@@ -104,7 +104,7 @@ namespace RogueCastle
 			m_versionNumber.Align = Types.TextAlign.Right;
 			m_versionNumber.FontSize = 8f;
 			m_versionNumber.Position = new Vector2(1305f, 5f);
-			m_versionNumber.Text = "v1.2.0a";
+			m_versionNumber.Text = "v1.2.0c";
 			m_pressStartText = new KeyIconTextObj(Game.JunicodeFont);
 			m_pressStartText.FontSize = 20f;
 			m_pressStartText.Text = "Press Enter to begin";

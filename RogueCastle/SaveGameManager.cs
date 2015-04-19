@@ -50,7 +50,7 @@ namespace RogueCastle
 				asyncResult.AsyncWaitHandle.WaitOne();
 				StorageDevice storageDevice = StorageDevice.EndShowSelector(asyncResult);
 				asyncResult.AsyncWaitHandle.Close();
-				asyncResult = storageDevice.BeginOpenContainer("RogueLegacyStorageContainer", null, null);
+				asyncResult = storageDevice.BeginOpenContainer("RogueLegacyEnhancedStorageContainer", null, null);
 				asyncResult.AsyncWaitHandle.WaitOne();
 				m_storageContainer = storageDevice.EndOpenContainer(asyncResult);
 				asyncResult.AsyncWaitHandle.Close();
