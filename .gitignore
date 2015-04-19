@@ -1,0 +1,8 @@
+bin*
+obj*
+*.bak
+*.dll
+*.sln
+*.suo
+*.old
+changelog.txt
