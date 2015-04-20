@@ -44,9 +44,6 @@ Feel free to contribute to this project :)
 * TraitStatType
 * VirtualScreen
 
-###3. REMOVE ALL DEMO RELEATED THINGS
-###4. MAKE DEBUG LOGGING CONDITIONAL 
-(if Debug build then enable Debug logging - general speed-up of code)
-###5. WORK ON LOADING THINGS FROM EXTERNAL SOURCES
+###3. WORK ON LOADING THINGS FROM EXTERNAL SOURCES
 (work on the actual modability)
-###6. TBA
+###4. TBA
