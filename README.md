@@ -19,8 +19,8 @@ If you want to be able to use JIT, you must copy all other game data (including 
 Feel free to contribute to this project :)
 
 ##TO DO LIST:
-###GENERAL CODE CLEANUP
-###FIX ISSUES FOUND IN CLASSES:
+###1. GENERAL CODE CLEANUP
+###2. FIX ISSUES FOUND IN CLASSES:
 * BossRoomType
 * ClassType
 * DiaryFlashBackScreen
@@ -43,3 +43,7 @@ Feel free to contribute to this project :)
 * SpellType
 * TraitStatType
 * VirtualScreen
+###3. REMOVE ALL DEMO RELEATED THINGS
+###4. MAKE DEBUG LOGGING CONDITIONAL (if debug build then debug - general speed-up of code)
+###5. WORK ON LOADING EXTERNAL SOURCES
+###TBA
