@@ -768,12 +768,12 @@ namespace RogueCastle
 		{
 			Console.WriteLine("Saving Config file");
 			string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			string path = Path.Combine(folderPath, "Rogue Legacy");
+            string path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
 			if (!Directory.Exists(path))
 			{
 				Directory.CreateDirectory(path);
 			}
-			string path2 = Path.Combine(folderPath, "Rogue Legacy", "GameConfig.ini");
+			string path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
 			using (StreamWriter streamWriter = new StreamWriter(path2, false))
 			{
 				streamWriter.WriteLine("[Screen Resolution]");
@@ -835,7 +835,7 @@ namespace RogueCastle
 			try
 			{
 				string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-				string path = Path.Combine(folderPath, "Rogue Legacy", "GameConfig.ini");
+                string path = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
 				using (StreamReader streamReader = new StreamReader(path))
 				{
 					CultureInfo cultureInfo = (CultureInfo)CultureInfo.CurrentCulture.Clone();

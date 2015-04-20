@@ -58,6 +58,7 @@ namespace RogueCastle
 	        }
 	        //goto IL_DE;
 	    }
+
 		public override void Update(GameTime gameTime)
 		{
 			bool flag = false;

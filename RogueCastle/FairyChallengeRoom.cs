@@ -73,8 +73,9 @@ namespace RogueCastle
 		public override void OnEnter()
 		{
 			m_teleportingOut = false;
-			Player.Flip = SpriteEffects.None;
+			//Player.Flip = SpriteEffects.None;
 			StorePlayerData();
+			Player.Flip = SpriteEffects.None;	
 			SetRoomData();
 			m_cutsceneRunning = true;
 			SoundManager.StopMusic(0.5f);

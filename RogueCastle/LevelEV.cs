@@ -50,7 +50,7 @@ namespace RogueCastle
 		public const int LEVEL_DUNGEON_RIGHTDOOR = 55;
 		public const int LEVEL_DUNGEON_TOPDOOR = 45;
 		public const int LEVEL_DUNGEON_BOTTOMDOOR = 100;
-		public const string GAME_VERSION = "v1.2.0a";
+		public const string GAME_VERSION = "v1.2.0c";
 		public static byte[] DEMENTIA_FLIGHT_LIST = new byte[]
 		{
 			9,

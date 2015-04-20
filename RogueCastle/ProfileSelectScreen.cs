@@ -437,15 +437,19 @@ namespace RogueCastle
 				flag = true;
 			}
 			Game.GameConfig.ProfileSlot = (byte)(m_selectedIndex + 1);
-			Game.PlayerStats.Dispose();
+			//Game.PlayerStats.Dispose();
 			(ScreenManager.Game as Game).SaveManager.ClearAllFileTypes(false);
 			(ScreenManager.Game as Game).SaveManager.ClearAllFileTypes(true);
-			SkillSystem.ResetAllTraits();
-			Game.PlayerStats = new PlayerStats();
-			(ScreenManager as RCScreenManager).Player.Reset();
+			//SkillSystem.ResetAllTraits();
+			//Game.PlayerStats = new PlayerStats();
+			//(ScreenManager as RCScreenManager).Player.Reset();
 			Game.GameConfig.ProfileSlot = profileSlot;
 			if (flag)
 			{
+				Game.PlayerStats.Dispose();
+				SkillSystem.ResetAllTraits();
+				Game.PlayerStats = new PlayerStats();
+				(ScreenManager as RCScreenManager).Player.Reset();
 				SoundManager.StopMusic(1f);
 				(ScreenManager as RCScreenManager).DisplayScreen(23, true, null);
 				return;

@@ -123,8 +123,9 @@ namespace RogueCastle
 		}
 		public override void OnEnter()
 		{
-			Player.Flip = SpriteEffects.FlipHorizontally;
+			//Player.Flip = SpriteEffects.FlipHorizontally;
 			StorePlayerData();
+			Player.Flip = SpriteEffects.FlipHorizontally;
 			SetRoomData();
 			m_cutsceneRunning = true;
 			SoundManager.StopMusic(0.5f);
