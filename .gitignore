@@ -1,8 +1,9 @@
 bin*
 obj*
+copyright-inserter*
 *.bak
+*.old
 *.dll
 *.sln
 *.suo
-*.old
 changelog.txt

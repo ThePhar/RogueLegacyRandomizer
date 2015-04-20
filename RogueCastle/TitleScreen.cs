@@ -1,3 +1,13 @@
+/*
+  Rogue Legacy Enhanced
+
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  Therefore, former creators copyright notice applies to the original disassembly and its modifications. 
+
+  Copyright(C) 2011-2015, Cellar Door Games Inc.
+  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+*/
+
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -96,7 +106,7 @@ namespace RogueCastle
 			m_titleText.Align = Types.TextAlign.Centre;
 			m_copyrightText = new TextObj(Game.JunicodeFont);
 			m_copyrightText.FontSize = 8f;
-			m_copyrightText.Text = " Copyright(C) 2011-2013, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.";
+			m_copyrightText.Text = "Copyright(C) 2011-2013, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.";
 			m_copyrightText.Align = Types.TextAlign.Centre;
 			m_copyrightText.Position = new Vector2(660f, 720 - m_copyrightText.Height - 10);
 			m_copyrightText.DropShadow = new Vector2(1f, 2f);
