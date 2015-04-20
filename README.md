@@ -6,7 +6,7 @@ This product is licensed under GPLv3. The source code is not maintained by any o
 
 In current state, it is just raw, a little bit cleaned and fixed disassembly. It is compilable and launchable, but definitely not playable right now.
 
-I started cleaning it up. After cleanup, I have in plan to fix most critical bugs in game's code. When all of these are done, I can start expanding the project with modability and features. 
+I started cleaning it up right now. After the cleanup, I have in plan to fix most critical bugs in engine's code, which currently prevents it to be playable. When all of these are done, I can start expanding the project with modability and features. 
 
 To make it work, copy these files from game folder to lib folder:
 * DS2DEngine.dll
