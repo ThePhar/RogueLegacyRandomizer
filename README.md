@@ -17,3 +17,29 @@ To make it work, copy these files from game folder to lib folder:
 If you want to be able to use JIT, you must copy all other game data (including other dlls) into Release and Debug folders after first compilation.
 
 Feel free to contribute to this project :)
+
+##TO DO LIST:
+###GENERAL CODE CLEANUP
+###FIX ISSUES FOUND IN CLASSES:
+* BossRoomType
+* ClassType
+* DiaryFlashBackScreen
+* EndingRoomObj
+* EnemyEV
+* EnemyType
+* GameEV
+* GetItemType
+* InputMapType
+* LevelBuilder2
+* LevelParser
+* LightArea
+* OrbType
+* PlayerEV
+* Program
+* SkillBuilder
+* SkillUnlockType
+* SpecialItemType
+* SpellEV
+* SpellType
+* TraitStatType
+* VirtualScreen
