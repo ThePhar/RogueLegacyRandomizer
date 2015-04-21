@@ -1,9 +1,0 @@
-bin*
-obj*
-copyrighter*
-changelog.txt
-*.bak
-*.old
-*.dll
-*.sln
-*.suo
