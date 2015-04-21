@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -43,7 +43,7 @@ namespace RogueCastle
 				m_background.Dispose();
 			}
 			m_background = new BackgroundObj("LineageScreenBG_Sprite");
-			m_background.SetRepeated(true, true, Game.ScreenManager.Camera, null);
+			m_background.SetRepeated(true, true, Game.ScreenManager.Camera);
 			m_background.X -= 6600f;
 			m_background.Opacity = 0.7f;
 			base.InitializeRenderTarget(bgRenderTarget);
@@ -57,7 +57,7 @@ namespace RogueCastle
 			m_continueText.ForceDraw = true;
 			m_continueText.Opacity = 0f;
 			m_background = new BackgroundObj("LineageScreenBG_Sprite");
-			m_background.SetRepeated(true, true, Game.ScreenManager.Camera, null);
+			m_background.SetRepeated(true, true, Game.ScreenManager.Camera);
 			m_background.X -= 6600f;
 			m_background.Opacity = 0.7f;
 			m_endingMask = new SpriteObj("Blank_Sprite");
@@ -91,7 +91,7 @@ namespace RogueCastle
 				current3.Initialize();
 				current3.PauseEnemy(true);
 				current3.IsWeighted = false;
-				current3.PlayAnimation(true);
+				current3.PlayAnimation();
 				current3.UpdateCollisionBoxes();
 				SpriteObj spriteObj = new SpriteObj("LineageScreenFrame_Sprite");
 				spriteObj.DropShadow = new Vector2(4f, 6f);
@@ -181,7 +181,7 @@ namespace RogueCastle
 						{
 							(current3 as EnemyObj_LastBoss).ForceSecondForm(true);
 							current3.ChangeSprite("EnemyLastBossIdle_Character");
-							current3.PlayAnimation(true);
+							current3.PlayAnimation();
 						}
 						spriteObj.ChangeSprite("GiantPortrait_Sprite");
 						spriteObj.Scale = Vector2.One;
@@ -193,7 +193,7 @@ namespace RogueCastle
 				else
 				{
 					current3.ChangeSprite("EnemyZombieWalk_Character");
-					current3.PlayAnimation(true);
+					current3.PlayAnimation();
 				}
 				SpriteObj spriteObj2 = new SpriteObj("LineageScreenPlaque1Long_Sprite");
 				spriteObj2.Scale = new Vector2(1.8f, 1.8f);
@@ -264,11 +264,11 @@ namespace RogueCastle
 				}
 				break;
 			}
-			enemy.PlayAnimation(true);
+			enemy.PlayAnimation();
 		}
 		public override void OnEnter()
 		{
-			m_blobBoss.PlayAnimation(true);
+			m_blobBoss.PlayAnimation();
 			foreach (EnemyObj current in EnemyList)
 			{
 				if (current.Type == 5)
@@ -326,7 +326,7 @@ namespace RogueCastle
 			{
 				object arg_91_0 = Player.AttachedLevel.Camera;
 				float arg_91_1 = 1.5f;
-				Easing arg_91_2 = new Easing(Quad.EaseInOut);
+				Easing arg_91_2 = Quad.EaseInOut;
 				string[] array = new string[4];
 				array[0] = "X";
 				string[] arg_66_0 = array;
@@ -341,7 +341,7 @@ namespace RogueCastle
 				Tween.To(arg_91_0, arg_91_1, arg_91_2, array);
 				object arg_10A_0 = Player;
 				float arg_10A_1 = 1.5f;
-				Easing arg_10A_2 = new Easing(Quad.EaseInOut);
+				Easing arg_10A_2 = Quad.EaseInOut;
 				string[] array2 = new string[4];
 				array2[0] = "X";
 				string[] arg_DE_0 = array2;
@@ -358,15 +358,10 @@ namespace RogueCastle
 				if (m_waypointIndex > m_cameraPosList.Count - 1)
 				{
 					m_waypointIndex = 0;
-					Tween.RunFunction(0f, Player.AttachedLevel.ScreenManager, "DisplayScreen", new object[]
-					{
-						18,
-						true,
-						typeof(List<object>)
-					});
+					Tween.RunFunction(0f, Player.AttachedLevel.ScreenManager, "DisplayScreen", 18, true, typeof(List<object>));
 					return;
 				}
-				Tween.RunFunction(m_waypointSpeed, this, "ChangeWaypoints", new object[0]);
+				Tween.RunFunction(m_waypointSpeed, this, "ChangeWaypoints");
 			}
 		}
 		public void ChangeLevelType()
@@ -381,18 +376,14 @@ namespace RogueCastle
 				if (m_displayingContinueText)
 				{
 					Tween.StopAll(false);
-					Game.ScreenManager.DisplayScreen(18, true, null);
+					Game.ScreenManager.DisplayScreen(18, true);
 				}
 				else
 				{
 					m_displayingContinueText = true;
 					Tween.StopAllContaining(m_continueText, false);
-					Tween.To(m_continueText, 0.5f, new Easing(Tween.EaseNone), new string[]
-					{
-						"Opacity",
-						"1"
-					});
-					Tween.RunFunction(4f, this, "HideContinueText", new object[0]);
+					Tween.To(m_continueText, 0.5f, Tween.EaseNone, "Opacity", "1");
+					Tween.RunFunction(4f, this, "HideContinueText");
 				}
 			}
 			base.Update(gameTime);
@@ -400,13 +391,7 @@ namespace RogueCastle
 		public void HideContinueText()
 		{
 			m_displayingContinueText = false;
-			Tween.To(m_continueText, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_continueText, 0.5f, Tween.EaseNone, "delay", "0", "Opacity", "0");
 		}
 		public override void Draw(Camera2D camera)
 		{

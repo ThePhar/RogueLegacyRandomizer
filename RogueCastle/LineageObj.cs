@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -444,39 +444,15 @@ namespace RogueCastle
 		public void DropFrame()
 		{
 			m_frameDropping = true;
-			Tween.By(m_frameSprite, 0.7f, new Easing(Back.EaseOut), new string[]
-			{
-				"X",
-				(-(float)m_frameSprite.Width / 2f - 2f).ToString(),
-				"Y",
-				"30",
-				"Rotation",
-				"45"
-			});
-			Tween.By(m_playerSprite, 0.7f, new Easing(Back.EaseOut), new string[]
-			{
-				"X",
-				(-(float)m_frameSprite.Width / 2f - 2f).ToString(),
-				"Y",
-				"30",
-				"Rotation",
-				"45"
-			});
-			Tween.RunFunction(1.5f, this, "DropFrame2", new object[0]);
+			Tween.By(m_frameSprite, 0.7f, Back.EaseOut, "X", (-(float)m_frameSprite.Width / 2f - 2f).ToString(), "Y", "30", "Rotation", "45");
+			Tween.By(m_playerSprite, 0.7f, Back.EaseOut, "X", (-(float)m_frameSprite.Width / 2f - 2f).ToString(), "Y", "30", "Rotation", "45");
+			Tween.RunFunction(1.5f, this, "DropFrame2");
 		}
 		public void DropFrame2()
 		{
 			SoundManager.PlaySound("Cutsc_Picture_Fall");
-			Tween.By(m_frameSprite, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Y",
-				"1000"
-			});
-			Tween.By(m_playerSprite, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Y",
-				"1000"
-			});
+			Tween.By(m_frameSprite, 0.5f, Quad.EaseIn, "Y", "1000");
+			Tween.By(m_playerSprite, 0.5f, Quad.EaseIn, "Y", "1000");
 		}
 		public override void Draw(Camera2D camera)
 		{
@@ -648,7 +624,7 @@ namespace RogueCastle
 		}
 		protected override GameObj CreateCloneInstance()
 		{
-			return new LineageObj(null, false);
+			return new LineageObj(null);
 		}
 		protected override void FillCloneInstance(object obj)
 		{

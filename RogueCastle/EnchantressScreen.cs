@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -88,7 +88,7 @@ namespace RogueCastle
 				m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
 			}
 			m_selectionIcon = new SpriteObj("BlacksmithUI_SelectionIcon_Sprite");
-			m_selectionIcon.PlayAnimation(true);
+			m_selectionIcon.PlayAnimation();
 			m_selectionIcon.Scale = Vector2.Zero;
 			m_selectionIcon.AnimationDelay = 0.1f;
 			m_selectionIcon.ForceDraw = true;
@@ -152,16 +152,16 @@ namespace RogueCastle
 		{
 			m_descriptionText = new TextObj(Game.JunicodeFont);
 			m_descriptionText.FontSize = 9f;
-			m_instructionsTitleText = new TextObj(null);
+			m_instructionsTitleText = new TextObj();
 			m_instructionsTitleText.Font = Game.JunicodeFont;
 			m_instructionsTitleText.FontSize = 10f;
 			m_instructionsTitleText.TextureColor = new Color(237, 202, 138);
 			m_instructionsTitleText.Text = "Instructions:";
-			m_instructionsText = new KeyIconTextObj(null);
+			m_instructionsText = new KeyIconTextObj();
 			m_instructionsText.Font = Game.JunicodeFont;
 			m_instructionsText.FontSize = 10f;
 			m_unlockCostContainer = new ObjContainer();
-			TextObj textObj = new TextObj(null);
+			TextObj textObj = new TextObj();
 			textObj.Font = Game.JunicodeFont;
 			textObj.FontSize = 10f;
 			textObj.TextureColor = Color.Yellow;
@@ -192,119 +192,41 @@ namespace RogueCastle
 				for (int i = 0; i < 11; i++)
 				{
 					Tween.StopAllContaining(m_activeIconArray[i], false);
-					Tween.To(m_activeIconArray[i], duration, new Easing(Back.EaseIn), new string[]
-					{
-						"delay",
-						num.ToString(),
-						"ScaleX",
-						"0",
-						"ScaleY",
-						"0"
-					});
+					Tween.To(m_activeIconArray[i], duration, Back.EaseIn, "delay", num.ToString(), "ScaleX", "0", "ScaleY", "0");
 				}
 			}
 			m_activeIconArray = m_masterIconArray[equipmentType];
 			num = 0.25f;
 			for (int j = 0; j < 11; j++)
 			{
-				Tween.To(m_activeIconArray[j], duration, new Easing(Back.EaseOut), new string[]
-				{
-					"delay",
-					num.ToString(),
-					"ScaleX",
-					"1",
-					"ScaleY",
-					"1"
-				});
+				Tween.To(m_activeIconArray[j], duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
 			}
 			foreach (SpriteObj current in m_newIconList)
 			{
 				Tween.StopAllContaining(current, false);
 				current.Scale = Vector2.Zero;
-				Tween.To(current, duration, new Easing(Back.EaseOut), new string[]
-				{
-					"delay",
-					num.ToString(),
-					"ScaleX",
-					"1",
-					"ScaleY",
-					"1"
-				});
+				Tween.To(current, duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
 			}
 			UpdateNewIcons();
 			m_equippedIcon.Scale = Vector2.Zero;
 			Tween.StopAllContaining(m_equippedIcon, false);
-			Tween.To(m_equippedIcon, duration, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				num.ToString(),
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
+			Tween.To(m_equippedIcon, duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
 		}
 		public void EaseInMenu()
 		{
 			float duration = 0.4f;
-			Tween.To(m_enchantressUI.GetChildAt(0), duration, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_selectionIcon, duration, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				"0.25",
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
+			Tween.To(m_enchantressUI.GetChildAt(0), duration, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_selectionIcon, duration, Back.EaseOut, "delay", "0.25", "ScaleX", "1", "ScaleY", "1");
 			float num = 0.2f;
 			for (int i = 6; i < m_enchantressUI.NumChildren - 3; i++)
 			{
 				num += 0.05f;
-				Tween.To(m_enchantressUI.GetChildAt(i), duration, new Easing(Back.EaseOut), new string[]
-				{
-					"delay",
-					num.ToString(),
-					"ScaleX",
-					"1",
-					"ScaleY",
-					"1"
-				});
+				Tween.To(m_enchantressUI.GetChildAt(i), duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
 			}
-			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 1), duration, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				num.ToString(),
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 2), duration, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				num.ToString(),
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3), duration, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				num.ToString(),
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.AddEndHandlerToLastTween(this, "EaseInComplete", new object[0]);
+			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 1), duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 2), duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3), duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
+			Tween.AddEndHandlerToLastTween(this, "EaseInComplete");
 		}
 		public void EaseInComplete()
 		{
@@ -317,67 +239,21 @@ namespace RogueCastle
 				current.Visible = false;
 			}
 			m_equippedIcon.Visible = false;
-			Tween.To(m_confirmText, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_cancelText, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_navigationText, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_confirmText, 0.2f, Linear.EaseNone, "Opacity", "0");
+			Tween.To(m_cancelText, 0.2f, Linear.EaseNone, "Opacity", "0");
+			Tween.To(m_navigationText, 0.2f, Linear.EaseNone, "Opacity", "0");
 			float num = 0.4f;
 			float num2 = 0f;
-			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 2), num, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3), num, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 4), num, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
+			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 2), num, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3), num, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 4), num, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
 			for (int i = 6; i < 11; i++)
 			{
 				if (m_currentCategoryIndex == i)
 				{
-					Tween.To(m_selectionIcon, num, new Easing(Back.EaseIn), new string[]
-					{
-						"delay",
-						num2.ToString(),
-						"ScaleX",
-						"0",
-						"ScaleY",
-						"0"
-					});
+					Tween.To(m_selectionIcon, num, Back.EaseIn, "delay", num2.ToString(), "ScaleX", "0", "ScaleY", "0");
 				}
-				Tween.To(m_enchantressUI.GetChildAt(i), num, new Easing(Back.EaseIn), new string[]
-				{
-					"delay",
-					num2.ToString(),
-					"ScaleX",
-					"0",
-					"ScaleY",
-					"0"
-				});
+				Tween.To(m_enchantressUI.GetChildAt(i), num, Back.EaseIn, "delay", num2.ToString(), "ScaleX", "0", "ScaleY", "0");
 				num2 += 0.05f;
 			}
 			for (int j = 1; j < 6; j++)
@@ -386,24 +262,10 @@ namespace RogueCastle
 			}
 			for (int k = 0; k < m_activeIconArray.Length; k++)
 			{
-				Tween.To(m_activeIconArray[k], num, new Easing(Back.EaseIn), new string[]
-				{
-					"ScaleX",
-					"0",
-					"ScaleY",
-					"0"
-				});
+				Tween.To(m_activeIconArray[k], num, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
 			}
-			Tween.To(m_enchantressUI.GetChildAt(0), num, new Easing(Back.EaseIn), new string[]
-			{
-				"delay",
-				"0.3",
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.RunFunction(num + 0.35f, ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(m_enchantressUI.GetChildAt(0), num, Back.EaseIn, "delay", "0.3", "ScaleX", "0", "ScaleY", "0");
+			Tween.RunFunction(num + 0.35f, ScreenManager, "HideCurrentScreen");
 		}
 		private void UpdateIconStates()
 		{
@@ -451,21 +313,9 @@ namespace RogueCastle
 			m_confirmText.Opacity = 0f;
 			m_cancelText.Opacity = 0f;
 			m_navigationText.Opacity = 0f;
-			Tween.To(m_confirmText, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_cancelText, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_navigationText, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_confirmText, 0.2f, Linear.EaseNone, "Opacity", "1");
+			Tween.To(m_cancelText, 0.2f, Linear.EaseNone, "Opacity", "1");
+			Tween.To(m_navigationText, 0.2f, Linear.EaseNone, "Opacity", "1");
 			m_confirmText.Text = "[Input:" + 0 + "]  select/equip";
 			m_cancelText.Text = "[Input:" + 2 + "]  cancel/close menu";
 			if (!InputManager.GamePadIsConnected(PlayerIndex.One))
@@ -483,11 +333,7 @@ namespace RogueCastle
 			UpdateIconStates();
 			DisplayCategory(0);
 			EaseInMenu();
-			Tween.To(this, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.5"
-			});
+			Tween.To(this, 0.2f, Linear.EaseNone, "BackBufferOpacity", "0.5");
 			UpdateIconSelectionText();
 			base.OnEnter();
 		}
@@ -509,11 +355,7 @@ namespace RogueCastle
 				}
 			}
 			m_selectionIcon.Scale = Vector2.Zero;
-			(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData,
-				SaveType.UpgradeData
-			});
+			(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
 			bool flag = true;
 			sbyte[] getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
 			for (int k = 0; k < getEquippedRuneArray.Length; k++)
@@ -593,18 +435,9 @@ namespace RogueCastle
 			if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
 			{
 				m_lockControls = true;
-				Tween.To(this, 0.2f, new Easing(Linear.EaseNone), new string[]
-				{
-					"delay",
-					"0.5",
-					"BackBufferOpacity",
-					"0"
-				});
+				Tween.To(this, 0.2f, Linear.EaseNone, "delay", "0.5", "BackBufferOpacity", "0");
 				EaseOutMenu();
-				Tween.RunFunction(0.13f, typeof(SoundManager), "PlaySound", new object[]
-				{
-					"ShopMenuClose"
-				});
+				Tween.RunFunction(0.13f, typeof(SoundManager), "PlaySound", "ShopMenuClose");
 			}
 			if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
 			{

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -44,44 +44,44 @@ namespace RogueCastle
 			{
 			case 2:
 				ChangeSprite("ChickenLeg_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			case 3:
 				ChangeSprite("ManaPotion_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			case 4:
 				ChangeSprite("Sword_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			case 6:
 				ChangeSprite("Shield_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			case 7:
 				ChangeSprite("Heart_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			case 8:
 				ChangeSprite("Heart_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				TextureColor = Color.Blue;
 				goto IL_11A;
 			case 9:
 				ChangeSprite("Backpack_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			case 10:
 				ChangeSprite("MoneyBag_Sprite");
-				PlayAnimation(1, 1, false);
+				PlayAnimation(1, 1);
 				goto IL_11A;
 			case 11:
 				ChangeSprite("Diamond_Sprite");
-				PlayAnimation(true);
+				PlayAnimation();
 				goto IL_11A;
 			}
 			ChangeSprite("Coin_Sprite");
-			PlayAnimation(true);
+			PlayAnimation();
 			IL_11A:
 			DropType = dropType;
 			m_amount = amount;
@@ -107,7 +107,7 @@ namespace RogueCastle
 				textManager.DisplayNumberStringText(num2, "gold", Color.Yellow, new Vector2(X, Bounds.Top));
 				if (DropType == 10)
 				{
-					PlayAnimation(1, 1, false);
+					PlayAnimation(1, 1);
 					return;
 				}
 				break;
@@ -167,7 +167,7 @@ namespace RogueCastle
 				Y = (int)Y;
 				if (DropType == 10 && CurrentFrame == 1 && CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect).Y < 0f)
 				{
-					PlayAnimation(2, TotalFrames, false);
+					PlayAnimation(2, TotalFrames);
 				}
 			}
 		}

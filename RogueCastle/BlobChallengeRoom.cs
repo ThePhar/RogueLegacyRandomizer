@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -131,29 +131,18 @@ namespace RogueCastle
 			SoundManager.StopMusic(0.5f);
 			m_boss.AnimationDelay = 0.1f;
 			m_boss.ChangeSprite("EnemyBlobBossAir_Character");
-			m_boss.PlayAnimation(true);
+			m_boss.PlayAnimation();
 			m_boss2.AnimationDelay = 0.1f;
 			m_boss2.ChangeSprite("EnemyBlobBossAir_Character");
-			m_boss2.PlayAnimation(true);
+			m_boss2.PlayAnimation();
 			Player.AttachedLevel.UpdateCamera();
 			m_startingCamPos = Player.AttachedLevel.Camera.Position;
 			Player.LockControls();
 			Player.AttachedLevel.RunCinematicBorders(6f);
 			Player.AttachedLevel.CameraLockedToPlayer = false;
 			Player.AttachedLevel.Camera.Y = Player.Y;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				m_boss.Y.ToString(),
-				"X",
-				m_boss.X.ToString()
-			});
-			Tween.RunFunction(1.2f, this, "DisplayBossTitle", new object[]
-			{
-				Game.PlayerStats.PlayerName + " VS",
-				m_boss.Name,
-				"Intro2"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X", m_boss.X.ToString());
+			Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
 			base.OnEnter();
 			m_bossChest.ForcedItemType = 18;
 		}
@@ -161,7 +150,7 @@ namespace RogueCastle
 		{
 			object arg_96_0 = Player.AttachedLevel.Camera;
 			float arg_96_1 = 1f;
-			Easing arg_96_2 = new Easing(Quad.EaseInOut);
+			Easing arg_96_2 = Quad.EaseInOut;
 			string[] array = new string[8];
 			array[0] = "delay";
 			array[1] = "0.5";
@@ -178,7 +167,7 @@ namespace RogueCastle
 			array[6] = "Zoom";
 			array[7] = "0.5";
 			Tween.To(arg_96_0, arg_96_1, arg_96_2, array);
-			Tween.AddEndHandlerToLastTween(this, "EndCutscene", new object[0]);
+			Tween.AddEndHandlerToLastTween(this, "EndCutscene");
 		}
 		public void EndCutscene()
 		{

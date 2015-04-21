@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -134,30 +134,23 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyMimicShake_Character", false, false), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyMimicIdle_Character", true, false), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(3f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyMimicShake_Character", false, false));
+			logicSet.AddAction(new PlayAnimationLogicAction(false));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyMimicIdle_Character", true, false));
+			logicSet.AddAction(new DelayLogicAction(3f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyMimicAttack_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveDirectionLogicAction(-1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Chest_Open_Large"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
+			logicSet2.AddAction(new GroundCheckLogicAction());
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet2.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyMimicAttack_Character"));
+			logicSet2.AddAction(new MoveDirectionLogicAction());
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "Chest_Open_Large"));
+			logicSet2.AddAction(new JumpLogicAction());
+			logicSet2.AddAction(new DelayLogicAction(0.3f));
+			logicSet2.AddAction(new GroundCheckLogicAction());
 			new LogicSet(this);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			base.InitializeLogic();
 		}
@@ -179,11 +172,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3A_1, arg_3A_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(false, m_generalBasicLB, 0, 100);
 				return;
 			}
 			//goto IL_1D;
@@ -206,11 +195,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3A_1, arg_3A_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(false, m_generalBasicLB, 0, 100);
 				return;
 			}
 			//goto IL_1D;
@@ -233,11 +218,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3A_1, arg_3A_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(false, m_generalBasicLB, 0, 100);
 				return;
 			}
 			//goto IL_1D;
@@ -260,11 +241,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3A_1, arg_3A_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(false, m_generalBasicLB, 0, 100);
 				return;
 			}
 			//goto IL_1D;
@@ -293,10 +270,7 @@ namespace RogueCastle
 		{
 			Type = 33;
 			OutlineWidth = 0;
-			m_closeSound = new FrameSoundObj(this, m_target, 1, new string[]
-			{
-				"Chest_Snap"
-			});
+			m_closeSound = new FrameSoundObj(this, m_target, 1, "Chest_Snap");
 		}
 		public override void Update(GameTime gameTime)
 		{

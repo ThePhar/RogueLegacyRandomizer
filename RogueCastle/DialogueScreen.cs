@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -125,7 +125,7 @@ namespace RogueCastle
 			m_confirmArgs = args;
 			if (m_confirmMethodInfo == null)
 			{
-				m_confirmMethodInfo = methodType.GetMethod(functionName, new Type[]
+				m_confirmMethodInfo = methodType.GetMethod(functionName, new[]
 				{
 					args[0].GetType().MakeArrayType()
 				});
@@ -151,7 +151,7 @@ namespace RogueCastle
 			m_cancelArgs = args;
 			if (m_cancelMethodInfo == null)
 			{
-				m_cancelMethodInfo = methodType.GetMethod(functionName, new Type[]
+				m_cancelMethodInfo = methodType.GetMethod(functionName, new[]
 				{
 					args[0].GetType().MakeArrayType()
 				});
@@ -205,19 +205,9 @@ namespace RogueCastle
 						{
 							m_lockControls = true;
 							SoundManager.PlaySound("DialogMenuClose");
-							Tween.To(m_dialogContainer, 0.3f, new Easing(Quad.EaseIn), new string[]
-							{
-								"Opacity",
-								"0",
-								"Y",
-								"0"
-							});
-							Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-							{
-								"BackBufferOpacity",
-								"0"
-							});
-							Tween.AddEndHandlerToLastTween(this, "ExitScreen", new object[0]);
+							Tween.To(m_dialogContainer, 0.3f, Quad.EaseIn, "Opacity", "0", "Y", "0");
+							Tween.To(this, 0.3f, Linear.EaseNone, "BackBufferOpacity", "0");
+							Tween.AddEndHandlerToLastTween(this, "ExitScreen");
 						}
 						else
 						{
@@ -232,13 +222,7 @@ namespace RogueCastle
 								TextObj textObj2 = m_dialogContainer.GetChildAt(2) as TextObj;
 								textObj2.StopTypeWriting(true);
 								m_dialogChoiceContainer.Visible = true;
-								Tween.To(m_dialogChoiceContainer, 0.3f, new Easing(Back.EaseOut), new string[]
-								{
-									"ScaleX",
-									"1",
-									"ScaleY",
-									"1"
-								});
+								Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
 								SoundManager.PlaySound("DialogOpenBump");
 							}
 						}
@@ -284,26 +268,10 @@ namespace RogueCastle
 						}
 						m_lockControls = true;
 						SoundManager.PlaySound("DialogMenuClose");
-						Tween.To(m_dialogContainer, 0.3f, new Easing(Quad.EaseInOut), new string[]
-						{
-							"Opacity",
-							"0",
-							"Y",
-							"100"
-						});
-						Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-						{
-							"BackBufferOpacity",
-							"0"
-						});
-						Tween.To(m_dialogChoiceContainer, 0.3f, new Easing(Back.EaseIn), new string[]
-						{
-							"ScaleX",
-							"0",
-							"ScaleY",
-							"0"
-						});
-						Tween.AddEndHandlerToLastTween(this, "ExitScreen", new object[0]);
+						Tween.To(m_dialogContainer, 0.3f, Quad.EaseInOut, "Opacity", "0", "Y", "100");
+						Tween.To(this, 0.3f, Linear.EaseNone, "BackBufferOpacity", "0");
+						Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+						Tween.AddEndHandlerToLastTween(this, "ExitScreen");
 					}
 					else if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
 					{
@@ -313,26 +281,10 @@ namespace RogueCastle
 						SoundManager.PlaySound("DialogueMenuCancel");
 						m_lockControls = true;
 						SoundManager.PlaySound("DialogMenuClose");
-						Tween.To(m_dialogContainer, 0.3f, new Easing(Quad.EaseInOut), new string[]
-						{
-							"Opacity",
-							"0",
-							"Y",
-							"100"
-						});
-						Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-						{
-							"BackBufferOpacity",
-							"0"
-						});
-						Tween.To(m_dialogChoiceContainer, 0.3f, new Easing(Back.EaseIn), new string[]
-						{
-							"ScaleX",
-							"0",
-							"ScaleY",
-							"0"
-						});
-						Tween.AddEndHandlerToLastTween(this, "ExitScreen", new object[0]);
+						Tween.To(m_dialogContainer, 0.3f, Quad.EaseInOut, "Opacity", "0", "Y", "100");
+						Tween.To(this, 0.3f, Linear.EaseNone, "BackBufferOpacity", "0");
+						Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+						Tween.AddEndHandlerToLastTween(this, "ExitScreen");
 					}
 				}
 			}
@@ -353,17 +305,8 @@ namespace RogueCastle
 					TextObj textObj = m_dialogContainer.GetChildAt(2) as TextObj;
 					textObj.StopTypeWriting(true);
 					m_dialogChoiceContainer.Visible = true;
-					Tween.To(m_dialogChoiceContainer, 0.3f, new Easing(Back.EaseOut), new string[]
-					{
-						"ScaleX",
-						"1",
-						"ScaleY",
-						"1"
-					});
-					Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", new object[]
-					{
-						"DialogOpenBump"
-					});
+					Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+					Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogOpenBump");
 				}
 			}
 			base.Update(gameTime);
@@ -417,18 +360,8 @@ namespace RogueCastle
 				(m_dialogContainer.GetChildAt(1) as TextObj).RandomizeSentence(false);
 			}
 			(m_dialogContainer.GetChildAt(2) as TextObj).BeginTypeWriting(dialogue[m_dialogCounter].Length * m_textScrollSpeed, "dialogue_tap");
-			Tween.To(m_dialogContainer, 0.3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Opacity",
-				"1",
-				"Y",
-				"150"
-			});
-			Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.5"
-			});
+			Tween.To(m_dialogContainer, 0.3f, Quad.EaseInOut, "Opacity", "1", "Y", "150");
+			Tween.To(this, 0.3f, Linear.EaseNone, "BackBufferOpacity", "0.5");
 			base.OnEnter();
 		}
 		public void ExitScreen()

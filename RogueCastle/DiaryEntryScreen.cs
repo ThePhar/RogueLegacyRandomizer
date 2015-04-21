@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -105,17 +105,9 @@ namespace RogueCastle
 				}
 			}
 			BackBufferOpacity = 0f;
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.7"
-			});
+			Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.7");
 			m_titleText.Opacity = 0f;
-			Tween.To(m_titleText, 0.25f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_titleText, 0.25f, Tween.EaseNone, "Opacity", "1");
 			int num = 0;
 			float num2 = 0f;
 			foreach (ObjContainer current in m_diaryList)
@@ -129,20 +121,8 @@ namespace RogueCastle
 						num2 += 0.05f;
 					}
 					num++;
-					Tween.To(current, 0.25f, new Easing(Tween.EaseNone), new string[]
-					{
-						"delay",
-						num2.ToString(),
-						"Opacity",
-						"1"
-					});
-					Tween.By(current, 0.25f, new Easing(Quad.EaseOut), new string[]
-					{
-						"delay",
-						num2.ToString(),
-						"Y",
-						"50"
-					});
+					Tween.To(current, 0.25f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "1");
+					Tween.By(current, 0.25f, Quad.EaseOut, "delay", num2.ToString(), "Y", "50");
 				}
 			}
 			base.OnEnter();
@@ -163,35 +143,15 @@ namespace RogueCastle
 						num2 += 0.05f;
 					}
 					num++;
-					Tween.To(current, 0.25f, new Easing(Tween.EaseNone), new string[]
-					{
-						"delay",
-						num2.ToString(),
-						"Opacity",
-						"0"
-					});
-					Tween.By(current, 0.25f, new Easing(Quad.EaseOut), new string[]
-					{
-						"delay",
-						num2.ToString(),
-						"Y",
-						"-50"
-					});
+					Tween.To(current, 0.25f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "0");
+					Tween.By(current, 0.25f, Quad.EaseOut, "delay", num2.ToString(), "Y", "-50");
 				}
 			}
 			m_titleText.Opacity = 1f;
-			Tween.To(m_titleText, 0.25f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_titleText, 0.25f, Tween.EaseNone, "Opacity", "0");
 			m_inputDelay = 1f;
-			Tween.To(this, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(this, 0.5f, Tween.EaseNone, "BackBufferOpacity", "0");
+			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
 		}
 		public override void HandleInput()
 		{
@@ -260,7 +220,7 @@ namespace RogueCastle
 		{
 			RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_entryIndex);
-			rCScreenManager.DisplayScreen(13, true, null);
+			rCScreenManager.DisplayScreen(13, true);
 		}
 		private void UpdateSelection()
 		{

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -175,79 +175,38 @@ namespace RogueCastle
 				Lifespan = 10f
 			};
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(0.5f));
 			LogicSet logicSet2 = new LogicSet(this);
 			logicSet2.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect", new object[0]), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Turret_Attack01",
-				"Turret_Attack02",
-				"Turret_Attack03"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(num, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02", "Turret_Attack03"));
+			logicSet2.AddAction(new DelayLogicAction(num));
 			LogicSet logicSet3 = new LogicSet(this);
 			logicSet3.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Turret_Attack01",
-				"Turret_Attack02",
-				"Turret_Attack03"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Turret_Attack01",
-				"Turret_Attack02",
-				"Turret_Attack03"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Turret_Attack01",
-				"Turret_Attack02",
-				"Turret_Attack03"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect", new object[0]), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(num, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02", "Turret_Attack03"));
+			logicSet3.AddAction(new DelayLogicAction(0.1f));
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02", "Turret_Attack03"));
+			logicSet3.AddAction(new DelayLogicAction(0.1f));
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02", "Turret_Attack03"));
+			logicSet3.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
+			logicSet3.AddAction(new DelayLogicAction(num));
 			LogicSet logicSet4 = new LogicSet(this);
 			logicSet4.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
 			projectileData.ChaseTarget = true;
 			projectileData.Target = m_target;
 			projectileData.TurnSpeed = 0.02f;
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Turret_Attack01",
-				"Turret_Attack02",
-				"Turret_Attack03"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect", new object[0]), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(num, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet3,
-				logicSet
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet4,
-				logicSet
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet
-			});
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02", "Turret_Attack03"));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
+			logicSet4.AddAction(new DelayLogicAction(num));
+			m_generalBasicLB.AddLogicSet(logicSet2, logicSet);
+			m_generalAdvancedLB.AddLogicSet(logicSet3, logicSet);
+			m_generalExpertLB.AddLogicSet(logicSet4, logicSet);
+			m_generalMiniBossLB.AddLogicSet(logicSet2, logicSet);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -330,11 +289,7 @@ namespace RogueCastle
 				return;
 			}
 			}
-			RunLogicBlock(false, m_generalExpertLB, new int[]
-			{
-				0,
-				100
-			});
+			RunLogicBlock(false, m_generalExpertLB, 0, 100);
 		}
 		protected override void RunMinibossLogic()
 		{

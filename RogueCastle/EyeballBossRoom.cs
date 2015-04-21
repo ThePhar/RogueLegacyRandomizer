@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -50,64 +50,20 @@ namespace RogueCastle
 			Player.AttachedLevel.RunCinematicBorders(8f);
 			Player.AttachedLevel.CameraLockedToPlayer = false;
 			Player.AttachedLevel.Camera.Y = Player.Y;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				m_boss.Y.ToString()
-			});
-			Tween.RunFunction(1.1f, m_boss, "PlayAnimation", new object[]
-			{
-				true
-			});
-			Tween.To(m_boss, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"2.5",
-				"AnimationDelay",
-				0.0166666675f.ToString()
-			});
-			Tween.To(m_boss, 3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"1",
-				"Rotation",
-				"1800"
-			});
-			Tween.AddEndHandlerToLastTween(m_boss, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossEye_Character"
-			});
-			Tween.To(m_boss, 2f, new Easing(Bounce.EaseOut), new string[]
-			{
-				"delay",
-				"2",
-				"ScaleX",
-				scale.X.ToString(),
-				"ScaleY",
-				scale.Y.ToString()
-			});
-			Tween.RunFunction(3.2f, this, "DisplayBossTitle", new object[]
-			{
-				"The Gatekeeper",
-				m_boss.Name,
-				"Intro2"
-			});
-			Tween.RunFunction(0.8f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Eyeball_Build"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString());
+			Tween.RunFunction(1.1f, m_boss, "PlayAnimation", true);
+			Tween.To(m_boss, 0.5f, Linear.EaseNone, "delay", "2.5", "AnimationDelay", 0.0166666675f.ToString());
+			Tween.To(m_boss, 3f, Quad.EaseInOut, "delay", "1", "Rotation", "1800");
+			Tween.AddEndHandlerToLastTween(m_boss, "ChangeSprite", "EnemyEyeballBossEye_Character");
+			Tween.To(m_boss, 2f, Bounce.EaseOut, "delay", "2", "ScaleX", scale.X.ToString(), "ScaleY", scale.Y.ToString());
+			Tween.RunFunction(3.2f, this, "DisplayBossTitle", "The Gatekeeper", m_boss.Name, "Intro2");
+			Tween.RunFunction(0.8f, typeof(SoundManager), "PlaySound", "Boss_Eyeball_Build");
 			base.OnEnter();
 		}
 		public void Intro2()
 		{
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0.5",
-				"Y",
-				((int)(Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "EndCutscene", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y", ((int)(Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString());
+			Tween.AddEndHandlerToLastTween(this, "EndCutscene");
 		}
 		public void EndCutscene()
 		{
@@ -121,7 +77,7 @@ namespace RogueCastle
 		{
 			if (!m_cutsceneRunning && !m_boss.BossVersionKilled && !SoundManager.IsMusicPlaying)
 			{
-				SoundManager.PlayMusic("CastleBossSong", true, 0f);
+				SoundManager.PlayMusic("CastleBossSong", true);
 			}
 			base.Update(gameTime);
 		}

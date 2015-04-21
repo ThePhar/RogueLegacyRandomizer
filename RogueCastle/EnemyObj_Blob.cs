@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -222,63 +222,37 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Move01",
-				"Blob_Move02",
-				"Blob_Move03",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1.1f, 1.9f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03", "Blank", "Blank", "Blank", "Blank", "Blank"));
+			logicSet.AddAction(new DelayLogicAction(1.1f, 1.9f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Move01",
-				"Blob_Move02",
-				"Blob_Move03",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(1f, 1.5f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03", "Blank", "Blank", "Blank", "Blank", "Blank"));
+			logicSet2.AddAction(new DelayLogicAction(1f, 1.5f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.5f, 0.9f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.5f, 0.9f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Jump"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Land"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, Speed), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "Jump", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet4.AddAction(new GroundCheckLogicAction());
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
+			logicSet4.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
+			logicSet4.AddAction(new JumpLogicAction());
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character"));
+			logicSet4.AddAction(new DelayLogicAction(0.2f));
+			logicSet4.AddAction(new GroundCheckLogicAction());
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Land"));
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, Speed));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "Jump"));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobIdle_Character"));
+			logicSet4.AddAction(new DelayLogicAction(0.2f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet4.Tag = 2;
 			ProjectileData data = new ProjectileData(this)
 			{
@@ -296,179 +270,99 @@ namespace RogueCastle
 				LockPosition = true
 			};
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Jump"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data), Types.Sequence.Serial);
-			logicSet5.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Land"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Jump", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet5.AddAction(new GroundCheckLogicAction());
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
+			logicSet5.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
+			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+			logicSet5.AddAction(new JumpLogicAction());
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character"));
+			logicSet5.AddAction(new DelayLogicAction(0.2f));
+			logicSet5.AddAction(new GroundCheckLogicAction());
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Land"));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Jump"));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobIdle_Character"));
+			logicSet5.AddAction(new DelayLogicAction(0.2f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Jump"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data), Types.Sequence.Serial);
-			logicSet6.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Land"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Jump", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet6.AddAction(new GroundCheckLogicAction());
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
+			logicSet6.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+			logicSet6.AddAction(new JumpLogicAction());
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character"));
+			logicSet6.AddAction(new DelayLogicAction(0.2f));
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+			logicSet6.AddAction(new DelayLogicAction(0.2f));
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+			logicSet6.AddAction(new DelayLogicAction(0.2f));
+			logicSet6.AddAction(new GroundCheckLogicAction());
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Land"));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Jump"));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobIdle_Character"));
+			logicSet6.AddAction(new DelayLogicAction(0.2f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Move01",
-				"Blob_Move02",
-				"Blob_Move03",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(1.1f, 1.9f, false), Types.Sequence.Serial);
+			logicSet7.AddAction(new MoveLogicAction(m_target, true));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03", "Blank", "Blank", "Blank", "Blank", "Blank"));
+			logicSet7.AddAction(new DelayLogicAction(1.1f, 1.9f));
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Move01",
-				"Blob_Move02",
-				"Blob_Move03",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(1f, 1.5f, false), Types.Sequence.Serial);
+			logicSet8.AddAction(new MoveLogicAction(m_target, false));
+			logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03", "Blank", "Blank", "Blank", "Blank", "Blank"));
+			logicSet8.AddAction(new DelayLogicAction(1f, 1.5f));
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.5f, 0.9f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet9.AddAction(new DelayLogicAction(0.5f, 0.9f));
 			LogicSet logicSet10 = new LogicSet(this);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossJump_Character", false, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Jump"
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossAir_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Blob_Land"
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, Speed), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossJump_Character", false, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Jump", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet10.AddAction(new GroundCheckLogicAction());
+			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossJump_Character", false, false));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
+			logicSet10.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet10.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
+			logicSet10.AddAction(new JumpLogicAction());
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossAir_Character"));
+			logicSet10.AddAction(new DelayLogicAction(0.2f));
+			logicSet10.AddAction(new GroundCheckLogicAction());
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Land"));
+			logicSet10.AddAction(new MoveLogicAction(m_target, true, Speed));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossJump_Character", false, false));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Jump"));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossIdle_Character"));
+			logicSet10.AddAction(new DelayLogicAction(0.2f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet10.Tag = 2;
 			LogicSet logicSet11 = new LogicSet(this);
-			logicSet11.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossAir_Character", true, true), Types.Sequence.Serial);
-			logicSet11.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyMove1",
-				"FairyMove2",
-				"FairyMove3"
-			}), Types.Sequence.Serial);
-			logicSet11.AddAction(new ChaseLogicAction(m_target, true, 1f, -1f), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet6
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7,
-				logicSet8,
-				logicSet9,
-				logicSet10
-			});
-			m_generalNeoLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet11
-			});
-			m_generalBossCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7,
-				logicSet8,
-				logicSet9
-			});
+			logicSet11.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossAir_Character"));
+			logicSet11.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyMove1", "FairyMove2", "FairyMove3"));
+			logicSet11.AddAction(new ChaseLogicAction(m_target, true, 1f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet6);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
+			m_generalMiniBossLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
+			m_generalNeoLB.AddLogicSet(logicSet11);
+			m_generalBossCooldownLB.AddLogicSet(logicSet7, logicSet8, logicSet9);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -478,22 +372,12 @@ namespace RogueCastle
 			logicBlocksToDispose.Add(m_generalBossCooldownLB);
 			if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
 			{
-				SetCooldownLogicBlock(m_generalBossCooldownLB, new int[]
-				{
-					40,
-					40,
-					20
-				});
+				SetCooldownLogicBlock(m_generalBossCooldownLB, 40, 40, 20);
 				ChangeSprite("EnemyBlobBossIdle_Character");
 			}
 			else
 			{
-				SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-				{
-					40,
-					40,
-					20
-				});
+				SetCooldownLogicBlock(m_generalCooldownLB, 40, 40, 20);
 			}
 			base.InitializeLogic();
 		}
@@ -504,24 +388,12 @@ namespace RogueCastle
 				switch (State)
 				{
 				case 0:
-					RunLogicBlock(true, m_generalBasicLB, new int[]
-					{
-						10,
-						10,
-						75,
-						5
-					});
+					RunLogicBlock(true, m_generalBasicLB, 10, 10, 75, 5);
 					break;
 				case 1:
 				case 2:
 				case 3:
-					RunLogicBlock(true, m_generalBasicLB, new int[]
-					{
-						45,
-						0,
-						0,
-						55
-					});
+					RunLogicBlock(true, m_generalBasicLB, 45, 0, 0, 55);
 					return;
 				default:
 					return;
@@ -535,24 +407,12 @@ namespace RogueCastle
 				switch (State)
 				{
 				case 0:
-					RunLogicBlock(true, m_generalAdvancedLB, new int[]
-					{
-						10,
-						10,
-						75,
-						5
-					});
+					RunLogicBlock(true, m_generalAdvancedLB, 10, 10, 75, 5);
 					break;
 				case 1:
 				case 2:
 				case 3:
-					RunLogicBlock(true, m_generalAdvancedLB, new int[]
-					{
-						45,
-						0,
-						0,
-						55
-					});
+					RunLogicBlock(true, m_generalAdvancedLB, 45, 0, 0, 55);
 					return;
 				default:
 					return;
@@ -566,24 +426,12 @@ namespace RogueCastle
 				switch (State)
 				{
 				case 0:
-					RunLogicBlock(true, m_generalExpertLB, new int[]
-					{
-						10,
-						10,
-						75,
-						5
-					});
+					RunLogicBlock(true, m_generalExpertLB, 10, 10, 75, 5);
 					break;
 				case 1:
 				case 2:
 				case 3:
-					RunLogicBlock(true, m_generalExpertLB, new int[]
-					{
-						45,
-						0,
-						0,
-						55
-					});
+					RunLogicBlock(true, m_generalExpertLB, 45, 0, 0, 55);
 					return;
 				default:
 					return;
@@ -602,13 +450,7 @@ namespace RogueCastle
 				case 3:
 					if (!IsNeo)
 					{
-						RunLogicBlock(true, m_generalMiniBossLB, new int[]
-						{
-							45,
-							0,
-							0,
-							55
-						});
+						RunLogicBlock(true, m_generalMiniBossLB, 45, 0, 0, 55);
 						return;
 					}
 					break;
@@ -619,17 +461,14 @@ namespace RogueCastle
 			else if (IsNeo)
 			{
 				AnimationDelay = 0.1f;
-				RunLogicBlock(true, m_generalNeoLB, new int[]
-				{
-					100
-				});
+				RunLogicBlock(true, m_generalNeoLB, 100);
 			}
 		}
 		public EnemyObj_Blob(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base("EnemyBlobIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
 		{
 			MainBlob = true;
 			TintablePart = _objectList[0];
-			PlayAnimation(true);
+			PlayAnimation();
 			m_invincibleCounter = 0.5f;
 			Type = 2;
 		}
@@ -694,7 +533,7 @@ namespace RogueCastle
 			{
 				enemyObj_Blob.ChangeSprite("EnemyBlobAir_Character");
 			}
-			enemyObj_Blob.PlayAnimation(true);
+			enemyObj_Blob.PlayAnimation();
 			if (LevelEV.SHOW_ENEMY_RADII)
 			{
 				enemyObj_Blob.InitializeDebugRadii();
@@ -731,7 +570,7 @@ namespace RogueCastle
 				enemyObj_EarthWizard.AccelerationX += m_target.EnemyKnockBack.X + num;
 			}
 			enemyObj_EarthWizard.AccelerationY += -(m_target.EnemyKnockBack.Y + num2);
-			enemyObj_EarthWizard.PlayAnimation(true);
+			enemyObj_EarthWizard.PlayAnimation();
 			if (LevelEV.SHOW_ENEMY_RADII)
 			{
 				enemyObj_EarthWizard.InitializeDebugRadii();
@@ -751,7 +590,7 @@ namespace RogueCastle
 				if (!m_currentActiveLB.IsActive && m_isTouchingGround && SpriteName != "EnemyBlobBossIdle_Character")
 				{
 					ChangeSprite("EnemyBlobBossIdle_Character");
-					PlayAnimation(true);
+					PlayAnimation();
 				}
 			}
 			else
@@ -763,7 +602,7 @@ namespace RogueCastle
 				if (!m_currentActiveLB.IsActive && m_isTouchingGround && SpriteName != "EnemyBlobIdle_Character")
 				{
 					ChangeSprite("EnemyBlobIdle_Character");
-					PlayAnimation(true);
+					PlayAnimation();
 				}
 			}
 			if (IsNeo)
@@ -813,7 +652,7 @@ namespace RogueCastle
 								m_flipTween.StopTween(false);
 							}
 							ScaleX = ScaleY;
-							CreateBlob(Difficulty, NumHits, false);
+							CreateBlob(Difficulty, NumHits);
 							Scale = new Vector2(ScaleX * BlobSizeChange.X, ScaleY * BlobSizeChange.Y);
 							Speed *= BlobSpeedChange;
 							if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
@@ -836,7 +675,7 @@ namespace RogueCastle
 				}
 				if (NumHits <= 0)
 				{
-					Kill(true);
+					Kill();
 				}
 			}
 		}
@@ -866,28 +705,20 @@ namespace RogueCastle
 				if (((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1) || (blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1)) && !m_bossVersionKilled)
 				{
 					Game.PlayerStats.BlobBossBeaten = true;
-					SoundManager.StopMusic(0f);
+					SoundManager.StopMusic();
 					m_bossVersionKilled = true;
 					m_target.LockControls();
 					m_levelScreen.PauseScreen();
 					m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
 					m_levelScreen.RunWhiteSlashEffect();
-					Tween.RunFunction(1f, this, "Part2", new object[0]);
+					Tween.RunFunction(1f, this, "Part2");
 					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
 					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Eyeball_Freeze");
 					GameUtil.UnlockAchievement("FEAR_OF_SLIME");
 					if (IsNeo)
 					{
-						Tween.To(m_target.AttachedLevel.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-						{
-							"Zoom",
-							"1",
-							"X",
-							m_target.X.ToString(),
-							"Y",
-							m_target.Y.ToString()
-						});
-						Tween.AddEndHandlerToLastTween(this, "LockCamera", new object[0]);
+						Tween.To(m_target.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "Zoom", "1", "X", m_target.X.ToString(), "Y", m_target.Y.ToString());
+						Tween.AddEndHandlerToLastTween(this, "LockCamera");
 						return;
 					}
 				}
@@ -915,11 +746,11 @@ namespace RogueCastle
 			{
 				if (!current.IsKilled)
 				{
-					current.Kill(true);
+					current.Kill();
 				}
 			}
 			SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Blob_Death");
-			base.Kill(true);
+			base.Kill();
 			if (!IsNeo)
 			{
 				List<int> list = new List<int>();
@@ -935,37 +766,22 @@ namespace RogueCastle
 				{
 					list.Add(2);
 				}
-				CDGMath.Shuffle<int>(list);
+				CDGMath.Shuffle(list);
 				float num = 0f;
 				for (int l = 0; l < list.Count; l++)
 				{
 					Vector2 position = Position;
 					if (list[l] == 0)
 					{
-						Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", new object[]
-						{
-							position,
-							1,
-							10
-						});
+						Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 1, 10);
 					}
 					else if (list[l] == 1)
 					{
-						Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", new object[]
-						{
-							position,
-							10,
-							100
-						});
+						Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 10, 100);
 					}
 					else
 					{
-						Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", new object[]
-						{
-							position,
-							11,
-							500
-						});
+						Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 11, 500);
 					}
 				}
 			}

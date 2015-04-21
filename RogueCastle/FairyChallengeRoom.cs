@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -80,41 +80,22 @@ namespace RogueCastle
 			m_cutsceneRunning = true;
 			SoundManager.StopMusic(0.5f);
 			m_boss.ChangeSprite("EnemyFairyGhostBossIdle_Character");
-			m_boss.PlayAnimation(true);
+			m_boss.PlayAnimation();
 			Player.AttachedLevel.UpdateCamera();
 			m_startingCamPos = Player.AttachedLevel.Camera.Position;
 			Player.LockControls();
 			Player.AttachedLevel.RunCinematicBorders(6f);
 			Player.AttachedLevel.CameraLockedToPlayer = false;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				m_boss.Y.ToString(),
-				"X",
-				m_boss.X.ToString()
-			});
-			Tween.RunFunction(1.2f, this, "DisplayBossTitle", new object[]
-			{
-				Game.PlayerStats.PlayerName + " VS",
-				m_boss.Name,
-				"Intro2"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X", m_boss.X.ToString());
+			Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
 			base.OnEnter();
 			Player.GetChildAt(10).TextureColor = Color.White;
 			m_bossChest.ForcedItemType = 16;
 		}
 		public void Intro2()
 		{
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0.5",
-				"Y",
-				m_startingCamPos.Y.ToString(),
-				"X",
-				m_startingCamPos.X.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "EndCutscene", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y", m_startingCamPos.Y.ToString(), "X", m_startingCamPos.X.ToString());
+			Tween.AddEndHandlerToLastTween(this, "EndCutscene");
 		}
 		public void EndCutscene()
 		{

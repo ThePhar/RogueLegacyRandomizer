@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -55,18 +55,9 @@ namespace RogueCastle
 				m_player = (objList[0] as PlayerObj);
 				if (m_playerFallSound == null)
 				{
-					m_playerFallSound = new FrameSoundObj(m_player, 14, new string[]
-					{
-						"Player_Death_BodyFall"
-					});
-					m_playerSwordSpinSound = new FrameSoundObj(m_player, 2, new string[]
-					{
-						"Player_Death_SwordTwirl"
-					});
-					m_playerSwordFallSound = new FrameSoundObj(m_player, 9, new string[]
-					{
-						"Player_Death_SwordLand"
-					});
+					m_playerFallSound = new FrameSoundObj(m_player, 14, "Player_Death_BodyFall");
+					m_playerSwordSpinSound = new FrameSoundObj(m_player, 2, "Player_Death_SwordTwirl");
+					m_playerSwordFallSound = new FrameSoundObj(m_player, 9, "Player_Death_SwordLand");
 				}
 				m_enemyList = (objList[1] as List<EnemyObj>);
 				m_coinsCollected = (int)objList[2];
@@ -137,13 +128,7 @@ namespace RogueCastle
 			m_playerFrame.Y -= 120f;
 			m_playerFrame.SetPortrait(Game.PlayerStats.HeadPiece, Game.PlayerStats.ShoulderPiece, Game.PlayerStats.ChestPiece);
 			m_playerFrame.UpdateData();
-			Tween.To(m_playerFrame, 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"4",
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
 			FamilyTreeNode item = new FamilyTreeNode
 			{
 				Name = Game.PlayerStats.PlayerName,
@@ -180,12 +165,7 @@ namespace RogueCastle
 			{
 				Game.PlayerStats.SpecialItem = 0;
 			}
-			(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData,
-				SaveType.Lineage,
-				SaveType.MapData
-			});
+			(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.MapData);
 			(ScreenManager.Game as Game).SaveManager.SaveAllFileTypes(true);
 			Game.PlayerStats.Traits = traits;
 			if (Game.PlayerStats.TimesDead >= 20)
@@ -204,66 +184,19 @@ namespace RogueCastle
 			m_playerGhost.Opacity = 0f;
 			m_spotlight.Opacity = 0f;
 			m_playerGhost.Position = new Vector2(m_player.X - m_playerGhost.Width / 2, m_player.Bounds.Top - 20);
-			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Ghost"
-			});
-			Tween.To(m_playerGhost, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Opacity",
-				"0.4"
-			});
-			Tween.By(m_playerGhost, 2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Y",
-				"-150"
-			});
+			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
+			Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
+			Tween.By(m_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
 			m_playerGhost.Opacity = 0.4f;
-			Tween.To(m_playerGhost, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"4",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "4", "Opacity", "0");
 			m_playerGhost.Opacity = 0f;
-			m_playerGhost.PlayAnimation(true);
-			Tween.To(this, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"1"
-			});
-			Tween.To(m_spotlight, 0.1f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"Opacity",
-				"1"
-			});
-			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_Spotlight"
-			});
-			Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", new object[]
-			{
-				"GameOverStinger",
-				false,
-				0.5f
-			});
-			Tween.To(Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_player.AbsX.ToString(),
-				"Y",
-				(m_player.Bounds.Bottom - 10).ToString(),
-				"Zoom",
-				"1"
-			});
-			Tween.RunFunction(2f, m_player, "RunDeathAnimation1", new object[0]);
+			m_playerGhost.PlayAnimation();
+			Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
+			Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
+			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
+			Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", "GameOverStinger", false, 0.5f);
+			Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_player.AbsX.ToString(), "Y", (m_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
+			Tween.RunFunction(2f, m_player, "RunDeathAnimation1");
 			if (Game.PlayerStats.Traits.X == 13f || Game.PlayerStats.Traits.Y == 13f)
 			{
 				(m_dialoguePlate.GetChildAt(2) as TextObj).Text = "#)!(%*#@!%^";
@@ -274,21 +207,9 @@ namespace RogueCastle
 				(m_dialoguePlate.GetChildAt(2) as TextObj).Text = GameEV.GAME_HINTS[CDGMath.RandomInt(0, GameEV.GAME_HINTS.Length - 1)];
 			}
 			(m_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + Game.PlayerStats.PlayerName + "'s Parting Words";
-			Tween.To(m_dialoguePlate, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"2",
-				"Opacity",
-				"1"
-			});
-			Tween.RunFunction(4f, this, "DropStats", new object[0]);
-			Tween.To(m_continueText, 0.4f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"4",
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
+			Tween.RunFunction(4f, this, "DropStats");
+			Tween.To(m_continueText, 0.4f, Linear.EaseNone, "delay", "4", "Opacity", "1");
 			base.OnEnter();
 		}
 		public override void OnExit()
@@ -334,14 +255,8 @@ namespace RogueCastle
 					{
 						enemyObj_Eyeball.ChangeToBossPupil();
 					}
-					Tween.To(current, 0f, new Easing(Tween.EaseNone), new string[]
-					{
-						"delay",
-						num.ToString(),
-						"Opacity",
-						"1"
-					});
-					Tween.RunFunction(num, this, "PlayEnemySound", new object[0]);
+					Tween.To(current, 0f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "1");
+					Tween.RunFunction(num, this, "PlayEnemySound");
 					topLeftCorner.X += 25f;
 					if (current.X + current.Width > Camera.TopLeftCorner.X + 200f + 950f)
 					{
@@ -420,7 +335,7 @@ namespace RogueCastle
 				}
 				else
 				{
-					(ScreenManager as RCScreenManager).DisplayScreen(3, true, null);
+					(ScreenManager as RCScreenManager).DisplayScreen(3, true);
 					m_lockControls = true;
 				}
 			}

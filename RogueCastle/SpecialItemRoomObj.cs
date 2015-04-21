@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -157,12 +157,9 @@ namespace RogueCastle
 						RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 						rCScreenManager.DialogueScreen.SetDialogue("Special Item Prayer");
 						rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-						rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "TakeItem", new object[0]);
-						rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", new object[]
-						{
-							"Canceling Selection"
-						});
-						rCScreenManager.DisplayScreen(13, true, null);
+						rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "TakeItem");
+						rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", "Canceling Selection");
+						rCScreenManager.DisplayScreen(13, true);
 					}
 				}
 				else
@@ -184,7 +181,7 @@ namespace RogueCastle
 			if (ItemType == 8)
 			{
 				Player.GetChildAt(10).Visible = true;
-				Player.PlayAnimation(true);
+				Player.PlayAnimation();
 			}
 			else
 			{
@@ -199,13 +196,9 @@ namespace RogueCastle
 			list.Add(new Vector2(m_pedestal.X, m_pedestal.Y - m_pedestal.Height / 2f));
 			list.Add(5);
 			list.Add(new Vector2(Game.PlayerStats.SpecialItem, 0f));
-			(Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData,
-				SaveType.MapData
-			});
+			(Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.MapData);
 			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list);
-			Tween.RunFunction(0f, Player, "RunGetItemAnimation", new object[0]);
+			Tween.RunFunction(0f, Player, "RunGetItemAnimation");
 		}
 		public override void Dispose()
 		{

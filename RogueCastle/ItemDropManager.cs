@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -70,12 +70,7 @@ namespace RogueCastle
 			itemDropObj.AnimationDelay = 0.05f;
 			itemDropObj.Opacity = 1f;
 			itemDropObj.CollectionCounter = 0.2f;
-			SoundManager.Play3DSound(itemDropObj, Game.ScreenManager.Player, new string[]
-			{
-				"CoinCollect1",
-				"CoinCollect2",
-				"CoinCollect3"
-			});
+			SoundManager.Play3DSound(itemDropObj, Game.ScreenManager.Player, "CoinCollect1", "CoinCollect2", "CoinCollect3");
 		}
 		public void DropItemWide(Vector2 position, int dropType, float amount)
 		{

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -142,9 +142,9 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherIdle_Character"));
+			logicSet.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			ProjectileData projectileData = new ProjectileData(this)
 			{
 				SpriteName = "ArrowProjectile_Sprite",
@@ -160,286 +160,169 @@ namespace RogueCastle
 				FollowArc = true
 			};
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-20f, -20f);
-			logicSet2.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet2.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet2.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet2.AddAction(new DelayLogicAction(m_fireDelay));
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet2.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet2.AddAction(new DelayLogicAction(0.5f));
+			logicSet2.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet2.AddAction(new DelayLogicAction(0.5f));
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-20f, -20f);
-			logicSet3.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet3.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet3.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-20f, -20f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-50f, -50f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet3.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet3.AddAction(new DelayLogicAction(0.5f));
+			logicSet3.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet3.AddAction(new DelayLogicAction(0.5f));
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-35f, -35f);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet4.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-35f, -35f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-15f, -15f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-55f, -55f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet4.AddAction(new DelayLogicAction(0.5f));
+			logicSet4.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet4.AddAction(new DelayLogicAction(0.5f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-50f, -50f);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet5.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-50f, -50f);
-			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet5.AddAction(new DelayLogicAction(0.5f));
+			logicSet5.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet5.AddAction(new DelayLogicAction(0.5f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-50f, -50f);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet6.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-50f, -50f);
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-75f, -75f);
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet6.AddAction(new DelayLogicAction(0.5f));
+			logicSet6.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet6.AddAction(new DelayLogicAction(0.5f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-60f, -60f);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet7.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet7.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-60f, -60f);
-			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-75f, -75f);
-			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet7.AddAction(new DelayLogicAction(0.5f));
+			logicSet7.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet7.AddAction(new DelayLogicAction(0.5f));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-70f, -70f);
-			logicSet8.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet8.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet8.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet8.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-70f, -70f);
-			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet8.AddAction(new DelayLogicAction(0.5f));
+			logicSet8.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet8.AddAction(new DelayLogicAction(0.5f));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-55f, -55f);
-			logicSet9.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet9.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-55f, -55f);
-			logicSet9.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet9.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-85f, -85f);
-			logicSet9.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet9.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet9.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet9.AddAction(new DelayLogicAction(0.5f));
+			logicSet9.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet9.AddAction(new DelayLogicAction(0.5f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet10 = new LogicSet(this);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false), Types.Sequence.Serial);
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "AngleArcher", new object[]
-			{
-				projectileData.Angle.X
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Load"
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(m_fireDelay, false), Types.Sequence.Serial);
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
+			logicSet10.AddAction(new DelayLogicAction(m_fireDelay));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-85f, -85f);
-			logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-95f, -95f);
-			logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"SkeletonArcher_Attack_01",
-				"SkeletonArcher_Attack_02",
-				"SkeletonArcher_Attack_03"
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet8,
-				logicSet5
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet3,
-				logicSet9,
-				logicSet6
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet4,
-				logicSet10,
-				logicSet7
-			});
+			logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01", "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
+			logicSet10.AddAction(new DelayLogicAction(0.5f));
+			logicSet10.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
+			logicSet10.AddAction(new DelayLogicAction(0.5f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet8, logicSet5);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet3, logicSet9, logicSet6);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet4, logicSet10, logicSet7);
 			projectileData.Dispose();
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
@@ -461,31 +344,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					20,
-					15,
-					15,
-					50
-				});
+				RunLogicBlock(false, m_generalBasicLB, 20, 15, 15, 50);
 				return;
 			case 2:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					20,
-					15,
-					50,
-					15
-				});
+				RunLogicBlock(false, m_generalBasicLB, 20, 15, 50, 15);
 				return;
 			case 3:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					20,
-					50,
-					15,
-					15
-				});
+				RunLogicBlock(false, m_generalBasicLB, 20, 50, 15, 15);
 				return;
 			default:
 				return;
@@ -505,31 +370,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(false, m_generalAdvancedLB, new int[]
-				{
-					20,
-					15,
-					15,
-					50
-				});
+				RunLogicBlock(false, m_generalAdvancedLB, 20, 15, 15, 50);
 				return;
 			case 2:
-				RunLogicBlock(false, m_generalAdvancedLB, new int[]
-				{
-					20,
-					15,
-					50,
-					15
-				});
+				RunLogicBlock(false, m_generalAdvancedLB, 20, 15, 50, 15);
 				return;
 			case 3:
-				RunLogicBlock(false, m_generalAdvancedLB, new int[]
-				{
-					20,
-					50,
-					15,
-					15
-				});
+				RunLogicBlock(false, m_generalAdvancedLB, 20, 50, 15, 15);
 				return;
 			default:
 				return;
@@ -549,31 +396,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(false, m_generalExpertLB, new int[]
-				{
-					20,
-					15,
-					15,
-					50
-				});
+				RunLogicBlock(false, m_generalExpertLB, 20, 15, 15, 50);
 				return;
 			case 2:
-				RunLogicBlock(false, m_generalExpertLB, new int[]
-				{
-					20,
-					50,
-					15,
-					15
-				});
+				RunLogicBlock(false, m_generalExpertLB, 20, 50, 15, 15);
 				return;
 			case 3:
-				RunLogicBlock(false, m_generalExpertLB, new int[]
-				{
-					20,
-					15,
-					50,
-					15
-				});
+				RunLogicBlock(false, m_generalExpertLB, 20, 15, 50, 15);
 				return;
 			default:
 				return;
@@ -593,31 +422,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					20,
-					15,
-					15,
-					50
-				});
+				RunLogicBlock(false, m_generalBasicLB, 20, 15, 15, 50);
 				return;
 			case 2:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					20,
-					15,
-					50,
-					15
-				});
+				RunLogicBlock(false, m_generalBasicLB, 20, 15, 50, 15);
 				return;
 			case 3:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					20,
-					50,
-					15,
-					15
-				});
+				RunLogicBlock(false, m_generalBasicLB, 20, 50, 15, 15);
 				return;
 			default:
 				return;

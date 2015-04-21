@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -48,7 +48,7 @@ namespace RogueCastle
 			m_king = new KingObj("King_Sprite");
 			m_king.OutlineWidth = 2;
 			m_king.AnimationDelay = 0.1f;
-			m_king.PlayAnimation(true);
+			m_king.PlayAnimation();
 			m_king.IsWeighted = false;
 			m_king.IsCollidable = true;
 			m_king.Scale = new Vector2(2f, 2f);
@@ -78,21 +78,13 @@ namespace RogueCastle
 			{
 				m_displayText = true;
 				Tween.StopAllContaining(m_tutorialText, false);
-				Tween.To(m_tutorialText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
+				Tween.To(m_tutorialText, 0.5f, Tween.EaseNone, "Opacity", "1");
 			}
 			else if (m_displayText && CDGMath.DistanceBetweenPts(Player.Position, m_king.Position) > 200f)
 			{
 				m_displayText = false;
 				Tween.StopAllContaining(m_tutorialText, false);
-				Tween.To(m_tutorialText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
+				Tween.To(m_tutorialText, 0.5f, Tween.EaseNone, "Opacity", "0");
 			}
 			if (Player.X > m_king.X - 100f)
 			{
@@ -101,7 +93,7 @@ namespace RogueCastle
 			if (!m_kingKilled && m_king.WasHit)
 			{
 				m_kingKilled = true;
-				Game.ScreenManager.DisplayScreen(27, false, null);
+				Game.ScreenManager.DisplayScreen(27, false);
 			}
 			base.Update(gameTime);
 		}

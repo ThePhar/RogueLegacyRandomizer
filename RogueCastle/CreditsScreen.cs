@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -110,20 +110,20 @@ namespace RogueCastle
 			m_prop2.Position = new Vector2(500f, 330f);
 			m_prop2.Scale = new Vector2(2f, 2f);
 			m_prop2.AnimationDelay = 0.1f;
-			m_prop2.PlayAnimation(true);
+			m_prop2.PlayAnimation();
 			m_prop3 = new ObjContainer("CastleAssetCandle1_Character");
 			m_prop3.Position = new Vector2(1000f, 440f);
 			m_prop3.Scale = new Vector2(2f, 2f);
 			m_playerSprite = new ObjContainer("PlayerWalking_Character");
 			m_playerSprite.Position = new Vector2(640f, 400f);
-			m_playerSprite.PlayAnimation(true);
+			m_playerSprite.PlayAnimation();
 			m_playerSprite.AnimationDelay = 0.1f;
 			m_playerSprite.Flip = SpriteEffects.FlipHorizontally;
 			m_playerSprite.OutlineWidth = 2;
 			Color textureColor = new Color(251, 156, 172);
 			m_wifeSprite = new ObjContainer("PlayerWalking_Character");
 			m_wifeSprite.Position = new Vector2(-200f, 400f);
-			m_wifeSprite.PlayAnimation(true);
+			m_wifeSprite.PlayAnimation();
 			m_wifeSprite.AnimationDelay = 0.1f;
 			m_wifeSprite.OutlineWidth = 2;
 			m_wifeSprite.Scale = new Vector2(2f, 2f);
@@ -134,7 +134,7 @@ namespace RogueCastle
 			m_wifeSprite.GetChildAt(11).TextureColor = new Color(11, 172, 239);
 			m_childSprite1 = new ObjContainer("PlayerWalking_Character");
 			m_childSprite1.Position = new Vector2(-270f, 415f);
-			m_childSprite1.PlayAnimation(true);
+			m_childSprite1.PlayAnimation();
 			m_childSprite1.AnimationDelay = 0.1f;
 			m_childSprite1.OutlineWidth = 2;
 			m_childSprite1.Scale = new Vector2(1.2f, 1.2f);
@@ -145,7 +145,7 @@ namespace RogueCastle
 			m_childSprite1.GetChildAt(11).TextureColor = new Color(11, 172, 239);
 			m_childSprite2 = new ObjContainer("PlayerWalking_Character");
 			m_childSprite2.Position = new Vector2(-330f, 420f);
-			m_childSprite2.PlayAnimation(true);
+			m_childSprite2.PlayAnimation();
 			m_childSprite2.AnimationDelay = 0.1f;
 			m_childSprite2.OutlineWidth = 2;
 			m_childSprite2.Scale = new Vector2(1f, 1f);
@@ -246,7 +246,7 @@ namespace RogueCastle
 		{
 			m_creditsNameList = new List<TextObj>();
 			m_creditsTitleList = new List<TextObj>();
-			m_backgroundStrings = new string[]
+			m_backgroundStrings = new[]
 			{
 				"Garden",
 				"Tower",
@@ -254,7 +254,7 @@ namespace RogueCastle
 				"Outside",
 				"Manor"
 			};
-			string[] array = new string[]
+			string[] array = new[]
 			{
 				"Cellar Door Games",
 				"Teddy Lee",
@@ -300,7 +300,7 @@ namespace RogueCastle
 				"",
 				"Thanks to all our fans for their support!"
 			};
-			string[] array2 = new string[]
+			string[] array2 = new[]
 			{
 				"Developed by",
 				"Design & Story",
@@ -386,33 +386,15 @@ namespace RogueCastle
 			m_allowExit = false;
 			float num = Game.PlayerStats.TotalHoursPlayed + Game.GetTotalGameTimeHours();
 			int num2 = (int)((num - (int)num) * 60f);
-			Console.WriteLine(string.Concat(new object[]
-			{
-				"Hours played: ",
-				num,
-				" minutes: ",
-				num2
-			}));
+			Console.WriteLine(string.Concat("Hours played: ", num, " minutes: ", num2));
 			m_totalDeaths.Text = "Total Children: " + Game.PlayerStats.TimesDead.ToString();
 			if (num2 < 10)
 			{
-				m_totalPlayTime.Text = string.Concat(new object[]
-				{
-					"Time Played - ",
-					(int)num,
-					":0",
-					num2
-				});
+				m_totalPlayTime.Text = string.Concat("Time Played - ", (int)num, ":0", num2);
 			}
 			else
 			{
-				m_totalPlayTime.Text = string.Concat(new object[]
-				{
-					"Time Played - ",
-					(int)num,
-					":",
-					num2
-				});
+				m_totalPlayTime.Text = string.Concat("Time Played - ", (int)num, ":", num2);
 			}
 			Camera.Position = Vector2.Zero;
 			m_displayingContinueText = false;
@@ -432,50 +414,22 @@ namespace RogueCastle
 			m_scrollDistance = -(m_creditsNameList[m_creditsNameList.Count - 1].Y + 100f);
 			foreach (TextObj current in m_creditsTitleList)
 			{
-				Tween.By(current, 75f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Y",
-					m_scrollDistance.ToString()
-				});
+				Tween.By(current, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
 			}
 			foreach (TextObj current2 in m_creditsNameList)
 			{
-				Tween.By(current2, 75f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Y",
-					m_scrollDistance.ToString()
-				});
+				Tween.By(current2, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
 			}
-			Tween.By(m_teddy, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_kenny, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_glauber, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_gordon, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_judson, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
+			Tween.By(m_teddy, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_kenny, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_glauber, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_gordon, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_judson, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
 			if (!IsEnding)
 			{
 				m_sideBorderLeft.X += 200f;
 				m_sideBorderRight.X -= 200f;
-				Tween.RunFunction(76f, this, "ResetScroll", new object[0]);
+				Tween.RunFunction(76f, this, "ResetScroll");
 			}
 			base.OnEnter();
 		}
@@ -532,25 +486,11 @@ namespace RogueCastle
 			if (Game.PlayerStats.Class == 16)
 			{
 				m_playerSprite.GetChildAt(0).Visible = true;
-				m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat(new object[]
-				{
-					"Player",
-					animationType,
-					"Head",
-					6,
-					"_Sprite"
-				}));
+				m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat("Player", animationType, "Head", 6, "_Sprite"));
 			}
 			if (Game.PlayerStats.Class == 17)
 			{
-				m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat(new object[]
-				{
-					"Player",
-					animationType,
-					"Head",
-					7,
-					"_Sprite"
-				}));
+				m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat("Player", animationType, "Head", 7, "_Sprite"));
 			}
 			if (!Game.PlayerStats.IsFemale)
 			{
@@ -623,7 +563,7 @@ namespace RogueCastle
 			text4 = text4.Remove(startIndex, 1);
 			text4 = text4.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
 			m_playerSprite.GetChildAt(3).ChangeSprite(text4);
-			m_playerSprite.PlayAnimation(true);
+			m_playerSprite.PlayAnimation();
 			m_playerSprite.CalculateBounds();
 			m_playerSprite.Y = 435f - (m_playerSprite.Bounds.Bottom - m_playerSprite.Y);
 		}
@@ -657,48 +597,20 @@ namespace RogueCastle
 			foreach (TextObj current in m_creditsTitleList)
 			{
 				current.Y += -m_scrollDistance;
-				Tween.By(current, 75f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Y",
-					m_scrollDistance.ToString()
-				});
+				Tween.By(current, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
 			}
 			foreach (TextObj current2 in m_creditsNameList)
 			{
 				current2.Y += -m_scrollDistance;
-				Tween.By(current2, 75f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Y",
-					m_scrollDistance.ToString()
-				});
+				Tween.By(current2, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
 				PositionTeam(current2.Text, new Vector2(current2.Bounds.Left - 50, current2.Y));
 			}
-			Tween.By(m_teddy, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_kenny, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_glauber, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_gordon, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.By(m_judson, 75f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Y",
-				m_scrollDistance.ToString()
-			});
-			Tween.RunFunction(76f, this, "ResetScroll", new object[0]);
+			Tween.By(m_teddy, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_kenny, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_glauber, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_gordon, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.By(m_judson, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
+			Tween.RunFunction(76f, this, "ResetScroll");
 		}
 		public override void HandleInput()
 		{
@@ -707,18 +619,14 @@ namespace RogueCastle
 				if (m_displayingContinueText)
 				{
 					Tween.StopAll(false);
-					(ScreenManager as RCScreenManager).DisplayScreen(3, true, null);
+					(ScreenManager as RCScreenManager).DisplayScreen(3, true);
 				}
 				else
 				{
 					m_displayingContinueText = true;
 					Tween.StopAllContaining(m_continueText, false);
-					Tween.To(m_continueText, 0.5f, new Easing(Tween.EaseNone), new string[]
-					{
-						"Opacity",
-						"1"
-					});
-					Tween.RunFunction(4f, this, "HideContinueText", new object[0]);
+					Tween.To(m_continueText, 0.5f, Tween.EaseNone, "Opacity", "1");
+					Tween.RunFunction(4f, this, "HideContinueText");
 				}
 			}
 			base.HandleInput();
@@ -726,13 +634,7 @@ namespace RogueCastle
 		public void HideContinueText()
 		{
 			m_displayingContinueText = false;
-			Tween.To(m_continueText, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_continueText, 0.5f, Tween.EaseNone, "delay", "0", "Opacity", "0");
 		}
 		private void UpdateBackground(float elapsedTime)
 		{
@@ -800,20 +702,9 @@ namespace RogueCastle
 		}
 		public void SwapBackground(string levelType)
 		{
-			Tween.By(m_sideBorderLeft, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"200"
-			});
-			Tween.By(m_sideBorderRight, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"-200"
-			});
-			Tween.AddEndHandlerToLastTween(this, "PerformSwap", new object[]
-			{
-				levelType
-			});
+			Tween.By(m_sideBorderLeft, 0.5f, Tween.EaseNone, "X", "200");
+			Tween.By(m_sideBorderRight, 0.5f, Tween.EaseNone, "X", "-200");
+			Tween.AddEndHandlerToLastTween(this, "PerformSwap", levelType);
 		}
 		public void PerformSwap(string levelType)
 		{
@@ -849,27 +740,11 @@ namespace RogueCastle
 										m_prop1.Visible = false;
 										m_prop2.Visible = false;
 										m_prop3.Visible = false;
-										Tween.By(m_manor, 3f, new Easing(Tween.EaseNone), new string[]
-										{
-											"X",
-											"300"
-										});
-										Tween.By(m_bgOutside, 3f, new Easing(Tween.EaseNone), new string[]
-										{
-											"X",
-											"300"
-										});
-										Tween.By(m_playerSprite, 3.5f, new Easing(Tween.EaseNone), new string[]
-										{
-											"X",
-											"-150"
-										});
-										Tween.AddEndHandlerToLastTween(this, "CreditsComplete", new object[0]);
-										Tween.By(m_sideBorderTop, 2.5f, new Easing(Tween.EaseNone), new string[]
-										{
-											"Y",
-											"-500"
-										});
+										Tween.By(m_manor, 3f, Tween.EaseNone, "X", "300");
+										Tween.By(m_bgOutside, 3f, Tween.EaseNone, "X", "300");
+										Tween.By(m_playerSprite, 3.5f, Tween.EaseNone, "X", "-150");
+										Tween.AddEndHandlerToLastTween(this, "CreditsComplete");
+										Tween.By(m_sideBorderTop, 2.5f, Tween.EaseNone, "Y", "-500");
 									}
 								}
 								else
@@ -904,7 +779,7 @@ namespace RogueCastle
 								m_border3.ChangeSprite("GardenBorder_Sprite");
 								m_prop1.ChangeSprite("GardenFloatingRock3_Sprite");
 								m_prop2.ChangeSprite("GardenFairy_Character");
-								m_prop2.PlayAnimation(true);
+								m_prop2.PlayAnimation();
 								m_prop2.AnimationDelay = 0.1f;
 								m_prop3.ChangeSprite("GardenLampPost1_Character");
 							}
@@ -954,69 +829,31 @@ namespace RogueCastle
 					m_border3.ChangeSprite("CastleBorder_Sprite");
 					m_prop1.ChangeSprite("CastleAssetWindow1_Sprite");
 					m_prop2.ChangeSprite("CastleAssetBackTorch_Character");
-					m_prop2.PlayAnimation(true);
+					m_prop2.PlayAnimation();
 					m_prop2.AnimationDelay = 0.1f;
 					m_prop3.ChangeSprite("CastleAssetCandle1_Character");
 				}
 			}
 			if (levelType != "Manor")
 			{
-				Tween.By(m_sideBorderLeft, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"X",
-					"-200"
-				});
-				Tween.By(m_sideBorderRight, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"X",
-					"200"
-				});
+				Tween.By(m_sideBorderLeft, 0.5f, Tween.EaseNone, "X", "-200");
+				Tween.By(m_sideBorderRight, 0.5f, Tween.EaseNone, "X", "200");
 				return;
 			}
-			Tween.By(m_sideBorderLeft, 3f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"-800"
-			});
-			Tween.By(m_sideBorderRight, 3f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"800"
-			});
+			Tween.By(m_sideBorderLeft, 3f, Tween.EaseNone, "X", "-800");
+			Tween.By(m_sideBorderRight, 3f, Tween.EaseNone, "X", "800");
 		}
 		public void CreditsComplete()
 		{
 			SetPlayerStyle("Idle");
-			Tween.RunFunction(0.5f, this, "SetPlayerStyle", new object[]
-			{
-				"LevelUp"
-			});
-			Tween.RunFunction(0.6f, m_playerSprite, "PlayAnimation", new object[]
-			{
-				false
-			});
-			Tween.To(m_thanksForPlayingText, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_totalDeaths, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.2",
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_totalPlayTime, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.4",
-				"Opacity",
-				"1"
-			});
-			Tween.RunFunction(1f, this, "BringWife", new object[0]);
-			Tween.RunFunction(1.1f, this, "BringChild1", new object[0]);
-			Tween.RunFunction(3f, this, "BringChild2", new object[0]);
+			Tween.RunFunction(0.5f, this, "SetPlayerStyle", "LevelUp");
+			Tween.RunFunction(0.6f, m_playerSprite, "PlayAnimation", false);
+			Tween.To(m_thanksForPlayingText, 2f, Tween.EaseNone, "Opacity", "1");
+			Tween.To(m_totalDeaths, 2f, Tween.EaseNone, "delay", "0.2", "Opacity", "1");
+			Tween.To(m_totalPlayTime, 2f, Tween.EaseNone, "delay", "0.4", "Opacity", "1");
+			Tween.RunFunction(1f, this, "BringWife");
+			Tween.RunFunction(1.1f, this, "BringChild1");
+			Tween.RunFunction(3f, this, "BringChild2");
 		}
 		public void BringWife()
 		{
@@ -1041,13 +878,9 @@ namespace RogueCastle
 				m_wifeSprite.GetChildAt(13).Visible = false;
 				m_wifeSprite.GetChildAt(5).Visible = false;
 			}
-			m_wifeSprite.PlayAnimation(true);
-			Tween.By(m_wifeSprite, 3f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"600"
-			});
-			Tween.AddEndHandlerToLastTween(this, "LevelUpWife", new object[0]);
+			m_wifeSprite.PlayAnimation();
+			Tween.By(m_wifeSprite, 3f, Tween.EaseNone, "X", "600");
+			Tween.AddEndHandlerToLastTween(this, "LevelUpWife");
 		}
 		public void LevelUpWife()
 		{
@@ -1100,16 +933,9 @@ namespace RogueCastle
 			m_childSprite1.GetChildAt(12).ChangeSprite("PlayerWalkingHead" + m_child1Head + "_Sprite");
 			m_childSprite1.GetChildAt(9).ChangeSprite("PlayerWalkingShoulderA" + m_child1Shoulders + "_Sprite");
 			m_childSprite1.GetChildAt(3).ChangeSprite("PlayerWalkingShoulderB" + m_child1Shoulders + "_Sprite");
-			m_childSprite1.PlayAnimation(true);
-			Tween.By(m_childSprite1, 3f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"600"
-			});
-			Tween.AddEndHandlerToLastTween(this, "LevelUpChild1", new object[]
-			{
-				flag
-			});
+			m_childSprite1.PlayAnimation();
+			Tween.By(m_childSprite1, 3f, Tween.EaseNone, "X", "600");
+			Tween.AddEndHandlerToLastTween(this, "LevelUpChild1", flag);
 		}
 		public void LevelUpChild1(bool isFemale)
 		{
@@ -1162,16 +988,9 @@ namespace RogueCastle
 			m_childSprite2.GetChildAt(12).ChangeSprite("PlayerWalkingHead" + m_child2Head + "_Sprite");
 			m_childSprite2.GetChildAt(9).ChangeSprite("PlayerWalkingShoulderA" + m_child2Shoulders + "_Sprite");
 			m_childSprite2.GetChildAt(3).ChangeSprite("PlayerWalkingShoulderB" + m_child2Shoulders + "_Sprite");
-			m_childSprite2.PlayAnimation(true);
-			Tween.By(m_childSprite2, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				"600"
-			});
-			Tween.AddEndHandlerToLastTween(this, "LevelUpChild2", new object[]
-			{
-				flag
-			});
+			m_childSprite2.PlayAnimation();
+			Tween.By(m_childSprite2, 2f, Tween.EaseNone, "X", "600");
+			Tween.AddEndHandlerToLastTween(this, "LevelUpChild2", flag);
 		}
 		public void LevelUpChild2(bool isFemale)
 		{
@@ -1198,11 +1017,7 @@ namespace RogueCastle
 			m_allowExit = true;
 			m_displayingContinueText = true;
 			Tween.StopAllContaining(m_continueText, false);
-			Tween.To(m_continueText, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_continueText, 0.5f, Tween.EaseNone, "Opacity", "1");
 		}
 		public override void Draw(GameTime gametime)
 		{

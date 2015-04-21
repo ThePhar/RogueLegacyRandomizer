@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -50,7 +50,7 @@ namespace RogueCastle
 		}
 		public override void LoadContent()
 		{
-			m_loadingText = new TextObj(null);
+			m_loadingText = new TextObj();
 			m_loadingText.Font = Game.JunicodeLargeFont;
 			m_loadingText.Text = "Building";
 			m_loadingText.Align = Types.TextAlign.Centre;
@@ -102,12 +102,8 @@ namespace RogueCastle
 			{
 				if (m_screenTypeToLoad == 27)
 				{
-					Tween.To(this, 0.05f, new Easing(Tween.EaseNone), new string[]
-					{
-						"BackBufferOpacity",
-						"1"
-					});
-					Tween.RunFunction(1f, this, "BeginThreading", new object[0]);
+					Tween.To(this, 0.05f, Tween.EaseNone, "BackBufferOpacity", "1");
+					Tween.RunFunction(1f, this, "BeginThreading");
 				}
 				else
 				{
@@ -118,46 +114,19 @@ namespace RogueCastle
 					if (!m_wipeTransition)
 					{
 						SoundManager.PlaySound("GateDrop");
-						Tween.To(m_gateSprite, 0.5f, new Easing(Tween.EaseNone), new string[]
-						{
-							"Y",
-							"0"
-						});
-						Tween.RunFunction(0.3f, m_effectPool, "LoadingGateSmokeEffect", new object[]
-						{
-							40
-						});
-						Tween.RunFunction(0.3f, typeof(SoundManager), "PlaySound", new object[]
-						{
-							"GateSlam"
-						});
-						Tween.RunFunction(0.55f, this, "ShakeScreen", new object[]
-						{
-							4,
-							true,
-							true
-						});
-						Tween.RunFunction(0.65f, this, "StopScreenShake", new object[0]);
-						Tween.RunFunction(1.5f, this, "BeginThreading", new object[0]);
+						Tween.To(m_gateSprite, 0.5f, Tween.EaseNone, "Y", "0");
+						Tween.RunFunction(0.3f, m_effectPool, "LoadingGateSmokeEffect", 40);
+						Tween.RunFunction(0.3f, typeof(SoundManager), "PlaySound", "GateSlam");
+						Tween.RunFunction(0.55f, this, "ShakeScreen", 4, true, true);
+						Tween.RunFunction(0.65f, this, "StopScreenShake");
+						Tween.RunFunction(1.5f, this, "BeginThreading");
 					}
 					else
 					{
-						Tween.By(m_blackTransitionIn, 0.15f, new Easing(Quad.EaseIn), new string[]
-						{
-							"X",
-							(-m_blackTransitionIn.X).ToString()
-						});
-						Tween.By(m_blackScreen, 0.15f, new Easing(Quad.EaseIn), new string[]
-						{
-							"X",
-							(-m_blackTransitionIn.X).ToString()
-						});
-						Tween.By(m_blackTransitionOut, 0.2f, new Easing(Quad.EaseIn), new string[]
-						{
-							"X",
-							(-m_blackTransitionIn.X).ToString()
-						});
-						Tween.AddEndHandlerToLastTween(this, "BeginThreading", new object[0]);
+						Tween.By(m_blackTransitionIn, 0.15f, Quad.EaseIn, "X", (-m_blackTransitionIn.X).ToString());
+						Tween.By(m_blackScreen, 0.15f, Quad.EaseIn, "X", (-m_blackTransitionIn.X).ToString());
+						Tween.By(m_blackTransitionOut, 0.2f, Quad.EaseIn, "X", (-m_blackTransitionIn.X).ToString());
+						Tween.AddEndHandlerToLastTween(this, "BeginThreading");
 					}
 				}
 				base.OnEnter();
@@ -166,7 +135,7 @@ namespace RogueCastle
 		public void BeginThreading()
 		{
 			Tween.StopAll(false);
-			Thread thread = new Thread(new ThreadStart(BeginLoading));
+			Thread thread = new Thread(BeginLoading);
 			if (thread.CurrentCulture.Name != "en-US")
 			{
 				thread.CurrentCulture = new CultureInfo("en-US", false);
@@ -313,10 +282,7 @@ namespace RogueCastle
 						}
 						if (!m_gameCrashed)
 						{
-							(ScreenManager.Game as Game).SaveManager.LoadFiles(m_levelToLoad as ProceduralLevelScreen, new SaveType[]
-							{
-								SaveType.MapData
-							});
+							(ScreenManager.Game as Game).SaveManager.LoadFiles(m_levelToLoad as ProceduralLevelScreen, SaveType.MapData);
 							Game.PlayerStats.LockCastle = false;
 						}
 					}
@@ -329,21 +295,14 @@ namespace RogueCastle
 				{
 					Console.WriteLine("This should only be used for debug purposes");
 					m_levelToLoad = LevelBuilder2.CreateLevel(null, area1List);
-					(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-					{
-						SaveType.Map,
-						SaveType.MapData
-					});
+					(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.Map, SaveType.MapData);
 				}
 				else
 				{
 					try
 					{
 						m_levelToLoad = (ScreenManager.Game as Game).SaveManager.LoadMap();
-						(ScreenManager.Game as Game).SaveManager.LoadFiles(m_levelToLoad as ProceduralLevelScreen, new SaveType[]
-						{
-							SaveType.MapData
-						});
+						(ScreenManager.Game as Game).SaveManager.LoadFiles(m_levelToLoad as ProceduralLevelScreen, SaveType.MapData);
 					}
 					catch
 					{
@@ -440,54 +399,22 @@ namespace RogueCastle
 			if (m_screenTypeToLoad == 27)
 			{
 				BackBufferOpacity = 1f;
-				Tween.To(this, 2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"BackBufferOpacity",
-					"0"
-				});
-				Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", new object[]
-				{
-					this,
-					true
-				});
+				Tween.To(this, 2f, Tween.EaseNone, "BackBufferOpacity", "0");
+				Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", this, true);
 				return;
 			}
 			if (!m_wipeTransition)
 			{
 				SoundManager.PlaySound("GateRise");
-				Tween.To(m_gateSprite, 1f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Y",
-					(-m_gateSprite.Height).ToString()
-				});
-				Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", new object[]
-				{
-					this,
-					true
-				});
+				Tween.To(m_gateSprite, 1f, Tween.EaseNone, "Y", (-m_gateSprite.Height).ToString());
+				Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", this, true);
 				return;
 			}
 			m_blackTransitionOut.Y = -500f;
-			Tween.By(m_blackTransitionIn, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				(-m_blackTransitionIn.Bounds.Width).ToString()
-			});
-			Tween.By(m_blackScreen, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				(-m_blackTransitionIn.Bounds.Width).ToString()
-			});
-			Tween.By(m_blackTransitionOut, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				(-m_blackTransitionIn.Bounds.Width).ToString()
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", new object[]
-			{
-				this,
-				true
-			});
+			Tween.By(m_blackTransitionIn, 0.2f, Tween.EaseNone, "X", (-m_blackTransitionIn.Bounds.Width).ToString());
+			Tween.By(m_blackScreen, 0.2f, Tween.EaseNone, "X", (-m_blackTransitionIn.Bounds.Width).ToString());
+			Tween.By(m_blackTransitionOut, 0.2f, Tween.EaseNone, "X", (-m_blackTransitionIn.Bounds.Width).ToString());
+			Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", this, true);
 		}
 		public override void Draw(GameTime gameTime)
 		{

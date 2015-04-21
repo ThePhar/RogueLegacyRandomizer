@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -156,7 +156,7 @@ namespace RogueCastle
 				{
 					flag = true;
 				}
-				string[] array = new string[]
+				string[] array = new[]
 				{
 					"GardenBat_Sprite",
 					"GardenCrow_Sprite",
@@ -172,7 +172,7 @@ namespace RogueCastle
 				{
 					m_silhouette.ChangeSprite("GardenSanta_Sprite");
 				}
-				m_silhouette.PlayAnimation(true);
+				m_silhouette.PlayAnimation();
 				Vector2 arg_A7_0 = Vector2.Zero;
 				if (flag)
 				{
@@ -189,14 +189,8 @@ namespace RogueCastle
 				{
 					num = -num;
 				}
-				Tween.By(m_silhouette, CDGMath.RandomFloat(10f, 15f), new Easing(Tween.EaseNone), new string[]
-				{
-					"X",
-					num.ToString(),
-					"Y",
-					CDGMath.RandomInt(-200, 200).ToString()
-				});
-				Tween.AddEndHandlerToLastTween(this, "SilhouetteComplete", new object[0]);
+				Tween.By(m_silhouette, CDGMath.RandomFloat(10f, 15f), Tween.EaseNone, "X", num.ToString(), "Y", CDGMath.RandomInt(-200, 200).ToString());
+				Tween.AddEndHandlerToLastTween(this, "SilhouetteComplete");
 			}
 		}
 		public void SilhouetteComplete()

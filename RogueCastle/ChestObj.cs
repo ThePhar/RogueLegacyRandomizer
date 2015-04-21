@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -149,7 +149,7 @@ namespace RogueCastle
 					}
 					if (num2 == 0)
 					{
-						GiveGold(itemDropManager, 0);
+						GiveGold(itemDropManager);
 					}
 					else if (num2 == 1)
 					{
@@ -224,37 +224,22 @@ namespace RogueCastle
 			float num5 = 0f;
 			for (int i = 0; i < num2; i++)
 			{
-				Tween.To(this, num5, new Easing(Linear.EaseNone), new string[0]);
-				Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem", new object[]
-				{
-					new Vector2(Position.X, Position.Y - Height / 2),
-					11,
-					500
-				});
+				Tween.To(this, num5, Linear.EaseNone);
+				Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem", new Vector2(Position.X, Position.Y - Height / 2), 11, 500);
 				num5 += 0.1f;
 			}
 			num5 = 0f;
 			for (int j = 0; j < num3; j++)
 			{
-				Tween.To(this, num5, new Easing(Linear.EaseNone), new string[0]);
-				Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem", new object[]
-				{
-					new Vector2(Position.X, Position.Y - Height / 2),
-					10,
-					100
-				});
+				Tween.To(this, num5, Linear.EaseNone);
+				Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem", new Vector2(Position.X, Position.Y - Height / 2), 10, 100);
 				num5 += 0.1f;
 			}
 			num5 = 0f;
 			for (int k = 0; k < num4; k++)
 			{
-				Tween.To(this, num5, new Easing(Linear.EaseNone), new string[0]);
-				Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem", new object[]
-				{
-					new Vector2(Position.X, Position.Y - Height / 2),
-					1,
-					10
-				});
+				Tween.To(this, num5, Linear.EaseNone);
+				Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem", new Vector2(Position.X, Position.Y - Height / 2), 1, 10);
 				num5 += 0.1f;
 			}
 		}
@@ -371,7 +356,7 @@ namespace RogueCastle
 					GiveStatDrop(manager, player, 1, 0);
 					return;
 				}
-				GiveGold(manager, 0);
+				GiveGold(manager);
 				return;
 			}
 			else
@@ -407,16 +392,10 @@ namespace RogueCastle
 					list2.Add(new Vector2(vector.X, vector.Y));
 					(player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list2);
 					player.RunGetItemAnimation();
-					Console.WriteLine(string.Concat(new object[]
-					{
-						"Unlocked item index ",
-						vector.X,
-						" of type ",
-						vector.Y
-					}));
+					Console.WriteLine(string.Concat("Unlocked item index ", vector.X, " of type ", vector.Y));
 					return;
 				}
-				GiveGold(manager, 0);
+				GiveGold(manager);
 				return;
 			}
 		}

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -175,7 +175,7 @@ namespace RogueCastle
 			m_selectionIcon = new SpriteObj("IconHalo_Sprite");
 			m_selectionIcon.ForceDraw = true;
 			m_selectionIcon.AnimationDelay = 0.1f;
-			m_selectionIcon.PlayAnimation(true);
+			m_selectionIcon.PlayAnimation();
 			m_selectionIcon.Scale = new Vector2(1.1f, 1.1f);
 			m_titleText = new SpriteObj("ManorTitleText_Sprite");
 			m_titleText.X = m_titleText.Width / 2f + 20f;
@@ -274,11 +274,7 @@ namespace RogueCastle
 		{
 			Game.ScreenManager.Player.AttachedLevel.UpdatePlayerSpellIcon();
 			SoundManager.StopMusic(0.5f);
-			(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.UpgradeData,
-				SaveType.PlayerData
-			});
+			(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.UpgradeData, SaveType.PlayerData);
 			base.OnExit();
 		}
 		public void SetVisible(SkillObj trait, bool fadeIn)
@@ -313,7 +309,7 @@ namespace RogueCastle
 				SpriteObj spriteObj = m_manor.GetChildAt(32) as SpriteObj;
 				spriteObj.Visible = true;
 				spriteObj.Opacity = 1f;
-				spriteObj.PlayAnimation(true);
+				spriteObj.PlayAnimation();
 				spriteObj.OverrideParentAnimationDelay = true;
 				spriteObj.AnimationDelay = 0.0333333351f;
 				spriteObj.Visible = true;
@@ -339,27 +335,15 @@ namespace RogueCastle
 				case 28:
 					num = 0.5f;
 					childAt.Opacity = 0f;
-					Tween.To(childAt, num, new Easing(Tween.EaseNone), new string[]
-					{
-						"Opacity",
-						"1"
-					});
+					Tween.To(childAt, num, Tween.EaseNone, "Opacity", "1");
 					goto IL_A26;
 				case 1:
 				case 5:
 					childAt.Opacity = 1f;
 					num = 1f;
 					childAt.X -= childAt.Width * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_short_01",
-						"skill_tree_reveal_short_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"X",
-						(childAt.Width * 2).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
+					Tween.By(childAt, num, Quad.EaseOut, "X", (childAt.Width * 2).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
 					goto IL_A26;
 				case 2:
@@ -367,30 +351,16 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 1.5f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_short_01",
-						"skill_tree_reveal_short_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
 					SpriteObj spriteObj = m_manor.GetChildAt(32) as SpriteObj;
-					spriteObj.PlayAnimation(true);
+					spriteObj.PlayAnimation();
 					spriteObj.OverrideParentAnimationDelay = true;
 					spriteObj.AnimationDelay = 0.0333333351f;
 					spriteObj.Visible = true;
 					spriteObj.Opacity = 0f;
-					Tween.To(spriteObj, 0.5f, new Easing(Tween.EaseNone), new string[]
-					{
-						"delay",
-						num.ToString(),
-						"Opacity",
-						"1"
-					});
+					Tween.To(spriteObj, 0.5f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "1");
 					goto IL_A26;
 				}
 				case 3:
@@ -403,16 +373,8 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 1f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_short_01",
-						"skill_tree_reveal_short_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
 					goto IL_A26;
 				case 4:
@@ -420,16 +382,8 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 3f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_01",
-						"skill_tree_reveal_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
 					goto IL_A26;
 				case 7:
@@ -437,16 +391,8 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 3f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_01",
-						"skill_tree_reveal_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
 					goto IL_A26;
 				case 8:
@@ -454,16 +400,8 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 3f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_01",
-						"skill_tree_reveal_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
 					goto IL_A26;
 				case 10:
@@ -471,16 +409,8 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 3f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_01",
-						"skill_tree_reveal_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
 					goto IL_A26;
 				case 12:
@@ -489,32 +419,16 @@ namespace RogueCastle
 					num = 1f;
 					childAt.X += childAt.Width * 2;
 					pos.X = childAt.AbsPosition.X - 60f;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_short_01",
-						"skill_tree_reveal_short_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"X",
-						(-(childAt.Width * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
+					Tween.By(childAt, num, Quad.EaseOut, "X", (-(childAt.Width * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
 					goto IL_A26;
 				case 16:
 					childAt.Opacity = 1f;
 					num = 3f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_01",
-						"skill_tree_reveal_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.5f, num);
 					goto IL_A26;
 				case 18:
@@ -522,16 +436,8 @@ namespace RogueCastle
 					childAt.Opacity = 1f;
 					num = 3f;
 					childAt.Y += childAt.Height * 2;
-					SoundManager.PlaySound(new string[]
-					{
-						"skill_tree_reveal_01",
-						"skill_tree_reveal_02"
-					});
-					Tween.By(childAt, num, new Easing(Quad.EaseOut), new string[]
-					{
-						"Y",
-						(-(childAt.Height * 2)).ToString()
-					});
+					SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
+					Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
 					m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.2f, num);
 					goto IL_A26;
 				case 23:
@@ -539,50 +445,24 @@ namespace RogueCastle
 				case 29:
 				case 30:
 				case 31:
-					Tween.RunFunction(0.25f, typeof(SoundManager), "PlaySound", new object[]
-					{
-						"skill_tree_reveal_bounce"
-					});
+					Tween.RunFunction(0.25f, typeof(SoundManager), "PlaySound", "skill_tree_reveal_bounce");
 					childAt.Opacity = 1f;
 					childAt.Scale = Vector2.Zero;
 					num = 1f;
-					Tween.To(childAt, num, new Easing(Bounce.EaseOut), new string[]
-					{
-						"ScaleX",
-						"1",
-						"ScaleY",
-						"1"
-					});
+					Tween.To(childAt, num, Bounce.EaseOut, "ScaleX", "1", "ScaleY", "1");
 					goto IL_A26;
 				}
 				num = 0.7f;
 				Vector2 vector = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
 				childAt.Opacity = 1f;
 				childAt.Y -= 720f;
-				Tween.By(childAt, num, new Easing(Quad.EaseIn), new string[]
-				{
-					"Y",
-					"720"
-				});
-				Tween.AddEndHandlerToLastTween(m_impactEffectPool, "SkillTreeDustEffect", new object[]
-				{
-					vector,
-					true,
-					childAt.Width * 2
-				});
-				Tween.RunFunction(num, this, "ShakeScreen", new object[]
-				{
-					5,
-					true,
-					true
-				});
-				Tween.RunFunction(num + 0.2f, this, "StopScreenShake", new object[0]);
+				Tween.By(childAt, num, Quad.EaseIn, "Y", "720");
+				Tween.AddEndHandlerToLastTween(m_impactEffectPool, "SkillTreeDustEffect", vector, true, childAt.Width * 2);
+				Tween.RunFunction(num, this, "ShakeScreen", 5, true, true);
+				Tween.RunFunction(num + 0.2f, this, "StopScreenShake");
 			}
 			IL_A26:
-			Tween.RunFunction(num, this, "SetSkillIconVisible", new object[]
-			{
-				skillObj
-			});
+			Tween.RunFunction(num, this, "SetSkillIconVisible", skillObj);
 			if (m_manor.GetChildAt(7).Visible && m_manor.GetChildAt(16).Visible)
 			{
 				(m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
@@ -601,20 +481,12 @@ namespace RogueCastle
 				{
 					current.Visible = true;
 					current.Opacity = 0f;
-					Tween.To(current, 0.2f, new Easing(Linear.EaseNone), new string[]
-					{
-						"Opacity",
-						"1"
-					});
+					Tween.To(current, 0.2f, Linear.EaseNone, "Opacity", "1");
 					num += 0.2f;
 				}
 			}
-			Tween.RunFunction(num, this, "UnlockControls", new object[0]);
-			Tween.RunFunction(num, this, "CheckForSkillUnlock", new object[]
-			{
-				skill,
-				true
-			});
+			Tween.RunFunction(num, this, "UnlockControls");
+			Tween.RunFunction(num, this, "CheckForSkillUnlock", skill, true);
 		}
 		public void CheckForSkillUnlock(SkillObj skill, bool displayScreen)
 		{
@@ -738,12 +610,8 @@ namespace RogueCastle
 			if (!m_cameraTweening && m_selectedTraitIndex != new Vector2(7f, 1f) && Camera.Y != 360f)
 			{
 				m_cameraTweening = true;
-				Tween.To(Camera, 0.5f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					360f.ToString()
-				});
-				Tween.AddEndHandlerToLastTween(this, "EndCameraTween", new object[0]);
+				Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
+				Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
 			}
 			float num = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			if (m_cloud1.Bounds.Right < -100)
@@ -847,12 +715,8 @@ namespace RogueCastle
 						if (!m_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
 						{
 							m_cameraTweening = true;
-							Tween.To(Camera, 0.5f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								60f.ToString()
-							});
-							Tween.AddEndHandlerToLastTween(this, "EndCameraTween", new object[0]);
+							Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 60f.ToString());
+							Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
 						}
 					}
 					else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
@@ -882,13 +746,7 @@ namespace RogueCastle
 						UpdateDescriptionPlate(skill3);
 						SoundManager.PlaySound("ShopMenuMove");
 						skill3.Scale = new Vector2(1.1f, 1.1f);
-						Tween.To(skill3, 0.1f, new Easing(Back.EaseOutLarge), new string[]
-						{
-							"ScaleX",
-							"1",
-							"ScaleY",
-							"1"
-						});
+						Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
 						m_dialoguePlate.Visible = true;
 					}
 					SkillObj skill4 = SkillSystem.GetSkill((int)m_selectedTraitIndex.X, (int)m_selectedTraitIndex.Y);
@@ -920,12 +778,12 @@ namespace RogueCastle
 						if (levelScreen.CurrentRoom is StartingRoomObj)
 						{
 							rCScreenManager.StartWipeTransition();
-							Tween.RunFunction(0.2f, rCScreenManager, "HideCurrentScreen", new object[0]);
-							Tween.RunFunction(0.2f, levelScreen.CurrentRoom, "OnEnter", new object[0]);
+							Tween.RunFunction(0.2f, rCScreenManager, "HideCurrentScreen");
+							Tween.RunFunction(0.2f, levelScreen.CurrentRoom, "OnEnter");
 						}
 						else
 						{
-							(ScreenManager as RCScreenManager).DisplayScreen(15, true, null);
+							(ScreenManager as RCScreenManager).DisplayScreen(15, true);
 						}
 					}
 					if (!LevelEV.RUN_DEMO_VERSION && !LevelEV.CREATE_RETAIL_VERSION && InputManager.JustPressed(Keys.Q, new PlayerIndex?(PlayerIndex.One)))
@@ -995,13 +853,7 @@ namespace RogueCastle
 				{
 					m_skillUpgrade.Text = "Upgrade: --";
 				}
-				m_skillLevel.Text = string.Concat(new object[]
-				{
-					"Level: ",
-					trait.CurrentLevel,
-					"/",
-					trait.MaxLevel
-				});
+				m_skillLevel.Text = string.Concat("Level: ", trait.CurrentLevel, "/", trait.MaxLevel);
 				string arg = "unlock";
 				if (trait.CurrentLevel > 0)
 				{

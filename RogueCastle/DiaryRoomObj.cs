@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -91,7 +91,7 @@ namespace RogueCastle
 					{
 						RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 						rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
-						rCScreenManager.DisplayScreen(13, true, null);
+						rCScreenManager.DisplayScreen(13, true);
 						PlayerStats expr_1DB = Game.PlayerStats;
 						expr_1DB.DiaryEntry += 1;
 						RoomCompleted = true;
@@ -100,7 +100,7 @@ namespace RogueCastle
 					{
 						RoomCompleted = true;
 						RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-						rCScreenManager2.DisplayScreen(20, true, null);
+						rCScreenManager2.DisplayScreen(20, true);
 					}
 				}
 			}

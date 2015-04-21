@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -50,15 +50,7 @@ namespace RogueCastle
 			{
 				ChangeSprite("DummySad_Character");
 				PlayAnimation(false);
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"EnemyHit1",
-					"EnemyHit2",
-					"EnemyHit3",
-					"EnemyHit4",
-					"EnemyHit5",
-					"EnemyHit6"
-				});
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4", "EnemyHit5", "EnemyHit6");
 				Blink(Color.Red, 0.1f);
 				m_levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(collisionPt);
 				m_levelScreen.ImpactEffectPool.WoodChipEffect(new Vector2(X, Bounds.Center.Y));
@@ -80,7 +72,7 @@ namespace RogueCastle
 		}
 		private void RandomizeName()
 		{
-			string[] array = new string[]
+			string[] array = new[]
 			{
 				"Oh god!",
 				"The pain!",

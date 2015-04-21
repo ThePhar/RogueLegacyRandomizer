@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -95,7 +95,7 @@ namespace RogueCastle
 		}
 		public override void Initialize()
 		{
-			Color[] array = new Color[]
+			Color[] array = new[]
 			{
 				Color.Red,
 				Color.Blue,
@@ -233,19 +233,11 @@ namespace RogueCastle
 			Player.AttachedLevel.Camera.Y = Bounds.Center.Y;
 			if (!IsReversed)
 			{
-				Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					(m_line.X + 500f).ToString()
-				});
+				Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (m_line.X + 500f).ToString());
 			}
 			else
 			{
-				Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					(m_line.X - 500f).ToString()
-				});
+				Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (m_line.X - 500f).ToString());
 			}
 			EquipPlayer();
 			ActivateTarget();
@@ -254,21 +246,13 @@ namespace RogueCastle
 		{
 			if (!IsReversed)
 			{
-				Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					(X + Player.AttachedLevel.Camera.Width / 2f).ToString()
-				});
+				Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (X + Player.AttachedLevel.Camera.Width / 2f).ToString());
 			}
 			else
 			{
-				Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					(Bounds.Right - Player.AttachedLevel.Camera.Width / 2f).ToString()
-				});
+				Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (Bounds.Right - Player.AttachedLevel.Camera.Width / 2f).ToString());
 			}
-			Tween.AddEndHandlerToLastTween(this, "CheckPlayerReward", new object[0]);
+			Tween.AddEndHandlerToLastTween(this, "CheckPlayerReward");
 			m_isPlayingGame = false;
 			Game.PlayerStats.Spell = 0;
 			Player.AttachedLevel.UpdatePlayerSpellIcon();
@@ -280,14 +264,14 @@ namespace RogueCastle
 			{
 				RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 				rCScreenManager.DialogueScreen.SetDialogue("CarnivalRoom1-Reward");
-				(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+				(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
 				RevealChest();
 				GameUtil.UnlockAchievement("LOVE_OF_CLOWNS");
 				return;
 			}
 			RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
 			rCScreenManager2.DialogueScreen.SetDialogue("CarnivalRoom1-Fail");
-			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
 		}
 		public void RevealChest()
 		{
@@ -420,19 +404,16 @@ namespace RogueCastle
 					RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 					rCScreenManager.DialogueScreen.SetDialogue("CarnivalRoom1-Start");
 					rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "BeginGame", new object[0]);
-					rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", new object[]
-					{
-						"Canceling Selection"
-					});
-					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "BeginGame");
+					rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", "Canceling Selection");
+					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
 				}
 			}
 			else if (m_elf.IsTouching && RoomCompleted && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
 			{
 				RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
 				rCScreenManager2.DialogueScreen.SetDialogue("CarnivalRoom1-End");
-				(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+				(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
 			}
 			if (m_isPlayingGame)
 			{
@@ -472,18 +453,10 @@ namespace RogueCastle
 			m_currentTarget.Visible = true;
 			if (!IsReversed)
 			{
-				Tween.By(m_currentTarget, 2f, new Easing(Quad.EaseOut), new string[]
-				{
-					"X",
-					(-400 + CDGMath.RandomInt(-200, 200)).ToString()
-				});
+				Tween.By(m_currentTarget, 2f, Quad.EaseOut, "X", (-400 + CDGMath.RandomInt(-200, 200)).ToString());
 				return;
 			}
-			Tween.By(m_currentTarget, 2f, new Easing(Quad.EaseOut), new string[]
-			{
-				"X",
-				(400 + CDGMath.RandomInt(-200, 200)).ToString()
-			});
+			Tween.By(m_currentTarget, 2f, Quad.EaseOut, "X", (400 + CDGMath.RandomInt(-200, 200)).ToString());
 		}
 		public void GiveGold()
 		{

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -95,31 +95,27 @@ namespace RogueCastle
 			Player.Flip = SpriteEffects.None;
 			Player.State = 1;
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", false), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1.5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", false));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", false));
+			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+			logicSet.AddAction(new PlayAnimationLogicAction());
+			logicSet.AddAction(new DelayLogicAction(1.5f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true));
 			Player.RunExternalLogicSet(logicSet);
-			Tween.RunFunction(1.6f, this, "Cutscene2", new object[0]);
+			Tween.RunFunction(1.6f, this, "Cutscene2");
 		}
 		public void Cutscene2()
 		{
 			Player.AttachedLevel.CameraLockedToPlayer = false;
-			Tween.By(Player.AttachedLevel.Camera, 1.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				"300"
-			});
-			Tween.AddEndHandlerToLastTween(this, "Cutscene3", new object[0]);
+			Tween.By(Player.AttachedLevel.Camera, 1.5f, Quad.EaseInOut, "X", "300");
+			Tween.AddEndHandlerToLastTween(this, "Cutscene3");
 		}
 		public void Cutscene3()
 		{
-			Tween.RunFunction(0.5f, this, "Cutscene4", new object[0]);
+			Tween.RunFunction(0.5f, this, "Cutscene4");
 			RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 			if (Game.PlayerStats.Class == 17)
 			{
@@ -130,25 +126,16 @@ namespace RogueCastle
 			{
 				rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk01");
 			}
-			rCScreenManager.DisplayScreen(13, true, null);
+			rCScreenManager.DisplayScreen(13, true);
 		}
 		public void Cutscene4()
 		{
-			Tween.RunFunction(0.5f, this, "DisplayBossTitle", new object[]
-			{
-				"The Traitor",
-				m_boss.Name,
-				"Cutscene5"
-			});
+			Tween.RunFunction(0.5f, this, "DisplayBossTitle", "The Traitor", m_boss.Name, "Cutscene5");
 		}
 		public void Cutscene5()
 		{
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				Player.X.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "BeginBattle", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", Player.X.ToString());
+			Tween.AddEndHandlerToLastTween(this, "BeginBattle");
 		}
 		public void BeginBattle()
 		{
@@ -163,12 +150,8 @@ namespace RogueCastle
 			Camera2D camera = Player.AttachedLevel.Camera;
 			m_playerX = camera.X;
 			SoundManager.PlaySound("Cutsc_CameraMove");
-			Tween.To(camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(m_fountain.Bounds.Center.X - 400).ToString()
-			});
-			Tween.RunFunction(2f, this, "RunFountainCutscene2", new object[0]);
+			Tween.To(camera, 1f, Quad.EaseInOut, "X", (m_fountain.Bounds.Center.X - 400).ToString());
+			Tween.RunFunction(2f, this, "RunFountainCutscene2");
 		}
 		public void RunFountainCutscene2()
 		{
@@ -177,8 +160,8 @@ namespace RogueCastle
 			m_fountain.ChangeSprite("FountainOfYouthShatter_Character");
 			m_fountain.PlayAnimation(false);
 			Player.AttachedLevel.ImpactEffectPool.DisplayFountainShatterSmoke(m_fountain);
-			Tween.RunFunction(2f, this, "DisplaySecondBoss", new object[0]);
-			Tween.RunFunction(2f, this, "RunFountainCutscene3", new object[0]);
+			Tween.RunFunction(2f, this, "DisplaySecondBoss");
+			Tween.RunFunction(2f, this, "RunFountainCutscene3");
 		}
 		public void DisplaySecondBoss()
 		{
@@ -192,12 +175,7 @@ namespace RogueCastle
 			SoundManager.PlayMusic("LastBossSong", true, 1f);
 			m_fountain.Visible = false;
 			StopShake();
-			Tween.RunFunction(2f, this, "DisplayBossTitle", new object[]
-			{
-				"Johannes",
-				"The Fountain",
-				"RunFountainCutscene4"
-			});
+			Tween.RunFunction(2f, this, "DisplayBossTitle", "Johannes", "The Fountain", "RunFountainCutscene4");
 		}
 		public void StartShake()
 		{
@@ -213,12 +191,8 @@ namespace RogueCastle
 		}
 		public void RunFountainCutscene4()
 		{
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_playerX.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(m_boss, "SecondFormActive", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_playerX.ToString());
+			Tween.AddEndHandlerToLastTween(m_boss, "SecondFormActive");
 		}
 		public override void Update(GameTime gameTime)
 		{
@@ -270,11 +244,7 @@ namespace RogueCastle
 			{
 				if (current.Name == "stainglass")
 				{
-					Tween.To(current, 2f, new Easing(Tween.EaseNone), new string[]
-					{
-						"Opacity",
-						"0.2"
-					});
+					Tween.To(current, 2f, Tween.EaseNone, "Opacity", "0.2");
 				}
 			}
 		}
@@ -311,7 +281,7 @@ namespace RogueCastle
 			{
 				list.Add(2);
 			}
-			CDGMath.Shuffle<int>(list);
+			CDGMath.Shuffle(list);
 			float num = 0f;
 			SoundManager.PlaySound("Boss_Flash");
 			for (int l = 0; l < list.Count; l++)
@@ -319,30 +289,15 @@ namespace RogueCastle
 				Vector2 position = m_boss.Position;
 				if (list[l] == 0)
 				{
-					Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", new object[]
-					{
-						position,
-						1,
-						10
-					});
+					Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 1, 10);
 				}
 				else if (list[l] == 1)
 				{
-					Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", new object[]
-					{
-						position,
-						10,
-						100
-					});
+					Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 10, 100);
 				}
 				else
 				{
-					Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", new object[]
-					{
-						position,
-						11,
-						500
-					});
+					Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 11, 500);
 				}
 			}
 		}

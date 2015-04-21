@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -102,8 +102,8 @@ namespace RogueCastle
 			SetRoomData();
 			m_cutsceneRunning = true;
 			SoundManager.StopMusic(0.5f);
-			m_boss.PlayAnimation(true);
-			m_boss2.PlayAnimation(true);
+			m_boss.PlayAnimation();
+			m_boss2.PlayAnimation();
 			Player.AttachedLevel.Camera.X = Player.X;
 			Player.AttachedLevel.Camera.Y = Player.Y;
 			Vector2 arg_8A_0 = Player.AttachedLevel.Camera.Position;
@@ -111,17 +111,8 @@ namespace RogueCastle
 			Player.AttachedLevel.RunCinematicBorders(6f);
 			Player.AttachedLevel.CameraLockedToPlayer = false;
 			Player.AttachedLevel.Camera.Y = Player.Y;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				m_boss.Y.ToString()
-			});
-			Tween.RunFunction(1.2f, this, "DisplayBossTitle", new object[]
-			{
-				Game.PlayerStats.PlayerName + " VS",
-				m_boss.Name,
-				"Intro2"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString());
+			Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
 			base.OnEnter();
 			m_bossChest.ForcedItemType = 19;
 		}
@@ -138,14 +129,8 @@ namespace RogueCastle
 		}
 		public void Intro2()
 		{
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0.5",
-				"Y",
-				((int)(Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "EndCutscene", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y", ((int)(Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString());
+			Tween.AddEndHandlerToLastTween(this, "EndCutscene");
 		}
 		public void EndCutscene()
 		{

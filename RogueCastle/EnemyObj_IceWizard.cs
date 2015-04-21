@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -157,125 +157,75 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChaseLogicAction(m_target, new Vector2(-255f, -175f), new Vector2(255f, -75f), true, MoveDuration, -1f), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character"));
+			logicSet.AddAction(new ChaseLogicAction(m_target, new Vector2(-255f, -175f), new Vector2(255f, -75f), true, MoveDuration));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChaseLogicAction(m_target, false, 1f, -1f), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character"));
+			logicSet2.AddAction(new ChaseLogicAction(m_target, false, 1f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.5f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyWizardSpell_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeSpell", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "SummonIceball", null), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(SpellDelay, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ShatterIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("CastSpell", "End", false), Types.Sequence.Parallel);
-			logicSet4.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResetIceball", null), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyWizardSpell_Character"));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeSpell"));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "SummonIceball", null));
+			logicSet4.AddAction(new DelayLogicAction(SpellDelay));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ShatterIceball", SpellProjectileCount));
+			logicSet4.AddAction(new PlayAnimationLogicAction("CastSpell", "End"), Types.Sequence.Parallel);
+			logicSet4.AddAction(new DelayLogicAction(0.5f));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResetIceball", null));
+			logicSet4.AddAction(new DelayLogicAction(0.5f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyWizardSpell_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeSpell", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "SummonIceball", null), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(SpellDelay, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.135f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.135f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.135f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.135f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.135f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.135f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", new object[]
-			{
-				SpellProjectileCount
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("CastSpell", "End", false), Types.Sequence.Parallel);
-			logicSet5.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ResetIceball", null), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyWizardSpell_Character"));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeSpell"));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "SummonIceball", null));
+			logicSet5.AddAction(new DelayLogicAction(SpellDelay));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new DelayLogicAction(0.135f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new DelayLogicAction(0.135f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new DelayLogicAction(0.135f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new DelayLogicAction(0.135f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new DelayLogicAction(0.135f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new DelayLogicAction(0.135f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ShatterExpertIceball", SpellProjectileCount));
+			logicSet5.AddAction(new PlayAnimationLogicAction("CastSpell", "End"), Types.Sequence.Parallel);
+			logicSet5.AddAction(new DelayLogicAction(0.5f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ResetIceball", null));
+			logicSet5.AddAction(new DelayLogicAction(0.5f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyWizardTeleportOut_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeforeTeleport", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(TeleportDelay, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("TeleportStart", "End", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(TeleportDuration, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new TeleportLogicAction(m_target, new Vector2(-400f, -400f), new Vector2(400f, 400f)), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", true), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyWizardTeleportIn_Character", true, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet6
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet6
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5,
-				logicSet6
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyWizardTeleportOut_Character", false, false));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeforeTeleport"));
+			logicSet6.AddAction(new DelayLogicAction(TeleportDelay));
+			logicSet6.AddAction(new PlayAnimationLogicAction("TeleportStart", "End"));
+			logicSet6.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", false));
+			logicSet6.AddAction(new DelayLogicAction(TeleportDuration));
+			logicSet6.AddAction(new TeleportLogicAction(m_target, new Vector2(-400f, -400f), new Vector2(400f, 400f)));
+			logicSet6.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyWizardTeleportIn_Character", true, false));
+			logicSet6.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet6.AddAction(new DelayLogicAction(0.5f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet6);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet6);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5, logicSet6);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -410,7 +360,7 @@ namespace RogueCastle
 		}
 		public EnemyObj_IceWizard(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base("EnemyWizardIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
 		{
-			PlayAnimation(true);
+			PlayAnimation();
 			TintablePart = _objectList[0];
 			Type = 11;
 		}
@@ -458,7 +408,7 @@ namespace RogueCastle
 			};
 			SoundManager.Play3DSound(this, m_target, "Ice_Wizard_Form");
 			m_iceballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-			m_iceballSummon.PlayAnimation("Start", "Grown", false);
+			m_iceballSummon.PlayAnimation("Start", "Grown");
 			projectileData.Dispose();
 		}
 		public void ShatterIceball(int numIceballs)
@@ -466,7 +416,7 @@ namespace RogueCastle
 			SoundManager.Play3DSound(this, m_target, "Ice_Wizard_Attack_Glass");
 			if (m_iceballSummon.SpriteName == "WizardIceSpell_Sprite")
 			{
-				m_iceballSummon.PlayAnimation("Grown", "End", false);
+				m_iceballSummon.PlayAnimation("Grown", "End");
 			}
 			ProjectileData projectileData = new ProjectileData(this)
 			{
@@ -487,10 +437,7 @@ namespace RogueCastle
 			{
 				projectileData.Angle = new Vector2(num, num);
 				ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-				Tween.RunFunction(0.15f, this, "ChangeIceballState", new object[]
-				{
-					projectileObj
-				});
+				Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
 				num += num2;
 			}
 			projectileData.Dispose();
@@ -500,7 +447,7 @@ namespace RogueCastle
 			SoundManager.Play3DSound(this, m_target, "Ice_Wizard_Attack");
 			if (m_iceballSummon.SpriteName == "WizardIceSpell_Sprite")
 			{
-				m_iceballSummon.PlayAnimation("Grown", "End", false);
+				m_iceballSummon.PlayAnimation("Grown", "End");
 			}
 			ProjectileData projectileData = new ProjectileData(this)
 			{
@@ -521,10 +468,7 @@ namespace RogueCastle
 				float num2 = CDGMath.RandomInt(0, 360);
 				projectileData.Angle = new Vector2(num2, num2);
 				ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-				Tween.RunFunction(0.15f, this, "ChangeIceballState", new object[]
-				{
-					projectileObj
-				});
+				Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
 				num2 += num;
 			}
 			projectileData.Dispose();

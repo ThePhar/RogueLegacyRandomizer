@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -30,7 +30,7 @@ namespace Randomchaos2DGodRays
 		public virtual void Initialize()
 		{
 			vertDec = VertexPositionTexture.VertexDeclaration;
-			corners = new VertexPositionTexture[]
+			corners = new[]
 			{
 				new VertexPositionTexture(new Vector3(1f, -1f, 0f), new Vector2(1f, 1f)),
 				new VertexPositionTexture(new Vector3(-1f, -1f, 0f), new Vector2(0f, 1f)),
@@ -47,12 +47,12 @@ namespace Randomchaos2DGodRays
 				0
 			};
 			vb = new VertexBuffer(Game.GraphicsDevice, typeof(VertexPositionTexture), corners.Length, BufferUsage.None);
-			vb.SetData<VertexPositionTexture>(corners);
+			vb.SetData(corners);
 		}
 		public virtual void Draw()
 		{
 			Game.GraphicsDevice.SetVertexBuffer(vb);
-			Game.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, corners, 0, 4, ib, 0, 2);
+			Game.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, corners, 0, 4, ib, 0, 2);
 		}
 	}
 }

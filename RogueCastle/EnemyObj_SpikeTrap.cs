@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -62,15 +62,10 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			m_extractLS = new LogicSet(this);
-			m_extractLS.AddAction(new PlayAnimationLogicAction(1, 2, false), Types.Sequence.Serial);
-			m_extractLS.AddAction(new DelayLogicAction(ExtractDelay, false), Types.Sequence.Serial);
-			m_extractLS.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"TrapSpike_01",
-				"TrapSpike_02",
-				"TrapSpike_03"
-			}), Types.Sequence.Serial);
-			m_extractLS.AddAction(new PlayAnimationLogicAction(2, 4, false), Types.Sequence.Serial);
+			m_extractLS.AddAction(new PlayAnimationLogicAction(1, 2));
+			m_extractLS.AddAction(new DelayLogicAction(ExtractDelay));
+			m_extractLS.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "TrapSpike_01", "TrapSpike_02", "TrapSpike_03"));
+			m_extractLS.AddAction(new PlayAnimationLogicAction(2, 4));
 			base.InitializeLogic();
 		}
 		protected override void RunBasicLogic()
@@ -134,7 +129,7 @@ namespace RogueCastle
 					else if (CurrentFrame == 5 && !m_extractLS.IsActive)
 					{
 						IsCollidable = false;
-						PlayAnimation("StartRetract", "RetractComplete", false);
+						PlayAnimation("StartRetract", "RetractComplete");
 					}
 				}
 				if (m_extractLS.IsActive)
@@ -153,12 +148,12 @@ namespace RogueCastle
 		}
 		public override void Reset()
 		{
-			PlayAnimation(1, 1, false);
+			PlayAnimation(1, 1);
 			base.Reset();
 		}
 		public override void ResetState()
 		{
-			PlayAnimation(1, 1, false);
+			PlayAnimation(1, 1);
 			base.ResetState();
 		}
 		public override void Dispose()

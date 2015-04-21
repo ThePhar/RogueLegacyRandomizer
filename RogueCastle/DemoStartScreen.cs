@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -36,12 +36,7 @@ namespace RogueCastle
 		public override void OnEnter()
 		{
 			BackBufferOpacity = 1f;
-			Tween.RunFunction(7f, ScreenManager, "DisplayScreen", new object[]
-			{
-				1,
-				true,
-				typeof(List<object>)
-			});
+			Tween.RunFunction(7f, ScreenManager, "DisplayScreen", 1, true, typeof(List<object>));
 			base.OnEnter();
 		}
 		public override void Draw(GameTime gametime)

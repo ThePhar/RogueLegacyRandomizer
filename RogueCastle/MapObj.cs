@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -97,7 +97,7 @@ namespace RogueCastle
 			m_playerSprite = new SpriteObj("MapPlayerIcon_Sprite");
 			m_playerSprite.AnimationDelay = 0.0333333351f;
 			m_playerSprite.ForceDraw = true;
-			m_playerSprite.PlayAnimation(true);
+			m_playerSprite.PlayAnimation();
 			m_spriteScale = new Vector2(22f, 22.5f);
 			m_addedRooms = new List<RoomObj>();
 			m_teleporterList = new List<SpriteObj>();
@@ -142,14 +142,7 @@ namespace RogueCastle
 		{
 			if (!m_addedRooms.Contains(room) && room.Width / 1320 < 5)
 			{
-				SpriteObj spriteObj = new SpriteObj(string.Concat(new object[]
-				{
-					"MapRoom",
-					room.Width / 1320,
-					"x",
-					room.Height / 720,
-					"_Sprite"
-				}));
+				SpriteObj spriteObj = new SpriteObj(string.Concat("MapRoom", room.Width / 1320, "x", room.Height / 720, "_Sprite"));
 				spriteObj.Position = new Vector2(room.X / m_spriteScale.X, room.Y / m_spriteScale.Y);
 				spriteObj.Scale = new Vector2((spriteObj.Width - 3f) / spriteObj.Width, (spriteObj.Height - 3f) / spriteObj.Height);
 				spriteObj.ForceDraw = true;
@@ -231,7 +224,7 @@ namespace RogueCastle
 							}
 							m_iconSpriteList.Add(spriteObj3);
 							spriteObj3.AnimationDelay = 0.0333333351f;
-							spriteObj3.PlayAnimation(true);
+							spriteObj3.PlayAnimation();
 							spriteObj3.ForceDraw = true;
 							spriteObj3.Position = new Vector2(current2.X / m_spriteScale.X - 8f, current2.Y / m_spriteScale.Y - 12f);
 							if (room.IsReversed)
@@ -247,7 +240,7 @@ namespace RogueCastle
 					SpriteObj spriteObj4 = new SpriteObj("MapBossIcon_Sprite");
 					spriteObj4.AnimationDelay = 0.0333333351f;
 					spriteObj4.ForceDraw = true;
-					spriteObj4.PlayAnimation(true);
+					spriteObj4.PlayAnimation();
 					spriteObj4.Position = new Vector2((room.X + room.Width / 2f) / m_spriteScale.X - spriteObj4.Width / 2 - 1f, (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj4.Height / 2 - 2f);
 					m_iconSpriteList.Add(spriteObj4);
 					m_iconSpritePosList.Add(spriteObj4.Position);
@@ -259,7 +252,7 @@ namespace RogueCastle
 					SpriteObj spriteObj5 = new SpriteObj("MapTeleporterIcon_Sprite");
 					spriteObj5.AnimationDelay = 0.0333333351f;
 					spriteObj5.ForceDraw = true;
-					spriteObj5.PlayAnimation(true);
+					spriteObj5.PlayAnimation();
 					spriteObj5.Position = new Vector2((room.X + room.Width / 2f) / m_spriteScale.X - spriteObj5.Width / 2 - 1f, (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj5.Height / 2 - 2f);
 					m_iconSpriteList.Add(spriteObj5);
 					m_iconSpritePosList.Add(spriteObj5.Position);
@@ -271,7 +264,7 @@ namespace RogueCastle
 					SpriteObj spriteObj6 = new SpriteObj("MapTeleporterIcon_Sprite");
 					spriteObj6.AnimationDelay = 0.0333333351f;
 					spriteObj6.ForceDraw = true;
-					spriteObj6.PlayAnimation(true);
+					spriteObj6.PlayAnimation();
 					spriteObj6.Position = new Vector2((room.X + room.Width / 2f) / m_spriteScale.X - spriteObj6.Width / 2 - 1f, (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj6.Height / 2 - 2f);
 					m_iconSpriteList.Add(spriteObj6);
 					m_iconSpritePosList.Add(spriteObj6.Position);
@@ -281,7 +274,7 @@ namespace RogueCastle
 				if (Game.PlayerStats.Class != 13 && room.Name == "Bonus")
 				{
 					SpriteObj spriteObj7 = new SpriteObj("MapBonusIcon_Sprite");
-					spriteObj7.PlayAnimation(true);
+					spriteObj7.PlayAnimation();
 					spriteObj7.AnimationDelay = 0.0333333351f;
 					spriteObj7.ForceDraw = true;
 					spriteObj7.Position = new Vector2((room.X + room.Width / 2f) / m_spriteScale.X - spriteObj7.Width / 2 - 1f, (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj7.Height / 2 - 2f);
@@ -333,7 +326,7 @@ namespace RogueCastle
 									}
 									m_iconSpriteList.Add(spriteObj);
 									spriteObj.AnimationDelay = 0.0333333351f;
-									spriteObj.PlayAnimation(true);
+									spriteObj.PlayAnimation();
 									spriteObj.ForceDraw = true;
 									spriteObj.Position = new Vector2(current2.X / m_spriteScale.X - 8f, current2.Y / m_spriteScale.Y - 12f);
 									if (current.IsReversed)
@@ -349,7 +342,7 @@ namespace RogueCastle
 					if (current.Name == "Bonus")
 					{
 						SpriteObj spriteObj2 = new SpriteObj("MapBonusIcon_Sprite");
-						spriteObj2.PlayAnimation(true);
+						spriteObj2.PlayAnimation();
 						spriteObj2.AnimationDelay = 0.0333333351f;
 						spriteObj2.ForceDraw = true;
 						spriteObj2.Position = new Vector2((current.X + current.Width / 2f) / m_spriteScale.X - spriteObj2.Width / 2 - 1f, (current.Y + current.Height / 2f) / m_spriteScale.Y - spriteObj2.Height / 2 - 2f);
@@ -405,20 +398,12 @@ namespace RogueCastle
 			{
 				m_yOffsetTween.StopTween(false);
 			}
-			m_xOffsetTween = Tween.To(this, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"CameraOffsetX",
-				(m_alphaMaskRect.X + m_alphaMaskRect.Width / 2f - pos.X / 1320f * 60f).ToString()
-			});
-			m_yOffsetTween = Tween.To(this, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"CameraOffsetY",
-				(m_alphaMaskRect.Y + m_alphaMaskRect.Height / 2f - pos.Y / 720f * 32f).ToString()
-			});
+			m_xOffsetTween = Tween.To(this, 0.3f, Quad.EaseOut, "CameraOffsetX", (m_alphaMaskRect.X + m_alphaMaskRect.Width / 2f - pos.X / 1320f * 60f).ToString());
+			m_yOffsetTween = Tween.To(this, 0.3f, Quad.EaseOut, "CameraOffsetY", (m_alphaMaskRect.Y + m_alphaMaskRect.Height / 2f - pos.Y / 720f * 32f).ToString());
 		}
 		public void CentreAroundObj(GameObj obj)
 		{
-			CentreAroundPos(obj.Position, false);
+			CentreAroundPos(obj.Position);
 		}
 		public void CentreAroundPlayer()
 		{
@@ -443,7 +428,7 @@ namespace RogueCastle
 				{
 					position.Y += 290f;
 				}
-				m_player.TeleportPlayer(position, null);
+				m_player.TeleportPlayer(position);
 			}
 		}
 		public void CentreAroundTeleporter(int index, bool tween = false)

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -228,11 +228,7 @@ namespace RogueCastle
 					}
 					float scaleY = ScaleY;
 					ScaleX = 0f;
-					m_flipTween = Tween.To(this, 0.15f, new Easing(Tween.EaseNone), new string[]
-					{
-						"ScaleX",
-						scaleY.ToString()
-					});
+					m_flipTween = Tween.To(this, 0.15f, Tween.EaseNone, "ScaleX", scaleY.ToString());
 				}
 				base.Flip = value;
 			}
@@ -266,23 +262,18 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new PlayAnimationLogicAction());
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new PlayAnimationLogicAction());
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new StopAnimationLogicAction(), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-			m_walkingLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			logicSet3.AddAction(new StopAnimationLogicAction());
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(1f));
+			m_walkingLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 		}
 		public EnemyObj(string spriteName, PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base(spriteName, physicsManager, levelToAttachTo)
 		{
@@ -297,7 +288,7 @@ namespace RogueCastle
 			m_resetSpriteName = spriteName;
 			Difficulty = difficulty;
 			ProjectileScale = new Vector2(1f, 1f);
-			PlayAnimation(true);
+			PlayAnimation();
 			PlayAnimationOnRestart = true;
 			OutlineWidth = 2;
 			GivesLichHealth = true;
@@ -540,7 +531,7 @@ namespace RogueCastle
 			}
 			if (CurrentHealth <= 0 && !IsKilled && !m_bossVersionKilled)
 			{
-				Kill(true);
+				Kill();
 			}
 			base.Update(gameTime);
 		}
@@ -892,15 +883,7 @@ namespace RogueCastle
 		{
 			if (m_target != null && m_target.CurrentHealth > 0)
 			{
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"EnemyHit1",
-					"EnemyHit2",
-					"EnemyHit3",
-					"EnemyHit4",
-					"EnemyHit5",
-					"EnemyHit6"
-				});
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4", "EnemyHit5", "EnemyHit6");
 				Blink(Color.Red, 0.1f);
 				m_levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(collisionPt);
 				if (isPlayer && (Game.PlayerStats.Class == 6 || Game.PlayerStats.Class == 14))
@@ -1076,7 +1059,7 @@ namespace RogueCastle
 			{
 				GameUtil.UnlockAchievement("FEAR_OF_CHICKENS");
 			}
-			base.Kill(true);
+			base.Kill();
 		}
 		public void PauseEnemy(bool forcePause = false)
 		{
@@ -1171,7 +1154,7 @@ namespace RogueCastle
 			ChangeSprite(m_resetSpriteName);
 			if (PlayAnimationOnRestart)
 			{
-				PlayAnimation(true);
+				PlayAnimation();
 			}
 			m_initialDelayCounter = InitialLogicDelay;
 			UnpauseEnemy(true);
@@ -1198,7 +1181,7 @@ namespace RogueCastle
 			}
 			if (PlayAnimationOnRestart)
 			{
-				PlayAnimation(true);
+				PlayAnimation();
 			}
 			m_initialDelayCounter = InitialLogicDelay;
 			LockFlip = m_internalLockFlip;
@@ -1227,15 +1210,7 @@ namespace RogueCastle
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(string.Concat(new string[]
-					{
-						"Could not parse key:",
-						key,
-						" with string:",
-						Tag,
-						".  Original Error: ",
-						ex.Message
-					}));
+					Console.WriteLine(string.Concat("Could not parse key:", key, " with string:", Tag, ".  Original Error: ", ex.Message));
 					float result = 0f;
 					return result;
 				}
@@ -1254,7 +1229,7 @@ namespace RogueCastle
 		}
 		protected override GameObj CreateCloneInstance()
 		{
-			return EnemyBuilder.BuildEnemy(Type, m_target, null, m_levelScreen, Difficulty, false);
+			return EnemyBuilder.BuildEnemy(Type, m_target, null, m_levelScreen, Difficulty);
 		}
 		protected override void FillCloneInstance(object obj)
 		{

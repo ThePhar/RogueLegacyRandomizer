@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -76,30 +76,13 @@ namespace RogueCastle
 			};
 			LogicSet logicSet = new LogicSet(this);
 			logicSet.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Turret_Attack01",
-				"Turret_Attack02",
-				"Turret_Attack03"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(num, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet
-			});
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02", "Turret_Attack03"));
+			logicSet.AddAction(new DelayLogicAction(num));
+			m_generalBasicLB.AddLogicSet(logicSet);
+			m_generalAdvancedLB.AddLogicSet(logicSet);
+			m_generalExpertLB.AddLogicSet(logicSet);
+			m_generalMiniBossLB.AddLogicSet(logicSet);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -116,10 +99,7 @@ namespace RogueCastle
 			case 2:
 			case 3:
 				//IL_1D:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					100
-				});
+				RunLogicBlock(false, m_generalBasicLB, 100);
 				return;
 			}
 			//goto IL_1D;

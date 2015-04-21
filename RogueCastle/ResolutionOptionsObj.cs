@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -106,12 +106,9 @@ namespace RogueCastle
 						RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
 						rCScreenManager.DialogueScreen.SetDialogue("Resolution Changed");
 						rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-						rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "SaveResolution", new object[]
-						{
-							vector
-						});
-						rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelResolution", new object[0]);
-						rCScreenManager.DisplayScreen(13, false, null);
+						rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "SaveResolution", vector);
+						rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelResolution");
+						rCScreenManager.DisplayScreen(13, false);
 						m_resetCounter = 10f;
 					}
 					else

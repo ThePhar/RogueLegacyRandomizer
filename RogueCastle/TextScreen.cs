@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -70,41 +70,17 @@ namespace RogueCastle
 			m_smoke2.Position = new Vector2(CDGMath.RandomInt(200, 700), m_text.Y + m_text.Height / 2f - 30f + CDGMath.RandomInt(-50, 50));
 			m_smoke3.Position = new Vector2(CDGMath.RandomInt(300, 800), m_text.Y + m_text.Height / 2f - 30f + CDGMath.RandomInt(-100, 100));
 			m_smoke1.Opacity = (m_smoke2.Opacity = (m_smoke3.Opacity = 0f));
-			Tween.To(m_smoke1, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0.3"
-			});
-			Tween.To(m_smoke2, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0.2"
-			});
-			Tween.To(m_smoke3, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0.15"
-			});
+			Tween.To(m_smoke1, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0.3");
+			Tween.To(m_smoke2, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0.2");
+			Tween.To(m_smoke3, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0.15");
 			BackBufferOpacity = 0f;
 			m_text.Opacity = 0f;
-			Tween.To(this, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				m_backBufferOpacity.ToString()
-			});
-			Tween.To(m_text, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(this, m_fadeInSpeed, Tween.EaseNone, "BackBufferOpacity", m_backBufferOpacity.ToString());
+			Tween.To(m_text, m_fadeInSpeed, Tween.EaseNone, "Opacity", "1");
 			if (m_typewriteText)
 			{
 				m_text.Visible = false;
-				Tween.RunFunction(m_fadeInSpeed, m_text, "BeginTypeWriting", new object[]
-				{
-					m_text.Text.Length * 0.05f,
-					""
-				});
+				Tween.RunFunction(m_fadeInSpeed, m_text, "BeginTypeWriting", m_text.Text.Length * 0.05f, "");
 			}
 			else
 			{
@@ -116,35 +92,15 @@ namespace RogueCastle
 		{
 			if (!m_loadEndingAfterward)
 			{
-				Tween.To(m_smoke1, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
-				Tween.To(m_smoke2, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
-				Tween.To(m_smoke3, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
-				Tween.To(this, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-				{
-					"BackBufferOpacity",
-					"0"
-				});
-				Tween.To(m_text, m_fadeInSpeed, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
-				Tween.AddEndHandlerToLastTween(Game.ScreenManager, "HideCurrentScreen", new object[0]);
+				Tween.To(m_smoke1, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0");
+				Tween.To(m_smoke2, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0");
+				Tween.To(m_smoke3, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0");
+				Tween.To(this, m_fadeInSpeed, Tween.EaseNone, "BackBufferOpacity", "0");
+				Tween.To(m_text, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0");
+				Tween.AddEndHandlerToLastTween(Game.ScreenManager, "HideCurrentScreen");
 				return;
 			}
-			Game.ScreenManager.DisplayScreen(24, true, null);
+			Game.ScreenManager.DisplayScreen(24, true);
 		}
 		public override void Update(GameTime gameTime)
 		{

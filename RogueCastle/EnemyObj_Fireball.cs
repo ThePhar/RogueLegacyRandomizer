@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -190,109 +190,74 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyGhostChase_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChaseLogicAction(m_target, true, 2f, -1f), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyGhostChase_Character"));
+			logicSet.AddAction(new ChaseLogicAction(m_target, true, 2f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyGhostChase_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChaseLogicAction(m_target, false, 1f, -1f), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyGhostChase_Character"));
+			logicSet2.AddAction(new ChaseLogicAction(m_target, false, 1f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(1f, 2f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyGhostIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(1f, 2f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
+			logicSet4.AddAction(new MoveLogicAction(m_target, true));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyGhostDashPrep_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(DashDelay, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "TurnToPlayer", null), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyGhostDash_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, DashSpeed), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(DashDuration, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.75f, false), Types.Sequence.Serial);
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyGhostDashPrep_Character"));
+			logicSet5.AddAction(new DelayLogicAction(DashDelay));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "TurnToPlayer", null));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyGhostDash_Character"));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, DashSpeed));
+			logicSet5.AddAction(new DelayLogicAction(DashDuration));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyGhostIdle_Character"));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet5.AddAction(new DelayLogicAction(0.75f));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyGhostDashPrep_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(DashDelay, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "TurnToPlayer", null), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyGhostDash_Character", true, true), Types.Sequence.Serial);
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyGhostDashPrep_Character"));
+			logicSet6.AddAction(new DelayLogicAction(DashDelay));
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "TurnToPlayer", null));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyGhostDash_Character"));
 			ThrowProjectiles(logicSet6, true);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, DashSpeed), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(DashDuration, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.75f, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, DashSpeed));
+			logicSet6.AddAction(new DelayLogicAction(DashDuration));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyGhostIdle_Character"));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet6.AddAction(new DelayLogicAction(0.75f));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChaseLogicAction(m_target, true, 2f, -1f), Types.Sequence.Serial);
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossIdle_Character"));
+			logicSet7.AddAction(new ChaseLogicAction(m_target, true, 2f));
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(1f, 2f, false), Types.Sequence.Serial);
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossIdle_Character"));
+			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet8.AddAction(new DelayLogicAction(1f, 2f));
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossDashPrep_Character", true, true), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(DashDelay, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new RunFunctionLogicAction(this, "TurnToPlayer", null), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet9.AddAction(new RunFunctionLogicAction(this, "ChangeFlameDirection", new object[0]), Types.Sequence.Serial);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, DashSpeed), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(DashDuration, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangePropertyLogicAction(_objectList[0], "Rotation", 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.75f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossDashPrep_Character"));
+			logicSet9.AddAction(new DelayLogicAction(DashDelay));
+			logicSet9.AddAction(new RunFunctionLogicAction(this, "TurnToPlayer", null));
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemyGhostBossIdle_Character"));
+			logicSet9.AddAction(new RunFunctionLogicAction(this, "ChangeFlameDirection"));
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, DashSpeed));
+			logicSet9.AddAction(new DelayLogicAction(DashDuration));
+			logicSet9.AddAction(new ChangePropertyLogicAction(_objectList[0], "Rotation", 0));
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet9.AddAction(new DelayLogicAction(0.75f));
 			logicSet5.Tag = 2;
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet5
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet5
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet6
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7,
-				logicSet2,
-				logicSet8,
-				logicSet4,
-				logicSet9
-			});
-			m_generalNeoLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7,
-				logicSet2,
-				logicSet8,
-				logicSet4,
-				logicSet9
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet5);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet5);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet6);
+			m_generalMiniBossLB.AddLogicSet(logicSet7, logicSet2, logicSet8, logicSet4, logicSet9);
+			m_generalNeoLB.AddLogicSet(logicSet7, logicSet2, logicSet8, logicSet4, logicSet9);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -333,26 +298,23 @@ namespace RogueCastle
 			{
 				projectileData.SpriteName = "GhostProjectile_Sprite";
 			}
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
 			projectileData.Angle = new Vector2(60f, 60f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(30f, 30f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(120f, 120f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(150f, 150f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-60f, -60f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-30f, -30f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-120f, -120f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-150f, -150f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		private void ThrowStandingProjectile(bool useBossProjectile = false)
@@ -440,14 +402,7 @@ namespace RogueCastle
 				return;
 			}
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					40,
-					0,
-					0,
-					0,
-					60
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 40, 0, 0, 0, 60);
 				return;
 			default:
 				return;
@@ -477,14 +432,7 @@ namespace RogueCastle
 				return;
 			}
 			case 3:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					40,
-					0,
-					0,
-					0,
-					60
-				});
+				RunLogicBlock(true, m_generalExpertLB, 40, 0, 0, 0, 60);
 				return;
 			default:
 				return;
@@ -516,14 +464,7 @@ namespace RogueCastle
 					return;
 				}
 				case 3:
-					RunLogicBlock(true, m_generalMiniBossLB, new int[]
-					{
-						52,
-						0,
-						0,
-						0,
-						48
-					});
+					RunLogicBlock(true, m_generalMiniBossLB, 52, 0, 0, 0, 48);
 					return;
 				default:
 					return;
@@ -553,14 +494,7 @@ namespace RogueCastle
 					return;
 				}
 				case 3:
-					RunLogicBlock(true, m_generalNeoLB, new int[]
-					{
-						45,
-						0,
-						0,
-						0,
-						55
-					});
+					RunLogicBlock(true, m_generalNeoLB, 45, 0, 0, 0, 55);
 					return;
 				default:
 					return;
@@ -637,14 +571,14 @@ namespace RogueCastle
 			if (m_target.CurrentHealth > 0)
 			{
 				Game.PlayerStats.FireballBossBeaten = true;
-				SoundManager.StopMusic(0f);
+				SoundManager.StopMusic();
 				SoundManager.PlaySound("PressStart");
 				m_bossVersionKilled = true;
 				m_target.LockControls();
 				m_levelScreen.PauseScreen();
 				m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
 				m_levelScreen.RunWhiteSlashEffect();
-				Tween.RunFunction(1f, this, "Part2", new object[0]);
+				Tween.RunFunction(1f, this, "Part2");
 				SoundManager.PlaySound("Boss_Flash");
 				SoundManager.PlaySound("Boss_Fireball_Freeze");
 				GameUtil.UnlockAchievement("FEAR_OF_FIRE");
@@ -660,38 +594,24 @@ namespace RogueCastle
 			}
 			PauseEnemy(true);
 			ChangeSprite("EnemyGhostBossIdle_Character");
-			PlayAnimation(true);
+			PlayAnimation();
 			m_target.CurrentSpeed = 0f;
 			m_target.ForceInvincible = true;
-			Tween.To(m_levelScreen.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				X.ToString(),
-				"Y",
-				Y.ToString()
-			});
+			Tween.To(m_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
 			m_shake = true;
 			m_shakeTimer = m_shakeDuration;
 			for (int i = 0; i < 40; i++)
 			{
 				Vector2 vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right), CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
-				Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", new object[]
+				Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", this, m_target, new[]
 				{
-					this,
-					m_target,
-					new string[]
-					{
-						"Boss_Explo_01",
-						"Boss_Explo_02",
-						"Boss_Explo_03"
-					}
+				    "Boss_Explo_01",
+				    "Boss_Explo_02",
+				    "Boss_Explo_03"
 				});
-				Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", new object[]
-				{
-					vector
-				});
+				Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
 			}
-			Tween.AddEndHandlerToLastTween(this, "Part3", new object[0]);
+			Tween.AddEndHandlerToLastTween(this, "Part3");
 			if (!IsNeo)
 			{
 				List<int> list = new List<int>();
@@ -707,37 +627,22 @@ namespace RogueCastle
 				{
 					list.Add(2);
 				}
-				CDGMath.Shuffle<int>(list);
+				CDGMath.Shuffle(list);
 				float num = 2.5f / list.Count;
 				for (int m = 0; m < list.Count; m++)
 				{
 					Vector2 position = Position;
 					if (list[m] == 0)
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							position,
-							1,
-							10
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);
 					}
 					else if (list[m] == 1)
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							position,
-							10,
-							100
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 10, 100);
 					}
 					else
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							position,
-							11,
-							500
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 11, 500);
 					}
 				}
 			}
@@ -746,7 +651,7 @@ namespace RogueCastle
 		{
 			SoundManager.PlaySound("Boss_Fireball_Death");
 			m_levelScreen.ImpactEffectPool.DestroyFireballBoss(Position);
-			base.Kill(true);
+			base.Kill();
 		}
 		public EnemyObj_Fireball(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base("EnemyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
 		{

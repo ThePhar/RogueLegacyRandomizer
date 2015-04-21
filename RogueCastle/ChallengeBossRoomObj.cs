@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -135,10 +135,7 @@ namespace RogueCastle
 		public override void OnExit()
 		{
 			LoadPlayerData();
-			(Game.ScreenManager.Game as Game).SaveManager.LoadFiles(Player.AttachedLevel, new SaveType[]
-			{
-				SaveType.UpgradeData
-			});
+			(Game.ScreenManager.Game as Game).SaveManager.LoadFiles(Player.AttachedLevel, SaveType.UpgradeData);
 			Player.AttachedLevel.UpdatePlayerHUD();
 			Player.AttachedLevel.UpdatePlayerHUDAbilities();
 			Player.AttachedLevel.UpdatePlayerHUDSpecialItem();
@@ -156,10 +153,7 @@ namespace RogueCastle
 			{
 				Player.AttachedLevel.CloseBossDoor(LinkedRoom, LevelType);
 			}
-			(Game.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData
-			});
+			(Game.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
 			base.OnExit();
 		}
 		public void DisplayBossTitle(string bossTitle1, string bossTitle2, string endHandler)
@@ -182,109 +176,32 @@ namespace RogueCastle
 			m_bossDivider.Y += m_bossTitle1.Height - 5;
 			m_bossTitle1.X -= 1000f;
 			m_bossTitle2.X += 1500f;
-			Tween.To(m_bossDivider, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_bossDivider, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0",
-				"ScaleX",
-				((float)(m_bossTitle2.Width / 5)).ToString()
-			});
-			Tween.To(m_bossTitle1, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_bossTitle2, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"1"
-			});
-			Tween.By(m_bossTitle1, 1f, new Easing(Quad.EaseOut), new string[]
-			{
-				"X",
-				"1000"
-			});
-			Tween.By(m_bossTitle2, 1f, new Easing(Quad.EaseOut), new string[]
-			{
-				"X",
-				"-1500"
-			});
+			Tween.To(m_bossDivider, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
+			Tween.To(m_bossDivider, 1f, Quad.EaseInOut, "delay", "0", "ScaleX", ((float)(m_bossTitle2.Width / 5)).ToString());
+			Tween.To(m_bossTitle1, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
+			Tween.To(m_bossTitle2, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
+			Tween.By(m_bossTitle1, 1f, Quad.EaseOut, "X", "1000");
+			Tween.By(m_bossTitle2, 1f, Quad.EaseOut, "X", "-1500");
 			m_bossTitle1.X += 1000f;
 			m_bossTitle2.X -= 1500f;
-			Tween.By(m_bossTitle1, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"20"
-			});
-			Tween.By(m_bossTitle2, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"-20"
-			});
+			Tween.By(m_bossTitle1, 2f, Tween.EaseNone, "delay", "1", "X", "20");
+			Tween.By(m_bossTitle2, 2f, Tween.EaseNone, "delay", "1", "X", "-20");
 			m_bossTitle1.X -= 1000f;
 			m_bossTitle2.X += 1500f;
-			Tween.AddEndHandlerToLastTween(this, endHandler, new object[0]);
-			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Title_Exit"
-			});
+			Tween.AddEndHandlerToLastTween(this, endHandler);
+			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Boss_Title_Exit");
 			m_bossTitle1.X += 1020f;
 			m_bossTitle2.X -= 1520f;
 			m_bossTitle1.Opacity = 1f;
 			m_bossTitle2.Opacity = 1f;
-			Tween.To(m_bossTitle1, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_bossTitle2, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Opacity",
-				"0"
-			});
-			Tween.By(m_bossTitle1, 0.6f, new Easing(Quad.EaseIn), new string[]
-			{
-				"delay",
-				"3",
-				"X",
-				"1500"
-			});
-			Tween.By(m_bossTitle2, 0.6f, new Easing(Quad.EaseIn), new string[]
-			{
-				"delay",
-				"3",
-				"X",
-				"-1000"
-			});
+			Tween.To(m_bossTitle1, 0.5f, Tween.EaseNone, "delay", "3", "Opacity", "0");
+			Tween.To(m_bossTitle2, 0.5f, Tween.EaseNone, "delay", "3", "Opacity", "0");
+			Tween.By(m_bossTitle1, 0.6f, Quad.EaseIn, "delay", "3", "X", "1500");
+			Tween.By(m_bossTitle2, 0.6f, Quad.EaseIn, "delay", "3", "X", "-1000");
 			m_bossTitle1.Opacity = 0f;
 			m_bossTitle2.Opacity = 0f;
 			m_bossDivider.Opacity = 1f;
-			Tween.To(m_bossDivider, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"2.8",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_bossDivider, 0.5f, Tween.EaseNone, "delay", "2.8", "Opacity", "0");
 			m_bossDivider.Opacity = 0f;
 		}
 		public override void Update(GameTime gameTime)
@@ -303,17 +220,9 @@ namespace RogueCastle
 				m_bossChest.Visible = true;
 				m_bossChest.Opacity = 0f;
 				SoundManager.PlayMusic("TitleScreenSong", true, 1f);
-				Tween.To(m_bossChest, 4f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
-				Tween.To(m_bossChest, 4f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					m_roomFloor.ToString()
-				});
-				Tween.AddEndHandlerToLastTween(this, "UnlockChest", new object[0]);
+				Tween.To(m_bossChest, 4f, Tween.EaseNone, "Opacity", "1");
+				Tween.To(m_bossChest, 4f, Quad.EaseOut, "Y", m_roomFloor.ToString());
+				Tween.AddEndHandlerToLastTween(this, "UnlockChest");
 				m_sparkleTimer = 0.5f;
 			}
 			if (m_bossChest.Visible && !m_bossChest.IsOpen && BossKilled)
@@ -324,10 +233,7 @@ namespace RogueCastle
 					if (m_sparkleTimer <= 0f)
 					{
 						m_sparkleTimer = 0.5f;
-						Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect", new object[]
-						{
-							new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height / 2)
-						});
+						Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect", new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height / 2));
 						return;
 					}
 				}
@@ -337,7 +243,7 @@ namespace RogueCastle
 				m_teleportingOut = true;
 				if (LevelEV.RUN_DEMO_VERSION)
 				{
-					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true, null);
+					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true);
 					return;
 				}
 				TeleportPlayer();
@@ -354,50 +260,36 @@ namespace RogueCastle
 			Vector2 position = Player.Position;
 			Vector2 scale = Player.Scale;
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new PlaySoundLogicAction(new string[]
-			{
-				"Teleport_Disappear"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleOut", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new object[]
-			{
-				new Vector2(Player.X, Player.Bounds.Bottom),
-				Player.Scale
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "LoadPlayerData", new object[0]), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false));
+			logicSet.AddAction(new DelayLogicAction(0.5f));
+			logicSet.AddAction(new PlaySoundLogicAction("Teleport_Disappear"));
+			logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleOut"));
+			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new Vector2(Player.X, Player.Bounds.Bottom), Player.Scale));
+			logicSet.AddAction(new DelayLogicAction(0.3f));
+			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new RunFunctionLogicAction(this, "LoadPlayerData"));
 			if (LinkedRoom != null)
 			{
 				Player.Scale = m_storedScale;
 				Player.OverrideInternalScale(m_storedScale);
 				Player.UpdateCollisionBoxes();
 				Player.Position = new Vector2(LinkedRoom.Bounds.Center.X, LinkedRoom.Bounds.Bottom - 60 - (Player.TerrainBounds.Bottom - Player.Y));
-				logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false), Types.Sequence.Serial);
-				logicSet.AddAction(new ChangePropertyLogicAction(Player, "ScaleY", m_storedScale.Y), Types.Sequence.Serial);
-				logicSet.AddAction(new TeleportLogicAction(null, Player.Position), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleIn", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new object[]
-				{
-					new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60),
-					m_storedScale
-				}), Types.Sequence.Serial);
-				logicSet.AddAction(new PlaySoundLogicAction(new string[]
-				{
-					"Teleport_Reappear"
-				}), Types.Sequence.Serial);
+				logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false));
+				logicSet.AddAction(new ChangePropertyLogicAction(Player, "ScaleY", m_storedScale.Y));
+				logicSet.AddAction(new TeleportLogicAction(null, Player.Position));
+				logicSet.AddAction(new DelayLogicAction(0.05f));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
+				logicSet.AddAction(new DelayLogicAction(1f));
+				logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleIn"));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), m_storedScale));
+				logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
 			}
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls", new object[0]), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false));
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls"));
 			Player.RunExternalLogicSet(logicSet);
 			Player.Position = position;
 			Player.Scale = scale;
@@ -405,26 +297,16 @@ namespace RogueCastle
 		}
 		public void TeleportScaleOut()
 		{
-			Tween.To(Player, 0.05f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleX",
-				"0"
-			});
+			Tween.To(Player, 0.05f, Tween.EaseNone, "ScaleX", "0");
 		}
 		public void TeleportScaleIn()
 		{
-			Tween.To(Player, 0.05f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.15",
-				"ScaleX",
-				m_storedScale.X.ToString()
-			});
+			Tween.To(Player, 0.05f, Tween.EaseNone, "delay", "0.15", "ScaleX", m_storedScale.X.ToString());
 		}
 		public void KickPlayerOut()
 		{
 			Player.AttachedLevel.PauseScreen();
-			SoundManager.StopMusic(0f);
+			SoundManager.StopMusic();
 			Player.LockControls();
 			Player.AttachedLevel.RunWhiteSlashEffect();
 			SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
@@ -435,18 +317,10 @@ namespace RogueCastle
 			Player.AccelerationY = 0f;
 			if (this is BlobChallengeRoom)
 			{
-				Tween.To(Player.AttachedLevel.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"Zoom",
-					"1",
-					"X",
-					Player.X.ToString(),
-					"Y",
-					Player.Y.ToString()
-				});
-				Tween.AddEndHandlerToLastTween(this, "LockCamera", new object[0]);
+				Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "Zoom", "1", "X", Player.X.ToString(), "Y", Player.Y.ToString());
+				Tween.AddEndHandlerToLastTween(this, "LockCamera");
 			}
-			Tween.RunFunction(1f, this, "KickPlayerOut2", new object[0]);
+			Tween.RunFunction(1f, this, "KickPlayerOut2");
 		}
 		public void KickPlayerOut2()
 		{
@@ -455,51 +329,37 @@ namespace RogueCastle
 			Vector2 position = Player.Position;
 			Vector2 scale = Player.Scale;
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1.3f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new PlaySoundLogicAction(new string[]
-			{
-				"Teleport_Disappear"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleOut", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new object[]
-			{
-				new Vector2(Player.X, Player.Bounds.Bottom),
-				Player.Scale
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "LoadPlayerData", new object[0]), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
+			logicSet.AddAction(new DelayLogicAction(1.3f));
+			logicSet.AddAction(new PlaySoundLogicAction("Teleport_Disappear"));
+			logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleOut"));
+			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new Vector2(Player.X, Player.Bounds.Bottom), Player.Scale));
+			logicSet.AddAction(new DelayLogicAction(0.3f));
+			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new RunFunctionLogicAction(this, "LoadPlayerData"));
 			if (LinkedRoom != null)
 			{
 				Player.Scale = m_storedScale;
 				Player.OverrideInternalScale(m_storedScale);
 				Player.UpdateCollisionBoxes();
 				Player.Position = new Vector2(LinkedRoom.Bounds.Center.X, LinkedRoom.Bounds.Bottom - 60 - (Player.TerrainBounds.Bottom - Player.Y));
-				logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false), Types.Sequence.Serial);
-				logicSet.AddAction(new ChangePropertyLogicAction(Player, "ScaleY", m_storedScale.Y), Types.Sequence.Serial);
-				logicSet.AddAction(new TeleportLogicAction(null, Player.Position), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleIn", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new object[]
-				{
-					new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60),
-					m_storedScale
-				}), Types.Sequence.Serial);
-				logicSet.AddAction(new PlaySoundLogicAction(new string[]
-				{
-					"Teleport_Reappear"
-				}), Types.Sequence.Serial);
+				logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false));
+				logicSet.AddAction(new ChangePropertyLogicAction(Player, "ScaleY", m_storedScale.Y));
+				logicSet.AddAction(new TeleportLogicAction(null, Player.Position));
+				logicSet.AddAction(new DelayLogicAction(0.05f));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
+				logicSet.AddAction(new DelayLogicAction(1f));
+				logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportScaleIn"));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), m_storedScale));
+				logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
 			}
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls", new object[0]), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false));
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls"));
 			Player.RunExternalLogicSet(logicSet);
 			Player.Position = position;
 			Player.Scale = scale;

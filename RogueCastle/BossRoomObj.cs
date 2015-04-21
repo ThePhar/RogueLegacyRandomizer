@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -88,109 +88,32 @@ namespace RogueCastle
 			m_bossDivider.Y += m_bossTitle1.Height - 5;
 			m_bossTitle1.X -= 1000f;
 			m_bossTitle2.X += 1500f;
-			Tween.To(m_bossDivider, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_bossDivider, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0",
-				"ScaleX",
-				((float)(m_bossTitle2.Width / 5)).ToString()
-			});
-			Tween.To(m_bossTitle1, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_bossTitle2, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"1"
-			});
-			Tween.By(m_bossTitle1, 1f, new Easing(Quad.EaseOut), new string[]
-			{
-				"X",
-				"1000"
-			});
-			Tween.By(m_bossTitle2, 1f, new Easing(Quad.EaseOut), new string[]
-			{
-				"X",
-				"-1500"
-			});
+			Tween.To(m_bossDivider, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
+			Tween.To(m_bossDivider, 1f, Quad.EaseInOut, "delay", "0", "ScaleX", ((float)(m_bossTitle2.Width / 5)).ToString());
+			Tween.To(m_bossTitle1, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
+			Tween.To(m_bossTitle2, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
+			Tween.By(m_bossTitle1, 1f, Quad.EaseOut, "X", "1000");
+			Tween.By(m_bossTitle2, 1f, Quad.EaseOut, "X", "-1500");
 			m_bossTitle1.X += 1000f;
 			m_bossTitle2.X -= 1500f;
-			Tween.By(m_bossTitle1, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"20"
-			});
-			Tween.By(m_bossTitle2, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"-20"
-			});
+			Tween.By(m_bossTitle1, 2f, Tween.EaseNone, "delay", "1", "X", "20");
+			Tween.By(m_bossTitle2, 2f, Tween.EaseNone, "delay", "1", "X", "-20");
 			m_bossTitle1.X -= 1000f;
 			m_bossTitle2.X += 1500f;
-			Tween.AddEndHandlerToLastTween(this, endHandler, new object[0]);
-			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Title_Exit"
-			});
+			Tween.AddEndHandlerToLastTween(this, endHandler);
+			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Boss_Title_Exit");
 			m_bossTitle1.X += 1020f;
 			m_bossTitle2.X -= 1520f;
 			m_bossTitle1.Opacity = 1f;
 			m_bossTitle2.Opacity = 1f;
-			Tween.To(m_bossTitle1, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_bossTitle2, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Opacity",
-				"0"
-			});
-			Tween.By(m_bossTitle1, 0.6f, new Easing(Quad.EaseIn), new string[]
-			{
-				"delay",
-				"3",
-				"X",
-				"1500"
-			});
-			Tween.By(m_bossTitle2, 0.6f, new Easing(Quad.EaseIn), new string[]
-			{
-				"delay",
-				"3",
-				"X",
-				"-1000"
-			});
+			Tween.To(m_bossTitle1, 0.5f, Tween.EaseNone, "delay", "3", "Opacity", "0");
+			Tween.To(m_bossTitle2, 0.5f, Tween.EaseNone, "delay", "3", "Opacity", "0");
+			Tween.By(m_bossTitle1, 0.6f, Quad.EaseIn, "delay", "3", "X", "1500");
+			Tween.By(m_bossTitle2, 0.6f, Quad.EaseIn, "delay", "3", "X", "-1000");
 			m_bossTitle1.Opacity = 0f;
 			m_bossTitle2.Opacity = 0f;
 			m_bossDivider.Opacity = 1f;
-			Tween.To(m_bossDivider, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"2.8",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_bossDivider, 0.5f, Tween.EaseNone, "delay", "2.8", "Opacity", "0");
 			m_bossDivider.Opacity = 0f;
 		}
 		public override void Update(GameTime gameTime)
@@ -205,17 +128,9 @@ namespace RogueCastle
 				m_bossChest.Visible = true;
 				m_bossChest.Opacity = 0f;
 				SoundManager.PlayMusic("TitleScreenSong", true, 1f);
-				Tween.To(m_bossChest, 4f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
-				Tween.To(m_bossChest, 4f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					m_roomFloor.ToString()
-				});
-				Tween.AddEndHandlerToLastTween(this, "UnlockChest", new object[0]);
+				Tween.To(m_bossChest, 4f, Tween.EaseNone, "Opacity", "1");
+				Tween.To(m_bossChest, 4f, Quad.EaseOut, "Y", m_roomFloor.ToString());
+				Tween.AddEndHandlerToLastTween(this, "UnlockChest");
 				m_sparkleTimer = 0.5f;
 			}
 			if (m_bossChest.Visible && !m_bossChest.IsOpen && BossKilled)
@@ -226,10 +141,7 @@ namespace RogueCastle
 					if (m_sparkleTimer <= 0f)
 					{
 						m_sparkleTimer = 0.5f;
-						Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect", new object[]
-						{
-							new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height / 2)
-						});
+						Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect", new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height / 2));
 						return;
 					}
 				}
@@ -239,7 +151,7 @@ namespace RogueCastle
 				m_teleportingOut = true;
 				if (LevelEV.RUN_DEMO_VERSION)
 				{
-					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true, null);
+					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true);
 					return;
 				}
 				TeleportPlayer();
@@ -259,74 +171,44 @@ namespace RogueCastle
 			Player.CurrentSpeed = 0f;
 			Vector2 position = Player.Position;
 			Vector2 scale = Player.Scale;
-			Tween.To(Player, 0.05f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"1.2",
-				"ScaleX",
-				"0"
-			});
+			Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "1.2", "ScaleX", "0");
 			Player.ScaleX = 0f;
-			Tween.To(Player, 0.05f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"7",
-				"ScaleX",
-				scale.X.ToString()
-			});
+			Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "7", "ScaleX", scale.X.ToString());
 			Player.ScaleX = scale.X;
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new PlaySoundLogicAction(new string[]
-			{
-				"Teleport_Disappear"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new object[]
-			{
-				new Vector2(Player.X, Player.Bounds.Bottom),
-				Player.Scale
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false));
+			logicSet.AddAction(new DelayLogicAction(0.5f));
+			logicSet.AddAction(new PlaySoundLogicAction("Teleport_Disappear"));
+			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new Vector2(Player.X, Player.Bounds.Bottom), Player.Scale));
+			logicSet.AddAction(new DelayLogicAction(0.3f));
+			logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
+			logicSet.AddAction(new DelayLogicAction(0.2f));
 			if (LinkedRoom != null)
 			{
 				Player.Position = new Vector2(Player.AttachedLevel.RoomList[1].Bounds.Center.X, Player.AttachedLevel.RoomList[1].Bounds.Center.Y);
 				Player.UpdateCollisionBoxes();
-				logicSet.AddAction(new TeleportLogicAction(null, Player.Position), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.RoomList[1], "RevealSymbol", new object[]
-				{
-					LevelType,
-					true
-				}), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(3.5f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
+				logicSet.AddAction(new TeleportLogicAction(null, Player.Position));
+				logicSet.AddAction(new DelayLogicAction(0.05f));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.RoomList[1], "RevealSymbol", LevelType, true));
+				logicSet.AddAction(new DelayLogicAction(3.5f));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
+				logicSet.AddAction(new DelayLogicAction(0.2f));
 				Player.Position = new Vector2(LinkedRoom.Bounds.Center.X, LinkedRoom.Bounds.Bottom - 60 - (Player.Bounds.Bottom - Player.Y));
 				Player.UpdateCollisionBoxes();
-				logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false), Types.Sequence.Serial);
-				logicSet.AddAction(new TeleportLogicAction(null, Player.Position), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new object[]
-				{
-					new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60),
-					scale
-				}), Types.Sequence.Serial);
-				logicSet.AddAction(new PlaySoundLogicAction(new string[]
-				{
-					"Teleport_Reappear"
-				}), Types.Sequence.Serial);
+				logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false));
+				logicSet.AddAction(new TeleportLogicAction(null, Player.Position));
+				logicSet.AddAction(new DelayLogicAction(0.05f));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
+				logicSet.AddAction(new DelayLogicAction(1f));
+				logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), scale));
+				logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
 			}
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls", new object[0]), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false));
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls"));
 			Player.RunExternalLogicSet(logicSet);
 			Player.Position = position;
 			Player.UpdateCollisionBoxes();

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -151,46 +151,26 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "Shake", true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "Shake", false), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "Shake", true));
+			logicSet.AddAction(new DelayLogicAction(1f));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "Shake", false));
+			logicSet.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1f, -1f), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.75f, -1f), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.75f));
 			ThrowAdvancedProjectiles(logicSet3, true);
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.75f, -1f), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.75f));
 			ThrowExpertProjectiles(logicSet4, true);
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.25f, -1f), Types.Sequence.Serial);
+			logicSet5.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.25f));
 			ThrowProjectiles(logicSet5, true);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet3
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet4
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet5
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet3);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet4);
+			m_generalMiniBossLB.AddLogicSet(logicSet, logicSet5);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -229,18 +209,15 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = ProjectileScale
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
 			projectileData.Angle = new Vector2(135f, 135f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(45f, 45f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-135f, -135f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		private void ThrowExpertProjectiles(LogicSet ls, bool useBossProjectile = false)
@@ -259,18 +236,15 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = ProjectileScale
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
 			projectileData.Angle = new Vector2(0f, 0f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(90f, 90f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(180f, 180f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		private void ThrowAdvancedProjectiles(LogicSet ls, bool useBossProjectile = false)
@@ -289,14 +263,11 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = ProjectileScale
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
 			projectileData.Angle = new Vector2(90f, 90f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		protected override void RunBasicLogic()
@@ -326,11 +297,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 			}
 		}
 		protected override void RunAdvancedLogic()
@@ -360,11 +327,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 0, 100);
 			}
 		}
 		protected override void RunExpertLogic()
@@ -394,11 +357,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalExpertLB, 0, 100);
 			}
 		}
 		protected override void RunMinibossLogic()
@@ -428,11 +387,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				RunLogicBlock(true, m_generalMiniBossLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalMiniBossLB, 0, 100);
 			}
 		}
 		public override void Update(GameTime gameTime)

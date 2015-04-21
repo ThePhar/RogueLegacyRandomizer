@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -898,11 +898,7 @@ namespace RogueCastle
 					}
 					float x = m_internalScale.X;
 					ScaleX = 0f;
-					m_flipTween = Tween.To(this, 0.15f, new Easing(Tween.EaseNone), new string[]
-					{
-						"ScaleX",
-						x.ToString()
-					});
+					m_flipTween = Tween.To(this, 0.15f, Tween.EaseNone, "ScaleX", x.ToString());
 				}
 				base.Flip = value;
 			}
@@ -970,29 +966,29 @@ namespace RogueCastle
 				m_standingAttack3LogicSet.Dispose();
 			}
 			m_standingAttack3LogicSet = new LogicSet(this);
-			m_standingAttack3LogicSet.AddAction(new ChangeSpriteLogicAction("PlayerAttacking3_Character", false, false), Types.Sequence.Serial);
-			m_standingAttack3LogicSet.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AttackAnimationDelay), Types.Sequence.Serial);
-			m_standingAttack3LogicSet.AddAction(new PlayAnimationLogicAction(2, 4, false), Types.Sequence.Serial);
-			m_standingAttack3LogicSet.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			m_standingAttack3LogicSet.AddAction(new RunFunctionLogicAction(this, "PlayAttackSound", new object[0]), Types.Sequence.Serial);
-			m_standingAttack3LogicSet.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Serial);
-			m_standingAttack3LogicSet.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AnimationDelay), Types.Sequence.Serial);
+			m_standingAttack3LogicSet.AddAction(new ChangeSpriteLogicAction("PlayerAttacking3_Character", false, false));
+			m_standingAttack3LogicSet.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AttackAnimationDelay));
+			m_standingAttack3LogicSet.AddAction(new PlayAnimationLogicAction(2, 4));
+			m_standingAttack3LogicSet.AddAction(new DelayLogicAction(AttackDelay));
+			m_standingAttack3LogicSet.AddAction(new RunFunctionLogicAction(this, "PlayAttackSound"));
+			m_standingAttack3LogicSet.AddAction(new PlayAnimationLogicAction("AttackStart", "End"));
+			m_standingAttack3LogicSet.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AnimationDelay));
 			if (m_airAttackLS != null)
 			{
 				m_airAttackLS.Dispose();
 			}
 			m_airAttackLS = new LogicSet(this);
-			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "IsAirAttacking", true), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new ChangeSpriteLogicAction("PlayerAirAttack_Character", false, false), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AttackAnimationDelay), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new RunFunctionLogicAction(this, "PlayAttackSound", new object[0]), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Start", "Start", false), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Frame 3 Test", "Frame 3 Test", false), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Attack", "Attack", false), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AnimationDelay), Types.Sequence.Serial);
-			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "IsAirAttacking", false), Types.Sequence.Serial);
+			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "IsAirAttacking", true));
+			m_airAttackLS.AddAction(new ChangeSpriteLogicAction("PlayerAirAttack_Character", false, false));
+			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AttackAnimationDelay));
+			m_airAttackLS.AddAction(new RunFunctionLogicAction(this, "PlayAttackSound"));
+			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Start", "Start"));
+			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Frame 3 Test", "Frame 3 Test"));
+			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Attack", "Attack"));
+			m_airAttackLS.AddAction(new DelayLogicAction(AttackDelay));
+			m_airAttackLS.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", AnimationDelay));
+			m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "IsAirAttacking", false));
 		}
 		public PlayerObj(string spriteName, PlayerIndex playerIndex, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, Game game) : base(spriteName, physicsManager, levelToAttachTo)
 		{
@@ -1005,36 +1001,12 @@ namespace RogueCastle
 			CollisionTypeTag = 2;
 			m_debugInputMap = new InputMap(PlayerIndex.Two, false);
 			InitializeInputMap();
-			m_walkDownSound = new FrameSoundObj(m_playerLegs, 4, new string[]
-			{
-				"Player_WalkDown01",
-				"Player_WalkDown02"
-			});
-			m_walkUpSound = new FrameSoundObj(m_playerLegs, 1, new string[]
-			{
-				"Player_WalkUp01",
-				"Player_WalkUp02"
-			});
-			m_walkUpSoundHigh = new FrameSoundObj(m_playerLegs, 1, new string[]
-			{
-				"Player_WalkUp01_High",
-				"Player_WalkUp02_High"
-			});
-			m_walkDownSoundHigh = new FrameSoundObj(m_playerLegs, 4, new string[]
-			{
-				"Player_WalkDown01_High",
-				"Player_WalkDown02_High"
-			});
-			m_walkUpSoundLow = new FrameSoundObj(m_playerLegs, 1, new string[]
-			{
-				"Player_WalkUp01_Low",
-				"Player_WalkUp02_Low"
-			});
-			m_walkDownSoundLow = new FrameSoundObj(m_playerLegs, 4, new string[]
-			{
-				"Player_WalkDown01_Low",
-				"Player_WalkDown02_Low"
-			});
+			m_walkDownSound = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01", "Player_WalkDown02");
+			m_walkUpSound = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01", "Player_WalkUp02");
+			m_walkUpSoundHigh = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01_High", "Player_WalkUp02_High");
+			m_walkDownSoundHigh = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01_High", "Player_WalkDown02_High");
+			m_walkUpSoundLow = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01_Low", "Player_WalkUp02_Low");
+			m_walkDownSoundLow = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01_Low", "Player_WalkDown02_Low");
 			m_externalLS = new LogicSet(null);
 			m_flightDurationText = new TextObj(Game.JunicodeFont);
 			m_flightDurationText.FontSize = 12f;
@@ -1308,7 +1280,7 @@ namespace RogueCastle
 				RCScreenManager rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
 				if (rCScreenManager != null)
 				{
-					Kill(true);
+					Kill();
 				}
 			}
 			if (m_debugInputMap.JustPressed(8))
@@ -1324,12 +1296,7 @@ namespace RogueCastle
 		{
 			if (!LevelEV.CREATE_RETAIL_VERSION && InputManager.JustPressed(Keys.T, null))
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"Fart1",
-					"Fart2",
-					"Fart3"
-				});
+				SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
 				m_levelScreen.ImpactEffectPool.DisplayFartEffect(this);
 			}
 			if (Game.GlobalInput.JustPressed(9) && Game.PlayerStats.TutorialComplete && m_levelScreen.CurrentRoom.Name != "Start" && m_levelScreen.CurrentRoom.Name != "Boss" && m_levelScreen.CurrentRoom.Name != "ChallengeBoss")
@@ -1426,7 +1393,7 @@ namespace RogueCastle
 					if (m_isTouchingGround && m_currentLogicSet == m_standingAttack3LogicSet && m_currentLogicSet.IsActive && m_playerLegs.SpriteName != "PlayerWalkingLegs_Sprite")
 					{
 						m_playerLegs.ChangeSprite("PlayerWalkingLegs_Sprite");
-						m_playerLegs.PlayAnimation(CurrentFrame, TotalFrames, false);
+						m_playerLegs.PlayAnimation(CurrentFrame, TotalFrames);
 						m_playerLegs.Y += 4f;
 						m_playerLegs.OverrideParentAnimationDelay = true;
 						m_playerLegs.AnimationDelay = 0.1f;
@@ -1466,12 +1433,7 @@ namespace RogueCastle
 					}
 					if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) && CDGMath.RandomInt(0, 100) >= 91)
 					{
-						SoundManager.PlaySound(new string[]
-						{
-							"Fart1",
-							"Fart2",
-							"Fart3"
-						});
+						SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
 						m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
 					}
 					flag = true;
@@ -1486,12 +1448,7 @@ namespace RogueCastle
 					SoundManager.PlaySound("Player_DoubleJump");
 					if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) && CDGMath.RandomInt(0, 100) >= 91)
 					{
-						SoundManager.PlaySound(new string[]
-						{
-							"Fart1",
-							"Fart2",
-							"Fart3"
-						});
+						SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
 						m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
 					}
 					flag = true;
@@ -1592,12 +1549,12 @@ namespace RogueCastle
 				if (Game.PlayerStats.Spell == 15 && (Game.GlobalInput.Pressed(12) || Game.GlobalInput.Pressed(24)) && m_rapidSpellCastDelay <= 0f)
 				{
 					m_rapidSpellCastDelay = 0.2f;
-					CastSpell(false, false);
+					CastSpell(false);
 					flag2 = true;
 				}
 				if ((m_spellCastDelay <= 0f || Game.PlayerStats.Class == 16) && (Game.GlobalInput.JustPressed(24) || (Game.PlayerStats.Class == 16 && Game.GlobalInput.JustPressed(12))) && (Game.PlayerStats.Class != 16 || !flag2))
 				{
-					CastSpell(false, false);
+					CastSpell(false);
 				}
 				if (Game.GlobalInput.JustPressed(13))
 				{
@@ -1729,12 +1686,7 @@ namespace RogueCastle
 					if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) && CDGMath.RandomInt(0, 100) >= 91)
 					{
 						m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
-						SoundManager.PlaySound(new string[]
-						{
-							"Fart1",
-							"Fart2",
-							"Fart3"
-						});
+						SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
 					}
 				}
 				else if (Game.GlobalInput.JustPressed(15))
@@ -1758,12 +1710,7 @@ namespace RogueCastle
 					if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) && CDGMath.RandomInt(0, 100) >= 91)
 					{
 						m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
-						SoundManager.PlaySound(new string[]
-						{
-							"Fart1",
-							"Fart2",
-							"Fart3"
-						});
+						SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
 					}
 				}
 			}
@@ -2085,7 +2032,7 @@ namespace RogueCastle
 				}
 				if (!IsAnimating && m_playerHead.SpriteName != "PlayerIdleHeadUp_Sprite")
 				{
-					PlayAnimation(true);
+					PlayAnimation();
 					return;
 				}
 				break;
@@ -2096,7 +2043,7 @@ namespace RogueCastle
 				}
 				if (!IsAnimating)
 				{
-					PlayAnimation(true);
+					PlayAnimation();
 					return;
 				}
 				break;
@@ -2116,7 +2063,7 @@ namespace RogueCastle
 				}
 				if (!IsAnimating)
 				{
-					PlayAnimation(true);
+					PlayAnimation();
 					return;
 				}
 				break;
@@ -2416,17 +2363,14 @@ namespace RogueCastle
 				StopAllSpells();
 				LockControls();
 				m_lastTouchedTeleporter = teleporterObj;
-				Tween.RunFunction(0f, AttachedLevel, "DisplayMap", new object[]
-				{
-					true
-				});
+				Tween.RunFunction(0f, AttachedLevel, "DisplayMap", true);
 			}
 			DoorObj doorObj = otherBox.Parent as DoorObj;
 			if (doorObj != null && !ControlsLocked && IsTouchingGround && doorObj.IsBossDoor && !doorObj.Locked && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
 			{
 				if (doorObj.Name == "FinalBossDoor")
 				{
-					Game.ScreenManager.DisplayScreen(24, true, null);
+					Game.ScreenManager.DisplayScreen(24, true);
 				}
 				else
 				{
@@ -2446,11 +2390,8 @@ namespace RogueCastle
 								LockControls();
 								(m_levelScreen.ScreenManager as RCScreenManager).StartWipeTransition();
 								Vector2 vector = new Vector2(current.X + current.Width / 2f, current.Bounds.Bottom - (Bounds.Bottom - Y));
-								Tween.RunFunction(0.2f, this, "EnterBossRoom", new object[]
-								{
-									vector
-								});
-								Tween.RunFunction(0.2f, m_levelScreen.ScreenManager, "EndWipeTransition", new object[0]);
+								Tween.RunFunction(0.2f, this, "EnterBossRoom", vector);
+								Tween.RunFunction(0.2f, m_levelScreen.ScreenManager, "EndWipeTransition");
 								break;
 							}
 						}
@@ -2606,30 +2547,10 @@ namespace RogueCastle
 				itemDropObj.AnimationDelay = 0.0166666675f;
 				itemDropObj.AccelerationY = 0f;
 				itemDropObj.AccelerationX = 0f;
-				Tween.By(itemDropObj, 0.4f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					"-120"
-				});
-				Tween.To(itemDropObj, 0.1f, new Easing(Linear.EaseNone), new string[]
-				{
-					"delay",
-					"0.6",
-					"Opacity",
-					"0"
-				});
-				Tween.AddEndHandlerToLastTween(m_levelScreen.ItemDropManager, "DestroyItemDrop", new object[]
-				{
-					itemDropObj
-				});
-				SoundManager.PlaySound(new string[]
-				{
-					"CoinDrop1",
-					"CoinDrop2",
-					"CoinDrop3",
-					"CoinDrop4",
-					"CoinDrop5"
-				});
+				Tween.By(itemDropObj, 0.4f, Quad.EaseOut, "Y", "-120");
+				Tween.To(itemDropObj, 0.1f, Linear.EaseNone, "delay", "0.6", "Opacity", "0");
+				Tween.AddEndHandlerToLastTween(m_levelScreen.ItemDropManager, "DestroyItemDrop", itemDropObj);
+				SoundManager.PlaySound("CoinDrop1", "CoinDrop2", "CoinDrop3", "CoinDrop4", "CoinDrop5");
 			}
 			ChestObj chestObj = physicsObj as ChestObj;
 			if (chestObj != null && !ControlsLocked && m_isTouchingGround && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)) && !chestObj.IsOpen)
@@ -2641,94 +2562,45 @@ namespace RogueCastle
 		{
 			if (Game.PlayerStats.IsFemale)
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_Female_Effort_03",
-					"Player_Female_Effort_04",
-					"Player_Female_Effort_05",
-					"Player_Female_Effort_06",
-					"Player_Female_Effort_07",
-					"Blank",
-					"Blank",
-					"Blank"
-				});
+				SoundManager.PlaySound("Player_Female_Effort_03", "Player_Female_Effort_04", "Player_Female_Effort_05", "Player_Female_Effort_06", "Player_Female_Effort_07", "Blank", "Blank", "Blank");
 			}
 			else
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_Male_Effort_01",
-					"Player_Male_Effort_02",
-					"Player_Male_Effort_04",
-					"Player_Male_Effort_05",
-					"Player_Male_Effort_07",
-					"Blank",
-					"Blank",
-					"Blank"
-				});
+				SoundManager.PlaySound("Player_Male_Effort_01", "Player_Male_Effort_02", "Player_Male_Effort_04", "Player_Male_Effort_05", "Player_Male_Effort_07", "Blank", "Blank", "Blank");
 			}
 			if (Game.PlayerStats.Class == 6 || Game.PlayerStats.Class == 14)
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_Attack_Sword_Spell_01",
-					"Player_Attack_Sword_Spell_02",
-					"Player_Attack_Sword_Spell_03"
-				});
+				SoundManager.PlaySound("Player_Attack_Sword_Spell_01", "Player_Attack_Sword_Spell_02", "Player_Attack_Sword_Spell_03");
 				return;
 			}
 			if (!IsAirAttacking)
 			{
 				if (Game.PlayerStats.Traits.X == 16f || Game.PlayerStats.Traits.Y == 16f)
 				{
-					SoundManager.PlaySound(new string[]
-					{
-						"Player_Attack01_Low",
-						"Player_Attack02_Low"
-					});
+					SoundManager.PlaySound("Player_Attack01_Low", "Player_Attack02_Low");
 					return;
 				}
 				if (Game.PlayerStats.Traits.X == 17f || Game.PlayerStats.Traits.Y == 17f)
 				{
-					SoundManager.PlaySound(new string[]
-					{
-						"Player_Attack01_High",
-						"Player_Attack02_High"
-					});
+					SoundManager.PlaySound("Player_Attack01_High", "Player_Attack02_High");
 					return;
 				}
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_Attack01",
-					"Player_Attack02"
-				});
+				SoundManager.PlaySound("Player_Attack01", "Player_Attack02");
 				return;
 			}
 			else
 			{
 				if (Game.PlayerStats.Traits.X == 16f || Game.PlayerStats.Traits.Y == 16f)
 				{
-					SoundManager.PlaySound(new string[]
-					{
-						"Player_AttackDown01_Low",
-						"Player_AttackDown02_Low"
-					});
+					SoundManager.PlaySound("Player_AttackDown01_Low", "Player_AttackDown02_Low");
 					return;
 				}
 				if (Game.PlayerStats.Traits.X == 17f || Game.PlayerStats.Traits.Y == 17f)
 				{
-					SoundManager.PlaySound(new string[]
-					{
-						"Player_AttackDown01_High",
-						"Player_AttackDown02_High"
-					});
+					SoundManager.PlaySound("Player_AttackDown01_High", "Player_AttackDown02_High");
 					return;
 				}
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_AttackDown01",
-					"Player_AttackDown02"
-				});
+				SoundManager.PlaySound("Player_AttackDown01", "Player_AttackDown02");
 				return;
 			}
 		}
@@ -2744,88 +2616,40 @@ namespace RogueCastle
 			{
 				teleporter = m_lastTouchedTeleporter;
 			}
-			Console.WriteLine(string.Concat(new object[]
-			{
-				"Player pos: ",
-				Position,
-				" teleporter: ",
-				teleporter.Position
-			}));
-			Tween.To(this, 0.4f, new Easing(Linear.EaseNone), new string[]
-			{
-				"X",
-				teleporter.X.ToString()
-			});
-			Tween.To(this, 0.05f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"1.5",
-				"ScaleX",
-				"0"
-			});
+			Console.WriteLine(string.Concat("Player pos: ", Position, " teleporter: ", teleporter.Position));
+			Tween.To(this, 0.4f, Linear.EaseNone, "X", teleporter.X.ToString());
+			Tween.To(this, 0.05f, Linear.EaseNone, "delay", "1.5", "ScaleX", "0");
 			Vector2 scale = Scale;
 			ScaleX = 0f;
-			Tween.To(this, 0.05f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"3.3",
-				"ScaleX",
-				scale.X.ToString()
-			});
+			Tween.To(this, 0.05f, Linear.EaseNone, "delay", "3.3", "ScaleX", scale.X.ToString());
 			ScaleX = scale.X;
 			Vector2 relativePos = new Vector2(position.X, position.Y - (TerrainBounds.Bottom - Y));
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "LockControls", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerJumping_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new JumpLogicAction(500f), Types.Sequence.Serial);
-			logicSet.AddAction(new PlaySoundLogicAction(new string[]
-			{
-				"Player_Jump_04"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(teleporter, "SetCollision", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.4f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
+			logicSet.AddAction(new RunFunctionLogicAction(this, "LockControls"));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerJumping_Character"));
+			logicSet.AddAction(new JumpLogicAction(500f));
+			logicSet.AddAction(new PlaySoundLogicAction("Player_Jump_04"));
+			logicSet.AddAction(new RunFunctionLogicAction(teleporter, "SetCollision", true));
+			logicSet.AddAction(new DelayLogicAction(0.4f));
+			logicSet.AddAction(new GroundCheckLogicAction());
 			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false), Types.Sequence.Parallel);
-			logicSet.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "DisplayTeleportEffect", new object[]
-			{
-				new Vector2(teleporter.X, teleporter.Bounds.Top)
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new PlaySoundLogicAction(new string[]
-			{
-				"Teleport_Disappear"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleport", new object[]
-			{
-				new Vector2(teleporter.X, teleporter.Bounds.Top),
-				Scale
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.8f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(m_levelScreen.ScreenManager, "StartWipeTransition", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(teleporter, "SetCollision", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new TeleportLogicAction(null, relativePos), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(m_levelScreen.ScreenManager, "EndWipeTransition", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new object[]
-			{
-				new Vector2(position.X - 5f, position.Y + 57f),
-				scale
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new PlaySoundLogicAction(new string[]
-			{
-				"Teleport_Reappear"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "LastBossDoorHack", new object[0]), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(0.1f));
+			logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "DisplayTeleportEffect", new Vector2(teleporter.X, teleporter.Bounds.Top)));
+			logicSet.AddAction(new DelayLogicAction(1f));
+			logicSet.AddAction(new PlaySoundLogicAction("Teleport_Disappear"));
+			logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleport", new Vector2(teleporter.X, teleporter.Bounds.Top), Scale));
+			logicSet.AddAction(new DelayLogicAction(0.8f));
+			logicSet.AddAction(new RunFunctionLogicAction(m_levelScreen.ScreenManager, "StartWipeTransition"));
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new RunFunctionLogicAction(teleporter, "SetCollision", false));
+			logicSet.AddAction(new TeleportLogicAction(null, relativePos));
+			logicSet.AddAction(new DelayLogicAction(0.05f));
+			logicSet.AddAction(new RunFunctionLogicAction(m_levelScreen.ScreenManager, "EndWipeTransition"));
+			logicSet.AddAction(new DelayLogicAction(0.5f));
+			logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new Vector2(position.X - 5f, position.Y + 57f), scale));
+			logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
+			logicSet.AddAction(new DelayLogicAction(0.2f));
+			logicSet.AddAction(new RunFunctionLogicAction(this, "LastBossDoorHack"));
 			RunExternalLogicSet(logicSet);
 		}
 		public void LastBossDoorHack()
@@ -2978,7 +2802,7 @@ namespace RogueCastle
 						Game.PlayerStats.SpecialItem = 0;
 						(Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
 						m_invincibleCounter = (int)(InvincibilityTime * 1000f);
-						(m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true, null);
+						(m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true);
 					}
 					else
 					{
@@ -2987,7 +2811,7 @@ namespace RogueCastle
 						{
 							CurrentHealth = (int)(MaxHealth * 0.1f);
 							m_invincibleCounter = (int)(InvincibilityTime * 1000f);
-							(m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true, null);
+							(m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true);
 						}
 						else
 						{
@@ -2999,7 +2823,7 @@ namespace RogueCastle
 							else
 							{
 								AttachedLevel.SetObjectKilledPlayer(obj);
-								Kill(true);
+								Kill();
 							}
 						}
 					}
@@ -3043,40 +2867,13 @@ namespace RogueCastle
 				}
 				if (Game.PlayerStats.IsFemale)
 				{
-					SoundManager.PlaySound(new string[]
-					{
-						"Player_Female_Damage_03",
-						"Player_Female_Damage_04",
-						"Player_Female_Damage_05",
-						"Player_Female_Damage_06",
-						"Player_Female_Damage_07"
-					});
+					SoundManager.PlaySound("Player_Female_Damage_03", "Player_Female_Damage_04", "Player_Female_Damage_05", "Player_Female_Damage_06", "Player_Female_Damage_07");
 				}
 				else
 				{
-					SoundManager.PlaySound(new string[]
-					{
-						"Player_Male_Injury_01",
-						"Player_Male_Injury_02",
-						"Player_Male_Injury_03",
-						"Player_Male_Injury_04",
-						"Player_Male_Injury_05",
-						"Player_Male_Injury_06",
-						"Player_Male_Injury_07",
-						"Player_Male_Injury_08",
-						"Player_Male_Injury_09",
-						"Player_Male_Injury_10"
-					});
+					SoundManager.PlaySound("Player_Male_Injury_01", "Player_Male_Injury_02", "Player_Male_Injury_03", "Player_Male_Injury_04", "Player_Male_Injury_05", "Player_Male_Injury_06", "Player_Male_Injury_07", "Player_Male_Injury_08", "Player_Male_Injury_09", "Player_Male_Injury_10");
 				}
-				SoundManager.PlaySound(new string[]
-				{
-					"EnemyHit1",
-					"EnemyHit2",
-					"EnemyHit3",
-					"EnemyHit4",
-					"EnemyHit5",
-					"EnemyHit6"
-				});
+				SoundManager.PlaySound("EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4", "EnemyHit5", "EnemyHit6");
 			}
 		}
 		public void KickInHitInvincibility()
@@ -3089,10 +2886,7 @@ namespace RogueCastle
 			if (challengeBossRoomObj != null)
 			{
 				challengeBossRoomObj.LoadPlayerData();
-				Game.SaveManager.LoadFiles(AttachedLevel, new SaveType[]
-				{
-					SaveType.UpgradeData
-				});
+				Game.SaveManager.LoadFiles(AttachedLevel, SaveType.UpgradeData);
 				CurrentHealth = 0;
 			}
 			m_translocatorSprite.Visible = false;
@@ -3107,38 +2901,17 @@ namespace RogueCastle
 		{
 			if (Game.PlayerStats.IsFemale)
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_Female_Death_01",
-					"Player_Female_Death_02"
-				});
+				SoundManager.PlaySound("Player_Female_Death_01", "Player_Female_Death_02");
 			}
 			else
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"Player_Male_Death_01",
-					"Player_Male_Death_02",
-					"Player_Male_Death_03",
-					"Player_Male_Death_04",
-					"Player_Male_Death_05",
-					"Player_Male_Death_06",
-					"Player_Male_Death_07",
-					"Player_Male_Death_08",
-					"Player_Male_Death_09"
-				});
+				SoundManager.PlaySound("Player_Male_Death_01", "Player_Male_Death_02", "Player_Male_Death_03", "Player_Male_Death_04", "Player_Male_Death_05", "Player_Male_Death_06", "Player_Male_Death_07", "Player_Male_Death_08", "Player_Male_Death_09");
 			}
 			ChangeSprite("PlayerDeath_Character");
 			PlayAnimation(false);
 			if (_objectList[0].Visible)
 			{
-				Tween.To(_objectList[0], 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"0.5",
-					"Opacity",
-					"0"
-				});
+				Tween.To(_objectList[0], 0.5f, Tween.EaseNone, "delay", "0.5", "Opacity", "0");
 			}
 		}
 		public void RunGetItemAnimation()
@@ -3349,13 +3122,7 @@ namespace RogueCastle
 					}
 					else if (spell == 13 || spell == 15)
 					{
-						SoundManager.PlaySound(new string[]
-						{
-							"Enemy_WallTurret_Fire_01",
-							"Enemy_WallTurret_Fire_02",
-							"Enemy_WallTurret_Fire_03",
-							"Enemy_WallTurret_Fire_04"
-						});
+						SoundManager.PlaySound("Enemy_WallTurret_Fire_01", "Enemy_WallTurret_Fire_02", "Enemy_WallTurret_Fire_03", "Enemy_WallTurret_Fire_04");
 					}
 					ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projData);
 					projectileObj.Spell = spell;
@@ -3371,16 +3138,8 @@ namespace RogueCastle
 						projectileObj.LifeSpan = xValue;
 						projectileObj.Opacity = 0f;
 						projectileObj.Y -= 20f;
-						Tween.By(projectileObj, 0.1f, new Easing(Tween.EaseNone), new string[]
-						{
-							"Y",
-							"20"
-						});
-						Tween.To(projectileObj, 0.1f, new Easing(Tween.EaseNone), new string[]
-						{
-							"Opacity",
-							"1"
-						});
+						Tween.By(projectileObj, 0.1f, Tween.EaseNone, "Y", "20");
+						Tween.To(projectileObj, 0.1f, Tween.EaseNone, "Opacity", "1");
 					}
 					if (spell == 9)
 					{
@@ -3531,13 +3290,7 @@ namespace RogueCastle
 					}
 					m_levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue, new Vector2(X, Bounds.Top));
 					AttachedLevel.ImpactEffectPool.StartInverseEmit(m_translocatorSprite.Position);
-					Tween.To(m_translocatorSprite, 0.4f, new Easing(Linear.EaseNone), new string[]
-					{
-						"ScaleX",
-						ScaleX.ToString(),
-						"ScaleY",
-						ScaleY.ToString()
-					});
+					Tween.To(m_translocatorSprite, 0.4f, Linear.EaseNone, "ScaleX", ScaleX.ToString(), "ScaleY", ScaleY.ToString());
 					SoundManager.PlaySound("mfqt_teleport_out");
 				}
 				else if (m_translocatorSprite.Visible && m_translocatorSprite.Scale == Scale)
@@ -3658,23 +3411,9 @@ namespace RogueCastle
 		public void Translocate(Vector2 position)
 		{
 			DisableAllWeight = true;
-			Tween.To(this, 0.08f, new Easing(Linear.EaseNone), new string[]
-			{
-				"ScaleX",
-				"3",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(this, 0f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.1",
-				"X",
-				position.X.ToString(),
-				"Y",
-				position.Y.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "ResetTranslocution", new object[0]);
+			Tween.To(this, 0.08f, Linear.EaseNone, "ScaleX", "3", "ScaleY", "0");
+			Tween.To(this, 0f, Linear.EaseNone, "delay", "0.1", "X", position.X.ToString(), "Y", position.Y.ToString());
+			Tween.AddEndHandlerToLastTween(this, "ResetTranslocution");
 			AttachedLevel.UpdateCamera();
 		}
 		public void OverrideInternalScale(Vector2 internalScale)
@@ -3719,11 +3458,7 @@ namespace RogueCastle
 			{
 				SoundManager.PlaySound("Assassin_Stealth_Enter");
 				CurrentMana -= 5f;
-				Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0.05"
-				});
+				Tween.To(this, 0.2f, Tween.EaseNone, "Opacity", "0.05");
 				m_assassinSpecialActive = true;
 				ForceInvincible = true;
 				m_levelScreen.ImpactEffectPool.AssassinCastEffect(Position);
@@ -3731,11 +3466,7 @@ namespace RogueCastle
 		}
 		public void DisableAssassinAbility()
 		{
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(this, 0.2f, Tween.EaseNone, "Opacity", "1");
 			m_assassinSpecialActive = false;
 			ForceInvincible = false;
 		}
@@ -3932,22 +3663,12 @@ namespace RogueCastle
 				projectileObj.CollisionTypeTag = 2;
 				projectileObj.Spell = 20;
 				projectileObj.IgnoreBoundsCheck = true;
-				Tween.To(projectileObj, 0.2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"ScaleX",
-					"100",
-					"ScaleY",
-					"50"
-				});
-				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile", new object[0]);
+				Tween.To(projectileObj, 0.2f, Tween.EaseNone, "ScaleX", "100", "ScaleY", "50");
+				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
 				SoundManager.PlaySound("Cast_FasRoDus");
 				m_levelScreen.ImpactEffectPool.DisplayFusRoDahText(new Vector2(X, Bounds.Top));
 				m_levelScreen.ShoutMagnitude = 0f;
-				Tween.To(m_levelScreen, 1f, new Easing(Tween.EaseNone), new string[]
-				{
-					"ShoutMagnitude",
-					"3"
-				});
+				Tween.To(m_levelScreen, 1f, Tween.EaseNone, "ShoutMagnitude", "3");
 			}
 		}
 		private void CastCloseShield()
@@ -3977,11 +3698,11 @@ namespace RogueCastle
 		{
 			m_axeProjData.AngleOffset = 0f;
 			m_axeProjData.Damage = (int)(TotalMagicDamage * 1f);
-			Tween.RunFunction(0f, this, "CastAxe", new object[0]);
-			Tween.RunFunction(0.15f, this, "CastAxe", new object[0]);
-			Tween.RunFunction(0.3f, this, "CastAxe", new object[0]);
-			Tween.RunFunction(0.45f, this, "CastAxe", new object[0]);
-			Tween.RunFunction(0.6f, this, "CastAxe", new object[0]);
+			Tween.RunFunction(0f, this, "CastAxe");
+			Tween.RunFunction(0.15f, this, "CastAxe");
+			Tween.RunFunction(0.3f, this, "CastAxe");
+			Tween.RunFunction(0.45f, this, "CastAxe");
+			Tween.RunFunction(0.6f, this, "CastAxe");
 		}
 		public void CastAxe()
 		{
@@ -3995,26 +3716,11 @@ namespace RogueCastle
 		{
 			m_rapidDaggerProjData.AngleOffset = 0f;
 			m_rapidDaggerProjData.Damage = (int)(TotalMagicDamage * SpellEV.GetDamageMultiplier(14));
-			Tween.RunFunction(0f, this, "CastDaggers", new object[]
-			{
-				false
-			});
-			Tween.RunFunction(0.05f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.1f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.15f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.2f, this, "CastDaggers", new object[]
-			{
-				true
-			});
+			Tween.RunFunction(0f, this, "CastDaggers", false);
+			Tween.RunFunction(0.05f, this, "CastDaggers", true);
+			Tween.RunFunction(0.1f, this, "CastDaggers", true);
+			Tween.RunFunction(0.15f, this, "CastDaggers", true);
+			Tween.RunFunction(0.2f, this, "CastDaggers", true);
 		}
 		public void CastDaggers(bool randomize)
 		{
@@ -4166,34 +3872,14 @@ namespace RogueCastle
 			spriteObj.Opacity = 0f;
 			spriteObj2.Opacity = 0f;
 			spriteObj.TextureColor = Color.White;
-			Tween.To(spriteObj, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(spriteObj, 0.1f, Tween.EaseNone, "Opacity", "1");
 			spriteObj.Opacity = 1f;
-			Tween.To(spriteObj, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.2",
-				"Opacity",
-				"0"
-			});
+			Tween.To(spriteObj, 0.1f, Tween.EaseNone, "delay", "0.2", "Opacity", "0");
 			spriteObj.Opacity = 0f;
 			spriteObj2.TextureColor = Color.White;
-			Tween.To(spriteObj2, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(spriteObj2, 0.1f, Tween.EaseNone, "Opacity", "1");
 			spriteObj2.Opacity = 1f;
-			Tween.To(spriteObj2, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.2",
-				"Opacity",
-				"0"
-			});
+			Tween.To(spriteObj2, 0.1f, Tween.EaseNone, "delay", "0.2", "Opacity", "0");
 			spriteObj2.Opacity = 0f;
 		}
 		public void ChangePartColour(int playerPart, Color colour)

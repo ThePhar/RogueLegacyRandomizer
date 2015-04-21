@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -153,7 +153,7 @@ namespace RogueCastle
 			list.Add(4);
 			list.Add(new Vector2(Game.PlayerStats.Spell, 0f));
 			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list);
-			Tween.RunFunction(0f, Player, "RunGetItemAnimation", new object[0]);
+			Tween.RunFunction(0f, Player, "RunGetItemAnimation");
 		}
 		public override void Dispose()
 		{

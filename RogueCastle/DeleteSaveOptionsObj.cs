@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -28,9 +28,9 @@ namespace RogueCastle
 					RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
 					rCScreenManager.DialogueScreen.SetDialogue("Delete Save");
 					rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSaveAskAgain", new object[0]);
-					rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand", new object[0]);
-					rCScreenManager.DisplayScreen(13, false, null);
+					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSaveAskAgain");
+					rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand");
+					rCScreenManager.DisplayScreen(13, false);
 				}
 			}
 		}
@@ -46,9 +46,9 @@ namespace RogueCastle
 			RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("Delete Save2");
 			rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSave", new object[0]);
-			rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand", new object[0]);
-			rCScreenManager.DisplayScreen(13, false, null);
+			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSave");
+			rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand");
+			rCScreenManager.DisplayScreen(13, false);
 		}
 		public void DeleteSave()
 		{
@@ -60,7 +60,7 @@ namespace RogueCastle
 			Game.PlayerStats = new PlayerStats();
 			(m_parentScreen.ScreenManager as RCScreenManager).Player.Reset();
 			SoundManager.StopMusic(1f);
-			(m_parentScreen.ScreenManager as RCScreenManager).DisplayScreen(23, true, null);
+			(m_parentScreen.ScreenManager as RCScreenManager).DisplayScreen(23, true);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -154,20 +154,20 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyNinjaRun_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.25f, 0.85f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyNinjaRun_Character"));
+			logicSet.AddAction(new PlayAnimationLogicAction());
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new DelayLogicAction(0.25f, 0.85f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyNinjaRun_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.25f, 0.85f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyNinjaRun_Character"));
+			logicSet2.AddAction(new PlayAnimationLogicAction());
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(0.25f, 0.85f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new StopAnimationLogicAction(), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.25f, 0.85f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character"));
+			logicSet3.AddAction(new StopAnimationLogicAction());
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.25f, 0.85f));
 			ProjectileData projectileData = new ProjectileData(this)
 			{
 				SpriteName = "ShurikenProjectile1_Sprite",
@@ -182,142 +182,93 @@ namespace RogueCastle
 				Scale = ProjectileScale
 			};
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(PauseBeforeProjectile, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyNinjaThrow_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(1, 3, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Ninja_ThrowStar_01",
-				"Ninja_ThrowStar_02",
-				"Ninja_ThrowStar_03"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(4, 5, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(PauseAfterProjectile, false), Types.Sequence.Serial);
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character"));
+			logicSet4.AddAction(new DelayLogicAction(PauseBeforeProjectile));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyNinjaThrow_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction(1, 3));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Ninja_ThrowStar_01", "Ninja_ThrowStar_02", "Ninja_ThrowStar_03"));
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet4.AddAction(new PlayAnimationLogicAction(4, 5));
+			logicSet4.AddAction(new DelayLogicAction(PauseAfterProjectile));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(PauseBeforeProjectile, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyNinjaThrow_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction(1, 3, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Ninja_ThrowStar_01",
-				"Ninja_ThrowStar_02",
-				"Ninja_ThrowStar_03"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character"));
+			logicSet5.AddAction(new DelayLogicAction(PauseBeforeProjectile));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyNinjaThrow_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction(1, 3));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Ninja_ThrowStar_01", "Ninja_ThrowStar_02", "Ninja_ThrowStar_03"));
+			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = -10f;
-			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = 10f;
-			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction(4, 5, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(PauseAfterProjectile, false), Types.Sequence.Serial);
+			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet5.AddAction(new PlayAnimationLogicAction(4, 5));
+			logicSet5.AddAction(new DelayLogicAction(PauseAfterProjectile));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(PauseBeforeProjectile, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyNinjaThrow_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction(1, 3, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Ninja_ThrowStar_01",
-				"Ninja_ThrowStar_02",
-				"Ninja_ThrowStar_03"
-			}), Types.Sequence.Serial);
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyNinjaIdle_Character"));
+			logicSet6.AddAction(new DelayLogicAction(PauseBeforeProjectile));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyNinjaThrow_Character", false, false));
+			logicSet6.AddAction(new PlayAnimationLogicAction(1, 3));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Ninja_ThrowStar_01", "Ninja_ThrowStar_02", "Ninja_ThrowStar_03"));
 			projectileData.AngleOffset = 0f;
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = -5f;
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = 5f;
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = -25f;
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = 25f;
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction(4, 5, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(PauseAfterProjectile, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet6.AddAction(new PlayAnimationLogicAction(4, 5));
+			logicSet6.AddAction(new DelayLogicAction(PauseAfterProjectile));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "CreateLog", null), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(TeleportDelay, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "CreateSmoke", null), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", true), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "CreateLog", null));
+			logicSet7.AddAction(new DelayLogicAction(TeleportDelay));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "CreateSmoke", null));
+			logicSet7.AddAction(new DelayLogicAction(0.15f));
+			logicSet7.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", true));
+			logicSet7.AddAction(new DelayLogicAction(0.15f));
+			logicSet7.AddAction(new GroundCheckLogicAction());
+			logicSet7.AddAction(new DelayLogicAction(0.15f));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet7.Tag = 2;
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new RunFunctionLogicAction(this, "CreateLog", null), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(TeleportDelay, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new RunFunctionLogicAction(this, "CreateSmoke", null), Types.Sequence.Serial);
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet8.AddAction(new RunFunctionLogicAction(this, "CreateLog", null));
+			logicSet8.AddAction(new DelayLogicAction(TeleportDelay));
+			logicSet8.AddAction(new RunFunctionLogicAction(this, "CreateSmoke", null));
 			projectileData.Target = null;
-			logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Ninja_ThrowStar_01",
-				"Ninja_ThrowStar_02",
-				"Ninja_ThrowStar_03"
-			}), Types.Sequence.Serial);
+			logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Ninja_ThrowStar_01", "Ninja_ThrowStar_02", "Ninja_ThrowStar_03"));
 			projectileData.AngleOffset = 45f;
-			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = 135f;
-			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = -45f;
-			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.AngleOffset = -135f;
-			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", true), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet8.AddAction(new DelayLogicAction(0.15f));
+			logicSet8.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", true));
+			logicSet8.AddAction(new DelayLogicAction(0.15f));
+			logicSet8.AddAction(new GroundCheckLogicAction());
+			logicSet8.AddAction(new DelayLogicAction(0.15f));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet8.Tag = 2;
-			m_basicTeleportAttackLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7
-			});
-			m_expertTeleportAttackLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet8
-			});
+			m_basicTeleportAttackLB.AddLogicSet(logicSet7);
+			m_expertTeleportAttackLB.AddLogicSet(logicSet8);
 			logicBlocksToDispose.Add(m_basicTeleportAttackLB);
 			logicBlocksToDispose.Add(m_expertTeleportAttackLB);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet6
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet6);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -356,13 +307,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					40,
-					30,
-					0,
-					30
-				});
+				RunLogicBlock(true, m_generalBasicLB, 40, 30, 0, 30);
 				return;
 			default:
 				return;
@@ -394,13 +339,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					40,
-					30,
-					0,
-					30
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 40, 30, 0, 30);
 				return;
 			default:
 				return;
@@ -432,13 +371,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					40,
-					30,
-					0,
-					30
-				});
+				RunLogicBlock(true, m_generalExpertLB, 40, 30, 0, 30);
 				return;
 			default:
 				return;
@@ -470,13 +403,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					40,
-					30,
-					0,
-					30
-				});
+				RunLogicBlock(true, m_generalBasicLB, 40, 30, 0, 30);
 				return;
 			default:
 				return;
@@ -512,17 +439,11 @@ namespace RogueCastle
 					m_currentActiveLB.StopLogicBlock();
 					if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
 					{
-						RunLogicBlock(false, m_expertTeleportAttackLB, new int[]
-						{
-							100
-						});
+						RunLogicBlock(false, m_expertTeleportAttackLB, 100);
 					}
 					else
 					{
-						RunLogicBlock(false, m_basicTeleportAttackLB, new int[]
-						{
-							100
-						});
+						RunLogicBlock(false, m_basicTeleportAttackLB, 100);
 					}
 					damage = (int)Math.Round(damage * (1f - m_teleportDamageReduc), MidpointRounding.AwayFromZero);
 				}
@@ -561,20 +482,8 @@ namespace RogueCastle
 			m_log.Visible = true;
 			m_log.Opacity = 1f;
 			m_smoke.PlayAnimation(false);
-			Tween.By(m_log, 0.1f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.2",
-				"Y",
-				"10"
-			});
-			Tween.To(m_log, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"Opacity",
-				"0"
-			});
+			Tween.By(m_log, 0.1f, Linear.EaseNone, "delay", "0.2", "Y", "10");
+			Tween.To(m_log, 0.2f, Linear.EaseNone, "delay", "0.3", "Opacity", "0");
 			SoundManager.Play3DSound(this, m_target, "Ninja_Teleport");
 			Visible = false;
 			IsCollidable = false;

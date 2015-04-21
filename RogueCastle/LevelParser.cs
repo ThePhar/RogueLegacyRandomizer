@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -106,7 +106,7 @@ namespace RogueCastle
 								byte enemyType = byte.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
 								xmlReader.MoveToAttribute("Difficulty");
 								GameTypes.EnemyDifficulty difficulty = (GameTypes.EnemyDifficulty)Enum.Parse(typeof(GameTypes.EnemyDifficulty), xmlReader.Value, true);
-								gameObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, difficulty, false);
+								gameObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, difficulty);
 								if (xmlReader.MoveToAttribute("Flip") && bool.Parse(xmlReader.Value))
 								{
 									gameObj.Flip = SpriteEffects.FlipHorizontally;
@@ -163,7 +163,7 @@ namespace RogueCastle
 						case "PhysicsObj":
 						{
 							xmlReader.MoveToAttribute("SpriteName");
-							gameObj = new PhysicsObj(xmlReader.Value, null);
+							gameObj = new PhysicsObj(xmlReader.Value);
 							PhysicsObj physicsObj = gameObj as PhysicsObj;
 							physicsObj.CollisionTypeTag = 5;
 							physicsObj.CollidesBottom = false;
@@ -185,7 +185,7 @@ namespace RogueCastle
 							}
 							else
 							{
-								gameObj = new PhysicsObjContainer(xmlReader.Value, null);
+								gameObj = new PhysicsObjContainer(xmlReader.Value);
 							}
 							break;
 						}
@@ -262,22 +262,22 @@ namespace RogueCastle
 							if (roomObj.AddToCastlePool)
 							{
 								LevelBuilder2.StoreRoom(roomObj2, GameTypes.LevelType.CASTLE);
-								LevelBuilder2.StoreSpecialRoom(roomObj2, GameTypes.LevelType.CASTLE, false);
+								LevelBuilder2.StoreSpecialRoom(roomObj2, GameTypes.LevelType.CASTLE);
 							}
 							if (roomObj.AddToDungeonPool)
 							{
 								LevelBuilder2.StoreRoom(roomObj3, GameTypes.LevelType.DUNGEON);
-								LevelBuilder2.StoreSpecialRoom(roomObj3, GameTypes.LevelType.DUNGEON, false);
+								LevelBuilder2.StoreSpecialRoom(roomObj3, GameTypes.LevelType.DUNGEON);
 							}
 							if (roomObj.AddToGardenPool)
 							{
 								LevelBuilder2.StoreRoom(roomObj4, GameTypes.LevelType.GARDEN);
-								LevelBuilder2.StoreSpecialRoom(roomObj4, GameTypes.LevelType.GARDEN, false);
+								LevelBuilder2.StoreSpecialRoom(roomObj4, GameTypes.LevelType.GARDEN);
 							}
 							if (roomObj.AddToTowerPool)
 							{
 								LevelBuilder2.StoreRoom(roomObj5, GameTypes.LevelType.TOWER);
-								LevelBuilder2.StoreSpecialRoom(roomObj5, GameTypes.LevelType.TOWER, false);
+								LevelBuilder2.StoreSpecialRoom(roomObj5, GameTypes.LevelType.TOWER);
 							}
 						}
 						if (roomObj.Name.Contains("DEBUG_ROOM"))
@@ -292,7 +292,7 @@ namespace RogueCastle
 					}
 					if (roomObj.X < 10000f && (roomObj.Name == "Boss" || roomObj.Name == "ChallengeBoss"))
 					{
-						LevelBuilder2.StoreSpecialRoom(roomObj, GameTypes.LevelType.CASTLE, false);
+						LevelBuilder2.StoreSpecialRoom(roomObj, GameTypes.LevelType.CASTLE);
 					}
 				}
 			}

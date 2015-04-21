@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -149,61 +149,45 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyWargRun_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "Chasing", true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyWargRun_Character"));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "Chasing", true));
+			logicSet.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyWargIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(this, "Chasing", false), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet2.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyWargIdle_Character"));
+			logicSet2.AddAction(new ChangePropertyLogicAction(this, "Chasing", false));
+			logicSet2.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Wolf_Attack"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargPounce_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(PounceDelay, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargJump_Character", false, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveDirectionLogicAction(-1f), Types.Sequence.Serial);
-			logicSet3.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet3.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(PounceLandDelay, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new GroundCheckLogicAction());
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Wolf_Attack"));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargPounce_Character"));
+			logicSet3.AddAction(new DelayLogicAction(PounceDelay));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargJump_Character", false, false));
+			logicSet3.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet3.AddAction(new MoveDirectionLogicAction());
+			logicSet3.AddAction(new JumpLogicAction());
+			logicSet3.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet3.AddAction(new GroundCheckLogicAction());
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(PounceLandDelay));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyWargHit_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
-			m_wolfHitLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet4
-			});
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyWargHit_Character", false, false));
+			logicSet4.AddAction(new DelayLogicAction(0.2f));
+			logicSet4.AddAction(new GroundCheckLogicAction());
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3);
+			m_wolfHitLB.AddLogicSet(logicSet4);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
 			logicBlocksToDispose.Add(m_wolfHitLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				40,
-				40,
-				20
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 40, 40, 20);
 			base.InitializeLogic();
 		}
 		protected override void RunBasicLogic()
@@ -238,12 +222,7 @@ namespace RogueCastle
 				{
 					if (m_target.Y < Y - m_target.Height)
 					{
-						RunLogicBlock(false, m_generalBasicLB, new int[]
-						{
-							0,
-							0,
-							100
-						});
+						RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
 						return;
 					}
 					bool arg_7E_1 = false;
@@ -288,12 +267,7 @@ namespace RogueCastle
 			{
 				if (m_target.Y < Y - m_target.Height)
 				{
-					RunLogicBlock(false, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_6E_1 = false;
@@ -337,12 +311,7 @@ namespace RogueCastle
 			{
 				if (m_target.Y < Y - m_target.Height)
 				{
-					RunLogicBlock(false, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_6E_1 = false;
@@ -386,12 +355,7 @@ namespace RogueCastle
 			{
 				if (m_target.Y < Y - m_target.Height)
 				{
-					RunLogicBlock(false, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_6E_1 = false;
@@ -419,7 +383,7 @@ namespace RogueCastle
 			if (m_isTouchingGround && CurrentSpeed == 0f && !IsAnimating)
 			{
 				ChangeSprite("EnemyWargIdle_Character");
-				PlayAnimation(true);
+				PlayAnimation();
 			}
 			if (SpriteName == "EnemyWargRun_Character")
 			{
@@ -428,21 +392,13 @@ namespace RogueCastle
 		}
 		public override void HitEnemy(int damage, Vector2 position, bool isPlayer)
 		{
-			SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-			{
-				"Wolf_Hit_01",
-				"Wolf_Hit_02",
-				"Wolf_Hit_03"
-			});
+			SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Wolf_Hit_01", "Wolf_Hit_02", "Wolf_Hit_03");
 			if (m_currentActiveLB != null && m_currentActiveLB.IsActive)
 			{
 				m_currentActiveLB.StopLogicBlock();
 			}
 			m_currentActiveLB = m_wolfHitLB;
-			m_currentActiveLB.RunLogicBlock(new int[]
-			{
-				100
-			});
+			m_currentActiveLB.RunLogicBlock(100);
 			base.HitEnemy(damage, position, isPlayer);
 		}
 		public override void ResetState()
@@ -459,12 +415,7 @@ namespace RogueCastle
 		{
 			Type = 19;
 			m_startDelayCounter = m_startDelay;
-			m_runFrameSound = new FrameSoundObj(this, 1, new string[]
-			{
-				"Wolf_Move01",
-				"Wolf_Move02",
-				"Wolf_Move03"
-			});
+			m_runFrameSound = new FrameSoundObj(this, 1, "Wolf_Move01", "Wolf_Move02", "Wolf_Move03");
 		}
 	}
 }

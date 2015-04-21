@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -48,16 +48,12 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-			m_basicAttackLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet
-			});
+			logicSet2.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f)));
+			logicSet2.AddAction(new DelayLogicAction(1f));
+			m_basicAttackLB.AddLogicSet(logicSet2, logicSet);
 			logicBlocksToDispose.Add(m_basicAttackLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
 			base.InitializeLogic();
@@ -80,11 +76,7 @@ namespace RogueCastle
 				}
 				else
 				{
-					RunLogicBlock(false, m_basicAttackLB, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(false, m_basicAttackLB, 0, 100);
 				}
 				if (X > m_levelScreen.CurrentRoom.Bounds.Right)
 				{
@@ -139,7 +131,7 @@ namespace RogueCastle
 		{
 			if (!IsAnimating)
 			{
-				PlayAnimation(true);
+				PlayAnimation();
 			}
 			base.Update(gameTime);
 		}

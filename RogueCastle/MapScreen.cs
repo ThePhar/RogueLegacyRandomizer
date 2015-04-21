@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -116,31 +116,31 @@ namespace RogueCastle
 			m_legend.Position = new Vector2(1320 - m_legend.Width - 20, 720 - m_legend.Height - 20);
 			SpriteObj spriteObj2 = new SpriteObj("MapPlayerIcon_Sprite");
 			spriteObj2.Position = new Vector2(30f, 60f);
-			spriteObj2.PlayAnimation(true);
+			spriteObj2.PlayAnimation();
 			m_legend.AddChild(spriteObj2);
 			int num = 30;
 			SpriteObj spriteObj3 = new SpriteObj("MapBossIcon_Sprite");
 			spriteObj3.Position = new Vector2(spriteObj2.X, spriteObj2.Y + num);
-			spriteObj3.PlayAnimation(true);
+			spriteObj3.PlayAnimation();
 			m_legend.AddChild(spriteObj3);
 			SpriteObj spriteObj4 = new SpriteObj("MapLockedChestIcon_Sprite");
 			spriteObj4.Position = new Vector2(spriteObj2.X, spriteObj3.Y + num);
-			spriteObj4.PlayAnimation(true);
+			spriteObj4.PlayAnimation();
 			m_legend.AddChild(spriteObj4);
 			SpriteObj spriteObj5 = new SpriteObj("MapFairyChestIcon_Sprite");
 			spriteObj5.Position = new Vector2(spriteObj2.X, spriteObj4.Y + num);
-			spriteObj5.PlayAnimation(true);
+			spriteObj5.PlayAnimation();
 			m_legend.AddChild(spriteObj5);
 			SpriteObj spriteObj6 = new SpriteObj("MapChestUnlocked_Sprite");
 			spriteObj6.Position = new Vector2(spriteObj2.X, spriteObj5.Y + num);
 			m_legend.AddChild(spriteObj6);
 			SpriteObj spriteObj7 = new SpriteObj("MapTeleporterIcon_Sprite");
 			spriteObj7.Position = new Vector2(spriteObj2.X, spriteObj6.Y + num);
-			spriteObj7.PlayAnimation(true);
+			spriteObj7.PlayAnimation();
 			m_legend.AddChild(spriteObj7);
 			SpriteObj spriteObj8 = new SpriteObj("MapBonusIcon_Sprite");
 			spriteObj8.Position = new Vector2(spriteObj2.X, spriteObj7.Y + num);
-			spriteObj8.PlayAnimation(true);
+			spriteObj8.PlayAnimation();
 			m_legend.AddChild(spriteObj8);
 			TextObj textObj2 = new TextObj(Game.JunicodeFont);
 			textObj2.Position = new Vector2(spriteObj2.X + 50f, 55f);
@@ -157,7 +157,7 @@ namespace RogueCastle
 			m_playerIcon = new ObjContainer("PlayerWalking_Character");
 			m_playerIcon.Scale = new Vector2(0.6f, 0.6f);
 			m_playerIcon.AnimationDelay = 0.1f;
-			m_playerIcon.PlayAnimation(true);
+			m_playerIcon.PlayAnimation();
 			m_playerIcon.ForceDraw = true;
 			m_playerIcon.OutlineWidth = 2;
 			m_playerIcon.GetChildAt(1).TextureColor = Color.Red;
@@ -225,7 +225,7 @@ namespace RogueCastle
 			{
 				SpriteObj spriteObj = m_teleporterList[m_selectedTeleporter];
 				m_playerIcon.Position = new Vector2(spriteObj.X + 7f, spriteObj.Y - 20f);
-				m_mapDisplay.CentreAroundTeleporter(m_selectedTeleporter, false);
+				m_mapDisplay.CentreAroundTeleporter(m_selectedTeleporter);
 			}
 			base.OnEnter();
 		}

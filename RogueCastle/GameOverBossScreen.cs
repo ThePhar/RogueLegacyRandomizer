@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -43,14 +43,8 @@ namespace RogueCastle
 		public override void PassInData(List<object> objList)
 		{
 			m_lastBoss = (objList[0] as EnemyObj_LastBoss);
-			m_bossKneesSound = new FrameSoundObj(m_lastBoss, 3, new string[]
-			{
-				"FinalBoss_St2_Deathsceen_Knees"
-			});
-			m_bossFallSound = new FrameSoundObj(m_lastBoss, 13, new string[]
-			{
-				"FinalBoss_St2_Deathsceen_Fall"
-			});
+			m_bossKneesSound = new FrameSoundObj(m_lastBoss, 3, "FinalBoss_St2_Deathsceen_Knees");
+			m_bossFallSound = new FrameSoundObj(m_lastBoss, 13, "FinalBoss_St2_Deathsceen_Fall");
 			base.PassInData(objList);
 		}
 		public override void LoadContent()
@@ -100,7 +94,7 @@ namespace RogueCastle
 			m_king = new SpriteObj("King_Sprite");
 			m_king.OutlineWidth = 2;
 			m_king.AnimationDelay = 0.1f;
-			m_king.PlayAnimation(true);
+			m_king.PlayAnimation();
 			m_king.Scale = new Vector2(2f, 2f);
 			base.LoadContent();
 		}
@@ -116,13 +110,7 @@ namespace RogueCastle
 			m_playerFrame.Y -= 120f;
 			m_playerFrame.SetPortrait(8, 1, 1);
 			m_playerFrame.UpdateData();
-			Tween.To(m_playerFrame, 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"4",
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
 			SoundManager.StopMusic(0.5f);
 			m_lockControls = false;
 			SoundManager.PlaySound("Player_Death_FadeToBlack");
@@ -134,88 +122,25 @@ namespace RogueCastle
 			m_playerGhost.Opacity = 0f;
 			m_spotlight.Opacity = 0f;
 			m_playerGhost.Position = new Vector2(m_lastBoss.X - m_playerGhost.Width / 2, m_lastBoss.Bounds.Top - 20);
-			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Ghost"
-			});
-			Tween.To(m_playerGhost, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Opacity",
-				"0.4"
-			});
-			Tween.By(m_playerGhost, 2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"3",
-				"Y",
-				"-150"
-			});
+			Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
+			Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
+			Tween.By(m_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
 			m_playerGhost.Opacity = 0.4f;
-			Tween.To(m_playerGhost, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"4",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "4", "Opacity", "0");
 			m_playerGhost.Opacity = 0f;
-			m_playerGhost.PlayAnimation(true);
-			Tween.To(this, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"1"
-			});
-			Tween.To(m_spotlight, 0.1f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"Opacity",
-				"1"
-			});
-			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_Spotlight"
-			});
-			Tween.RunFunction(2f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"FinalBoss_St1_DeathGrunt"
-			});
-			Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", new object[]
-			{
-				"GameOverBossStinger",
-				false,
-				0.5f
-			});
-			Tween.To(Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_lastBoss.AbsX.ToString(),
-				"Y",
-				(m_lastBoss.Bounds.Bottom - 10).ToString()
-			});
-			Tween.RunFunction(2f, m_lastBoss, "PlayAnimation", new object[]
-			{
-				false
-			});
+			m_playerGhost.PlayAnimation();
+			Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
+			Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
+			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
+			Tween.RunFunction(2f, typeof(SoundManager), "PlaySound", "FinalBoss_St1_DeathGrunt");
+			Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", "GameOverBossStinger", false, 0.5f);
+			Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_lastBoss.AbsX.ToString(), "Y", (m_lastBoss.Bounds.Bottom - 10).ToString());
+			Tween.RunFunction(2f, m_lastBoss, "PlayAnimation", false);
 			(m_dialoguePlate.GetChildAt(2) as TextObj).Text = "The sun... I had forgotten how it feels...";
 			(m_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + m_lastBoss.Name + "'s Parting Words";
-			Tween.To(m_dialoguePlate, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"2",
-				"Opacity",
-				"1"
-			});
-			Tween.RunFunction(4f, this, "DropStats", new object[0]);
-			Tween.To(m_continueText, 0.4f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"4",
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
+			Tween.RunFunction(4f, this, "DropStats");
+			Tween.To(m_continueText, 0.4f, Linear.EaseNone, "delay", "4", "Opacity", "1");
 			base.OnEnter();
 		}
 		public void DropStats()
@@ -231,13 +156,7 @@ namespace RogueCastle
 			m_king.Scale /= 2f;
 			m_king.Opacity = 0f;
 			num += 0.05f;
-			Tween.To(m_king, 0f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				num.ToString(),
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_king, 0f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "1");
 		}
 		private void SetObjectKilledPlayerText()
 		{
@@ -257,54 +176,16 @@ namespace RogueCastle
 		{
 			Tween.StopAll(false);
 			SoundManager.StopMusic(1f);
-			Tween.To(this, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.To(m_lastBoss, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_dialoguePlate, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_continueText, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_playerGhost, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_king, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_spotlight, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_playerFrame, 0.5f, new Easing(Quad.EaseIn), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_initialCameraPos.X.ToString(),
-				"Y",
-				m_initialCameraPos.Y.ToString()
-			});
-			Tween.RunFunction(0.5f, ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(this, 0.5f, Quad.EaseIn, "BackBufferOpacity", "0");
+			Tween.To(m_lastBoss, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(m_dialoguePlate, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(m_continueText, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(m_playerGhost, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(m_king, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(m_spotlight, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(m_playerFrame, 0.5f, Quad.EaseIn, "Opacity", "0");
+			Tween.To(Camera, 0.5f, Quad.EaseInOut, "X", m_initialCameraPos.X.ToString(), "Y", m_initialCameraPos.Y.ToString());
+			Tween.RunFunction(0.5f, ScreenManager, "HideCurrentScreen");
 		}
 		public override void OnExit()
 		{

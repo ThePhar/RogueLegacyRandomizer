@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -23,47 +23,47 @@ namespace RogueCastle
 		private static List<RoomObj>[,] m_dungeonRoomArray = new List<RoomObj>[4, 4];
 		private static List<RoomObj>[,] m_towerRoomArray = new List<RoomObj>[4, 4];
 		private static List<RoomObj>[,] m_gardenRoomArray = new List<RoomObj>[4, 4];
-		private static List<RoomObj> m_bossRoomArray = null;
-		private static RoomObj m_startingRoom = null;
-		private static RoomObj m_testRoom = null;
-		private static RoomObj m_castleEntranceRoom = null;
-		private static RoomObj m_linkerCastleRoom = null;
-		private static RoomObj m_linkerDungeonRoom = null;
-		private static RoomObj m_linkerGardenRoom = null;
-		private static RoomObj m_linkerTowerRoom = null;
-		private static RoomObj m_bossCastleEntranceRoom = null;
-		private static RoomObj m_bossDungeonEntranceRoom = null;
-		private static RoomObj m_bossGardenEntranceRoom = null;
-		private static RoomObj m_bossTowerEntranceRoom = null;
-		private static List<RoomObj> m_secretCastleRoomArray = null;
-		private static List<RoomObj> m_secretGardenRoomArray = null;
-		private static List<RoomObj> m_secretTowerRoomArray = null;
-		private static List<RoomObj> m_secretDungeonRoomArray = null;
-		private static List<RoomObj> m_bonusCastleRoomArray = null;
-		private static List<RoomObj> m_bonusGardenRoomArray = null;
-		private static List<RoomObj> m_bonusTowerRoomArray = null;
-		private static List<RoomObj> m_bonusDungeonRoomArray = null;
-		private static List<RoomObj> m_dlcCastleRoomArray = null;
-		private static List<RoomObj> m_dlcGardenRoomArray = null;
-		private static List<RoomObj> m_dlcTowerRoomArray = null;
-		private static List<RoomObj> m_dlcDungeonRoomArray = null;
-		private static RoomObj m_tutorialRoom = null;
-		private static RoomObj m_throneRoom = null;
-		private static RoomObj m_endingRoom = null;
-		private static CompassRoomObj m_compassRoom = null;
-		private static List<RoomObj> m_challengeRoomArray = null;
-		private static bool hasTopDoor = false;
-		private static bool hasBottomDoor = false;
-		private static bool hasLeftDoor = false;
-		private static bool hasRightDoor = false;
-		private static bool hasTopLeftDoor = false;
-		private static bool hasTopRightDoor = false;
-		private static bool hasBottomLeftDoor = false;
-		private static bool hasBottomRightDoor = false;
-		private static bool hasRightTopDoor = false;
-		private static bool hasRightBottomDoor = false;
-		private static bool hasLeftTopDoor = false;
-		private static bool hasLeftBottomDoor = false;
+		private static List<RoomObj> m_bossRoomArray;
+		private static RoomObj m_startingRoom;
+		private static RoomObj m_testRoom;
+		private static RoomObj m_castleEntranceRoom;
+		private static RoomObj m_linkerCastleRoom;
+		private static RoomObj m_linkerDungeonRoom;
+		private static RoomObj m_linkerGardenRoom;
+		private static RoomObj m_linkerTowerRoom;
+		private static RoomObj m_bossCastleEntranceRoom;
+		private static RoomObj m_bossDungeonEntranceRoom;
+		private static RoomObj m_bossGardenEntranceRoom;
+		private static RoomObj m_bossTowerEntranceRoom;
+		private static List<RoomObj> m_secretCastleRoomArray;
+		private static List<RoomObj> m_secretGardenRoomArray;
+		private static List<RoomObj> m_secretTowerRoomArray;
+		private static List<RoomObj> m_secretDungeonRoomArray;
+		private static List<RoomObj> m_bonusCastleRoomArray;
+		private static List<RoomObj> m_bonusGardenRoomArray;
+		private static List<RoomObj> m_bonusTowerRoomArray;
+		private static List<RoomObj> m_bonusDungeonRoomArray;
+		private static List<RoomObj> m_dlcCastleRoomArray;
+		private static List<RoomObj> m_dlcGardenRoomArray;
+		private static List<RoomObj> m_dlcTowerRoomArray;
+		private static List<RoomObj> m_dlcDungeonRoomArray;
+		private static RoomObj m_tutorialRoom;
+		private static RoomObj m_throneRoom;
+		private static RoomObj m_endingRoom;
+		private static CompassRoomObj m_compassRoom;
+		private static List<RoomObj> m_challengeRoomArray;
+		private static bool hasTopDoor;
+		private static bool hasBottomDoor;
+		private static bool hasLeftDoor;
+		private static bool hasRightDoor;
+		private static bool hasTopLeftDoor;
+		private static bool hasTopRightDoor;
+		private static bool hasBottomLeftDoor;
+		private static bool hasBottomRightDoor;
+		private static bool hasRightTopDoor;
+		private static bool hasRightBottomDoor;
+		private static bool hasLeftTopDoor;
+		private static bool hasLeftBottomDoor;
 		public static RoomObj StartingRoom
 		{
 			get
@@ -177,25 +177,11 @@ namespace RogueCastle
 			{
 				if (room.Width % 1320 != 0)
 				{
-					throw new Exception(string.Concat(new object[]
-					{
-						"Room Name: ",
-						room.Name,
-						" is not a width divisible by ",
-						1320,
-						". Cannot parse the file."
-					}));
+					throw new Exception(string.Concat("Room Name: ", room.Name, " is not a width divisible by ", 1320, ". Cannot parse the file."));
 				}
 				if (room.Height % 720 != 0)
 				{
-					throw new Exception(string.Concat(new object[]
-					{
-						"Room Name: ",
-						room.Name,
-						" is not a height divisible by ",
-						720,
-						". Cannot parse the file."
-					}));
+					throw new Exception(string.Concat("Room Name: ", room.Name, " is not a height divisible by ", 720, ". Cannot parse the file."));
 				}
 				int num = room.Width / 1320;
 				int num2 = room.Height / 720;
@@ -463,25 +449,11 @@ namespace RogueCastle
 			list4.AddRange(list3);
 			if (areaInfo.SecretRooms.Y > list2.Count)
 			{
-				throw new Exception(string.Concat(new object[]
-				{
-					"Cannot add ",
-					(int)areaInfo.SecretRooms.Y,
-					" secret rooms from pool of ",
-					list2.Count,
-					" secret rooms."
-				}));
+				throw new Exception(string.Concat("Cannot add ", (int)areaInfo.SecretRooms.Y, " secret rooms from pool of ", list2.Count, " secret rooms."));
 			}
 			if (areaInfo.BonusRooms.Y > list3.Count)
 			{
-				throw new Exception(string.Concat(new object[]
-				{
-					"Cannot add ",
-					(int)areaInfo.BonusRooms.Y,
-					" bonus rooms from pool of ",
-					list3.Count,
-					" bonus rooms."
-				}));
+				throw new Exception(string.Concat("Cannot add ", (int)areaInfo.BonusRooms.Y, " bonus rooms from pool of ", list3.Count, " bonus rooms."));
 			}
 			GameTypes.LevelType levelType = areaInfo.LevelType;
 			List<RoomObj> list5 = new List<RoomObj>();
@@ -689,7 +661,7 @@ namespace RogueCastle
 						continue;
 					}
 					int index = CDGMath.RandomInt(0, list8.Count - 1);
-					CDGMath.Shuffle<DoorObj>(list8);
+					CDGMath.Shuffle(list8);
 					DoorObj doorObj3 = list8[index];
 					if (flag4)
 					{
@@ -766,25 +738,11 @@ namespace RogueCastle
 			}
 			if (num3 != 0)
 			{
-				Console.WriteLine(string.Concat(new object[]
-				{
-					"WARNING: Only ",
-					num4 - num3,
-					" secret rooms of ",
-					num4,
-					" creation attempts were successful"
-				}));
+				Console.WriteLine(string.Concat("WARNING: Only ", num4 - num3, " secret rooms of ", num4, " creation attempts were successful"));
 			}
 			if (num7 != 0)
 			{
-				Console.WriteLine(string.Concat(new object[]
-				{
-					"WARNING: Only ",
-					num8 - num7,
-					" secret rooms of ",
-					num8,
-					" creation attempts were successful"
-				}));
+				Console.WriteLine(string.Concat("WARNING: Only ", num8 - num7, " secret rooms of ", num8, " creation attempts were successful"));
 			}
 			return list7;
 		}
@@ -1273,10 +1231,10 @@ namespace RogueCastle
 						}
 					}
 				}
-				RemoveFromListHelper<TerrainObj>(current.TerrainObjList);
-				RemoveFromListHelper<GameObj>(current.GameObjList);
-				RemoveFromListHelper<EnemyObj>(current.EnemyList);
-				RemoveFromListHelper<BorderObj>(current.BorderList);
+				RemoveFromListHelper(current.TerrainObjList);
+				RemoveFromListHelper(current.GameObjList);
+				RemoveFromListHelper(current.EnemyList);
+				RemoveFromListHelper(current.BorderList);
 			}
 		}
 		private static void RemoveFromListHelper<T>(List<T> list)
@@ -1387,27 +1345,27 @@ namespace RogueCastle
 						EnemyObj enemyObj;
 						if (enemyOrbObj.OrbType == 0)
 						{
-							enemyObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, (GameTypes.EnemyDifficulty)difficulty, false);
+							enemyObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, (GameTypes.EnemyDifficulty)difficulty);
 						}
 						else if (enemyOrbObj.OrbType == 1)
 						{
-							enemyObj = EnemyBuilder.BuildEnemy(enemyType2, null, null, null, (GameTypes.EnemyDifficulty)difficulty2, false);
+							enemyObj = EnemyBuilder.BuildEnemy(enemyType2, null, null, null, (GameTypes.EnemyDifficulty)difficulty2);
 						}
 						else if (enemyOrbObj.OrbType == 2)
 						{
-							enemyObj = EnemyBuilder.BuildEnemy(enemyType3, null, null, null, (GameTypes.EnemyDifficulty)difficulty3, false);
+							enemyObj = EnemyBuilder.BuildEnemy(enemyType3, null, null, null, (GameTypes.EnemyDifficulty)difficulty3);
 						}
 						else if (enemyOrbObj.OrbType == 3)
 						{
-							enemyObj = EnemyBuilder.BuildEnemy(enemyType4, null, null, null, (GameTypes.EnemyDifficulty)difficulty4, false);
+							enemyObj = EnemyBuilder.BuildEnemy(enemyType4, null, null, null, (GameTypes.EnemyDifficulty)difficulty4);
 						}
 						else if (enemyOrbObj.OrbType == 4)
 						{
-							enemyObj = EnemyBuilder.BuildEnemy(enemyType5, null, null, null, (GameTypes.EnemyDifficulty)difficulty5, false);
+							enemyObj = EnemyBuilder.BuildEnemy(enemyType5, null, null, null, (GameTypes.EnemyDifficulty)difficulty5);
 						}
 						else
 						{
-							enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.EXPERT, false);
+							enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.EXPERT);
 						}
 						while (enemyOrbObj.ForceFlying && enemyObj.IsWeighted)
 						{
@@ -1420,41 +1378,41 @@ namespace RogueCastle
 								num = CDGMath.RandomInt(0, array.Length - 1);
 								enemyType = array[num];
 								difficulty = array2[num];
-								enemyObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, (GameTypes.EnemyDifficulty)difficulty, false);
+								enemyObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, (GameTypes.EnemyDifficulty)difficulty);
 							}
 							else if (enemyOrbObj.OrbType == 1)
 							{
 								num = CDGMath.RandomInt(0, array.Length - 1);
 								enemyType2 = array[num];
 								difficulty2 = array2[num];
-								enemyObj = EnemyBuilder.BuildEnemy(enemyType2, null, null, null, (GameTypes.EnemyDifficulty)difficulty2, false);
+								enemyObj = EnemyBuilder.BuildEnemy(enemyType2, null, null, null, (GameTypes.EnemyDifficulty)difficulty2);
 							}
 							else if (enemyOrbObj.OrbType == 2)
 							{
 								num = CDGMath.RandomInt(0, array.Length - 1);
 								enemyType3 = array[num];
 								difficulty3 = array2[num];
-								enemyObj = EnemyBuilder.BuildEnemy(enemyType3, null, null, null, (GameTypes.EnemyDifficulty)difficulty3, false);
+								enemyObj = EnemyBuilder.BuildEnemy(enemyType3, null, null, null, (GameTypes.EnemyDifficulty)difficulty3);
 							}
 							else if (enemyOrbObj.OrbType == 3)
 							{
 								num = CDGMath.RandomInt(0, array.Length - 1);
 								enemyType4 = array[num];
 								difficulty4 = array2[num];
-								enemyObj = EnemyBuilder.BuildEnemy(enemyType4, null, null, null, (GameTypes.EnemyDifficulty)difficulty4, false);
+								enemyObj = EnemyBuilder.BuildEnemy(enemyType4, null, null, null, (GameTypes.EnemyDifficulty)difficulty4);
 							}
 							else if (enemyOrbObj.OrbType == 4)
 							{
 								num = CDGMath.RandomInt(0, array.Length - 1);
 								enemyType5 = array[num];
 								difficulty5 = array2[num];
-								enemyObj = EnemyBuilder.BuildEnemy(enemyType5, null, null, null, (GameTypes.EnemyDifficulty)difficulty5, false);
+								enemyObj = EnemyBuilder.BuildEnemy(enemyType5, null, null, null, (GameTypes.EnemyDifficulty)difficulty5);
 							}
 							else
 							{
 								num = CDGMath.RandomInt(0, array.Length - 1);
 								b = array[num];
-								enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.EXPERT, false);
+								enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.EXPERT);
 							}
 						}
 						enemyObj.Position = enemyOrbObj.Position;
@@ -1470,7 +1428,7 @@ namespace RogueCastle
 						if (enemyTagObj != null)
 						{
 							int num3 = CDGMath.RandomInt(0, array.Length - 1);
-							EnemyObj enemyObj2 = EnemyBuilder.BuildEnemy(array[num3], null, null, null, GameTypes.EnemyDifficulty.BASIC, false);
+							EnemyObj enemyObj2 = EnemyBuilder.BuildEnemy(array[num3], null, null, null, GameTypes.EnemyDifficulty.BASIC);
 							enemyObj2.Position = enemyTagObj.Position;
 							enemyObj2.IsProcedural = true;
 							current.EnemyList.Add(enemyObj2);

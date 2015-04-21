@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -26,9 +26,9 @@ namespace RogueCastle
 					RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
 					rCScreenManager.DialogueScreen.SetDialogue("Back to Menu");
 					rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "GoBackToTitle", new object[0]);
-					rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand", new object[0]);
-					rCScreenManager.DisplayScreen(13, false, null);
+					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "GoBackToTitle");
+					rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand");
+					rCScreenManager.DisplayScreen(13, false);
 				}
 			}
 		}
@@ -68,27 +68,17 @@ namespace RogueCastle
 				if (challengeBossRoomObj != null)
 				{
 					challengeBossRoomObj.LoadPlayerData();
-					(m_parentScreen.ScreenManager.Game as Game).SaveManager.LoadFiles(levelScreen, new SaveType[]
-					{
-						SaveType.UpgradeData
-					});
+					(m_parentScreen.ScreenManager.Game as Game).SaveManager.LoadFiles(levelScreen, SaveType.UpgradeData);
 					levelScreen.Player.CurrentHealth = challengeBossRoomObj.StoredHP;
 					levelScreen.Player.CurrentMana = challengeBossRoomObj.StoredMP;
 				}
 			}
-			(m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData,
-				SaveType.UpgradeData
-			});
+			(m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
 			if (Game.PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start" && levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
 			{
-				(m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-				{
-					SaveType.MapData
-				});
+				(m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.MapData);
 			}
-			Game.ScreenManager.DisplayScreen(3, true, null);
+			Game.ScreenManager.DisplayScreen(3, true);
 		}
 		public void CancelCommand()
 		{

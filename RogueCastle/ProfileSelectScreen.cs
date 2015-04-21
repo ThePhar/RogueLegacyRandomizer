@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -139,11 +139,7 @@ namespace RogueCastle
 			{
 				m_deleteProfileText.Visible = false;
 			}
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.9"
-			});
+			Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.9");
 			m_title.Position = new Vector2(660f, 100f);
 			m_slot1Container.Position = new Vector2(660f, 300f);
 			m_slot2Container.Position = new Vector2(660f, 420f);
@@ -152,7 +148,7 @@ namespace RogueCastle
 			TweenInText(m_slot1Container, 0.05f);
 			TweenInText(m_slot2Container, 0.1f);
 			TweenInText(m_slot3Container, 0.15f);
-			Tween.RunFunction(0.5f, this, "UnlockControls", new object[0]);
+			Tween.RunFunction(0.5f, this, "UnlockControls");
 			if (InputManager.GamePadIsConnected(PlayerIndex.One))
 			{
 				m_confirmText.ForcedScale = new Vector2(0.7f, 0.7f);
@@ -172,26 +168,10 @@ namespace RogueCastle
 			m_cancelText.Opacity = 0f;
 			m_navigationText.Opacity = 0f;
 			m_deleteProfileText.Opacity = 0f;
-			Tween.To(m_confirmText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_cancelText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_navigationText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_deleteProfileText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_confirmText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			Tween.To(m_deleteProfileText, 0.2f, Tween.EaseNone, "Opacity", "1");
 			base.OnEnter();
 		}
 		private void CheckSaveHeaders(ObjContainer container, byte profile)
@@ -247,74 +227,28 @@ namespace RogueCastle
 		{
 			obj.Opacity = 0f;
 			obj.Y -= 50f;
-			Tween.To(obj, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				delay.ToString(),
-				"Opacity",
-				"1"
-			});
-			Tween.By(obj, 0.5f, new Easing(Quad.EaseOut), new string[]
-			{
-				"delay",
-				delay.ToString(),
-				"Y",
-				"50"
-			});
+			Tween.To(obj, 0.5f, Tween.EaseNone, "delay", delay.ToString(), "Opacity", "1");
+			Tween.By(obj, 0.5f, Quad.EaseOut, "delay", delay.ToString(), "Y", "50");
 		}
 		private void ExitTransition()
 		{
 			SoundManager.PlaySound("DialogMenuClose");
-			Tween.To(m_confirmText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_cancelText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_navigationText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_deleteProfileText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_confirmText, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_deleteProfileText, 0.2f, Tween.EaseNone, "Opacity", "0");
 			m_lockControls = true;
 			TweenOutText(m_title, 0f);
 			TweenOutText(m_slot1Container, 0.05f);
 			TweenOutText(m_slot2Container, 0.1f);
 			TweenOutText(m_slot3Container, 0.15f);
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(this, 0.2f, Tween.EaseNone, "delay", "0.5", "BackBufferOpacity", "0");
+			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
 		}
 		private void TweenOutText(GameObj obj, float delay)
 		{
-			Tween.To(obj, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				delay.ToString(),
-				"Opacity",
-				"0"
-			});
-			Tween.By(obj, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				delay.ToString(),
-				"Y",
-				"-50"
-			});
+			Tween.To(obj, 0.5f, Tween.EaseNone, "delay", delay.ToString(), "Opacity", "0");
+			Tween.By(obj, 0.5f, Quad.EaseInOut, "delay", delay.ToString(), "Y", "-50");
 		}
 		public override void OnExit()
 		{
@@ -376,7 +310,7 @@ namespace RogueCastle
 					game.SaveConfig();
 					if (game.SaveManager.FileExists(SaveType.PlayerData))
 					{
-						(ScreenManager as RCScreenManager).DisplayScreen(3, true, null);
+						(ScreenManager as RCScreenManager).DisplayScreen(3, true);
 					}
 					else
 					{
@@ -386,7 +320,7 @@ namespace RogueCastle
 						(ScreenManager as RCScreenManager).Player.Reset();
 						Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
 						Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
-						(ScreenManager as RCScreenManager).DisplayScreen(23, true, null);
+						(ScreenManager as RCScreenManager).DisplayScreen(23, true);
 					}
 				}
 				if (Game.GlobalInput.JustPressed(26) && m_deleteProfileText.Visible)
@@ -417,16 +351,16 @@ namespace RogueCastle
 			RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("Delete Save");
 			rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSaveAskAgain", new object[0]);
-			rCScreenManager.DisplayScreen(13, false, null);
+			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSaveAskAgain");
+			rCScreenManager.DisplayScreen(13, false);
 		}
 		public void DeleteSaveAskAgain()
 		{
 			RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("Delete Save2");
 			rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSave", new object[0]);
-			rCScreenManager.DisplayScreen(13, false, null);
+			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSave");
+			rCScreenManager.DisplayScreen(13, false);
 		}
 		public void DeleteSave()
 		{
@@ -451,7 +385,7 @@ namespace RogueCastle
 				Game.PlayerStats = new PlayerStats();
 				(ScreenManager as RCScreenManager).Player.Reset();
 				SoundManager.StopMusic(1f);
-				(ScreenManager as RCScreenManager).DisplayScreen(23, true, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(23, true);
 				return;
 			}
 			m_deleteProfileText.Visible = false;

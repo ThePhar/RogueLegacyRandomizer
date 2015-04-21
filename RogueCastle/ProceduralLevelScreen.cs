@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -293,7 +293,7 @@ namespace RogueCastle
 			m_tempEnemyStartPositions = new List<Vector2>();
 			m_impactEffectPool = new ImpactEffectPool(2000);
 			CameraLockedToPlayer = true;
-			m_roomTitle = new TextObj(null);
+			m_roomTitle = new TextObj();
 			m_roomTitle.Font = Game.JunicodeLargeFont;
 			m_roomTitle.Align = Types.TextAlign.Right;
 			m_roomTitle.Opacity = 0f;
@@ -419,7 +419,7 @@ namespace RogueCastle
 			m_filmGrain.Scale = new Vector2(2.015f, 2.05f);
 			m_filmGrain.X -= 5f;
 			m_filmGrain.Y -= 5f;
-			m_filmGrain.PlayAnimation(true);
+			m_filmGrain.PlayAnimation();
 			m_filmGrain.AnimationDelay = 0.0333333351f;
 			m_compassBG = new SpriteObj("CompassBG_Sprite");
 			m_compassBG.ForceDraw = true;
@@ -433,7 +433,7 @@ namespace RogueCastle
 		}
 		private void InitializeCreditsText()
 		{
-			m_creditsTextTitleList = new string[]
+			m_creditsTextTitleList = new[]
 			{
 				"Developed by",
 				"Design",
@@ -443,7 +443,7 @@ namespace RogueCastle
 				"Music",
 				""
 			};
-			m_creditsTextList = new string[]
+			m_creditsTextList = new[]
 			{
 				"Cellar Door Games",
 				"Teddy Lee",
@@ -479,41 +479,16 @@ namespace RogueCastle
 				m_creditsText.Opacity = 0f;
 				m_creditsTitleText.Text = m_creditsTextTitleList[m_creditsIndex];
 				m_creditsText.Text = m_creditsTextList[m_creditsIndex];
-				Tween.To(m_creditsTitleText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
-				Tween.To(m_creditsText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"0.2",
-					"Opacity",
-					"1"
-				});
+				Tween.To(m_creditsTitleText, 0.5f, Tween.EaseNone, "Opacity", "1");
+				Tween.To(m_creditsText, 0.5f, Tween.EaseNone, "delay", "0.2", "Opacity", "1");
 				m_creditsTitleText.Opacity = 1f;
 				m_creditsText.Opacity = 1f;
-				Tween.To(m_creditsTitleText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"4",
-					"Opacity",
-					"0"
-				});
-				Tween.To(m_creditsText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"4.2",
-					"Opacity",
-					"0"
-				});
+				Tween.To(m_creditsTitleText, 0.5f, Tween.EaseNone, "delay", "4", "Opacity", "0");
+				Tween.To(m_creditsText, 0.5f, Tween.EaseNone, "delay", "4.2", "Opacity", "0");
 				m_creditsTitleText.Opacity = 0f;
 				m_creditsText.Opacity = 0f;
 				m_creditsIndex++;
-				Tween.RunFunction(8f, this, "DisplayCreditsText", new object[]
-				{
-					false
-				});
+				Tween.RunFunction(8f, this, "DisplayCreditsText", false);
 			}
 		}
 		public void StopCreditsText()
@@ -854,7 +829,7 @@ namespace RogueCastle
 							{
 								fairyChestObj.ResetChest();
 							}
-							fairyChestObj.SetConditionType(0);
+							fairyChestObj.SetConditionType();
 						}
 					}
 					m_chestList.Add(chestObj);
@@ -1282,11 +1257,7 @@ namespace RogueCastle
 						m_miniMapDisplay.AddRoom(current);
 						if (current.Name != "Start")
 						{
-							(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-							{
-								SaveType.PlayerData,
-								SaveType.MapData
-							});
+							(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.MapData);
 						}
 						if (current.Name == "ChallengeBoss")
 						{
@@ -1377,35 +1348,13 @@ namespace RogueCastle
 									m_roomEnteringTitle.X = 1250f;
 									m_roomEnteringTitle.Align = Types.TextAlign.Right;
 								}
-								Tween.To(m_roomTitle, 0.5f, new Easing(Linear.EaseNone), new string[]
-								{
-									"delay",
-									"0.2",
-									"Opacity",
-									"1"
-								});
+								Tween.To(m_roomTitle, 0.5f, Linear.EaseNone, "delay", "0.2", "Opacity", "1");
 								m_roomTitle.Opacity = 1f;
-								Tween.To(m_roomTitle, 0.5f, new Easing(Linear.EaseNone), new string[]
-								{
-									"delay",
-									"2.2",
-									"Opacity",
-									"0"
-								});
+								Tween.To(m_roomTitle, 0.5f, Linear.EaseNone, "delay", "2.2", "Opacity", "0");
 								m_roomTitle.Opacity = 0f;
-								Tween.To(m_roomEnteringTitle, 0.5f, new Easing(Linear.EaseNone), new string[]
-								{
-									"Opacity",
-									"1"
-								});
+								Tween.To(m_roomEnteringTitle, 0.5f, Linear.EaseNone, "Opacity", "1");
 								m_roomEnteringTitle.Opacity = 1f;
-								Tween.To(m_roomEnteringTitle, 0.5f, new Easing(Linear.EaseNone), new string[]
-								{
-									"delay",
-									"2",
-									"Opacity",
-									"0"
-								});
+								Tween.To(m_roomEnteringTitle, 0.5f, Linear.EaseNone, "delay", "2", "Opacity", "0");
 								m_roomEnteringTitle.Opacity = 0f;
 							}
 							else
@@ -1480,7 +1429,7 @@ namespace RogueCastle
 							if (animateableObj != null && animateableObj.TotalFrames > 1 && !(animateableObj is ChestObj) && !(current6 is BreakableObj))
 							{
 								animateableObj.AnimationDelay = 0.1f;
-								animateableObj.PlayAnimation(true);
+								animateableObj.PlayAnimation();
 							}
 						}
 						if (!DisableRoomOnEnter)
@@ -1676,7 +1625,7 @@ namespace RogueCastle
 		{
 			if (Game.GlobalInput.JustPressed(8) && CurrentRoom.Name != "Ending")
 			{
-				(ScreenManager as RCScreenManager).DisplayScreen(16, true, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(16, true);
 			}
 			if (!LevelEV.RUN_DEMO_VERSION && !LevelEV.CREATE_RETAIL_VERSION)
 			{
@@ -1856,40 +1805,16 @@ namespace RogueCastle
 		{
 			Tween.StopAllContaining(m_compassBG, false);
 			Tween.StopAllContaining(m_compass, false);
-			Tween.To(m_compassBG, 0.5f, new Easing(Back.EaseOutLarge), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_compass, 0.5f, new Easing(Back.EaseOutLarge), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
+			Tween.To(m_compassBG, 0.5f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_compass, 0.5f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
 			m_compassDisplayed = true;
 		}
 		private void HideCompass()
 		{
 			Tween.StopAllContaining(m_compassBG, false);
 			Tween.StopAllContaining(m_compass, false);
-			Tween.To(m_compassBG, 0.5f, new Easing(Back.EaseInLarge), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_compass, 0.5f, new Easing(Back.EaseInLarge), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
+			Tween.To(m_compassBG, 0.5f, Back.EaseInLarge, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_compass, 0.5f, Back.EaseInLarge, "ScaleX", "0", "ScaleY", "0");
 			m_compassDisplayed = false;
 			RemoveCompassDoor();
 		}
@@ -2252,12 +2177,8 @@ namespace RogueCastle
 			m_whiteBG.Scale = Vector2.One;
 			m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
 			m_whiteBG.Opacity = 1f;
-			Tween.To(m_whiteBG, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.RunFunction(0.2f, this, "RunWhiteSlash2", new object[0]);
+			Tween.To(m_whiteBG, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.RunFunction(0.2f, this, "RunWhiteSlash2");
 		}
 		public void RunWhiteSlash2()
 		{
@@ -2265,11 +2186,7 @@ namespace RogueCastle
 			m_whiteBG.Scale = Vector2.One;
 			m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
 			m_whiteBG.Opacity = 1f;
-			Tween.To(m_whiteBG, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_whiteBG, 0.2f, Tween.EaseNone, "Opacity", "0");
 		}
 		public void LightningEffectTwice()
 		{
@@ -2277,12 +2194,8 @@ namespace RogueCastle
 			m_whiteBG.Scale = Vector2.One;
 			m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
 			m_whiteBG.Opacity = 1f;
-			Tween.To(m_whiteBG, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.RunFunction(0.2f, this, "LightningEffectOnce", new object[0]);
+			Tween.To(m_whiteBG, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.RunFunction(0.2f, this, "LightningEffectOnce");
 		}
 		public void LightningEffectOnce()
 		{
@@ -2290,16 +2203,8 @@ namespace RogueCastle
 			m_whiteBG.Scale = Vector2.One;
 			m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
 			m_whiteBG.Opacity = 1f;
-			Tween.To(m_whiteBG, 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			SoundManager.PlaySound(new string[]
-			{
-				"LightningClap1",
-				"LightningClap2"
-			});
+			Tween.To(m_whiteBG, 1f, Tween.EaseNone, "Opacity", "0");
+			SoundManager.PlaySound("LightningClap1", "LightningClap2");
 		}
 		public void SpawnDementiaEnemy()
 		{
@@ -2434,12 +2339,7 @@ namespace RogueCastle
 			list.Add(m_bagsCollected);
 			list.Add(m_diamondsCollected);
 			list.Add(m_objKilledPlayer);
-			Tween.RunFunction(0f, ScreenManager, "DisplayScreen", new object[]
-			{
-				7,
-				true,
-				list
-			});
+			Tween.RunFunction(0f, ScreenManager, "DisplayScreen", 7, true, list);
 		}
 		public void RunCinematicBorders(float duration)
 		{
@@ -2449,34 +2349,10 @@ namespace RogueCastle
 			m_blackBorder1.Y = 0f;
 			m_blackBorder2.Y = 720 - m_borderSize;
 			float num = 1f;
-			Tween.By(m_blackBorder1, num, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				(duration - num).ToString(),
-				"Y",
-				(-m_borderSize).ToString()
-			});
-			Tween.By(m_blackBorder2, num, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				(duration - num).ToString(),
-				"Y",
-				m_borderSize.ToString()
-			});
-			Tween.To(m_blackBorder1, num, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				(duration - num + 0.2f).ToString(),
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_blackBorder2, num, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				(duration - num + 0.2f).ToString(),
-				"Opacity",
-				"0"
-			});
+			Tween.By(m_blackBorder1, num, Quad.EaseInOut, "delay", (duration - num).ToString(), "Y", (-m_borderSize).ToString());
+			Tween.By(m_blackBorder2, num, Quad.EaseInOut, "delay", (duration - num).ToString(), "Y", m_borderSize.ToString());
+			Tween.To(m_blackBorder1, num, Linear.EaseNone, "delay", (duration - num + 0.2f).ToString(), "Opacity", "0");
+			Tween.To(m_blackBorder2, num, Linear.EaseNone, "delay", (duration - num + 0.2f).ToString(), "Opacity", "0");
 		}
 		public void StopCinematicBorders()
 		{
@@ -2490,7 +2366,7 @@ namespace RogueCastle
 			{
 				(ScreenManager as RCScreenManager).ActivateMapScreenTeleporter();
 			}
-			(ScreenManager as RCScreenManager).DisplayScreen(14, true, null);
+			(ScreenManager as RCScreenManager).DisplayScreen(14, true);
 		}
 		public void PauseAllEnemies()
 		{
@@ -2498,11 +2374,11 @@ namespace RogueCastle
 			CurrentRoom.PauseRoom();
 			foreach (EnemyObj current in CurrentRoom.EnemyList)
 			{
-				current.PauseEnemy(false);
+				current.PauseEnemy();
 			}
 			foreach (EnemyObj current2 in CurrentRoom.TempEnemyList)
 			{
-				current2.PauseEnemy(false);
+				current2.PauseEnemy();
 			}
 			m_projectileManager.PauseAllProjectiles(false);
 		}
@@ -2512,26 +2388,14 @@ namespace RogueCastle
 			SoundManager.PauseMusic();
 			m_enemyPauseDuration = duration;
 			PauseAllEnemies();
-			Tween.To(m_traitAura, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleX",
-				"100",
-				"ScaleY",
-				"100"
-			});
+			Tween.To(m_traitAura, 0.2f, Tween.EaseNone, "ScaleX", "100", "ScaleY", "100");
 		}
 		public void StopTimeStop()
 		{
 			SoundManager.PlaySound("Cast_TimeStop");
 			SoundManager.ResumeMusic();
-			Tween.To(m_traitAura, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "UnpauseAllEnemies", new object[0]);
+			Tween.To(m_traitAura, 0.2f, Tween.EaseNone, "ScaleX", "0", "ScaleY", "0");
+			Tween.AddEndHandlerToLastTween(this, "UnpauseAllEnemies");
 		}
 		public void UnpauseAllEnemies()
 		{
@@ -2540,11 +2404,11 @@ namespace RogueCastle
 			CurrentRoom.UnpauseRoom();
 			foreach (EnemyObj current in CurrentRoom.EnemyList)
 			{
-				current.UnpauseEnemy(false);
+				current.UnpauseEnemy();
 			}
 			foreach (EnemyObj current2 in CurrentRoom.TempEnemyList)
 			{
-				current2.UnpauseEnemy(false);
+				current2.UnpauseEnemy();
 			}
 			m_projectileManager.UnpauseAllProjectiles();
 		}
@@ -2793,11 +2657,7 @@ namespace RogueCastle
 			(m_objectivePlate.GetChildAt(3) as TextObj).Text = objectiveProgress;
 			if (tween)
 			{
-				m_objectivePlateTween = Tween.By(m_objectivePlate, 0.5f, new Easing(Back.EaseOut), new string[]
-				{
-					"X",
-					"-300"
-				});
+				m_objectivePlateTween = Tween.By(m_objectivePlate, 0.5f, Back.EaseOut, "X", "-300");
 				return;
 			}
 			m_objectivePlate.X -= 300f;
@@ -2813,11 +2673,7 @@ namespace RogueCastle
 				}
 				if (tween)
 				{
-					Tween.By(m_objectivePlate, 0.5f, new Easing(Back.EaseIn), new string[]
-					{
-						"X",
-						"300"
-					});
+					Tween.By(m_objectivePlate, 0.5f, Back.EaseIn, "X", "300");
 					return;
 				}
 				m_objectivePlate.X += 300f;
@@ -2986,11 +2842,7 @@ namespace RogueCastle
 		public void RevealMorning()
 		{
 			m_sky.MorningOpacity = 0f;
-			Tween.To(m_sky, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"MorningOpacity",
-				"1"
-			});
+			Tween.To(m_sky, 2f, Tween.EaseNone, "MorningOpacity", "1");
 		}
 		public void ZoomOutAllObjects()
 		{
@@ -3020,31 +2872,16 @@ namespace RogueCastle
 				if (Math.Abs(num3) > Math.Abs(num2))
 				{
 					list.Add(new Vector2(0f, num2));
-					Tween.By(current, 0.5f, new Easing(Back.EaseIn), new string[]
-					{
-						"delay",
-						num.ToString(),
-						"Y",
-						num2.ToString()
-					});
+					Tween.By(current, 0.5f, Back.EaseIn, "delay", num.ToString(), "Y", num2.ToString());
 				}
 				else
 				{
 					list.Add(new Vector2(num3, 0f));
-					Tween.By(current, 0.5f, new Easing(Back.EaseIn), new string[]
-					{
-						"delay",
-						num.ToString(),
-						"X",
-						num3.ToString()
-					});
+					Tween.By(current, 0.5f, Back.EaseIn, "delay", num.ToString(), "X", num3.ToString());
 				}
 				num += 0.05f;
 			}
-			Tween.RunFunction(num + 0.5f, this, "ZoomInAllObjects", new object[]
-			{
-				list
-			});
+			Tween.RunFunction(num + 0.5f, this, "ZoomInAllObjects", list);
 		}
 		public void ZoomInAllObjects(List<Vector2> objPositions)
 		{
@@ -3052,15 +2889,7 @@ namespace RogueCastle
 			float num2 = 1f;
 			foreach (GameObj current in CurrentRoom.GameObjList)
 			{
-				Tween.By(current, 0.5f, new Easing(Back.EaseOut), new string[]
-				{
-					"delay",
-					num2.ToString(),
-					"X",
-					(-objPositions[num].X).ToString(),
-					"Y",
-					(-objPositions[num].Y).ToString()
-				});
+				Tween.By(current, 0.5f, Back.EaseOut, "delay", num2.ToString(), "X", (-objPositions[num].X).ToString(), "Y", (-objPositions[num].Y).ToString());
 				num++;
 				num2 += 0.05f;
 			}

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -241,12 +241,7 @@ namespace RogueCastle
 					Vector2 vector = new Vector2(value.Y, value.X * -1f);
 					Vector2 heading2 = 2f * (CDGMath.DotProduct(heading, vector) / CDGMath.DotProduct(vector, vector)) * vector - heading;
 					Heading = heading2;
-					SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-					{
-						"GiantSpike_Bounce_01",
-						"GiantSpike_Bounce_02",
-						"GiantSpike_Bounce_03"
-					});
+					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "GiantSpike_Bounce_01", "GiantSpike_Bounce_02", "GiantSpike_Bounce_03");
 					m_selfDestructCounter++;
 					m_selfDestructTimer = 1f;
 				}
@@ -291,12 +286,7 @@ namespace RogueCastle
 					X += value.X;
 					Y += value.Y;
 					Heading = heading2;
-					SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-					{
-						"GiantSpike_Bounce_01",
-						"GiantSpike_Bounce_02",
-						"GiantSpike_Bounce_03"
-					});
+					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "GiantSpike_Bounce_01", "GiantSpike_Bounce_02", "GiantSpike_Bounce_03");
 					m_selfDestructCounter++;
 					m_selfDestructTimer = 1f;
 				}

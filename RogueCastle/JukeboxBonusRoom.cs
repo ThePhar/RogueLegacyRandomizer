@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -29,7 +29,7 @@ namespace RogueCastle
 		private SpriteObj m_speechBubble;
 		public JukeboxBonusRoom()
 		{
-			m_songList = new string[]
+			m_songList = new[]
 			{
 				"CastleBossSong",
 				"GardenSong",
@@ -48,7 +48,7 @@ namespace RogueCastle
 				"EndSong",
 				"EndSongDrums"
 			};
-			m_songTitleList = new string[]
+			m_songTitleList = new[]
 			{
 				"Pistol Shrimp",
 				"The Grim Outdoors",
@@ -89,7 +89,7 @@ namespace RogueCastle
 		}
 		public override void LoadContent(GraphicsDevice graphics)
 		{
-			m_songTitle = new TextObj(null);
+			m_songTitle = new TextObj();
 			m_songTitle.Font = Game.JunicodeLargeFont;
 			m_songTitle.Align = Types.TextAlign.Right;
 			m_songTitle.Text = "Song name here";
@@ -124,35 +124,13 @@ namespace RogueCastle
 					Tween.StopAllContaining(m_songTitle, false);
 					m_songTitle.Opacity = 0f;
 					m_nowPlayingText.Opacity = 0f;
-					Tween.To(m_songTitle, 0.5f, new Easing(Linear.EaseNone), new string[]
-					{
-						"delay",
-						"0.2",
-						"Opacity",
-						"1"
-					});
+					Tween.To(m_songTitle, 0.5f, Linear.EaseNone, "delay", "0.2", "Opacity", "1");
 					m_songTitle.Opacity = 1f;
-					Tween.To(m_songTitle, 0.5f, new Easing(Linear.EaseNone), new string[]
-					{
-						"delay",
-						"2.2",
-						"Opacity",
-						"0"
-					});
+					Tween.To(m_songTitle, 0.5f, Linear.EaseNone, "delay", "2.2", "Opacity", "0");
 					m_songTitle.Opacity = 0f;
-					Tween.To(m_nowPlayingText, 0.5f, new Easing(Linear.EaseNone), new string[]
-					{
-						"Opacity",
-						"1"
-					});
+					Tween.To(m_nowPlayingText, 0.5f, Linear.EaseNone, "Opacity", "1");
 					m_nowPlayingText.Opacity = 1f;
-					Tween.To(m_nowPlayingText, 0.5f, new Easing(Linear.EaseNone), new string[]
-					{
-						"delay",
-						"2",
-						"Opacity",
-						"0"
-					});
+					Tween.To(m_nowPlayingText, 0.5f, Linear.EaseNone, "delay", "2", "Opacity", "0");
 					m_nowPlayingText.Opacity = 0f;
 					SoundManager.PlayMusic(m_songList[m_songIndex], true, 1f);
 					m_songTitle.Text = m_songTitleList[m_songIndex];
@@ -177,46 +155,24 @@ namespace RogueCastle
 		}
 		public void AnimateJukebox()
 		{
-			Tween.To(m_jukeBox, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleY",
-				"2.9",
-				"ScaleX",
-				"3.1",
-				"Rotation",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "AnimateJukebox2", new object[0]);
+			Tween.To(m_jukeBox, 0.2f, Tween.EaseNone, "ScaleY", "2.9", "ScaleX", "3.1", "Rotation", "0");
+			Tween.AddEndHandlerToLastTween(this, "AnimateJukebox2");
 			Player.AttachedLevel.ImpactEffectPool.DisplayMusicNote(new Vector2(m_jukeBox.Bounds.Center.X + CDGMath.RandomInt(-20, 20), m_jukeBox.Bounds.Top + CDGMath.RandomInt(0, 20)));
 		}
 		public void AnimateJukebox2()
 		{
 			if (!m_rotatedLeft)
 			{
-				Tween.To(m_jukeBox, 0.2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Rotation",
-					"-2"
-				});
+				Tween.To(m_jukeBox, 0.2f, Tween.EaseNone, "Rotation", "-2");
 				m_rotatedLeft = true;
 			}
 			else
 			{
-				Tween.To(m_jukeBox, 0.2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Rotation",
-					"2"
-				});
+				Tween.To(m_jukeBox, 0.2f, Tween.EaseNone, "Rotation", "2");
 				m_rotatedLeft = false;
 			}
-			Tween.To(m_jukeBox, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleY",
-				"3.1",
-				"ScaleX",
-				"2.9"
-			});
-			Tween.AddEndHandlerToLastTween(this, "AnimateJukebox", new object[0]);
+			Tween.To(m_jukeBox, 0.2f, Tween.EaseNone, "ScaleY", "3.1", "ScaleX", "2.9");
+			Tween.AddEndHandlerToLastTween(this, "AnimateJukebox");
 		}
 		public override void Draw(Camera2D camera)
 		{

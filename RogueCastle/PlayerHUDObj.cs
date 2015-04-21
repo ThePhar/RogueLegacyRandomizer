@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -41,12 +41,12 @@ namespace RogueCastle
 		public PlayerHUDObj() : base("PlayerHUDLvlText_Sprite")
 		{
 			ForceDraw = true;
-			m_playerLevelText = new TextObj(null);
+			m_playerLevelText = new TextObj();
 			m_playerLevelText.Text = Game.PlayerStats.CurrentLevel.ToString();
 			m_playerLevelText.Font = Game.PlayerLevelFont;
 			m_coin = new SpriteObj("PlayerUICoin_Sprite");
 			m_coin.ForceDraw = true;
-			m_goldText = new TextObj(null);
+			m_goldText = new TextObj();
 			m_goldText.Text = "0";
 			m_goldText.Font = Game.GoldFont;
 			m_goldText.FontSize = 25f;

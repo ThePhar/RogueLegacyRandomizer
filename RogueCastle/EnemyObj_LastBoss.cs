@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -212,364 +212,234 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new DebugTraceLogicAction("WalkTowardSLS"), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.3f, 0.75f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet.AddAction(new DebugTraceLogicAction("WalkTowardSLS"));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet.AddAction(new GroundCheckLogicAction());
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet.AddAction(new DelayLogicAction(0.3f, 0.75f));
+			logicSet.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new DebugTraceLogicAction("WalkAway"), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet2.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet2.AddAction(new DebugTraceLogicAction("WalkAway"));
+			logicSet2.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet2.AddAction(new GroundCheckLogicAction());
+			logicSet2.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f));
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new DebugTraceLogicAction("walkStop"), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet3.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.25f, 0.5f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new DebugTraceLogicAction("walkStop"));
+			logicSet3.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet3.AddAction(new GroundCheckLogicAction());
+			logicSet3.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.25f, 0.5f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new DebugTraceLogicAction("attack"), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.05f), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("PlayerAttacking3_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(2, 4, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Player_Attack01",
-				"Player_Attack02"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet4.AddAction(new DebugTraceLogicAction("attack"));
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.05f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("PlayerAttacking3_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction(2, 4));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "Player_Attack01", "Player_Attack02"));
+			logicSet4.AddAction(new PlayAnimationLogicAction("AttackStart", "End"));
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character"));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new DebugTraceLogicAction("moveattack"), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.05f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("PlayerAttacking3_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction(2, 4, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Player_Attack01",
-				"Player_Attack02"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new DebugTraceLogicAction("moveattack"));
+			logicSet5.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true));
+			logicSet5.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.05f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("PlayerAttacking3_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction(2, 4));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "Player_Attack01", "Player_Attack02"));
+			logicSet5.AddAction(new PlayAnimationLogicAction("AttackStart", "End"));
+			logicSet5.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character"));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new DebugTraceLogicAction("Throwing Daggers"), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "CastCloseShield", new object[0]), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet6.AddAction(new DebugTraceLogicAction("Throwing Daggers"));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character"));
+			logicSet6.AddAction(new PlayAnimationLogicAction(false));
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "CastCloseShield"));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new DebugTraceLogicAction("Throwing Daggers"), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, true), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowDaggerProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
+			logicSet7.AddAction(new DebugTraceLogicAction("Throwing Daggers"));
+			logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet7.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f));
+			logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", false));
+			logicSet7.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character"));
+			logicSet7.AddAction(new PlayAnimationLogicAction(false));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowDaggerProjectiles"));
+			logicSet7.AddAction(new DelayLogicAction(0.25f));
+			logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet7.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
 			logicSet7.Tag = 2;
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new DebugTraceLogicAction("Throwing Daggers"), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", false), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, true), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Serial);
-			logicSet8.AddAction(new RunFunctionLogicAction(this, "ThrowDaggerProjectilesNeo", new object[0]), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
+			logicSet8.AddAction(new DebugTraceLogicAction("Throwing Daggers"));
+			logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet8.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f));
+			logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", false));
+			logicSet8.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character"));
+			logicSet8.AddAction(new PlayAnimationLogicAction(false));
+			logicSet8.AddAction(new RunFunctionLogicAction(this, "ThrowDaggerProjectilesNeo"));
+			logicSet8.AddAction(new DelayLogicAction(0.25f));
+			logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet8.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
 			logicSet8.Tag = 2;
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new DebugTraceLogicAction("jumpLS"), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet9.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Player_Jump"
-			}), Types.Sequence.Serial);
-			logicSet9.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new RunFunctionLogicAction(this, "ThrowAxeProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.75f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
+			logicSet9.AddAction(new DebugTraceLogicAction("jumpLS"));
+			logicSet9.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet9.AddAction(new GroundCheckLogicAction());
+			logicSet9.AddAction(new MoveLogicAction(m_target, true));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, "Player_Jump"));
+			logicSet9.AddAction(new JumpLogicAction());
+			logicSet9.AddAction(new DelayLogicAction(0.2f));
+			logicSet9.AddAction(new RunFunctionLogicAction(this, "ThrowAxeProjectiles"));
+			logicSet9.AddAction(new DelayLogicAction(0.75f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet9.AddAction(new GroundCheckLogicAction());
 			LogicSet logicSet10 = new LogicSet(this);
-			logicSet10.AddAction(new DebugTraceLogicAction("jumpLS"), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true), Types.Sequence.Serial);
-			logicSet10.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Player_Jump"
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowAxeProjectilesNeo", new object[0]), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.75f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
+			logicSet10.AddAction(new DebugTraceLogicAction("jumpLS"));
+			logicSet10.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
+			logicSet10.AddAction(new GroundCheckLogicAction());
+			logicSet10.AddAction(new MoveLogicAction(m_target, true));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "Player_Jump"));
+			logicSet10.AddAction(new JumpLogicAction());
+			logicSet10.AddAction(new DelayLogicAction(0.2f));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowAxeProjectilesNeo"));
+			logicSet10.AddAction(new DelayLogicAction(0.75f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet10.AddAction(new GroundCheckLogicAction());
 			LogicSet logicSet11 = new LogicSet(this);
-			logicSet11.AddAction(new DebugTraceLogicAction("dashLS"), Types.Sequence.Serial);
-			logicSet11.AddAction(new RunFunctionLogicAction(this, "CastCloseShield", new object[0]), Types.Sequence.Serial);
-			logicSet11.AddAction(new RunFunctionLogicAction(this, "Dash", new object[]
-			{
-				0
-			}), Types.Sequence.Serial);
-			logicSet11.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet11.AddAction(new RunFunctionLogicAction(this, "DashComplete", new object[0]), Types.Sequence.Serial);
+			logicSet11.AddAction(new DebugTraceLogicAction("dashLS"));
+			logicSet11.AddAction(new RunFunctionLogicAction(this, "CastCloseShield"));
+			logicSet11.AddAction(new RunFunctionLogicAction(this, "Dash", 0));
+			logicSet11.AddAction(new DelayLogicAction(0.25f));
+			logicSet11.AddAction(new RunFunctionLogicAction(this, "DashComplete"));
 			LogicSet logicSet12 = new LogicSet(this);
-			logicSet12.AddAction(new DebugTraceLogicAction("dashAwayRightLS"), Types.Sequence.Serial);
-			logicSet12.AddAction(new RunFunctionLogicAction(this, "Dash", new object[]
-			{
-				1
-			}), Types.Sequence.Serial);
-			logicSet12.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet12.AddAction(new RunFunctionLogicAction(this, "DashComplete", new object[0]), Types.Sequence.Serial);
+			logicSet12.AddAction(new DebugTraceLogicAction("dashAwayRightLS"));
+			logicSet12.AddAction(new RunFunctionLogicAction(this, "Dash", 1));
+			logicSet12.AddAction(new DelayLogicAction(0.25f));
+			logicSet12.AddAction(new RunFunctionLogicAction(this, "DashComplete"));
 			LogicSet logicSet13 = new LogicSet(this);
-			logicSet13.AddAction(new DebugTraceLogicAction("dashAwayLeftLS"), Types.Sequence.Serial);
-			logicSet13.AddAction(new RunFunctionLogicAction(this, "Dash", new object[]
-			{
-				-1
-			}), Types.Sequence.Serial);
-			logicSet13.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet13.AddAction(new RunFunctionLogicAction(this, "DashComplete", new object[0]), Types.Sequence.Serial);
+			logicSet13.AddAction(new DebugTraceLogicAction("dashAwayLeftLS"));
+			logicSet13.AddAction(new RunFunctionLogicAction(this, "Dash", -1));
+			logicSet13.AddAction(new DelayLogicAction(0.25f));
+			logicSet13.AddAction(new RunFunctionLogicAction(this, "DashComplete"));
 			LogicSet logicSet14 = new LogicSet(this);
-			logicSet14.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet14.AddAction(new ChangeSpriteLogicAction("EnemyLastBossRun_Character", true, true), Types.Sequence.Serial);
-			logicSet14.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet14.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet14.AddAction(new DelayLogicAction(0.35f, 1.15f, false), Types.Sequence.Serial);
-			logicSet14.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet14.AddAction(new GroundCheckLogicAction());
+			logicSet14.AddAction(new ChangeSpriteLogicAction("EnemyLastBossRun_Character"));
+			logicSet14.AddAction(new MoveLogicAction(m_target, true));
+			logicSet14.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet14.AddAction(new DelayLogicAction(0.35f, 1.15f));
+			logicSet14.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet15 = new LogicSet(this);
-			logicSet15.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet15.AddAction(new ChangeSpriteLogicAction("EnemyLastBossRun_Character", true, true), Types.Sequence.Serial);
-			logicSet15.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet15.AddAction(new DelayLogicAction(0.2f, 1f, false), Types.Sequence.Serial);
-			logicSet15.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet15.AddAction(new GroundCheckLogicAction());
+			logicSet15.AddAction(new ChangeSpriteLogicAction("EnemyLastBossRun_Character"));
+			logicSet15.AddAction(new MoveLogicAction(m_target, false));
+			logicSet15.AddAction(new DelayLogicAction(0.2f, 1f));
+			logicSet15.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet16 = new LogicSet(this);
-			logicSet16.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet16.AddAction(new ChangeSpriteLogicAction("EnemyLastBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet16.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet16.AddAction(new DelayLogicAction(0.2f, 0.5f, false), Types.Sequence.Serial);
+			logicSet16.AddAction(new GroundCheckLogicAction());
+			logicSet16.AddAction(new ChangeSpriteLogicAction("EnemyLastBossIdle_Character"));
+			logicSet16.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet16.AddAction(new DelayLogicAction(0.2f, 0.5f));
 			LogicSet logicSet17 = new LogicSet(this);
-			logicSet17.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet17.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet17.AddAction(new ChangeSpriteLogicAction("EnemyLastBossAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet17.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack", false), Types.Sequence.Serial);
-			logicSet17.AddAction(new DelayLogicAction(m_lastBossAttackDelay, false), Types.Sequence.Serial);
-			logicSet17.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSwing"
-			}), Types.Sequence.Serial);
-			logicSet17.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_Effort_01",
-				"FinalBoss_St2_Effort_02",
-				"FinalBoss_St2_Effort_03",
-				"FinalBoss_St2_Effort_04",
-				"FinalBoss_St2_Effort_05"
-			}), Types.Sequence.Serial);
-			logicSet17.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet17.AddAction(new ChangeSpriteLogicAction("EnemyLastBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet17.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet17.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet17.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet17.AddAction(new ChangeSpriteLogicAction("EnemyLastBossAttack_Character", false, false));
+			logicSet17.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack"));
+			logicSet17.AddAction(new DelayLogicAction(m_lastBossAttackDelay));
+			logicSet17.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSwing"));
+			logicSet17.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_Effort_01", "FinalBoss_St2_Effort_02", "FinalBoss_St2_Effort_03", "FinalBoss_St2_Effort_04", "FinalBoss_St2_Effort_05"));
+			logicSet17.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet17.AddAction(new ChangeSpriteLogicAction("EnemyLastBossIdle_Character"));
+			logicSet17.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet18 = new LogicSet(this);
 			RunTeleportLS(logicSet18, "Centre");
-			logicSet18.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false), Types.Sequence.Serial);
-			logicSet18.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSlam_Prime"
-			}), Types.Sequence.Serial);
-			logicSet18.AddAction(new PlayAnimationLogicAction("Start", "BeforeCast", false), Types.Sequence.Serial);
-			logicSet18.AddAction(new DelayLogicAction(m_castDelay, false), Types.Sequence.Serial);
-			logicSet18.AddAction(new RunFunctionLogicAction(this, "CastSpears", new object[]
-			{
-				m_numSpears,
-				m_spearDuration
-			}), Types.Sequence.Serial);
-			logicSet18.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSlam"
-			}), Types.Sequence.Serial);
-			logicSet18.AddAction(new PlayAnimationLogicAction("BeforeCast", "End", false), Types.Sequence.Serial);
-			logicSet18.AddAction(new DelayLogicAction(m_spearDuration + 1f, false), Types.Sequence.Serial);
+			logicSet18.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false));
+			logicSet18.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam_Prime"));
+			logicSet18.AddAction(new PlayAnimationLogicAction("Start", "BeforeCast"));
+			logicSet18.AddAction(new DelayLogicAction(m_castDelay));
+			logicSet18.AddAction(new RunFunctionLogicAction(this, "CastSpears", m_numSpears, m_spearDuration));
+			logicSet18.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam"));
+			logicSet18.AddAction(new PlayAnimationLogicAction("BeforeCast", "End"));
+			logicSet18.AddAction(new DelayLogicAction(m_spearDuration + 1f));
 			LogicSet logicSet19 = new LogicSet(this);
-			logicSet19.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0), Types.Sequence.Serial);
-			logicSet19.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell2_Character", false, false), Types.Sequence.Serial);
-			logicSet19.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSummon_a"
-			}), Types.Sequence.Serial);
-			logicSet19.AddAction(new PlayAnimationLogicAction("Start", "Cast", false), Types.Sequence.Serial);
-			logicSet19.AddAction(new DelayLogicAction(m_castDelay, false), Types.Sequence.Serial);
-			logicSet19.AddAction(new RunFunctionLogicAction(this, "CastSwordsRandom", new object[0]), Types.Sequence.Serial);
-			logicSet19.AddAction(new PlayAnimationLogicAction("Cast", "End", false), Types.Sequence.Serial);
-			logicSet19.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
+			logicSet19.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
+			logicSet19.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell2_Character", false, false));
+			logicSet19.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSummon_a"));
+			logicSet19.AddAction(new PlayAnimationLogicAction("Start", "Cast"));
+			logicSet19.AddAction(new DelayLogicAction(m_castDelay));
+			logicSet19.AddAction(new RunFunctionLogicAction(this, "CastSwordsRandom"));
+			logicSet19.AddAction(new PlayAnimationLogicAction("Cast", "End"));
+			logicSet19.AddAction(new DelayLogicAction(1f));
 			LogicSet logicSet20 = new LogicSet(this);
-			logicSet20.AddAction(new LockFaceDirectionLogicAction(true, 1), Types.Sequence.Serial);
+			logicSet20.AddAction(new LockFaceDirectionLogicAction(true, 1));
 			RunTeleportLS(logicSet20, "Left");
-			logicSet20.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false), Types.Sequence.Serial);
-			logicSet20.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSlam_Prime"
-			}), Types.Sequence.Serial);
-			logicSet20.AddAction(new PlayAnimationLogicAction("Start", "BeforeCast", false), Types.Sequence.Serial);
-			logicSet20.AddAction(new DelayLogicAction(m_castDelay, false), Types.Sequence.Serial);
-			logicSet20.AddAction(new RunFunctionLogicAction(this, "CastSwords", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet20.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSlam"
-			}), Types.Sequence.Serial);
-			logicSet20.AddAction(new PlayAnimationLogicAction("BeforeCast", "End", false), Types.Sequence.Serial);
-			logicSet20.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-			logicSet20.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet20.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false));
+			logicSet20.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam_Prime"));
+			logicSet20.AddAction(new PlayAnimationLogicAction("Start", "BeforeCast"));
+			logicSet20.AddAction(new DelayLogicAction(m_castDelay));
+			logicSet20.AddAction(new RunFunctionLogicAction(this, "CastSwords", true));
+			logicSet20.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam"));
+			logicSet20.AddAction(new PlayAnimationLogicAction("BeforeCast", "End"));
+			logicSet20.AddAction(new DelayLogicAction(1f));
+			logicSet20.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet21 = new LogicSet(this);
-			logicSet21.AddAction(new LockFaceDirectionLogicAction(true, -1), Types.Sequence.Serial);
+			logicSet21.AddAction(new LockFaceDirectionLogicAction(true, -1));
 			RunTeleportLS(logicSet21, "Right");
-			logicSet21.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false), Types.Sequence.Serial);
-			logicSet21.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSlam_Prime"
-			}), Types.Sequence.Serial);
-			logicSet21.AddAction(new PlayAnimationLogicAction("Start", "BeforeCast", false), Types.Sequence.Serial);
-			logicSet21.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_BlockLaugh"
-			}), Types.Sequence.Serial);
-			logicSet21.AddAction(new DelayLogicAction(m_castDelay, false), Types.Sequence.Serial);
-			logicSet21.AddAction(new RunFunctionLogicAction(this, "CastSwords", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet21.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_SwordSlam"
-			}), Types.Sequence.Serial);
-			logicSet21.AddAction(new PlayAnimationLogicAction("BeforeCast", "End", false), Types.Sequence.Serial);
-			logicSet21.AddAction(new DelayLogicAction(1f, false), Types.Sequence.Serial);
-			logicSet21.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet21.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false));
+			logicSet21.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam_Prime"));
+			logicSet21.AddAction(new PlayAnimationLogicAction("Start", "BeforeCast"));
+			logicSet21.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_BlockLaugh"));
+			logicSet21.AddAction(new DelayLogicAction(m_castDelay));
+			logicSet21.AddAction(new RunFunctionLogicAction(this, "CastSwords", false));
+			logicSet21.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam"));
+			logicSet21.AddAction(new PlayAnimationLogicAction("BeforeCast", "End"));
+			logicSet21.AddAction(new DelayLogicAction(1f));
+			logicSet21.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet22 = new LogicSet(this);
-			logicSet22.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", new object[]
-			{
-				m_orbsEasy
-			}), Types.Sequence.Serial);
-			logicSet22.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet22.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", m_orbsEasy));
+			logicSet22.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet23 = new LogicSet(this);
-			logicSet23.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", new object[]
-			{
-				m_orbsNormal
-			}), Types.Sequence.Serial);
-			logicSet23.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet23.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", m_orbsNormal));
+			logicSet23.AddAction(new LockFaceDirectionLogicAction(false));
 			LogicSet logicSet24 = new LogicSet(this);
-			logicSet24.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", new object[]
-			{
-				m_orbsHard
-			}), Types.Sequence.Serial);
-			logicSet24.AddAction(new DelayLogicAction(0f, false), Types.Sequence.Serial);
-			logicSet24.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet9,
-				logicSet5,
-				logicSet6,
-				logicSet7,
-				logicSet11
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet14,
-				logicSet15,
-				logicSet16,
-				logicSet17,
-				logicSet18,
-				logicSet19,
-				logicSet20,
-				logicSet21
-			});
-			m_damageShieldLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet22,
-				logicSet23,
-				logicSet24
-			});
-			m_cooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet9,
-				logicSet5,
-				logicSet6,
-				logicSet7,
-				logicSet11
-			});
-			m_secondFormCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet14,
-				logicSet15,
-				logicSet16
-			});
-			m_generalBasicNeoLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet10,
-				logicSet5,
-				logicSet6,
-				logicSet8,
-				logicSet11
-			});
+			logicSet24.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", m_orbsHard));
+			logicSet24.AddAction(new DelayLogicAction(0f));
+			logicSet24.AddAction(new LockFaceDirectionLogicAction(false));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet9, logicSet5, logicSet6, logicSet7, logicSet11);
+			m_generalAdvancedLB.AddLogicSet(logicSet14, logicSet15, logicSet16, logicSet17, logicSet18, logicSet19, logicSet20, logicSet21);
+			m_damageShieldLB.AddLogicSet(logicSet22, logicSet23, logicSet24);
+			m_cooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet9, logicSet5, logicSet6, logicSet7, logicSet11);
+			m_secondFormCooldownLB.AddLogicSet(logicSet14, logicSet15, logicSet16);
+			m_generalBasicNeoLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet10, logicSet5, logicSet6, logicSet8, logicSet11);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_damageShieldLB);
 			logicBlocksToDispose.Add(m_cooldownLB);
 			logicBlocksToDispose.Add(m_secondFormCooldownLB);
 			logicBlocksToDispose.Add(m_generalBasicNeoLB);
-			m_firstFormDashAwayLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet13,
-				logicSet12
-			});
+			m_firstFormDashAwayLB.AddLogicSet(logicSet13, logicSet12);
 			logicBlocksToDispose.Add(m_firstFormDashAwayLB);
 			LogicBlock arg_139D_1 = m_cooldownLB;
 			int[] array = new int[8];
@@ -580,24 +450,18 @@ namespace RogueCastle
 		}
 		private void RunTeleportLS(LogicSet logicSet, string roomPosition)
 		{
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "Opacity", 0.5f), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyLastBossTeleport_Character", false, false), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"FinalBoss_St2_BlockAction"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportTo", new object[]
-			{
-				roomPosition
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayObjLogicAction(m_delayObj), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(this, "Opacity", 1), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", false));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", false));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "Opacity", 0.5f));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyLastBossTeleport_Character", false, false));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_BlockAction"));
+			logicSet.AddAction(new DelayLogicAction(0.25f));
+			logicSet.AddAction(new RunFunctionLogicAction(this, "TeleportTo", roomPosition));
+			logicSet.AddAction(new DelayObjLogicAction(m_delayObj));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsCollidable", true));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "IsWeighted", true));
+			logicSet.AddAction(new ChangePropertyLogicAction(this, "Opacity", 1));
 		}
 		public void ThrowAxeProjectiles()
 		{
@@ -620,26 +484,11 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = AxeSpellScale
 			};
-			Tween.RunFunction(0f, this, "CastAxe", new object[]
-			{
-				false
-			});
-			Tween.RunFunction(0.15f, this, "CastAxe", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.3f, this, "CastAxe", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.45f, this, "CastAxe", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.6f, this, "CastAxe", new object[]
-			{
-				true
-			});
+			Tween.RunFunction(0f, this, "CastAxe", false);
+			Tween.RunFunction(0.15f, this, "CastAxe", true);
+			Tween.RunFunction(0.3f, this, "CastAxe", true);
+			Tween.RunFunction(0.45f, this, "CastAxe", true);
+			Tween.RunFunction(0.6f, this, "CastAxe", true);
 		}
 		public void ThrowAxeProjectilesNeo()
 		{
@@ -662,18 +511,9 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = AxeSpellScale
 			};
-			Tween.RunFunction(0.3f, this, "CastAxe", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.3f, this, "CastAxe", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.3f, this, "CastAxe", new object[]
-			{
-				true
-			});
+			Tween.RunFunction(0.3f, this, "CastAxe", true);
+			Tween.RunFunction(0.3f, this, "CastAxe", true);
+			Tween.RunFunction(0.3f, this, "CastAxe", true);
 		}
 		public void CastAxe(bool randomize)
 		{
@@ -705,26 +545,11 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = DaggerSpellScale
 			};
-			Tween.RunFunction(0f, this, "CastDaggers", new object[]
-			{
-				false
-			});
-			Tween.RunFunction(0.05f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.1f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.15f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.2f, this, "CastDaggers", new object[]
-			{
-				true
-			});
+			Tween.RunFunction(0f, this, "CastDaggers", false);
+			Tween.RunFunction(0.05f, this, "CastDaggers", true);
+			Tween.RunFunction(0.1f, this, "CastDaggers", true);
+			Tween.RunFunction(0.15f, this, "CastDaggers", true);
+			Tween.RunFunction(0.2f, this, "CastDaggers", true);
 		}
 		public void ThrowDaggerProjectilesNeo()
 		{
@@ -746,18 +571,9 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = DaggerSpellScale
 			};
-			Tween.RunFunction(0f, this, "CastDaggers", new object[]
-			{
-				false
-			});
-			Tween.RunFunction(0.05f, this, "CastDaggers", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.1f, this, "CastDaggers", new object[]
-			{
-				true
-			});
+			Tween.RunFunction(0f, this, "CastDaggers", false);
+			Tween.RunFunction(0.05f, this, "CastDaggers", true);
+			Tween.RunFunction(0.1f, this, "CastDaggers", true);
 		}
 		public void CastDaggers(bool randomize)
 		{
@@ -848,58 +664,18 @@ namespace RogueCastle
 						case 2:
 							if (!IsNeo)
 							{
-								RunLogicBlock(true, m_generalBasicLB, new int[]
-								{
-									35,
-									0,
-									0,
-									25,
-									0,
-									0,
-									20,
-									20
-								});
+								RunLogicBlock(true, m_generalBasicLB, 35, 0, 0, 25, 0, 0, 20, 20);
 								return;
 							}
-							RunLogicBlock(true, m_generalBasicNeoLB, new int[]
-							{
-								25,
-								0,
-								20,
-								15,
-								0,
-								0,
-								15,
-								25
-							});
+							RunLogicBlock(true, m_generalBasicNeoLB, 25, 0, 20, 15, 0, 0, 15, 25);
 							return;
 						case 3:
 							if (!IsNeo)
 							{
-								RunLogicBlock(true, m_generalBasicLB, new int[]
-								{
-									0,
-									0,
-									0,
-									35,
-									35,
-									0,
-									0,
-									30
-								});
+								RunLogicBlock(true, m_generalBasicLB, 0, 0, 0, 35, 35, 0, 0, 30);
 								return;
 							}
-							RunLogicBlock(true, m_generalBasicNeoLB, new int[]
-							{
-								0,
-								0,
-								0,
-								50,
-								20,
-								0,
-								0,
-								30
-							});
+							RunLogicBlock(true, m_generalBasicNeoLB, 0, 0, 0, 50, 20, 0, 0, 30);
 							return;
 						default:
 							return;
@@ -917,56 +693,16 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					63,
-					0,
-					0,
-					0,
-					15,
-					12,
-					5,
-					5
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 63, 0, 0, 0, 15, 12, 5, 5);
 				return;
 			case 1:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					68,
-					0,
-					0,
-					0,
-					10,
-					12,
-					5,
-					5
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 68, 0, 0, 0, 10, 12, 5, 5);
 				return;
 			case 2:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					52,
-					12,
-					0,
-					0,
-					11,
-					15,
-					5,
-					5
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 52, 12, 0, 0, 11, 15, 5, 5);
 				return;
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					31,
-					15,
-					0,
-					26,
-					3,
-					13,
-					6,
-					6
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 31, 15, 0, 26, 3, 13, 6, 6);
 				return;
 			default:
 				return;
@@ -1009,86 +745,26 @@ namespace RogueCastle
 						case 1:
 							if (!m_target.IsJumping)
 							{
-								RunLogicBlock(true, m_generalBasicLB, new int[]
-								{
-									30,
-									0,
-									15,
-									20,
-									0,
-									25,
-									0,
-									10
-								});
+								RunLogicBlock(true, m_generalBasicLB, 30, 0, 15, 20, 0, 25, 0, 10);
 								return;
 							}
-							RunLogicBlock(true, m_generalBasicLB, new int[]
-							{
-								50,
-								0,
-								15,
-								0,
-								0,
-								25,
-								0,
-								10
-							});
+							RunLogicBlock(true, m_generalBasicLB, 50, 0, 15, 0, 0, 25, 0, 10);
 							return;
 						case 2:
 							if (!m_target.IsJumping)
 							{
-								RunLogicBlock(true, m_generalBasicLB, new int[]
-								{
-									20,
-									0,
-									10,
-									10,
-									0,
-									15,
-									20,
-									10
-								});
+								RunLogicBlock(true, m_generalBasicLB, 20, 0, 10, 10, 0, 15, 20, 10);
 								return;
 							}
-							RunLogicBlock(true, m_generalBasicLB, new int[]
-							{
-								40,
-								0,
-								15,
-								0,
-								0,
-								15,
-								20,
-								10
-							});
+							RunLogicBlock(true, m_generalBasicLB, 40, 0, 15, 0, 0, 15, 20, 10);
 							return;
 						case 3:
 							if (m_isTouchingGround)
 							{
-								RunLogicBlock(true, m_generalBasicLB, new int[]
-								{
-									0,
-									10,
-									0,
-									20,
-									35,
-									10,
-									0,
-									25
-								});
+								RunLogicBlock(true, m_generalBasicLB, 0, 10, 0, 20, 35, 10, 0, 25);
 								return;
 							}
-							RunLogicBlock(true, m_generalBasicLB, new int[]
-							{
-								0,
-								10,
-								0,
-								0,
-								55,
-								10,
-								0,
-								25
-							});
+							RunLogicBlock(true, m_generalBasicLB, 0, 10, 0, 0, 55, 10, 0, 25);
 							return;
 						default:
 							return;
@@ -1138,11 +814,7 @@ namespace RogueCastle
 			float num = Math.Abs(CDGMath.DistanceBetweenPts(Position, zero));
 			m_teleportDuration = num * 0.001f;
 			m_delayObj.X = m_teleportDuration;
-			Tween.To(this, m_teleportDuration, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				zero.X.ToString()
-			});
+			Tween.To(this, m_teleportDuration, Quad.EaseInOut, "X", zero.X.ToString());
 			SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_BlockMove");
 		}
 		public void CastSwords(bool castLeft)
@@ -1172,29 +844,18 @@ namespace RogueCastle
 				Vector2 vector = new Vector2(X, Y + CDGMath.RandomInt(-1320, 100));
 				ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
 				projectileObj.Position = vector;
-				Tween.By(projectileObj, 2.5f, new Easing(Tween.EaseNone), new string[]
+				Tween.By(projectileObj, 2.5f, Tween.EaseNone, "delay", num.ToString(), "X", num2.ToString());
+				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
+				Tween.RunFunction(num, typeof(SoundManager), "Play3DSound", this, m_target, new[]
 				{
-					"delay",
-					num.ToString(),
-					"X",
-					num2.ToString()
-				});
-				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile", new object[0]);
-				Tween.RunFunction(num, typeof(SoundManager), "Play3DSound", new object[]
-				{
-					this,
-					m_target,
-					new string[]
-					{
-						"FinalBoss_St2_SwordSummon_c_01",
-						"FinalBoss_St2_SwordSummon_c_02",
-						"FinalBoss_St2_SwordSummon_c_03",
-						"FinalBoss_St2_SwordSummon_c_04",
-						"FinalBoss_St2_SwordSummon_c_05",
-						"FinalBoss_St2_SwordSummon_c_06",
-						"FinalBoss_St2_SwordSummon_c_07",
-						"FinalBoss_St2_SwordSummon_c_08"
-					}
+				    "FinalBoss_St2_SwordSummon_c_01",
+				    "FinalBoss_St2_SwordSummon_c_02",
+				    "FinalBoss_St2_SwordSummon_c_03",
+				    "FinalBoss_St2_SwordSummon_c_04",
+				    "FinalBoss_St2_SwordSummon_c_05",
+				    "FinalBoss_St2_SwordSummon_c_06",
+				    "FinalBoss_St2_SwordSummon_c_07",
+				    "FinalBoss_St2_SwordSummon_c_08"
 				});
 				m_levelScreen.ImpactEffectPool.SpellCastEffect(vector, 0f, false);
 				num += 0.075f;
@@ -1231,68 +892,38 @@ namespace RogueCastle
 				projectileObj.Y = Y + (Bounds.Bottom - Y);
 				projectileObj.StopAnimation();
 				num += projectileObj.Width;
-				Tween.RunFunction(num3, typeof(SoundManager), "Play3DSound", new object[]
+				Tween.RunFunction(num3, typeof(SoundManager), "Play3DSound", this, m_target, new[]
 				{
-					this,
-					m_target,
-					new string[]
-					{
-						"FinalBoss_St2_Lance_01",
-						"FinalBoss_St2_Lance_02",
-						"FinalBoss_St2_Lance_03",
-						"FinalBoss_St2_Lance_04",
-						"FinalBoss_St2_Lance_05",
-						"FinalBoss_St2_Lance_06",
-						"FinalBoss_St2_Lance_07",
-						"FinalBoss_St2_Lance_08"
-					}
+				    "FinalBoss_St2_Lance_01",
+				    "FinalBoss_St2_Lance_02",
+				    "FinalBoss_St2_Lance_03",
+				    "FinalBoss_St2_Lance_04",
+				    "FinalBoss_St2_Lance_05",
+				    "FinalBoss_St2_Lance_06",
+				    "FinalBoss_St2_Lance_07",
+				    "FinalBoss_St2_Lance_08"
 				});
-				Tween.RunFunction(num3, projectileObj, "PlayAnimation", new object[]
+				Tween.RunFunction(num3, projectileObj, "PlayAnimation", "Before", "End", false);
+				Tween.RunFunction(num3 + duration, projectileObj, "PlayAnimation", "Retract", "RetractComplete", false);
+				Tween.RunFunction(num3 + duration, typeof(SoundManager), "Play3DSound", this, m_target, new[]
 				{
-					"Before",
-					"End",
-					false
+				    "FinalBoss_St2_Lance_Retract_01",
+				    "FinalBoss_St2_Lance_Retract_02",
+				    "FinalBoss_St2_Lance_Retract_03",
+				    "FinalBoss_St2_Lance_Retract_04",
+				    "FinalBoss_St2_Lance_Retract_05",
+				    "FinalBoss_St2_Lance_Retract_06"
 				});
-				Tween.RunFunction(num3 + duration, projectileObj, "PlayAnimation", new object[]
-				{
-					"Retract",
-					"RetractComplete",
-					false
-				});
-				Tween.RunFunction(num3 + duration, typeof(SoundManager), "Play3DSound", new object[]
-				{
-					this,
-					m_target,
-					new string[]
-					{
-						"FinalBoss_St2_Lance_Retract_01",
-						"FinalBoss_St2_Lance_Retract_02",
-						"FinalBoss_St2_Lance_Retract_03",
-						"FinalBoss_St2_Lance_Retract_04",
-						"FinalBoss_St2_Lance_Retract_05",
-						"FinalBoss_St2_Lance_Retract_06"
-					}
-				});
-				Tween.RunFunction(num3 + duration + 1f, projectileObj, "KillProjectile", new object[0]);
+				Tween.RunFunction(num3 + duration + 1f, projectileObj, "KillProjectile");
 				ProjectileObj projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
 				projectileObj2.Scale = new Vector2(2f, 2f);
 				projectileObj2.X = vector.X - 50f + num2;
 				projectileObj2.Y = Y + (Bounds.Bottom - Y);
 				projectileObj2.StopAnimation();
 				num2 -= projectileObj2.Width;
-				Tween.RunFunction(num3, projectileObj2, "PlayAnimation", new object[]
-				{
-					"Before",
-					"End",
-					false
-				});
-				Tween.RunFunction(num3 + duration, projectileObj2, "PlayAnimation", new object[]
-				{
-					"Retract",
-					"RetractComplete",
-					false
-				});
-				Tween.RunFunction(num3 + duration + 1f, projectileObj2, "KillProjectile", new object[0]);
+				Tween.RunFunction(num3, projectileObj2, "PlayAnimation", "Before", "End", false);
+				Tween.RunFunction(num3 + duration, projectileObj2, "PlayAnimation", "Retract", "RetractComplete", false);
+				Tween.RunFunction(num3 + duration + 1f, projectileObj2, "KillProjectile");
 				num3 += 0.05f;
 			}
 			projectileData.Dispose();
@@ -1326,38 +957,18 @@ namespace RogueCastle
 				projectileObj.X = vector.X + 50f + num;
 				projectileObj.Y = vector.Y + (Bounds.Bottom - Y) + 120f;
 				projectileObj.Opacity = 0f;
-				Tween.To(projectileObj, 0.25f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
-				Tween.By(projectileObj, 2.5f, new Easing(Quad.EaseIn), new string[]
-				{
-					"delay",
-					num3.ToString(),
-					"Y",
-					(-megaUpwardSwordProjectileSpeed).ToString()
-				});
-				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile", new object[0]);
+				Tween.To(projectileObj, 0.25f, Tween.EaseNone, "Opacity", "1");
+				Tween.By(projectileObj, 2.5f, Quad.EaseIn, "delay", num3.ToString(), "Y", (-megaUpwardSwordProjectileSpeed).ToString());
+				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
 				num = CDGMath.RandomInt(50, 1000);
 				ProjectileObj projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
 				projectileObj2.Scale = new Vector2(2f, 2f);
 				projectileObj2.X = vector.X - 50f + num2;
 				projectileObj2.Y = vector.Y + (Bounds.Bottom - Y) + 120f;
 				projectileObj2.Opacity = 0f;
-				Tween.To(projectileObj2, 0.25f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
-				Tween.By(projectileObj2, 2.5f, new Easing(Quad.EaseIn), new string[]
-				{
-					"delay",
-					num3.ToString(),
-					"Y",
-					(-megaUpwardSwordProjectileSpeed).ToString()
-				});
-				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile", new object[0]);
+				Tween.To(projectileObj2, 0.25f, Tween.EaseNone, "Opacity", "1");
+				Tween.By(projectileObj2, 2.5f, Quad.EaseIn, "delay", num3.ToString(), "Y", (-megaUpwardSwordProjectileSpeed).ToString());
+				Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
 				num2 = -CDGMath.RandomInt(50, 1000);
 				num3 += 0.25f;
 			}
@@ -1505,12 +1116,12 @@ namespace RogueCastle
 					if (AccelerationY < 0f && SpriteName != "PlayerJumping_Character")
 					{
 						ChangeSprite("PlayerJumping_Character");
-						PlayAnimation(true);
+						PlayAnimation();
 					}
 					else if (AccelerationY > 0f && SpriteName != "PlayerFalling_Character")
 					{
 						ChangeSprite("PlayerFalling_Character");
-						PlayAnimation(true);
+						PlayAnimation();
 					}
 				}
 				else if (m_isTouchingGround && m_currentActiveLB != null && SpriteName == "PlayerAttacking3_Character" && CurrentSpeed != 0f)
@@ -1519,7 +1130,7 @@ namespace RogueCastle
 					if (spriteObj.SpriteName != "PlayerWalkingLegs_Sprite")
 					{
 						spriteObj.ChangeSprite("PlayerWalkingLegs_Sprite");
-						spriteObj.PlayAnimation(CurrentFrame, TotalFrames, false);
+						spriteObj.PlayAnimation(CurrentFrame, TotalFrames);
 						spriteObj.Y += 4f;
 						spriteObj.OverrideParentAnimationDelay = true;
 						spriteObj.AnimationDelay = 0.1f;
@@ -1622,15 +1233,11 @@ namespace RogueCastle
 			m_target.LockControls();
 			m_target.ChangeSprite("PlayerWalking_Character");
 			LogicSet logicSet = new LogicSet(m_target);
-			logicSet.AddAction(new DelayLogicAction(num2, false), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(num2));
 			m_target.RunExternalLogicSet(logicSet);
-			m_target.PlayAnimation(true);
-			Tween.To(m_target, num2, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				zero.X.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "SecondFormDeath", new object[0]);
+			m_target.PlayAnimation();
+			Tween.To(m_target, num2, Tween.EaseNone, "X", zero.X.ToString());
+			Tween.AddEndHandlerToLastTween(this, "SecondFormDeath");
 		}
 		public void SecondFormDeath()
 		{
@@ -1644,31 +1251,18 @@ namespace RogueCastle
 			}
 			PlayAnimation(false);
 			SoundManager.PlaySound("FinalBoss_St1_DeathGrunt");
-			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_SwordTwirl"
-			});
-			Tween.RunFunction(0.7f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_SwordLand"
-			});
-			Tween.RunFunction(1.2f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_BodyFall"
-			});
+			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "Player_Death_SwordTwirl");
+			Tween.RunFunction(0.7f, typeof(SoundManager), "PlaySound", "Player_Death_SwordLand");
+			Tween.RunFunction(1.2f, typeof(SoundManager), "PlaySound", "Player_Death_BodyFall");
 			float num = 2f;
-			Tween.RunFunction(2f, this, "PlayBlackSmokeSounds", new object[0]);
+			Tween.RunFunction(2f, this, "PlayBlackSmokeSounds");
 			for (int i = 0; i < 30; i++)
 			{
-				Tween.RunFunction(num, m_levelScreen.ImpactEffectPool, "BlackSmokeEffect", new object[]
-				{
-					Position,
-					new Vector2(1f + num * 1f, 1f + num * 1f)
-				});
+				Tween.RunFunction(num, m_levelScreen.ImpactEffectPool, "BlackSmokeEffect", Position, new Vector2(1f + num * 1f, 1f + num * 1f));
 				num += 0.05f;
 			}
-			Tween.RunFunction(3f, this, "HideEnemy", new object[0]);
-			Tween.RunFunction(6f, this, "SecondFormDialogue", new object[0]);
+			Tween.RunFunction(3f, this, "HideEnemy");
+			Tween.RunFunction(6f, this, "SecondFormDialogue");
 		}
 		public void PlayBlackSmokeSounds()
 		{
@@ -1682,8 +1276,8 @@ namespace RogueCastle
 		{
 			RCScreenManager rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk02");
-			rCScreenManager.DialogueScreen.SetConfirmEndHandler(m_levelScreen.CurrentRoom, "RunFountainCutscene", new object[0]);
-			rCScreenManager.DisplayScreen(13, true, null);
+			rCScreenManager.DialogueScreen.SetConfirmEndHandler(m_levelScreen.CurrentRoom, "RunFountainCutscene");
+			rCScreenManager.DisplayScreen(13, true);
 		}
 		public void SecondFormComplete()
 		{
@@ -1719,13 +1313,8 @@ namespace RogueCastle
 			ProjectileDamage = Damage;
 			KnockBack = EnemyEV.LastBoss_Advanced_KnockBack;
 			ChangeSprite("EnemyLastBossIdle_Character");
-			SetCooldownLogicBlock(m_secondFormCooldownLB, new int[]
-			{
-				40,
-				20,
-				40
-			});
-			PlayAnimation(true);
+			SetCooldownLogicBlock(m_secondFormCooldownLB, 40, 20, 40);
+			PlayAnimation();
 			Name = "The Fountain";
 			IsWeighted = true;
 			IsCollidable = true;
@@ -1748,37 +1337,15 @@ namespace RogueCastle
 			{
 				if (!m_isHurt && !m_isDashing)
 				{
-					SoundManager.Play3DSound(this, m_target, new string[]
-					{
-						"FinalBoss_St1_Dmg_01",
-						"FinalBoss_St1_Dmg_02",
-						"FinalBoss_St1_Dmg_03",
-						"FinalBoss_St1_Dmg_04"
-					});
+					SoundManager.Play3DSound(this, m_target, "FinalBoss_St1_Dmg_01", "FinalBoss_St1_Dmg_02", "FinalBoss_St1_Dmg_03", "FinalBoss_St1_Dmg_04");
 					base.HitEnemy(damage, collisionPt, isPlayer);
 					return;
 				}
 			}
 			else
 			{
-				SoundManager.Play3DSound(this, m_target, new string[]
-				{
-					"FinalBoss_St2_Hit_01",
-					"FinalBoss_St2_Hit_03",
-					"FinalBoss_St2_Hit_04"
-				});
-				SoundManager.Play3DSound(this, m_target, new string[]
-				{
-					"FinalBoss_St2_DmgVox_01",
-					"FinalBoss_St2_DmgVox_02",
-					"FinalBoss_St2_DmgVox_03",
-					"FinalBoss_St2_DmgVox_04",
-					"FinalBoss_St2_DmgVox_05",
-					"FinalBoss_St2_DmgVox_06",
-					"FinalBoss_St2_DmgVox_07",
-					"FinalBoss_St2_DmgVox_08",
-					"FinalBoss_St2_DmgVox_09"
-				});
+				SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_Hit_01", "FinalBoss_St2_Hit_03", "FinalBoss_St2_Hit_04");
+				SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_DmgVox_01", "FinalBoss_St2_DmgVox_02", "FinalBoss_St2_DmgVox_03", "FinalBoss_St2_DmgVox_04", "FinalBoss_St2_DmgVox_05", "FinalBoss_St2_DmgVox_06", "FinalBoss_St2_DmgVox_07", "FinalBoss_St2_DmgVox_08", "FinalBoss_St2_DmgVox_09");
 				base.HitEnemy(damage, collisionPt, isPlayer);
 			}
 		}
@@ -1803,10 +1370,10 @@ namespace RogueCastle
 					{
 						Flip = SpriteEffects.None;
 					}
-					Tween.RunFunction(1f, this, "Part2", new object[0]);
+					Tween.RunFunction(1f, this, "Part2");
 					SoundManager.PlaySound("Boss_Flash");
 					SoundManager.PlaySound("Boss_Eyeball_Freeze");
-					SoundManager.StopMusic(0f);
+					SoundManager.StopMusic();
 					m_target.LockControls();
 					GameUtil.UnlockAchievement("FEAR_OF_FATHERS");
 					if (Game.PlayerStats.TimesCastleBeaten > 1)
@@ -1822,8 +1389,8 @@ namespace RogueCastle
 					m_levelScreen.RunWhiteSlashEffect();
 					SoundManager.PlaySound("Boss_Flash");
 					SoundManager.PlaySound("Boss_Eyeball_Freeze");
-					Tween.RunFunction(1f, m_levelScreen, "UnpauseScreen", new object[0]);
-					Tween.RunFunction(1f, typeof(SoundManager), "ResumeMusic", new object[0]);
+					Tween.RunFunction(1f, m_levelScreen, "UnpauseScreen");
+					Tween.RunFunction(1f, typeof(SoundManager), "ResumeMusic");
 				}
 			}
 		}
@@ -1843,18 +1410,9 @@ namespace RogueCastle
 			ChangeSprite("PlayerDeath_Character");
 			PlayAnimation(false);
 			SoundManager.PlaySound("FinalBoss_St1_DeathGrunt");
-			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_SwordTwirl"
-			});
-			Tween.RunFunction(0.7f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_SwordLand"
-			});
-			Tween.RunFunction(1.2f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_BodyFall"
-			});
+			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "Player_Death_SwordTwirl");
+			Tween.RunFunction(0.7f, typeof(SoundManager), "PlaySound", "Player_Death_SwordLand");
+			Tween.RunFunction(1.2f, typeof(SoundManager), "PlaySound", "Player_Death_BodyFall");
 		}
 		public void SetPlayerData()
 		{
@@ -1883,10 +1441,7 @@ namespace RogueCastle
 			Game.PlayerStats.LastbossBeaten = true;
 			Game.PlayerStats.CharacterFound = false;
 			Game.PlayerStats.TimesCastleBeaten++;
-			(m_target.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData
-			});
+			(m_target.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
 		}
 		public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
 		{
@@ -1917,11 +1472,7 @@ namespace RogueCastle
 				}
 				if (vector.X > 0f)
 				{
-					RunLogicBlock(true, m_firstFormDashAwayLB, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(true, m_firstFormDashAwayLB, 0, 100);
 					return;
 				}
 				if (vector.X < 0f)
@@ -1945,16 +1496,16 @@ namespace RogueCastle
 			PauseEnemy(true);
 			m_target.CurrentSpeed = 0f;
 			m_target.ForceInvincible = true;
-			Tween.RunFunction(1f, m_levelScreen, "RevealMorning", new object[0]);
-			Tween.RunFunction(1f, m_levelScreen.CurrentRoom, "ChangeWindowOpacity", new object[0]);
-			Tween.RunFunction(5f, this, "Part3", new object[0]);
+			Tween.RunFunction(1f, m_levelScreen, "RevealMorning");
+			Tween.RunFunction(1f, m_levelScreen.CurrentRoom, "ChangeWindowOpacity");
+			Tween.RunFunction(5f, this, "Part3");
 		}
 		public void Part3()
 		{
 			RCScreenManager rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk03");
-			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Part4", new object[0]);
-			rCScreenManager.DisplayScreen(13, true, null);
+			rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Part4");
+			rCScreenManager.DisplayScreen(13, true);
 		}
 		public void Part4()
 		{
@@ -1981,19 +1532,10 @@ namespace RogueCastle
 			text = text.Remove(startIndex, 1);
 			text = text.Replace("_", 7 + "_");
 			_objectList[12].ChangeSprite(text);
-			PlayAnimation(true);
+			PlayAnimation();
 			m_delayObj = new BlankObj(0, 0);
-			m_walkDownSoundFinalBoss = new FrameSoundObj(this, 3, new string[]
-			{
-				"FinalBoss_St2_Foot_01",
-				"FinalBoss_St2_Foot_02",
-				"FinalBoss_St2_Foot_03"
-			});
-			m_walkUpSoundFinalBoss = new FrameSoundObj(this, 6, new string[]
-			{
-				"FinalBoss_St2_Foot_04",
-				"FinalBoss_St2_Foot_05"
-			});
+			m_walkDownSoundFinalBoss = new FrameSoundObj(this, 3, "FinalBoss_St2_Foot_01", "FinalBoss_St2_Foot_02", "FinalBoss_St2_Foot_03");
+			m_walkUpSoundFinalBoss = new FrameSoundObj(this, 6, "FinalBoss_St2_Foot_04", "FinalBoss_St2_Foot_05");
 		}
 		public override void ChangeSprite(string spriteName)
 		{

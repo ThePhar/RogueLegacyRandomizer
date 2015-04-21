@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -34,7 +34,7 @@ namespace RogueCastle
 		private bool m_bossDoorOpening;
 		public CastleEntranceRoomObj()
 		{
-			m_castleGate = new PhysicsObj("CastleEntranceGate_Sprite", null);
+			m_castleGate = new PhysicsObj("CastleEntranceGate_Sprite");
 			m_castleGate.IsWeighted = false;
 			m_castleGate.IsCollidable = true;
 			m_castleGate.CollisionTypeTag = 1;
@@ -157,13 +157,7 @@ namespace RogueCastle
 			if (tween)
 			{
 				m_bossDoorSprite.GetChildAt(index).Opacity = 0f;
-				Tween.To(m_bossDoorSprite.GetChildAt(index), 0.5f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"delay",
-					"1.5",
-					"Opacity",
-					"1"
-				});
+				Tween.To(m_bossDoorSprite.GetChildAt(index), 0.5f, Quad.EaseInOut, "delay", "1.5", "Opacity", "1");
 				return;
 			}
 			m_bossDoorSprite.GetChildAt(index).Opacity = 1f;
@@ -191,7 +185,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				m_mapIcon.SetKey(new Keys?(Game.GlobalInput.KeyList[9]), true);
+				m_mapIcon.SetKey(new Keys?(Game.GlobalInput.KeyList[9]));
 				m_mapIcon.Scale = new Vector2(0.5f, 0.5f);
 			}
 			if (!m_allFilesSaved)
@@ -249,7 +243,7 @@ namespace RogueCastle
 			float x = Player.AttachedLevel.Camera.X;
 			object arg_C7_0 = Player.AttachedLevel.Camera;
 			float arg_C7_1 = 1f;
-			Easing arg_C7_2 = new Easing(Quad.EaseInOut);
+			Easing arg_C7_2 = Quad.EaseInOut;
 			string[] array = new string[2];
 			array[0] = "X";
 			string[] arg_C5_0 = array;
@@ -257,24 +251,15 @@ namespace RogueCastle
 			int x2 = Bounds.Center.X;
 			arg_C5_0[arg_C5_1] = x2.ToString();
 			Tween.To(arg_C7_0, arg_C7_1, arg_C7_2, array);
-			Tween.RunFunction(2.2f, this, "PlayBossDoorAnimation2", new object[]
-			{
-				x
-			});
+			Tween.RunFunction(2.2f, this, "PlayBossDoorAnimation2", x);
 		}
 		public void PlayBossDoorAnimation2(float storedX)
 		{
 			m_bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
 			m_bossDoorSprite.PlayAnimation(false);
 			SoundManager.PlaySound("LastDoor_Open");
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"2",
-				"X",
-				storedX.ToString()
-			});
-			Tween.RunFunction(3.1f, this, "BossDoorAnimationComplete", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "2", "X", storedX.ToString());
+			Tween.RunFunction(3.1f, this, "BossDoorAnimationComplete");
 		}
 		public void BossDoorAnimationComplete()
 		{
@@ -295,7 +280,7 @@ namespace RogueCastle
 			}
 			if (!SoundManager.IsMusicPlaying)
 			{
-				SoundManager.PlayMusic("CastleSong", true, 0f);
+				SoundManager.PlayMusic("CastleSong", true);
 			}
 			if (Player.X < m_castleGate.Bounds.Right)
 			{
@@ -331,14 +316,14 @@ namespace RogueCastle
 				{
 					RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 					rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
-					rCScreenManager.DisplayScreen(13, true, null);
+					rCScreenManager.DisplayScreen(13, true);
 					PlayerStats expr_24E = Game.PlayerStats;
 					expr_24E.DiaryEntry += 1;
 				}
 				else
 				{
 					RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-					rCScreenManager2.DisplayScreen(20, true, null);
+					rCScreenManager2.DisplayScreen(20, true);
 				}
 			}
 			base.Update(gameTime);
@@ -351,20 +336,16 @@ namespace RogueCastle
 				Player.X += 10f;
 				Player.State = 1;
 				LogicSet logicSet = new LogicSet(Player);
-				logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls", new object[0]), Types.Sequence.Serial);
-				logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-				logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-				logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-				logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 200), Types.Sequence.Serial);
-				logicSet.AddAction(new DelayLogicAction(0.2f, false), Types.Sequence.Serial);
-				logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0), Types.Sequence.Serial);
+				logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
+				logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+				logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+				logicSet.AddAction(new PlayAnimationLogicAction());
+				logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 200));
+				logicSet.AddAction(new DelayLogicAction(0.2f));
+				logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0));
 				Player.RunExternalLogicSet(logicSet);
-				Tween.By(m_castleGate, 1.5f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					m_castleGate.Height.ToString()
-				});
-				Tween.AddEndHandlerToLastTween(Player, "UnlockControls", new object[0]);
+				Tween.By(m_castleGate, 1.5f, Quad.EaseOut, "Y", m_castleGate.Height.ToString());
+				Tween.AddEndHandlerToLastTween(Player, "UnlockControls");
 				Player.AttachedLevel.RunCinematicBorders(1.5f);
 			}
 			else

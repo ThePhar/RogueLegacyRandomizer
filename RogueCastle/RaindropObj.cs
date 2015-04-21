@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -151,15 +151,11 @@ namespace RogueCastle
 			Rotation = 0f;
 			if (!m_isSnowflake)
 			{
-				PlayAnimation(2, TotalFrames, false);
+				PlayAnimation(2, TotalFrames);
 				return;
 			}
-			Tween.To(this, 0.25f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "KillDrop", new object[0]);
+			Tween.To(this, 0.25f, Tween.EaseNone, "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "KillDrop");
 		}
 		public void KillDrop()
 		{

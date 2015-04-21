@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -74,78 +74,20 @@ namespace RogueCastle
 			m_plate.Scale = Vector2.Zero;
 			m_titlePlate.Scale = Vector2.Zero;
 			m_title.Scale = Vector2.Zero;
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.7"
-			});
-			Tween.To(m_titlePlate, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_title, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				"0.1",
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_plate, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				"0.3",
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
+			Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.7");
+			Tween.To(m_titlePlate, 0.5f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_title, 0.5f, Back.EaseOut, "delay", "0.1", "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_plate, 0.5f, Back.EaseOut, "delay", "0.3", "ScaleX", "1", "ScaleY", "1");
 			m_picturePlate.Scale = new Vector2(2f, 2f);
 			m_picturePlate.Opacity = 0f;
 			m_picturePlate.Rotation = 0f;
-			Tween.To(m_picturePlate, 0.3f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.4",
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1",
-				"Rotation",
-				"-15"
-			});
-			Tween.To(m_picturePlate, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.4",
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_picturePlate, 0.3f, Tween.EaseNone, "delay", "0.4", "ScaleX", "1", "ScaleY", "1", "Rotation", "-15");
+			Tween.To(m_picturePlate, 0.1f, Tween.EaseNone, "delay", "0.4", "Opacity", "1");
 			m_picture.Scale = new Vector2(2f, 2f);
 			m_picture.Opacity = 0f;
 			m_picture.Rotation = 0f;
-			Tween.To(m_picture, 0.3f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.4",
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1",
-				"Rotation",
-				"-15"
-			});
-			Tween.To(m_picture, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.4",
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_picture, 0.3f, Tween.EaseNone, "delay", "0.4", "ScaleX", "1", "ScaleY", "1", "Rotation", "-15");
+			Tween.To(m_picture, 0.1f, Tween.EaseNone, "delay", "0.4", "Opacity", "1");
 			base.OnEnter();
 		}
 		private void SetData()
@@ -227,49 +169,13 @@ namespace RogueCastle
 		private void ExitTransition()
 		{
 			SoundManager.PlaySound("Upgrade_Splash_Out");
-			Tween.To(m_picture, 0.5f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_picturePlate, 0.5f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_titlePlate, 0.5f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_title, 0.5f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_plate, 0.5f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.4",
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(m_picture, 0.5f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_picturePlate, 0.5f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_titlePlate, 0.5f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_title, 0.5f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_plate, 0.5f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(this, 0.2f, Tween.EaseNone, "delay", "0.4", "BackBufferOpacity", "0");
+			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
 		}
 		public override void HandleInput()
 		{

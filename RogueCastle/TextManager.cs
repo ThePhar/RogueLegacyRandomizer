@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -58,7 +58,7 @@ namespace RogueCastle
 		{
 			for (int i = 0; i < m_poolSize; i++)
 			{
-				TextObj textObj = new TextObj(null);
+				TextObj textObj = new TextObj();
 				textObj.Visible = false;
 				textObj.TextureColor = Color.White;
 				textObj.OutlineWidth = 2;
@@ -91,38 +91,12 @@ namespace RogueCastle
 			textObj3.X += textObj2.Width;
 			textObj3.Y -= 5f;
 			textObj3.Visible = true;
-			Tween.By(textObj2, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"-60"
-			});
-			Tween.To(textObj2, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DestroyText", new object[]
-			{
-				textObj2
-			});
-			Tween.By(textObj3, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"-60"
-			});
-			Tween.To(textObj3, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DestroyText", new object[]
-			{
-				textObj3
-			});
+			Tween.By(textObj2, 0.3f, Quad.EaseOut, "Y", "-60");
+			Tween.To(textObj2, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj2);
+			Tween.By(textObj3, 0.3f, Quad.EaseOut, "Y", "-60");
+			Tween.To(textObj3, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj3);
 		}
 		public void DisplayStringNumberText(string text, int amount, Color color, Vector2 position)
 		{
@@ -146,38 +120,12 @@ namespace RogueCastle
 			textObj3.TextureColor = color;
 			textObj3.Position = new Vector2(textObj2.X + textObj2.Width, textObj2.Y + 5f);
 			textObj3.Visible = true;
-			Tween.By(textObj3, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"-60"
-			});
-			Tween.To(textObj3, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DestroyText", new object[]
-			{
-				textObj3
-			});
-			Tween.By(textObj2, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"-60"
-			});
-			Tween.To(textObj2, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DestroyText", new object[]
-			{
-				textObj2
-			});
+			Tween.By(textObj3, 0.3f, Quad.EaseOut, "Y", "-60");
+			Tween.To(textObj3, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj3);
+			Tween.By(textObj2, 0.3f, Quad.EaseOut, "Y", "-60");
+			Tween.To(textObj2, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj2);
 		}
 		public void DisplayNumberText(int amount, Color color, Vector2 position)
 		{
@@ -190,22 +138,9 @@ namespace RogueCastle
 			textObj.Visible = true;
 			textObj.Position = position;
 			textObj.Y -= textObj.Height / 2f;
-			Tween.By(textObj, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"-60"
-			});
-			Tween.To(textObj, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DestroyText", new object[]
-			{
-				textObj
-			});
+			Tween.By(textObj, 0.3f, Quad.EaseOut, "Y", "-60");
+			Tween.To(textObj, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj);
 		}
 		public void DisplayStringText(string text, Color color, Vector2 position)
 		{
@@ -217,22 +152,9 @@ namespace RogueCastle
 			textObj.TextureColor = color;
 			textObj.Position = position;
 			textObj.Visible = true;
-			Tween.By(textObj, 0.3f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"-60"
-			});
-			Tween.To(textObj, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DestroyText", new object[]
-			{
-				textObj
-			});
+			Tween.By(textObj, 0.3f, Quad.EaseOut, "Y", "-60");
+			Tween.To(textObj, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj);
 		}
 		public void DestroyText(TextObj obj)
 		{

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -51,7 +51,7 @@ namespace RogueCastle
 				}
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < 375f && Vector2.Distance(chest.AbsPosition, player.AbsPosition) > num && player.Flip == spriteEffects)
 				{
-					chest.SetChestFailed(false);
+					chest.SetChestFailed();
 					return;
 				}
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < num)
@@ -64,7 +64,7 @@ namespace RogueCastle
 			case 4:
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < 10000f && player.IsJumping && player.AccelerationY < 0f && Vector2.Distance(chest.AbsPosition, player.AbsPosition) > num)
 				{
-					chest.SetChestFailed(false);
+					chest.SetChestFailed();
 					return;
 				}
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < num)
@@ -76,7 +76,7 @@ namespace RogueCastle
 			case 6:
 				if (player.IsTouchingGround && Vector2.Distance(chest.AbsPosition, player.AbsPosition) > num && Vector2.Distance(chest.AbsPosition, player.AbsPosition) < 1000f)
 				{
-					chest.SetChestFailed(false);
+					chest.SetChestFailed();
 					return;
 				}
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < num)
@@ -90,7 +90,7 @@ namespace RogueCastle
 				{
 					if (current.CurrentHealth < current.MaxHealth)
 					{
-						chest.SetChestFailed(false);
+						chest.SetChestFailed();
 						break;
 					}
 				}
@@ -103,7 +103,7 @@ namespace RogueCastle
 			case 8:
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) > num && chest.Timer <= 0f)
 				{
-					chest.SetChestFailed(false);
+					chest.SetChestFailed();
 					return;
 				}
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < num && chest.Timer > 0f)
@@ -115,7 +115,7 @@ namespace RogueCastle
 			case 9:
 				if (player.State == 3)
 				{
-					chest.SetChestFailed(false);
+					chest.SetChestFailed();
 					return;
 				}
 				if (Vector2.Distance(chest.AbsPosition, player.AbsPosition) < num)

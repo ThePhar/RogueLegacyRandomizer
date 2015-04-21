@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -26,9 +26,9 @@ namespace RogueCastle
 					RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
 					rCScreenManager.DialogueScreen.SetDialogue("Quit Rogue Legacy");
 					rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "QuitProgram", new object[0]);
-					rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand", new object[0]);
-					rCScreenManager.DisplayScreen(13, false, null);
+					rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "QuitProgram");
+					rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand");
+					rCScreenManager.DisplayScreen(13, false);
 				}
 			}
 		}

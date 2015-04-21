@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -177,52 +177,39 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character"));
+			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f)));
+			logicSet.AddAction(new DelayLogicAction(0.5f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character"));
+			logicSet2.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet2.AddAction(new DelayLogicAction(0.5f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyHorseTurn_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(this, "Flip", SpriteEffects.None), Types.Sequence.Serial);
-			logicSet3.AddAction(new RunFunctionLogicAction(this, "ResetTurn", new object[0]), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyHorseTurn_Character"));
+			logicSet3.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f)));
+			logicSet3.AddAction(new DelayLogicAction(0.25f));
+			logicSet3.AddAction(new ChangePropertyLogicAction(this, "Flip", SpriteEffects.None));
+			logicSet3.AddAction(new RunFunctionLogicAction(this, "ResetTurn"));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyHorseTurn_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "Flip", SpriteEffects.FlipHorizontally), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResetTurn", new object[0]), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyHorseTurn_Character"));
+			logicSet4.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet4.AddAction(new DelayLogicAction(0.25f));
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "Flip", SpriteEffects.FlipHorizontally));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResetTurn"));
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f), -1f), Types.Sequence.Serial);
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character"));
+			logicSet5.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f)));
 			ThrowStandingProjectiles(logicSet5, true);
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyHorseRun_Character"));
+			logicSet6.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
 			ThrowStandingProjectiles(logicSet6, true);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2
-			});
-			m_turnLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet4,
-				logicSet3
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2);
+			m_turnLB.AddLogicSet(logicSet4, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_turnLB);
-			m_gallopSound = new FrameSoundObj(this, m_target, 2, new string[]
-			{
-				"Enemy_Horse_Gallop_01",
-				"Enemy_Horse_Gallop_02",
-				"Enemy_Horse_Gallop_03"
-			});
+			m_gallopSound = new FrameSoundObj(this, m_target, 2, "Enemy_Horse_Gallop_01", "Enemy_Horse_Gallop_02", "Enemy_Horse_Gallop_03");
 			base.InitializeLogic();
 		}
 		private void ThrowStandingProjectiles(LogicSet ls, bool useBossProjectile = false)
@@ -242,15 +229,12 @@ namespace RogueCastle
 				Scale = ProjectileScale,
 				Lifespan = 0.75f
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			ls.AddAction(new DelayLogicAction(0.075f, false), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			ls.AddAction(new DelayLogicAction(0.075f, false), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			ls.AddAction(new DelayLogicAction(0.075f));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			ls.AddAction(new DelayLogicAction(0.075f));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		protected override void RunBasicLogic()
@@ -270,11 +254,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3C_1, arg_3C_2, array);
 					return;
 				}
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 				return;
 			default:
 				return;
@@ -297,11 +277,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3C_1, arg_3C_2, array);
 					return;
 				}
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 				return;
 			default:
 				return;
@@ -324,11 +300,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3C_1, arg_3C_2, array);
 					return;
 				}
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 				return;
 			default:
 				return;
@@ -351,11 +323,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3C_1, arg_3C_2, array);
 					return;
 				}
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 				return;
 			default:
 				return;
@@ -484,11 +452,7 @@ namespace RogueCastle
 				if (HeadingX < 0f)
 				{
 					m_currentActiveLB.StopLogicBlock();
-					RunLogicBlock(false, m_turnLB, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(false, m_turnLB, 0, 100);
 				}
 				else
 				{
@@ -513,12 +477,7 @@ namespace RogueCastle
 		}
 		public override void HitEnemy(int damage, Vector2 collisionPt, bool isPlayer)
 		{
-			SoundManager.Play3DSound(this, m_target, new string[]
-			{
-				"Enemy_Horse_Hit_01",
-				"Enemy_Horse_Hit_02",
-				"Enemy_Horse_Hit_03"
-			});
+			SoundManager.Play3DSound(this, m_target, "Enemy_Horse_Hit_01", "Enemy_Horse_Hit_02", "Enemy_Horse_Hit_03");
 			base.HitEnemy(damage, collisionPt, isPlayer);
 		}
 		public override void Kill(bool giveXP = true)

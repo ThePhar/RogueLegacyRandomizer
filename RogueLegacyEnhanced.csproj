@@ -25,6 +25,9 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DS2DEngine">
       <HintPath>lib\DS2DEngine.dll</HintPath>
@@ -272,6 +275,9 @@
     <Compile Include="RogueCastle\WaypointObj.cs" />
     <Compile Include="RogueCastle\WordBuilder.cs" />
     <Compile Include="RogueCastle\XMLCompiler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RLE.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

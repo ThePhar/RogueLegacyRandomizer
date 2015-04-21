@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -44,20 +44,11 @@ namespace RogueCastle
 		{
 			m_levelDataLoaded = false;
 			m_fadingOut = false;
-			Thread thread = new Thread(new ThreadStart(LoadLevelData));
+			Thread thread = new Thread(LoadLevelData);
 			thread.Start();
 			m_logo.Opacity = 0f;
-			Tween.To(m_logo, 1f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"1"
-			});
-			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", new object[]
-			{
-				"CDGSplashCreak"
-			});
+			Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "0.5", "Opacity", "1");
+			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "CDGSplashCreak");
 			base.OnEnter();
 		}
 		private void LoadLevelData()
@@ -65,15 +56,15 @@ namespace RogueCastle
 			lock (this)
 			{
 				LevelBuilder2.Initialize();
-				LevelParser.ParseRooms("Map_1x1", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_1x2", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_1x3", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_2x1", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_2x2", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_2x3", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_3x1", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_3x2", ScreenManager.Game.Content, false);
-				LevelParser.ParseRooms("Map_Special", ScreenManager.Game.Content, false);
+				LevelParser.ParseRooms("Map_1x1", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_1x2", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_1x3", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_2x1", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_2x2", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_2x3", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_3x1", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_3x2", ScreenManager.Game.Content);
+				LevelParser.ParseRooms("Map_Special", ScreenManager.Game.Content);
 				LevelParser.ParseRooms("Map_DLC1", ScreenManager.Game.Content, true);
 				LevelBuilder2.IndexRoomList();
 				m_levelDataLoaded = true;
@@ -83,10 +74,7 @@ namespace RogueCastle
 		{
 			if ((ScreenManager.Game as Game).SaveManager.FileExists(SaveType.PlayerData))
 			{
-				(ScreenManager.Game as Game).SaveManager.LoadFiles(null, new SaveType[]
-				{
-					SaveType.PlayerData
-				});
+				(ScreenManager.Game as Game).SaveManager.LoadFiles(null, SaveType.PlayerData);
 				if (Game.PlayerStats.ShoulderPiece < 1 || Game.PlayerStats.HeadPiece < 1 || Game.PlayerStats.ChestPiece < 1)
 				{
 					Game.PlayerStats.TutorialComplete = false;
@@ -94,20 +82,20 @@ namespace RogueCastle
 				}
 				if (!Game.PlayerStats.TutorialComplete)
 				{
-					(ScreenManager as RCScreenManager).DisplayScreen(23, true, null);
+					(ScreenManager as RCScreenManager).DisplayScreen(23, true);
 					return;
 				}
-				(ScreenManager as RCScreenManager).DisplayScreen(3, true, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(3, true);
 				return;
 			}
 			else
 			{
 				if (!Game.PlayerStats.TutorialComplete)
 				{
-					(ScreenManager as RCScreenManager).DisplayScreen(23, true, null);
+					(ScreenManager as RCScreenManager).DisplayScreen(23, true);
 					return;
 				}
-				(ScreenManager as RCScreenManager).DisplayScreen(3, true, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(3, true);
 				return;
 			}
 		}
@@ -124,19 +112,9 @@ namespace RogueCastle
 				m_fadingOut = true;
 				float opacity2 = m_logo.Opacity;
 				m_logo.Opacity = 1f;
-				Tween.To(m_logo, 1f, new Easing(Linear.EaseNone), new string[]
-				{
-					"delay",
-					"1.5",
-					"Opacity",
-					"0"
-				});
-				Tween.AddEndHandlerToLastTween(this, "LoadNextScreen", new object[0]);
-				Tween.To(m_loadingText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
+				Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "1.5", "Opacity", "0");
+				Tween.AddEndHandlerToLastTween(this, "LoadNextScreen");
+				Tween.To(m_loadingText, 0.5f, Tween.EaseNone, "Opacity", "0");
 				m_logo.Opacity = opacity2;
 			}
 			base.Update(gameTime);

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -136,25 +136,10 @@ namespace RogueCastle
 			m_confirmText.Opacity = 0f;
 			m_cancelText.Opacity = 0f;
 			m_navigationText.Opacity = 0f;
-			Tween.To(m_confirmText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_cancelText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_navigationText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"DialogueMenuOpen"
-			});
+			Tween.To(m_confirmText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogueMenuOpen");
 			if (!m_optionsArray.Contains(m_backToMenuObj))
 			{
 				m_optionsArray.Insert(m_optionsArray.Count - 1, m_backToMenuObj);
@@ -164,51 +149,27 @@ namespace RogueCastle
 				m_optionsArray.RemoveAt(m_optionsArray.Count - 2);
 			}
 			m_transitioning = true;
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.8"
-			});
+			Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.8");
 			m_selectedOptionIndex = 0;
 			m_selectedOption = m_optionsArray[m_selectedOptionIndex];
 			m_selectedOption.IsActive = false;
 			m_bgSprite.Position = new Vector2(660f, 0f);
 			m_bgSprite.Opacity = 0f;
-			Tween.To(m_bgSprite, 0.5f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				360f.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "EndTransition", new object[0]);
-			Tween.To(m_bgSprite, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_bgSprite, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
+			Tween.AddEndHandlerToLastTween(this, "EndTransition");
+			Tween.To(m_bgSprite, 0.2f, Tween.EaseNone, "Opacity", "1");
 			int num = 0;
 			foreach (OptionsObj current in m_optionsArray)
 			{
 				current.Y = 160 + num * 30 - 360f;
 				current.Opacity = 0f;
-				Tween.By(current, 0.5f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					360f.ToString()
-				});
-				Tween.To(current, 0.2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
+				Tween.By(current, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
+				Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "1");
 				current.Initialize();
 				num++;
 			}
 			m_optionsBar.Opacity = 0f;
-			Tween.To(m_optionsBar, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_optionsBar, 0.2f, Tween.EaseNone, "Opacity", "1");
 			base.OnEnter();
 		}
 		public void EndTransition()
@@ -219,62 +180,25 @@ namespace RogueCastle
 		{
 			SoundManager.PlaySound("DialogMenuClose");
 			m_transitioning = true;
-			Tween.To(m_confirmText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_cancelText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_navigationText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.To(m_optionsBar, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_confirmText, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0");
+			Tween.To(m_optionsBar, 0.2f, Tween.EaseNone, "Opacity", "0");
 			m_bgSprite.Position = new Vector2(660f, 360f);
 			m_bgSprite.Opacity = 1f;
-			Tween.To(m_bgSprite, 0.5f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"0"
-			});
-			Tween.To(m_bgSprite, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_bgSprite, 0.5f, Quad.EaseOut, "Y", "0");
+			Tween.To(m_bgSprite, 0.2f, Tween.EaseNone, "Opacity", "0");
 			int num = 0;
 			foreach (OptionsObj current in m_optionsArray)
 			{
 				current.Y = 160 + num * 30;
 				current.Opacity = 1f;
-				Tween.By(current, 0.5f, new Easing(Quad.EaseOut), new string[]
-				{
-					"Y",
-					//-360f.ToString()
-                    (-360f).ToString()
-				});
-				Tween.To(current, 0.2f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"0"
-				});
+				Tween.By(current, 0.5f, Quad.EaseOut, "Y", (-360f).ToString());
+				Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "0");
 				num++;
 			}
-			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
 		}
 		public override void OnExit()
 		{
@@ -383,43 +307,19 @@ namespace RogueCastle
 			{
 				foreach (OptionsObj current in m_optionsArray)
 				{
-					Tween.By(current, 0.3f, new Easing(Quad.EaseInOut), new string[]
-					{
-						"X",
-						"-1320"
-					});
+					Tween.By(current, 0.3f, Quad.EaseInOut, "X", "-1320");
 				}
-				Tween.By(m_optionsTitle, 0.3f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					"-1320"
-				});
-				Tween.By(m_changeControlsTitle, 0.3f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					"-1320"
-				});
+				Tween.By(m_optionsTitle, 0.3f, Quad.EaseInOut, "X", "-1320");
+				Tween.By(m_changeControlsTitle, 0.3f, Quad.EaseInOut, "X", "-1320");
 				m_changingControls = true;
 				return;
 			}
 			foreach (OptionsObj current2 in m_optionsArray)
 			{
-				Tween.By(current2, 0.3f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"X",
-					"1320"
-				});
+				Tween.By(current2, 0.3f, Quad.EaseInOut, "X", "1320");
 			}
-			Tween.By(m_optionsTitle, 0.3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				"1320"
-			});
-			Tween.By(m_changeControlsTitle, 0.3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				"1320"
-			});
+			Tween.By(m_optionsTitle, 0.3f, Quad.EaseInOut, "X", "1320");
+			Tween.By(m_changeControlsTitle, 0.3f, Quad.EaseInOut, "X", "1320");
 			m_changingControls = false;
 		}
 		public override void Draw(GameTime gametime)

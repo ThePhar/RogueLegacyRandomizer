@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -146,58 +146,41 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEnergonWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEnergonWalk_Character"));
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEnergonWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEnergonWalk_Character"));
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEnergonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "FireCurrentTypeProjectile", new object[0]), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character", true, true), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEnergonAttack_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack"));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "FireCurrentTypeProjectile"));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character"));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEnergonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "SwitchRandomType", new object[0]), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(2f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet5
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			logicSet5.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEnergonAttack_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack"));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "SwitchRandomType"));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character"));
+			logicSet5.AddAction(new DelayLogicAction(2f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet5);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_generalMiniBossLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				0,
-				0,
-				100
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 0, 0, 100);
 			base.InitializeLogic();
 		}
 		protected override void RunBasicLogic()
@@ -209,14 +192,7 @@ namespace RogueCastle
 				break;
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					0,
-					30,
-					60,
-					10
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 0, 30, 60, 10);
 				break;
 			default:
 				return;
@@ -272,7 +248,7 @@ namespace RogueCastle
 			energonProjectileObj.Scale = ProjectileScale;
 			energonProjectileObj.Opacity = 0.8f;
 			energonProjectileObj.Damage = Damage;
-			energonProjectileObj.PlayAnimation(true);
+			energonProjectileObj.PlayAnimation();
 		}
 		public void DestroyProjectile(EnergonProjectileObj projectile)
 		{
@@ -318,7 +294,7 @@ namespace RogueCastle
 				m_shield.ChangeSprite("EnergonDownSwordShield_Sprite");
 				break;
 			}
-			m_shield.PlayAnimation(true);
+			m_shield.PlayAnimation();
 		}
 		public override void Update(GameTime gameTime)
 		{
@@ -403,7 +379,7 @@ namespace RogueCastle
 			Type = 23;
 			m_shield = new SpriteObj("EnergonSwordShield_Sprite");
 			m_shield.AnimationDelay = 0.1f;
-			m_shield.PlayAnimation(true);
+			m_shield.PlayAnimation();
 			m_shield.Opacity = 0.5f;
 			m_shield.Scale = new Vector2(1.2f, 1.2f);
 			m_projectilePool = new DS2DPool<EnergonProjectileObj>();
@@ -412,7 +388,7 @@ namespace RogueCastle
 				EnergonProjectileObj energonProjectileObj = new EnergonProjectileObj("EnergonSwordProjectile_Sprite", this);
 				energonProjectileObj.Visible = false;
 				energonProjectileObj.CollidesWithTerrain = false;
-				energonProjectileObj.PlayAnimation(true);
+				energonProjectileObj.PlayAnimation();
 				energonProjectileObj.AnimationDelay = 0.05f;
 				m_projectilePool.AddToPool(energonProjectileObj);
 			}

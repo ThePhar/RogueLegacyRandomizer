@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -14,15 +14,15 @@ namespace RogueCastle
 {
 	public class WordBuilder
 	{
-		private static string[] intro = new string[]
+		private static string[] intro = new[]
 		{
 			"Sir Skunky the Knight\n"
 		};
-		private static string[] middle = new string[]
+		private static string[] middle = new[]
 		{
 			"Gigantism - You are larger\n"
 		};
-		private static string[] end = new string[]
+		private static string[] end = new[]
 		{
 			"Dextrocardia - HP/MP pools are swapped\n"
 		};

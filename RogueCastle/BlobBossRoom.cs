@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -85,36 +85,12 @@ namespace RogueCastle
 			Player.LockControls();
 			Player.AttachedLevel.UpdateCamera();
 			Player.AttachedLevel.CameraLockedToPlayer = false;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(Bounds.Left + 700).ToString(),
-				"Y",
-				m_boss1.Y.ToString()
-			});
-			Tween.By(m_blobArray[0], 1f, new Easing(Quad.EaseIn), new string[]
-			{
-				"delay",
-				"0.5",
-				"Y",
-				"1150"
-			});
-			Tween.AddEndHandlerToLastTween(this, "GrowBlob", new object[]
-			{
-				m_blobArray[0]
-			});
-			Tween.By(m_blobArray[1], 1f, new Easing(Quad.EaseIn), new string[]
-			{
-				"delay",
-				"1.5",
-				"Y",
-				"1150"
-			});
-			Tween.AddEndHandlerToLastTween(this, "GrowBlob", new object[]
-			{
-				m_blobArray[1]
-			});
-			Tween.RunFunction(1f, this, "DropBlobs", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (Bounds.Left + 700).ToString(), "Y", m_boss1.Y.ToString());
+			Tween.By(m_blobArray[0], 1f, Quad.EaseIn, "delay", "0.5", "Y", "1150");
+			Tween.AddEndHandlerToLastTween(this, "GrowBlob", m_blobArray[0]);
+			Tween.By(m_blobArray[1], 1f, Quad.EaseIn, "delay", "1.5", "Y", "1150");
+			Tween.AddEndHandlerToLastTween(this, "GrowBlob", m_blobArray[1]);
+			Tween.RunFunction(1f, this, "DropBlobs");
 			m_boss1.Scale = new Vector2(0.5f, 0.5f);
 			Player.AttachedLevel.RunCinematicBorders(9f);
 			base.OnEnter();
@@ -124,37 +100,14 @@ namespace RogueCastle
 			float num = 1f;
 			for (int i = 2; i < m_blobArray.Count; i++)
 			{
-				Tween.By(m_blobArray[i], 1f, new Easing(Quad.EaseIn), new string[]
-				{
-					"delay",
-					num.ToString(),
-					"Y",
-					"1150"
-				});
-				Tween.AddEndHandlerToLastTween(this, "GrowBlob", new object[]
-				{
-					m_blobArray[i]
-				});
+				Tween.By(m_blobArray[i], 1f, Quad.EaseIn, "delay", num.ToString(), "Y", "1150");
+				Tween.AddEndHandlerToLastTween(this, "GrowBlob", m_blobArray[i]);
 				num += 0.5f * (m_blobArray.Count - i) / m_blobArray.Count;
 			}
-			Tween.RunFunction(num + 1f, m_boss1, "PlayAnimation", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(num + 1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Blob_Idle_Loop"
-			});
-			Tween.RunFunction(num + 1f, this, "DisplayBossTitle", new object[]
-			{
-				"The Infinite",
-				m_boss1.Name,
-				"Intro2"
-			});
-			Tween.RunFunction(num + 1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Blob_Spawn"
-			});
+			Tween.RunFunction(num + 1f, m_boss1, "PlayAnimation", true);
+			Tween.RunFunction(num + 1f, typeof(SoundManager), "PlaySound", "Boss_Blob_Idle_Loop");
+			Tween.RunFunction(num + 1f, this, "DisplayBossTitle", "The Infinite", m_boss1.Name, "Intro2");
+			Tween.RunFunction(num + 1f, typeof(SoundManager), "PlaySound", "Boss_Blob_Spawn");
 		}
 		public void GrowBlob(GameObj blob)
 		{
@@ -163,26 +116,13 @@ namespace RogueCastle
 			m_boss1.PlayAnimation(false);
 			m_boss1.ScaleX += num;
 			m_boss1.ScaleY += num;
-			SoundManager.PlaySound(new string[]
-			{
-				"Boss_Blob_Spawn_01",
-				"Boss_Blob_Spawn_02",
-				"Boss_Blob_Spawn_03"
-			});
+			SoundManager.PlaySound("Boss_Blob_Spawn_01", "Boss_Blob_Spawn_02", "Boss_Blob_Spawn_03");
 		}
 		public void Intro2()
 		{
-			m_boss1.PlayAnimation(true);
-			Tween.To(Player.AttachedLevel.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0.5",
-				"X",
-				(Player.X + GlobalEV.Camera_XOffset).ToString(),
-				"Y",
-				(Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "BeginBattle", new object[0]);
+			m_boss1.PlayAnimation();
+			Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "delay", "0.5", "X", (Player.X + GlobalEV.Camera_XOffset).ToString(), "Y", (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString());
+			Tween.AddEndHandlerToLastTween(this, "BeginBattle");
 		}
 		public void BeginBattle()
 		{
@@ -190,7 +130,7 @@ namespace RogueCastle
 			Player.AttachedLevel.CameraLockedToPlayer = true;
 			Player.UnlockControls();
 			m_boss1.UnpauseEnemy(true);
-			m_boss1.PlayAnimation(true);
+			m_boss1.PlayAnimation();
 		}
 		public override void Update(GameTime gameTime)
 		{

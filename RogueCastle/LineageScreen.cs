@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -50,7 +50,7 @@ namespace RogueCastle
 		{
 			Game.HSVEffect.Parameters["Saturation"].SetValue(0);
 			m_background = new BackgroundObj("LineageScreenBG_Sprite");
-			m_background.SetRepeated(true, true, Camera, null);
+			m_background.SetRepeated(true, true, Camera);
 			m_background.X -= 6600f;
 			m_bgShadow = new SpriteObj("LineageScreenShadow_Sprite");
 			m_bgShadow.Scale = new Vector2(11f, 11f);
@@ -156,7 +156,7 @@ namespace RogueCastle
 		}
 		public override void ReinitializeRTs()
 		{
-			m_background.SetRepeated(true, true, Camera, null);
+			m_background.SetRepeated(true, true, Camera);
 			base.ReinitializeRTs();
 		}
 		private void UpdateDescriptionPlate()
@@ -220,13 +220,13 @@ namespace RogueCastle
 			}
 			m_currentPoint = position;
 			m_currentBranchArray.Clear();
-			int[] array = new int[]
+			int[] array = new[]
 			{
 				-450,
 				0,
 				450
 			};
-			int[] array2 = new int[]
+			int[] array2 = new[]
 			{
 				-200,
 				200
@@ -385,10 +385,7 @@ namespace RogueCastle
 					});
 				}
 				Game.PlayerStats.CurrentBranches = list;
-				(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-				{
-					SaveType.Lineage
-				});
+				(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.Lineage);
 				return;
 			}
 			AddLineageRow(3, m_masterArray[m_masterArray.Count - 1].Position, true, true);
@@ -414,13 +411,10 @@ namespace RogueCastle
 			float num3 = m_storedMusicVol / 120f;
 			for (int i = 0; i < 120; i++)
 			{
-				Tween.RunFunction(num * i, this, "ReduceMusic", new object[]
-				{
-					num2
-				});
+				Tween.RunFunction(num * i, this, "ReduceMusic", num2);
 				num2 -= num3;
 			}
-			Tween.RunFunction(2f, this, "StopLegacySong", new object[0]);
+			Tween.RunFunction(2f, this, "StopLegacySong");
 			Game.PlayerStats.CurrentBranches = null;
 			if (Game.PlayerStats.Class == 16)
 			{
@@ -465,7 +459,7 @@ namespace RogueCastle
 				Game.LineageSongCue.Dispose();
 				Game.LineageSongCue = SoundManager.GetMusicCue("LegacySong");
 				Game.LineageSongCue.Play();
-				SoundManager.StopMusic(0f);
+				SoundManager.StopMusic();
 				SoundManager.PlayMusic("SkillTreeSong", true, 1f);
 			}
 			base.Update(gameTime);
@@ -479,49 +473,25 @@ namespace RogueCastle
 				if (Game.GlobalInput.JustPressed(9) && SkillSystem.GetSkill(SkillType.Randomize_Children).ModifierAmount > 0f && !Game.PlayerStats.RerolledChildren)
 				{
 					m_lockControls = true;
-					SoundManager.PlaySound(new string[]
-					{
-						"frame_woosh_01",
-						"frame_woosh_02"
-					});
+					SoundManager.PlaySound("frame_woosh_01", "frame_woosh_02");
 					if (m_xShift != 0)
 					{
 						m_xShift = 0;
-						Tween.By(m_descriptionPlate, 0.2f, new Easing(Back.EaseOut), new string[]
-						{
-							"delay",
-							"0.2",
-							"X",
-							"-600"
-						});
-						m_selectTween = Tween.To(Camera, 0.3f, new Easing(Quad.EaseOut), new string[]
-						{
-							"delay",
-							"0.2",
-							"X",
-							(m_masterArray.Count * m_xPosOffset).ToString()
-						});
+						Tween.By(m_descriptionPlate, 0.2f, Back.EaseOut, "delay", "0.2", "X", "-600");
+						m_selectTween = Tween.To(Camera, 0.3f, Quad.EaseOut, "delay", "0.2", "X", (m_masterArray.Count * m_xPosOffset).ToString());
 					}
 					(ScreenManager as RCScreenManager).StartWipeTransition();
-					Tween.RunFunction(0.2f, this, "RerollCurrentBranch", new object[0]);
+					Tween.RunFunction(0.2f, this, "RerollCurrentBranch");
 				}
 				if (Game.GlobalInput.Pressed(20) || Game.GlobalInput.Pressed(21))
 				{
 					if (Camera.X > m_masterArray[0].X + 10f)
 					{
 						SoundManager.PlaySound("frame_swoosh_01");
-						m_selectTween = Tween.By(Camera, 0.3f, new Easing(Quad.EaseOut), new string[]
-						{
-							"X",
-							(-m_xPosOffset).ToString()
-						});
+						m_selectTween = Tween.By(Camera, 0.3f, Quad.EaseOut, "X", (-m_xPosOffset).ToString());
 						if (m_xShift == 0)
 						{
-							Tween.By(m_descriptionPlate, 0.2f, new Easing(Back.EaseIn), new string[]
-							{
-								"X",
-								"600"
-							});
+							Tween.By(m_descriptionPlate, 0.2f, Back.EaseIn, "X", "600");
 						}
 						m_xShift--;
 					}
@@ -529,19 +499,11 @@ namespace RogueCastle
 				else if ((Game.GlobalInput.Pressed(22) || Game.GlobalInput.Pressed(23)) && m_xShift < 0)
 				{
 					SoundManager.PlaySound("frame_swoosh_01");
-					m_selectTween = Tween.By(Camera, 0.3f, new Easing(Quad.EaseOut), new string[]
-					{
-						"X",
-						m_xPosOffset.ToString()
-					});
+					m_selectTween = Tween.By(Camera, 0.3f, Quad.EaseOut, "X", m_xPosOffset.ToString());
 					m_xShift++;
 					if (m_xShift == 0)
 					{
-						Tween.By(m_descriptionPlate, 0.2f, new Easing(Back.EaseOut), new string[]
-						{
-							"X",
-							"-600"
-						});
+						Tween.By(m_descriptionPlate, 0.2f, Back.EaseOut, "X", "-600");
 					}
 				}
 				if (m_xShift == 0)
@@ -560,21 +522,9 @@ namespace RogueCastle
 						if (m_selectedLineageIndex != selectedLineageIndex)
 						{
 							UpdateDescriptionPlate();
-							m_selectTween = Tween.By(m_currentBranchArray[0], 0.3f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								"450"
-							});
-							Tween.By(m_currentBranchArray[1], 0.3f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								"450"
-							});
-							Tween.By(m_currentBranchArray[2], 0.3f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								"450"
-							});
+							m_selectTween = Tween.By(m_currentBranchArray[0], 0.3f, Quad.EaseOut, "Y", "450");
+							Tween.By(m_currentBranchArray[1], 0.3f, Quad.EaseOut, "Y", "450");
+							Tween.By(m_currentBranchArray[2], 0.3f, Quad.EaseOut, "Y", "450");
 						}
 					}
 					else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
@@ -591,21 +541,9 @@ namespace RogueCastle
 						if (m_selectedLineageIndex != selectedLineageIndex)
 						{
 							UpdateDescriptionPlate();
-							m_selectTween = Tween.By(m_currentBranchArray[0], 0.3f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								"-450"
-							});
-							Tween.By(m_currentBranchArray[1], 0.3f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								"-450"
-							});
-							Tween.By(m_currentBranchArray[2], 0.3f, new Easing(Quad.EaseOut), new string[]
-							{
-								"Y",
-								"-450"
-							});
+							m_selectTween = Tween.By(m_currentBranchArray[0], 0.3f, Quad.EaseOut, "Y", "-450");
+							Tween.By(m_currentBranchArray[1], 0.3f, Quad.EaseOut, "Y", "-450");
+							Tween.By(m_currentBranchArray[2], 0.3f, Quad.EaseOut, "Y", "-450");
 						}
 					}
 				}
@@ -619,32 +557,17 @@ namespace RogueCastle
 							RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
 							rCScreenManager.DialogueScreen.SetDialogue("LineageChoiceWarning");
 							rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-							rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "StartGame", new object[0]);
-							rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", new object[]
-							{
-								"Canceling Selection"
-							});
-							(ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+							rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "StartGame");
+							rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", "Canceling Selection");
+							(ScreenManager as RCScreenManager).DisplayScreen(13, true);
 						}
 					}
 					else
 					{
 						m_xShift = 0;
-						SoundManager.PlaySound(new string[]
-						{
-							"frame_woosh_01",
-							"frame_woosh_02"
-						});
-						Tween.By(m_descriptionPlate, 0.2f, new Easing(Back.EaseOut), new string[]
-						{
-							"X",
-							"-600"
-						});
-						m_selectTween = Tween.To(Camera, 0.3f, new Easing(Quad.EaseOut), new string[]
-						{
-							"X",
-							(m_masterArray.Count * m_xPosOffset).ToString()
-						});
+						SoundManager.PlaySound("frame_woosh_01", "frame_woosh_02");
+						Tween.By(m_descriptionPlate, 0.2f, Back.EaseOut, "X", "-600");
+						m_selectTween = Tween.To(Camera, 0.3f, Quad.EaseOut, "X", (m_masterArray.Count * m_xPosOffset).ToString());
 					}
 				}
 				base.HandleInput();
@@ -654,10 +577,7 @@ namespace RogueCastle
 		{
 			m_rerollText.Visible = false;
 			Game.PlayerStats.RerolledChildren = true;
-			(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData
-			});
+			(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
 			Game.PlayerStats.CurrentBranches.Clear();
 			LoadCurrentBranches();
 			(ScreenManager as RCScreenManager).EndWipeTransition();
@@ -681,7 +601,7 @@ namespace RogueCastle
 				Game.PlayerStats.WizardSpellList = SpellType.GetNext3Spells();
 			}
 			Game.PlayerStats.CurrentBranches.Clear();
-			(ScreenManager as RCScreenManager).DisplayScreen(15, true, null);
+			(ScreenManager as RCScreenManager).DisplayScreen(15, true);
 		}
 		public override void Draw(GameTime gameTime)
 		{

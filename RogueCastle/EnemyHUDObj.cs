@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -28,11 +28,11 @@ namespace RogueCastle
 		public EnemyHUDObj() : base("EnemyHUD_Sprite")
 		{
 			ForceDraw = true;
-			m_enemyNameText = new TextObj(null);
+			m_enemyNameText = new TextObj();
 			m_enemyNameText.Font = Game.JunicodeFont;
 			m_enemyNameText.FontSize = 10f;
 			m_enemyNameText.Align = Types.TextAlign.Right;
-			m_enemyLevelText = new TextObj(null);
+			m_enemyLevelText = new TextObj();
 			m_enemyLevelText.Font = Game.EnemyLevelFont;
 			m_enemyHPBar = new SpriteObj("EnemyHPBar_Sprite");
 			m_enemyHPBar.ForceDraw = true;

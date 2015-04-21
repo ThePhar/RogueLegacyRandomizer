@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -52,7 +52,7 @@ namespace RogueCastle
 	                if (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f)
 	                {
 	                    m_isExtended = true;
-	                    PlayAnimation("EndRetract", "EndRetract", false);
+	                    PlayAnimation("EndRetract", "EndRetract");
 	                }
 	                return;
 	        }
@@ -77,30 +77,22 @@ namespace RogueCastle
 						float num = 0f;
 						for (int i = 0; i < 10; i++)
 						{
-							Tween.RunFunction(num, this, "Blink", new object[]
-							{
-								Color.Red,
-								0.05f
-							});
+							Tween.RunFunction(num, this, "Blink", Color.Red, 0.05f);
 							num += 0.1f;
 						}
 					}
 					if (m_retractCounter <= 0f)
 					{
 						m_isExtended = false;
-						PlayAnimation("StartExtract", "EndExtract", false);
-						SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-						{
-							"Platform_Activate_03",
-							"Platform_Activate_04"
-						});
+						PlayAnimation("StartExtract", "EndExtract");
+						SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Platform_Activate_03", "Platform_Activate_04");
 					}
 				}
 			}
 			else if (!m_isExtended)
 			{
 				m_isExtended = true;
-				PlayAnimation("EndRetract", "EndRetract", false);
+				PlayAnimation("EndRetract", "EndRetract");
 			}
 			base.Update(gameTime);
 		}
@@ -108,25 +100,13 @@ namespace RogueCastle
 		{
 			if (m_target.IsAirAttacking && !m_isExtended && (CurrentFrame == 1 || CurrentFrame == TotalFrames))
 			{
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"EnemyHit1",
-					"EnemyHit2",
-					"EnemyHit3",
-					"EnemyHit4",
-					"EnemyHit5",
-					"EnemyHit6"
-				});
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4", "EnemyHit5", "EnemyHit6");
 				Blink(Color.Red, 0.1f);
 				m_levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(position);
 				m_isExtended = true;
 				m_blinkedWarning = false;
-				PlayAnimation("StartRetract", "EndRetract", false);
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"Platform_Activate_01",
-					"Platform_Activate_02"
-				});
+				PlayAnimation("StartRetract", "EndRetract");
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Platform_Activate_01", "Platform_Activate_02");
 				m_retractCounter = RetractDelay;
 				if (m_target.IsAirAttacking)
 				{
@@ -142,7 +122,7 @@ namespace RogueCastle
 			{
 				return;
 			}
-			PlayAnimation(1, 1, false);
+			PlayAnimation(1, 1);
 			m_isExtended = false;
 			m_blinkedWarning = false;
 			m_retractCounter = 0f;
@@ -154,7 +134,7 @@ namespace RogueCastle
 			{
 				return;
 			}
-			PlayAnimation(1, 1, false);
+			PlayAnimation(1, 1);
 			m_isExtended = false;
 			m_blinkedWarning = false;
 			m_retractCounter = 0f;

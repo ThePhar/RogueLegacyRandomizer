@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -161,14 +161,14 @@ namespace RogueCastle
 			textObj.TextureColor = Color.Black;
 			m_dataList1 = new List<TextObj>();
 			m_dataList2 = new List<TextObj>();
-			string[] array = new string[]
+			string[] array = new[]
 			{
 				"Health",
 				"Mana",
 				"Armor",
 				"Weight"
 			};
-			string[] array2 = new string[]
+			string[] array2 = new[]
 			{
 				"Strength",
 				"Intelligence",
@@ -260,7 +260,7 @@ namespace RogueCastle
 			SoundManager.PlaySound("StatCard_In");
 			LoadCardColour();
 			m_spellIcon.ChangeSprite(SpellType.Icon(Game.PlayerStats.Spell));
-			string[] array = new string[]
+			string[] array = new[]
 			{
 				"CardCastleBG_Sprite",
 				"CardGardenBG_Sprite",
@@ -270,23 +270,9 @@ namespace RogueCastle
 			m_playerBG.ChangeSprite(array[CDGMath.RandomInt(0, 3)]);
 			m_frontCard.Y = 1500f;
 			m_backCard.Y = 1500f;
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.7"
-			});
-			Tween.To(m_frontCard, 0.4f, new Easing(Back.EaseOut), new string[]
-			{
-				"Y",
-				"30"
-			});
-			Tween.To(m_backCard, 0.4f, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				"0.2",
-				"Y",
-				"30"
-			});
+			Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.7");
+			Tween.To(m_frontCard, 0.4f, Back.EaseOut, "Y", "30");
+			Tween.To(m_backCard, 0.4f, Back.EaseOut, "delay", "0.2", "Y", "30");
 			PlayerObj player = (ScreenManager as RCScreenManager).Player;
 			LoadFrontCardStats(player);
 			LoadBackCardStats(player);
@@ -302,12 +288,8 @@ namespace RogueCastle
 			}
 			m_cancelText.Text = "[Input:" + 2 + "] to exit profile card";
 			m_cancelText.Opacity = 0f;
-			Tween.To(m_cancelText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			string[] array2 = new string[]
+			Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
+			string[] array2 = new[]
 			{
 				"Glauber Kotaki",
 				"Kenny Lee",
@@ -324,7 +306,7 @@ namespace RogueCastle
 			string[] array;
 			if (Game.PlayerStats.Class == 16)
 			{
-				array = new string[]
+				array = new[]
 				{
 					"Idle",
 					"Walking",
@@ -335,7 +317,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				array = new string[]
+				array = new[]
 				{
 					"Idle",
 					"Attacking3",
@@ -348,7 +330,7 @@ namespace RogueCastle
 			string[] array2;
 			if (Game.PlayerStats.Class == 16)
 			{
-				array2 = new string[]
+				array2 = new[]
 				{
 					"Jumping",
 					"Falling"
@@ -356,7 +338,7 @@ namespace RogueCastle
 			}
 			else
 			{
-				array2 = new string[]
+				array2 = new[]
 				{
 					"Jumping",
 					"AirAttack",
@@ -464,14 +446,7 @@ namespace RogueCastle
 			if (Game.PlayerStats.Class == 16)
 			{
 				m_playerSprite.GetChildAt(0).Visible = true;
-				m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat(new object[]
-				{
-					"Player",
-					animationType,
-					"Head",
-					6,
-					"_Sprite"
-				}));
+				m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat("Player", animationType, "Head", 6, "_Sprite"));
 			}
 			if (!Game.PlayerStats.IsFemale)
 			{
@@ -515,33 +490,13 @@ namespace RogueCastle
 		public void ExitScreenTransition()
 		{
 			SoundManager.PlaySound("StatCard_Out");
-			Tween.To(m_cancelText, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "0");
 			m_frontCard.Y = 30f;
 			m_backCard.Y = 30f;
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.3",
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.To(m_frontCard, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"Y",
-				"1500"
-			});
-			Tween.To(m_backCard, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"delay",
-				"0.2",
-				"Y",
-				"1500"
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(this, 0.2f, Tween.EaseNone, "delay", "0.3", "BackBufferOpacity", "0");
+			Tween.To(m_frontCard, 0.4f, Back.EaseIn, "Y", "1500");
+			Tween.To(m_backCard, 0.4f, Back.EaseIn, "delay", "0.2", "Y", "1500");
+			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
 			OnExit();
 		}
 		private void LoadCardColour()
@@ -618,13 +573,7 @@ namespace RogueCastle
 			}
 			m_playerName.Text = Game.PlayerStats.PlayerName;
 			m_playerStats.Text = (int)(player.Damage / 20f) + "/" + (int)(player.MaxHealth / 50f);
-			m_levelClass.Text = string.Concat(new object[]
-			{
-				"Lv. ",
-				Game.PlayerStats.CurrentLevel,
-				" - ",
-				ClassType.ToString(Game.PlayerStats.Class, Game.PlayerStats.IsFemale)
-			});
+			m_levelClass.Text = string.Concat("Lv. ", Game.PlayerStats.CurrentLevel, " - ", ClassType.ToString(Game.PlayerStats.Class, Game.PlayerStats.IsFemale));
 			m_money.Text = Game.PlayerStats.Gold.ToString();
 			m_classDescription.Text = ClassType.ProfileCardDescription(Game.PlayerStats.Class);
 		}
@@ -644,13 +593,7 @@ namespace RogueCastle
 					break;
 				case 2:
 				{
-					m_dataList1[i].Text = string.Concat(new object[]
-					{
-						player.TotalArmor.ToString(),
-						"(",
-						(int)(player.TotalDamageReduc * 100f),
-						"%)"
-					});
+					m_dataList1[i].Text = string.Concat(player.TotalArmor.ToString(), "(", (int)(player.TotalDamageReduc * 100f), "%)");
 					float num = player.TotalCritChance * 100f;
 					m_dataList2[i].Text = ((int)Math.Round(num, MidpointRounding.AwayFromZero)).ToString() + "%";
 					break;

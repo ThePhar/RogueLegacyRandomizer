@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -64,7 +64,7 @@ namespace RogueCastle
 			TextObj textObj = new TextObj(Game.JunicodeFont);
 			textObj.FontSize = 12f;
 			textObj.DropShadow = new Vector2(2f, 2f);
-			string[] array = new string[]
+			string[] array = new[]
 			{
 				"Up",
 				"Down",
@@ -78,7 +78,7 @@ namespace RogueCastle
 				"Cast Spell",
 				"Reset Controls"
 			};
-			m_controlKeys = new int[]
+			m_controlKeys = new[]
 			{
 				16,
 				18,
@@ -189,20 +189,14 @@ namespace RogueCastle
 							RCScreenManager screenManager = Game.ScreenManager;
 							screenManager.DialogueScreen.SetDialogue("RestoreDefaultControlsWarning");
 							screenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-							screenManager.DialogueScreen.SetConfirmEndHandler(this, "RestoreControls", new object[0]);
-							screenManager.DialogueScreen.SetCancelEndHandler(this, "CancelRestoreControls", new object[0]);
-							screenManager.DisplayScreen(13, true, null);
+							screenManager.DialogueScreen.SetConfirmEndHandler(this, "RestoreControls");
+							screenManager.DialogueScreen.SetCancelEndHandler(this, "CancelRestoreControls");
+							screenManager.DisplayScreen(13, true);
 						}
 						else
 						{
-							Tween.To(m_setKeyPlate, 0.3f, new Easing(Back.EaseOut), new string[]
-							{
-								"ScaleX",
-								"1",
-								"ScaleY",
-								"1"
-							});
-							Tween.AddEndHandlerToLastTween(this, "SetKeyTrue", new object[0]);
+							Tween.To(m_setKeyPlate, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+							Tween.AddEndHandlerToLastTween(this, "SetKeyTrue");
 						}
 					}
 					else if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
@@ -233,7 +227,7 @@ namespace RogueCastle
 					return;
 				}
 				bool flag = false;
-				Keys[] array = new Keys[]
+				Keys[] array = new[]
 				{
 					Keys.Tab,
 					Keys.CapsLock,
@@ -267,13 +261,7 @@ namespace RogueCastle
 				}
 				if (keys == Keys.Escape)
 				{
-					Tween.To(m_setKeyPlate, 0.3f, new Easing(Back.EaseIn), new string[]
-					{
-						"ScaleX",
-						"0",
-						"ScaleY",
-						"0"
-					});
+					Tween.To(m_setKeyPlate, 0.3f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
 					m_settingKey = false;
 					return;
 				}
@@ -287,17 +275,11 @@ namespace RogueCastle
 				}
 			}
 			SoundManager.PlaySound("Gen_Menu_Toggle");
-			Tween.To(m_setKeyPlate, 0.3f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
+			Tween.To(m_setKeyPlate, 0.3f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
 			m_settingKey = false;
 			if (InputManager.AnyButtonPressed(PlayerIndex.One))
 			{
-				int[] array3 = new int[]
+				int[] array3 = new[]
 				{
 					0,
 					1,
@@ -333,7 +315,7 @@ namespace RogueCastle
 			else if (InputManager.AnyKeyPressed())
 			{
 				Keys keys3 = InputManager.KeysPressedArray[0];
-				int[] array5 = new int[]
+				int[] array5 = new[]
 				{
 					0,
 					1,
@@ -384,58 +366,23 @@ namespace RogueCastle
 						switch (num)
 						{
 						case 16:
-							m_keyboardControls[i].Text = string.Concat(new object[]
-							{
-								"[Key:",
-								Game.GlobalInput.KeyList[m_controlKeys[i]],
-								"], [Key:",
-								Game.GlobalInput.KeyList[17],
-								"]"
-							});
+							m_keyboardControls[i].Text = string.Concat("[Key:", Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[17], "]");
 							goto IL_30B;
 						case 18:
-							m_keyboardControls[i].Text = string.Concat(new object[]
-							{
-								"[Key:",
-								Game.GlobalInput.KeyList[m_controlKeys[i]],
-								"], [Key:",
-								Game.GlobalInput.KeyList[19],
-								"]"
-							});
+							m_keyboardControls[i].Text = string.Concat("[Key:", Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[19], "]");
 							goto IL_30B;
 						case 20:
-							m_keyboardControls[i].Text = string.Concat(new object[]
-							{
-								"[Key:",
-								Game.GlobalInput.KeyList[m_controlKeys[i]],
-								"], [Key:",
-								Game.GlobalInput.KeyList[21],
-								"]"
-							});
+							m_keyboardControls[i].Text = string.Concat("[Key:", Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[21], "]");
 							goto IL_30B;
 						case 22:
-							m_keyboardControls[i].Text = string.Concat(new object[]
-							{
-								"[Key:",
-								Game.GlobalInput.KeyList[m_controlKeys[i]],
-								"], [Key:",
-								Game.GlobalInput.KeyList[23],
-								"]"
-							});
+							m_keyboardControls[i].Text = string.Concat("[Key:", Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[23], "]");
 							goto IL_30B;
 						}
 						m_keyboardControls[i].Text = "[Key:" + Game.GlobalInput.KeyList[m_controlKeys[i]] + "]";
 					}
 					else
 					{
-						m_keyboardControls[i].Text = string.Concat(new object[]
-						{
-							"[Key:",
-							Game.GlobalInput.KeyList[m_controlKeys[i]],
-							"], [Key:",
-							Game.GlobalInput.KeyList[11],
-							"]"
-						});
+						m_keyboardControls[i].Text = string.Concat("[Key:", Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[11], "]");
 					}
 					IL_30B:
 					m_gamepadControls[i].Text = "[Button:" + Game.GlobalInput.ButtonList[m_controlKeys[i]] + "]";

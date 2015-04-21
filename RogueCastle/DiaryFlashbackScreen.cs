@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -41,7 +41,7 @@ namespace RogueCastle
 			m_filmGrain.Scale = new Vector2(2.015f, 2.05f);
 			m_filmGrain.X -= 5f;
 			m_filmGrain.Y -= 5f;
-			m_filmGrain.PlayAnimation(true);
+			m_filmGrain.PlayAnimation();
 			m_filmGrain.AnimationDelay = 0.0333333351f;
 			base.LoadContent();
 		}
@@ -53,7 +53,7 @@ namespace RogueCastle
 				m_background.Dispose();
 			}
 			m_background = new BackgroundObj("LineageScreenBG_Sprite");
-			m_background.SetRepeated(true, true, Camera, null);
+			m_background.SetRepeated(true, true, Camera);
 			m_background.X -= 6600f;
 			base.ReinitializeRTs();
 		}
@@ -61,19 +61,9 @@ namespace RogueCastle
 		{
 			GameUtil.UnlockAchievement("LOVE_OF_BOOKS");
 			BackBufferOpacity = 0f;
-			Tween.To(this, 0.05f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"1"
-			});
+			Tween.To(this, 0.05f, Tween.EaseNone, "BackBufferOpacity", "1");
 			BackBufferOpacity = 1f;
-			Tween.To(this, 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.1",
-				"BackBufferOpacity",
-				"0"
-			});
+			Tween.To(this, 1f, Tween.EaseNone, "delay", "0.1", "BackBufferOpacity", "0");
 			BackBufferOpacity = 0f;
 			m_storedCameraPos = Camera.Position;
 			Camera.Position = Vector2.Zero;
@@ -81,41 +71,33 @@ namespace RogueCastle
 			{
 				m_sepiaRT = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
 				m_background = new BackgroundObj("LineageScreenBG_Sprite");
-				m_background.SetRepeated(true, true, Camera, null);
+				m_background.SetRepeated(true, true, Camera);
 				m_background.X -= 6600f;
 			}
 			CreateLineageObjDebug();
 			Camera.X = m_lineageArray[m_lineageArray.Count - 1].X;
 			SoundManager.PlaySound("Cutsc_Thunder");
-			Tween.RunFunction(1f, this, "Cutscene1", new object[0]);
+			Tween.RunFunction(1f, this, "Cutscene1");
 			base.OnEnter();
 		}
 		public void Cutscene1()
 		{
 			SoundManager.PlaySound("Cutsc_PictureMove");
-			Tween.To(Camera, m_lineageArray.Count * 0.2f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_lineageArray[0].X.ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "Cutscene2", new object[0]);
+			Tween.To(Camera, m_lineageArray.Count * 0.2f, Quad.EaseInOut, "X", m_lineageArray[0].X.ToString());
+			Tween.AddEndHandlerToLastTween(this, "Cutscene2");
 		}
 		public void Cutscene2()
 		{
 			LineageObj lineageObj = m_lineageArray[0];
 			lineageObj.ForceDraw = true;
-			Tween.RunFunction(1f, lineageObj, "DropFrame", new object[0]);
-			Tween.RunFunction(4.5f, this, "ExitTransition", new object[0]);
+			Tween.RunFunction(1f, lineageObj, "DropFrame");
+			Tween.RunFunction(4.5f, this, "ExitTransition");
 		}
 		public void ExitTransition()
 		{
 			SoundManager.PlaySound("Cutsc_Picture_Break");
-			Tween.To(this, 0.05f, new Easing(Tween.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"1"
-			});
-			Tween.RunFunction(0.1f, ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(this, 0.05f, Tween.EaseNone, "BackBufferOpacity", "1");
+			Tween.RunFunction(0.1f, ScreenManager, "HideCurrentScreen");
 		}
 		public override void OnExit()
 		{

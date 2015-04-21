@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -208,204 +208,113 @@ namespace RogueCastle
 				Scale = ProjectileScale
 			};
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"Eyeball_ProjectileAttack"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, 3f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
+			logicSet.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Eyeball_ProjectileAttack"));
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
+			logicSet.AddAction(new DelayLogicAction(1f, 3f));
 			logicSet.Tag = 2;
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"EyeballFire1"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.75f, 2f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
+			logicSet2.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new DelayLogicAction(0.15f));
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new DelayLogicAction(0.15f));
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new DelayLogicAction(0.15f));
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
+			logicSet2.AddAction(new DelayLogicAction(0.75f, 2f));
 			logicSet2.Tag = 2;
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"EyeballFire1"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
+			logicSet3.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
+			logicSet3.AddAction(new DelayLogicAction(0.1f));
 			ThrowThreeProjectiles(logicSet3);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(1f, 3f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
+			logicSet3.AddAction(new DelayLogicAction(1f, 3f));
 			logicSet3.Tag = 2;
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "LockEyeball", new object[0]), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupilFire_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"EyeballFire1"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ThrowCardinalProjectiles", new object[]
-			{
-				0,
-				true,
-				0
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(3.15f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupil_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball", new object[0]), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
+			logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+			logicSet4.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
+			logicSet4.AddAction(new DelayLogicAction(0.1f));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ThrowCardinalProjectiles", 0, true, 0));
+			logicSet4.AddAction(new DelayLogicAction(3.15f));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false));
+			logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "LockEyeball", new object[0]), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupilFire_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"EyeballFire1"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowCardinalProjectilesNeo", new object[]
-			{
-				0,
-				true,
-				0
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(3f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupil_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball", new object[0]), Types.Sequence.Serial);
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
+			logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+			logicSet5.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
+			logicSet5.AddAction(new DelayLogicAction(0.1f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowCardinalProjectilesNeo", 0, true, 0));
+			logicSet5.AddAction(new DelayLogicAction(3f));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false));
+			logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "LockEyeball", new object[0]), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupilFire_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"EyeballFire1"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "ThrowSprayProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(1.6f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "ThrowSprayProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(1.6f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupil_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball", new object[0]), Types.Sequence.Serial);
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
+			logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+			logicSet6.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
+			logicSet6.AddAction(new DelayLogicAction(0.1f));
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "ThrowSprayProjectiles", true));
+			logicSet6.AddAction(new DelayLogicAction(1.6f));
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "ThrowSprayProjectiles", true));
+			logicSet6.AddAction(new DelayLogicAction(1.6f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false));
+			logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
+			logicSet6.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character", true, true), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "LockEyeball", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupilFire_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, new string[]
-			{
-				"EyeballFire1"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.575f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.575f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.575f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.575f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles", new object[0]), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.575f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", new object[]
-			{
-				"EnemyEyeballBossPupil_Sprite"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball", new object[0]), Types.Sequence.Serial);
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
+			logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+			logicSet7.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
+			logicSet7.AddAction(new DelayLogicAction(0.1f));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles"));
+			logicSet7.AddAction(new DelayLogicAction(0.575f));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles"));
+			logicSet7.AddAction(new DelayLogicAction(0.575f));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles"));
+			logicSet7.AddAction(new DelayLogicAction(0.575f));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles"));
+			logicSet7.AddAction(new DelayLogicAction(0.575f));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "ThrowRandomProjectiles"));
+			logicSet7.AddAction(new DelayLogicAction(0.575f));
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossEye_Character", false, false));
+			logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
+			logicSet7.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
 			logicSet7.Tag = 2;
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new DelayLogicAction(0.2f, 0.5f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet8
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet8
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet3,
-				logicSet8
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet4,
-				logicSet6,
-				logicSet7,
-				logicSet8
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet8
-			});
-			m_generalNeoLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet5,
-				logicSet6,
-				logicSet7,
-				logicSet8
-			});
+			logicSet8.AddAction(new DelayLogicAction(0.2f, 0.5f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet8);
+			m_generalAdvancedLB.AddLogicSet(logicSet2, logicSet8);
+			m_generalExpertLB.AddLogicSet(logicSet3, logicSet8);
+			m_generalMiniBossLB.AddLogicSet(logicSet4, logicSet6, logicSet7, logicSet8);
+			m_generalCooldownLB.AddLogicSet(logicSet8);
+			m_generalNeoLB.AddLogicSet(logicSet5, logicSet6, logicSet7, logicSet8);
 			logicBlocksToDispose.Add(m_generalNeoLB);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_generalMiniBossLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				100
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 100);
 			projectileData.Dispose();
 			base.InitializeLogic();
 		}
@@ -428,12 +337,12 @@ namespace RogueCastle
 			for (int i = 0; i <= 3; i++)
 			{
 				projectileData.AngleOffset = 0f;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 				projectileData.AngleOffset = 45f;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 				projectileData.AngleOffset = -45f;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-				ls.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+				ls.AddAction(new DelayLogicAction(0.1f));
 			}
 			projectileData.Dispose();
 		}
@@ -457,14 +366,14 @@ namespace RogueCastle
 			for (int i = 0; i <= 170; i += 10)
 			{
 				projectileData.AngleOffset = i * num;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 				projectileData.AngleOffset = 90 + i * num;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 				projectileData.AngleOffset = 180 + i * num;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 				projectileData.AngleOffset = 270 + i * num;
-				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-				ls.AddAction(new DelayLogicAction(0.175f, false), Types.Sequence.Serial);
+				ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+				ls.AddAction(new DelayLogicAction(0.175f));
 			}
 			projectileData.Dispose();
 		}
@@ -500,12 +409,7 @@ namespace RogueCastle
 				m_levelScreen.ProjectileManager.FireProjectile(projectileData);
 				projectileData.Dispose();
 				startProjIndex++;
-				Tween.RunFunction(0.12f, this, "ThrowCardinalProjectiles", new object[]
-				{
-					startProjIndex,
-					false,
-					flipper
-				});
+				Tween.RunFunction(0.12f, this, "ThrowCardinalProjectiles", startProjIndex, false, flipper);
 			}
 		}
 		public void ThrowCardinalProjectilesNeo(int startProjIndex, bool randomizeFlipper, int flipper)
@@ -540,29 +444,16 @@ namespace RogueCastle
 				m_levelScreen.ProjectileManager.FireProjectile(projectileData);
 				projectileData.Dispose();
 				startProjIndex++;
-				Tween.RunFunction(0.12f, this, "ThrowCardinalProjectilesNeo", new object[]
-				{
-					startProjIndex,
-					false,
-					flipper
-				});
+				Tween.RunFunction(0.12f, this, "ThrowCardinalProjectilesNeo", startProjIndex, false, flipper);
 			}
 		}
 		public void LockEyeball()
 		{
-			Tween.To(this, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"PupilOffset",
-				"0"
-			});
+			Tween.To(this, 0.5f, Quad.EaseInOut, "PupilOffset", "0");
 		}
 		public void UnlockEyeball()
 		{
-			Tween.To(this, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"PupilOffset",
-				"30"
-			});
+			Tween.To(this, 0.5f, Quad.EaseInOut, "PupilOffset", "30");
 		}
 		public void ChangeToBossPupil()
 		{
@@ -600,10 +491,7 @@ namespace RogueCastle
 			}
 			if (firstShot)
 			{
-				Tween.RunFunction(0.8f, this, "ThrowSprayProjectiles", new object[]
-				{
-					false
-				});
+				Tween.RunFunction(0.8f, this, "ThrowSprayProjectiles", false);
 			}
 			projectileData.Dispose();
 		}
@@ -646,11 +534,7 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 				return;
 			case 1:
 			case 2:
@@ -672,11 +556,7 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 0, 100);
 				return;
 			case 1:
 			case 2:
@@ -698,11 +578,7 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalExpertLB, 0, 100);
 				return;
 			case 1:
 			case 2:
@@ -756,10 +632,7 @@ namespace RogueCastle
 		{
 			m_pupil = new SpriteObj("EnemyEyeballPupil_Sprite");
 			AddChild(m_pupil);
-			m_squishSound = new FrameSoundObj(this, m_target, 2, new string[]
-			{
-				"Eyeball_Prefire"
-			});
+			m_squishSound = new FrameSoundObj(this, m_target, 2, "Eyeball_Prefire");
 			Type = 6;
 			DisableCollisionBoxRotations = false;
 		}
@@ -811,12 +684,7 @@ namespace RogueCastle
 		{
 			if (!m_bossVersionKilled)
 			{
-				SoundManager.PlaySound(new string[]
-				{
-					"EyeballSquish1",
-					"EyeballSquish2",
-					"EyeballSquish3"
-				});
+				SoundManager.PlaySound("EyeballSquish1", "EyeballSquish2", "EyeballSquish3");
 				base.HitEnemy(damage, position, isPlayer);
 			}
 		}
@@ -835,7 +703,7 @@ namespace RogueCastle
 				{
 					m_currentActiveLB.StopLogicBlock();
 				}
-				SoundManager.StopMusic(0f);
+				SoundManager.StopMusic();
 				m_bossVersionKilled = true;
 				m_target.LockControls();
 				m_levelScreen.PauseScreen();
@@ -843,7 +711,7 @@ namespace RogueCastle
 				m_levelScreen.RunWhiteSlashEffect();
 				SoundManager.PlaySound("Boss_Flash");
 				SoundManager.PlaySound("Boss_Eyeball_Freeze");
-				Tween.RunFunction(1f, this, "Part2", new object[0]);
+				Tween.RunFunction(1f, this, "Part2");
 				GameUtil.UnlockAchievement("FEAR_OF_EYES");
 			}
 		}
@@ -858,7 +726,7 @@ namespace RogueCastle
 			LockEyeball();
 			PauseEnemy(true);
 			ChangeSprite("EnemyEyeballBossFire_Character");
-			PlayAnimation(true);
+			PlayAnimation();
 			m_target.CurrentSpeed = 0f;
 			m_target.ForceInvincible = true;
 			if (IsNeo)
@@ -867,7 +735,7 @@ namespace RogueCastle
 			}
 			object arg_106_0 = m_levelScreen.Camera;
 			float arg_106_1 = 0.5f;
-			Easing arg_106_2 = new Easing(Quad.EaseInOut);
+			Easing arg_106_2 = Quad.EaseInOut;
 			string[] array = new string[4];
 			array[0] = "X";
 			string[] arg_CF_0 = array;
@@ -886,23 +754,15 @@ namespace RogueCastle
 			for (int i = 0; i < 40; i++)
 			{
 				Vector2 vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right), CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
-				Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", new object[]
+				Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", this, m_target, new[]
 				{
-					this,
-					m_target,
-					new string[]
-					{
-						"Boss_Explo_01",
-						"Boss_Explo_02",
-						"Boss_Explo_03"
-					}
+				    "Boss_Explo_01",
+				    "Boss_Explo_02",
+				    "Boss_Explo_03"
 				});
-				Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", new object[]
-				{
-					vector
-				});
+				Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
 			}
-			Tween.AddEndHandlerToLastTween(this, "Part3", new object[0]);
+			Tween.AddEndHandlerToLastTween(this, "Part3");
 			if (!IsNeo)
 			{
 				List<int> list = new List<int>();
@@ -918,37 +778,22 @@ namespace RogueCastle
 				{
 					list.Add(2);
 				}
-				CDGMath.Shuffle<int>(list);
+				CDGMath.Shuffle(list);
 				float num = 2.5f / list.Count;
 				for (int m = 0; m < list.Count; m++)
 				{
 					Vector2 vector2 = new Vector2(CDGMath.RandomInt(m_pupil.AbsBounds.Left, m_pupil.AbsBounds.Right), CDGMath.RandomInt(m_pupil.AbsBounds.Top, m_pupil.AbsBounds.Bottom));
 					if (list[m] == 0)
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							vector2,
-							1,
-							10
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 1, 10);
 					}
 					else if (list[m] == 1)
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							vector2,
-							10,
-							100
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 10, 100);
 					}
 					else
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							vector2,
-							11,
-							500
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 11, 500);
 					}
 				}
 			}
@@ -963,29 +808,14 @@ namespace RogueCastle
 			}
 			GoToFrame(1);
 			StopAnimation();
-			Tween.To(this, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Rotation",
-				"-1080"
-			});
-			Tween.To(this, 2f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"ScaleX",
-				"0.1",
-				"ScaleY",
-				"0.1"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DeathComplete", new object[0]);
+			Tween.To(this, 2f, Tween.EaseNone, "Rotation", "-1080");
+			Tween.To(this, 2f, Quad.EaseInOut, "ScaleX", "0.1", "ScaleY", "0.1");
+			Tween.AddEndHandlerToLastTween(this, "DeathComplete");
 		}
 		public void DeathComplete()
 		{
-			SoundManager.PlaySound(new string[]
-			{
-				"Boss_Explo_01",
-				"Boss_Explo_02",
-				"Boss_Explo_03"
-			});
-			base.Kill(true);
+			SoundManager.PlaySound("Boss_Explo_01", "Boss_Explo_02", "Boss_Explo_03");
+			base.Kill();
 		}
 		public override void Dispose()
 		{

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -78,18 +78,8 @@ namespace RogueCastle
 			}
 			State = 1;
 			m_lockSprite.PlayAnimation(false);
-			Tween.By(m_lockSprite, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Y",
-				"40"
-			});
-			Tween.To(m_lockSprite, 0.2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.1",
-				"Opacity",
-				"0"
-			});
+			Tween.By(m_lockSprite, 0.2f, Linear.EaseNone, "Y", "40");
+			Tween.To(m_lockSprite, 0.2f, Linear.EaseNone, "delay", "0.1", "Opacity", "0");
 		}
 		public void SetChestFailed(bool skipTween = false)
 		{
@@ -105,15 +95,7 @@ namespace RogueCastle
 			if (!skipTween)
 			{
 				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "FairyChest_Fail");
-				Tween.To(m_errorSprite, 0.5f, new Easing(Quad.EaseIn), new string[]
-				{
-					"ScaleX",
-					"0.5",
-					"ScaleY",
-					"0.5",
-					"Opacity",
-					"1"
-				});
+				Tween.To(m_errorSprite, 0.5f, Quad.EaseIn, "ScaleX", "0.5", "ScaleY", "0.5", "Opacity", "1");
 				return;
 			}
 			m_errorSprite.Scale = new Vector2(0.5f, 0.5f);
@@ -158,17 +140,11 @@ namespace RogueCastle
 					list2.Add(new Vector2(vector.X, vector.Y));
 					(player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list2);
 					player.RunGetItemAnimation();
-					Console.WriteLine(string.Concat(new object[]
-					{
-						"Unlocked item index ",
-						vector.X,
-						" of type ",
-						vector.Y
-					}));
+					Console.WriteLine(string.Concat("Unlocked item index ", vector.X, " of type ", vector.Y));
 				}
 				else
 				{
-					GiveGold(itemDropManager, 0);
+					GiveGold(itemDropManager);
 				}
 				player.AttachedLevel.RefreshMapChestIcons();
 			}
@@ -190,11 +166,8 @@ namespace RogueCastle
 						float num = 0f;
 						for (int i = 0; i < 2; i++)
 						{
-							Tween.To(this, num, new Easing(Linear.EaseNone), new string[0]);
-							Tween.AddEndHandlerToLastTween(m_player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect", new object[]
-							{
-								new Vector2(X, Y - Height / 2)
-							});
+							Tween.To(this, num, Linear.EaseNone);
+							Tween.AddEndHandlerToLastTween(m_player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect", new Vector2(X, Y - Height / 2));
 							num += 0.5f;
 						}
 					}
@@ -249,7 +222,7 @@ namespace RogueCastle
 			m_lockSprite.Visible = true;
 			m_lockSprite.Opacity = 1f;
 			Opacity = 1f;
-			m_lockSprite.PlayAnimation(1, 1, false);
+			m_lockSprite.PlayAnimation(1, 1);
 			TextureColor = Color.White;
 			if (ConditionType == 8)
 			{
@@ -266,7 +239,7 @@ namespace RogueCastle
 			base.FillCloneInstance(obj);
 			FairyChestObj fairyChestObj = obj as FairyChestObj;
 			fairyChestObj.State = State;
-			SetConditionType(0);
+			SetConditionType();
 		}
 		public override void Dispose()
 		{

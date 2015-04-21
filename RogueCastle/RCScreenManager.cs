@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -98,21 +98,21 @@ namespace RogueCastle
 			InitializeScreens();
 			base.Initialize();
 			m_virtualScreen = new VirtualScreen(1320, 720, Camera.GraphicsDevice);
-			Game.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
-			Game.Deactivated += new EventHandler<EventArgs>(PauseGame);
+			Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
+			Game.Deactivated += PauseGame;
 			Form form = Control.FromHandle(Game.Window.Handle) as Form;
 			if (form != null)
 			{
-				form.MouseCaptureChanged += new EventHandler(PauseGame);
+				form.MouseCaptureChanged += PauseGame;
 			}
-			Camera.GraphicsDevice.DeviceReset += new EventHandler<EventArgs>(ReinitializeContent);
+			Camera.GraphicsDevice.DeviceReset += ReinitializeContent;
 		}
 		public void PauseGame(object sender, EventArgs e)
 		{
 			ProceduralLevelScreen proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
 			if (proceduralLevelScreen != null && !(proceduralLevelScreen.CurrentRoom is EndingRoomObj))
 			{
-				DisplayScreen(16, true, null);
+				DisplayScreen(16, true);
 			}
 		}
 		public void ReinitializeContent(object sender, EventArgs e)
@@ -444,41 +444,17 @@ namespace RogueCastle
 			m_blackTransitionIn.X = 1320 - m_blackTransitionIn.Bounds.Left;
 			m_blackScreen.X = m_blackTransitionIn.X;
 			m_blackTransitionOut.X = m_blackScreen.X + m_blackScreen.Width;
-			Tween.By(m_blackTransitionIn, 0.15f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(-m_blackTransitionIn.X).ToString()
-			});
-			Tween.By(m_blackScreen, 0.15f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(-m_blackTransitionIn.X).ToString()
-			});
-			Tween.By(m_blackTransitionOut, 0.15f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(-m_blackTransitionIn.X).ToString()
-			});
+			Tween.By(m_blackTransitionIn, 0.15f, Quad.EaseInOut, "X", (-m_blackTransitionIn.X).ToString());
+			Tween.By(m_blackScreen, 0.15f, Quad.EaseInOut, "X", (-m_blackTransitionIn.X).ToString());
+			Tween.By(m_blackTransitionOut, 0.15f, Quad.EaseInOut, "X", (-m_blackTransitionIn.X).ToString());
 		}
 		public void EndWipeTransition()
 		{
 			m_isWipeTransitioning = false;
 			m_blackTransitionOut.Y = -500f;
-			Tween.By(m_blackTransitionIn, 0.25f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				"-3000"
-			});
-			Tween.By(m_blackScreen, 0.25f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				"-3000"
-			});
-			Tween.By(m_blackTransitionOut, 0.25f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				"-3000"
-			});
+			Tween.By(m_blackTransitionIn, 0.25f, Quad.EaseInOut, "X", "-3000");
+			Tween.By(m_blackScreen, 0.25f, Quad.EaseInOut, "X", "-3000");
+			Tween.By(m_blackTransitionOut, 0.25f, Quad.EaseInOut, "X", "-3000");
 		}
 		public void UpdatePauseScreenIcons()
 		{

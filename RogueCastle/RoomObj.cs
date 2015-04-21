@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -161,13 +161,7 @@ namespace RogueCastle
 			set
 			{
 				m_debugRoomPosition = value;
-				m_roomInfoText.Text = string.Concat(new object[]
-				{
-					"Level Editor Pos: ",
-					m_debugRoomPosition.ToString(),
-					"\nReversed: ",
-					IsReversed
-				});
+				m_roomInfoText.Text = string.Concat("Level Editor Pos: ", m_debugRoomPosition.ToString(), "\nReversed: ", IsReversed);
 			}
 		}
 		public RenderTarget2D BGRender
@@ -875,11 +869,7 @@ namespace RogueCastle
 		}
 		public void DarkenRoom()
 		{
-			Tween.To(m_pauseBG, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0.7"
-			});
+			Tween.To(m_pauseBG, 0.1f, Tween.EaseNone, "Opacity", "0.7");
 		}
 		public virtual void PauseRoom()
 		{
@@ -907,11 +897,7 @@ namespace RogueCastle
 		}
 		public virtual void UnpauseRoom()
 		{
-			Tween.To(m_pauseBG, 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_pauseBG, 0.1f, Tween.EaseNone, "Opacity", "0");
 			foreach (GameObj current in GameObjList)
 			{
 				IAnimateableObj animateableObj = current as IAnimateableObj;

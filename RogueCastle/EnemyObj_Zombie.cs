@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -146,53 +146,30 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyZombieWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Zombie_Groan_01",
-				"Zombie_Groan_02",
-				"Zombie_Groan_03",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyZombieWalk_Character"));
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Zombie_Groan_01", "Zombie_Groan_02", "Zombie_Groan_03", "Blank", "Blank", "Blank", "Blank", "Blank"));
+			logicSet.AddAction(new DelayLogicAction(0.5f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, 0f), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyZombieRise_Character", false, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Zombie_Rise"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(this, "Risen", true), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(this, "Lowered", false), Types.Sequence.Serial);
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet2.AddAction(new MoveLogicAction(m_target, false, 0f));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyZombieRise_Character", false, false));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Zombie_Rise"));
+			logicSet2.AddAction(new PlayAnimationLogicAction(false));
+			logicSet2.AddAction(new ChangePropertyLogicAction(this, "Risen", true));
+			logicSet2.AddAction(new ChangePropertyLogicAction(this, "Lowered", false));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, false, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyZombieLower_Character", false, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Zombie_Lower"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(this, "Risen", false), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(this, "Lowered", true), Types.Sequence.Serial);
-			m_basicWalkLS.AddLogicSet(new LogicSet[]
-			{
-				logicSet
-			});
-			m_basicRiseLowerLS.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet3
-			});
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet3.AddAction(new MoveLogicAction(m_target, false, 0f));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyZombieLower_Character", false, false));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Zombie_Lower"));
+			logicSet3.AddAction(new PlayAnimationLogicAction(false));
+			logicSet3.AddAction(new ChangePropertyLogicAction(this, "Risen", false));
+			logicSet3.AddAction(new ChangePropertyLogicAction(this, "Lowered", true));
+			m_basicWalkLS.AddLogicSet(logicSet);
+			m_basicRiseLowerLS.AddLogicSet(logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_basicWalkLS);
 			logicBlocksToDispose.Add(m_basicRiseLowerLS);
 			base.InitializeLogic();
@@ -204,11 +181,7 @@ namespace RogueCastle
 			case 0:
 				if (!Lowered)
 				{
-					RunLogicBlock(false, m_basicRiseLowerLS, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
 				}
 				return;
 			case 1:
@@ -223,10 +196,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3B_1, arg_3B_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_basicWalkLS, new int[]
-				{
-					100
-				});
+				RunLogicBlock(false, m_basicWalkLS, 100);
 				return;
 			default:
 				return;
@@ -239,11 +209,7 @@ namespace RogueCastle
 			case 0:
 				if (!Lowered)
 				{
-					RunLogicBlock(false, m_basicRiseLowerLS, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
 				}
 				return;
 			case 1:
@@ -258,10 +224,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3B_1, arg_3B_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_basicWalkLS, new int[]
-				{
-					100
-				});
+				RunLogicBlock(false, m_basicWalkLS, 100);
 				return;
 			default:
 				return;
@@ -274,11 +237,7 @@ namespace RogueCastle
 			case 0:
 				if (!Lowered)
 				{
-					RunLogicBlock(false, m_basicRiseLowerLS, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
 				}
 				return;
 			case 1:
@@ -293,10 +252,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3B_1, arg_3B_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_basicWalkLS, new int[]
-				{
-					100
-				});
+				RunLogicBlock(false, m_basicWalkLS, 100);
 				return;
 			default:
 				return;
@@ -309,11 +265,7 @@ namespace RogueCastle
 			case 0:
 				if (!Lowered)
 				{
-					RunLogicBlock(false, m_basicRiseLowerLS, new int[]
-					{
-						0,
-						100
-					});
+					RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
 				}
 				return;
 			case 1:
@@ -328,10 +280,7 @@ namespace RogueCastle
 					RunLogicBlock(arg_3B_1, arg_3B_2, array);
 					return;
 				}
-				RunLogicBlock(false, m_basicWalkLS, new int[]
-				{
-					100
-				});
+				RunLogicBlock(false, m_basicWalkLS, 100);
 				return;
 			default:
 				return;

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -145,65 +145,46 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveDirectionLogicAction(0f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, 2f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightIdle_Character"));
+			logicSet.AddAction(new MoveDirectionLogicAction(0f));
+			logicSet.AddAction(new DelayLogicAction(0.5f, 2f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveDirectionLogicAction(-1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.5f, 2f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightWalk_Character"));
+			logicSet2.AddAction(new MoveDirectionLogicAction());
+			logicSet2.AddAction(new DelayLogicAction(0.5f, 2f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveDirectionLogicAction(0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnIn_Character", false, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction(1, 2, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"ShieldKnight_Turn"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction(3, TotalFrames, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnOut_Character", true, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveDirectionLogicAction(-1f), Types.Sequence.Serial);
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet3.AddAction(new MoveDirectionLogicAction(0f));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnIn_Character", false, false));
+			logicSet3.AddAction(new PlayAnimationLogicAction(1, 2));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "ShieldKnight_Turn"));
+			logicSet3.AddAction(new PlayAnimationLogicAction(3, TotalFrames));
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnOut_Character", true, false));
+			logicSet3.AddAction(new MoveDirectionLogicAction());
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveDirectionLogicAction(0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnIn_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.05f), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(1, 2, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"ShieldKnight_Turn"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(3, TotalFrames, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnOut_Character", true, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.09090909f), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveDirectionLogicAction(-1f), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet4
-			});
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new MoveDirectionLogicAction(0f));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnIn_Character", false, false));
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.05f));
+			logicSet4.AddAction(new PlayAnimationLogicAction(1, 2));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "ShieldKnight_Turn"));
+			logicSet4.AddAction(new PlayAnimationLogicAction(3, TotalFrames));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyShieldKnightTurnOut_Character", true, false));
+			logicSet4.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.09090909f));
+			logicSet4.AddAction(new MoveDirectionLogicAction());
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet4);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
-			SetCooldownLogicBlock(m_generalBasicLB, new int[]
-			{
-				100
-			});
+			SetCooldownLogicBlock(m_generalBasicLB, 100);
 			base.InitializeLogic();
 		}
 		protected override void RunBasicLogic()
@@ -214,12 +195,7 @@ namespace RogueCastle
 			{
 				if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
 				{
-					RunLogicBlock(true, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_107_1 = true;
@@ -235,12 +211,7 @@ namespace RogueCastle
 			{
 				if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
 				{
-					RunLogicBlock(true, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_8E_1 = true;
@@ -262,12 +233,7 @@ namespace RogueCastle
 			{
 				if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
 				{
-					RunLogicBlock(true, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_107_1 = true;
@@ -283,12 +249,7 @@ namespace RogueCastle
 			{
 				if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
 				{
-					RunLogicBlock(true, m_generalBasicLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 					return;
 				}
 				bool arg_8E_1 = true;
@@ -310,12 +271,7 @@ namespace RogueCastle
 			{
 				if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
 				{
-					RunLogicBlock(true, m_generalExpertLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(true, m_generalExpertLB, 0, 0, 100);
 					return;
 				}
 				bool arg_107_1 = true;
@@ -331,12 +287,7 @@ namespace RogueCastle
 			{
 				if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
 				{
-					RunLogicBlock(true, m_generalExpertLB, new int[]
-					{
-						0,
-						0,
-						100
-					});
+					RunLogicBlock(true, m_generalExpertLB, 0, 0, 100);
 					return;
 				}
 				bool arg_8E_1 = true;
@@ -434,12 +385,7 @@ namespace RogueCastle
 				Point center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
 				Vector2 position = new Vector2(center.X, center.Y);
 				m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, new Vector2(2f, 2f));
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"ShieldKnight_Block01",
-					"ShieldKnight_Block02",
-					"ShieldKnight_Block03"
-				});
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "ShieldKnight_Block01", "ShieldKnight_Block02", "ShieldKnight_Block03");
 				m_invincibleCounter = InvincibilityTime;
 				m_levelScreen.SetLastEnemyHit(this);
 				Blink(Color.LightBlue, 0.1f);
@@ -460,12 +406,7 @@ namespace RogueCastle
 		{
 			if (m_target != null && m_target.CurrentHealth > 0)
 			{
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"Knight_Hit01",
-					"Knight_Hit02",
-					"Knight_Hit03"
-				});
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Knight_Hit01", "Knight_Hit02", "Knight_Hit03");
 				if (((Flip == SpriteEffects.None && m_target.X > X) || (Flip == SpriteEffects.FlipHorizontally && m_target.X < X)) && m_target.SpriteName != "PlayerAirAttack_Character")
 				{
 					damage = (int)(damage * (1f - m_blockDmgReduction));
@@ -485,16 +426,8 @@ namespace RogueCastle
 		public EnemyObj_ShieldKnight(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base("EnemyShieldKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
 		{
 			Type = 14;
-			m_walkSound = new FrameSoundObj(this, m_target, 1, new string[]
-			{
-				"KnightWalk1",
-				"KnightWalk2"
-			});
-			m_walkSound2 = new FrameSoundObj(this, m_target, 6, new string[]
-			{
-				"KnightWalk1",
-				"KnightWalk2"
-			});
+			m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
+			m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
 		}
 		public override void Dispose()
 		{

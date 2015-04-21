@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -193,35 +193,20 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1.25f, 2.75f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new DelayLogicAction(1.25f, 2.75f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(1.25f, 2.75f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(1.25f, 2.75f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new StopAnimationLogicAction(), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(1f, 1.5f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			logicSet3.AddAction(new StopAnimationLogicAction());
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(1f, 1.5f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				40,
-				40,
-				20
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 40, 40, 20);
 			base.InitializeLogic();
 		}
 		protected override void RunBasicLogic()
@@ -229,22 +214,12 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 				return;
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					60,
-					20,
-					20
-				});
+				RunLogicBlock(true, m_generalBasicLB, 60, 20, 20);
 				return;
 			default:
 				return;
@@ -255,22 +230,12 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 				return;
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					60,
-					20,
-					20
-				});
+				RunLogicBlock(true, m_generalBasicLB, 60, 20, 20);
 				return;
 			default:
 				return;
@@ -281,22 +246,12 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
 				return;
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					60,
-					20,
-					20
-				});
+				RunLogicBlock(true, m_generalBasicLB, 60, 20, 20);
 				return;
 			default:
 				return;
@@ -334,16 +289,8 @@ namespace RogueCastle
 			}
 			Type = 1;
 			TintablePart = _objectList[3];
-			m_walkSound = new FrameSoundObj(this, m_target, 1, new string[]
-			{
-				"KnightWalk1",
-				"KnightWalk2"
-			});
-			m_walkSound2 = new FrameSoundObj(this, m_target, 6, new string[]
-			{
-				"KnightWalk1",
-				"KnightWalk2"
-			});
+			m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
+			m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
 		}
 		public override void Update(GameTime gameTime)
 		{
@@ -388,7 +335,7 @@ namespace RogueCastle
 					m_ballAngle += ChainSpeed * 60f * num;
 					if (!IsAnimating && CurrentSpeed != 0f)
 					{
-						PlayAnimation(true);
+						PlayAnimation();
 					}
 				}
 				if (SpriteName == "EnemyFlailKnight_Character")
@@ -455,14 +402,14 @@ namespace RogueCastle
 				enemyObj_BouncySpike2.SaveToFile = false;
 				if (IsPaused)
 				{
-					enemyObj_BouncySpike2.PauseEnemy(false);
+					enemyObj_BouncySpike2.PauseEnemy();
 				}
 			}
 			enemyObj_BouncySpike.SpawnRoom = m_levelScreen.CurrentRoom;
 			enemyObj_BouncySpike.SaveToFile = false;
 			if (IsPaused)
 			{
-				enemyObj_BouncySpike.PauseEnemy(false);
+				enemyObj_BouncySpike.PauseEnemy();
 			}
 			base.Kill(giveXP);
 		}
@@ -502,12 +449,7 @@ namespace RogueCastle
 		}
 		public override void HitEnemy(int damage, Vector2 position, bool isPlayer)
 		{
-			SoundManager.Play3DSound(this, m_target, new string[]
-			{
-				"Knight_Hit01",
-				"Knight_Hit02",
-				"Knight_Hit03"
-			});
+			SoundManager.Play3DSound(this, m_target, "Knight_Hit01", "Knight_Hit02", "Knight_Hit03");
 			base.HitEnemy(damage, position, isPlayer);
 		}
 		public override void Dispose()

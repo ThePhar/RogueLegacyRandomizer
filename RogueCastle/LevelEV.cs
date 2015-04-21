@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -225,7 +225,7 @@ namespace RogueCastle
 				1,
 				1
 			};
-			CASTLE_ASSETSWAP_LIST = new string[]
+			CASTLE_ASSETSWAP_LIST = new[]
 			{
 				"BreakableBarrel1_Character",
 				"BreakableBarrel2_Character",
@@ -254,7 +254,7 @@ namespace RogueCastle
 				"CastleDoorOpen_Sprite",
 				"CastleAssetFrame_Sprite"
 			};
-			DUNGEON_ASSETSWAP_LIST = new string[]
+			DUNGEON_ASSETSWAP_LIST = new[]
 			{
 				"BreakableCrate1_Character",
 				"BreakableBarrel1_Character",
@@ -283,7 +283,7 @@ namespace RogueCastle
 				"DungeonDoorOpen_Sprite",
 				""
 			};
-			TOWER_ASSETSWAP_LIST = new string[]
+			TOWER_ASSETSWAP_LIST = new[]
 			{
 				"BreakableCrate1_Character",
 				"BreakableCrate2_Character",
@@ -312,7 +312,7 @@ namespace RogueCastle
 				"TowerDoorOpen_Sprite",
 				"CastleAssetFrame_Sprite"
 			};
-			GARDEN_ASSETSWAP_LIST = new string[]
+			GARDEN_ASSETSWAP_LIST = new[]
 			{
 				"GardenUrn1_Character",
 				"GardenUrn2_Character",

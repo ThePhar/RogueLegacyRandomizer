@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -97,7 +97,7 @@ namespace RogueCastle
 				Game.GenericTexture.Dispose();
 			}
 			Game.GenericTexture = new Texture2D(graphicsDevice, 1, 1);
-			Game.GenericTexture.SetData<Color>(new Color[]
+			Game.GenericTexture.SetData(new[]
 			{
 				Color.White
 			});

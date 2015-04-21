@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -153,130 +153,90 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, 1f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightWalk_Character"));
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new DelayLogicAction(0.2f, 1f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.2f, 1f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightWalk_Character"));
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(0.2f, 1f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.2f, 1f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.2f, 1f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(AttackThrustDelay, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveDirectionLogicAction(AttackThrustSpeed), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", new object[]
-			{
-				this,
-				20,
-				0.3f
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Parallel);
-			logicSet4.AddAction(new DelayLogicAction(AttackThrustDuration, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(null, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet4.AddAction(new DelayLogicAction(AttackThrustDelay));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			logicSet4.AddAction(new MoveDirectionLogicAction(AttackThrustSpeed));
+			logicSet4.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", this, 20, 0.3f));
+			logicSet4.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
+			logicSet4.AddAction(new DelayLogicAction(AttackThrustDuration));
+			logicSet4.AddAction(new MoveLogicAction(null, true, 0f));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet4.AddAction(new DelayLogicAction(0.3f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(AttackThrustDelayExpert, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedExpert), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", new object[]
-			{
-				this,
-				20,
-				0.3f
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Parallel);
-			logicSet5.AddAction(new DelayLogicAction(AttackThrustDurationExpert, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(null, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet5.AddAction(new DelayLogicAction(AttackThrustDelayExpert));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			logicSet5.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedExpert));
+			logicSet5.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", this, 20, 0.3f));
+			logicSet5.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
+			logicSet5.AddAction(new DelayLogicAction(AttackThrustDurationExpert));
+			logicSet5.AddAction(new MoveLogicAction(null, true, 0f));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet5.AddAction(new DelayLogicAction(0.3f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(AttackThrustDelayMiniBoss, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", new object[]
-			{
-				this,
-				20,
-				0.3f
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Parallel);
-			logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(null, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", new object[]
-			{
-				this,
-				20,
-				0.3f
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Parallel);
-			logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(null, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss), Types.Sequence.Serial);
-			logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", new object[]
-			{
-				this,
-				20,
-				0.3f
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End", false), Types.Sequence.Parallel);
-			logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(null, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet6.AddAction(new DelayLogicAction(AttackThrustDelayMiniBoss));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss));
+			logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", this, 20, 0.3f));
+			logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
+			logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss));
+			logicSet6.AddAction(new MoveLogicAction(null, true, 0f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet6.AddAction(new DelayLogicAction(0.25f));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss));
+			logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", this, 20, 0.3f));
+			logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
+			logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss));
+			logicSet6.AddAction(new MoveLogicAction(null, true, 0f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet6.AddAction(new DelayLogicAction(0.25f));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss));
+			logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect", this, 20, 0.3f));
+			logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
+			logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss));
+			logicSet6.AddAction(new MoveLogicAction(null, true, 0f));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet6.AddAction(new DelayLogicAction(0.3f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet6.Tag = 2;
 			ProjectileData projectileData = new ProjectileData(this)
 			{
@@ -292,154 +252,103 @@ namespace RogueCastle
 				Scale = ProjectileScale
 			};
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(AttackProjectileDelay, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnight_Projectile"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet7.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet7.AddAction(new DelayLogicAction(AttackProjectileDelay));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnight_Projectile"));
+			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet7.AddAction(new DelayLogicAction(0.3f));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet7.Tag = 2;
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(AttackProjectileExpertDelay, false), Types.Sequence.Serial);
+			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet8.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet8.AddAction(new DelayLogicAction(AttackProjectileExpertDelay));
 			ThrowThreeProjectiles(logicSet8);
-			logicSet8.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet8.AddAction(new DelayLogicAction(0.3f));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet8.Tag = 2;
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(AttackProjectileMinibossDelay, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnight_Projectile"
-			}), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f), Types.Sequence.Serial);
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet9.AddAction(new DelayLogicAction(AttackProjectileMinibossDelay));
+			logicSet9.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnight_Projectile"));
+			logicSet9.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f));
 			ThrowTwoProjectiles(logicSet9);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet9.AddAction(new DelayLogicAction(0.05f));
 			ThrowThreeProjectiles(logicSet9);
-			logicSet9.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new DelayLogicAction(0.05f));
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet9.AddAction(new DelayLogicAction(0.05f));
 			ThrowTwoProjectiles(logicSet9);
-			logicSet9.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
+			logicSet9.AddAction(new DelayLogicAction(0.5f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet9.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
 			logicSet9.Tag = 2;
 			LogicSet logicSet10 = new LogicSet(this);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(AttackProjectileMinibossDelay, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnight_Projectile"
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f), Types.Sequence.Serial);
+			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet10.AddAction(new DelayLogicAction(AttackProjectileMinibossDelay));
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnight_Projectile"));
+			logicSet10.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f));
 			ThrowThreeProjectiles(logicSet10);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet10.AddAction(new DelayLogicAction(0.05f));
 			ThrowTwoProjectiles(logicSet10);
-			logicSet10.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.05f, false), Types.Sequence.Serial);
+			logicSet10.AddAction(new DelayLogicAction(0.05f));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet10.AddAction(new DelayLogicAction(0.05f));
 			ThrowThreeProjectiles(logicSet10);
-			logicSet10.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f), Types.Sequence.Serial);
+			logicSet10.AddAction(new DelayLogicAction(0.5f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet10.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
 			logicSet10.Tag = 2;
 			LogicSet logicSet11 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet11.AddAction(new MoveLogicAction(m_target, false, 300f), Types.Sequence.Serial);
-			logicSet11.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet11.AddAction(new DelayLogicAction(0.3f, false), Types.Sequence.Serial);
-			logicSet11.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet11.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
+			logicSet11.AddAction(new MoveLogicAction(m_target, false, 300f));
+			logicSet11.AddAction(new JumpLogicAction());
+			logicSet11.AddAction(new DelayLogicAction(0.3f));
+			logicSet11.AddAction(new GroundCheckLogicAction());
+			logicSet11.AddAction(new JumpLogicAction());
 			ThrowRapidProjectiles(logicSet11);
 			ThrowRapidProjectiles(logicSet11);
 			ThrowRapidProjectiles(logicSet11);
-			logicSet11.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet11.AddAction(new DelayLogicAction(0.1f, false), Types.Sequence.Serial);
-			logicSet11.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
+			logicSet11.AddAction(new GroundCheckLogicAction());
+			logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet11.AddAction(new DelayLogicAction(0.1f));
+			logicSet11.AddAction(new JumpLogicAction());
 			ThrowRapidProjectiles(logicSet11);
 			ThrowRapidProjectiles(logicSet11);
 			ThrowRapidProjectiles(logicSet11);
-			logicSet11.AddAction(new GroundCheckLogicAction(), Types.Sequence.Serial);
-			logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
+			logicSet11.AddAction(new GroundCheckLogicAction());
+			logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f));
 			logicSet11.Tag = 2;
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet7
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet7
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5,
-				logicSet8
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet6,
-				logicSet9,
-				logicSet10
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet7);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet7);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5, logicSet8);
+			m_generalMiniBossLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet6, logicSet9, logicSet10);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_generalMiniBossLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				55,
-				25,
-				20
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 55, 25, 20);
 			projectileData.Dispose();
 			base.InitializeLogic();
 		}
@@ -458,16 +367,13 @@ namespace RogueCastle
 				Angle = new Vector2(0f, 0f),
 				Scale = ProjectileScale
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnight_Projectile"
-			}), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnight_Projectile"));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(45f, 45f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			ls.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			ls.AddAction(new PlayAnimationLogicAction("Attack", "End"));
 			projectileData.Dispose();
 		}
 		private void ThrowTwoProjectiles(LogicSet ls)
@@ -484,14 +390,11 @@ namespace RogueCastle
 				AngleOffset = 0f,
 				Angle = new Vector2(22f, 22f)
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SpearKnightAttack1"
-			}), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-22f, -22f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			ls.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			ls.AddAction(new PlayAnimationLogicAction("Attack", "End"));
 			projectileData.Dispose();
 		}
 		private void ThrowRapidProjectiles(LogicSet ls)
@@ -508,11 +411,11 @@ namespace RogueCastle
 				AngleOffset = 0f,
 				Angle = Vector2.Zero
 			};
-			ls.AddAction(new DelayLogicAction(0.2f, 0.35f, false), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			ls.AddAction(new DelayLogicAction(0.2f, 0.35f, false), Types.Sequence.Serial);
+			ls.AddAction(new DelayLogicAction(0.2f, 0.35f));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			ls.AddAction(new DelayLogicAction(0.2f, 0.35f));
 			projectileData.SourceAnchor = new Vector2(130f, 28f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		protected override void RunBasicLogic()
@@ -529,34 +432,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					55,
-					30,
-					0,
-					0,
-					15
-				});
+				RunLogicBlock(true, m_generalBasicLB, 55, 30, 0, 0, 15);
 				return;
 			case 2:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					20,
-					20,
-					10,
-					0,
-					50
-				});
+				RunLogicBlock(true, m_generalBasicLB, 20, 20, 10, 0, 50);
 				return;
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					20,
-					15,
-					0,
-					0,
-					65
-				});
+				RunLogicBlock(true, m_generalBasicLB, 20, 15, 0, 0, 65);
 				return;
 			default:
 				return;
@@ -576,34 +458,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					55,
-					30,
-					0,
-					0,
-					15
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 55, 30, 0, 0, 15);
 				return;
 			case 2:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					15,
-					15,
-					10,
-					15,
-					45
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 15, 15, 10, 15, 45);
 				return;
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					15,
-					10,
-					0,
-					60,
-					15
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 15, 10, 0, 60, 15);
 				return;
 			default:
 				return;
@@ -623,34 +484,13 @@ namespace RogueCastle
 				return;
 			}
 			case 1:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					55,
-					30,
-					0,
-					0,
-					15
-				});
+				RunLogicBlock(true, m_generalExpertLB, 55, 30, 0, 0, 15);
 				return;
 			case 2:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					15,
-					15,
-					10,
-					15,
-					45
-				});
+				RunLogicBlock(true, m_generalExpertLB, 15, 15, 10, 15, 45);
 				return;
 			case 3:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					15,
-					10,
-					0,
-					60,
-					15
-				});
+				RunLogicBlock(true, m_generalExpertLB, 15, 10, 0, 60, 15);
 				return;
 			default:
 				return;
@@ -664,15 +504,7 @@ namespace RogueCastle
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalMiniBossLB, new int[]
-				{
-					14,
-					13,
-					11,
-					26,
-					18,
-					18
-				});
+				RunLogicBlock(true, m_generalMiniBossLB, 14, 13, 11, 26, 18, 18);
 				return;
 			default:
 				return;
@@ -689,28 +521,15 @@ namespace RogueCastle
 		}
 		public override void HitEnemy(int damage, Vector2 position, bool isPlayer)
 		{
-			SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-			{
-				"Knight_Hit01",
-				"Knight_Hit02",
-				"Knight_Hit03"
-			});
+			SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Knight_Hit01", "Knight_Hit02", "Knight_Hit03");
 			base.HitEnemy(damage, position, isPlayer);
 		}
 		public EnemyObj_Knight(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base("EnemySpearKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
 		{
 			TintablePart = _objectList[1];
 			Type = 12;
-			m_walkSound = new FrameSoundObj(this, m_target, 1, new string[]
-			{
-				"KnightWalk1",
-				"KnightWalk2"
-			});
-			m_walkSound2 = new FrameSoundObj(this, m_target, 6, new string[]
-			{
-				"KnightWalk1",
-				"KnightWalk2"
-			});
+			m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
+			m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
 		}
 		public override void Dispose()
 		{

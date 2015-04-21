@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -146,14 +146,7 @@ namespace RogueCastle
 			case 2:
 				return "Huge HP.  Low Str and MP.";
 			case 3:
-				return string.Concat(new object[]
-				{
-					"+",
-					15.000001f,
-					"% Crit. Chance, +",
-					125f,
-					"% Crit. Damage.\nLow HP, MP, and Str."
-				});
+				return string.Concat("+", 15.000001f, "% Crit. Chance, +", 125f, "% Crit. Damage.\nLow HP, MP, and Str.");
 			case 4:
 				return "Huge Str, but you cannot land critical strikes.\n +" + 30.0000019f + "% Move Speed.  Low HP and MP.";
 			case 5:
@@ -169,14 +162,7 @@ namespace RogueCastle
 			case 10:
 				return "SPECIAL: Barbarian Shout.\nHuge HP.  Low Str and MP.";
 			case 11:
-				return string.Concat(new object[]
-				{
-					"SPECIAL: Mist Form\n+",
-					15.000001f,
-					"% Crit. Chance, +",
-					125f,
-					"% Crit. Damage.\nLow HP, MP, and Str."
-				});
+				return string.Concat("SPECIAL: Mist Form\n+", 15.000001f, "% Crit. Chance, +", 125f, "% Crit. Damage.\nLow HP, MP, and Str.");
 			case 12:
 				return "SPECIAL: Replacement Technique.\nHuge Str, but you cannot land critical strikes.\n +" + 30.0000019f + "% Move Speed.  Low HP and MP.";
 			case 13:

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -98,7 +98,7 @@ namespace RogueCastle
 			m_largeCloud4 = new SpriteObj("TitleLargeCloud2_Sprite");
 			m_largeCloud4.Position = new Vector2(1320f, 720 - m_largeCloud4.Height);
 			m_largeCloud4.Flip = SpriteEffects.FlipHorizontally;
-			m_titleText = new TextObj(null);
+			m_titleText = new TextObj();
 			m_titleText.Font = Game.JunicodeFont;
 			m_titleText.FontSize = 45f;
 			m_titleText.Text = "ROGUE CASTLE";
@@ -164,14 +164,7 @@ namespace RogueCastle
 			m_profileSelectKey = new KeyIconTextObj(Game.JunicodeFont);
 			m_profileSelectKey.Align = Types.TextAlign.Left;
 			m_profileSelectKey.FontSize = 10f;
-			m_profileSelectKey.Text = string.Concat(new object[]
-			{
-				"[Input:",
-				25,
-				"] to Change Profile (",
-				Game.GameConfig.ProfileSlot,
-				")"
-			});
+			m_profileSelectKey.Text = string.Concat("[Input:", 25, "] to Change Profile (", Game.GameConfig.ProfileSlot, ")");
 			m_profileSelectKey.Position = new Vector2(30f, 15f);
 			m_profileSelectKey.ForceDraw = true;
 			m_profileSelectKey.DropShadow = new Vector2(2f, 2f);
@@ -189,14 +182,7 @@ namespace RogueCastle
 		public override void OnEnter()
 		{
 			Camera.Zoom = 1f;
-			m_profileSelectKey.Text = string.Concat(new object[]
-			{
-				"[Input:",
-				25,
-				"] to Change Profile (",
-				Game.GameConfig.ProfileSlot,
-				")"
-			});
+			m_profileSelectKey.Text = string.Concat("[Input:", 25, "] to Change Profile (", Game.GameConfig.ProfileSlot, ")");
 			SoundManager.PlayMusic("TitleScreenSong", true, 1f);
 			Game.ScreenManager.Player.ForceInvincible = false;
 			m_optionsEntered = false;
@@ -208,35 +194,15 @@ namespace RogueCastle
 			m_crown.Visible = false;
 			m_randomSeagullSFX = CDGMath.RandomInt(1, 5);
 			m_startPressed = false;
-			Tween.By(m_godRay, 5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				"-0.23"
-			});
+			Tween.By(m_godRay, 5f, Quad.EaseInOut, "Y", "-0.23");
 			m_logo.Opacity = 0f;
 			m_logo.Position = new Vector2(660f, 310f);
-			Tween.To(m_logo, 2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_logo, 3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				"360"
-			});
+			Tween.To(m_logo, 2f, Linear.EaseNone, "Opacity", "1");
+			Tween.To(m_logo, 3f, Quad.EaseInOut, "Y", "360");
 			m_crown.Opacity = 0f;
 			m_crown.Position = new Vector2(390f, 200f);
-			Tween.To(m_crown, 2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.By(m_crown, 3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				"50"
-			});
+			Tween.To(m_crown, 2f, Linear.EaseNone, "Opacity", "1");
+			Tween.By(m_crown, 3f, Quad.EaseInOut, "Y", "50");
 			m_dlcIcon.Opacity = 0f;
 			m_dlcIcon.Visible = false;
 			if (Game.PlayerStats.ChallengeLastBossBeaten)
@@ -244,16 +210,8 @@ namespace RogueCastle
 				m_dlcIcon.Visible = true;
 			}
 			m_dlcIcon.Position = new Vector2(898f, 267f);
-			Tween.To(m_dlcIcon, 2f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.By(m_dlcIcon, 3f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"Y",
-				"50"
-			});
+			Tween.To(m_dlcIcon, 2f, Linear.EaseNone, "Opacity", "1");
+			Tween.By(m_dlcIcon, 3f, Quad.EaseInOut, "Y", "50");
 			Camera.Position = new Vector2(660f, 360f);
 			m_pressStartText.Text = "[Input:" + 0 + "]";
 			LoadSaveData();
@@ -285,12 +243,7 @@ namespace RogueCastle
 			Game.PlayerStats.Dispose();
 			Game.PlayerStats = new PlayerStats();
 			(ScreenManager as RCScreenManager).Player.Reset();
-			(ScreenManager.Game as Game).SaveManager.LoadFiles(null, new SaveType[]
-			{
-				SaveType.PlayerData,
-				SaveType.Lineage,
-				SaveType.UpgradeData
-			});
+			(ScreenManager.Game as Game).SaveManager.LoadFiles(null, SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
 			Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
 			Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
 		}
@@ -354,16 +307,16 @@ namespace RogueCastle
 				{
 					if (m_loadStartingRoom)
 					{
-						(ScreenManager as RCScreenManager).DisplayScreen(15, true, null);
+						(ScreenManager as RCScreenManager).DisplayScreen(15, true);
 					}
 					else
 					{
-						(ScreenManager as RCScreenManager).DisplayScreen(5, true, null);
+						(ScreenManager as RCScreenManager).DisplayScreen(5, true);
 					}
 				}
 				else
 				{
-					(ScreenManager as RCScreenManager).DisplayScreen(9, true, null);
+					(ScreenManager as RCScreenManager).DisplayScreen(9, true);
 				}
 			}
 			else
@@ -379,16 +332,8 @@ namespace RogueCastle
 					Game.PlayerStats.FinalDoorOpened = false;
 					if ((ScreenManager.Game as Game).SaveManager.FileExists(SaveType.Map))
 					{
-						(ScreenManager.Game as Game).SaveManager.ClearFiles(new SaveType[]
-						{
-							SaveType.Map,
-							SaveType.MapData
-						});
-						(ScreenManager.Game as Game).SaveManager.ClearBackupFiles(new SaveType[]
-						{
-							SaveType.Map,
-							SaveType.MapData
-						});
+						(ScreenManager.Game as Game).SaveManager.ClearFiles(SaveType.Map, SaveType.MapData);
+						(ScreenManager.Game as Game).SaveManager.ClearBackupFiles(SaveType.Map, SaveType.MapData);
 					}
 				}
 				else
@@ -397,13 +342,8 @@ namespace RogueCastle
 				}
 				Game.PlayerStats.HeadPiece = (byte)CDGMath.RandomInt(1, 5);
 				Game.PlayerStats.EnemiesKilledInRun.Clear();
-				(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-				{
-					SaveType.PlayerData,
-					SaveType.Lineage,
-					SaveType.UpgradeData
-				});
-				(ScreenManager as RCScreenManager).DisplayScreen(15, true, null);
+				(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
+				(ScreenManager as RCScreenManager).DisplayScreen(15, true);
 			}
 			SoundManager.StopMusic(0.2f);
 		}
@@ -450,14 +390,7 @@ namespace RogueCastle
 				m_optionsKey.Text = "[Input:" + 4 + "]";
 				m_profileCardKey.Text = "[Input:" + 7 + "]";
 				m_creditsKey.Text = "[Input:" + 6 + "]";
-				m_profileSelectKey.Text = string.Concat(new object[]
-				{
-					"[Input:",
-					25,
-					"] to Change Profile (",
-					Game.GameConfig.ProfileSlot,
-					")"
-				});
+				m_profileSelectKey.Text = string.Concat("[Input:", 25, "] to Change Profile (", Game.GameConfig.ProfileSlot, ")");
 			}
 			base.Update(gameTime);
 		}
@@ -469,7 +402,7 @@ namespace RogueCastle
 			}
 			if (!m_startNewLegacy && Game.GlobalInput.JustPressed(7))
 			{
-				(ScreenManager as RCScreenManager).DisplayScreen(17, false, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(17, false);
 			}
 			if (Game.GlobalInput.JustPressed(4))
 			{
@@ -480,11 +413,11 @@ namespace RogueCastle
 			}
 			if (Game.GlobalInput.JustPressed(6))
 			{
-				(ScreenManager as RCScreenManager).DisplayScreen(18, false, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(18, false);
 			}
 			if (Game.GlobalInput.JustPressed(25))
 			{
-				(ScreenManager as RCScreenManager).DisplayScreen(30, false, null);
+				(ScreenManager as RCScreenManager).DisplayScreen(30, false);
 			}
 			base.HandleInput();
 		}

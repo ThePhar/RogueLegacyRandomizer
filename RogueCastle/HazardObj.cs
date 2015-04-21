@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -74,7 +74,7 @@ namespace RogueCastle
 			Vector2 vector = new Vector2(60f / _width, 60f / _height);
 			_width = (int)(_width * vector.X);
 			_height = (int)(_height * vector.Y);
-			m_texture = ConvertToTexture(camera, true, null);
+			m_texture = ConvertToTexture(camera);
 			_width = (int)Math.Ceiling(_width / vector.X);
 			_height = (int)Math.Ceiling(_height / vector.Y);
 			Scale = new Vector2(_width / (_width / 60f * 64f), 1f);

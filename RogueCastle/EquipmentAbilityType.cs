@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -145,14 +145,7 @@ namespace RogueCastle
 			case 0:
 				return "Press [Input:" + 10 + "] while in air.";
 			case 1:
-				return string.Concat(new object[]
-				{
-					"[Input:",
-					14,
-					"] or [Input:",
-					15,
-					"] to dash."
-				});
+				return string.Concat("[Input:", 14, "] or [Input:", 15, "] to dash.");
 			case 2:
 				return "Kill enemies to regain health.";
 			case 3:

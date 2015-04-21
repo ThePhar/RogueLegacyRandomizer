@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -78,8 +78,8 @@ namespace RogueCastle
 		private GameTime m_forcedGameTime2;
 		private float m_frameLimit = 0.025f;
 		private bool m_frameLimitSwap;
-		public static float TotalGameTime = 0f;
-		private static float TotalGameTimeHours = 0f;
+		public static float TotalGameTime;
+		private static float TotalGameTimeHours;
 		private bool m_contentLoaded;
 		private bool m_gameLoaded;
 		private WeakReference gcTracker = new WeakReference(new object());
@@ -166,9 +166,9 @@ namespace RogueCastle
 			Form form = Control.FromHandle(Window.Handle) as Form;
 			if (form != null)
 			{
-				form.FormClosing += new FormClosingEventHandler(FormClosing);
+				form.FormClosing += FormClosing;
 			}
-			GraphicsDeviceManager.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(ChangeGraphicsSettings);
+			GraphicsDeviceManager.PreparingDeviceSettings += ChangeGraphicsSettings;
 			SleepUtil.DisableScreensaver();
 		}
 		protected void ChangeGraphicsSettings(object sender, PreparingDeviceSettingsEventArgs e)
@@ -180,7 +180,7 @@ namespace RogueCastle
 			Tween.Initialize(7000);
 			InputManager.Initialize();
 			InputManager.InitializeDXManager(Services, Window);
-			Buttons[] buttonList = new Buttons[]
+			Buttons[] buttonList = new[]
 			{
 				Buttons.X,
 				Buttons.A,
@@ -353,9 +353,9 @@ namespace RogueCastle
 				LoadAllEffects();
 				LoadAllSpritesheets();
 				SoundManager.Initialize("Content\\Audio\\RogueCastleXACTProj.xgs");
-				SoundManager.LoadWaveBank("Content\\Audio\\SFXWaveBank.xwb", false);
+				SoundManager.LoadWaveBank("Content\\Audio\\SFXWaveBank.xwb");
 				SoundManager.LoadWaveBank("Content\\Audio\\MusicWaveBank.xwb", true);
-				SoundManager.LoadSoundBank("Content\\Audio\\SFXSoundBank.xsb", false);
+				SoundManager.LoadSoundBank("Content\\Audio\\SFXSoundBank.xsb");
 				SoundManager.LoadSoundBank("Content\\Audio\\MusicSoundBank.xsb", true);
 				SoundManager.GlobalMusicVolume = GameConfig.MusicVolume;
 				SoundManager.GlobalSFXVolume = GameConfig.SFXVolume;
@@ -365,22 +365,22 @@ namespace RogueCastle
 				}
 				InputManager.UseDirectInput = GameConfig.EnableDirectInput;
 				GenericTexture = new Texture2D(GraphicsDevice, 1, 1);
-				GenericTexture.SetData<Color>(new Color[]
+				GenericTexture.SetData(new[]
 				{
 					Color.White
 				});
 				if (!LevelEV.LOAD_SPLASH_SCREEN)
 				{
 					LevelBuilder2.Initialize();
-					LevelParser.ParseRooms("Map_1x1", Content, false);
-					LevelParser.ParseRooms("Map_1x2", Content, false);
-					LevelParser.ParseRooms("Map_1x3", Content, false);
-					LevelParser.ParseRooms("Map_2x1", Content, false);
-					LevelParser.ParseRooms("Map_2x2", Content, false);
-					LevelParser.ParseRooms("Map_2x3", Content, false);
-					LevelParser.ParseRooms("Map_3x1", Content, false);
-					LevelParser.ParseRooms("Map_3x2", Content, false);
-					LevelParser.ParseRooms("Map_Special", Content, false);
+					LevelParser.ParseRooms("Map_1x1", Content);
+					LevelParser.ParseRooms("Map_1x2", Content);
+					LevelParser.ParseRooms("Map_1x3", Content);
+					LevelParser.ParseRooms("Map_2x1", Content);
+					LevelParser.ParseRooms("Map_2x2", Content);
+					LevelParser.ParseRooms("Map_2x3", Content);
+					LevelParser.ParseRooms("Map_3x1", Content);
+					LevelParser.ParseRooms("Map_3x2", Content);
+					LevelParser.ParseRooms("Map_Special", Content);
 					LevelParser.ParseRooms("Map_DLC1", Content, true);
 					LevelBuilder2.IndexRoomList();
 				}
@@ -456,7 +456,7 @@ namespace RogueCastle
 				areaStruct8.SecretRooms = new Vector2(2f, 3f);
 				areaStruct8.BonusRooms = new Vector2(1f, 2f);
 				areaStruct8.Color = Color.DarkBlue;
-				Area1List = new AreaStruct[]
+				Area1List = new[]
 				{
 					areaStruct,
 					areaStruct2,
@@ -465,7 +465,7 @@ namespace RogueCastle
 				};
 				if (LevelEV.RUN_DEMO_VERSION)
 				{
-					Area1List = new AreaStruct[]
+					Area1List = new[]
 					{
 						areaStruct5
 					};
@@ -556,31 +556,31 @@ namespace RogueCastle
 				{
 					if (LevelEV.RUN_DEMO_VERSION)
 					{
-						ScreenManager.DisplayScreen(28, true, null);
+						ScreenManager.DisplayScreen(28, true);
 					}
 					else
 					{
-						ScreenManager.DisplayScreen(1, true, null);
+						ScreenManager.DisplayScreen(1, true);
 					}
 				}
 				else if (!LevelEV.LOAD_TITLE_SCREEN)
 				{
 					if (LevelEV.RUN_TESTROOM)
 					{
-						ScreenManager.DisplayScreen(5, true, null);
+						ScreenManager.DisplayScreen(5, true);
 					}
 					else if (LevelEV.RUN_TUTORIAL)
 					{
-						ScreenManager.DisplayScreen(23, true, null);
+						ScreenManager.DisplayScreen(23, true);
 					}
 					else
 					{
-						ScreenManager.DisplayScreen(15, true, null);
+						ScreenManager.DisplayScreen(15, true);
 					}
 				}
 				else
 				{
-					ScreenManager.DisplayScreen(3, true, null);
+					ScreenManager.DisplayScreen(3, true);
 				}
 			}
 			TotalGameTime = (float)gameTime.TotalGameTime.TotalSeconds;
@@ -708,10 +708,7 @@ namespace RogueCastle
 					if (challengeBossRoomObj != null)
 					{
 						challengeBossRoomObj.LoadPlayerData();
-						SaveManager.LoadFiles(levelScreen, new SaveType[]
-						{
-							SaveType.UpgradeData
-						});
+						SaveManager.LoadFiles(levelScreen, SaveType.UpgradeData);
 						levelScreen.Player.CurrentHealth = challengeBossRoomObj.StoredHP;
 						levelScreen.Player.CurrentMana = challengeBossRoomObj.StoredMP;
 					}
@@ -722,17 +719,10 @@ namespace RogueCastle
 				}
 				if (SaveManager.FileExists(SaveType.PlayerData))
 				{
-					SaveManager.SaveFiles(new SaveType[]
-					{
-						SaveType.PlayerData,
-						SaveType.UpgradeData
-					});
+					SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
 					if (PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start" && levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
 					{
-						SaveManager.SaveFiles(new SaveType[]
-						{
-							SaveType.MapData
-						});
+						SaveManager.SaveFiles(SaveType.MapData);
 					}
 				}
 			}

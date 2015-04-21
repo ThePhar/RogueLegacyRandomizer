@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -59,51 +59,23 @@ namespace RogueCastle
 			GameObjList.Add(m_speechBubble);
 			m_diary.OutlineWidth = 2;
 			m_speechBubble.Position = new Vector2(m_diary.X, m_diary.Y - m_speechBubble.Height - 20f);
-			m_tutorialTextList = new string[]
+			m_tutorialTextList = new[]
 			{
 				"Tap [Input:" + 11 + "] to Jump",
 				"Hold [Input:" + 11 + "] to Jump Higher",
 				"Tap [Input:" + 12 + "] to Attack",
-				string.Concat(new object[]
-				{
-					"Hold [Input:",
-					19,
-					"] and Tap [Input:",
-					11,
-					"] to Drop Ledges"
-				}),
-				string.Concat(new object[]
-				{
-					"(Air) Hold [Input:",
-					19,
-					"] and Tap [Input:",
-					12,
-					"] to Attack Down"
-				})
+				string.Concat("Hold [Input:", 19, "] and Tap [Input:", 11, "] to Drop Ledges"),
+				string.Concat("(Air) Hold [Input:", 19, "] and Tap [Input:", 12, "] to Attack Down")
 			};
-			m_tutorialControllerTextList = new string[]
+			m_tutorialControllerTextList = new[]
 			{
 				"Tap [Input:" + 10 + "] to Jump",
 				"Hold [Input:" + 10 + "] to Jump Higher",
 				"Tap [Input:" + 12 + "] to Attack",
-				string.Concat(new object[]
-				{
-					"Hold [Input:",
-					18,
-					"] and Tap [Input:",
-					10,
-					"] to Drop Ledges"
-				}),
-				string.Concat(new object[]
-				{
-					"(Air) Hold [Input:",
-					18,
-					"] and Tap [Input:",
-					12,
-					"] to Attack Down"
-				})
+				string.Concat("Hold [Input:", 18, "] and Tap [Input:", 10, "] to Drop Ledges"),
+				string.Concat("(Air) Hold [Input:", 18, "] and Tap [Input:", 12, "] to Attack Down")
 			};
-			m_creditsTextTitleList = new string[]
+			m_creditsTextTitleList = new[]
 			{
 				"Developed by",
 				"Design",
@@ -113,7 +85,7 @@ namespace RogueCastle
 				"Music",
 				""
 			};
-			m_creditsTextList = new string[]
+			m_creditsTextList = new[]
 			{
 				"Cellar Door Games",
 				"Teddy Lee",
@@ -210,10 +182,7 @@ namespace RogueCastle
 			{
 				SoundManager.StopMusic(4f);
 			}
-			Tween.RunFunction(2f, Player.AttachedLevel, "DisplayCreditsText", new object[]
-			{
-				true
-			});
+			Tween.RunFunction(2f, Player.AttachedLevel, "DisplayCreditsText", true);
 			base.OnEnter();
 		}
 		public void DisplayCreditsText()
@@ -224,38 +193,16 @@ namespace RogueCastle
 				m_creditsText.Opacity = 0f;
 				m_creditsTitleText.Text = m_creditsTextTitleList[m_creditsIndex];
 				m_creditsText.Text = m_creditsTextList[m_creditsIndex];
-				Tween.To(m_creditsTitleText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"Opacity",
-					"1"
-				});
-				Tween.To(m_creditsText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"0.2",
-					"Opacity",
-					"1"
-				});
+				Tween.To(m_creditsTitleText, 0.5f, Tween.EaseNone, "Opacity", "1");
+				Tween.To(m_creditsText, 0.5f, Tween.EaseNone, "delay", "0.2", "Opacity", "1");
 				m_creditsTitleText.Opacity = 1f;
 				m_creditsText.Opacity = 1f;
-				Tween.To(m_creditsTitleText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"4",
-					"Opacity",
-					"0"
-				});
-				Tween.To(m_creditsText, 0.5f, new Easing(Tween.EaseNone), new string[]
-				{
-					"delay",
-					"4.2",
-					"Opacity",
-					"0"
-				});
+				Tween.To(m_creditsTitleText, 0.5f, Tween.EaseNone, "delay", "4", "Opacity", "0");
+				Tween.To(m_creditsText, 0.5f, Tween.EaseNone, "delay", "4.2", "Opacity", "0");
 				m_creditsTitleText.Opacity = 0f;
 				m_creditsText.Opacity = 0f;
 				m_creditsIndex++;
-				Tween.RunFunction(8f, this, "DisplayCreditsText", new object[0]);
+				Tween.RunFunction(8f, this, "DisplayCreditsText");
 			}
 		}
 		private int PlayerNearWaypoint()
@@ -288,19 +235,11 @@ namespace RogueCastle
 						{
 							m_tutorialText.Text = m_tutorialControllerTextList[m_waypointIndex];
 						}
-						Tween.To(m_tutorialText, 0.25f, new Easing(Tween.EaseNone), new string[]
-						{
-							"Opacity",
-							"1"
-						});
+						Tween.To(m_tutorialText, 0.25f, Tween.EaseNone, "Opacity", "1");
 					}
 					else
 					{
-						Tween.To(m_tutorialText, 0.25f, new Easing(Tween.EaseNone), new string[]
-						{
-							"Opacity",
-							"0"
-						});
+						Tween.To(m_tutorialText, 0.25f, Tween.EaseNone, "Opacity", "0");
 					}
 				}
 			}
@@ -322,13 +261,13 @@ namespace RogueCastle
 						{
 							RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 							rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + 24);
-							rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "RunFlashback", new object[0]);
-							rCScreenManager.DisplayScreen(13, true, null);
+							rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "RunFlashback");
+							rCScreenManager.DisplayScreen(13, true);
 						}
 						else
 						{
 							RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-							rCScreenManager2.DisplayScreen(20, true, null);
+							rCScreenManager2.DisplayScreen(20, true);
 						}
 					}
 				}
@@ -350,8 +289,8 @@ namespace RogueCastle
 		public void RunFlashback()
 		{
 			Player.LockControls();
-			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(25, true, null);
-			Tween.RunFunction(0.5f, this, "OpenDoor", new object[0]);
+			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(25, true);
+			Tween.RunFunction(0.5f, this, "OpenDoor");
 		}
 		public void OpenDoor()
 		{
@@ -360,10 +299,7 @@ namespace RogueCastle
 			m_door.Locked = false;
 			Game.PlayerStats.ReadLastDiary = true;
 			Game.PlayerStats.DiaryEntry = 25;
-			(Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData
-			});
+			(Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
 		}
 		public override void Draw(Camera2D camera)
 		{

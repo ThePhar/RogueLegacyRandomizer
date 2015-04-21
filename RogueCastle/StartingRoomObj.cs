@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -156,7 +156,7 @@ namespace RogueCastle
 			m_enchantress.Scale = new Vector2(2f, 2f);
 			m_enchantress.Flip = SpriteEffects.FlipHorizontally;
 			m_enchantress.Position = new Vector2(1150f, 660f - (m_enchantress.Bounds.Bottom - m_enchantress.AnchorY) - 2f);
-			m_enchantress.PlayAnimation(true);
+			m_enchantress.PlayAnimation();
 			m_enchantress.AnimationDelay = 0.1f;
 			(m_enchantress.GetChildAt(4) as IAnimateableObj).StopAnimation();
 			m_enchantress.OutlineWidth = 2;
@@ -174,7 +174,7 @@ namespace RogueCastle
 			m_architect.Flip = SpriteEffects.FlipHorizontally;
 			m_architect.Scale = new Vector2(2f, 2f);
 			m_architect.Position = new Vector2(1550f, 660f - (m_architect.Bounds.Bottom - m_architect.AnchorY) - 2f);
-			m_architect.PlayAnimation(true);
+			m_architect.PlayAnimation();
 			m_architect.AnimationDelay = 0.1f;
 			m_architect.OutlineWidth = 2;
 			(m_architect.GetChildAt(1) as IAnimateableObj).StopAnimation();
@@ -190,13 +190,13 @@ namespace RogueCastle
 			m_screw.OutlineWidth = 2;
 			m_screw.Position = new Vector2(m_architect.X + 30f, m_architect.Bounds.Bottom - 1);
 			m_screw.AnimationDelay = 0.1f;
-			m_tollCollector = new PhysicsObjContainer("NPCTollCollectorIdle_Character", null);
+			m_tollCollector = new PhysicsObjContainer("NPCTollCollectorIdle_Character");
 			m_tollCollector.Flip = SpriteEffects.FlipHorizontally;
 			m_tollCollector.Scale = new Vector2(2.5f, 2.5f);
 			m_tollCollector.IsWeighted = false;
 			m_tollCollector.IsCollidable = true;
 			m_tollCollector.Position = new Vector2(2565f, 420f - (m_tollCollector.Bounds.Bottom - m_tollCollector.AnchorY));
-			m_tollCollector.PlayAnimation(true);
+			m_tollCollector.PlayAnimation();
 			m_tollCollector.AnimationDelay = 0.1f;
 			m_tollCollector.OutlineWidth = 2;
 			m_tollCollector.CollisionTypeTag = 1;
@@ -326,22 +326,14 @@ namespace RogueCastle
 			Player.CurrentHealth = Player.MaxHealth;
 			Player.CurrentMana = Player.MaxMana;
 			Player.ForceInvincible = false;
-			(Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-			{
-				SaveType.PlayerData
-			});
+			(Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
 			if (TollCollectorAvailable && !Player.AttachedLevel.PhysicsManager.ObjectList.Contains(m_tollCollector))
 			{
 				Player.AttachedLevel.PhysicsManager.AddObject(m_tollCollector);
 			}
 			if (m_blacksmithAnvilSound == null)
 			{
-				m_blacksmithAnvilSound = new FrameSoundObj(m_blacksmith.GetChildAt(5) as IAnimateableObj, Player, 7, new string[]
-				{
-					"Anvil1",
-					"Anvil2",
-					"Anvil3"
-				});
+				m_blacksmithAnvilSound = new FrameSoundObj(m_blacksmith.GetChildAt(5) as IAnimateableObj, Player, 7, "Anvil1", "Anvil2", "Anvil3");
 			}
 			if (Game.PlayerStats.Traits.X == 35f || Game.PlayerStats.Traits.Y == 35f)
 			{
@@ -358,17 +350,17 @@ namespace RogueCastle
 			Player.IsWeighted = false;
 			Player.IsCollidable = false;
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true), Types.Sequence.Serial);
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
+			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+			logicSet.AddAction(new PlayAnimationLogicAction());
+			logicSet.AddAction(new DelayLogicAction(0.5f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true));
 			Player.RunExternalLogicSet(logicSet);
-			Tween.By(this, 1f, new Easing(Linear.EaseNone), new string[0]);
-			Tween.AddEndHandlerToLastTween(Player, "UnlockControls", new object[0]);
+			Tween.By(this, 1f, Linear.EaseNone);
+			Tween.AddEndHandlerToLastTween(Player, "UnlockControls");
 			SoundManager.StopMusic(1f);
 			m_isRaining = (CDGMath.RandomPlusMinus() > 0);
 			m_isRaining = true;
@@ -424,12 +416,7 @@ namespace RogueCastle
 				{
 					m_playerWalkedOut = true;
 					(Player.AttachedLevel.ScreenManager as RCScreenManager).StartWipeTransition();
-					Tween.RunFunction(0.2f, Player.AttachedLevel.ScreenManager, "DisplayScreen", new object[]
-					{
-						6,
-						true,
-						typeof(List<object>)
-					});
+					Tween.RunFunction(0.2f, Player.AttachedLevel.ScreenManager, "DisplayScreen", 6, true, typeof(List<object>));
 				}
 				else if (!Player.ControlsLocked && Player.X > Bounds.Right && !TollCollectorAvailable)
 				{
@@ -555,7 +542,7 @@ namespace RogueCastle
 		}
 		private void LoadLevel()
 		{
-			Game.ScreenManager.DisplayScreen(5, true, null);
+			Game.ScreenManager.DisplayScreen(5, true);
 		}
 		private void HandleInput()
 		{
@@ -588,11 +575,8 @@ namespace RogueCastle
 									rCScreenManager.DialogueScreen.SetDialogue("Meet Architect 2");
 								}
 								rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-								rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "ActivateArchitect", new object[0]);
-								rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", new object[]
-								{
-									"Canceling Selection"
-								});
+								rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "ActivateArchitect");
+								rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", "Canceling Selection");
 							}
 							else
 							{
@@ -603,7 +587,7 @@ namespace RogueCastle
 						{
 							rCScreenManager.DialogueScreen.SetDialogue("No Castle Architect");
 						}
-						rCScreenManager.DisplayScreen(13, true, null);
+						rCScreenManager.DisplayScreen(13, true);
 					}
 				}
 				if (m_tollCollectorIcon.Visible && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
@@ -611,12 +595,9 @@ namespace RogueCastle
 					RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
 					if (Game.PlayerStats.SpecialItem == 1)
 					{
-						Tween.RunFunction(0.1f, this, "TollPaid", new object[]
-						{
-							false
-						});
+						Tween.RunFunction(0.1f, this, "TollPaid", false);
 						rCScreenManager2.DialogueScreen.SetDialogue("Toll Collector Obol");
-						rCScreenManager2.DisplayScreen(13, true, null);
+						rCScreenManager2.DisplayScreen(13, true);
 						return;
 					}
 					if (Game.PlayerStats.SpecialItem == 9)
@@ -665,15 +646,9 @@ namespace RogueCastle
 		private void RunTollPaidSelection(RCScreenManager manager)
 		{
 			manager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-			manager.DialogueScreen.SetConfirmEndHandler(this, "TollPaid", new object[]
-			{
-				true
-			});
-			manager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", new object[]
-			{
-				"Canceling Selection"
-			});
-			manager.DisplayScreen(13, true, null);
+			manager.DialogueScreen.SetConfirmEndHandler(this, "TollPaid", true);
+			manager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", "Canceling Selection");
+			manager.DisplayScreen(13, true);
 		}
 		public void MovePlayerTo(GameObj target)
 		{
@@ -694,19 +669,12 @@ namespace RogueCastle
 				Player.CurrentSpeed = 0f;
 				Player.LockControls();
 				Player.ChangeSprite("PlayerWalking_Character");
-				Player.PlayAnimation(true);
+				Player.PlayAnimation();
 				LogicSet logicSet = new LogicSet(Player);
-				logicSet.AddAction(new DelayLogicAction(num, false), Types.Sequence.Serial);
+				logicSet.AddAction(new DelayLogicAction(num));
 				Player.RunExternalLogicSet(logicSet);
-				Tween.To(Player, num, new Easing(Tween.EaseNone), new string[]
-				{
-					"X",
-					(target.Position.X - 150f).ToString()
-				});
-				Tween.AddEndHandlerToLastTween(this, "MovePlayerComplete", new object[]
-				{
-					target
-				});
+				Tween.To(Player, num, Tween.EaseNone, "X", (target.Position.X - 150f).ToString());
+				Tween.AddEndHandlerToLastTween(this, "MovePlayerComplete", target);
 				return;
 			}
 			MovePlayerComplete(target);
@@ -733,10 +701,10 @@ namespace RogueCastle
 						array[0] = 11;
 						array[1] = true;
 						arg_1A1_0.SetConfirmEndHandler(arg_1A1_1, arg_1A1_2, array);
-						(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+						(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
 						return;
 					}
-					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(11, true, null);
+					(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(11, true);
 				}
 				return;
 			}
@@ -751,10 +719,10 @@ namespace RogueCastle
 				array2[0] = 10;
 				array2[1] = true;
 				arg_CA_0.SetConfirmEndHandler(arg_CA_1, arg_CA_2, array2);
-				(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true, null);
+				(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
 				return;
 			}
-			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(10, true, null);
+			(Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(10, true);
 		}
 		public void TollPaid(bool chargeFee)
 		{
@@ -779,12 +747,9 @@ namespace RogueCastle
 				SoundManager.PlaySound("Charon_Laugh");
 				m_tollCollector.ChangeSprite("NPCTollCollectorLaugh_Character");
 				m_tollCollector.AnimationDelay = 0.05f;
-				m_tollCollector.PlayAnimation(true);
-				Tween.RunFunction(1f, Player.AttachedLevel.ImpactEffectPool, "DisplayDeathEffect", new object[]
-				{
-					m_tollCollector.Position
-				});
-				Tween.RunFunction(1f, this, "HideTollCollector", new object[0]);
+				m_tollCollector.PlayAnimation();
+				Tween.RunFunction(1f, Player.AttachedLevel.ImpactEffectPool, "DisplayDeathEffect", m_tollCollector.Position);
+				Tween.RunFunction(1f, this, "HideTollCollector");
 			}
 			if (Game.PlayerStats.SpecialItem == 1 || Game.PlayerStats.SpecialItem == 10 || Game.PlayerStats.SpecialItem == 9 || Game.PlayerStats.SpecialItem == 13 || Game.PlayerStats.SpecialItem == 11 || Game.PlayerStats.SpecialItem == 12)
 			{
@@ -827,43 +792,15 @@ namespace RogueCastle
 			m_architect.ChangeSprite("ArchitectPull_Character");
 			(m_architect.GetChildAt(1) as SpriteObj).PlayAnimation(false);
 			m_screw.AnimationDelay = 0.0333333351f;
-			Tween.RunFunction(0.5f, m_architect.GetChildAt(0), "PlayAnimation", new object[]
-			{
-				true
-			});
-			Tween.RunFunction(0.5f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Architect_Lever"
-			});
-			Tween.RunFunction(1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Architect_Screw"
-			});
-			Tween.RunFunction(1f, m_screw, "PlayAnimation", new object[]
-			{
-				false
-			});
-			Tween.By(m_architectBlock, 0.8f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1.1",
-				"Y",
-				"135"
-			});
-			Tween.RunFunction(1f, this, "ShakeScreen", new object[]
-			{
-				2,
-				true,
-				false
-			});
-			Tween.RunFunction(1.5f, this, "StopScreenShake", new object[0]);
-			Tween.RunFunction(1.5f, Player.AttachedLevel.ImpactEffectPool, "SkillTreeDustEffect", new object[]
-			{
-				new Vector2(m_screw.X - m_screw.Width / 2f, m_screw.Y - 40f),
-				true,
-				m_screw.Width
-			});
-			Tween.RunFunction(3f, this, "StopArchitectActivation", new object[0]);
+			Tween.RunFunction(0.5f, m_architect.GetChildAt(0), "PlayAnimation", true);
+			Tween.RunFunction(0.5f, typeof(SoundManager), "PlaySound", "Architect_Lever");
+			Tween.RunFunction(1f, typeof(SoundManager), "PlaySound", "Architect_Screw");
+			Tween.RunFunction(1f, m_screw, "PlayAnimation", false);
+			Tween.By(m_architectBlock, 0.8f, Tween.EaseNone, "delay", "1.1", "Y", "135");
+			Tween.RunFunction(1f, this, "ShakeScreen", 2, true, false);
+			Tween.RunFunction(1.5f, this, "StopScreenShake");
+			Tween.RunFunction(1.5f, Player.AttachedLevel.ImpactEffectPool, "SkillTreeDustEffect", new Vector2(m_screw.X - m_screw.Width / 2f, m_screw.Y - 40f), true, m_screw.Width);
+			Tween.RunFunction(3f, this, "StopArchitectActivation");
 		}
 		public void StopArchitectActivation()
 		{
@@ -893,7 +830,7 @@ namespace RogueCastle
 			}
 			RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
 			rCScreenManager.DialogueScreen.SetDialogue("Castle Lock Complete Architect");
-			rCScreenManager.DisplayScreen(13, true, null);
+			rCScreenManager.DisplayScreen(13, true);
 		}
 		public override void Draw(Camera2D camera)
 		{

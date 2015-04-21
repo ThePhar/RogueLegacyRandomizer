@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -156,220 +156,156 @@ namespace RogueCastle
 				Scale = ProjectileScale
 			};
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemySkeletonWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemySkeletonWalk_Character"));
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
+			logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySkeletonWalk_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySkeletonWalk_Character"));
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.2f, 0.75f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character"));
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.2f, 0.75f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new StopAnimationLogicAction(), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.5f, 1f, false), Types.Sequence.Serial);
+			logicSet4.AddAction(new StopAnimationLogicAction());
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new DelayLogicAction(0.5f, 1f));
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.2f, 0.4f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet5.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
+			logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet5.AddAction(new DelayLogicAction(0.2f, 0.4f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet6.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
 			projectileData.Angle = new Vector2(-85f, -85f);
-			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.2f, 0.4f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet6.AddAction(new DelayLogicAction(0.2f, 0.4f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction(1, 3, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
+			logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false));
+			logicSet7.AddAction(new PlayAnimationLogicAction(1, 3));
+			logicSet7.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet7.AddAction(new JumpLogicAction());
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet7.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
 			projectileData.Angle = new Vector2(-72f, -72f);
-			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.2f, 0.4f, false), Types.Sequence.Serial);
-			logicSet7.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet7.AddAction(new DelayLogicAction(0.2f, 0.4f));
+			logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet7.Tag = 2;
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction(1, 3, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
+			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false));
+			logicSet8.AddAction(new PlayAnimationLogicAction(1, 3));
+			logicSet8.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet8.AddAction(new JumpLogicAction());
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet8.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
 			projectileData.Angle = new Vector2(-85f, -85f);
-			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.2f, 0.4f, false), Types.Sequence.Serial);
-			logicSet8.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet8.AddAction(new DelayLogicAction(0.2f, 0.4f));
+			logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet8.Tag = 2;
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet9.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet9.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet9.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
 			ThrowThreeProjectiles(logicSet9);
-			logicSet9.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Parallel);
-			logicSet9.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new PlayAnimationLogicAction("Attack", "End"), Types.Sequence.Parallel);
+			logicSet9.AddAction(new DelayLogicAction(0.15f));
 			ThrowThreeProjectiles(logicSet9);
-			logicSet9.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new DelayLogicAction(0.15f));
 			ThrowThreeProjectiles(logicSet9);
-			logicSet9.AddAction(new DelayLogicAction(0.2f, 0.4f, false), Types.Sequence.Serial);
-			logicSet9.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet9.AddAction(new DelayLogicAction(0.2f, 0.4f));
+			logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet9.Tag = 2;
 			LogicSet logicSet10 = new LogicSet(this);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction(1, 3, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(JumpDelay, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new JumpLogicAction(0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
+			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false));
+			logicSet10.AddAction(new PlayAnimationLogicAction(1, 3));
+			logicSet10.AddAction(new DelayLogicAction(JumpDelay));
+			logicSet10.AddAction(new JumpLogicAction());
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet10.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
 			ThrowThreeProjectiles(logicSet10);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Parallel);
-			logicSet10.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
+			logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "End"), Types.Sequence.Parallel);
+			logicSet10.AddAction(new DelayLogicAction(0.15f));
 			ThrowThreeProjectiles(logicSet10);
-			logicSet10.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
+			logicSet10.AddAction(new DelayLogicAction(0.15f));
 			ThrowThreeProjectiles(logicSet10);
-			logicSet10.AddAction(new DelayLogicAction(0.2f, 0.4f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet10.AddAction(new DelayLogicAction(0.2f, 0.4f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet10.Tag = 2;
 			LogicSet logicSet11 = new LogicSet(this);
-			logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet11.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet11.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet11.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
+			logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet11.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet11.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet11.AddAction(new DelayLogicAction(AttackDelay));
 			projectileData.Angle = new Vector2(-89f, -35f);
 			projectileData.RotationSpeed = 8f;
 			projectileData.SourceAnchor = new Vector2(5f, -20f);
-			logicSet11.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
-			logicSet11.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet11.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet11.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet11.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet11.AddAction(new DelayLogicAction(0.4f, 0.9f, false), Types.Sequence.Serial);
+			logicSet11.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
+			logicSet11.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet11.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet11.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet11.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character"));
+			logicSet11.AddAction(new DelayLogicAction(0.4f, 0.9f));
 			LogicSet logicSet12 = new LogicSet(this);
-			logicSet12.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet12.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet12.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet12.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet12.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet12.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"SkeletonHit1"
-			}), Types.Sequence.Serial);
-			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet12.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet12.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
-			logicSet12.AddAction(new DelayLogicAction(0.15f, 0.35f, false), Types.Sequence.Serial);
-			logicSet12.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character", true, true), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5,
-				logicSet6
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5,
-				logicSet6,
-				logicSet7,
-				logicSet8
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet9,
-				logicSet10
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet4,
-				logicSet11,
-				logicSet12
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			logicSet12.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet12.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet12.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
+			logicSet12.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet12.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet12.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
+			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet12.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet12.AddAction(new LockFaceDirectionLogicAction(false));
+			logicSet12.AddAction(new DelayLogicAction(0.15f, 0.35f));
+			logicSet12.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character"));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5, logicSet6);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5, logicSet6, logicSet7, logicSet8);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet9, logicSet10);
+			m_generalMiniBossLB.AddLogicSet(logicSet, logicSet2, logicSet4, logicSet11, logicSet12);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_generalMiniBossLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				30,
-				30,
-				40
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 30, 30, 40);
 			projectileData.Dispose();
 			base.InitializeLogic();
 		}
@@ -389,11 +325,11 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = ProjectileScale
 			};
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Speed = new Vector2(ProjectileSpeed - 350f, ProjectileSpeed - 350f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Speed = new Vector2(ProjectileSpeed + 350f, ProjectileSpeed + 350f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		protected override void RunBasicLogic()
@@ -413,24 +349,10 @@ namespace RogueCastle
 				return;
 			}
 			case 2:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					10,
-					10,
-					0,
-					40,
-					40
-				});
+				RunLogicBlock(true, m_generalBasicLB, 10, 10, 0, 40, 40);
 				return;
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					10,
-					10,
-					0,
-					30,
-					50
-				});
+				RunLogicBlock(true, m_generalBasicLB, 10, 10, 0, 30, 50);
 				return;
 			default:
 				return;
@@ -454,16 +376,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					10,
-					10,
-					0,
-					15,
-					15,
-					25,
-					25
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 10, 10, 0, 15, 15, 25, 25);
 				return;
 			default:
 				RunBasicLogic();
@@ -476,25 +389,11 @@ namespace RogueCastle
 			{
 			case 0:
 			case 1:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					35,
-					35,
-					0,
-					0,
-					15
-				});
+				RunLogicBlock(true, m_generalExpertLB, 35, 35, 0, 0, 15);
 				return;
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					15,
-					15,
-					0,
-					35,
-					35
-				});
+				RunLogicBlock(true, m_generalExpertLB, 15, 15, 0, 35, 35);
 				return;
 			default:
 				RunBasicLogic();
@@ -521,14 +420,7 @@ namespace RogueCastle
 					return;
 				}
 				Console.WriteLine("RAGING");
-				RunLogicBlock(true, m_generalMiniBossLB, new int[]
-				{
-					0,
-					0,
-					10,
-					0,
-					90
-				});
+				RunLogicBlock(true, m_generalMiniBossLB, 0, 0, 10, 0, 90);
 				return;
 			}
 			//goto IL_1D;

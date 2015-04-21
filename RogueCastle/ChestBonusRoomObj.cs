@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -45,7 +45,7 @@ namespace RogueCastle
 			m_chestList = new List<ChestObj>();
 			m_elf = new NpcObj("Elf_Character");
 			m_elf.Scale = new Vector2(2f, 2f);
-			m_gate = new PhysicsObj("CastleEntranceGate_Sprite", null);
+			m_gate = new PhysicsObj("CastleEntranceGate_Sprite");
 			m_gate.IsWeighted = false;
 			m_gate.IsCollidable = true;
 			m_gate.CollisionTypeTag = 1;
@@ -101,13 +101,13 @@ namespace RogueCastle
 		}
 		private void ShuffleChests(int goldPaid)
 		{
-			int[] array = new int[]
+			int[] array = new[]
 			{
 				1,
 				2,
 				3
 			};
-			CDGMath.Shuffle<int>(array);
+			CDGMath.Shuffle(array);
 			int num = 0;
 			foreach (GameObj current in GameObjList)
 			{
@@ -177,7 +177,7 @@ namespace RogueCastle
 					{
 						rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Lost");
 					}
-					Game.ScreenManager.DisplayScreen(13, true, null);
+					Game.ScreenManager.DisplayScreen(13, true);
 				}
 			}
 			HandleInput();
@@ -194,11 +194,8 @@ namespace RogueCastle
 					{
 						rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom" + ID + "-Start");
 						rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-						rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "PlayChestGame", new object[0]);
-						rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", new object[]
-						{
-							"Canceling Selection"
-						});
+						rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "PlayChestGame");
+						rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine", "Canceling Selection");
 					}
 					else
 					{
@@ -209,7 +206,7 @@ namespace RogueCastle
 				{
 					rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-End");
 				}
-				Game.ScreenManager.DisplayScreen(13, true, null);
+				Game.ScreenManager.DisplayScreen(13, true);
 			}
 		}
 		public void PlayChestGame()
@@ -234,21 +231,12 @@ namespace RogueCastle
 				Game.PlayerStats.Gold -= num2;
 				ShuffleChests(num2);
 				Player.AttachedLevel.TextManager.DisplayNumberStringText(-num2, "gold", Color.Yellow, new Vector2(Player.X, Player.Bounds.Top));
-				Tween.By(m_gate, 1f, new Easing(Quad.EaseInOut), new string[]
-				{
-					"Y",
-					(-m_gate.Height).ToString()
-				});
+				Tween.By(m_gate, 1f, Quad.EaseInOut, "Y", (-m_gate.Height).ToString());
 				return;
 			}
 			(Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen.SetDialogue("ChestBonusRoom1-NoMoney");
-			Tween.To(this, 0f, new Easing(Linear.EaseNone), new string[0]);
-			Tween.AddEndHandlerToLastTween(Player.AttachedLevel.ScreenManager, "DisplayScreen", new object[]
-			{
-				13,
-				true,
-				typeof(List<object>)
-			});
+			Tween.To(this, 0f, Linear.EaseNone);
+			Tween.AddEndHandlerToLastTween(Player.AttachedLevel.ScreenManager, "DisplayScreen", 13, true, typeof(List<object>));
 		}
 		public override void Reset()
 		{

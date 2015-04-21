@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -71,7 +71,7 @@ namespace RogueCastle
 		public const float TRAIT_ENDOMORPH = 0.5f;
 		public const float TRAIT_MOVESPEED_AMOUNT = 0.3f;
 		public const float TRAIT_DEMENTIA_SPAWN_CHANCE = 0.2f;
-		public static int[] BREAKABLE_ITEMDROP_CHANCE = new int[]
+		public static int[] BREAKABLE_ITEMDROP_CHANCE = new[]
 		{
 			3,
 			4,
@@ -92,25 +92,25 @@ namespace RogueCastle
 			array[0] = 87;
 			array[1] = 13;
 			CHEST_TYPE_CHANCE = array;
-			BRONZECHEST_ITEMDROP_CHANCE = new int[]
+			BRONZECHEST_ITEMDROP_CHANCE = new[]
 			{
 				85,
 				0,
 				15
 			};
-			SILVERCHEST_ITEMDROP_CHANCE = new int[]
+			SILVERCHEST_ITEMDROP_CHANCE = new[]
 			{
 				22,
 				5,
 				73
 			};
-			GOLDCHEST_ITEMDROP_CHANCE = new int[]
+			GOLDCHEST_ITEMDROP_CHANCE = new[]
 			{
 				0,
 				20,
 				80
 			};
-			STATDROP_CHANCE = new int[]
+			STATDROP_CHANCE = new[]
 			{
 				15,
 				15,
@@ -119,21 +119,14 @@ namespace RogueCastle
 				25,
 				5
 			};
-			GAME_HINTS = new string[]
+			GAME_HINTS = new[]
 			{
 				"The Forest is always to the right side of the Castle.",
 				"The Maya is always at the top of the Castle.",
 				"The Darkness is always at the bottom of the Castle.",
 				"If you're having trouble with a boss, try using different runes.",
 				"Vault runes let you to jump in the air with [Input:" + 10 + "]",
-				string.Concat(new object[]
-				{
-					"Sprint runes let you dash with [Input:",
-					14,
-					"] or [Input:",
-					15,
-					"]"
-				}),
+				string.Concat("Sprint runes let you dash with [Input:", 14, "] or [Input:", 15, "]"),
 				"Each class has pros and cons.  Make sure to change your playstyle accordingly.",
 				"Exploring and finding chests is the best way to earn gold.",
 				"Harder areas offer greater rewards.",

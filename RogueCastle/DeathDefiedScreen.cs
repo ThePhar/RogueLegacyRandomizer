@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -61,106 +61,36 @@ namespace RogueCastle
 			m_titlePlate.Opacity = 1f;
 			m_storedMusicVolume = SoundManager.GlobalMusicVolume;
 			m_songName = SoundManager.GetCurrentMusicName();
-			Tween.To(typeof(SoundManager), 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"GlobalMusicVolume",
-				(m_storedMusicVolume * 0.1f).ToString()
-			});
+			Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", (m_storedMusicVolume * 0.1f).ToString());
 			SoundManager.PlaySound("Player_Death_FadeToBlack");
 			m_player.Visible = true;
 			m_player.Opacity = 1f;
 			m_spotlight.Opacity = 0f;
-			Tween.To(this, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"1"
-			});
-			Tween.To(m_spotlight, 0.1f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"Opacity",
-				"1"
-			});
-			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Player_Death_Spotlight"
-			});
-			Tween.To(Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_player.AbsX.ToString(),
-				"Y",
-				(m_player.Bounds.Bottom - 10).ToString(),
-				"Zoom",
-				"1"
-			});
-			Tween.RunFunction(2f, this, "PlayerLevelUpAnimation", new object[0]);
+			Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
+			Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
+			Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
+			Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_player.AbsX.ToString(), "Y", (m_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
+			Tween.RunFunction(2f, this, "PlayerLevelUpAnimation");
 			base.OnEnter();
 		}
 		public void PlayerLevelUpAnimation()
 		{
 			m_player.ChangeSprite("PlayerLevelUp_Character");
 			m_player.PlayAnimation(false);
-			Tween.To(m_titlePlate, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_title, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				"0.1",
-				"ScaleX",
-				"0.8",
-				"ScaleY",
-				"0.8"
-			});
-			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"GetItemStinger3"
-			});
-			Tween.RunFunction(2f, this, "ExitTransition", new object[0]);
+			Tween.To(m_titlePlate, 0.5f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_title, 0.5f, Back.EaseOut, "delay", "0.1", "ScaleX", "0.8", "ScaleY", "0.8");
+			Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "GetItemStinger3");
+			Tween.RunFunction(2f, this, "ExitTransition");
 		}
 		public void ExitTransition()
 		{
-			Tween.To(typeof(SoundManager), 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"GlobalMusicVolume",
-				m_storedMusicVolume.ToString()
-			});
-			Tween.To(Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_cameraPos.X.ToString(),
-				"Y",
-				m_cameraPos.Y.ToString()
-			});
-			Tween.To(m_spotlight, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_titlePlate, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(m_title, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"0"
-			});
-			Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen", new object[0]);
+			Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", m_storedMusicVolume.ToString());
+			Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_cameraPos.X.ToString(), "Y", m_cameraPos.Y.ToString());
+			Tween.To(m_spotlight, 0.5f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_titlePlate, 0.5f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(m_title, 0.5f, Tween.EaseNone, "Opacity", "0");
+			Tween.To(this, 0.2f, Tween.EaseNone, "delay", "1", "BackBufferOpacity", "0");
+			Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
 		}
 		public override void Draw(GameTime gameTime)
 		{

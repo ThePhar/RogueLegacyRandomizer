@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -35,7 +35,7 @@ namespace RogueCastle
 			m_boss.ChangeSprite("EnemyFairyGhostBossIdle_Character");
 			m_bossShadow.TextureColor = Color.Black;
 			m_bossShadow.Scale = m_boss.Scale;
-			m_bossShadow.PlayAnimation(true);
+			m_bossShadow.PlayAnimation();
 			GameObjList.Add(m_bossShadow);
 			base.Initialize();
 		}
@@ -48,114 +48,44 @@ namespace RogueCastle
 			m_bossShadow.Position = new Vector2(Bounds.Left + 100, Bounds.Top + 400);
 			Player.AttachedLevel.CameraLockedToPlayer = false;
 			Player.AttachedLevel.RunCinematicBorders(11f);
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(Bounds.Left + 900).ToString(),
-				"Y",
-				(Bounds.Top + 400).ToString()
-			});
-			Tween.By(m_bossShadow, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"3000"
-			});
-			Tween.RunFunction(1.8f, this, "Intro2", new object[0]);
-			Tween.RunFunction(0.5f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Flameskull_Whoosh_01"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (Bounds.Left + 900).ToString(), "Y", (Bounds.Top + 400).ToString());
+			Tween.By(m_bossShadow, 0.5f, Tween.EaseNone, "delay", "1", "X", "3000");
+			Tween.RunFunction(1.8f, this, "Intro2");
+			Tween.RunFunction(0.5f, typeof(SoundManager), "PlaySound", "Boss_Flameskull_Whoosh_01");
 			base.OnEnter();
 		}
 		public void Intro2()
 		{
 			m_bossShadow.Position = new Vector2(Bounds.Right - 100, Bounds.Bottom - 400);
 			m_bossShadow.Flip = SpriteEffects.FlipHorizontally;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				(Bounds.Right - 900).ToString(),
-				"Y",
-				(Bounds.Bottom - 400).ToString()
-			});
-			Tween.By(m_bossShadow, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"-3000"
-			});
-			Tween.RunFunction(1.8f, this, "Intro3", new object[0]);
-			Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Flameskull_Whoosh_02"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", (Bounds.Right - 900).ToString(), "Y", (Bounds.Bottom - 400).ToString());
+			Tween.By(m_bossShadow, 0.5f, Tween.EaseNone, "delay", "1", "X", "-3000");
+			Tween.RunFunction(1.8f, this, "Intro3");
+			Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", "Boss_Flameskull_Whoosh_02");
 		}
 		public void Intro3()
 		{
 			m_bossShadow.Position = m_boss.Position;
 			m_bossShadow.X -= 1500f;
 			m_bossShadow.Flip = SpriteEffects.None;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_boss.X.ToString(),
-				"Y",
-				m_boss.Y.ToString()
-			});
-			Tween.By(m_bossShadow, 1f, new Easing(Quad.EaseOut), new string[]
-			{
-				"delay",
-				"1",
-				"X",
-				"1500"
-			});
-			Tween.RunFunction(1.8f, this, "Intro4", new object[0]);
-			Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"Boss_Flameskull_Spawn"
-			});
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_boss.X.ToString(), "Y", m_boss.Y.ToString());
+			Tween.By(m_bossShadow, 1f, Quad.EaseOut, "delay", "1", "X", "1500");
+			Tween.RunFunction(1.8f, this, "Intro4");
+			Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", "Boss_Flameskull_Spawn");
 		}
 		public void Intro4()
 		{
-			m_boss.PlayAnimation(true);
+			m_boss.PlayAnimation();
 			m_bossShadow.ChangeSprite("EnemyFairyGhostBossIdle_Character");
-			m_bossShadow.PlayAnimation(true);
-			Tween.To(m_boss, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"1"
-			});
-			Tween.To(m_bossShadow, 0.5f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.5",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(this, "DisplayBossTitle", new object[]
-			{
-				"The Forgotten",
-				m_boss.Name,
-				"Intro5"
-			});
+			m_bossShadow.PlayAnimation();
+			Tween.To(m_boss, 0.5f, Tween.EaseNone, "delay", "0.5", "Opacity", "1");
+			Tween.To(m_bossShadow, 0.5f, Tween.EaseNone, "delay", "0.5", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(this, "DisplayBossTitle", "The Forgotten", m_boss.Name, "Intro5");
 		}
 		public void Intro5()
 		{
-			Tween.To(Player.AttachedLevel.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0.3",
-				"X",
-				(Player.X + GlobalEV.Camera_XOffset).ToString(),
-				"Y",
-				(Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "BeginFight", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "delay", "0.3", "X", (Player.X + GlobalEV.Camera_XOffset).ToString(), "Y", (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString());
+			Tween.AddEndHandlerToLastTween(this, "BeginFight");
 		}
 		public void BeginFight()
 		{

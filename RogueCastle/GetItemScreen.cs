@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -110,11 +110,7 @@ namespace RogueCastle
 			m_tripStat2.Scale = Vector2.One;
 			if (m_itemType != 7)
 			{
-				(ScreenManager.Game as Game).SaveManager.SaveFiles(new SaveType[]
-				{
-					SaveType.PlayerData,
-					SaveType.UpgradeData
-				});
+				(ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
 			}
 			m_itemSprite.Rotation = 0f;
 			m_itemSprite.Scale = Vector2.One;
@@ -166,14 +162,8 @@ namespace RogueCastle
 					m_tripStat2.Visible = true;
 					m_tripStat1.AnimationDelay = 0.05f;
 					m_tripStat2.AnimationDelay = 0.05f;
-					Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", new object[]
-					{
-						true
-					});
-					Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", new object[]
-					{
-						true
-					});
+					Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", true);
+					Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", true);
 					m_tripStat1FoundText.Text = GetStatText((int)m_tripStatData.X);
 					m_tripStat2FoundText.Text = GetStatText((int)m_tripStatData.Y);
 					m_itemFoundText.Y += 50f;
@@ -203,7 +193,7 @@ namespace RogueCastle
 				}
 				break;
 			}
-			m_itemSprite.PlayAnimation(true);
+			m_itemSprite.PlayAnimation();
 			ItemSpinAnimation();
 			base.OnEnter();
 		}
@@ -212,71 +202,30 @@ namespace RogueCastle
 			m_itemSprite.Scale = Vector2.One;
 			m_itemSprite.Position = m_itemStartPos;
 			m_buildUpSound = SoundManager.PlaySound("GetItemBuildupStinger");
-			Tween.To(typeof(SoundManager), 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"GlobalMusicVolume",
-				(m_storedMusicVolume * 0.1f).ToString()
-			});
+			Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", (m_storedMusicVolume * 0.1f).ToString());
 			m_itemSprite.Scale = new Vector2(35f / m_itemSprite.Height, 35f / m_itemSprite.Height);
-			Tween.By(m_itemSprite, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"Y",
-				"-150"
-			});
-			Tween.RunFunction(0.7f, this, "ItemSpinAnimation2", new object[0]);
+			Tween.By(m_itemSprite, 0.5f, Back.EaseOut, "Y", "-150");
+			Tween.RunFunction(0.7f, this, "ItemSpinAnimation2");
 			m_tripStat1.Scale = Vector2.One;
 			m_tripStat2.Scale = Vector2.One;
 			m_tripStat1.Position = m_itemStartPos;
 			m_tripStat2.Position = m_itemStartPos;
-			Tween.By(m_tripStat1, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"Y",
-				"-150",
-				"X",
-				"50"
-			});
+			Tween.By(m_tripStat1, 0.5f, Back.EaseOut, "Y", "-150", "X", "50");
 			m_tripStat1.Scale = new Vector2(35f / m_tripStat1.Height, 35f / m_tripStat1.Height);
-			Tween.By(m_tripStat2, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"Y",
-				"-150",
-				"X",
-				"-50"
-			});
+			Tween.By(m_tripStat2, 0.5f, Back.EaseOut, "Y", "-150", "X", "-50");
 			m_tripStat2.Scale = new Vector2(35f / m_tripStat2.Height, 35f / m_tripStat2.Height);
 		}
 		public void ItemSpinAnimation2()
 		{
-			Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", new object[]
-			{
-				"GetItemStinger3"
-			});
+			Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", "GetItemStinger3");
 			if (m_buildUpSound != null && m_buildUpSound.IsPlaying)
 			{
 				m_buildUpSound.Stop(AudioStopOptions.AsAuthored);
 			}
-			Tween.To(m_itemSprite, 0.2f, new Easing(Quad.EaseOut), new string[]
-			{
-				"ScaleX",
-				"0.1",
-				"ScaleY",
-				"0.1"
-			});
-			Tween.AddEndHandlerToLastTween(this, "ItemSpinAnimation3", new object[0]);
-			Tween.To(m_tripStat1, 0.2f, new Easing(Quad.EaseOut), new string[]
-			{
-				"ScaleX",
-				"0.1",
-				"ScaleY",
-				"0.1"
-			});
-			Tween.To(m_tripStat2, 0.2f, new Easing(Quad.EaseOut), new string[]
-			{
-				"ScaleX",
-				"0.1",
-				"ScaleY",
-				"0.1"
-			});
+			Tween.To(m_itemSprite, 0.2f, Quad.EaseOut, "ScaleX", "0.1", "ScaleY", "0.1");
+			Tween.AddEndHandlerToLastTween(this, "ItemSpinAnimation3");
+			Tween.To(m_tripStat1, 0.2f, Quad.EaseOut, "ScaleX", "0.1", "ScaleY", "0.1");
+			Tween.To(m_tripStat2, 0.2f, Quad.EaseOut, "ScaleX", "0.1", "ScaleY", "0.1");
 		}
 		public void ItemSpinAnimation3()
 		{
@@ -284,82 +233,24 @@ namespace RogueCastle
 			m_itemSprite.Scale = Vector2.One;
 			float num = 130f / m_itemSprite.Height;
 			m_itemSprite.Scale = scale;
-			Tween.To(m_itemSprite, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleX",
-				num.ToString(),
-				"ScaleY",
-				num.ToString()
-			});
-			Tween.To(m_itemSprite, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				660.ToString(),
-				"Y",
-				390.ToString()
-			});
-			Tween.To(m_itemFoundText, 0.3f, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_continueText, 0.3f, new Easing(Linear.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_itemSprite, 0.2f, Tween.EaseNone, "ScaleX", num.ToString(), "ScaleY", num.ToString());
+			Tween.To(m_itemSprite, 0.2f, Tween.EaseNone, "X", 660.ToString(), "Y", 390.ToString());
+			Tween.To(m_itemFoundText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_continueText, 0.3f, Linear.EaseNone, "Opacity", "1");
 			scale = m_tripStat1.Scale;
 			m_tripStat1.Scale = Vector2.One;
 			num = 130f / m_tripStat1.Height;
 			m_tripStat1.Scale = scale;
-			Tween.To(m_tripStat1, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleX",
-				num.ToString(),
-				"ScaleY",
-				num.ToString()
-			});
-			Tween.To(m_tripStat1, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				830.ToString(),
-				"Y",
-				390.ToString()
-			});
+			Tween.To(m_tripStat1, 0.2f, Tween.EaseNone, "ScaleX", num.ToString(), "ScaleY", num.ToString());
+			Tween.To(m_tripStat1, 0.2f, Tween.EaseNone, "X", 830.ToString(), "Y", 390.ToString());
 			scale = m_tripStat2.Scale;
 			m_tripStat2.Scale = Vector2.One;
 			num = 130f / m_tripStat2.Height;
 			m_tripStat2.Scale = scale;
-			Tween.To(m_tripStat2, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"ScaleX",
-				num.ToString(),
-				"ScaleY",
-				num.ToString()
-			});
-			Tween.To(m_tripStat2, 0.2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"X",
-				490.ToString(),
-				"Y",
-				390.ToString()
-			});
-			Tween.To(m_tripStat1FoundText, 0.3f, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(m_tripStat2FoundText, 0.3f, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
+			Tween.To(m_tripStat2, 0.2f, Tween.EaseNone, "ScaleX", num.ToString(), "ScaleY", num.ToString());
+			Tween.To(m_tripStat2, 0.2f, Tween.EaseNone, "X", 490.ToString(), "Y", 390.ToString());
+			Tween.To(m_tripStat1FoundText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(m_tripStat2FoundText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
 			for (int i = 0; i < m_levelUpParticles.Length; i++)
 			{
 				m_levelUpParticles[i].AnimationDelay = 0f;
@@ -369,62 +260,27 @@ namespace RogueCastle
 				m_levelUpParticles[i].Position = new Vector2(660f, 360f);
 				m_levelUpParticles[i].Position += new Vector2(CDGMath.RandomInt(-100, 100), CDGMath.RandomInt(-50, 50));
 				float duration = CDGMath.RandomFloat(0f, 0.5f);
-				Tween.To(m_levelUpParticles[i], 0.2f, new Easing(Linear.EaseNone), new string[]
-				{
-					"delay",
-					duration.ToString(),
-					"Opacity",
-					"1"
-				});
-				Tween.To(m_levelUpParticles[i], 0.5f, new Easing(Linear.EaseNone), new string[]
-				{
-					"delay",
-					duration.ToString(),
-					"ScaleX",
-					"2",
-					"ScaleY",
-					"2"
-				});
-				Tween.To(m_levelUpParticles[i], duration, new Easing(Linear.EaseNone), new string[0]);
-				Tween.AddEndHandlerToLastTween(m_levelUpParticles[i], "PlayAnimation", new object[]
-				{
-					false
-				});
+				Tween.To(m_levelUpParticles[i], 0.2f, Linear.EaseNone, "delay", duration.ToString(), "Opacity", "1");
+				Tween.To(m_levelUpParticles[i], 0.5f, Linear.EaseNone, "delay", duration.ToString(), "ScaleX", "2", "ScaleY", "2");
+				Tween.To(m_levelUpParticles[i], duration, Linear.EaseNone);
+				Tween.AddEndHandlerToLastTween(m_levelUpParticles[i], "PlayAnimation", false);
 			}
 			m_itemFoundSprite.Position = new Vector2(660f, 190f);
 			m_itemFoundSprite.Scale = Vector2.Zero;
 			m_itemFoundSprite.Visible = true;
-			Tween.To(m_itemFoundSprite, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"delay",
-				"0.05",
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
+			Tween.To(m_itemFoundSprite, 0.5f, Back.EaseOut, "delay", "0.05", "ScaleX", "1", "ScaleY", "1");
 			m_levelUpBGImage.Position = m_itemFoundSprite.Position;
 			m_levelUpBGImage.Y += 30f;
 			m_levelUpBGImage.Scale = Vector2.Zero;
 			m_levelUpBGImage.Visible = true;
-			Tween.To(m_levelUpBGImage, 0.5f, new Easing(Back.EaseOut), new string[]
-			{
-				"ScaleX",
-				"1",
-				"ScaleY",
-				"1"
-			});
-			Tween.To(this, 0.5f, new Easing(Linear.EaseNone), new string[]
-			{
-				"BackBufferOpacity",
-				"0.5"
-			});
+			Tween.To(m_levelUpBGImage, 0.5f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+			Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "0.5");
 			if (m_itemSpinning)
 			{
 				m_itemSprite.Rotation = -25f;
 			}
 			m_itemSpinning = false;
-			Tween.RunFunction(0.5f, this, "UnlockControls", new object[0]);
+			Tween.RunFunction(0.5f, this, "UnlockControls");
 		}
 		public void UnlockControls()
 		{
@@ -441,88 +297,18 @@ namespace RogueCastle
 				return;
 			}
 			m_lockControls = true;
-			Tween.To(typeof(SoundManager), 1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"GlobalMusicVolume",
-				m_storedMusicVolume.ToString()
-			});
-			Tween.To(m_itemSprite, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_itemFoundText, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"delay",
-				"0.1",
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(this, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"BackBufferOpacity",
-				"0"
-			});
-			Tween.To(m_levelUpBGImage, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_itemFoundSprite, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"delay",
-				"0.1",
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_continueText, 0.4f, new Easing(Linear.EaseNone), new string[]
-			{
-				"delay",
-				"0.1",
-				"Opacity",
-				"0"
-			});
-			Tween.AddEndHandlerToLastTween(ScreenManager as RCScreenManager, "HideCurrentScreen", new object[0]);
-			Tween.To(m_tripStat1, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_tripStat2, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_tripStat1FoundText, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"delay",
-				"0.1",
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
-			Tween.To(m_tripStat2FoundText, 0.4f, new Easing(Back.EaseIn), new string[]
-			{
-				"delay",
-				"0.1",
-				"ScaleX",
-				"0",
-				"ScaleY",
-				"0"
-			});
+			Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", m_storedMusicVolume.ToString());
+			Tween.To(m_itemSprite, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_itemFoundText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
+			Tween.To(this, 0.4f, Back.EaseIn, "BackBufferOpacity", "0");
+			Tween.To(m_levelUpBGImage, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_itemFoundSprite, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_continueText, 0.4f, Linear.EaseNone, "delay", "0.1", "Opacity", "0");
+			Tween.AddEndHandlerToLastTween(ScreenManager as RCScreenManager, "HideCurrentScreen");
+			Tween.To(m_tripStat1, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_tripStat2, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_tripStat1FoundText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
+			Tween.To(m_tripStat2FoundText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
 		}
 		public override void Update(GameTime gameTime)
 		{

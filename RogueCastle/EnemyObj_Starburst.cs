@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -152,127 +152,99 @@ namespace RogueCastle
 			};
 			LogicSet logicSet = new LogicSet(this);
 			projectileData.Angle = new Vector2(0f, 0f);
-			logicSet.AddAction(new RunFunctionLogicAction(this, "FireAnimation", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Eyeball_ProjectileAttack"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
+			logicSet.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(90f, 90f);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(180f, 180f);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(1f, 1f, false), Types.Sequence.Serial);
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
+			logicSet.AddAction(new DelayLogicAction(1f, 1f));
 			logicSet.Tag = 2;
 			LogicSet logicSet2 = new LogicSet(this);
 			projectileData.Angle = new Vector2(45f, 45f);
-			logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45), Types.Sequence.Serial);
-			logicSet2.AddAction(new RunFunctionLogicAction(this, "FireAnimation", new object[0]), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Eyeball_ProjectileAttack"
-			}), Types.Sequence.Serial);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
+			logicSet2.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
+			logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
+			logicSet2.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(135f, 135f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-135f, -135f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(90f, 90f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(180f, 180f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(0f, 0f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(1f, 1f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
+			logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
+			logicSet2.AddAction(new DelayLogicAction(1f, 1f));
 			logicSet2.Tag = 2;
 			LogicSet logicSet3 = new LogicSet(this);
 			projectileData.Angle = new Vector2(45f, 45f);
 			projectileData.CollidesWithTerrain = false;
 			projectileData.SpriteName = "GhostProjectile_Sprite";
-			logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45), Types.Sequence.Serial);
-			logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation", new object[0]), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(FireballDelay, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Eyeball_ProjectileAttack"
-			}), Types.Sequence.Serial);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
+			logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
+			logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
+			logicSet3.AddAction(new DelayLogicAction(FireballDelay));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(135f, 135f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-135f, -135f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(90f, 90f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(180f, 180f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(0f, 0f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(1f, 1f, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation", new object[0]), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Eyeball_ProjectileAttack"
-			}), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
+			logicSet3.AddAction(new DelayLogicAction(1f, 1f));
+			logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
 			projectileData.Angle = new Vector2(25f, 25f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-25f, -25f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(115f, 115f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-115f, -115f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-70f, -70f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(70f, 70f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(160f, 160f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-160f, -160f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(1.25f, 1.25f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
+			logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
+			logicSet3.AddAction(new DelayLogicAction(1.25f, 1.25f));
 			logicSet3.Tag = 2;
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new DelayLogicAction(0.5f, 0.5f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet4
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet4
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet3,
-				logicSet4
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2,
-				logicSet4
-			});
+			logicSet4.AddAction(new DelayLogicAction(0.5f, 0.5f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet4);
+			m_generalAdvancedLB.AddLogicSet(logicSet2, logicSet4);
+			m_generalExpertLB.AddLogicSet(logicSet3, logicSet4);
+			m_generalMiniBossLB.AddLogicSet(logicSet2, logicSet4);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
@@ -283,7 +255,7 @@ namespace RogueCastle
 		public void FireAnimation()
 		{
 			ChangeSprite("EnemyStarburstAttack_Character");
-			(_objectList[0] as IAnimateableObj).PlayAnimation(true);
+			(_objectList[0] as IAnimateableObj).PlayAnimation();
 			(_objectList[1] as IAnimateableObj).PlayAnimation(false);
 		}
 		protected override void RunBasicLogic()
@@ -291,11 +263,7 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 0, 100);
 				return;
 			case 1:
 			case 2:
@@ -317,11 +285,7 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 0, 100);
 				return;
 			case 1:
 			case 2:
@@ -343,11 +307,7 @@ namespace RogueCastle
 			switch (State)
 			{
 			case 0:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					0,
-					100
-				});
+				RunLogicBlock(true, m_generalExpertLB, 0, 100);
 				return;
 			case 1:
 			case 2:

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -445,12 +445,7 @@ namespace RogueCastle
 						Vector2 value = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation, Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
 						if (value != Vector2.Zero)
 						{
-							SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-							{
-								"Spike_Bounce_01",
-								"Spike_Bounce_02",
-								"Spike_Bounce_03"
-							});
+							SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Spike_Bounce_01", "Spike_Bounce_02", "Spike_Bounce_03");
 							Vector2 heading = Heading;
 							Vector2 vector = new Vector2(value.Y, value.X * -1f);
 							Vector2 pt = 2f * (CDGMath.DotProduct(heading, vector) / CDGMath.DotProduct(vector, vector)) * vector - heading;
@@ -601,38 +596,18 @@ namespace RogueCastle
 				case "SpellDagger_Sprite":
 					if (hitPlayer)
 					{
-						Tween.By(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-						{
-							"Rotation",
-							"270"
-						});
+						Tween.By(this, 0.3f, Linear.EaseNone, "Rotation", "270");
 						int num2 = CDGMath.RandomInt(-50, 50);
 						int num3 = CDGMath.RandomInt(-100, -50);
-						Tween.By(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-						{
-							"X",
-							num2.ToString(),
-							"Y",
-							num3.ToString()
-						});
-						Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-						{
-							"Opacity",
-							"0"
-						});
-						Tween.AddEndHandlerToLastTween(this, "KillProjectile", new object[0]);
+						Tween.By(this, 0.3f, Linear.EaseNone, "X", num2.ToString(), "Y", num3.ToString());
+						Tween.To(this, 0.3f, Linear.EaseNone, "Opacity", "0");
+						Tween.AddEndHandlerToLastTween(this, "KillProjectile");
 						return;
 					}
 					IsWeighted = false;
 					IsCollidable = false;
-					Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-					{
-						"delay",
-						"0.3",
-						"Opacity",
-						"0"
-					});
-					Tween.AddEndHandlerToLastTween(this, "KillProjectile", new object[0]);
+					Tween.To(this, 0.3f, Linear.EaseNone, "delay", "0.3", "Opacity", "0");
+					Tween.AddEndHandlerToLastTween(this, "KillProjectile");
 					return;
 				case "ShurikenProjectile1_Sprite":
 				case "BoneProjectile_Sprite":
@@ -643,19 +618,9 @@ namespace RogueCastle
 					IsCollidable = false;
 					int num4 = CDGMath.RandomInt(-50, 50);
 					int num5 = CDGMath.RandomInt(-100, 100);
-					Tween.By(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-					{
-						"X",
-						num4.ToString(),
-						"Y",
-						num5.ToString()
-					});
-					Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-					{
-						"Opacity",
-						"0"
-					});
-					Tween.AddEndHandlerToLastTween(this, "KillProjectile", new object[0]);
+					Tween.By(this, 0.3f, Linear.EaseNone, "X", num4.ToString(), "Y", num5.ToString());
+					Tween.To(this, 0.3f, Linear.EaseNone, "Opacity", "0");
+					Tween.AddEndHandlerToLastTween(this, "KillProjectile");
 					return;
 				}
 				case "HomingProjectile_Sprite":
@@ -665,11 +630,7 @@ namespace RogueCastle
 					{
 						proceduralLevelScreen.ImpactEffectPool.DisplayExplosionEffect(Position);
 					}
-					SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-					{
-						"MissileExplosion_01",
-						"MissileExplosion_02"
-					});
+					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "MissileExplosion_01", "MissileExplosion_02");
 					KillProjectile();
 					return;
 				}
@@ -678,43 +639,23 @@ namespace RogueCastle
 					IsCollidable = false;
 					AccelerationX = 0f;
 					AccelerationY = 0f;
-					Tween.To(this, 0.3f, new Easing(Tween.EaseNone), new string[]
-					{
-						"Opacity",
-						"0"
-					});
-					Tween.AddEndHandlerToLastTween(this, "KillProjectile", new object[0]);
+					Tween.To(this, 0.3f, Tween.EaseNone, "Opacity", "0");
+					Tween.AddEndHandlerToLastTween(this, "KillProjectile");
 					return;
 				case "SpellDamageShield_Sprite":
 				case "SpellDisplacer_Sprite":
-					Tween.To(this, 0.2f, new Easing(Tween.EaseNone), new string[]
-					{
-						"Opacity",
-						"0"
-					});
-					Tween.AddEndHandlerToLastTween(this, "KillProjectile", new object[0]);
+					Tween.To(this, 0.2f, Tween.EaseNone, "Opacity", "0");
+					Tween.AddEndHandlerToLastTween(this, "KillProjectile");
 					return;
 				case "LastBossSwordProjectile_Sprite":
 				{
 					IsCollidable = false;
 					Tween.StopAllContaining(this, false);
-					Tween.By(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-					{
-						"Rotation",
-						"270"
-					});
+					Tween.By(this, 0.3f, Linear.EaseNone, "Rotation", "270");
 					int num6 = CDGMath.RandomInt(-100, -50);
-					Tween.By(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-					{
-						"Y",
-						num6.ToString()
-					});
-					Tween.To(this, 0.3f, new Easing(Linear.EaseNone), new string[]
-					{
-						"Opacity",
-						"0"
-					});
-					Tween.AddEndHandlerToLastTween(this, "KillProjectile", new object[0]);
+					Tween.By(this, 0.3f, Linear.EaseNone, "Y", num6.ToString());
+					Tween.To(this, 0.3f, Linear.EaseNone, "Opacity", "0");
+					Tween.AddEndHandlerToLastTween(this, "KillProjectile");
 					return;
 				}
 				case "SpellNuke_Sprite":
@@ -738,12 +679,7 @@ namespace RogueCastle
 				}
 				if (SpriteName == "WizardIceProjectile_Sprite")
 				{
-					SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-					{
-						"Ice_Wizard_Break_01",
-						"Ice_Wizard_Break_02",
-						"Ice_Wizard_Break_03"
-					});
+					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Ice_Wizard_Break_01", "Ice_Wizard_Break_02", "Ice_Wizard_Break_03");
 				}
 				string text = SpriteName.Replace("_", "Explosion_");
 				ChangeSprite(text);
@@ -755,7 +691,7 @@ namespace RogueCastle
 				{
 					Rotation = 0f;
 				}
-				Tween.RunFunction(0.5f, this, "KillProjectile", new object[0]);
+				Tween.RunFunction(0.5f, this, "KillProjectile");
 			}
 		}
 		public void ActivateEffect()
@@ -771,7 +707,7 @@ namespace RogueCastle
 				CollisionTypeTag = 10;
 				AnimationDelay = 0.0333333351f;
 				Scale = new Vector2(4f, 4f);
-				Tween.RunFunction(0.5f, this, "KillProjectile", new object[0]);
+				Tween.RunFunction(0.5f, this, "KillProjectile");
 				(Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).ImpactEffectPool.DisplayExplosionEffect(Position);
 				return;
 			case 4:

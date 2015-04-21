@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -141,7 +141,7 @@ namespace RogueCastle
 		}
 		public override void OnEnter()
 		{
-			SoundManager.StopMusic(0f);
+			SoundManager.StopMusic();
 			Player.CurrentHealth = Player.MaxHealth;
 			Player.CurrentMana = Player.MaxMana;
 			Game.PlayerStats.HeadPiece = 7;
@@ -156,14 +156,14 @@ namespace RogueCastle
 			Player.Position = new Vector2(10f, 660f - (Player.Bounds.Bottom - Player.Y));
 			Player.State = 1;
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls", new object[0]), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(2.5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0), Types.Sequence.Serial);
+			logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
+			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+			logicSet.AddAction(new PlayAnimationLogicAction());
+			logicSet.AddAction(new DelayLogicAction(2.5f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0));
 			Player.RunExternalLogicSet(logicSet);
-			Tween.RunFunction(2f, this, "Intro1", new object[0]);
+			Tween.RunFunction(2f, this, "Intro1");
 			base.OnEnter();
 		}
 		public void Intro1()
@@ -176,21 +176,21 @@ namespace RogueCastle
 			list.Add(m_introText);
 			list.Add(false);
 			Game.ScreenManager.DisplayScreen(22, false, list);
-			Tween.RunFunction(3f, this, "Intro2", new object[0]);
+			Tween.RunFunction(3f, this, "Intro2");
 		}
 		public void Intro2()
 		{
 			m_inSecondPart = true;
-			Tween.RunFunction(3f, Player.AttachedLevel, "LightningEffectTwice", new object[0]);
+			Tween.RunFunction(3f, Player.AttachedLevel, "LightningEffectTwice");
 			LogicSet logicSet = new LogicSet(Player);
-			logicSet.AddAction(new DelayLogicAction(5f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f), -1f), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(true), Types.Sequence.Serial);
-			logicSet.AddAction(new DelayLogicAction(0.7f, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0), Types.Sequence.Serial);
+			logicSet.AddAction(new DelayLogicAction(5f));
+			logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
+			logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
+			logicSet.AddAction(new PlayAnimationLogicAction());
+			logicSet.AddAction(new DelayLogicAction(0.7f));
+			logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0));
 			Player.RunExternalLogicSet(logicSet);
-			Tween.RunFunction(5.3f, this, "Intro3", new object[0]);
+			Tween.RunFunction(5.3f, this, "Intro3");
 		}
 		public void Intro3()
 		{
@@ -203,7 +203,7 @@ namespace RogueCastle
 			list.Add(m_introText);
 			list.Add(false);
 			Game.ScreenManager.DisplayScreen(22, false, list);
-			Tween.RunFunction(4f, this, "Intro4", new object[0]);
+			Tween.RunFunction(4f, this, "Intro4");
 		}
 		public void Intro4()
 		{

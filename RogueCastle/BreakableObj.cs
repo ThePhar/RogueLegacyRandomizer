@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -103,38 +103,11 @@ namespace RogueCastle
 				{
 					for (int i = 0; i < NumChildren; i++)
 					{
-						Tween.By(GetChildAt(i), 0.3f, new Easing(Linear.EaseNone), new string[]
-						{
-							"X",
-							CDGMath.RandomInt(-50, 50).ToString(),
-							"Y",
-							"50",
-							"Rotation",
-							CDGMath.RandomInt(-360, 360).ToString()
-						});
-						Tween.To(GetChildAt(i), 0.1f, new Easing(Linear.EaseNone), new string[]
-						{
-							"delay",
-							"0.2",
-							"Opacity",
-							"0"
-						});
+						Tween.By(GetChildAt(i), 0.3f, Linear.EaseNone, "X", CDGMath.RandomInt(-50, 50).ToString(), "Y", "50", "Rotation", CDGMath.RandomInt(-360, 360).ToString());
+						Tween.To(GetChildAt(i), 0.1f, Linear.EaseNone, "delay", "0.2", "Opacity", "0");
 					}
-					SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-					{
-						"EnemyHit1",
-						"EnemyHit2",
-						"EnemyHit3",
-						"EnemyHit4",
-						"EnemyHit5",
-						"EnemyHit6"
-					});
-					SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-					{
-						"Break1",
-						"Break2",
-						"Break3"
-					});
+					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4", "EnemyHit5", "EnemyHit6");
+					SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Break1", "Break2", "Break3");
 					if (Game.PlayerStats.Traits.X == 15f || Game.PlayerStats.Traits.Y == 15f)
 					{
 						player.CurrentMana += 1f;
@@ -164,13 +137,8 @@ namespace RogueCastle
 							enemyObj_Chicken.SaveToFile = false;
 							player.AttachedLevel.AddEnemyToCurrentRoom(enemyObj_Chicken);
 							enemyObj_Chicken.IsCollidable = false;
-							Tween.RunFunction(0.2f, enemyObj_Chicken, "MakeCollideable", new object[0]);
-							SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-							{
-								"Chicken_Cluck_01",
-								"Chicken_Cluck_02",
-								"Chicken_Cluck_03"
-							});
+							Tween.RunFunction(0.2f, enemyObj_Chicken, "MakeCollideable");
+							SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chicken_Cluck_01", "Chicken_Cluck_02", "Chicken_Cluck_03");
 							break;
 						}
 						else
@@ -201,38 +169,11 @@ namespace RogueCastle
 			}
 			for (int k = 0; k < NumChildren; k++)
 			{
-				Tween.By(GetChildAt(k), 0.3f, new Easing(Linear.EaseNone), new string[]
-				{
-					"X",
-					CDGMath.RandomInt(-50, 50).ToString(),
-					"Y",
-					"50",
-					"Rotation",
-					CDGMath.RandomInt(-360, 360).ToString()
-				});
-				Tween.To(GetChildAt(k), 0.1f, new Easing(Linear.EaseNone), new string[]
-				{
-					"delay",
-					"0.2",
-					"Opacity",
-					"0"
-				});
+				Tween.By(GetChildAt(k), 0.3f, Linear.EaseNone, "X", CDGMath.RandomInt(-50, 50).ToString(), "Y", "50", "Rotation", CDGMath.RandomInt(-360, 360).ToString());
+				Tween.To(GetChildAt(k), 0.1f, Linear.EaseNone, "delay", "0.2", "Opacity", "0");
 			}
-			SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-			{
-				"EnemyHit1",
-				"EnemyHit2",
-				"EnemyHit3",
-				"EnemyHit4",
-				"EnemyHit5",
-				"EnemyHit6"
-			});
-			SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-			{
-				"Break1",
-				"Break2",
-				"Break3"
-			});
+			SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4", "EnemyHit5", "EnemyHit6");
+			SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Break1", "Break2", "Break3");
 			if (Game.PlayerStats.Traits.X == 15f || Game.PlayerStats.Traits.Y == 15f)
 			{
 				player.CurrentMana += 1f;

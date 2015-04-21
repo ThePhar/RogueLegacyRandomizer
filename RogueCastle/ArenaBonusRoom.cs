@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -177,16 +177,8 @@ namespace RogueCastle
 		private void DisplayChest()
 		{
 			m_chest.IsLocked = false;
-			Tween.To(m_chest, 2f, new Easing(Tween.EaseNone), new string[]
-			{
-				"Opacity",
-				"1"
-			});
-			Tween.By(m_chest, 2f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Y",
-				"200"
-			});
+			Tween.To(m_chest, 2f, Tween.EaseNone, "Opacity", "1");
+			Tween.By(m_chest, 2f, Quad.EaseOut, "Y", "200");
 		}
 		public override void Dispose()
 		{

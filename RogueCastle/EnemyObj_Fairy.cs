@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -194,192 +194,112 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostMove_Character", true, true), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyMove1",
-				"FairyMove2",
-				"FairyMove3"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new ChaseLogicAction(m_target, true, 1f, -1f), Types.Sequence.Serial);
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostMove_Character"));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyMove1", "FairyMove2", "FairyMove3"));
+			logicSet.AddAction(new ChaseLogicAction(m_target, true, 1f));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChaseLogicAction(m_target, false, 0.5f, -1f), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet2.AddAction(new ChaseLogicAction(m_target, false, 0.5f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.5f, 0.75f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.5f, 0.75f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostShoot_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostShoot_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet4.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", false));
+			logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet4.AddAction(new DelayLogicAction(0.25f));
+			logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostShoot_Character", false, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.15f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet5.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostShoot_Character", false, false));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet5.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", false));
+			logicSet5.AddAction(new DelayLogicAction(0.15f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", false));
+			logicSet5.AddAction(new DelayLogicAction(0.15f));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", false));
+			logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet5.AddAction(new DelayLogicAction(0.25f));
+			logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet5.Tag = 2;
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostShoot_Character", false, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostShoot_Character", false, false));
+			logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet6.AddAction(new DelayLogicAction(AttackDelay));
 			ThrowEightProjectiles(logicSet6);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new DelayLogicAction(0.25f));
 			ThrowEightProjectiles(logicSet6);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new DelayLogicAction(0.25f));
 			ThrowEightProjectiles(logicSet6);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new DelayLogicAction(0.25f));
 			ThrowEightProjectiles(logicSet6);
-			logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet6.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
+			logicSet6.AddAction(new DelayLogicAction(0.25f));
+			logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet6.Tag = 2;
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossMove_Character", true, true), Types.Sequence.Serial);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyMove1",
-				"FairyMove2",
-				"FairyMove3"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new ChaseLogicAction(m_target, true, 1f, -1f), Types.Sequence.Serial);
+			logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossMove_Character"));
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyMove1", "FairyMove2", "FairyMove3"));
+			logicSet7.AddAction(new ChaseLogicAction(m_target, true, 1f));
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChaseLogicAction(m_target, false, 0.5f, -1f), Types.Sequence.Serial);
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character"));
+			logicSet8.AddAction(new ChaseLogicAction(m_target, false, 0.5f));
 			LogicSet logicSet9 = new LogicSet(this);
-			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet9.AddAction(new DelayLogicAction(0.5f, 0.75f, false), Types.Sequence.Serial);
+			logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet9.AddAction(new DelayLogicAction(0.5f, 0.75f));
 			LogicSet logicSet10 = new LogicSet(this);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(true, 0), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossShoot_Character", false, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(AttackDelay, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossShoot_Character", false, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "End", false), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossMove_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet10.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
-			logicSet10.AddAction(new LockFaceDirectionLogicAction(false, 0), Types.Sequence.Serial);
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character"));
+			logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossShoot_Character", false, false));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character"));
+			logicSet10.AddAction(new DelayLogicAction(AttackDelay));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossShoot_Character", false, false));
+			logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "End"));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossMove_Character"));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", true));
+			logicSet10.AddAction(new DelayLogicAction(0.25f));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", true));
+			logicSet10.AddAction(new DelayLogicAction(0.25f));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", true));
+			logicSet10.AddAction(new DelayLogicAction(0.25f));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", true));
+			logicSet10.AddAction(new DelayLogicAction(0.25f));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", true));
+			logicSet10.AddAction(new DelayLogicAction(0.25f));
+			logicSet10.AddAction(new RunFunctionLogicAction(this, "ThrowFourProjectiles", true));
+			logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character"));
+			logicSet10.AddAction(new DelayLogicAction(0.25f));
+			logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
 			logicSet10.Tag = 2;
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet5
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet6
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7,
-				logicSet8,
-				logicSet9,
-				logicSet10
-			});
-			m_generalNeoLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet7,
-				logicSet8,
-				logicSet9,
-				logicSet10
-			});
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4);
+			m_generalAdvancedLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet5);
+			m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet6);
+			m_generalMiniBossLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
+			m_generalNeoLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
 			if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
 			{
-				m_generalCooldownLB.AddLogicSet(new LogicSet[]
-				{
-					logicSet7,
-					logicSet8,
-					logicSet9
-				});
+				m_generalCooldownLB.AddLogicSet(logicSet7, logicSet8, logicSet9);
 			}
 			else
 			{
-				m_generalCooldownLB.AddLogicSet(new LogicSet[]
-				{
-					logicSet,
-					logicSet2,
-					logicSet3
-				});
+				m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			}
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
@@ -416,12 +336,7 @@ namespace RogueCastle
 			}
 			if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
 			{
-				SoundManager.Play3DSound(this, Game.ScreenManager.Player, new string[]
-				{
-					"Boss_Flameskull_Roar_01",
-					"Boss_Flameskull_Roar_02",
-					"Boss_Flameskull_Roar_03"
-				});
+				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Roar_01", "Boss_Flameskull_Roar_02", "Boss_Flameskull_Roar_03");
 			}
 			else
 			{
@@ -452,30 +367,24 @@ namespace RogueCastle
 				CollidesWithTerrain = false,
 				Scale = ProjectileScale
 			};
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(90f, 90f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(180f, 180f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			ls.AddAction(new DelayLogicAction(0.125f, false), Types.Sequence.Serial);
-			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"FairyAttack1"
-			}), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			ls.AddAction(new DelayLogicAction(0.125f));
+			ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
 			projectileData.Angle = new Vector2(135f, 135f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(45f, 45f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-135f, -135f);
-			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Dispose();
 		}
 		protected override void RunBasicLogic()
@@ -502,13 +411,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					50,
-					10,
-					0,
-					40
-				});
+				RunLogicBlock(true, m_generalBasicLB, 50, 10, 0, 40);
 				return;
 			default:
 				return;
@@ -538,13 +441,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					50,
-					10,
-					0,
-					40
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 50, 10, 0, 40);
 				return;
 			default:
 				return;
@@ -574,13 +471,7 @@ namespace RogueCastle
 			}
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					50,
-					10,
-					0,
-					40
-				});
+				RunLogicBlock(true, m_generalExpertLB, 50, 10, 0, 40);
 				return;
 			default:
 				return;
@@ -613,13 +504,7 @@ namespace RogueCastle
 				}
 				case 2:
 				case 3:
-					RunLogicBlock(true, m_generalMiniBossLB, new int[]
-					{
-						50,
-						10,
-						0,
-						40
-					});
+					RunLogicBlock(true, m_generalMiniBossLB, 50, 10, 0, 40);
 					return;
 				default:
 					return;
@@ -650,13 +535,7 @@ namespace RogueCastle
 				}
 				case 2:
 				case 3:
-					RunLogicBlock(true, m_generalNeoLB, new int[]
-					{
-						50,
-						10,
-						0,
-						40
-					});
+					RunLogicBlock(true, m_generalNeoLB, 50, 10, 0, 40);
 					return;
 				default:
 					return;
@@ -740,7 +619,7 @@ namespace RogueCastle
 		}
 		public EnemyObj_Fairy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty) : base("EnemyFairyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
 		{
-			PlayAnimation(true);
+			PlayAnimation();
 			MainFairy = true;
 			TintablePart = _objectList[0];
 			Type = 7;
@@ -775,7 +654,7 @@ namespace RogueCastle
 			}
 			enemyObj_Fairy.Level = Level - 7 - 1;
 			m_levelScreen.AddEnemyToCurrentRoom(enemyObj_Fairy);
-			enemyObj_Fairy.PlayAnimation(true);
+			enemyObj_Fairy.PlayAnimation();
 			enemyObj_Fairy.MainFairy = false;
 			enemyObj_Fairy.SavedStartingPos = enemyObj_Fairy.Position;
 			enemyObj_Fairy.SaveToFile = false;
@@ -804,14 +683,14 @@ namespace RogueCastle
 			if (m_target.CurrentHealth > 0)
 			{
 				Game.PlayerStats.FairyBossBeaten = true;
-				SoundManager.StopMusic(0f);
+				SoundManager.StopMusic();
 				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "PressStart");
 				m_bossVersionKilled = true;
 				m_target.LockControls();
 				m_levelScreen.PauseScreen();
 				m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
 				m_levelScreen.RunWhiteSlashEffect();
-				Tween.RunFunction(1f, this, "Part2", new object[0]);
+				Tween.RunFunction(1f, this, "Part2");
 				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
 				SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Freeze");
 				GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
@@ -824,7 +703,7 @@ namespace RogueCastle
 			{
 				if (!current.IsKilled)
 				{
-					current.Kill(true);
+					current.Kill();
 				}
 			}
 			m_levelScreen.UnpauseScreen();
@@ -835,42 +714,28 @@ namespace RogueCastle
 			}
 			PauseEnemy(true);
 			ChangeSprite("EnemyFairyGhostBossShoot_Character");
-			PlayAnimation(true);
+			PlayAnimation();
 			m_target.CurrentSpeed = 0f;
 			m_target.ForceInvincible = true;
 			if (IsNeo)
 			{
 				m_target.InvincibleToSpikes = true;
 			}
-			Tween.To(m_levelScreen.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				X.ToString(),
-				"Y",
-				Y.ToString()
-			});
+			Tween.To(m_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
 			m_shake = true;
 			m_shakeTimer = m_shakeDuration;
 			for (int i = 0; i < 40; i++)
 			{
 				Vector2 vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right), CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
-				Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", new object[]
+				Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", this, m_target, new[]
 				{
-					this,
-					m_target,
-					new string[]
-					{
-						"Boss_Explo_01",
-						"Boss_Explo_02",
-						"Boss_Explo_03"
-					}
+				    "Boss_Explo_01",
+				    "Boss_Explo_02",
+				    "Boss_Explo_03"
 				});
-				Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", new object[]
-				{
-					vector
-				});
+				Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
 			}
-			Tween.AddEndHandlerToLastTween(this, "Part3", new object[0]);
+			Tween.AddEndHandlerToLastTween(this, "Part3");
 			if (!IsNeo)
 			{
 				List<int> list = new List<int>();
@@ -886,37 +751,22 @@ namespace RogueCastle
 				{
 					list.Add(2);
 				}
-				CDGMath.Shuffle<int>(list);
+				CDGMath.Shuffle(list);
 				float num = 2.5f / list.Count;
 				for (int m = 0; m < list.Count; m++)
 				{
 					Vector2 position = Position;
 					if (list[m] == 0)
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							position,
-							1,
-							10
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);
 					}
 					else if (list[m] == 1)
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							position,
-							10,
-							100
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 10, 100);
 					}
 					else
 					{
-						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", new object[]
-						{
-							position,
-							11,
-							500
-						});
+						Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 11, 500);
 					}
 				}
 			}
@@ -930,7 +780,7 @@ namespace RogueCastle
 				m_deathLoop.Stop(AudioStopOptions.Immediate);
 			}
 			m_levelScreen.RunWhiteSlash2();
-			base.Kill(true);
+			base.Kill();
 		}
 		public override void Reset()
 		{

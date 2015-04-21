@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -150,176 +150,112 @@ namespace RogueCastle
 				Scale = ProjectileScale
 			};
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Squirm_01",
-				"Enemy_Venus_Squirm_02",
-				"Enemy_Venus_Squirm_03"
-			}), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1, false), Types.Sequence.Serial);
-			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Attack_01"
-			}), Types.Sequence.Serial);
+			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01", "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03"));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
+			logicSet.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
+			logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-75f, -75f);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-105f, -105f);
-			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames, false), Types.Sequence.Serial);
-			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character", true, true), Types.Sequence.Serial);
+			logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
+			logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
 			logicSet.Tag = 2;
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Attack_01"
-			}), Types.Sequence.Serial);
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
+			logicSet2.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
+			logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
 			projectileData.Angle = new Vector2(-60f, -60f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-75f, -75f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-105f, -105f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-120f, -120f);
-			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet2.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames, false), Types.Sequence.Serial);
-			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character", true, true), Types.Sequence.Serial);
+			logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet2.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
+			logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
 			logicSet2.Tag = 2;
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Attack_01"
-			}), Types.Sequence.Serial);
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
+			logicSet3.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
+			logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
 			projectileData.Angle = new Vector2(-45f, -45f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-60f, -60f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-85f, -85f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-95f, -95f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-75f, -75f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-105f, -105f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-120f, -120f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-135f, -135f);
-			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet3.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames, false), Types.Sequence.Serial);
-			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character", true, true), Types.Sequence.Serial);
+			logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet3.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
+			logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
 			logicSet3.Tag = 2;
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Attack_01"
-			}), Types.Sequence.Serial);
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
+			logicSet4.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
+			logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
 			projectileData.Angle = new Vector2(-60f, -60f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-87f, -87f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-90f, -90f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-93f, -93f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-75f, -75f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-105f, -105f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
 			projectileData.Angle = new Vector2(-120f, -120f);
-			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData), Types.Sequence.Serial);
-			logicSet4.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames, false), Types.Sequence.Serial);
-			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character", true, true), Types.Sequence.Serial);
+			logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+			logicSet4.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
+			logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
 			logicSet4.Tag = 2;
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(0.25f, false), Types.Sequence.Serial);
+			logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
+			logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet5.AddAction(new DelayLogicAction(0.25f));
 			LogicSet logicSet6 = new LogicSet(this);
-			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Squirm_01",
-				"Enemy_Venus_Squirm_02",
-				"Enemy_Venus_Squirm_03",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet6.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet6.AddAction(new DelayLogicAction(0.25f, 0.45f, false), Types.Sequence.Serial);
+			logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01", "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03", "Blank", "Blank", "Blank"));
+			logicSet6.AddAction(new MoveLogicAction(m_target, true));
+			logicSet6.AddAction(new DelayLogicAction(0.25f, 0.45f));
 			LogicSet logicSet7 = new LogicSet(this);
-			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Squirm_01",
-				"Enemy_Venus_Squirm_02",
-				"Enemy_Venus_Squirm_03",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet7.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet7.AddAction(new DelayLogicAction(0.25f, 0.45f, false), Types.Sequence.Serial);
+			logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01", "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03", "Blank", "Blank", "Blank"));
+			logicSet7.AddAction(new MoveLogicAction(m_target, false));
+			logicSet7.AddAction(new DelayLogicAction(0.25f, 0.45f));
 			LogicSet logicSet8 = new LogicSet(this);
-			logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, new string[]
-			{
-				"Enemy_Venus_Squirm_01",
-				"Enemy_Venus_Squirm_02",
-				"Enemy_Venus_Squirm_03",
-				"Blank",
-				"Blank",
-				"Blank"
-			}), Types.Sequence.Serial);
-			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character", true, true), Types.Sequence.Serial);
-			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet8.AddAction(new DelayLogicAction(0.25f, 0.45f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet
-			});
-			m_generalAdvancedLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet2
-			});
-			m_generalExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet3
-			});
-			m_generalMiniBossLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet4
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet5
-			});
-			m_generalCooldownExpertLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet6,
-				logicSet7,
-				logicSet8
-			});
+			logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01", "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03", "Blank", "Blank", "Blank"));
+			logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
+			logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet8.AddAction(new DelayLogicAction(0.25f, 0.45f));
+			m_generalBasicLB.AddLogicSet(logicSet);
+			m_generalAdvancedLB.AddLogicSet(logicSet2);
+			m_generalExpertLB.AddLogicSet(logicSet3);
+			m_generalMiniBossLB.AddLogicSet(logicSet4);
+			m_generalCooldownLB.AddLogicSet(logicSet5);
+			m_generalCooldownExpertLB.AddLogicSet(logicSet6, logicSet7, logicSet8);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_generalMiniBossLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
 			logicBlocksToDispose.Add(m_generalCooldownExpertLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				100
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 100);
 			if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
 			{
 				LogicBlock arg_AA5_1 = m_generalCooldownExpertLB;
@@ -340,10 +276,7 @@ namespace RogueCastle
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalBasicLB, new int[]
-				{
-					100
-				});
+				RunLogicBlock(true, m_generalBasicLB, 100);
 				break;
 			default:
 				return;
@@ -358,10 +291,7 @@ namespace RogueCastle
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalAdvancedLB, new int[]
-				{
-					100
-				});
+				RunLogicBlock(true, m_generalAdvancedLB, 100);
 				break;
 			default:
 				return;
@@ -376,10 +306,7 @@ namespace RogueCastle
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalExpertLB, new int[]
-				{
-					100
-				});
+				RunLogicBlock(true, m_generalExpertLB, 100);
 				break;
 			default:
 				return;
@@ -393,10 +320,7 @@ namespace RogueCastle
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(true, m_generalMiniBossLB, new int[]
-				{
-					100
-				});
+				RunLogicBlock(true, m_generalMiniBossLB, 100);
 				return;
 			default:
 				return;

@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -51,55 +51,32 @@ namespace RogueCastle
 		protected override void InitializeLogic()
 		{
 			LogicSet logicSet = new LogicSet(this);
-			logicSet.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
+			logicSet.AddAction(new MoveLogicAction(m_target, true));
 			LogicSet logicSet2 = new LogicSet(this);
-			logicSet2.AddAction(new MoveLogicAction(m_target, false, -1f), Types.Sequence.Serial);
-			logicSet2.AddAction(new DelayLogicAction(0.5f, 1.25f, false), Types.Sequence.Serial);
+			logicSet2.AddAction(new MoveLogicAction(m_target, false));
+			logicSet2.AddAction(new DelayLogicAction(0.5f, 1.25f));
 			LogicSet logicSet3 = new LogicSet(this);
-			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f), Types.Sequence.Serial);
-			logicSet3.AddAction(new DelayLogicAction(0.5f, 1.25f, false), Types.Sequence.Serial);
+			logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
+			logicSet3.AddAction(new DelayLogicAction(0.5f, 1.25f));
 			LogicSet logicSet4 = new LogicSet(this);
-			logicSet4.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResizeProjectile", new object[]
-			{
-				true
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResizeProjectile", new object[]
-			{
-				false
-			}), Types.Sequence.Serial);
-			logicSet4.AddAction(new DelayLogicAction(3f, false), Types.Sequence.Serial);
+			logicSet4.AddAction(new MoveLogicAction(m_target, true));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResizeProjectile", true));
+			logicSet4.AddAction(new RunFunctionLogicAction(this, "ResizeProjectile", false));
+			logicSet4.AddAction(new DelayLogicAction(3f));
 			LogicSet logicSet5 = new LogicSet(this);
-			logicSet5.AddAction(new MoveLogicAction(m_target, true, -1f), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile", new object[0]), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile", new object[0]), Types.Sequence.Serial);
-			logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile", new object[0]), Types.Sequence.Serial);
-			logicSet5.AddAction(new DelayLogicAction(1.3f, false), Types.Sequence.Serial);
-			m_generalBasicLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3,
-				logicSet4,
-				logicSet5
-			});
-			m_generalCooldownLB.AddLogicSet(new LogicSet[]
-			{
-				logicSet,
-				logicSet2,
-				logicSet3
-			});
+			logicSet5.AddAction(new MoveLogicAction(m_target, true));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile"));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile"));
+			logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile"));
+			logicSet5.AddAction(new DelayLogicAction(1.3f));
+			m_generalBasicLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet4, logicSet5);
+			m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
 			logicBlocksToDispose.Add(m_generalBasicLB);
 			logicBlocksToDispose.Add(m_generalAdvancedLB);
 			logicBlocksToDispose.Add(m_generalExpertLB);
 			logicBlocksToDispose.Add(m_generalMiniBossLB);
 			logicBlocksToDispose.Add(m_generalCooldownLB);
-			SetCooldownLogicBlock(m_generalCooldownLB, new int[]
-			{
-				40,
-				40,
-				20
-			});
+			SetCooldownLogicBlock(m_generalCooldownLB, 40, 40, 20);
 			base.InitializeLogic();
 		}
 		public void FireRandomProjectile()
@@ -122,14 +99,7 @@ namespace RogueCastle
 			case 1:
 			case 2:
 			case 3:
-				RunLogicBlock(false, m_generalBasicLB, new int[]
-				{
-					0,
-					0,
-					0,
-					20,
-					80
-				});
+				RunLogicBlock(false, m_generalBasicLB, 0, 0, 0, 20, 80);
 				return;
 			default:
 				return;

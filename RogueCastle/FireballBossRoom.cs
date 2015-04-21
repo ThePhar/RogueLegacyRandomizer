@@ -1,7 +1,7 @@
 /*
   Rogue Legacy Enhanced
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators..
+  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
   Therefore, former creators copyright notice applies to original disassembly. 
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
@@ -47,7 +47,7 @@ namespace RogueCastle
 			for (int i = 0; i < 15; i++)
 			{
 				SpriteObj spriteObj = new SpriteObj("GhostBossProjectile_Sprite");
-				spriteObj.PlayAnimation(true);
+				spriteObj.PlayAnimation();
 				spriteObj.OutlineWidth = 2;
 				spriteObj.Position = CDGMath.GetCirclePosition(num, 300f, m_boss.Position);
 				spriteObj.Scale = new Vector2(2f, 2f);
@@ -65,17 +65,11 @@ namespace RogueCastle
 			Player.LockControls();
 			m_boss.Scale = Vector2.Zero;
 			m_boss.Visible = true;
-			m_boss.PlayAnimation(true);
+			m_boss.PlayAnimation();
 			Player.AttachedLevel.UpdateCamera();
 			Player.AttachedLevel.CameraLockedToPlayer = false;
-			Tween.To(Player.AttachedLevel.Camera, 1f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"X",
-				m_boss.X.ToString(),
-				"Y",
-				m_boss.Y.ToString()
-			});
-			Tween.RunFunction(1.5f, this, "Intro2", new object[0]);
+			Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_boss.X.ToString(), "Y", m_boss.Y.ToString());
+			Tween.RunFunction(1.5f, this, "Intro2");
 			Player.AttachedLevel.RunCinematicBorders(10f);
 			base.OnEnter();
 		}
@@ -84,21 +78,14 @@ namespace RogueCastle
 			float num = 0f;
 			for (int i = 0; i < m_fireList.Count; i++)
 			{
-				Tween.RunFunction(num, this, "DisplayOrb", new object[]
-				{
-					i
-				});
+				Tween.RunFunction(num, this, "DisplayOrb", i);
 				num += 0.1f;
 			}
-			Tween.RunFunction(num + 0.5f, this, "Intro3", new object[0]);
+			Tween.RunFunction(num + 0.5f, this, "Intro3");
 		}
 		public void DisplayOrb(int index)
 		{
-			Tween.To(m_fireList[index], 0.2f, new Easing(Quad.EaseOut), new string[]
-			{
-				"Opacity",
-				"1"
-			});
+			Tween.To(m_fireList[index], 0.2f, Quad.EaseOut, "Opacity", "1");
 			SoundManager.PlaySound("Boss_Fireball_Whoosh_01");
 		}
 		public void Intro3()
@@ -107,53 +94,25 @@ namespace RogueCastle
 			float num = 0f;
 			for (int i = 0; i < m_fireList.Count; i++)
 			{
-				Tween.RunFunction(num, this, "AbsorbOrb", new object[]
-				{
-					i
-				});
+				Tween.RunFunction(num, this, "AbsorbOrb", i);
 				num += 0.1f;
 			}
-			Tween.RunFunction(num + 0.5f, this, "DisplayBossTitle", new object[]
-			{
-				"The Sentinel",
-				m_boss.Name,
-				"Intro4"
-			});
+			Tween.RunFunction(num + 0.5f, this, "DisplayBossTitle", "The Sentinel", m_boss.Name, "Intro4");
 		}
 		public void AbsorbOrb(int index)
 		{
 			SoundManager.PlaySound("Boss_Fireball_Puff_01");
-			Tween.To(m_fireList[index], 0.2f, new Easing(Quad.EaseIn), new string[]
-			{
-				"X",
-				m_boss.X.ToString(),
-				"Y",
-				m_boss.Y.ToString()
-			});
-			Tween.To(m_fireList[index], 0.1f, new Easing(Tween.EaseNone), new string[]
-			{
-				"delay",
-				"0.1",
-				"Opacity",
-				"0"
-			});
+			Tween.To(m_fireList[index], 0.2f, Quad.EaseIn, "X", m_boss.X.ToString(), "Y", m_boss.Y.ToString());
+			Tween.To(m_fireList[index], 0.1f, Tween.EaseNone, "delay", "0.1", "Opacity", "0");
 			m_boss.ScaleX += m_bossStartingScale / 15f;
 			m_boss.ScaleY += m_bossStartingScale / 15f;
 		}
 		public void Intro4()
 		{
 			m_boss.Visible = true;
-			m_boss.PlayAnimation(true);
-			Tween.To(Player.AttachedLevel.Camera, 0.5f, new Easing(Quad.EaseInOut), new string[]
-			{
-				"delay",
-				"0.5",
-				"X",
-				(Player.X + GlobalEV.Camera_XOffset).ToString(),
-				"Y",
-				(Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString()
-			});
-			Tween.AddEndHandlerToLastTween(this, "BeginFight", new object[0]);
+			m_boss.PlayAnimation();
+			Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "delay", "0.5", "X", (Player.X + GlobalEV.Camera_XOffset).ToString(), "Y", (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString());
+			Tween.AddEndHandlerToLastTween(this, "BeginFight");
 		}
 		public void BeginFight()
 		{
@@ -185,7 +144,7 @@ namespace RogueCastle
 			}
 			if (!m_cutsceneRunning && !SoundManager.IsMusicPlaying && !m_boss.BossVersionKilled)
 			{
-				SoundManager.PlayMusic("TowerBossSong", true, 0f);
+				SoundManager.PlayMusic("TowerBossSong", true);
 			}
 			base.Update(gameTime);
 		}
