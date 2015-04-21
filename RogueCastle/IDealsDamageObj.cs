@@ -10,11 +10,8 @@
 
 namespace RogueCastle
 {
-	public interface IDealsDamageObj
-	{
-		int Damage
-		{
-			get;
-		}
-	}
+    public interface IDealsDamageObj
+    {
+        int Damage { get; }
+    }
 }
