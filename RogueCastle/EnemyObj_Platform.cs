@@ -42,30 +42,26 @@ namespace RogueCastle
             IsWeighted = false;
             RetractDelay = 3f;
             Name = "Platform";
-            switch (Difficulty)
+            /*switch (Difficulty)
             {
                 case GameTypes.EnemyDifficulty.BASIC:
                 case GameTypes.EnemyDifficulty.ADVANCED:
                 case GameTypes.EnemyDifficulty.EXPERT:
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MINIBOSS:*/
                     //IL_DE:
                     if (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f)
                     {
                         m_isExtended = true;
                         PlayAnimation("EndRetract", "EndRetract");
                     }
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_DE;
         }
 
         public override void Update(GameTime gameTime)
         {
-            bool flag = false;
-            if (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f)
-            {
-                flag = true;
-            }
+            bool flag = (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f);
             if (!flag)
             {
                 if (m_retractCounter > 0f)

@@ -61,29 +61,17 @@ namespace RogueCastle
                 case 9:
                     return "Archmage";
                 case 10:
-                    if (isFemale)
-                    {
-                        return "Barbarian Queen";
-                    }
-                    return "Barbarian King";
+                    return isFemale ? "Barbarian Queen" : "Barbarian King";
                 case 11:
                     return "Assassin";
                 case 12:
                     return "Hokage";
                 case 13:
-                    if (isFemale)
-                    {
-                        return "Spelunkette";
-                    }
-                    return "Spelunker";
+                    return isFemale ? "Spelunkette" : "Spelunker";
                 case 14:
                     return "Spellsword";
                 case 15:
-                    if (isFemale)
-                    {
-                        return "Lich Queen";
-                    }
-                    return "Lich King";
+                    return isFemale ? "Lich Queen" : "Lich King";
                 case 16:
                     return "Dragon";
                 case 17:
@@ -194,11 +182,7 @@ namespace RogueCastle
 
         public static byte GetRandomClass()
         {
-            List<byte> list = new List<byte>();
-            list.Add(0);
-            list.Add(1);
-            list.Add(2);
-            list.Add(3);
+            List<byte> list = new List<byte> {0, 1, 2, 3};
             if (SkillSystem.GetSkill(SkillType.Ninja_Unlock).ModifierAmount > 0f)
             {
                 list.Add(4);

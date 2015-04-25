@@ -189,11 +189,9 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
-            {
-                m_chest = null;
-                base.Dispose();
-            }
+            if (IsDisposed) return;
+            m_chest = null;
+            base.Dispose();
         }
     }
 }

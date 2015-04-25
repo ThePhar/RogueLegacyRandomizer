@@ -7,3 +7,4 @@ changelog.txt
 *.dll
 *.sln
 *.suo
+*.sln.DotSettings.user

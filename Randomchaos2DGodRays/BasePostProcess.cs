@@ -37,16 +37,14 @@ namespace Randomchaos2DGodRays
 
         public virtual void Draw(GameTime gameTime)
         {
-            if (Enabled)
+            if (!Enabled) return;
+            if (sq == null)
             {
-                if (sq == null)
-                {
-                    sq = new ScreenQuad(Game);
-                    sq.Initialize();
-                }
-                effect.CurrentTechnique.Passes[0].Apply();
-                sq.Draw();
+                sq = new ScreenQuad(Game);
+                sq.Initialize();
             }
+            effect.CurrentTechnique.Passes[0].Apply();
+            sq.Draw();
         }
     }
 }

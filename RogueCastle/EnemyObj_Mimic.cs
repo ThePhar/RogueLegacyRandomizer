@@ -159,12 +159,12 @@ namespace RogueCastle
 
         protected override void RunBasicLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     if (!m_isAttacking)
                     {
@@ -176,19 +176,19 @@ namespace RogueCastle
                         return;
                     }
                     RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 
         protected override void RunAdvancedLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     if (!m_isAttacking)
                     {
@@ -200,19 +200,19 @@ namespace RogueCastle
                         return;
                     }
                     RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 
         protected override void RunExpertLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     if (!m_isAttacking)
                     {
@@ -224,19 +224,19 @@ namespace RogueCastle
                         return;
                     }
                     RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 
         protected override void RunMinibossLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     if (!m_isAttacking)
                     {
@@ -248,8 +248,8 @@ namespace RogueCastle
                         return;
                     }
                     RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 

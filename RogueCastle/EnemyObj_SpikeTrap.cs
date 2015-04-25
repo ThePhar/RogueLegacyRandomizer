@@ -50,16 +50,16 @@ namespace RogueCastle
             ExtractDelay = 0.1f;
             DetectionRect = new Rectangle(0, 0, 120, 30);
             Name = "Spike Trap";
-            switch (Difficulty)
+            /*switch (Difficulty)
             {
                 case GameTypes.EnemyDifficulty.BASIC:
                 case GameTypes.EnemyDifficulty.ADVANCED:
                 case GameTypes.EnemyDifficulty.EXPERT:
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MINIBOSS:*/
                     //IL_F5:
                     IsCollidable = false;
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_F5;
         }
 

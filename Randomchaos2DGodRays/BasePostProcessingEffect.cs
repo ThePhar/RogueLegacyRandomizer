@@ -44,27 +44,25 @@ namespace Randomchaos2DGodRays
             lastScene = null;
             for (int i = 0; i < count; i++)
             {
-                if (postProcesses[i].Enabled)
+                if (!postProcesses[i].Enabled) continue;
+                postProcesses[i].HalfPixel = HalfPixel;
+                postProcesses[i].orgBuffer = orgScene;
+                if (postProcesses[i].newScene == null)
                 {
-                    postProcesses[i].HalfPixel = HalfPixel;
-                    postProcesses[i].orgBuffer = orgScene;
-                    if (postProcesses[i].newScene == null)
-                    {
-                        postProcesses[i].newScene = new RenderTarget2D(Game.GraphicsDevice,
-                            Game.GraphicsDevice.Viewport.Width/2, Game.GraphicsDevice.Viewport.Height/2, false,
-                            SurfaceFormat.Color, DepthFormat.None);
-                    }
-                    Game.GraphicsDevice.SetRenderTarget(postProcesses[i].newScene);
-                    if (lastScene == null)
-                    {
-                        lastScene = orgScene;
-                    }
-                    postProcesses[i].BackBuffer = lastScene;
-                    Game.GraphicsDevice.Textures[0] = postProcesses[i].BackBuffer;
-                    postProcesses[i].Draw(gameTime);
-                    Game.GraphicsDevice.SetRenderTarget(null);
-                    lastScene = postProcesses[i].newScene;
+                    postProcesses[i].newScene = new RenderTarget2D(Game.GraphicsDevice,
+                        Game.GraphicsDevice.Viewport.Width/2, Game.GraphicsDevice.Viewport.Height/2, false,
+                        SurfaceFormat.Color, DepthFormat.None);
                 }
+                Game.GraphicsDevice.SetRenderTarget(postProcesses[i].newScene);
+                if (lastScene == null)
+                {
+                    lastScene = orgScene;
+                }
+                postProcesses[i].BackBuffer = lastScene;
+                Game.GraphicsDevice.Textures[0] = postProcesses[i].BackBuffer;
+                postProcesses[i].Draw(gameTime);
+                Game.GraphicsDevice.SetRenderTarget(null);
+                lastScene = postProcesses[i].newScene;
             }
             if (lastScene == null)
             {

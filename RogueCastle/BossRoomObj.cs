@@ -30,16 +30,9 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_bossTitle1 = new TextObj(Game.JunicodeFont);
-            m_bossTitle1.Text = "The Forsaken";
-            m_bossTitle1.OutlineWidth = 2;
-            m_bossTitle1.FontSize = 18f;
-            m_bossTitle2 = new TextObj(Game.JunicodeLargeFont);
-            m_bossTitle2.Text = "Alexander";
-            m_bossTitle2.OutlineWidth = 2;
-            m_bossTitle2.FontSize = 40f;
-            m_bossDivider = new SpriteObj("Blank_Sprite");
-            m_bossDivider.OutlineWidth = 2;
+            m_bossTitle1 = new TextObj(Game.JunicodeFont) {Text = "The Forsaken", OutlineWidth = 2, FontSize = 18f};
+            m_bossTitle2 = new TextObj(Game.JunicodeLargeFont) {Text = "Alexander", OutlineWidth = 2, FontSize = 40f};
+            m_bossDivider = new SpriteObj("Blank_Sprite") {OutlineWidth = 2};
             foreach (DoorObj current in DoorList)
             {
                 m_roomFloor = current.Bounds.Bottom;
@@ -137,16 +130,13 @@ namespace RogueCastle
             }
             if (m_bossChest.Visible && !m_bossChest.IsOpen && BossKilled)
             {
-                if (m_sparkleTimer > 0f)
-                {
-                    m_sparkleTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
-                    if (m_sparkleTimer <= 0f)
-                    {
-                        m_sparkleTimer = 0.5f;
-                        Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect",
-                            new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height/2));
-                    }
-                }
+                if (!(m_sparkleTimer > 0f)) return;
+                m_sparkleTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
+                
+                if (!(m_sparkleTimer <= 0f)) return;
+                m_sparkleTimer = 0.5f;
+                Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect",
+                    new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height/2));
             }
             else if (m_bossChest.Visible && m_bossChest.IsOpen && BossKilled && !m_teleportingOut)
             {

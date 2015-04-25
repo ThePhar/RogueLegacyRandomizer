@@ -47,13 +47,11 @@ namespace Randomchaos2DGodRays
             Scene = scene;
             for (int i = 0; i < count; i++)
             {
-                if (postProcessingEffects[i].Enabled)
-                {
-                    postProcessingEffects[i].HalfPixel = HalfPixel;
-                    postProcessingEffects[i].orgScene = scene;
-                    postProcessingEffects[i].Draw(gameTime, Scene);
-                    Scene = postProcessingEffects[i].lastScene;
-                }
+                if (!postProcessingEffects[i].Enabled) continue;
+                postProcessingEffects[i].HalfPixel = HalfPixel;
+                postProcessingEffects[i].orgScene = scene;
+                postProcessingEffects[i].Draw(gameTime, Scene);
+                Scene = postProcessingEffects[i].lastScene;
             }
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
             spriteBatch.Draw(Scene,

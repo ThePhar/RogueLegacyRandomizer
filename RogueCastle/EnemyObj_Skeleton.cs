@@ -409,12 +409,12 @@ namespace RogueCastle
 
         protected override void RunMinibossLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     if (m_levelScreen.CurrentRoom.ActiveEnemies > 1)
                     {
@@ -428,8 +428,8 @@ namespace RogueCastle
                     }
                     Console.WriteLine("RAGING");
                     RunLogicBlock(true, m_generalMiniBossLB, 0, 0, 10, 0, 90);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 

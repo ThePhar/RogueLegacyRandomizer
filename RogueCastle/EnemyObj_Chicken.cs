@@ -154,61 +154,61 @@ namespace RogueCastle
 
         protected override void RunBasicLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
                 case 3:
-                    //IL_1D:
+                    //IL_1D:*/
                     RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 
         protected override void RunAdvancedLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
                 case 3:
-                    //IL_1D:
+                    //IL_1D:*/
                     RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 
         protected override void RunExpertLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 
         protected override void RunMinibossLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 

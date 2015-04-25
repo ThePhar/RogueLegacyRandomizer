@@ -1479,6 +1479,9 @@ namespace RogueCastle
                 case GameTypes.LevelType.TOWER:
                     SoundManager.PlayMusic("TowerSong", true, 1f);
                     return;
+                default:
+                    SoundManager.PlayMusic("CastleSong", true, 1f);
+                    return;
             }
             //goto IL_A8;
         }

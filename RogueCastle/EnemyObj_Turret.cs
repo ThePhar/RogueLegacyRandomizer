@@ -96,16 +96,16 @@ namespace RogueCastle
 
         protected override void RunBasicLogic()
         {
-            switch (State)
+            /*switch (State)
             {
                 case 0:
                 case 1:
                 case 2:
-                case 3:
+                case 3:*/
                     //IL_1D:
                     RunLogicBlock(false, m_generalBasicLB, 100);
-                    return;
-            }
+                    //return;
+            //}
             //goto IL_1D;
         }
 

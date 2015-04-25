@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 
@@ -1039,11 +1040,11 @@ namespace RogueCastle
                     float num2 = 0f;
                     if (furthestRoomDirection != null)
                     {
-                        if (!(furthestRoomDirection == "Right"))
+                        if (furthestRoomDirection != "Right")
                         {
-                            if (!(furthestRoomDirection == "Left"))
+                            if (furthestRoomDirection != "Left")
                             {
-                                if (!(furthestRoomDirection == "Top"))
+                                if (furthestRoomDirection != "Top")
                                 {
                                     if (furthestRoomDirection == "Bottom")
                                     {
@@ -1354,8 +1355,8 @@ namespace RogueCastle
             Vector2 arg_0C_0 = roomList[0].Position;
             foreach (RoomObj current in roomList)
             {
-                byte[] array = {}; //null;
-                byte[] array2 = {}; //null;
+                byte[] array;// = {}; //null;
+                byte[] array2;// = {}; //null;
                 switch (current.LevelType)
                 {
                     case GameTypes.LevelType.CASTLE:
@@ -1374,6 +1375,10 @@ namespace RogueCastle
                     case GameTypes.LevelType.TOWER:
                         array = LevelEV.TOWER_ENEMY_LIST;
                         array2 = LevelEV.TOWER_ENEMY_DIFFICULTY_LIST;
+                        goto IL_7D;
+                    default:
+                        array = LevelEV.CASTLE_ENEMY_LIST;
+                        array2 = LevelEV.CASTLE_ENEMY_DIFFICULTY_LIST;
                         goto IL_7D;
                 }
                 //goto IL_47;
@@ -1674,9 +1679,8 @@ namespace RogueCastle
             ProceduralLevelScreen proceduralLevelScreen = new ProceduralLevelScreen();
             List<RoomObj> list = new List<RoomObj>();
             int num = 0;
-            for (int i = 0; i < roomInfoList.Length; i++)
+            foreach (Vector4 vector in roomInfoList)
             {
-                Vector4 vector = roomInfoList[i];
                 int num2 = (int) vector.W;
                 RoomObj roomObj;
                 if (num2 < 10000)
@@ -1755,9 +1759,8 @@ namespace RogueCastle
             List<RoomObj> list = new List<RoomObj>();
             List<AreaStruct> list2 = new List<AreaStruct>();
             List<AreaStruct> list3 = new List<AreaStruct>();
-            for (int i = 0; i < areaStructs.Length; i++)
+            foreach (AreaStruct item in areaStructs)
             {
-                AreaStruct item = areaStructs[i];
                 if (item.LevelType == GameTypes.LevelType.CASTLE || item.LevelType == GameTypes.LevelType.GARDEN)
                 {
                     list2.Add(item);
@@ -1818,13 +1821,9 @@ namespace RogueCastle
                                 }
                                 array[j] = CreateArea(num2, areaInfo, list4, doorObj.Room, false);
                             }
-                            foreach (RoomObj current in array[j])
+                            if (array[j].Any(current => current.Name == "EntranceBoss"))
                             {
-                                if (current.Name == "EntranceBoss")
-                                {
-                                    flag = true;
-                                    break;
-                                }
+                                flag = true;
                             }
                             if (!flag)
                             {
@@ -1908,13 +1907,9 @@ namespace RogueCastle
                             {
                                 goto Block_25;
                             }
-                            foreach (RoomObj current2 in array2[k])
+                            if (array2[k].Any(current2 => current2.Name == "EntranceBoss"))
                             {
-                                if (current2.Name == "EntranceBoss")
-                                {
-                                    flag3 = true;
-                                    break;
-                                }
+                                flag3 = true;
                             }
                             if (!flag3)
                             {
@@ -2158,11 +2153,11 @@ namespace RogueCastle
             string result = "";
             if (doorPosition != null)
             {
-                if (!(doorPosition == "Left"))
+                if (doorPosition != "Left")
                 {
-                    if (!(doorPosition == "Right"))
+                    if (doorPosition != "Right")
                     {
-                        if (!(doorPosition == "Top"))
+                        if (doorPosition != "Top")
                         {
                             if (doorPosition == "Bottom")
                             {
@@ -2193,11 +2188,11 @@ namespace RogueCastle
             string doorPosition;
             if ((doorPosition = doorToCheck.DoorPosition) != null)
             {
-                if (!(doorPosition == "Left"))
+                if (doorPosition != "Left")
                 {
-                    if (!(doorPosition == "Right"))
+                    if (doorPosition != "Right")
                     {
-                        if (!(doorPosition == "Top"))
+                        if (doorPosition != "Top")
                         {
                             if (doorPosition == "Bottom")
                             {
@@ -2223,18 +2218,7 @@ namespace RogueCastle
                         doorToCheck.Y - (otherDoorToCheck.Y - otherDoorToCheck.Room.Y));
                 }
             }
-            foreach (RoomObj current in roomList)
-            {
-                if (
-                    CollisionMath.Intersects(
-                        new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height),
-                        new Rectangle((int) zero.X, (int) zero.Y, otherDoorToCheck.Room.Width,
-                            otherDoorToCheck.Room.Height)) || zero.X < 0f)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return roomList.Any(current => CollisionMath.Intersects(new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height), new Rectangle((int) zero.X, (int) zero.Y, otherDoorToCheck.Room.Width, otherDoorToCheck.Room.Height)) || zero.X < 0f);
         }
 
         public static void MoveRoom(RoomObj room, Vector2 newPosition)
@@ -2361,38 +2345,17 @@ namespace RogueCastle
 
         public static RoomObj GetSpecificBossRoom(byte bossRoomType)
         {
-            foreach (RoomObj current in m_bossRoomArray)
-            {
-                if (current.Tag != "" && byte.Parse(current.Tag) == bossRoomType)
-                {
-                    return current;
-                }
-            }
-            return null;
+            return m_bossRoomArray.FirstOrDefault(current => current.Tag != "" && byte.Parse(current.Tag) == bossRoomType);
         }
 
         public static RoomObj GetChallengeRoom(byte bossRoomType)
         {
-            foreach (RoomObj current in m_challengeRoomArray)
-            {
-                if (current.Tag != "" && byte.Parse(current.Tag) == bossRoomType)
-                {
-                    return current;
-                }
-            }
-            return null;
+            return m_challengeRoomArray.FirstOrDefault(current => current.Tag != "" && byte.Parse(current.Tag) == bossRoomType);
         }
 
         public static RoomObj GetChallengeBossRoomFromRoomList(GameTypes.LevelType levelType, List<RoomObj> roomList)
         {
-            foreach (RoomObj current in roomList)
-            {
-                if (current.Name == "ChallengeBoss" && current.LevelType == levelType)
-                {
-                    return current;
-                }
-            }
-            return null;
+            return roomList.FirstOrDefault(current => current.Name == "ChallengeBoss" && current.LevelType == levelType);
         }
 
         public static List<RoomObj>[,] GetLevelTypeRoomArray(GameTypes.LevelType levelType)
@@ -2410,10 +2373,12 @@ namespace RogueCastle
                     return m_dungeonRoomArray;
                 case GameTypes.LevelType.TOWER:
                     return m_towerRoomArray;
+                default:
+                    throw new Exception("Cannot create level of type NONE");
             }
             //goto IL_1C;
             //return new List<RoomObj>[,] {};
-            return null;
+            //return null;
         }
 
         public static void IndexRoomList()
