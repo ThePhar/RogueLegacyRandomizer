@@ -19,17 +19,28 @@ namespace RogueCastle
 {
     public class MapScreen : Screen
     {
-        private MapObj m_mapDisplay;
+        private TextObj m_alzheimersQuestionMarks;
+        private KeyIconTextObj m_continueText;
+        private bool m_isTeleporter;
         private ObjContainer m_legend;
+        private MapObj m_mapDisplay;
+        private KeyIconTextObj m_navigationText;
+        private ObjContainer m_playerIcon;
+        private KeyIconTextObj m_recentreText;
+        private int m_selectedTeleporter;
         private SpriteObj[] m_teleporterList;
         private SpriteObj m_titleText;
-        private ObjContainer m_playerIcon;
-        private int m_selectedTeleporter;
-        private KeyIconTextObj m_continueText;
-        private KeyIconTextObj m_recentreText;
-        private KeyIconTextObj m_navigationText;
-        private TextObj m_alzheimersQuestionMarks;
-        private bool m_isTeleporter;
+
+        public MapScreen(ProceduralLevelScreen level)
+        {
+            m_mapDisplay = new MapObj(false, level);
+            m_alzheimersQuestionMarks = new TextObj(Game.JunicodeLargeFont);
+            m_alzheimersQuestionMarks.FontSize = 30f;
+            m_alzheimersQuestionMarks.ForceDraw = true;
+            m_alzheimersQuestionMarks.Text = "?????";
+            m_alzheimersQuestionMarks.Align = Types.TextAlign.Centre;
+            m_alzheimersQuestionMarks.Position = new Vector2(660f, 360f - m_alzheimersQuestionMarks.Height/2f);
+        }
 
         public bool IsTeleporter
         {
@@ -49,24 +60,13 @@ namespace RogueCastle
             }
         }
 
-        public MapScreen(ProceduralLevelScreen level)
-        {
-            m_mapDisplay = new MapObj(false, level);
-            m_alzheimersQuestionMarks = new TextObj(Game.JunicodeLargeFont);
-            m_alzheimersQuestionMarks.FontSize = 30f;
-            m_alzheimersQuestionMarks.ForceDraw = true;
-            m_alzheimersQuestionMarks.Text = "?????";
-            m_alzheimersQuestionMarks.Align = Types.TextAlign.Centre;
-            m_alzheimersQuestionMarks.Position = new Vector2(660f, 360f - m_alzheimersQuestionMarks.Height/2f);
-        }
-
         private void FindRoomTitlePos(List<RoomObj> roomList, GameTypes.LevelType levelType, out Vector2 pos)
         {
-            float num = 3.40282347E+38f;
-            float num2 = -3.40282347E+38f;
-            float num3 = 3.40282347E+38f;
-            float num4 = -3.40282347E+38f;
-            foreach (RoomObj current in roomList)
+            var num = 3.40282347E+38f;
+            var num2 = -3.40282347E+38f;
+            var num3 = 3.40282347E+38f;
+            var num4 = -3.40282347E+38f;
+            foreach (var current in roomList)
             {
                 if (current.Name != "Boss" &&
                     (current.LevelType == levelType ||
@@ -106,10 +106,10 @@ namespace RogueCastle
             m_mapDisplay.CameraOffset = new Vector2(660f, 360f);
             m_legend = new ObjContainer();
             m_legend.ForceDraw = true;
-            SpriteObj spriteObj = new SpriteObj("TraitsScreenPlate_Sprite");
+            var spriteObj = new SpriteObj("TraitsScreenPlate_Sprite");
             m_legend.AddChild(spriteObj);
             spriteObj.Scale = new Vector2(0.75f, 0.58f);
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.Align = Types.TextAlign.Centre;
             textObj.Position = new Vector2(m_legend.Width/2*spriteObj.ScaleX, m_legend.Bounds.Top + 10);
             textObj.Text = "Legend";
@@ -119,35 +119,35 @@ namespace RogueCastle
             m_legend.AddChild(textObj);
             m_legend.AnimationDelay = 0.0333333351f;
             m_legend.Position = new Vector2(1320 - m_legend.Width - 20, 720 - m_legend.Height - 20);
-            SpriteObj spriteObj2 = new SpriteObj("MapPlayerIcon_Sprite");
+            var spriteObj2 = new SpriteObj("MapPlayerIcon_Sprite");
             spriteObj2.Position = new Vector2(30f, 60f);
             spriteObj2.PlayAnimation();
             m_legend.AddChild(spriteObj2);
-            int num = 30;
-            SpriteObj spriteObj3 = new SpriteObj("MapBossIcon_Sprite");
+            var num = 30;
+            var spriteObj3 = new SpriteObj("MapBossIcon_Sprite");
             spriteObj3.Position = new Vector2(spriteObj2.X, spriteObj2.Y + num);
             spriteObj3.PlayAnimation();
             m_legend.AddChild(spriteObj3);
-            SpriteObj spriteObj4 = new SpriteObj("MapLockedChestIcon_Sprite");
+            var spriteObj4 = new SpriteObj("MapLockedChestIcon_Sprite");
             spriteObj4.Position = new Vector2(spriteObj2.X, spriteObj3.Y + num);
             spriteObj4.PlayAnimation();
             m_legend.AddChild(spriteObj4);
-            SpriteObj spriteObj5 = new SpriteObj("MapFairyChestIcon_Sprite");
+            var spriteObj5 = new SpriteObj("MapFairyChestIcon_Sprite");
             spriteObj5.Position = new Vector2(spriteObj2.X, spriteObj4.Y + num);
             spriteObj5.PlayAnimation();
             m_legend.AddChild(spriteObj5);
-            SpriteObj spriteObj6 = new SpriteObj("MapChestUnlocked_Sprite");
+            var spriteObj6 = new SpriteObj("MapChestUnlocked_Sprite");
             spriteObj6.Position = new Vector2(spriteObj2.X, spriteObj5.Y + num);
             m_legend.AddChild(spriteObj6);
-            SpriteObj spriteObj7 = new SpriteObj("MapTeleporterIcon_Sprite");
+            var spriteObj7 = new SpriteObj("MapTeleporterIcon_Sprite");
             spriteObj7.Position = new Vector2(spriteObj2.X, spriteObj6.Y + num);
             spriteObj7.PlayAnimation();
             m_legend.AddChild(spriteObj7);
-            SpriteObj spriteObj8 = new SpriteObj("MapBonusIcon_Sprite");
+            var spriteObj8 = new SpriteObj("MapBonusIcon_Sprite");
             spriteObj8.Position = new Vector2(spriteObj2.X, spriteObj7.Y + num);
             spriteObj8.PlayAnimation();
             m_legend.AddChild(spriteObj8);
-            TextObj textObj2 = new TextObj(Game.JunicodeFont);
+            var textObj2 = new TextObj(Game.JunicodeFont);
             textObj2.Position = new Vector2(spriteObj2.X + 50f, 55f);
             textObj2.Text =
                 "You are here \nBoss location \nUnopened chest \nFairy chest \nOpened chest \nTeleporter \nBonus Room";
@@ -233,7 +233,7 @@ namespace RogueCastle
             }
             if (IsTeleporter && m_teleporterList.Length > 0)
             {
-                SpriteObj spriteObj = m_teleporterList[m_selectedTeleporter];
+                var spriteObj = m_teleporterList[m_selectedTeleporter];
                 m_playerIcon.Position = new Vector2(spriteObj.X + 7f, spriteObj.Y - 20f);
                 m_mapDisplay.CentreAroundTeleporter(m_selectedTeleporter);
             }
@@ -256,25 +256,25 @@ namespace RogueCastle
             }
             if (!IsTeleporter)
             {
-                float num = 5f;
+                var num = 5f;
                 if (Game.GlobalInput.Pressed(16) || Game.GlobalInput.Pressed(17))
                 {
-                    MapObj expr_7F_cp_0 = m_mapDisplay;
+                    var expr_7F_cp_0 = m_mapDisplay;
                     expr_7F_cp_0.CameraOffset.Y = expr_7F_cp_0.CameraOffset.Y + num;
                 }
                 else if (Game.GlobalInput.Pressed(18) || Game.GlobalInput.Pressed(19))
                 {
-                    MapObj expr_B5_cp_0 = m_mapDisplay;
+                    var expr_B5_cp_0 = m_mapDisplay;
                     expr_B5_cp_0.CameraOffset.Y = expr_B5_cp_0.CameraOffset.Y - num;
                 }
                 if (Game.GlobalInput.Pressed(20) || Game.GlobalInput.Pressed(21))
                 {
-                    MapObj expr_E9_cp_0 = m_mapDisplay;
+                    var expr_E9_cp_0 = m_mapDisplay;
                     expr_E9_cp_0.CameraOffset.X = expr_E9_cp_0.CameraOffset.X + num;
                 }
                 else if (Game.GlobalInput.Pressed(22) || Game.GlobalInput.Pressed(23))
                 {
-                    MapObj expr_11F_cp_0 = m_mapDisplay;
+                    var expr_11F_cp_0 = m_mapDisplay;
                     expr_11F_cp_0.CameraOffset.X = expr_11F_cp_0.CameraOffset.X - num;
                 }
                 if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
@@ -284,7 +284,7 @@ namespace RogueCastle
             }
             else
             {
-                int selectedTeleporter = m_selectedTeleporter;
+                var selectedTeleporter = m_selectedTeleporter;
                 if (Game.GlobalInput.JustPressed(22) || Game.GlobalInput.JustPressed(23))
                 {
                     m_selectedTeleporter++;
@@ -331,7 +331,7 @@ namespace RogueCastle
             if (IsTeleporter && m_teleporterList.Length > 0)
             {
                 m_titleText.Draw(Camera);
-                SpriteObj spriteObj = m_teleporterList[m_selectedTeleporter];
+                var spriteObj = m_teleporterList[m_selectedTeleporter];
                 m_playerIcon.Position = new Vector2(spriteObj.X + 14f, spriteObj.Y - 20f);
                 m_playerIcon.Draw(Camera);
             }

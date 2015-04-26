@@ -19,10 +19,10 @@ namespace RogueCastle
 {
     public class CDGSplashScreen : Screen
     {
-        private SpriteObj m_logo;
-        private TextObj m_loadingText;
-        private bool m_levelDataLoaded;
         private bool m_fadingOut;
+        private bool m_levelDataLoaded;
+        private TextObj m_loadingText;
+        private SpriteObj m_logo;
         private float m_totalElapsedTime;
 
         public override void LoadContent()
@@ -46,7 +46,7 @@ namespace RogueCastle
         {
             m_levelDataLoaded = false;
             m_fadingOut = false;
-            Thread thread = new Thread(LoadLevelData);
+            var thread = new Thread(LoadLevelData);
             thread.Start();
             m_logo.Opacity = 0f;
             Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "0.5", "Opacity", "1");
@@ -107,14 +107,14 @@ namespace RogueCastle
         {
             if (!m_levelDataLoaded && m_logo.Opacity == 1f)
             {
-                float opacity = (float) Math.Abs(Math.Sin(m_totalElapsedTime));
+                var opacity = (float) Math.Abs(Math.Sin(m_totalElapsedTime));
                 m_totalElapsedTime += (float) gameTime.ElapsedGameTime.TotalSeconds;
                 m_loadingText.Opacity = opacity;
             }
             if (m_levelDataLoaded && !m_fadingOut)
             {
                 m_fadingOut = true;
-                float opacity2 = m_logo.Opacity;
+                var opacity2 = m_logo.Opacity;
                 m_logo.Opacity = 1f;
                 Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "1.5", "Opacity", "0");
                 Tween.AddEndHandlerToLastTween(this, "LoadNextScreen");

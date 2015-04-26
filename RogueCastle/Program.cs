@@ -18,7 +18,7 @@ namespace RogueCastle
     {
         private static void Main(string[] args)
         {
-            bool flag = true;
+            var flag = true;
             if (flag)
             {
                 if (LevelEV.CREATE_RETAIL_VERSION)
@@ -47,7 +47,7 @@ namespace RogueCastle
                 }
                 if (args.Length == 1 && !LevelEV.CREATE_RETAIL_VERSION)
                 {
-                    using (Game game = new Game(args[0]))
+                    using (var game = new Game(args[0]))
                     {
                         LevelEV.RUN_TESTROOM = true;
                         LevelEV.DISABLE_SAVING = true;
@@ -59,7 +59,7 @@ namespace RogueCastle
                 {
                     try
                     {
-                        using (Game game2 = new Game())
+                        using (var game2 = new Game())
                         {
                             game2.Run();
                         }
@@ -67,15 +67,15 @@ namespace RogueCastle
                     }
                     catch (Exception ex)
                     {
-                        string str = DateTime.Now.ToString("dd-mm-yyyy_HH-mm-ss");
-                        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                        string path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
+                        var str = DateTime.Now.ToString("dd-mm-yyyy_HH-mm-ss");
+                        var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                        var path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
                         }
-                        string path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "CrashLog_" + str + ".log");
-                        using (StreamWriter streamWriter = new StreamWriter(path2, false))
+                        var path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "CrashLog_" + str + ".log");
+                        using (var streamWriter = new StreamWriter(path2, false))
                         {
                             streamWriter.WriteLine(ex.ToString());
                         }
@@ -85,7 +85,7 @@ namespace RogueCastle
                         return;
                     }
                 }
-                using (Game game3 = new Game())
+                using (var game3 = new Game())
                 {
                     game3.Run();
                 }

@@ -20,23 +20,24 @@ namespace RogueCastle
 {
     public class GameOverBossScreen : Screen
     {
-        private EnemyObj_LastBoss m_lastBoss;
-        private ObjContainer m_dialoguePlate;
-        private KeyIconTextObj m_continueText;
-        private SpriteObj m_playerGhost;
-        private SpriteObj m_king;
-        private SpriteObj m_spotlight;
-        private LineageObj m_playerFrame;
         private FrameSoundObj m_bossFallSound;
         private FrameSoundObj m_bossKneesSound;
+        private KeyIconTextObj m_continueText;
+        private ObjContainer m_dialoguePlate;
         private Vector2 m_initialCameraPos;
+        private SpriteObj m_king;
+        private EnemyObj_LastBoss m_lastBoss;
         private bool m_lockControls;
-        public float BackBufferOpacity { get; set; }
+        private LineageObj m_playerFrame;
+        private SpriteObj m_playerGhost;
+        private SpriteObj m_spotlight;
 
         public GameOverBossScreen()
         {
             DrawIfCovered = true;
         }
+
+        public float BackBufferOpacity { get; set; }
 
         public override void PassInData(List<object> objList)
         {
@@ -54,19 +55,19 @@ namespace RogueCastle
             m_continueText.Opacity = 0f;
             m_continueText.Position = new Vector2(1270f, 30f);
             m_continueText.ForceDraw = true;
-            Vector2 dropShadow = new Vector2(2f, 2f);
-            Color textureColor = new Color(255, 254, 128);
+            var dropShadow = new Vector2(2f, 2f);
+            var textureColor = new Color(255, 254, 128);
             m_dialoguePlate = new ObjContainer("DialogBox_Character");
             m_dialoguePlate.Position = new Vector2(660f, 610f);
             m_dialoguePlate.ForceDraw = true;
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.Align = Types.TextAlign.Centre;
             textObj.Text = "Your valor shown in battle shall never be forgotten.";
             textObj.FontSize = 18f;
             textObj.DropShadow = dropShadow;
             textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height/2 + 25);
             m_dialoguePlate.AddChild(textObj);
-            KeyIconTextObj keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
+            var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 12f;
             keyIconTextObj.Align = Types.TextAlign.Centre;
             keyIconTextObj.Text = "\"Arrrrggghhhh\"";
@@ -74,7 +75,7 @@ namespace RogueCastle
             keyIconTextObj.Y = 10f;
             keyIconTextObj.TextureColor = textureColor;
             m_dialoguePlate.AddChild(keyIconTextObj);
-            TextObj textObj2 = new TextObj(Game.JunicodeFont);
+            var textObj2 = new TextObj(Game.JunicodeFont);
             textObj2.FontSize = 8f;
             textObj2.Text = "-Player X's parting words";
             textObj2.Y = keyIconTextObj.Y;
@@ -147,9 +148,9 @@ namespace RogueCastle
 
         public void DropStats()
         {
-            Vector2 arg_05_0 = Vector2.Zero;
-            float num = 0f;
-            Vector2 topLeftCorner = Camera.TopLeftCorner;
+            var arg_05_0 = Vector2.Zero;
+            var num = 0f;
+            var topLeftCorner = Camera.TopLeftCorner;
             topLeftCorner.X += 200f;
             topLeftCorner.Y += 450f;
             m_king.Position = topLeftCorner;
@@ -163,7 +164,7 @@ namespace RogueCastle
 
         private void SetObjectKilledPlayerText()
         {
-            TextObj textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
+            var textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
             textObj.Text = m_lastBoss.Name + " has been slain by " + Game.PlayerStats.PlayerName;
         }
 

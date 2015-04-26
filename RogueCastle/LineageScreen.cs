@@ -22,25 +22,25 @@ namespace RogueCastle
 {
     public class LineageScreen : Screen
     {
-        private SpriteObj m_titleText;
-        private LineageObj m_startingLineageObj;
-        private LineageObj m_selectedLineageObj;
-        private int m_selectedLineageIndex;
-        private List<LineageObj> m_currentBranchArray;
-        private List<LineageObj> m_masterArray;
-        private Vector2 m_startingPoint;
-        private Vector2 m_currentPoint;
+        private readonly Vector2 m_startingPoint;
+        private readonly int m_xPosOffset = 400;
         private BackgroundObj m_background;
         private SpriteObj m_bgShadow;
-        private TweenObject m_selectTween;
-        private int m_xPosOffset = 400;
-        private ObjContainer m_descriptionPlate;
-        private int m_xShift;
-        private float m_storedMusicVol;
         private KeyIconTextObj m_confirmText;
+        private List<LineageObj> m_currentBranchArray;
+        private Vector2 m_currentPoint;
+        private ObjContainer m_descriptionPlate;
+        private bool m_lockControls;
+        private List<LineageObj> m_masterArray;
         private KeyIconTextObj m_navigationText;
         private KeyIconTextObj m_rerollText;
-        private bool m_lockControls;
+        private int m_selectedLineageIndex;
+        private LineageObj m_selectedLineageObj;
+        private TweenObject m_selectTween;
+        private LineageObj m_startingLineageObj;
+        private float m_storedMusicVol;
+        private SpriteObj m_titleText;
+        private int m_xShift;
 
         public LineageScreen()
         {
@@ -64,12 +64,12 @@ namespace RogueCastle
             m_titleText.X = 660f;
             m_titleText.Y = 72f;
             m_titleText.ForceDraw = true;
-            int num = 20;
+            var num = 20;
             m_descriptionPlate = new ObjContainer("LineageScreenPlate_Character");
             m_descriptionPlate.ForceDraw = true;
             m_descriptionPlate.Position = new Vector2(1320 - m_descriptionPlate.Width - 30,
                 (720 - m_descriptionPlate.Height)/2f);
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
             textObj.Align = Types.TextAlign.Centre;
             textObj.OutlineColour = new Color(181, 142, 39);
@@ -79,14 +79,14 @@ namespace RogueCastle
             textObj.Position = new Vector2(m_descriptionPlate.Width/2f, 15f);
             textObj.LimitCorners = true;
             m_descriptionPlate.AddChild(textObj);
-            TextObj textObj2 = textObj.Clone() as TextObj;
+            var textObj2 = textObj.Clone() as TextObj;
             textObj2.FontSize = 10f;
             textObj2.Text = "Knight";
             textObj2.Align = Types.TextAlign.Left;
             textObj2.X = num;
             textObj2.Y += 40f;
             m_descriptionPlate.AddChild(textObj2);
-            KeyIconTextObj keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
+            var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 8f;
             keyIconTextObj.OutlineColour = textObj2.OutlineColour;
             keyIconTextObj.OutlineWidth = 2;
@@ -98,9 +98,9 @@ namespace RogueCastle
             keyIconTextObj.X = num + 20;
             keyIconTextObj.LimitCorners = true;
             m_descriptionPlate.AddChild(keyIconTextObj);
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
-                TextObj textObj3 = textObj2.Clone() as TextObj;
+                var textObj3 = textObj2.Clone() as TextObj;
                 textObj3.Text = "TraitName";
                 textObj3.X = num;
                 textObj3.Align = Types.TextAlign.Left;
@@ -109,20 +109,20 @@ namespace RogueCastle
                     textObj3.Y = m_descriptionPlate.GetChildAt(m_descriptionPlate.NumChildren - 1).Y + 50f;
                 }
                 m_descriptionPlate.AddChild(textObj3);
-                TextObj textObj4 = textObj2.Clone() as TextObj;
+                var textObj4 = textObj2.Clone() as TextObj;
                 textObj4.Text = "TraitDescription";
                 textObj4.X = num + 20;
                 textObj4.FontSize = 8f;
                 textObj4.Align = Types.TextAlign.Left;
                 m_descriptionPlate.AddChild(textObj4);
             }
-            TextObj textObj5 = textObj2.Clone() as TextObj;
+            var textObj5 = textObj2.Clone() as TextObj;
             textObj5.Text = "SpellName";
             textObj5.FontSize = 10f;
             textObj5.X = num;
             textObj5.Align = Types.TextAlign.Left;
             m_descriptionPlate.AddChild(textObj5);
-            KeyIconTextObj keyIconTextObj2 = new KeyIconTextObj(Game.JunicodeFont);
+            var keyIconTextObj2 = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj2.OutlineColour = new Color(181, 142, 39);
             keyIconTextObj2.OutlineWidth = 2;
             keyIconTextObj2.OverrideParentScale = true;
@@ -136,7 +136,7 @@ namespace RogueCastle
             m_descriptionPlate.AddChild(keyIconTextObj2);
             m_masterArray = new List<LineageObj>();
             m_currentBranchArray = new List<LineageObj>();
-            Vector2 arg_47E_0 = Vector2.Zero;
+            var arg_47E_0 = Vector2.Zero;
             m_confirmText = new KeyIconTextObj(Game.JunicodeFont);
             m_confirmText.ForceDraw = true;
             m_confirmText.FontSize = 12f;
@@ -166,19 +166,19 @@ namespace RogueCastle
 
         private void UpdateDescriptionPlate()
         {
-            LineageObj lineageObj = m_currentBranchArray[m_selectedLineageIndex];
-            TextObj textObj = m_descriptionPlate.GetChildAt(1) as TextObj;
+            var lineageObj = m_currentBranchArray[m_selectedLineageIndex];
+            var textObj = m_descriptionPlate.GetChildAt(1) as TextObj;
             textObj.Text = lineageObj.PlayerName;
-            TextObj textObj2 = m_descriptionPlate.GetChildAt(2) as TextObj;
+            var textObj2 = m_descriptionPlate.GetChildAt(2) as TextObj;
             textObj2.Text = "Class - " + ClassType.ToString(lineageObj.Class, lineageObj.IsFemale);
-            KeyIconTextObj keyIconTextObj = m_descriptionPlate.GetChildAt(3) as KeyIconTextObj;
+            var keyIconTextObj = m_descriptionPlate.GetChildAt(3) as KeyIconTextObj;
             keyIconTextObj.Text = ClassType.Description(lineageObj.Class);
             keyIconTextObj.WordWrap(340);
-            TextObj textObj3 = m_descriptionPlate.GetChildAt(4) as TextObj;
+            var textObj3 = m_descriptionPlate.GetChildAt(4) as TextObj;
             textObj3.Y = keyIconTextObj.Y + keyIconTextObj.Height + 5f;
-            TextObj textObj4 = m_descriptionPlate.GetChildAt(5) as TextObj;
+            var textObj4 = m_descriptionPlate.GetChildAt(5) as TextObj;
             textObj4.Y = textObj3.Y + 30f;
-            int num = (int) textObj3.Y;
+            var num = (int) textObj3.Y;
             if (lineageObj.Traits.X > 0f)
             {
                 textObj3.Text = "Trait - " + TraitType.ToString((byte) lineageObj.Traits.X);
@@ -192,9 +192,9 @@ namespace RogueCastle
                 textObj3.Text = "Traits - None";
                 textObj4.Text = "";
             }
-            TextObj textObj5 = m_descriptionPlate.GetChildAt(6) as TextObj;
+            var textObj5 = m_descriptionPlate.GetChildAt(6) as TextObj;
             textObj5.Y = textObj4.Y + textObj4.Height + 5f;
-            TextObj textObj6 = m_descriptionPlate.GetChildAt(7) as TextObj;
+            var textObj6 = m_descriptionPlate.GetChildAt(7) as TextObj;
             textObj6.Y = textObj5.Y + 30f;
             if (lineageObj.Traits.Y > 0f)
             {
@@ -208,10 +208,10 @@ namespace RogueCastle
                 textObj5.Text = "";
                 textObj6.Text = "";
             }
-            TextObj textObj7 = m_descriptionPlate.GetChildAt(8) as TextObj;
+            var textObj7 = m_descriptionPlate.GetChildAt(8) as TextObj;
             textObj7.Text = "Spell - " + SpellType.ToString(lineageObj.Spell);
             textObj7.Y = num;
-            KeyIconTextObj keyIconTextObj2 = m_descriptionPlate.GetChildAt(9) as KeyIconTextObj;
+            var keyIconTextObj2 = m_descriptionPlate.GetChildAt(9) as KeyIconTextObj;
             keyIconTextObj2.Text = SpellType.Description(lineageObj.Spell);
             keyIconTextObj2.Y = textObj7.Y + 30f;
             keyIconTextObj2.WordWrap(340);
@@ -226,27 +226,27 @@ namespace RogueCastle
             }
             m_currentPoint = position;
             m_currentBranchArray.Clear();
-            int[] array = new[]
+            int[] array =
             {
                 -450,
                 0,
                 450
             };
-            int[] array2 = new[]
+            int[] array2 =
             {
                 -200,
                 200
             };
-            for (int i = 0; i < numLineages; i++)
+            for (var i = 0; i < numLineages; i++)
             {
-                LineageObj lineageObj = new LineageObj(this, createEmpty);
+                var lineageObj = new LineageObj(this, createEmpty);
                 if (randomizePortrait)
                 {
                     lineageObj.RandomizePortrait();
                 }
                 lineageObj.ForceDraw = true;
                 lineageObj.X = position.X + m_xPosOffset;
-                int[] array3 = array;
+                var array3 = array;
                 if (numLineages == 2)
                 {
                     array3 = array2;
@@ -313,16 +313,16 @@ namespace RogueCastle
         public void LoadFamilyTreeData()
         {
             m_masterArray.Clear();
-            int num = 700;
+            var num = 700;
             if (Game.PlayerStats.FamilyTreeArray != null && Game.PlayerStats.FamilyTreeArray.Count > 0)
             {
-                int num2 = 0;
-                using (List<FamilyTreeNode>.Enumerator enumerator = Game.PlayerStats.FamilyTreeArray.GetEnumerator())
+                var num2 = 0;
+                using (var enumerator = Game.PlayerStats.FamilyTreeArray.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
-                        FamilyTreeNode current = enumerator.Current;
-                        LineageObj lineageObj = new LineageObj(this, true);
+                        var current = enumerator.Current;
+                        var lineageObj = new LineageObj(this, true);
                         lineageObj.IsDead = true;
                         lineageObj.Age = current.Age;
                         lineageObj.ChildAge = current.ChildAge;
@@ -348,8 +348,8 @@ namespace RogueCastle
                     return;
                 }
             }
-            int num3 = 0;
-            LineageObj lineageObj2 = new LineageObj(this, true);
+            var num3 = 0;
+            var lineageObj2 = new LineageObj(this, true);
             lineageObj2.IsDead = true;
             lineageObj2.Age = 30;
             lineageObj2.ChildAge = 5;
@@ -376,8 +376,8 @@ namespace RogueCastle
             if (Game.PlayerStats.CurrentBranches == null || Game.PlayerStats.CurrentBranches.Count < 1)
             {
                 AddLineageRow(3, m_masterArray[m_masterArray.Count - 1].Position, false, true);
-                List<PlayerLineageData> list = new List<PlayerLineageData>();
-                for (int i = 0; i < m_currentBranchArray.Count; i++)
+                var list = new List<PlayerLineageData>();
+                for (var i = 0; i < m_currentBranchArray.Count; i++)
                 {
                     list.Add(new PlayerLineageData
                     {
@@ -390,7 +390,7 @@ namespace RogueCastle
                         Spell = m_currentBranchArray[i].Spell,
                         Traits = m_currentBranchArray[i].Traits,
                         Age = m_currentBranchArray[i].Age,
-                        ChildAge = m_currentBranchArray[i].ChildAge,
+                        ChildAge = m_currentBranchArray[i].ChildAge
                         //IsFemale = this.m_currentBranchArray[i].IsFemale
                     });
                 }
@@ -399,8 +399,8 @@ namespace RogueCastle
                 return;
             }
             AddLineageRow(3, m_masterArray[m_masterArray.Count - 1].Position, true, true);
-            List<PlayerLineageData> currentBranches = Game.PlayerStats.CurrentBranches;
-            for (int j = 0; j < m_currentBranchArray.Count; j++)
+            var currentBranches = Game.PlayerStats.CurrentBranches;
+            for (var j = 0; j < m_currentBranchArray.Count; j++)
             {
                 m_currentBranchArray[j].PlayerName = currentBranches[j].Name;
                 m_currentBranchArray[j].SetPortrait(currentBranches[j].HeadPiece, currentBranches[j].ShoulderPiece,
@@ -418,10 +418,10 @@ namespace RogueCastle
 
         public override void OnExit()
         {
-            float num = 0.0166666675f;
-            float num2 = m_storedMusicVol;
-            float num3 = m_storedMusicVol/120f;
-            for (int i = 0; i < 120; i++)
+            var num = 0.0166666675f;
+            var num2 = m_storedMusicVol;
+            var num3 = m_storedMusicVol/120f;
+            for (var i = 0; i < 120; i++)
             {
                 Tween.RunFunction(num*i, this, "ReduceMusic", num2);
                 num2 -= num3;
@@ -484,8 +484,8 @@ namespace RogueCastle
         {
             if (!m_lockControls && (m_selectTween == null || (m_selectTween != null && !m_selectTween.Active)))
             {
-                LineageObj selectedLineageObj = m_selectedLineageObj;
-                int selectedLineageIndex = m_selectedLineageIndex;
+                var selectedLineageObj = m_selectedLineageObj;
+                var selectedLineageIndex = m_selectedLineageIndex;
                 if (Game.GlobalInput.JustPressed(9) &&
                     SkillSystem.GetSkill(SkillType.Randomize_Children).ModifierAmount > 0f &&
                     !Game.PlayerStats.RerolledChildren)
@@ -573,7 +573,7 @@ namespace RogueCastle
                     {
                         if (selectedLineageObj == m_selectedLineageObj)
                         {
-                            RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
+                            var rCScreenManager = ScreenManager as RCScreenManager;
                             rCScreenManager.DialogueScreen.SetDialogue("LineageChoiceWarning");
                             rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "StartGame");
@@ -643,11 +643,11 @@ namespace RogueCastle
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,
                 Camera.GetTransformation());
-            foreach (LineageObj current in m_masterArray)
+            foreach (var current in m_masterArray)
             {
                 current.Draw(Camera);
             }
-            foreach (LineageObj current2 in m_currentBranchArray)
+            foreach (var current2 in m_currentBranchArray)
             {
                 current2.Draw(Camera);
             }
@@ -674,13 +674,13 @@ namespace RogueCastle
                 m_titleText.Dispose();
                 m_titleText = null;
                 m_selectedLineageObj = null;
-                foreach (LineageObj current in m_currentBranchArray)
+                foreach (var current in m_currentBranchArray)
                 {
                     current.Dispose();
                 }
                 m_currentBranchArray.Clear();
                 m_currentBranchArray = null;
-                foreach (LineageObj current2 in m_masterArray)
+                foreach (var current2 in m_masterArray)
                 {
                     if (!current2.IsDisposed)
                     {
@@ -713,8 +713,8 @@ namespace RogueCastle
 
         public int NameCopies(string name)
         {
-            int num = 0;
-            foreach (LineageObj current in m_masterArray)
+            var num = 0;
+            foreach (var current in m_masterArray)
             {
                 if (current.PlayerName.Contains(" " + name))
                 {
@@ -726,7 +726,7 @@ namespace RogueCastle
 
         public bool CurrentBranchNameCopyFound(string name)
         {
-            foreach (LineageObj current in m_currentBranchArray)
+            foreach (var current in m_currentBranchArray)
             {
                 if (current.PlayerName.Contains(" " + name))
                 {

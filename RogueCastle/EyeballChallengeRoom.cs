@@ -19,14 +19,14 @@ namespace RogueCastle
     {
         private EnemyObj_Eyeball m_boss;
 
-        public override bool BossKilled
-        {
-            get { return m_boss.IsKilled; }
-        }
-
         public EyeballChallengeRoom()
         {
             m_roomActivityDelay = 0.5f;
+        }
+
+        public override bool BossKilled
+        {
+            get { return m_boss.IsKilled; }
         }
 
         public override void Initialize()
@@ -81,7 +81,7 @@ namespace RogueCastle
             m_boss.PlayAnimation();
             Player.AttachedLevel.Camera.X = (int) (Bounds.Left + Player.AttachedLevel.Camera.Width*0.5f);
             Player.AttachedLevel.Camera.Y = Player.Y;
-            Vector2 arg_BC_0 = Player.AttachedLevel.Camera.Position;
+            var arg_BC_0 = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;

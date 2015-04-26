@@ -29,20 +29,6 @@ namespace RogueCastle
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        public struct SettingStruct
-        {
-            public int ScreenWidth;
-            public int ScreenHeight;
-            public bool FullScreen;
-            public float MusicVolume;
-            public float SFXVolume;
-            public bool QuickDrop;
-            public bool EnableDirectInput;
-            public byte ProfileSlot;
-            public bool ReduceQuality;
-            public bool EnableSteamCloud;
-        }
-
         public static Texture2D GenericTexture;
         public static Effect MaskEffect;
         public static Effect BWMaskEffect;
@@ -54,9 +40,6 @@ namespace RogueCastle
         public static Effect InvertShader;
         public static Effect ColourSwapShader;
         public static AreaStruct[] Area1List;
-        public GraphicsDeviceManager graphics;
-        private SaveGameManager m_saveGameManager;
-        private PhysicsManager m_physicsManager;
         public static EquipmentSystem EquipmentSystem;
         public static PlayerStats PlayerStats = new PlayerStats();
         public static SpriteFont PixelArtFont;
@@ -74,38 +57,17 @@ namespace RogueCastle
         public static SettingStruct GameConfig;
         public static List<string> NameArray;
         public static List<string> FemaleNameArray;
-        private string m_commandLineFilePath = "";
-        private GameTime m_forcedGameTime1;
-        private GameTime m_forcedGameTime2;
-        private float m_frameLimit = 0.025f;
-        private bool m_frameLimitSwap;
         public static float TotalGameTime;
         private static float TotalGameTimeHours;
-        private bool m_contentLoaded;
-        private bool m_gameLoaded;
+        private readonly float m_frameLimit = 0.025f;
         private WeakReference gcTracker = new WeakReference(new object());
-        public static RCScreenManager ScreenManager { get; internal set; }
-        public static float PlaySessionLength { get; set; }
-
-        public PhysicsManager PhysicsManager
-        {
-            get { return m_physicsManager; }
-        }
-
-        public ContentManager ContentManager
-        {
-            get { return Content; }
-        }
-
-        public SaveGameManager SaveManager
-        {
-            get { return m_saveGameManager; }
-        }
-
-        public GraphicsDeviceManager GraphicsDeviceManager
-        {
-            get { return graphics; }
-        }
+        public GraphicsDeviceManager graphics;
+        private string m_commandLineFilePath = "";
+        private bool m_contentLoaded;
+        private GameTime m_forcedGameTime1;
+        private GameTime m_forcedGameTime2;
+        private bool m_frameLimitSwap;
+        private bool m_gameLoaded;
 
         public Game(string filePath = "")
         {
@@ -136,7 +98,7 @@ namespace RogueCastle
             EngineEV.ScreenHeight = 720;
             Window.Title = "Rogue Legacy Enhanced";
             ScreenManager = new RCScreenManager(this);
-            m_saveGameManager = new SaveGameManager(this);
+            SaveManager = new SaveGameManager(this);
             IsFixedTimeStep = false;
             graphics.SynchronizeWithVerticalRetrace = !LevelEV.SHOW_FPS;
             Window.AllowUserResizing = false;
@@ -144,18 +106,34 @@ namespace RogueCastle
             {
                 InactiveSleepTime = default(TimeSpan);
             }
-            m_physicsManager = new PhysicsManager();
+            PhysicsManager = new PhysicsManager();
             EquipmentSystem = new EquipmentSystem();
             EquipmentSystem.InitializeEquipmentData();
             EquipmentSystem.InitializeAbilityCosts();
             GameConfig = default(SettingStruct);
-            Form form = Control.FromHandle(Window.Handle) as Form;
+            var form = Control.FromHandle(Window.Handle) as Form;
             if (form != null)
             {
                 form.FormClosing += FormClosing;
             }
             GraphicsDeviceManager.PreparingDeviceSettings += ChangeGraphicsSettings;
             SleepUtil.DisableScreensaver();
+        }
+
+        public static RCScreenManager ScreenManager { get; internal set; }
+        public static float PlaySessionLength { get; set; }
+        public PhysicsManager PhysicsManager { get; private set; }
+
+        public ContentManager ContentManager
+        {
+            get { return Content; }
+        }
+
+        public SaveGameManager SaveManager { get; private set; }
+
+        public GraphicsDeviceManager GraphicsDeviceManager
+        {
+            get { return graphics; }
         }
 
         protected void ChangeGraphicsSettings(object sender, PreparingDeviceSettingsEventArgs e)
@@ -168,7 +146,7 @@ namespace RogueCastle
             Tween.Initialize(7000);
             InputManager.Initialize();
             InputManager.InitializeDXManager(Services, Window);
-            Buttons[] buttonList = new[]
+            Buttons[] buttonList =
             {
                 Buttons.X,
                 Buttons.A,
@@ -197,9 +175,9 @@ namespace RogueCastle
                 DialogueManager.LoadLanguageBinFile("Content\\Languages\\Diary_En.bin");
             }
             DialogueManager.SetLanguage("English");
-            m_saveGameManager.Initialize();
-            m_physicsManager.Initialize(ScreenManager.Camera);
-            m_physicsManager.TerminalVelocity = 2000;
+            SaveManager.Initialize();
+            PhysicsManager.Initialize(ScreenManager.Camera);
+            PhysicsManager.TerminalVelocity = 2000;
             InitializeNameArray();
             InitializeFemaleNameArray();
             ScreenManager.Initialize();
@@ -208,7 +186,7 @@ namespace RogueCastle
             InitializeScreenConfig();
             if (LevelEV.SHOW_FPS)
             {
-                FrameRateCounter frameRateCounter = new FrameRateCounter(this);
+                var frameRateCounter = new FrameRateCounter(this);
                 Components.Add(frameRateCounter);
                 frameRateCounter.Initialize();
             }
@@ -376,7 +354,7 @@ namespace RogueCastle
                     LevelBuilder2.IndexRoomList();
                 }
                 SkillSystem.Initialize();
-                AreaStruct areaStruct = new AreaStruct
+                var areaStruct = new AreaStruct
                 {
                     Name = "The Grand Entrance",
                     LevelType = GameTypes.LevelType.CASTLE,
@@ -386,7 +364,7 @@ namespace RogueCastle
                     BonusRooms = new Vector2(2f, 3f),
                     Color = Color.White
                 };
-                AreaStruct areaStruct2 = new AreaStruct
+                var areaStruct2 = new AreaStruct
                 {
                     LevelType = GameTypes.LevelType.GARDEN,
                     TotalRooms = new Vector2(23f, 27f),
@@ -395,7 +373,7 @@ namespace RogueCastle
                     BonusRooms = new Vector2(2f, 3f),
                     Color = Color.Green
                 };
-                AreaStruct areaStruct3 = new AreaStruct
+                var areaStruct3 = new AreaStruct
                 {
                     LevelType = GameTypes.LevelType.TOWER,
                     TotalRooms = new Vector2(23f, 27f),
@@ -404,7 +382,7 @@ namespace RogueCastle
                     BonusRooms = new Vector2(2f, 3f),
                     Color = Color.DarkBlue
                 };
-                AreaStruct areaStruct4 = new AreaStruct
+                var areaStruct4 = new AreaStruct
                 {
                     LevelType = GameTypes.LevelType.DUNGEON,
                     TotalRooms = new Vector2(23f, 27f),
@@ -413,7 +391,7 @@ namespace RogueCastle
                     BonusRooms = new Vector2(2f, 3f),
                     Color = Color.Red
                 };
-                AreaStruct areaStruct5 = new AreaStruct
+                var areaStruct5 = new AreaStruct
                 {
                     Name = "The Grand Entrance",
                     LevelType = GameTypes.LevelType.CASTLE,
@@ -423,7 +401,7 @@ namespace RogueCastle
                     BonusRooms = new Vector2(2f, 3f),
                     Color = Color.White
                 };
-                AreaStruct areaStruct6 = default(AreaStruct);
+                var areaStruct6 = default(AreaStruct);
                 areaStruct6.Name = "The Grand Entrance";
                 areaStruct6.LevelType = GameTypes.LevelType.GARDEN;
                 areaStruct6.TotalRooms = new Vector2(12f, 14f);
@@ -431,7 +409,7 @@ namespace RogueCastle
                 areaStruct6.SecretRooms = new Vector2(2f, 3f);
                 areaStruct6.BonusRooms = new Vector2(1f, 2f);
                 areaStruct6.Color = Color.Green;
-                AreaStruct areaStruct7 = default(AreaStruct);
+                var areaStruct7 = default(AreaStruct);
                 areaStruct7.Name = "The Grand Entrance";
                 areaStruct7.LevelType = GameTypes.LevelType.DUNGEON;
                 areaStruct7.TotalRooms = new Vector2(12f, 14f);
@@ -439,7 +417,7 @@ namespace RogueCastle
                 areaStruct7.SecretRooms = new Vector2(2f, 3f);
                 areaStruct7.BonusRooms = new Vector2(1f, 2f);
                 areaStruct7.Color = Color.Red;
-                AreaStruct areaStruct8 = default(AreaStruct);
+                var areaStruct8 = default(AreaStruct);
                 areaStruct8.Name = "The Grand Entrance";
                 areaStruct8.LevelType = GameTypes.LevelType.TOWER;
                 areaStruct8.TotalRooms = new Vector2(12f, 14f);
@@ -581,7 +559,7 @@ namespace RogueCastle
             }
             TotalGameTime = (float) gameTime.TotalGameTime.TotalSeconds;
             TotalGameTimeHours = (float) gameTime.TotalGameTime.TotalHours;
-            GameTime gameTime2 = gameTime;
+            var gameTime2 = gameTime;
             if (gameTime.ElapsedGameTime.TotalSeconds > m_frameLimit)
             {
                 if (!m_frameLimitSwap)
@@ -616,15 +594,15 @@ namespace RogueCastle
         private void InitializeNameArray()
         {
             NameArray = new List<string>();
-            using (StreamReader streamReader = new StreamReader("Content\\HeroNames.txt"))
+            using (var streamReader = new StreamReader("Content\\HeroNames.txt"))
             {
-                SpriteFont spriteFont = Content.Load<SpriteFont>("Fonts\\Junicode");
+                var spriteFont = Content.Load<SpriteFont>("Fonts\\Junicode");
                 SpriteFontArray.SpriteFontList.Add(spriteFont);
-                TextObj textObj = new TextObj(spriteFont);
+                var textObj = new TextObj(spriteFont);
                 while (!streamReader.EndOfStream)
                 {
-                    string text = streamReader.ReadLine();
-                    bool flag = false;
+                    var text = streamReader.ReadLine();
+                    var flag = false;
                     try
                     {
                         textObj.Text = text;
@@ -652,15 +630,15 @@ namespace RogueCastle
         private void InitializeFemaleNameArray()
         {
             FemaleNameArray = new List<string>();
-            using (StreamReader streamReader = new StreamReader("Content\\HeroineNames.txt"))
+            using (var streamReader = new StreamReader("Content\\HeroineNames.txt"))
             {
-                SpriteFont spriteFont = Content.Load<SpriteFont>("Fonts\\Junicode");
+                var spriteFont = Content.Load<SpriteFont>("Fonts\\Junicode");
                 SpriteFontArray.SpriteFontList.Add(spriteFont);
-                TextObj textObj = new TextObj(spriteFont);
+                var textObj = new TextObj(spriteFont);
                 while (!streamReader.EndOfStream)
                 {
-                    string text = streamReader.ReadLine();
-                    bool flag = false;
+                    var text = streamReader.ReadLine();
+                    var flag = false;
                     try
                     {
                         textObj.Text = text;
@@ -690,7 +668,7 @@ namespace RogueCastle
             if (!(ScreenManager.CurrentScreen is CDGSplashScreen) && !(ScreenManager.CurrentScreen is DemoStartScreen))
             {
                 UpdatePlaySessionLength();
-                ProceduralLevelScreen levelScreen = ScreenManager.GetLevelScreen();
+                var levelScreen = ScreenManager.GetLevelScreen();
                 if (levelScreen != null &&
                     (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom ||
                      levelScreen.CurrentRoom is CarnivalShoot2BonusRoom))
@@ -706,7 +684,7 @@ namespace RogueCastle
                 }
                 if (levelScreen != null)
                 {
-                    ChallengeBossRoomObj challengeBossRoomObj = levelScreen.CurrentRoom as ChallengeBossRoomObj;
+                    var challengeBossRoomObj = levelScreen.CurrentRoom as ChallengeBossRoomObj;
                     if (challengeBossRoomObj != null)
                     {
                         challengeBossRoomObj.LoadPlayerData();
@@ -746,12 +724,12 @@ namespace RogueCastle
 
         public List<Vector2> GetSupportedResolutions()
         {
-            List<Vector2> list = new List<Vector2>();
-            foreach (DisplayMode current in GraphicsDevice.Adapter.SupportedDisplayModes)
+            var list = new List<Vector2>();
+            foreach (var current in GraphicsDevice.Adapter.SupportedDisplayModes)
             {
                 if (current.Width < 2000 && current.Height < 2000)
                 {
-                    Vector2 item = new Vector2(current.Width, current.Height);
+                    var item = new Vector2(current.Width, current.Height);
                     if (!list.Contains(item))
                     {
                         list.Add(new Vector2(current.Width, current.Height));
@@ -764,14 +742,14 @@ namespace RogueCastle
         public void SaveConfig()
         {
             Console.WriteLine("Saving Config file");
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
+            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            string path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
-            using (StreamWriter streamWriter = new StreamWriter(path2, false))
+            var path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
+            using (var streamWriter = new StreamWriter(path2, false))
             {
                 streamWriter.WriteLine("[Screen Resolution]");
                 streamWriter.WriteLine("ScreenWidth=" + GameConfig.ScreenWidth);
@@ -832,20 +810,20 @@ namespace RogueCastle
             InitializeDefaultConfig();
             try
             {
-                string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string path = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
-                using (StreamReader streamReader = new StreamReader(path))
+                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var path = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
+                using (var streamReader = new StreamReader(path))
                 {
-                    CultureInfo cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+                    var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
                     cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
                     string text;
                     while ((text = streamReader.ReadLine()) != null)
                     {
-                        int num = text.IndexOf("=");
+                        var num = text.IndexOf("=");
                         if (num != -1)
                         {
-                            string text2 = text.Substring(0, num);
-                            string text3 = text.Substring(num + 1);
+                            var text2 = text.Substring(0, num);
+                            var text3 = text.Substring(num + 1);
                             string key;
                             switch (key = text2)
                             {
@@ -981,6 +959,20 @@ namespace RogueCastle
         public static float GetTotalGameTimeHours()
         {
             return TotalGameTimeHours;
+        }
+
+        public struct SettingStruct
+        {
+            public bool EnableDirectInput;
+            public bool EnableSteamCloud;
+            public bool FullScreen;
+            public float MusicVolume;
+            public byte ProfileSlot;
+            public bool QuickDrop;
+            public bool ReduceQuality;
+            public int ScreenHeight;
+            public int ScreenWidth;
+            public float SFXVolume;
         }
     }
 }

@@ -381,14 +381,14 @@ namespace RogueCastle
 
         public static Vector2 CreateRandomTraits()
         {
-            Vector2 zero = Vector2.Zero;
-            int num = 0;
-            int num2 = 2;
-            int num3 = 94;
-            int num4 = 39;
-            int num5 = 1;
-            int num6 = CDGMath.RandomInt(0, 100);
-            for (int i = 0; i < num2; i++)
+            var zero = Vector2.Zero;
+            var num = 0;
+            var num2 = 2;
+            var num3 = 94;
+            var num4 = 39;
+            var num5 = 1;
+            var num6 = CDGMath.RandomInt(0, 100);
+            for (var i = 0; i < num2; i++)
             {
                 if (num6 < num3)
                 {
@@ -400,19 +400,19 @@ namespace RogueCastle
                     num3 = num5;
                 }
             }
-            int[] array = new[]
+            int[] array =
             {
                 48,
                 37,
                 15
             };
             byte b = 0;
-            int num7 = 0;
-            int num8 = CDGMath.RandomInt(0, 100);
-            List<byte> list = new List<byte>();
+            var num7 = 0;
+            var num8 = CDGMath.RandomInt(0, 100);
+            var list = new List<byte>();
             if (num > 0)
             {
-                for (int j = 0; j < 3; j++)
+                for (var j = 0; j < 3; j++)
                 {
                     num7 += array[j];
                     if (num8 <= num7)
@@ -436,7 +436,7 @@ namespace RogueCastle
                 num7 = 0;
                 num8 = CDGMath.RandomInt(0, 100);
                 list.Clear();
-                for (int k = 0; k < 3; k++)
+                for (var k = 0; k < 3; k++)
                 {
                     num7 += array[k];
                     if (num8 <= num7)
@@ -462,7 +462,7 @@ namespace RogueCastle
 
         public static bool TraitConflict(Vector2 traits)
         {
-            bool result = false;
+            var result = false;
             if ((traits.X == 16f && traits.Y == 17f) || (traits.X == 17f && traits.Y == 16f))
             {
                 result = true;

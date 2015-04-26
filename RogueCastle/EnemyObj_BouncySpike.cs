@@ -16,17 +16,26 @@ namespace RogueCastle
 {
     public class EnemyObj_BouncySpike : EnemyObj
     {
-        private float RotationSpeed = 250f;
+        private readonly int m_selfDestructTotalBounces = 12;
+        private readonly float RotationSpeed = 250f;
         private float m_internalOrientation;
-        public RoomObj SpawnRoom;
-        private float m_selfDestructTimer = 0.7f;
         private int m_selfDestructCounter;
-        private int m_selfDestructTotalBounces = 12;
+        private float m_selfDestructTimer = 0.7f;
+        public RoomObj SpawnRoom;
+
+        public EnemyObj_BouncySpike(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyBouncySpike_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 3;
+            NonKillable = true;
+        }
+
         public Vector2 SavedStartingPos { get; set; }
 
         protected override void InitializeEV()
         {
-            int num = CDGMath.RandomInt(0, 11);
+            var num = CDGMath.RandomInt(0, 11);
             if (num >= 9)
             {
                 Orientation = 0f;
@@ -218,9 +227,9 @@ namespace RogueCastle
         {
             if (!IsPaused)
             {
-                float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-                Vector2 value = Vector2.Zero;
-                Rectangle bounds = m_levelScreen.CurrentRoom.Bounds;
+                var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+                var value = Vector2.Zero;
+                var bounds = m_levelScreen.CurrentRoom.Bounds;
                 if (Y < bounds.Top + 10)
                 {
                     value = CollisionMath.CalculateMTD(Bounds, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 10));
@@ -241,10 +250,10 @@ namespace RogueCastle
                 }
                 if (value != Vector2.Zero)
                 {
-                    Vector2 heading = Heading;
-                    Vector2 vector = new Vector2(value.Y, value.X*-1f);
-                    Vector2 heading2 = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
-                                       vector - heading;
+                    var heading = Heading;
+                    var vector = new Vector2(value.Y, value.X*-1f);
+                    var heading2 = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
+                                   vector - heading;
                     Heading = heading2;
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "GiantSpike_Bounce_01",
                         "GiantSpike_Bounce_02", "GiantSpike_Bounce_03");
@@ -281,18 +290,18 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            TerrainObj terrainObj = otherBox.Parent as TerrainObj;
+            var terrainObj = otherBox.Parent as TerrainObj;
             if (terrainObj != null && !(terrainObj is DoorObj) && terrainObj.CollidesBottom && terrainObj.CollidesLeft &&
                 terrainObj.CollidesRight && terrainObj.CollidesTop)
             {
-                Vector2 value = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, (int) thisBox.AbsRotation,
+                var value = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, (int) thisBox.AbsRotation,
                     Vector2.Zero, otherBox.AbsRect, (int) otherBox.AbsRotation, Vector2.Zero);
                 if (value != Vector2.Zero)
                 {
-                    Vector2 heading = Heading;
-                    Vector2 vector = new Vector2(value.Y, value.X*-1f);
-                    Vector2 heading2 = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
-                                       vector - heading;
+                    var heading = Heading;
+                    var vector = new Vector2(value.Y, value.X*-1f);
+                    var heading2 = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
+                                   vector - heading;
                     X += value.X;
                     Y += value.Y;
                     Heading = heading2;
@@ -314,14 +323,6 @@ namespace RogueCastle
             }
             Orientation = m_internalOrientation;
             base.Reset();
-        }
-
-        public EnemyObj_BouncySpike(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyBouncySpike_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 3;
-            NonKillable = true;
         }
 
         public override void Dispose()

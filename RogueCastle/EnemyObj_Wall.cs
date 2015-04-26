@@ -15,11 +15,19 @@ namespace RogueCastle
 {
     public class EnemyObj_Wall : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_Wall(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            CollisionTypeTag = 4;
+            Type = 18;
+        }
 
         protected override void InitializeEV()
         {
@@ -52,20 +60,20 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new MoveLogicAction(m_target, true));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(0.5f, 1.25f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.5f, 1.25f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new MoveLogicAction(m_target, true));
             logicSet4.AddAction(new RunFunctionLogicAction(this, "ResizeProjectile", true));
             logicSet4.AddAction(new RunFunctionLogicAction(this, "ResizeProjectile", false));
             logicSet4.AddAction(new DelayLogicAction(3f));
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new MoveLogicAction(m_target, true));
             logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile"));
             logicSet5.AddAction(new RunFunctionLogicAction(this, "FireRandomProjectile"));
@@ -160,14 +168,6 @@ namespace RogueCastle
             }
             base.Update(gameTime);
             Y -= HeadingY;
-        }
-
-        public EnemyObj_Wall(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            CollisionTypeTag = 4;
-            Type = 18;
         }
     }
 }

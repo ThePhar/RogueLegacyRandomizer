@@ -24,55 +24,77 @@ namespace RogueCastle
         protected const int STATE_ENGAGE = 1;
         protected const int STATE_PROJECTILE_ENGAGE = 2;
         protected const int STATE_MELEE_ENGAGE = 3;
-        protected float DistanceToPlayer;
-        protected GameObj TintablePart;
-        protected int ProjectileRadius;
-        protected int MeleeRadius;
-        protected int EngageRadius;
-        protected float CooldownTime;
-        protected int m_damage;
-        protected bool CanFallOffLedges = true;
         protected bool AlwaysFaceTarget;
-        protected int ProjectileDamage = 5;
-        protected float ProjectileSpeed = 100f;
-        protected int m_xpValue;
-        private int m_level;
+        protected bool CanFallOffLedges = true;
+        protected float CooldownTime;
         protected int DamageGainPerLevel;
-        protected int XPBonusPerLevel;
+        protected float DistanceToPlayer;
+        protected int EngageRadius;
         protected int HealthGainPerLevel;
-        protected float MinMoneyGainPerLevel;
-        protected float MaxMoneyGainPerLevel;
+        public float InitialLogicDelay;
         protected float ItemDropChance;
-        protected int MinMoneyDropAmount;
-        protected int MaxMoneyDropAmount;
-        protected float MoneyDropChance;
+        protected List<LogicBlock> logicBlocksToDispose;
+        protected bool m_bossVersionKilled;
+        private LogicBlock m_cooldownLB;
+        private int[] m_cooldownParams;
+        private float m_cooldownTimer;
+        protected LogicBlock m_currentActiveLB;
+        protected int m_damage;
+        private Texture2D m_engageRadiusTexture;
+        protected TweenObject m_flipTween;
+        protected float m_initialDelayCounter;
         protected float m_invincibilityTime = 0.4f;
         protected float m_invincibleCounter;
         protected float m_invincibleCounterProjectile;
-        protected float StatLevelHPMod;
-        protected float StatLevelDMGMod;
-        protected float StatLevelXPMod;
-        public float InitialLogicDelay;
-        protected float m_initialDelayCounter;
-        protected PlayerObj m_target;
-        protected string m_resetSpriteName;
-        private int m_numTouchingGrounds;
-        private LogicBlock m_walkingLB;
-        protected LogicBlock m_currentActiveLB;
-        private LogicBlock m_cooldownLB;
-        private bool m_runCooldown;
-        private float m_cooldownTimer;
-        private int[] m_cooldownParams;
-        private Texture2D m_engageRadiusTexture;
-        private Texture2D m_projectileRadiusTexture;
+        private int m_level;
         private Texture2D m_meleeRadiusTexture;
-        public bool SaveToFile = true;
-        public byte Type;
-        private bool m_isPaused;
-        protected bool m_bossVersionKilled;
-        protected List<LogicBlock> logicBlocksToDispose;
-        protected TweenObject m_flipTween;
+        private int m_numTouchingGrounds;
+        private Texture2D m_projectileRadiusTexture;
+        protected string m_resetSpriteName;
+        private bool m_runCooldown;
         protected bool m_saveToEnemiesKilledList = true;
+        protected PlayerObj m_target;
+        private LogicBlock m_walkingLB;
+        protected int m_xpValue;
+        protected int MaxMoneyDropAmount;
+        protected float MaxMoneyGainPerLevel;
+        protected int MeleeRadius;
+        protected int MinMoneyDropAmount;
+        protected float MinMoneyGainPerLevel;
+        protected float MoneyDropChance;
+        protected int ProjectileDamage = 5;
+        protected int ProjectileRadius;
+        protected float ProjectileSpeed = 100f;
+        public bool SaveToFile = true;
+        protected float StatLevelDMGMod;
+        protected float StatLevelHPMod;
+        protected float StatLevelXPMod;
+        protected GameObj TintablePart;
+        public byte Type;
+        protected int XPBonusPerLevel;
+
+        public EnemyObj(string spriteName, PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            : base(spriteName, physicsManager, levelToAttachTo)
+        {
+            DisableCollisionBoxRotations = true;
+            Type = 0;
+            CollisionTypeTag = 3;
+            m_target = target;
+            m_walkingLB = new LogicBlock();
+            m_currentActiveLB = new LogicBlock();
+            m_cooldownLB = new LogicBlock();
+            logicBlocksToDispose = new List<LogicBlock>();
+            m_resetSpriteName = spriteName;
+            Difficulty = difficulty;
+            ProjectileScale = new Vector2(1f, 1f);
+            PlayAnimation();
+            PlayAnimationOnRestart = true;
+            OutlineWidth = 2;
+            GivesLichHealth = true;
+            DropsItem = true;
+        }
+
         public Vector2 ProjectileScale { get; internal set; }
         public bool Procedural { get; set; }
         public bool NonKillable { get; set; }
@@ -130,12 +152,6 @@ namespace RogueCastle
             internal set { base.MaxHealth = value; }
         }
 
-        public int Damage
-        {
-            get { return m_damage + DamageGainPerLevel*(Level - 1); }
-            internal set { m_damage = value; }
-        }
-
         public int XPValue
         {
             get { return m_xpValue + XPBonusPerLevel*(Level - 1); }
@@ -147,10 +163,7 @@ namespace RogueCastle
             get { return m_resetSpriteName; }
         }
 
-        public new bool IsPaused
-        {
-            get { return m_isPaused; }
-        }
+        public new bool IsPaused { get; private set; }
 
         public override SpriteEffects Flip
         {
@@ -164,12 +177,18 @@ namespace RogueCastle
                     {
                         m_flipTween.StopTween(false);
                     }
-                    float scaleY = ScaleY;
+                    var scaleY = ScaleY;
                     ScaleX = 0f;
                     m_flipTween = Tween.To(this, 0.15f, Tween.EaseNone, "ScaleX", scaleY.ToString());
                 }
                 base.Flip = value;
             }
+        }
+
+        public int Damage
+        {
+            get { return m_damage + DamageGainPerLevel*(Level - 1); }
+            internal set { m_damage = value; }
         }
 
         private void InitializeBaseEV()
@@ -202,41 +221,19 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new PlayAnimationLogicAction());
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new PlayAnimationLogicAction());
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new StopAnimationLogicAction());
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(1f));
             m_walkingLB.AddLogicSet(logicSet, logicSet2, logicSet3);
-        }
-
-        public EnemyObj(string spriteName, PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
-            : base(spriteName, physicsManager, levelToAttachTo)
-        {
-            DisableCollisionBoxRotations = true;
-            Type = 0;
-            CollisionTypeTag = 3;
-            m_target = target;
-            m_walkingLB = new LogicBlock();
-            m_currentActiveLB = new LogicBlock();
-            m_cooldownLB = new LogicBlock();
-            logicBlocksToDispose = new List<LogicBlock>();
-            m_resetSpriteName = spriteName;
-            Difficulty = difficulty;
-            ProjectileScale = new Vector2(1f, 1f);
-            PlayAnimation();
-            PlayAnimationOnRestart = true;
-            OutlineWidth = 2;
-            GivesLichHealth = true;
-            DropsItem = true;
         }
 
         public void SetDifficulty(GameTypes.EnemyDifficulty difficulty, bool reinitialize)
@@ -265,7 +262,7 @@ namespace RogueCastle
             m_internalAnimationDelay = AnimationDelay;
             m_internalScale = Scale;
             InternalFlip = Flip;
-            foreach (LogicBlock current in logicBlocksToDispose)
+            foreach (var current in logicBlocksToDispose)
             {
                 current.ClearAllLogicSets();
             }
@@ -281,9 +278,9 @@ namespace RogueCastle
         {
             if (m_engageRadiusTexture == null)
             {
-                int num = EngageRadius;
-                int num2 = ProjectileRadius;
-                int num3 = MeleeRadius;
+                var num = EngageRadius;
+                var num2 = ProjectileRadius;
+                var num3 = MeleeRadius;
                 if (num > 1000)
                 {
                     num = 1000;
@@ -314,7 +311,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (m_initialDelayCounter > 0f)
             {
                 m_initialDelayCounter -= num;
@@ -489,20 +486,20 @@ namespace RogueCastle
         public void CheckGroundCollisionOld()
         {
             m_numTouchingGrounds = 0;
-            float num = 2.14748365E+09f;
-            int num2 = 10;
-            bool flag = true;
-            foreach (IPhysicsObj current in m_levelScreen.PhysicsManager.ObjectList)
+            var num = 2.14748365E+09f;
+            var num2 = 10;
+            var flag = true;
+            foreach (var current in m_levelScreen.PhysicsManager.ObjectList)
             {
                 if (current != this && current.CollidesTop &&
                     (current.CollisionTypeTag == 1 || current.CollisionTypeTag == 5 || current.CollisionTypeTag == 4 ||
                      current.CollisionTypeTag == 10) && Math.Abs(current.Bounds.Top - Bounds.Bottom) < num2)
                 {
-                    foreach (CollisionBox current2 in current.CollisionBoxes)
+                    foreach (var current2 in current.CollisionBoxes)
                     {
                         if (current2.Type == 0)
                         {
-                            Rectangle a = GroundCollisionRect;
+                            var a = GroundCollisionRect;
                             if (current2.AbsRotation != 0f)
                             {
                                 a = RotatedGroundCollisionRect;
@@ -515,7 +512,7 @@ namespace RogueCastle
                                 {
                                     flag = false;
                                 }
-                                Vector2 vector = CollisionMath.RotatedRectIntersectsMTD(GroundCollisionRect, 0f,
+                                var vector = CollisionMath.RotatedRectIntersectsMTD(GroundCollisionRect, 0f,
                                     Vector2.Zero, current2.AbsRect, current2.AbsRotation, Vector2.Zero);
                                 if (flag)
                                 {
@@ -523,7 +520,7 @@ namespace RogueCastle
                                         !CollisionMath.RotatedRectIntersects(Bounds, 0f, Vector2.Zero, current2.AbsRect,
                                             current2.AbsRotation, Vector2.Zero);
                                 }
-                                float y = vector.Y;
+                                var y = vector.Y;
                                 if (num > y)
                                 {
                                     num = y;
@@ -546,12 +543,12 @@ namespace RogueCastle
             if (AccelerationY >= 0f)
             {
                 IPhysicsObj physicsObj = null;
-                float num = 3.40282347E+38f;
+                var num = 3.40282347E+38f;
                 IPhysicsObj physicsObj2 = null;
-                float num2 = 3.40282347E+38f;
-                Rectangle terrainBounds = TerrainBounds;
+                var num2 = 3.40282347E+38f;
+                var terrainBounds = TerrainBounds;
                 terrainBounds.Height += 10;
-                foreach (TerrainObj current in m_levelScreen.CurrentRoom.TerrainObjList)
+                foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
                 {
                     if (current.Visible && current.IsCollidable && current.CollidesTop && current.HasTerrainHitBox &&
                         (current.CollisionTypeTag == 1 || current.CollisionTypeTag == 10 ||
@@ -559,17 +556,17 @@ namespace RogueCastle
                     {
                         if (current.Rotation == 0f)
                         {
-                            Rectangle left = terrainBounds;
+                            var left = terrainBounds;
                             left.X -= 30;
                             left.Width += 60;
-                            Vector2 value = CollisionMath.CalculateMTD(left, current.Bounds);
+                            var value = CollisionMath.CalculateMTD(left, current.Bounds);
                             if (value != Vector2.Zero)
                             {
                                 m_numTouchingGrounds++;
                             }
                             if (CollisionMath.CalculateMTD(terrainBounds, current.Bounds).Y < 0f)
                             {
-                                int num3 = current.Bounds.Top - Bounds.Bottom;
+                                var num3 = current.Bounds.Top - Bounds.Bottom;
                                 if (num3 < num)
                                 {
                                     physicsObj = current;
@@ -579,7 +576,7 @@ namespace RogueCastle
                         }
                         else
                         {
-                            Vector2 value2 = CollisionMath.RotatedRectIntersectsMTD(terrainBounds, Rotation,
+                            var value2 = CollisionMath.RotatedRectIntersectsMTD(terrainBounds, Rotation,
                                 Vector2.Zero, current.TerrainBounds, current.Rotation, Vector2.Zero);
                             if (value2 != Vector2.Zero)
                             {
@@ -587,27 +584,27 @@ namespace RogueCastle
                             }
                             if (value2.Y < 0f)
                             {
-                                float y = value2.Y;
+                                var y = value2.Y;
                                 if (y < num2 && value2.Y < 0f)
                                 {
                                     physicsObj2 = current;
                                     num2 = y;
                                 }
                             }
-                            Rectangle terrainBounds2 = TerrainBounds;
+                            var terrainBounds2 = TerrainBounds;
                             terrainBounds2.Height += 50;
-                            int num4 = 15;
-                            Vector2 pt = CollisionMath.RotatedRectIntersectsMTD(terrainBounds2, Rotation, Vector2.Zero,
+                            var num4 = 15;
+                            var pt = CollisionMath.RotatedRectIntersectsMTD(terrainBounds2, Rotation, Vector2.Zero,
                                 current.TerrainBounds, current.Rotation, Vector2.Zero);
                             if (pt.Y < 0f)
                             {
-                                float num5 = CDGMath.DistanceBetweenPts(pt, Vector2.Zero);
-                                float num6 = (float) (50.0 - Math.Sqrt(num5*num5*2f));
+                                var num5 = CDGMath.DistanceBetweenPts(pt, Vector2.Zero);
+                                var num6 = (float) (50.0 - Math.Sqrt(num5*num5*2f));
                                 if (num6 > 0f && num6 < num4)
                                 {
                                     Y += num6;
                                 }
-                                float y2 = value2.Y;
+                                var y2 = value2.Y;
                                 if (y2 < num2)
                                 {
                                     physicsObj2 = current;
@@ -631,14 +628,14 @@ namespace RogueCastle
         private void HookToSlope(IPhysicsObj collisionObj)
         {
             UpdateCollisionBoxes();
-            Rectangle terrainBounds = TerrainBounds;
+            var terrainBounds = TerrainBounds;
             terrainBounds.Height += 100;
-            float num = X;
+            var num = X;
             if (
                 CollisionMath.RotatedRectIntersectsMTD(terrainBounds, Rotation, Vector2.Zero, collisionObj.TerrainBounds,
                     collisionObj.Rotation, Vector2.Zero).Y < 0f)
             {
-                bool flag = false;
+                var flag = false;
                 Vector2 vector;
                 Vector2 vector2;
                 if (collisionObj.Width > collisionObj.Height)
@@ -686,11 +683,11 @@ namespace RogueCastle
                 }
                 if (flag)
                 {
-                    float num2 = vector2.X - vector.X;
-                    float num3 = vector2.Y - vector.Y;
-                    float x = vector.X;
-                    float y = vector.Y;
-                    float num4 = y + (num - x)*(num3/num2);
+                    var num2 = vector2.X - vector.X;
+                    var num3 = vector2.Y - vector.Y;
+                    var x = vector.X;
+                    var y = vector.Y;
+                    var num4 = y + (num - x)*(num3/num2);
                     num4 -= TerrainBounds.Bottom - Y - 2f;
                     Y = (int) num4;
                 }
@@ -731,8 +728,8 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            IPhysicsObj physicsObj = otherBox.AbsParent as IPhysicsObj;
-            Vector2 vector = CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect);
+            var physicsObj = otherBox.AbsParent as IPhysicsObj;
+            var vector = CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect);
             if (collisionResponseType == 2 &&
                 (physicsObj.CollisionTypeTag == 2 || physicsObj.CollisionTypeTag == 10 ||
                  (physicsObj.CollisionTypeTag == 10 && IsWeighted)) &&
@@ -747,8 +744,8 @@ namespace RogueCastle
                     m_levelScreen.ImpactEffectPool.DisplayQuestionMark(new Vector2(X, Bounds.Top));
                     return;
                 }
-                int num = (physicsObj as IDealsDamageObj).Damage;
-                bool isPlayer = false;
+                var num = (physicsObj as IDealsDamageObj).Damage;
+                var isPlayer = false;
                 if (physicsObj == m_target)
                 {
                     if (CDGMath.RandomFloat(0f, 1f) <= m_target.TotalCritChance && !NonKillable &&
@@ -759,7 +756,7 @@ namespace RogueCastle
                     }
                     isPlayer = true;
                 }
-                ProjectileObj projectileObj = otherBox.AbsParent as ProjectileObj;
+                var projectileObj = otherBox.AbsParent as ProjectileObj;
                 if (projectileObj != null)
                 {
                     m_invincibleCounterProjectile = InvincibilityTime;
@@ -768,12 +765,12 @@ namespace RogueCastle
                         projectileObj.RunDestroyAnimation(false);
                     }
                 }
-                Point center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
+                var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
                 if (thisBox.AbsRotation != 0f || otherBox.AbsRotation != 0f)
                 {
                     center = Rectangle.Intersect(thisBox.AbsParent.Bounds, otherBox.AbsParent.Bounds).Center;
                 }
-                Vector2 collisionPt = new Vector2(center.X, center.Y);
+                var collisionPt = new Vector2(center.X, center.Y);
                 if (projectileObj == null || (projectileObj != null && projectileObj.Spell != 20))
                 {
                     if (projectileObj != null || physicsObj.CollisionTypeTag != 10 ||
@@ -785,7 +782,7 @@ namespace RogueCastle
                 else if (projectileObj != null && projectileObj.Spell == 20 && CanBeKnockedBack && !IsPaused)
                 {
                     CurrentSpeed = 0f;
-                    float num2 = 3f;
+                    var num2 = 3f;
                     if (KnockBack == Vector2.Zero)
                     {
                         if (X < m_target.X)
@@ -843,7 +840,7 @@ namespace RogueCastle
                 {
                     AccelerationX = 0f;
                 }
-                bool flag = false;
+                var flag = false;
                 if (Math.Abs(vector.X) < 10f && vector.X != 0f && Math.Abs(vector.Y) < 10f && vector.Y != 0f)
                 {
                     flag = true;
@@ -858,7 +855,7 @@ namespace RogueCastle
                 {
                     flag = true;
                 }
-                Vector2 vector2 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
+                var vector2 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
                     Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
                 if (!flag)
                 {
@@ -894,7 +891,7 @@ namespace RogueCastle
                 }
                 if (isPlayer)
                 {
-                    PlayerObj expr_198 = m_target;
+                    var expr_198 = m_target;
                     expr_198.NumSequentialAttacks += 1;
                     if (m_target.IsAirAttacking)
                     {
@@ -907,7 +904,7 @@ namespace RogueCastle
                     Game.PlayerStats.Traits.Y != 17f)
                 {
                     CurrentSpeed = 0f;
-                    float num = 1f;
+                    var num = 1f;
                     if (Game.PlayerStats.Traits.X == 16f || Game.PlayerStats.Traits.Y == 16f)
                     {
                         num = 2f;
@@ -948,7 +945,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            int totalVampBonus = m_target.TotalVampBonus;
+            var totalVampBonus = m_target.TotalVampBonus;
             if (totalVampBonus > 0)
             {
                 m_target.CurrentHealth += totalVampBonus;
@@ -987,22 +984,22 @@ namespace RogueCastle
                 }
                 if (CDGMath.RandomFloat(0f, 1f) <= MoneyDropChance)
                 {
-                    int num = CDGMath.RandomInt(MinMoneyDropAmount, MaxMoneyDropAmount)*10 +
+                    var num = CDGMath.RandomInt(MinMoneyDropAmount, MaxMoneyDropAmount)*10 +
                               (int) (CDGMath.RandomFloat(MinMoneyGainPerLevel, MaxMoneyGainPerLevel)*Level*10f);
-                    int num2 = num/500;
+                    var num2 = num/500;
                     num -= num2*500;
-                    int num3 = num/100;
+                    var num3 = num/100;
                     num -= num3*100;
-                    int num4 = num/10;
-                    for (int i = 0; i < num2; i++)
+                    var num4 = num/10;
+                    for (var i = 0; i < num2; i++)
                     {
                         m_levelScreen.ItemDropManager.DropItem(Position, 11, 500f);
                     }
-                    for (int j = 0; j < num3; j++)
+                    for (var j = 0; j < num3; j++)
                     {
                         m_levelScreen.ItemDropManager.DropItem(Position, 10, 100f);
                     }
-                    for (int k = 0; k < num4; k++)
+                    for (var k = 0; k < num4; k++)
                     {
                         m_levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
                     }
@@ -1015,9 +1012,9 @@ namespace RogueCastle
             m_levelScreen.ImpactEffectPool.DisplayDeathEffect(Position);
             if ((Game.PlayerStats.Class == 7 || Game.PlayerStats.Class == 15) && GivesLichHealth)
             {
-                int num5 = 0;
-                int currentLevel = Game.PlayerStats.CurrentLevel;
-                int num6 = (int) (Level*2.75f);
+                var num5 = 0;
+                var currentLevel = Game.PlayerStats.CurrentLevel;
+                var num6 = (int) (Level*2.75f);
                 if (currentLevel < num6)
                 {
                     num5 = 4;
@@ -1026,7 +1023,7 @@ namespace RogueCastle
                 {
                     num5 = 4;
                 }
-                int num7 =
+                var num7 =
                     (int)
                         Math.Round(
                             (m_target.BaseHealth + m_target.GetEquipmentHealth() + Game.PlayerStats.BonusHealth*5 +
@@ -1044,7 +1041,7 @@ namespace RogueCastle
             Game.PlayerStats.NumEnemiesBeaten++;
             if (m_saveToEnemiesKilledList)
             {
-                Vector4 value = Game.PlayerStats.EnemiesKilledList[Type];
+                var value = Game.PlayerStats.EnemiesKilledList[Type];
                 switch (Difficulty)
                 {
                     case GameTypes.EnemyDifficulty.BASIC:
@@ -1073,7 +1070,7 @@ namespace RogueCastle
         {
             if ((!IsPaused && !IsKilled && !m_bossVersionKilled) || forcePause)
             {
-                m_isPaused = true;
+                IsPaused = true;
                 DisableAllWeight = true;
                 PauseAnimation();
             }
@@ -1083,7 +1080,7 @@ namespace RogueCastle
         {
             if ((IsPaused && !IsKilled && !m_bossVersionKilled) || forceUnpause)
             {
-                m_isPaused = false;
+                IsPaused = false;
                 DisableAllWeight = false;
                 ResumeAnimation();
             }
@@ -1108,11 +1105,11 @@ namespace RogueCastle
                     m_currentActiveLB.StopLogicBlock();
                 }
                 m_currentActiveLB = null;
-                foreach (LogicBlock current in logicBlocksToDispose)
+                foreach (var current in logicBlocksToDispose)
                 {
                     current.Dispose();
                 }
-                for (int i = 0; i < logicBlocksToDispose.Count; i++)
+                for (var i = 0; i < logicBlocksToDispose.Count; i++)
                 {
                     logicBlocksToDispose[i] = null;
                 }
@@ -1212,24 +1209,24 @@ namespace RogueCastle
         {
             if (Tag != "")
             {
-                int num = Tag.IndexOf(key + ":") + key.Length + 1;
-                int num2 = Tag.IndexOf(",", num);
+                var num = Tag.IndexOf(key + ":") + key.Length + 1;
+                var num2 = Tag.IndexOf(",", num);
                 if (num2 == -1)
                 {
                     num2 = Tag.Length;
                 }
                 try
                 {
-                    CultureInfo cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+                    var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
                     cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
-                    float result = float.Parse(Tag.Substring(num, num2 - num), NumberStyles.Any, cultureInfo);
+                    var result = float.Parse(Tag.Substring(num, num2 - num), NumberStyles.Any, cultureInfo);
                     return result;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(string.Concat("Could not parse key:", key, " with string:", Tag,
                         ".  Original Error: ", ex.Message));
-                    float result = 0f;
+                    var result = 0f;
                     return result;
                 }
             }
@@ -1238,8 +1235,8 @@ namespace RogueCastle
 
         protected string ParseTagToString(string key)
         {
-            int num = Tag.IndexOf(key + ":") + key.Length + 1;
-            int num2 = Tag.IndexOf(",", num);
+            var num = Tag.IndexOf(key + ":") + key.Length + 1;
+            var num2 = Tag.IndexOf(",", num);
             if (num2 == -1)
             {
                 num2 = Tag.Length;
@@ -1255,7 +1252,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            EnemyObj enemyObj = obj as EnemyObj;
+            var enemyObj = obj as EnemyObj;
             enemyObj.IsProcedural = IsProcedural;
             enemyObj.InitialLogicDelay = InitialLogicDelay;
             enemyObj.NonKillable = NonKillable;

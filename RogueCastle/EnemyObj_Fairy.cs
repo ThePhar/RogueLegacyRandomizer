@@ -19,29 +19,40 @@ namespace RogueCastle
 {
     public class EnemyObj_Fairy : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private LogicBlock m_generalNeoLB = new LogicBlock();
-        private bool m_isNeo;
-        private float AttackDelay = 0.5f;
-        public RoomObj SpawnRoom;
-        public int NumHits = 1;
-        private bool m_shake;
-        private bool m_shookLeft;
-        private float m_shakeTimer;
-        private float m_shakeDuration = 0.03f;
-        private int m_bossCoins = 30;
-        private int m_bossMoneyBags = 12;
-        private int m_bossDiamonds = 3;
+        private readonly float AttackDelay = 0.5f;
+        private readonly int m_bossCoins = 30;
+        private readonly int m_bossDiamonds = 3;
+        private readonly int m_bossMoneyBags = 12;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+        private readonly LogicBlock m_generalNeoLB = new LogicBlock();
+        private readonly int m_numSummons = 22;
+        private readonly float m_shakeDuration = 0.03f;
+        private readonly float m_summonTimerNeo = 3f;
         private Cue m_deathLoop;
+        private bool m_isNeo;
         private bool m_playDeathLoop;
-        private int m_numSummons = 22;
-        private float m_summonTimer = 6f;
+        private bool m_shake;
+        private float m_shakeTimer;
+        private bool m_shookLeft;
         private float m_summonCounter = 6f;
-        private float m_summonTimerNeo = 3f;
+        private float m_summonTimer = 6f;
+        public int NumHits = 1;
+        public RoomObj SpawnRoom;
+
+        public EnemyObj_Fairy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyFairyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            PlayAnimation();
+            MainFairy = true;
+            TintablePart = _objectList[0];
+            Type = 7;
+        }
+
         public bool MainFairy { get; set; }
         public Vector2 SavedStartingPos { get; set; }
 
@@ -185,18 +196,18 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostMove_Character"));
             logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyMove1", "FairyMove2",
                 "FairyMove3"));
             logicSet.AddAction(new ChaseLogicAction(m_target, true, 1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
             logicSet2.AddAction(new ChaseLogicAction(m_target, false, 0.5f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.5f, 0.75f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
@@ -209,7 +220,7 @@ namespace RogueCastle
             logicSet4.AddAction(new DelayLogicAction(0.25f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
@@ -226,7 +237,7 @@ namespace RogueCastle
             logicSet5.AddAction(new DelayLogicAction(0.25f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostIdle_Character"));
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
@@ -245,18 +256,18 @@ namespace RogueCastle
             logicSet6.AddAction(new DelayLogicAction(0.25f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.Tag = 2;
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossMove_Character"));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyMove1", "FairyMove2",
                 "FairyMove3"));
             logicSet7.AddAction(new ChaseLogicAction(m_target, true, 1f));
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character"));
             logicSet8.AddAction(new ChaseLogicAction(m_target, false, 0.5f));
-            LogicSet logicSet9 = new LogicSet(this);
+            var logicSet9 = new LogicSet(this);
             logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet9.AddAction(new DelayLogicAction(0.5f, 0.75f));
-            LogicSet logicSet10 = new LogicSet(this);
+            var logicSet10 = new LogicSet(this);
             logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyFairyGhostBossIdle_Character"));
             logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
@@ -301,8 +312,8 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalMiniBossLB);
             logicBlocksToDispose.Add(m_generalCooldownLB);
             logicBlocksToDispose.Add(m_generalNeoLB);
-            LogicBlock arg_975_1 = m_generalCooldownLB;
-            int[] array = new int[3];
+            var arg_975_1 = m_generalCooldownLB;
+            var array = new int[3];
             array[0] = 70;
             array[1] = 30;
             SetCooldownLogicBlock(arg_975_1, array);
@@ -311,7 +322,7 @@ namespace RogueCastle
 
         public void ThrowFourProjectiles(bool useBossProjectile)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "GhostProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -350,7 +361,7 @@ namespace RogueCastle
 
         private void ThrowEightProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "GhostProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -391,18 +402,18 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_73_1 = true;
-                    LogicBlock arg_73_2 = m_generalBasicLB;
-                    int[] array = new int[4];
+                    var arg_73_1 = true;
+                    var arg_73_2 = m_generalBasicLB;
+                    var array = new int[4];
                     array[2] = 100;
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
                 }
                 case 1:
                 {
-                    bool arg_58_1 = true;
-                    LogicBlock arg_58_2 = m_generalBasicLB;
-                    int[] array2 = new int[4];
+                    var arg_58_1 = true;
+                    var arg_58_2 = m_generalBasicLB;
+                    var array2 = new int[4];
                     array2[0] = 100;
                     RunLogicBlock(arg_58_1, arg_58_2, array2);
                     return;
@@ -422,18 +433,18 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_73_1 = true;
-                    LogicBlock arg_73_2 = m_generalAdvancedLB;
-                    int[] array = new int[4];
+                    var arg_73_1 = true;
+                    var arg_73_2 = m_generalAdvancedLB;
+                    var array = new int[4];
                     array[2] = 100;
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
                 }
                 case 1:
                 {
-                    bool arg_58_1 = true;
-                    LogicBlock arg_58_2 = m_generalAdvancedLB;
-                    int[] array2 = new int[4];
+                    var arg_58_1 = true;
+                    var arg_58_2 = m_generalAdvancedLB;
+                    var array2 = new int[4];
                     array2[0] = 100;
                     RunLogicBlock(arg_58_1, arg_58_2, array2);
                     return;
@@ -453,18 +464,18 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_73_1 = true;
-                    LogicBlock arg_73_2 = m_generalExpertLB;
-                    int[] array = new int[4];
+                    var arg_73_1 = true;
+                    var arg_73_2 = m_generalExpertLB;
+                    var array = new int[4];
                     array[2] = 100;
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
                 }
                 case 1:
                 {
-                    bool arg_58_1 = true;
-                    LogicBlock arg_58_2 = m_generalExpertLB;
-                    int[] array2 = new int[4];
+                    var arg_58_1 = true;
+                    var arg_58_2 = m_generalExpertLB;
+                    var array2 = new int[4];
                     array2[0] = 100;
                     RunLogicBlock(arg_58_1, arg_58_2, array2);
                     return;
@@ -486,9 +497,9 @@ namespace RogueCastle
                 {
                     case 0:
                     {
-                        bool arg_80_1 = true;
-                        LogicBlock arg_80_2 = m_generalMiniBossLB;
-                        int[] array = new int[4];
+                        var arg_80_1 = true;
+                        var arg_80_2 = m_generalMiniBossLB;
+                        var array = new int[4];
                         array[0] = 80;
                         array[1] = 20;
                         RunLogicBlock(arg_80_1, arg_80_2, array);
@@ -496,9 +507,9 @@ namespace RogueCastle
                     }
                     case 1:
                     {
-                        bool arg_60_1 = true;
-                        LogicBlock arg_60_2 = m_generalMiniBossLB;
-                        int[] array2 = new int[4];
+                        var arg_60_1 = true;
+                        var arg_60_2 = m_generalMiniBossLB;
+                        var array2 = new int[4];
                         array2[0] = 100;
                         RunLogicBlock(arg_60_1, arg_60_2, array2);
                         return;
@@ -511,42 +522,39 @@ namespace RogueCastle
                         return;
                 }
             }
-            else
+            switch (State)
             {
-                switch (State)
+                case 0:
                 {
-                    case 0:
-                    {
-                        bool arg_10C_1 = true;
-                        LogicBlock arg_10C_2 = m_generalNeoLB;
-                        int[] array3 = new int[4];
-                        array3[0] = 80;
-                        array3[1] = 20;
-                        RunLogicBlock(arg_10C_1, arg_10C_2, array3);
-                        return;
-                    }
-                    case 1:
-                    {
-                        bool arg_E8_1 = true;
-                        LogicBlock arg_E8_2 = m_generalNeoLB;
-                        int[] array4 = new int[4];
-                        array4[0] = 100;
-                        RunLogicBlock(arg_E8_1, arg_E8_2, array4);
-                        return;
-                    }
-                    case 2:
-                    case 3:
-                        RunLogicBlock(true, m_generalNeoLB, 50, 10, 0, 40);
-                        return;
-                    default:
-                        return;
+                    var arg_10C_1 = true;
+                    var arg_10C_2 = m_generalNeoLB;
+                    var array3 = new int[4];
+                    array3[0] = 80;
+                    array3[1] = 20;
+                    RunLogicBlock(arg_10C_1, arg_10C_2, array3);
+                    return;
                 }
+                case 1:
+                {
+                    var arg_E8_1 = true;
+                    var arg_E8_2 = m_generalNeoLB;
+                    var array4 = new int[4];
+                    array4[0] = 100;
+                    RunLogicBlock(arg_E8_1, arg_E8_2, array4);
+                    return;
+                }
+                case 2:
+                case 3:
+                    RunLogicBlock(true, m_generalNeoLB, 50, 10, 0, 40);
+                    return;
+                default:
+                    return;
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS && !IsPaused)
             {
                 if (m_summonCounter > 0f)
@@ -576,12 +584,12 @@ namespace RogueCastle
                         }
                     }
                 }
-                RoomObj currentRoom = m_levelScreen.CurrentRoom;
-                Rectangle bounds = Bounds;
-                Rectangle bounds2 = currentRoom.Bounds;
-                int num2 = bounds.Right - bounds2.Right;
-                int num3 = bounds.Left - bounds2.Left;
-                int num4 = bounds.Bottom - bounds2.Bottom;
+                var currentRoom = m_levelScreen.CurrentRoom;
+                var bounds = Bounds;
+                var bounds2 = currentRoom.Bounds;
+                var num2 = bounds.Right - bounds2.Right;
+                var num3 = bounds.Left - bounds2.Left;
+                var num4 = bounds.Bottom - bounds2.Bottom;
                 if (num2 > 0)
                 {
                     X -= num2;
@@ -620,21 +628,11 @@ namespace RogueCastle
             base.Update(gameTime);
         }
 
-        public EnemyObj_Fairy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyFairyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            PlayAnimation();
-            MainFairy = true;
-            TintablePart = _objectList[0];
-            Type = 7;
-        }
-
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
             if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS && !m_bossVersionKilled)
             {
-                PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+                var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
                 {
                     playerObj.HitPlayer(this);
@@ -648,7 +646,7 @@ namespace RogueCastle
 
         private void CreateFairy(GameTypes.EnemyDifficulty difficulty)
         {
-            EnemyObj_Fairy enemyObj_Fairy = new EnemyObj_Fairy(null, null, null, difficulty);
+            var enemyObj_Fairy = new EnemyObj_Fairy(null, null, null, difficulty);
             enemyObj_Fairy.Position = Position;
             enemyObj_Fairy.DropsItem = false;
             if (m_target.X < enemyObj_Fairy.X)
@@ -709,7 +707,7 @@ namespace RogueCastle
         public void Part2()
         {
             m_playDeathLoop = true;
-            foreach (EnemyObj current in m_levelScreen.CurrentRoom.TempEnemyList)
+            foreach (var current in m_levelScreen.CurrentRoom.TempEnemyList)
             {
                 if (!current.IsKilled)
                 {
@@ -734,9 +732,9 @@ namespace RogueCastle
             Tween.To(m_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
             m_shake = true;
             m_shakeTimer = m_shakeDuration;
-            for (int i = 0; i < 40; i++)
+            for (var i = 0; i < 40; i++)
             {
-                Vector2 vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right),
+                var vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right),
                     CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
                 Tween.RunFunction(i*0.1f, typeof (SoundManager), "Play3DSound", this, m_target, new[]
                 {
@@ -749,24 +747,24 @@ namespace RogueCastle
             Tween.AddEndHandlerToLastTween(this, "Part3");
             if (!IsNeo)
             {
-                List<int> list = new List<int>();
-                for (int j = 0; j < m_bossCoins; j++)
+                var list = new List<int>();
+                for (var j = 0; j < m_bossCoins; j++)
                 {
                     list.Add(0);
                 }
-                for (int k = 0; k < m_bossMoneyBags; k++)
+                for (var k = 0; k < m_bossMoneyBags; k++)
                 {
                     list.Add(1);
                 }
-                for (int l = 0; l < m_bossDiamonds; l++)
+                for (var l = 0; l < m_bossDiamonds; l++)
                 {
                     list.Add(2);
                 }
                 CDGMath.Shuffle(list);
-                float num = 2.5f/list.Count;
-                for (int m = 0; m < list.Count; m++)
+                var num = 2.5f/list.Count;
+                for (var m = 0; m < list.Count; m++)
                 {
-                    Vector2 position = Position;
+                    var position = Position;
                     if (list[m] == 0)
                     {
                         Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);

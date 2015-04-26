@@ -16,13 +16,20 @@ namespace RogueCastle
 {
     public class EnemyObj_Skeleton : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private float AttackDelay = 0.1f;
-        private float JumpDelay = 0.25f;
+        private readonly float AttackDelay = 0.1f;
+        private readonly float JumpDelay = 0.25f;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_Skeleton(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySkeletonIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 15;
+        }
 
         protected override void InitializeEV()
         {
@@ -143,7 +150,7 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "BoneProjectile_Sprite",
                 SourceAnchor = new Vector2(20f, -20f),
@@ -157,23 +164,23 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemySkeletonWalk_Character"));
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySkeletonWalk_Character"));
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new StopAnimationLogicAction());
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet4.AddAction(new DelayLogicAction(0.5f, 1f));
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
@@ -185,7 +192,7 @@ namespace RogueCastle
             logicSet5.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
@@ -198,7 +205,7 @@ namespace RogueCastle
             logicSet6.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.Tag = 2;
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false));
             logicSet7.AddAction(new PlayAnimationLogicAction(1, 3));
@@ -214,7 +221,7 @@ namespace RogueCastle
             logicSet7.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet7.Tag = 2;
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false));
             logicSet8.AddAction(new PlayAnimationLogicAction(1, 3));
@@ -230,7 +237,7 @@ namespace RogueCastle
             logicSet8.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet8.Tag = 2;
-            LogicSet logicSet9 = new LogicSet(this);
+            var logicSet9 = new LogicSet(this);
             logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
@@ -246,7 +253,7 @@ namespace RogueCastle
             logicSet9.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet9.Tag = 2;
-            LogicSet logicSet10 = new LogicSet(this);
+            var logicSet10 = new LogicSet(this);
             logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonJump_Character", false, false));
             logicSet10.AddAction(new PlayAnimationLogicAction(1, 3));
@@ -265,7 +272,7 @@ namespace RogueCastle
             logicSet10.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet10.Tag = 2;
-            LogicSet logicSet11 = new LogicSet(this);
+            var logicSet11 = new LogicSet(this);
             logicSet11.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet11.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
@@ -281,7 +288,7 @@ namespace RogueCastle
             logicSet11.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character"));
             logicSet11.AddAction(new DelayLogicAction(0.4f, 0.9f));
-            LogicSet logicSet12 = new LogicSet(this);
+            var logicSet12 = new LogicSet(this);
             logicSet12.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet12.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet12.AddAction(new ChangeSpriteLogicAction("EnemySkeletonAttack_Character", false, false));
@@ -314,7 +321,7 @@ namespace RogueCastle
 
         private void ThrowThreeProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "BoneProjectile_Sprite",
                 SourceAnchor = new Vector2(20f, -20f),
@@ -343,9 +350,9 @@ namespace RogueCastle
                 case 0:
                 case 1:
                 {
-                    bool arg_91_1 = true;
-                    LogicBlock arg_91_2 = m_generalBasicLB;
-                    int[] array = new int[5];
+                    var arg_91_1 = true;
+                    var arg_91_2 = m_generalBasicLB;
+                    var array = new int[5];
                     array[0] = 40;
                     array[1] = 40;
                     array[2] = 20;
@@ -370,9 +377,9 @@ namespace RogueCastle
                 case 0:
                 case 1:
                 {
-                    bool arg_72_1 = true;
-                    LogicBlock arg_72_2 = m_generalAdvancedLB;
-                    int[] array = new int[7];
+                    var arg_72_1 = true;
+                    var arg_72_2 = m_generalAdvancedLB;
+                    var array = new int[7];
                     array[0] = 40;
                     array[1] = 40;
                     array[2] = 20;
@@ -415,20 +422,20 @@ namespace RogueCastle
                 case 1:
                 case 2:
                 case 3:*/
-                    //IL_1D:
-                    if (m_levelScreen.CurrentRoom.ActiveEnemies > 1)
-                    {
-                        bool arg_4A_1 = true;
-                        LogicBlock arg_4A_2 = m_generalMiniBossLB;
-                        int[] array = new int[5];
-                        array[2] = 10;
-                        array[3] = 90;
-                        RunLogicBlock(arg_4A_1, arg_4A_2, array);
-                        return;
-                    }
-                    Console.WriteLine("RAGING");
-                    RunLogicBlock(true, m_generalMiniBossLB, 0, 0, 10, 0, 90);
-                    //return;
+            //IL_1D:
+            if (m_levelScreen.CurrentRoom.ActiveEnemies > 1)
+            {
+                var arg_4A_1 = true;
+                var arg_4A_2 = m_generalMiniBossLB;
+                var array = new int[5];
+                array[2] = 10;
+                array[3] = 90;
+                RunLogicBlock(arg_4A_1, arg_4A_2, array);
+                return;
+            }
+            Console.WriteLine("RAGING");
+            RunLogicBlock(true, m_generalMiniBossLB, 0, 0, 10, 0, 90);
+            //return;
             //}
             //goto IL_1D;
         }
@@ -440,13 +447,6 @@ namespace RogueCastle
                 TintablePart.TextureColor = new Color(185, 0, 15);
             }
             base.Update(gameTime);
-        }
-
-        public EnemyObj_Skeleton(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySkeletonIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 15;
         }
 
         public override void HitEnemy(int damage, Vector2 position, bool isPlayer)

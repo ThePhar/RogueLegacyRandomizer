@@ -15,6 +15,13 @@ namespace RogueCastle
 {
     public class EnemyObj_Dummy : EnemyObj
     {
+        public EnemyObj_Dummy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("Dummy_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 30;
+        }
+
         protected override void InitializeEV()
         {
             Scale = new Vector2(2.2f, 2.2f);
@@ -58,7 +65,7 @@ namespace RogueCastle
                 m_levelScreen.ImpactEffectPool.WoodChipEffect(new Vector2(X, Bounds.Center.Y));
                 if (isPlayer)
                 {
-                    PlayerObj expr_D0 = m_target;
+                    var expr_D0 = m_target;
                     expr_D0.NumSequentialAttacks += 1;
                     if (m_target.IsAirAttacking)
                     {
@@ -75,7 +82,7 @@ namespace RogueCastle
 
         private void RandomizeName()
         {
-            string[] array = new[]
+            string[] array =
             {
                 "Oh god!",
                 "The pain!",
@@ -101,13 +108,6 @@ namespace RogueCastle
                 "Try again"
             };
             Name = array[CDGMath.RandomInt(0, array.Length - 1)];
-        }
-
-        public EnemyObj_Dummy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("Dummy_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 30;
         }
     }
 }

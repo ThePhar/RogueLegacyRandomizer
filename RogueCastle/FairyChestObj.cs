@@ -21,19 +21,12 @@ namespace RogueCastle
     public class FairyChestObj : ChestObj
     {
         private const float SparkleDelay = 1f;
-        private SpriteObj m_lockSprite;
-        private SpriteObj m_errorSprite;
         private int m_conditionType;
+        private SpriteObj m_errorSprite;
+        private SpriteObj m_lockSprite;
         private PlayerObj m_player;
         private float m_sparkleCounter = 1f;
         private TextObj m_timerText;
-        public int State { get; internal set; }
-        public float Timer { get; set; }
-
-        public int ConditionType
-        {
-            get { return m_conditionType; }
-        }
 
         public FairyChestObj(PhysicsManager physicsManager) : base(physicsManager)
         {
@@ -45,6 +38,14 @@ namespace RogueCastle
             m_timerText.DropShadow = new Vector2(2f, 2f);
             m_timerText.Align = Types.TextAlign.Centre;
             m_player = Game.ScreenManager.Player;
+        }
+
+        public int State { get; internal set; }
+        public float Timer { get; set; }
+
+        public int ConditionType
+        {
+            get { return m_conditionType; }
         }
 
         public void SetConditionType(int conditionType = 0)
@@ -108,14 +109,14 @@ namespace RogueCastle
                     player.AttachedLevel.RefreshMapChestIcons();
                     return;
                 }
-                List<byte[]> getRuneArray = Game.PlayerStats.GetRuneArray;
-                List<Vector2> list = new List<Vector2>();
-                int num = 0;
-                foreach (byte[] current in getRuneArray)
+                var getRuneArray = Game.PlayerStats.GetRuneArray;
+                var list = new List<Vector2>();
+                var num = 0;
+                foreach (var current in getRuneArray)
                 {
-                    int num2 = 0;
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
+                    var num2 = 0;
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
                     {
                         if (array[i] == 0)
                         {
@@ -127,9 +128,9 @@ namespace RogueCastle
                 }
                 if (list.Count > 0)
                 {
-                    Vector2 vector = list[CDGMath.RandomInt(0, list.Count - 1)];
+                    var vector = list[CDGMath.RandomInt(0, list.Count - 1)];
                     Game.PlayerStats.GetRuneArray[(int) vector.X][(int) vector.Y] = 1;
-                    List<object> list2 = new List<object>();
+                    var list2 = new List<object>();
                     list2.Add(new Vector2(X, Y - Height/2f));
                     list2.Add(2);
                     list2.Add(new Vector2(vector.X, vector.Y));
@@ -159,8 +160,8 @@ namespace RogueCastle
                     if (m_sparkleCounter <= 0f)
                     {
                         m_sparkleCounter = 1f;
-                        float num = 0f;
-                        for (int i = 0; i < 2; i++)
+                        var num = 0f;
+                        for (var i = 0; i < 2; i++)
                         {
                             Tween.To(this, num, Linear.EaseNone);
                             Tween.AddEndHandlerToLastTween(m_player.AttachedLevel.ImpactEffectPool,
@@ -179,8 +180,7 @@ namespace RogueCastle
                     m_timerText.Text = ((int) Timer + 1).ToString();
                     m_timerText.Draw(camera);
                     m_player.AttachedLevel.UpdateObjectiveProgress(
-                        (DialogueManager.GetText("Chest_Locked " + ConditionType).Dialogue[0] + (int) (Timer + 1f))
-                            .ToString());
+                        (DialogueManager.GetText("Chest_Locked " + ConditionType).Dialogue[0] + (int) (Timer + 1f)));
                 }
             }
             if (ConditionType != 10 || IsOpen)
@@ -241,7 +241,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            FairyChestObj fairyChestObj = obj as FairyChestObj;
+            var fairyChestObj = obj as FairyChestObj;
             fairyChestObj.State = State;
             SetConditionType();
         }

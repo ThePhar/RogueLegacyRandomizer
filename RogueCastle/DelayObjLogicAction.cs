@@ -15,8 +15,8 @@ namespace RogueCastle
 {
     public class DelayObjLogicAction : LogicAction
     {
-        private GameObj m_delayObj;
         private float m_delayCounter;
+        private GameObj m_delayObj;
 
         public DelayObjLogicAction(GameObj delayObj)
         {

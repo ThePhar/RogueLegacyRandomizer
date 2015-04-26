@@ -19,72 +19,31 @@ namespace RogueCastle
 {
     public class LineageObj : ObjContainer
     {
-        private ObjContainer m_playerSprite;
-        private TextObj m_playerName;
-        private TextObj m_trait1Title;
-        private TextObj m_trait2Title;
-        private TextObj m_ageText;
-        private TextObj m_classTextObj;
-        private SpriteObj m_frameSprite;
-        private SpriteObj m_plaqueSprite;
-        private SpriteObj m_spellIcon;
-        private SpriteObj m_spellIconHolder;
-        private bool m_isDead;
-        public bool BeatenABoss;
-        public int NumEnemiesKilled;
+        private readonly int m_textYPos = 140;
         public byte Age = 30;
+        public bool BeatenABoss;
         public byte ChildAge = 4;
         public byte Class;
-        public byte Spell;
-        public bool IsFemale;
         public bool FlipPortrait;
-        private int m_textYPos = 140;
-        private Color m_skinColour1 = new Color(231, 175, 131, 255);
-        private Color m_skinColour2 = new Color(199, 109, 112, 255);
+        public bool IsFemale;
+        private TextObj m_ageText;
+        private TextObj m_classTextObj;
+        private bool m_frameDropping;
+        private SpriteObj m_frameSprite;
+        private bool m_isDead;
         private Color m_lichColour1 = new Color(255, 255, 255, 255);
         private Color m_lichColour2 = new Color(198, 198, 198, 255);
-        private bool m_frameDropping;
-
-        public string PlayerName
-        {
-            get { return m_playerName.Text; }
-            set { m_playerName.Text = value; }
-        }
-
-        public byte ChestPiece { get; set; }
-        public byte HeadPiece { get; set; }
-        public byte ShoulderPiece { get; set; }
-        public bool DisablePlaque { get; set; }
-        public Vector2 Traits { get; internal set; }
-
-        public bool IsDead
-        {
-            get { return m_isDead; }
-            set
-            {
-                m_isDead = value;
-                if (value)
-                {
-                    m_trait1Title.Visible = false;
-                    m_trait2Title.Visible = false;
-                    m_ageText.Visible = true;
-                    return;
-                }
-                m_trait1Title.Visible = true;
-                m_trait2Title.Visible = true;
-                m_ageText.Visible = false;
-            }
-        }
-
-        public override Rectangle Bounds
-        {
-            get { return m_playerSprite.Bounds; }
-        }
-
-        public override Rectangle AbsBounds
-        {
-            get { return m_playerSprite.Bounds; }
-        }
+        private SpriteObj m_plaqueSprite;
+        private TextObj m_playerName;
+        private ObjContainer m_playerSprite;
+        private Color m_skinColour1 = new Color(231, 175, 131, 255);
+        private Color m_skinColour2 = new Color(199, 109, 112, 255);
+        private SpriteObj m_spellIcon;
+        private SpriteObj m_spellIconHolder;
+        private TextObj m_trait1Title;
+        private TextObj m_trait2Title;
+        public int NumEnemiesKilled;
+        public byte Spell;
 
         public LineageObj(LineageScreen screen, bool createEmpty = false)
         {
@@ -104,7 +63,7 @@ namespace RogueCastle
             m_playerSprite.GetChildAt(7).TextureColor = Color.Red;
             m_playerSprite.GetChildAt(14).Visible = false;
             m_playerSprite.GetChildAt(16).Visible = false;
-            Color textureColor = new Color(251, 156, 172);
+            var textureColor = new Color(251, 156, 172);
             m_playerSprite.GetChildAt(13).TextureColor = textureColor;
             m_playerName = new TextObj(Game.JunicodeFont);
             m_playerName.FontSize = 10f;
@@ -176,7 +135,7 @@ namespace RogueCastle
                 {
                     Traits = TraitType.CreateRandomTraits();
                 }
-                byte[] spellList = ClassType.GetSpellList(Class);
+                var spellList = ClassType.GetSpellList(Class);
                 do
                 {
                     Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
@@ -188,12 +147,53 @@ namespace RogueCastle
             }
         }
 
+        public string PlayerName
+        {
+            get { return m_playerName.Text; }
+            set { m_playerName.Text = value; }
+        }
+
+        public byte ChestPiece { get; set; }
+        public byte HeadPiece { get; set; }
+        public byte ShoulderPiece { get; set; }
+        public bool DisablePlaque { get; set; }
+        public Vector2 Traits { get; internal set; }
+
+        public bool IsDead
+        {
+            get { return m_isDead; }
+            set
+            {
+                m_isDead = value;
+                if (value)
+                {
+                    m_trait1Title.Visible = false;
+                    m_trait2Title.Visible = false;
+                    m_ageText.Visible = true;
+                    return;
+                }
+                m_trait1Title.Visible = true;
+                m_trait2Title.Visible = true;
+                m_ageText.Visible = false;
+            }
+        }
+
+        public override Rectangle Bounds
+        {
+            get { return m_playerSprite.Bounds; }
+        }
+
+        public override Rectangle AbsBounds
+        {
+            get { return m_playerSprite.Bounds; }
+        }
+
         private void CreateMaleName(LineageScreen screen)
         {
-            string text = Game.NameArray[CDGMath.RandomInt(0, Game.NameArray.Count - 1)];
+            var text = Game.NameArray[CDGMath.RandomInt(0, Game.NameArray.Count - 1)];
             if (screen != null)
             {
-                int num = 0;
+                var num = 0;
                 while (screen.CurrentBranchNameCopyFound(text))
                 {
                     text = Game.NameArray[CDGMath.RandomInt(0, Game.NameArray.Count - 1)];
@@ -210,8 +210,8 @@ namespace RogueCastle
                 {
                     text = text.Substring(0, 9) + ".";
                 }
-                int num2 = 0;
-                string text2 = "";
+                var num2 = 0;
+                var text2 = "";
                 if (screen != null)
                 {
                     num2 = screen.NameCopies(text);
@@ -223,7 +223,7 @@ namespace RogueCastle
                 m_playerName.Text = "Sir " + text;
                 if (text2 != "")
                 {
-                    TextObj expr_BD = m_playerName;
+                    var expr_BD = m_playerName;
                     expr_BD.Text = expr_BD.Text + " " + text2;
                 }
             }
@@ -235,10 +235,10 @@ namespace RogueCastle
 
         private void CreateFemaleName(LineageScreen screen)
         {
-            string text = Game.FemaleNameArray[CDGMath.RandomInt(0, Game.FemaleNameArray.Count - 1)];
+            var text = Game.FemaleNameArray[CDGMath.RandomInt(0, Game.FemaleNameArray.Count - 1)];
             if (screen != null)
             {
-                int num = 0;
+                var num = 0;
                 while (screen.CurrentBranchNameCopyFound(text))
                 {
                     text = Game.FemaleNameArray[CDGMath.RandomInt(0, Game.FemaleNameArray.Count - 1)];
@@ -255,8 +255,8 @@ namespace RogueCastle
                 {
                     text = text.Substring(0, 9) + ".";
                 }
-                int num2 = 0;
-                string text2 = "";
+                var num2 = 0;
+                var text2 = "";
                 if (screen != null)
                 {
                     num2 = screen.NameCopies(text);
@@ -268,7 +268,7 @@ namespace RogueCastle
                 m_playerName.Text = "Lady " + text;
                 if (text2 != "")
                 {
-                    TextObj expr_BD = m_playerName;
+                    var expr_BD = m_playerName;
                     expr_BD.Text = expr_BD.Text + " " + text2;
                 }
             }
@@ -280,9 +280,9 @@ namespace RogueCastle
 
         public void RandomizePortrait()
         {
-            int num = CDGMath.RandomInt(1, 5);
-            int num2 = CDGMath.RandomInt(1, 5);
-            int num3 = CDGMath.RandomInt(1, 5);
+            var num = CDGMath.RandomInt(1, 5);
+            var num2 = CDGMath.RandomInt(1, 5);
+            var num3 = CDGMath.RandomInt(1, 5);
             if (Class == 17)
             {
                 num = 7;
@@ -299,22 +299,22 @@ namespace RogueCastle
             HeadPiece = headPiece;
             ShoulderPiece = shoulderPiece;
             ChestPiece = chestPiece;
-            string text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
-            int startIndex = text.IndexOf("_") - 1;
+            var text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
+            var startIndex = text.IndexOf("_") - 1;
             text = text.Remove(startIndex, 1);
             text = text.Replace("_", HeadPiece + "_");
             m_playerSprite.GetChildAt(12).ChangeSprite(text);
-            string text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
+            var text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
             startIndex = text2.IndexOf("_") - 1;
             text2 = text2.Remove(startIndex, 1);
             text2 = text2.Replace("_", ChestPiece + "_");
             m_playerSprite.GetChildAt(4).ChangeSprite(text2);
-            string text3 = (m_playerSprite.GetChildAt(9) as IAnimateableObj).SpriteName;
+            var text3 = (m_playerSprite.GetChildAt(9) as IAnimateableObj).SpriteName;
             startIndex = text3.IndexOf("_") - 1;
             text3 = text3.Remove(startIndex, 1);
             text3 = text3.Replace("_", ShoulderPiece + "_");
             m_playerSprite.GetChildAt(9).ChangeSprite(text3);
-            string text4 = (m_playerSprite.GetChildAt(3) as IAnimateableObj).SpriteName;
+            var text4 = (m_playerSprite.GetChildAt(3) as IAnimateableObj).SpriteName;
             startIndex = text4.IndexOf("_") - 1;
             text4 = text4.Remove(startIndex, 1);
             text4 = text4.Replace("_", ShoulderPiece + "_");
@@ -323,8 +323,8 @@ namespace RogueCastle
 
         public void UpdateAge(int currentEra)
         {
-            int num = currentEra - ChildAge;
-            int num2 = currentEra + Age;
+            var num = currentEra - ChildAge;
+            var num2 = currentEra + Age;
             m_ageText.Text = num + " - " + num2;
         }
 
@@ -536,7 +536,7 @@ namespace RogueCastle
         public void SetTraits(Vector2 traits)
         {
             Traits = traits;
-            string text = "";
+            var text = "";
             if (Traits.X != 0f)
             {
                 text += TraitType.ToString((byte) Traits.X);
@@ -569,7 +569,7 @@ namespace RogueCastle
 
         public void UpdateClassRank()
         {
-            string text = "the ";
+            var text = "the ";
             if (BeatenABoss)
             {
                 text += "Legendary ";

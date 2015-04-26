@@ -24,7 +24,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            EnemyTagObj enemyTagObj = obj as EnemyTagObj;
+            var enemyTagObj = obj as EnemyTagObj;
             enemyTagObj.EnemyType = EnemyType;
         }
     }

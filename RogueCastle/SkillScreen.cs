@@ -22,47 +22,47 @@ namespace RogueCastle
 {
     public class SkillScreen : Screen
     {
+        private readonly int m_shakeAmount = 2;
+        private readonly float m_shakeDelay = 0.01f;
         private SpriteObj m_bg;
+        private bool m_cameraTweening;
         private SpriteObj m_cloud1;
         private SpriteObj m_cloud2;
         private SpriteObj m_cloud3;
         private SpriteObj m_cloud4;
         private SpriteObj m_cloud5;
-        private SpriteObj m_selectionIcon;
-        private Vector2 m_selectedTraitIndex;
-        private KeyIconTextObj m_continueText;
-        private KeyIconTextObj m_toggleIconsText;
-        private KeyIconTextObj m_confirmText;
-        private KeyIconTextObj m_navigationText;
-        private SpriteObj m_titleText;
-        private ObjContainer m_dialoguePlate;
-        private ObjContainer m_manor;
-        private bool m_fadingIn;
-        private bool m_cameraTweening;
-        private bool m_lockControls;
-        private ImpactEffectPool m_impactEffectPool;
-        private GameObj m_shakeObj;
-        private float m_shakeTimer;
-        private int m_shakeAmount = 2;
-        private float m_shakeDelay = 0.01f;
-        private bool m_shookLeft;
-        private float m_shakeDuration;
-        private TextObj m_playerMoney;
         private SpriteObj m_coinIcon;
-        private SpriteObj m_skillIcon;
-        private TextObj m_skillTitle;
-        private TextObj m_skillDescription;
-        private KeyIconTextObj m_inputDescription;
+        private KeyIconTextObj m_confirmText;
+        private KeyIconTextObj m_continueText;
         private SpriteObj m_descriptionDivider;
-        private TextObj m_skillCurrent;
-        private TextObj m_skillUpgrade;
-        private TextObj m_skillLevel;
+        private ObjContainer m_dialoguePlate;
+        private bool m_fadingIn;
+        private bool m_horizontalShake;
+        private ImpactEffectPool m_impactEffectPool;
+        private KeyIconTextObj m_inputDescription;
+        private bool m_lockControls;
+        private ObjContainer m_manor;
+        private KeyIconTextObj m_navigationText;
+        private TextObj m_playerMoney;
+        private float m_screenShakeMagnitude;
+        private Vector2 m_selectedTraitIndex;
+        private SpriteObj m_selectionIcon;
+        private float m_shakeDuration;
+        private GameObj m_shakeObj;
+        private bool m_shakeScreen;
+        private float m_shakeTimer;
+        private bool m_shookLeft;
         private TextObj m_skillCost;
         private SpriteObj m_skillCostBG;
-        private bool m_horizontalShake;
+        private TextObj m_skillCurrent;
+        private TextObj m_skillDescription;
+        private SpriteObj m_skillIcon;
+        private TextObj m_skillLevel;
+        private TextObj m_skillTitle;
+        private TextObj m_skillUpgrade;
+        private SpriteObj m_titleText;
+        private KeyIconTextObj m_toggleIconsText;
         private bool m_verticalShake;
-        private bool m_shakeScreen;
-        private float m_screenShakeMagnitude;
 
         public SkillScreen()
         {
@@ -77,7 +77,7 @@ namespace RogueCastle
             m_manor = new ObjContainer("TraitsCastle_Character");
             m_manor.Scale = new Vector2(2f, 2f);
             m_manor.ForceDraw = true;
-            for (int i = 0; i < m_manor.NumChildren; i++)
+            for (var i = 0; i < m_manor.NumChildren; i++)
             {
                 m_manor.GetChildAt(i).Visible = false;
                 m_manor.GetChildAt(i).Opacity = 0f;
@@ -164,7 +164,7 @@ namespace RogueCastle
             {
                 ForceDraw = true
             };
-            float opacity = 1f;
+            var opacity = 1f;
             m_cloud1.Opacity = opacity;
             m_cloud2.Opacity = opacity;
             m_cloud3.Opacity = opacity;
@@ -223,8 +223,8 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            bool flag = true;
-            foreach (SkillObj current in SkillSystem.SkillArray)
+            var flag = true;
+            foreach (var current in SkillSystem.SkillArray)
             {
                 if (current.CurrentLevel < 1)
                 {
@@ -244,8 +244,8 @@ namespace RogueCastle
             m_manor.GetChildAt(23).Visible = true;
             m_manor.GetChildAt(23).Opacity = 1f;
             Camera.Position = new Vector2(660f, 360f);
-            SkillObj[] skillArray = SkillSystem.GetSkillArray();
-            for (int i = 0; i < skillArray.Length; i++)
+            var skillArray = SkillSystem.GetSkillArray();
+            for (var i = 0; i < skillArray.Length; i++)
             {
                 if (skillArray[i].CurrentLevel > 0)
                 {
@@ -256,7 +256,7 @@ namespace RogueCastle
             {
                 SoundManager.PlayMusic("SkillTreeSong", true, 1f);
             }
-            SkillObj skill = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
+            var skill = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
             m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill);
             UpdateDescriptionPlate(skill);
             m_dialoguePlate.Visible = true;
@@ -285,16 +285,16 @@ namespace RogueCastle
 
         public void SetVisible(SkillObj trait, bool fadeIn)
         {
-            int manorPiece = SkillSystem.GetManorPiece(trait);
+            var manorPiece = SkillSystem.GetManorPiece(trait);
             if (fadeIn)
             {
                 SetManorPieceVisible(manorPiece, trait);
                 return;
             }
-            GameObj childAt = m_manor.GetChildAt(manorPiece);
+            var childAt = m_manor.GetChildAt(manorPiece);
             childAt.Opacity = 1f;
             childAt.Visible = true;
-            foreach (SkillObj current in SkillSystem.GetAllConnectingTraits(trait))
+            foreach (var current in SkillSystem.GetAllConnectingTraits(trait))
             {
                 if (!current.Visible)
                 {
@@ -312,7 +312,7 @@ namespace RogueCastle
             }
             if (m_manor.GetChildAt(2).Visible)
             {
-                SpriteObj spriteObj = m_manor.GetChildAt(32) as SpriteObj;
+                var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
                 spriteObj.Visible = true;
                 spriteObj.Opacity = 1f;
                 spriteObj.PlayAnimation();
@@ -324,13 +324,13 @@ namespace RogueCastle
 
         public void SetManorPieceVisible(int manorIndex, SkillObj skillObj)
         {
-            GameObj childAt = m_manor.GetChildAt(manorIndex);
-            float num = 0f;
+            var childAt = m_manor.GetChildAt(manorIndex);
+            var num = 0f;
             if (!childAt.Visible)
             {
                 m_lockControls = true;
                 childAt.Visible = true;
-                Vector2 pos = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
+                var pos = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
                 switch (manorIndex)
                 {
                     case 0:
@@ -361,7 +361,7 @@ namespace RogueCastle
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
                         m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2, num);
-                        SpriteObj spriteObj = m_manor.GetChildAt(32) as SpriteObj;
+                        var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
                         spriteObj.PlayAnimation();
                         spriteObj.OverrideParentAnimationDelay = true;
                         spriteObj.AnimationDelay = 0.0333333351f;
@@ -460,7 +460,7 @@ namespace RogueCastle
                         goto IL_A26;
                 }
                 num = 0.7f;
-                Vector2 vector = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
+                var vector = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
                 childAt.Opacity = 1f;
                 childAt.Y -= 720f;
                 Tween.By(childAt, num, Quad.EaseIn, "Y", "720");
@@ -482,8 +482,8 @@ namespace RogueCastle
 
         public void SetSkillIconVisible(SkillObj skill)
         {
-            float num = 0f;
-            foreach (SkillObj current in SkillSystem.GetAllConnectingTraits(skill))
+            var num = 0f;
+            foreach (var current in SkillSystem.GetAllConnectingTraits(skill))
             {
                 if (!current.Visible)
                 {
@@ -585,7 +585,7 @@ namespace RogueCastle
             }
             if (b != 0 && displayScreen)
             {
-                List<object> list = new List<object>();
+                var list = new List<object>();
                 list.Add(b);
                 (ScreenManager as RCScreenManager).DisplayScreen(19, true, list);
             }
@@ -627,7 +627,7 @@ namespace RogueCastle
                 Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
                 Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
             }
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (m_cloud1.Bounds.Right < -100)
             {
                 m_cloud1.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
@@ -686,7 +686,7 @@ namespace RogueCastle
         {
             if (!m_cameraTweening && !m_lockControls)
             {
-                bool flag = false;
+                var flag = false;
                 if (Game.GlobalInput.JustPressed(9))
                 {
                     if (SkillSystem.IconsVisible)
@@ -721,13 +721,13 @@ namespace RogueCastle
                 }
                 if (SkillSystem.IconsVisible)
                 {
-                    Vector2 selectedTraitIndex = m_selectedTraitIndex;
-                    Vector2 vector = new Vector2(-1f, -1f);
+                    var selectedTraitIndex = m_selectedTraitIndex;
+                    var vector = new Vector2(-1f, -1f);
                     if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y).TopLink;
-                        SkillObj skill = SkillSystem.GetSkill(SkillType.SuperSecret);
+                        var skill = SkillSystem.GetSkill(SkillType.SuperSecret);
                         if (!m_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
                         {
                             m_cameraTweening = true;
@@ -755,7 +755,7 @@ namespace RogueCastle
                     }
                     if (vector.X != -1f && vector.Y != -1f)
                     {
-                        SkillObj skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
+                        var skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
                         if (skill2.TraitType != SkillType.Null && skill2.Visible)
                         {
                             m_selectedTraitIndex = vector;
@@ -763,7 +763,7 @@ namespace RogueCastle
                     }
                     if (selectedTraitIndex != m_selectedTraitIndex)
                     {
-                        SkillObj skill3 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X,
+                        var skill3 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X,
                             (int) m_selectedTraitIndex.Y);
                         m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill3);
                         UpdateDescriptionPlate(skill3);
@@ -772,7 +772,7 @@ namespace RogueCastle
                         Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
                         m_dialoguePlate.Visible = true;
                     }
-                    SkillObj skill4 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
+                    var skill4 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
                     if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
                         Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
                     {
@@ -797,8 +797,8 @@ namespace RogueCastle
                     if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
                     {
                         m_lockControls = true;
-                        RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
-                        ProceduralLevelScreen levelScreen = rCScreenManager.GetLevelScreen();
+                        var rCScreenManager = ScreenManager as RCScreenManager;
+                        var levelScreen = rCScreenManager.GetLevelScreen();
                         levelScreen.Reset();
                         if (levelScreen.CurrentRoom is StartingRoomObj)
                         {
@@ -814,7 +814,7 @@ namespace RogueCastle
                     if (!LevelEV.RUN_DEMO_VERSION && !LevelEV.CREATE_RETAIL_VERSION &&
                         InputManager.JustPressed(Keys.Q, PlayerIndex.One))
                     {
-                        foreach (SkillObj current in SkillSystem.SkillArray)
+                        foreach (var current in SkillSystem.SkillArray)
                         {
                             if (current.CurrentLevel < current.MaxLevel)
                             {
@@ -836,7 +836,7 @@ namespace RogueCastle
 
         public void UpdateDescriptionPlate(SkillObj trait)
         {
-            string text = trait.IconName;
+            var text = trait.IconName;
             text = text.Replace("Locked", "");
             text = text.Replace("Max", "");
             m_skillIcon.ChangeSprite(text);
@@ -846,7 +846,7 @@ namespace RogueCastle
             m_inputDescription.Text = trait.InputDescription;
             m_inputDescription.WordWrap(280);
             m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
-            float num = TraitStatType.GetTraitStat(trait.TraitType);
+            var num = TraitStatType.GetTraitStat(trait.TraitType);
             if (num > -1f)
             {
                 if (num < 1f)
@@ -866,7 +866,7 @@ namespace RogueCastle
                 m_skillCurrent.Text = "Current: " + num + trait.UnitOfMeasurement;
                 if (trait.CurrentLevel < trait.MaxLevel)
                 {
-                    float num2 = trait.PerLevelModifier;
+                    var num2 = trait.PerLevelModifier;
                     if (num2 < 1f && trait.TraitType != SkillType.Invuln_Time_Up)
                     {
                         num2 *= 100f;
@@ -882,7 +882,7 @@ namespace RogueCastle
                     m_skillUpgrade.Text = "Upgrade: --";
                 }
                 m_skillLevel.Text = string.Concat("Level: ", trait.CurrentLevel, "/", trait.MaxLevel);
-                string arg = "unlock";
+                var arg = "unlock";
                 if (trait.CurrentLevel > 0)
                 {
                     arg = "upgrade";
@@ -906,7 +906,7 @@ namespace RogueCastle
                 m_skillUpgrade.Text = "";
                 m_skillLevel.Text = "";
                 m_descriptionDivider.Visible = false;
-                string arg2 = "unlock";
+                var arg2 = "unlock";
                 if (trait.CurrentLevel > 0)
                 {
                     arg2 = "upgrade";
@@ -944,10 +944,10 @@ namespace RogueCastle
             m_impactEffectPool.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             m_selectionIcon.Draw(Camera);
-            SkillObj[] skillArray = SkillSystem.GetSkillArray();
-            for (int i = 0; i < skillArray.Length; i++)
+            var skillArray = SkillSystem.GetSkillArray();
+            for (var i = 0; i < skillArray.Length; i++)
             {
-                SkillObj skillObj = skillArray[i];
+                var skillObj = skillArray[i];
                 if (skillObj.TraitType != SkillType.Filler && skillObj.TraitType != SkillType.Null && skillObj.Visible)
                 {
                     skillObj.Draw(Camera);

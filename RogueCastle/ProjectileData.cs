@@ -16,39 +16,33 @@ namespace RogueCastle
 {
     public class ProjectileData : IDisposable
     {
-        private bool m_isDisposed;
-        public bool IsWeighted;
-        public string SpriteName;
-        public GameObj Source;
-        public GameObj Target;
-        public Vector2 SourceAnchor;
-        public float AngleOffset;
         public Vector2 Angle;
-        public float RotationSpeed;
-        public int Damage;
-        public Vector2 Speed;
-        public Vector2 Scale = new Vector2(1f, 1f);
-        public bool CollidesWithTerrain = true;
-        public bool DestroysWithTerrain = true;
-        public float Lifespan = 10f;
-        public float TurnSpeed = 10f;
-        public bool ChaseTarget;
-        public bool FollowArc;
-        public float StartingRotation;
-        public bool ShowIcon = true;
-        public bool IsCollidable = true;
-        public bool DestroysWithEnemy = true;
-        public bool LockPosition;
-        public bool CollidesWith1Ways;
-        public bool DestroyOnRoomTransition = true;
+        public float AngleOffset;
         public bool CanBeFusRohDahed = true;
+        public bool ChaseTarget;
+        public bool CollidesWith1Ways;
+        public bool CollidesWithTerrain = true;
+        public int Damage;
+        public bool DestroyOnRoomTransition = true;
+        public bool DestroysWithEnemy = true;
+        public bool DestroysWithTerrain = true;
+        public bool FollowArc;
         public bool IgnoreInvincibleCounter;
+        public bool IsCollidable = true;
+        public bool IsWeighted;
+        public float Lifespan = 10f;
+        public bool LockPosition;
+        public float RotationSpeed;
+        public Vector2 Scale = new Vector2(1f, 1f);
+        public bool ShowIcon = true;
+        public GameObj Source;
+        public Vector2 SourceAnchor;
+        public Vector2 Speed;
+        public string SpriteName;
+        public float StartingRotation;
+        public GameObj Target;
+        public float TurnSpeed = 10f;
         public bool WrapProjectile;
-
-        public bool IsDisposed
-        {
-            get { return m_isDisposed; }
-        }
 
         public ProjectileData(GameObj source)
         {
@@ -59,13 +53,15 @@ namespace RogueCastle
             Source = source;
         }
 
+        public bool IsDisposed { get; private set; }
+
         public void Dispose()
         {
             if (!IsDisposed)
             {
                 Source = null;
                 Target = null;
-                m_isDisposed = true;
+                IsDisposed = true;
             }
         }
 

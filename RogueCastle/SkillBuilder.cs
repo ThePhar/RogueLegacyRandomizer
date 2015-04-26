@@ -16,7 +16,7 @@ namespace RogueCastle
     {
         public static SkillObj BuildSkill(SkillType skillType)
         {
-            SkillObj skillObj = new SkillObj("Icon_SwordLocked_Sprite");
+            var skillObj = new SkillObj("Icon_SwordLocked_Sprite");
             switch (skillType)
             {
                 case SkillType.Filler:
@@ -747,7 +747,7 @@ namespace RogueCastle
 
         public static SkillLinker GetSkillLinker(int xIndex, int yIndex)
         {
-            SkillLinker result = default(SkillLinker);
+            var result = default(SkillLinker);
             if (xIndex == 5 && yIndex == 9)
             {
                 result.TopLink = new Vector2(5f, 8f);

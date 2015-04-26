@@ -17,14 +17,14 @@ namespace RogueCastle
 {
     public class ThroneRoomObj : RoomObj
     {
-        private KeyIconTextObj m_tutorialText;
         private bool m_displayText;
         private KingObj m_king;
         private bool m_kingKilled;
+        private KeyIconTextObj m_tutorialText;
 
         public override void Initialize()
         {
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "fountain")
                 {
@@ -33,7 +33,7 @@ namespace RogueCastle
                     break;
                 }
             }
-            foreach (DoorObj current2 in DoorList)
+            foreach (var current2 in DoorList)
             {
                 current2.Locked = true;
             }

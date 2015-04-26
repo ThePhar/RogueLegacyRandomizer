@@ -17,67 +17,13 @@ namespace RogueCastle
 {
     public class GaussianBlur
     {
-        private Effect effect;
-        private int radius;
+        private readonly Effect effect;
+        private readonly EffectParameter m_offsetParameters;
+        private readonly RenderTarget2D m_renderHolder;
+        private readonly RenderTarget2D m_renderHolder2;
         private float amount;
-        private float sigma;
-        private float[] kernel;
-        private Vector2[] offsetsHoriz;
-        private Vector2[] offsetsVert;
-        private RenderTarget2D m_renderHolder;
-        private RenderTarget2D m_renderHolder2;
         private bool m_invertMask;
-        private EffectParameter m_offsetParameters;
-
-        public int Radius
-        {
-            get { return radius; }
-            set
-            {
-                radius = value;
-                ComputeKernel();
-            }
-        }
-
-        public float Amount
-        {
-            get { return amount; }
-            set
-            {
-                amount = value;
-                ComputeKernel();
-            }
-        }
-
-        public float Sigma
-        {
-            get { return sigma; }
-        }
-
-        public float[] Kernel
-        {
-            get { return kernel; }
-        }
-
-        public Vector2[] TextureOffsetsX
-        {
-            get { return offsetsHoriz; }
-        }
-
-        public Vector2[] TextureOffsetsY
-        {
-            get { return offsetsVert; }
-        }
-
-        public bool InvertMask
-        {
-            get { return m_invertMask; }
-            set
-            {
-                m_invertMask = value;
-                effect.Parameters["invert"].SetValue(m_invertMask);
-            }
-        }
+        private int radius;
 
         public GaussianBlur()
         {
@@ -107,41 +53,76 @@ namespace RogueCastle
             m_offsetParameters = effect.Parameters["offsets"];
         }
 
+        public int Radius
+        {
+            get { return radius; }
+            set
+            {
+                radius = value;
+                ComputeKernel();
+            }
+        }
+
+        public float Amount
+        {
+            get { return amount; }
+            set
+            {
+                amount = value;
+                ComputeKernel();
+            }
+        }
+
+        public float Sigma { get; private set; }
+        public float[] Kernel { get; private set; }
+        public Vector2[] TextureOffsetsX { get; private set; }
+        public Vector2[] TextureOffsetsY { get; private set; }
+
+        public bool InvertMask
+        {
+            get { return m_invertMask; }
+            set
+            {
+                m_invertMask = value;
+                effect.Parameters["invert"].SetValue(m_invertMask);
+            }
+        }
+
         public void ComputeKernel()
         {
-            kernel = null;
-            kernel = new float[radius*2 + 1];
-            sigma = radius/amount;
-            float num = 2f*sigma*sigma;
-            float num2 = (float) Math.Sqrt(num*3.1415926535897931);
-            float num3 = 0f;
-            for (int i = -radius; i <= radius; i++)
+            Kernel = null;
+            Kernel = new float[radius*2 + 1];
+            Sigma = radius/amount;
+            var num = 2f*Sigma*Sigma;
+            var num2 = (float) Math.Sqrt(num*3.1415926535897931);
+            var num3 = 0f;
+            for (var i = -radius; i <= radius; i++)
             {
                 float num4 = i*i;
-                int num5 = i + radius;
-                kernel[num5] = (float) Math.Exp(-(double) num4/num)/num2;
-                num3 += kernel[num5];
+                var num5 = i + radius;
+                Kernel[num5] = (float) Math.Exp(-(double) num4/num)/num2;
+                num3 += Kernel[num5];
             }
-            for (int j = 0; j < kernel.Length; j++)
+            for (var j = 0; j < Kernel.Length; j++)
             {
-                kernel[j] /= num3;
+                Kernel[j] /= num3;
             }
-            effect.Parameters["weights"].SetValue(kernel);
+            effect.Parameters["weights"].SetValue(Kernel);
         }
 
         public void ComputeOffsets()
         {
-            offsetsHoriz = null;
-            offsetsHoriz = new Vector2[radius*2 + 1];
-            offsetsVert = null;
-            offsetsVert = new Vector2[radius*2 + 1];
-            float num = 1f/m_renderHolder.Width;
-            float num2 = 1f/m_renderHolder.Height;
-            for (int i = -radius; i <= radius; i++)
+            TextureOffsetsX = null;
+            TextureOffsetsX = new Vector2[radius*2 + 1];
+            TextureOffsetsY = null;
+            TextureOffsetsY = new Vector2[radius*2 + 1];
+            var num = 1f/m_renderHolder.Width;
+            var num2 = 1f/m_renderHolder.Height;
+            for (var i = -radius; i <= radius; i++)
             {
-                int num3 = i + radius;
-                offsetsHoriz[num3] = new Vector2(i*num, 0f);
-                offsetsVert[num3] = new Vector2(0f, i*num2);
+                var num3 = i + radius;
+                TextureOffsetsX[num3] = new Vector2(i*num, 0f);
+                TextureOffsetsY[num3] = new Vector2(0f, i*num2);
             }
         }
 
@@ -152,7 +133,7 @@ namespace RogueCastle
                 throw new InvalidOperationException("GaussianBlur.fx effect not loaded.");
             }
             Camera.GraphicsDevice.SetRenderTarget(m_renderHolder);
-            m_offsetParameters.SetValue(offsetsHoriz);
+            m_offsetParameters.SetValue(TextureOffsetsX);
             if (mask != null)
             {
                 Camera.GraphicsDevice.Textures[1] = mask;
@@ -172,7 +153,7 @@ namespace RogueCastle
             if (LevelEV.SAVE_FRAMES)
             {
                 Camera.GraphicsDevice.SetRenderTarget(m_renderHolder2);
-                m_offsetParameters.SetValue(offsetsVert);
+                m_offsetParameters.SetValue(TextureOffsetsY);
                 if (mask != null)
                 {
                     Camera.GraphicsDevice.Textures[1] = mask;
@@ -188,7 +169,7 @@ namespace RogueCastle
                 return;
             }
             Camera.GraphicsDevice.SetRenderTarget(srcTexture);
-            m_offsetParameters.SetValue(offsetsVert);
+            m_offsetParameters.SetValue(TextureOffsetsY);
             if (mask != null)
             {
                 Camera.GraphicsDevice.Textures[1] = mask;

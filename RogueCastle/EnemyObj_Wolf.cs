@@ -15,15 +15,25 @@ namespace RogueCastle
 {
     public class EnemyObj_Wolf : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private LogicBlock m_wolfHitLB = new LogicBlock();
-        private float PounceDelay = 0.3f;
-        private float PounceLandDelay = 0.5f;
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly FrameSoundObj m_runFrameSound;
+        private readonly float m_startDelay = 1f;
+        private readonly LogicBlock m_wolfHitLB = new LogicBlock();
+        private readonly float PounceDelay = 0.3f;
+        private readonly float PounceLandDelay = 0.5f;
         private Color FurColour = Color.White;
-        private float m_startDelay = 1f;
         private float m_startDelayCounter;
-        private FrameSoundObj m_runFrameSound;
+
+        public EnemyObj_Wolf(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyWargIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 19;
+            m_startDelayCounter = m_startDelay;
+            m_runFrameSound = new FrameSoundObj(this, 1, "Wolf_Move01", "Wolf_Move02", "Wolf_Move03");
+        }
+
         public bool Chasing { get; set; }
 
         protected override void InitializeEV()
@@ -146,20 +156,20 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyWargRun_Character"));
             logicSet.AddAction(new ChangePropertyLogicAction(this, "Chasing", true));
             logicSet.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet2.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyWargIdle_Character"));
             logicSet2.AddAction(new ChangePropertyLogicAction(this, "Chasing", false));
             logicSet2.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new GroundCheckLogicAction());
             logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -176,7 +186,7 @@ namespace RogueCastle
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWargIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(PounceLandDelay));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyWargHit_Character", false, false));
             logicSet4.AddAction(new DelayLogicAction(0.2f));
             logicSet4.AddAction(new GroundCheckLogicAction());
@@ -198,9 +208,9 @@ namespace RogueCastle
                     case 0:
                         if (Chasing)
                         {
-                            bool arg_C7_1 = false;
-                            LogicBlock arg_C7_2 = m_generalBasicLB;
-                            int[] array = new int[3];
+                            var arg_C7_1 = false;
+                            var arg_C7_2 = m_generalBasicLB;
+                            var array = new int[3];
                             array[1] = 100;
                             RunLogicBlock(arg_C7_1, arg_C7_2, array);
                         }
@@ -208,9 +218,9 @@ namespace RogueCastle
                     case 1:
                         if (!Chasing)
                         {
-                            bool arg_A1_1 = false;
-                            LogicBlock arg_A1_2 = m_generalBasicLB;
-                            int[] array2 = new int[3];
+                            var arg_A1_1 = false;
+                            var arg_A1_2 = m_generalBasicLB;
+                            var array2 = new int[3];
                             array2[0] = 100;
                             RunLogicBlock(arg_A1_1, arg_A1_2, array2);
                         }
@@ -223,9 +233,9 @@ namespace RogueCastle
                             RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                             return;
                         }
-                        bool arg_7E_1 = false;
-                        LogicBlock arg_7E_2 = m_generalBasicLB;
-                        int[] array3 = new int[3];
+                        var arg_7E_1 = false;
+                        var arg_7E_2 = m_generalBasicLB;
+                        var array3 = new int[3];
                         array3[0] = 100;
                         RunLogicBlock(arg_7E_1, arg_7E_2, array3);
                         return;
@@ -243,9 +253,9 @@ namespace RogueCastle
                 case 0:
                     if (Chasing)
                     {
-                        bool arg_B7_1 = false;
-                        LogicBlock arg_B7_2 = m_generalBasicLB;
-                        int[] array = new int[3];
+                        var arg_B7_1 = false;
+                        var arg_B7_2 = m_generalBasicLB;
+                        var array = new int[3];
                         array[1] = 100;
                         RunLogicBlock(arg_B7_1, arg_B7_2, array);
                     }
@@ -253,9 +263,9 @@ namespace RogueCastle
                 case 1:
                     if (!Chasing)
                     {
-                        bool arg_91_1 = false;
-                        LogicBlock arg_91_2 = m_generalBasicLB;
-                        int[] array2 = new int[3];
+                        var arg_91_1 = false;
+                        var arg_91_2 = m_generalBasicLB;
+                        var array2 = new int[3];
                         array2[0] = 100;
                         RunLogicBlock(arg_91_1, arg_91_2, array2);
                     }
@@ -268,9 +278,9 @@ namespace RogueCastle
                         RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
-                    bool arg_6E_1 = false;
-                    LogicBlock arg_6E_2 = m_generalBasicLB;
-                    int[] array3 = new int[3];
+                    var arg_6E_1 = false;
+                    var arg_6E_2 = m_generalBasicLB;
+                    var array3 = new int[3];
                     array3[0] = 100;
                     RunLogicBlock(arg_6E_1, arg_6E_2, array3);
                     return;
@@ -287,9 +297,9 @@ namespace RogueCastle
                 case 0:
                     if (Chasing)
                     {
-                        bool arg_B7_1 = false;
-                        LogicBlock arg_B7_2 = m_generalBasicLB;
-                        int[] array = new int[3];
+                        var arg_B7_1 = false;
+                        var arg_B7_2 = m_generalBasicLB;
+                        var array = new int[3];
                         array[1] = 100;
                         RunLogicBlock(arg_B7_1, arg_B7_2, array);
                     }
@@ -297,9 +307,9 @@ namespace RogueCastle
                 case 1:
                     if (!Chasing)
                     {
-                        bool arg_91_1 = false;
-                        LogicBlock arg_91_2 = m_generalBasicLB;
-                        int[] array2 = new int[3];
+                        var arg_91_1 = false;
+                        var arg_91_2 = m_generalBasicLB;
+                        var array2 = new int[3];
                         array2[0] = 100;
                         RunLogicBlock(arg_91_1, arg_91_2, array2);
                     }
@@ -312,9 +322,9 @@ namespace RogueCastle
                         RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
-                    bool arg_6E_1 = false;
-                    LogicBlock arg_6E_2 = m_generalBasicLB;
-                    int[] array3 = new int[3];
+                    var arg_6E_1 = false;
+                    var arg_6E_2 = m_generalBasicLB;
+                    var array3 = new int[3];
                     array3[0] = 100;
                     RunLogicBlock(arg_6E_1, arg_6E_2, array3);
                     return;
@@ -331,9 +341,9 @@ namespace RogueCastle
                 case 0:
                     if (Chasing)
                     {
-                        bool arg_B7_1 = false;
-                        LogicBlock arg_B7_2 = m_generalBasicLB;
-                        int[] array = new int[3];
+                        var arg_B7_1 = false;
+                        var arg_B7_2 = m_generalBasicLB;
+                        var array = new int[3];
                         array[1] = 100;
                         RunLogicBlock(arg_B7_1, arg_B7_2, array);
                     }
@@ -341,9 +351,9 @@ namespace RogueCastle
                 case 1:
                     if (!Chasing)
                     {
-                        bool arg_91_1 = false;
-                        LogicBlock arg_91_2 = m_generalBasicLB;
-                        int[] array2 = new int[3];
+                        var arg_91_1 = false;
+                        var arg_91_2 = m_generalBasicLB;
+                        var array2 = new int[3];
                         array2[0] = 100;
                         RunLogicBlock(arg_91_1, arg_91_2, array2);
                     }
@@ -356,9 +366,9 @@ namespace RogueCastle
                         RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
-                    bool arg_6E_1 = false;
-                    LogicBlock arg_6E_2 = m_generalBasicLB;
-                    int[] array3 = new int[3];
+                    var arg_6E_1 = false;
+                    var arg_6E_2 = m_generalBasicLB;
+                    var array3 = new int[3];
                     array3[0] = 100;
                     RunLogicBlock(arg_6E_1, arg_6E_2, array3);
                     return;
@@ -412,15 +422,6 @@ namespace RogueCastle
         {
             m_startDelayCounter = m_startDelay;
             base.Reset();
-        }
-
-        public EnemyObj_Wolf(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyWargIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 19;
-            m_startDelayCounter = m_startDelay;
-            m_runFrameSound = new FrameSoundObj(this, 1, "Wolf_Move01", "Wolf_Move02", "Wolf_Move03");
         }
     }
 }

@@ -20,13 +20,13 @@ namespace RogueCastle
 {
     public class SkillUnlockScreen : Screen
     {
-        private ObjContainer m_plate;
-        private ObjContainer m_picturePlate;
         private SpriteObj m_picture;
-        private TextObj m_text;
-        private SpriteObj m_titlePlate;
-        private SpriteObj m_title;
+        private ObjContainer m_picturePlate;
+        private ObjContainer m_plate;
         private byte m_skillUnlockType;
+        private TextObj m_text;
+        private SpriteObj m_title;
+        private SpriteObj m_titlePlate;
         public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()

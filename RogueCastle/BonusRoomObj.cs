@@ -12,12 +12,12 @@ namespace RogueCastle
 {
     public class BonusRoomObj : RoomObj
     {
-        public bool RoomCompleted { get; set; }
-
         public BonusRoomObj()
         {
             ID = -1;
         }
+
+        public bool RoomCompleted { get; set; }
 
         public override void Reset()
         {

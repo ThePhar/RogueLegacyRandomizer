@@ -15,8 +15,20 @@ namespace RogueCastle
 {
     public class MusicVolOptionsObj : OptionsObj
     {
-        private SpriteObj m_volumeBarBG;
         private SpriteObj m_volumeBar;
+        private SpriteObj m_volumeBarBG;
+
+        public MusicVolOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Music Volume")
+        {
+            m_volumeBarBG = new SpriteObj("OptionsScreenVolumeBG_Sprite");
+            m_volumeBarBG.X = m_optionsTextOffset;
+            m_volumeBarBG.Y = m_volumeBarBG.Height/2f - 2f;
+            AddChild(m_volumeBarBG);
+            m_volumeBar = new SpriteObj("OptionsScreenVolumeBar_Sprite");
+            m_volumeBar.X = m_volumeBarBG.X + 6f;
+            m_volumeBar.Y = m_volumeBarBG.Y + 5f;
+            AddChild(m_volumeBar);
+        }
 
         public override bool IsActive
         {
@@ -31,18 +43,6 @@ namespace RogueCastle
                 }
                 m_volumeBar.TextureColor = Color.White;
             }
-        }
-
-        public MusicVolOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Music Volume")
-        {
-            m_volumeBarBG = new SpriteObj("OptionsScreenVolumeBG_Sprite");
-            m_volumeBarBG.X = m_optionsTextOffset;
-            m_volumeBarBG.Y = m_volumeBarBG.Height/2f - 2f;
-            AddChild(m_volumeBarBG);
-            m_volumeBar = new SpriteObj("OptionsScreenVolumeBar_Sprite");
-            m_volumeBar.X = m_volumeBarBG.X + 6f;
-            m_volumeBar.Y = m_volumeBarBG.Y + 5f;
-            AddChild(m_volumeBar);
         }
 
         public override void Initialize()

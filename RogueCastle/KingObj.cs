@@ -15,34 +15,29 @@ namespace RogueCastle
 {
     public class KingObj : PhysicsObj
     {
-        private bool m_wasHit;
-
-        public bool WasHit
-        {
-            get { return m_wasHit; }
-        }
-
         public KingObj(string spriteName) : base(spriteName, null)
         {
         }
 
+        public bool WasHit { get; private set; }
+
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            IPhysicsObj physicsObj = otherBox.AbsParent as IPhysicsObj;
-            if (collisionResponseType == 2 && physicsObj.CollisionTypeTag == 2 && !m_wasHit)
+            var physicsObj = otherBox.AbsParent as IPhysicsObj;
+            if (collisionResponseType == 2 && physicsObj.CollisionTypeTag == 2 && !WasHit)
             {
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3",
                     "EnemyHit4", "EnemyHit5", "EnemyHit6");
                 SoundManager.PlaySound("Boss_Title_Exit");
                 SoundManager.PlaySound("Player_Death_Grunt");
-                Point center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
+                var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
                 if (thisBox.AbsRotation != 0f || otherBox.AbsRotation != 0f)
                 {
                     center = Rectangle.Intersect(thisBox.AbsParent.Bounds, otherBox.AbsParent.Bounds).Center;
                 }
-                Vector2 position = new Vector2(center.X, center.Y);
+                var position = new Vector2(center.X, center.Y);
                 (otherBox.AbsParent as PlayerObj).AttachedLevel.ImpactEffectPool.DisplayEnemyImpactEffect(position);
-                m_wasHit = true;
+                WasHit = true;
             }
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }

@@ -18,10 +18,10 @@ namespace RogueCastle
 {
     public class BlobBossRoom : BossRoomObj
     {
-        private EnemyObj_Blob m_boss1;
+        private readonly int m_numIntroBlobs = 10;
         private List<ObjContainer> m_blobArray;
+        private EnemyObj_Blob m_boss1;
         private float m_desiredBossScale;
-        private int m_numIntroBlobs = 10;
 
         public override bool BossKilled
         {
@@ -32,15 +32,15 @@ namespace RogueCastle
         {
             get
             {
-                int num = 0;
-                foreach (EnemyObj current in EnemyList)
+                var num = 0;
+                foreach (var current in EnemyList)
                 {
                     if (current.Type == 2 && !current.IsKilled)
                     {
                         num++;
                     }
                 }
-                foreach (EnemyObj current2 in TempEnemyList)
+                foreach (var current2 in TempEnemyList)
                 {
                     if (current2.Type == 2 && !current2.IsKilled)
                     {
@@ -58,9 +58,9 @@ namespace RogueCastle
             m_boss1.DisableAllWeight = false;
             m_desiredBossScale = m_boss1.Scale.X;
             m_blobArray = new List<ObjContainer>();
-            for (int i = 0; i < m_numIntroBlobs; i++)
+            for (var i = 0; i < m_numIntroBlobs; i++)
             {
-                ObjContainer objContainer = new ObjContainer("EnemyBlobBossAir_Character");
+                var objContainer = new ObjContainer("EnemyBlobBossAir_Character");
                 objContainer.Position = m_boss1.Position;
                 objContainer.Scale = new Vector2(0.4f, 0.4f);
                 objContainer.GetChildAt(0).TextureColor = Color.White;
@@ -100,8 +100,8 @@ namespace RogueCastle
 
         public void DropBlobs()
         {
-            float num = 1f;
-            for (int i = 2; i < m_blobArray.Count; i++)
+            var num = 1f;
+            for (var i = 2; i < m_blobArray.Count; i++)
             {
                 Tween.By(m_blobArray[i], 1f, Quad.EaseIn, "delay", num.ToString(), "Y", "1150");
                 Tween.AddEndHandlerToLastTween(this, "GrowBlob", m_blobArray[i]);
@@ -115,7 +115,7 @@ namespace RogueCastle
 
         public void GrowBlob(GameObj blob)
         {
-            float num = (m_desiredBossScale - 0.5f)/m_numIntroBlobs;
+            var num = (m_desiredBossScale - 0.5f)/m_numIntroBlobs;
             blob.Visible = false;
             m_boss1.PlayAnimation(false);
             m_boss1.ScaleX += num;
@@ -143,8 +143,8 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            Rectangle bounds = Bounds;
-            foreach (EnemyObj current in EnemyList)
+            var bounds = Bounds;
+            foreach (var current in EnemyList)
             {
                 if (current.Type == 2 && !current.IsKilled &&
                     (current.X > Bounds.Right - 20 || current.X < Bounds.Left + 20 || current.Y > Bounds.Bottom - 20 ||
@@ -153,7 +153,7 @@ namespace RogueCastle
                     current.Position = new Vector2(bounds.Center.X, bounds.Center.Y);
                 }
             }
-            foreach (EnemyObj current2 in TempEnemyList)
+            foreach (var current2 in TempEnemyList)
             {
                 if (current2.Type == 2 && !current2.IsKilled &&
                     (current2.X > Bounds.Right - 20 || current2.X < Bounds.Left + 20 || current2.Y > Bounds.Bottom - 20 ||

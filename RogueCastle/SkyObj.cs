@@ -17,25 +17,26 @@ namespace RogueCastle
 {
     public class SkyObj : GameObj
     {
-        private SpriteObj m_moon;
         private BackgroundObj m_differenceCloud;
         private BackgroundObj m_differenceCloud2;
         private BackgroundObj m_differenceCloud3;
+        private ProceduralLevelScreen m_levelScreen;
+        private SpriteObj m_moon;
         private Vector2 m_moonPos;
         private SpriteObj m_silhouette;
         private bool m_silhouetteFlying;
         private float m_silhouetteTimer;
-        private ProceduralLevelScreen m_levelScreen;
-        public float MorningOpacity { get; set; }
 
         public SkyObj(ProceduralLevelScreen levelScreen)
         {
             m_levelScreen = levelScreen;
         }
 
+        public float MorningOpacity { get; set; }
+
         public void LoadContent(Camera2D camera)
         {
-            Vector2 one = new Vector2(2f, 2f);
+            var one = new Vector2(2f, 2f);
             m_moon = new SpriteObj("ParallaxMoon_Sprite");
             m_moon.Position = new Vector2(900f, 200f);
             if (LevelEV.SAVE_FRAMES)
@@ -73,7 +74,7 @@ namespace RogueCastle
 
         public void ReinitializeRT(Camera2D camera)
         {
-            Vector2 one = new Vector2(2f, 2f);
+            var one = new Vector2(2f, 2f);
             if (LevelEV.SAVE_FRAMES)
             {
                 m_moon.Position /= 2f;
@@ -114,13 +115,13 @@ namespace RogueCastle
 
         public void Update(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (!m_silhouetteFlying && m_silhouetteTimer > 0f)
             {
                 m_silhouetteTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_silhouetteTimer <= 0f)
                 {
-                    int num2 = CDGMath.RandomInt(1, 100);
+                    var num2 = CDGMath.RandomInt(1, 100);
                     if (num2 > 95)
                     {
                         ShowSilhouette(true);
@@ -152,12 +153,12 @@ namespace RogueCastle
                 m_silhouetteFlying = true;
                 m_silhouette.Rotation = 0f;
                 m_silhouette.Flip = SpriteEffects.None;
-                bool flag = false;
+                var flag = false;
                 if (CDGMath.RandomInt(0, 1) > 0)
                 {
                     flag = true;
                 }
-                string[] array = new[]
+                string[] array =
                 {
                     "GardenBat_Sprite",
                     "GardenCrow_Sprite",
@@ -174,7 +175,7 @@ namespace RogueCastle
                     m_silhouette.ChangeSprite("GardenSanta_Sprite");
                 }
                 m_silhouette.PlayAnimation();
-                Vector2 arg_A7_0 = Vector2.Zero;
+                var arg_A7_0 = Vector2.Zero;
                 if (flag)
                 {
                     m_silhouette.X = -(float) m_silhouette.Width;
@@ -185,7 +186,7 @@ namespace RogueCastle
                     m_silhouette.X = m_levelScreen.CurrentRoom.Width + m_silhouette.Width;
                 }
                 m_silhouette.Y = CDGMath.RandomFloat(100f, 500f);
-                int num = m_levelScreen.CurrentRoom.Bounds.Width + m_silhouette.Width*2;
+                var num = m_levelScreen.CurrentRoom.Bounds.Width + m_silhouette.Width*2;
                 if (!flag)
                 {
                     num = -num;

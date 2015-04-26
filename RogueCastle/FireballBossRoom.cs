@@ -19,8 +19,8 @@ namespace RogueCastle
     public class FireballBossRoom : BossRoomObj
     {
         private EnemyObj_Fireball m_boss;
-        private List<SpriteObj> m_fireList;
         private float m_bossStartingScale;
+        private List<SpriteObj> m_fireList;
 
         public override bool BossKilled
         {
@@ -29,7 +29,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            foreach (EnemyObj current in EnemyList)
+            foreach (var current in EnemyList)
             {
                 if (current is EnemyObj_Fireball)
                 {
@@ -41,11 +41,11 @@ namespace RogueCastle
             m_boss.ChangeSprite("EnemyGhostBossIdle_Character");
             m_bossStartingScale = m_boss.ScaleX;
             m_fireList = new List<SpriteObj>();
-            float num = 0f;
-            float num2 = 24f;
-            for (int i = 0; i < 15; i++)
+            var num = 0f;
+            var num2 = 24f;
+            for (var i = 0; i < 15; i++)
             {
-                SpriteObj spriteObj = new SpriteObj("GhostBossProjectile_Sprite");
+                var spriteObj = new SpriteObj("GhostBossProjectile_Sprite");
                 spriteObj.PlayAnimation();
                 spriteObj.OutlineWidth = 2;
                 spriteObj.Position = CDGMath.GetCirclePosition(num, 300f, m_boss.Position);
@@ -76,8 +76,8 @@ namespace RogueCastle
 
         public void Intro2()
         {
-            float num = 0f;
-            for (int i = 0; i < m_fireList.Count; i++)
+            var num = 0f;
+            for (var i = 0; i < m_fireList.Count; i++)
             {
                 Tween.RunFunction(num, this, "DisplayOrb", i);
                 num += 0.1f;
@@ -94,8 +94,8 @@ namespace RogueCastle
         public void Intro3()
         {
             SoundManager.PlaySound("Boss_Fireball_Spawn");
-            float num = 0f;
-            for (int i = 0; i < m_fireList.Count; i++)
+            var num = 0f;
+            for (var i = 0; i < m_fireList.Count; i++)
             {
                 Tween.RunFunction(num, this, "AbsorbOrb", i);
                 num += 0.1f;
@@ -127,7 +127,7 @@ namespace RogueCastle
             SoundManager.PlayMusic("TowerBossIntroSong", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = true;
             Player.UnlockControls();
-            foreach (EnemyObj current in EnemyList)
+            foreach (var current in EnemyList)
             {
                 if (current is EnemyObj_BouncySpike)
                 {
@@ -143,7 +143,7 @@ namespace RogueCastle
         {
             if (m_boss.CurrentHealth <= 0 && ActiveEnemies > 1)
             {
-                foreach (EnemyObj current in EnemyList)
+                foreach (var current in EnemyList)
                 {
                     if (current is EnemyObj_BouncySpike)
                     {
@@ -160,7 +160,7 @@ namespace RogueCastle
 
         public override void BossCleanup()
         {
-            foreach (EnemyObj current in EnemyList)
+            foreach (var current in EnemyList)
             {
                 if (current is EnemyObj_BouncySpike)
                 {

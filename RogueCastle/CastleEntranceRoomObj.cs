@@ -20,17 +20,17 @@ namespace RogueCastle
 {
     public class CastleEntranceRoomObj : RoomObj
     {
-        private bool m_gateClosed;
-        private PhysicsObj m_castleGate;
-        private TeleporterObj m_teleporter;
-        private ObjContainer m_bossDoorSprite;
-        private DoorObj m_bossDoor;
-        private SpriteObj m_diary;
-        private SpriteObj m_speechBubble;
-        private TextObj m_mapText;
-        private KeyIconObj m_mapIcon;
         private bool m_allFilesSaved;
+        private DoorObj m_bossDoor;
         private bool m_bossDoorOpening;
+        private ObjContainer m_bossDoorSprite;
+        private PhysicsObj m_castleGate;
+        private SpriteObj m_diary;
+        private bool m_gateClosed;
+        private KeyIconObj m_mapIcon;
+        private TextObj m_mapText;
+        private SpriteObj m_speechBubble;
+        private TeleporterObj m_teleporter;
 
         public CastleEntranceRoomObj()
         {
@@ -60,7 +60,7 @@ namespace RogueCastle
             m_mapIcon = new KeyIconObj();
             m_mapIcon.Scale = new Vector2(0.5f, 0.5f);
             GameObjList.Add(m_mapIcon);
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "diary")
                 {
@@ -76,7 +76,7 @@ namespace RogueCastle
             m_diary.OutlineWidth = 2;
             m_speechBubble.Position = new Vector2(m_diary.X, m_diary.Y - m_speechBubble.Height - 20f);
             DoorObj doorObj = null;
-            foreach (GameObj current2 in GameObjList)
+            foreach (var current2 in GameObjList)
             {
                 if (current2.Name == "LastDoor")
                 {
@@ -84,7 +84,7 @@ namespace RogueCastle
                     break;
                 }
             }
-            foreach (DoorObj current3 in DoorList)
+            foreach (var current3 in DoorList)
             {
                 if (current3.DoorPosition == "Left")
                 {
@@ -96,7 +96,7 @@ namespace RogueCastle
                     m_bossDoor.Locked = true;
                 }
             }
-            for (int i = 1; i < m_bossDoorSprite.NumChildren; i++)
+            for (var i = 1; i < m_bossDoorSprite.NumChildren; i++)
             {
                 m_bossDoorSprite.GetChildAt(i).Opacity = 0f;
             }
@@ -109,7 +109,7 @@ namespace RogueCastle
 
         public void RevealSymbol(GameTypes.LevelType levelType, bool tween)
         {
-            bool flag = false;
+            var flag = false;
             int index;
             switch (levelType)
             {
@@ -249,15 +249,15 @@ namespace RogueCastle
             Player.CurrentSpeed = 0f;
             Player.LockControls();
             Player.AttachedLevel.CameraLockedToPlayer = false;
-            float x = Player.AttachedLevel.Camera.X;
+            var x = Player.AttachedLevel.Camera.X;
             object arg_C7_0 = Player.AttachedLevel.Camera;
-            float arg_C7_1 = 1f;
+            var arg_C7_1 = 1f;
             Easing arg_C7_2 = Quad.EaseInOut;
-            string[] array = new string[2];
+            var array = new string[2];
             array[0] = "X";
-            string[] arg_C5_0 = array;
-            int arg_C5_1 = 1;
-            int x2 = Bounds.Center.X;
+            var arg_C5_0 = array;
+            var arg_C5_1 = 1;
+            var x2 = Bounds.Center.X;
             arg_C5_0[arg_C5_1] = x2.ToString();
             Tween.To(arg_C7_0, arg_C7_1, arg_C7_2, array);
             Tween.RunFunction(2.2f, this, "PlayBossDoorAnimation2", x);
@@ -300,7 +300,7 @@ namespace RogueCastle
                 Player.X = m_castleGate.Bounds.Right + 20;
                 Player.AttachedLevel.UpdateCamera();
             }
-            Rectangle bounds = m_diary.Bounds;
+            var bounds = m_diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
@@ -329,15 +329,15 @@ namespace RogueCastle
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {
-                    RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                    var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
                     rCScreenManager.DisplayScreen(13, true);
-                    PlayerStats expr_24E = Game.PlayerStats;
+                    var expr_24E = Game.PlayerStats;
                     expr_24E.DiaryEntry += 1;
                 }
                 else
                 {
-                    RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                    var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     rCScreenManager2.DisplayScreen(20, true);
                 }
             }
@@ -351,7 +351,7 @@ namespace RogueCastle
                 Player.Y = 381f;
                 Player.X += 10f;
                 Player.State = 1;
-                LogicSet logicSet = new LogicSet(Player);
+                var logicSet = new LogicSet(Player);
                 logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
                 logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
                 logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));

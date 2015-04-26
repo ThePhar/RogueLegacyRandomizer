@@ -15,24 +15,24 @@ namespace Randomchaos2DGodRays
 {
     public class BasePostProcess
     {
-        public Vector2 HalfPixel;
         public Texture2D BackBuffer;
-        public Texture2D orgBuffer;
-        public bool Enabled = true;
         protected Effect effect;
+        public bool Enabled = true;
         protected Game Game;
+        public Vector2 HalfPixel;
         public RenderTarget2D newScene;
+        public Texture2D orgBuffer;
         private ScreenQuad sq;
         public bool UsesVertexShader;
-
-        protected SpriteBatch spriteBatch
-        {
-            get { return (SpriteBatch) Game.Services.GetService(typeof (SpriteBatch)); }
-        }
 
         public BasePostProcess(Game game)
         {
             Game = game;
+        }
+
+        protected SpriteBatch spriteBatch
+        {
+            get { return (SpriteBatch) Game.Services.GetService(typeof (SpriteBatch)); }
         }
 
         public virtual void Draw(GameTime gameTime)

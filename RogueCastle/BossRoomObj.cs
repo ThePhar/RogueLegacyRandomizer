@@ -18,14 +18,14 @@ namespace RogueCastle
 {
     public abstract class BossRoomObj : RoomObj
     {
-        protected bool m_cutsceneRunning;
         private ChestObj m_bossChest;
-        private float m_sparkleTimer;
-        private bool m_teleportingOut;
-        private float m_roomFloor;
+        private SpriteObj m_bossDivider;
         private TextObj m_bossTitle1;
         private TextObj m_bossTitle2;
-        private SpriteObj m_bossDivider;
+        protected bool m_cutsceneRunning;
+        private float m_roomFloor;
+        private float m_sparkleTimer;
+        private bool m_teleportingOut;
         public abstract bool BossKilled { get; }
 
         public override void Initialize()
@@ -33,7 +33,7 @@ namespace RogueCastle
             m_bossTitle1 = new TextObj(Game.JunicodeFont) {Text = "The Forsaken", OutlineWidth = 2, FontSize = 18f};
             m_bossTitle2 = new TextObj(Game.JunicodeLargeFont) {Text = "Alexander", OutlineWidth = 2, FontSize = 40f};
             m_bossDivider = new SpriteObj("Blank_Sprite") {OutlineWidth = 2};
-            foreach (DoorObj current in DoorList)
+            foreach (var current in DoorList)
             {
                 m_roomFloor = current.Bounds.Bottom;
             }
@@ -66,7 +66,7 @@ namespace RogueCastle
             SoundManager.PlaySound("Boss_Title");
             m_bossTitle1.Text = bossTitle1;
             m_bossTitle2.Text = bossTitle2;
-            Camera2D camera = Player.AttachedLevel.Camera;
+            var camera = Player.AttachedLevel.Camera;
             if (Player.AttachedLevel.CurrentRoom is LastBossRoom)
             {
                 m_bossTitle1.Position = new Vector2(camera.X - 550f, camera.Y + 100f);
@@ -132,7 +132,7 @@ namespace RogueCastle
             {
                 if (!(m_sparkleTimer > 0f)) return;
                 m_sparkleTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
-                
+
                 if (!(m_sparkleTimer <= 0f)) return;
                 m_sparkleTimer = 0.5f;
                 Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect",
@@ -163,13 +163,13 @@ namespace RogueCastle
         public void TeleportPlayer()
         {
             Player.CurrentSpeed = 0f;
-            Vector2 position = Player.Position;
-            Vector2 scale = Player.Scale;
+            var position = Player.Position;
+            var scale = Player.Scale;
             Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "1.2", "ScaleX", "0");
             Player.ScaleX = 0f;
             Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "7", "ScaleX", scale.X.ToString());
             Player.ScaleX = scale.X;
-            LogicSet logicSet = new LogicSet(Player);
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
             logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
             logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false));

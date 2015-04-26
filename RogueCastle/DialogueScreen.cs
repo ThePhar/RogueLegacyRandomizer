@@ -20,33 +20,33 @@ namespace RogueCastle
 {
     public class DialogueScreen : Screen
     {
-        private ObjContainer m_dialogContainer;
-        private byte m_dialogCounter;
-        private string[] m_dialogTitles;
-        private string[] m_dialogText;
-        private float m_dialogContinueIconY;
-        private string m_dialogueObjName;
-        private MethodInfo m_confirmMethodInfo;
-        private object m_confirmMethodObj;
-        private object[] m_confirmArgs;
+        private readonly float m_textScrollSpeed = 0.03f;
+        private object[] m_cancelArgs;
         private MethodInfo m_cancelMethodInfo;
         private object m_cancelMethodObj;
-        private object[] m_cancelArgs;
-        private bool m_runChoiceDialogue;
+        private object[] m_confirmArgs;
+        private MethodInfo m_confirmMethodInfo;
+        private object m_confirmMethodObj;
         private ObjContainer m_dialogChoiceContainer;
-        private bool m_runCancelEndHandler;
+        private ObjContainer m_dialogContainer;
+        private float m_dialogContinueIconY;
+        private byte m_dialogCounter;
+        private string[] m_dialogText;
+        private string[] m_dialogTitles;
+        private string m_dialogueObjName;
         private byte m_highlightedChoice = 2;
-        private bool m_lockControls;
-        private float m_textScrollSpeed = 0.03f;
         private float m_inputDelayTimer;
+        private bool m_lockControls;
+        private bool m_runCancelEndHandler;
+        private bool m_runChoiceDialogue;
         public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
             textObj.Align = Types.TextAlign.Left;
-            TextObj textObj2 = new TextObj(Game.JunicodeFont);
+            var textObj2 = new TextObj(Game.JunicodeFont);
             textObj2.FontSize = 14f;
             textObj2.Text = "Blacksmith";
             textObj2.DropShadow = new Vector2(2f, 2f);
@@ -64,23 +64,23 @@ namespace RogueCastle
                 "This is a test to see how much text I can fit onto this dialog box without it running out of space. The text needs to be defined after the dialog text position is set, because the dialogtext width affects the entire width of the dialog container, which in END.";
             textObj.WordWrap(850);
             textObj.DropShadow = new Vector2(2f, 3f);
-            SpriteObj spriteObj = new SpriteObj("ContinueTextIcon_Sprite");
+            var spriteObj = new SpriteObj("ContinueTextIcon_Sprite");
             spriteObj.Position = new Vector2(m_dialogContainer.GetChildAt(2).Bounds.Right,
                 m_dialogContainer.GetChildAt(2).Bounds.Bottom);
             m_dialogContainer.AddChild(spriteObj);
             m_dialogContinueIconY = spriteObj.Y;
-            TextObj textObj3 = new TextObj(Game.JunicodeFont);
+            var textObj3 = new TextObj(Game.JunicodeFont);
             textObj3.FontSize = 12f;
             textObj3.Text = "Yes";
             textObj3.Align = Types.TextAlign.Centre;
-            TextObj textObj4 = new TextObj(Game.JunicodeFont);
+            var textObj4 = new TextObj(Game.JunicodeFont);
             textObj4.FontSize = 12f;
             textObj4.Text = "No";
             textObj4.Align = Types.TextAlign.Centre;
             m_dialogChoiceContainer = new ObjContainer();
-            SpriteObj obj = new SpriteObj("GameOverStatPlate_Sprite");
+            var obj = new SpriteObj("GameOverStatPlate_Sprite");
             m_dialogChoiceContainer.AddChild(obj);
-            SpriteObj spriteObj2 = new SpriteObj("DialogueChoiceHighlight_Sprite");
+            var spriteObj2 = new SpriteObj("DialogueChoiceHighlight_Sprite");
             m_dialogChoiceContainer.AddChild(spriteObj2);
             m_dialogChoiceContainer.ForceDraw = true;
             m_dialogChoiceContainer.Position = new Vector2(660f, 360f);
@@ -120,8 +120,8 @@ namespace RogueCastle
 
         public void SetConfirmEndHandler(Type methodType, string functionName, params object[] args)
         {
-            Type[] array = new Type[args.Length];
-            for (int i = 0; i < args.Length; i++)
+            var array = new Type[args.Length];
+            for (var i = 0; i < args.Length; i++)
             {
                 array[i] = args[i].GetType();
             }
@@ -148,8 +148,8 @@ namespace RogueCastle
 
         public void SetCancelEndHandler(Type methodType, string functionName, params object[] args)
         {
-            Type[] array = new Type[args.Length];
-            for (int i = 0; i < args.Length; i++)
+            var array = new Type[args.Length];
+            for (var i = 0; i < args.Length; i++)
             {
                 array[i] = args[i].GetType();
             }
@@ -169,7 +169,7 @@ namespace RogueCastle
 
         public void SetDialogueChoice(string dialogueObjName)
         {
-            DialogueObj text = DialogueManager.GetText(dialogueObjName);
+            var text = DialogueManager.GetText(dialogueObjName);
             (m_dialogChoiceContainer.GetChildAt(2) as TextObj).Text = text.Speakers[0];
             (m_dialogChoiceContainer.GetChildAt(3) as TextObj).Text = text.Dialogue[0];
             if (Game.PlayerStats.Traits.X == 5f || Game.PlayerStats.Traits.Y == 5f)
@@ -191,7 +191,7 @@ namespace RogueCastle
                     {
                         if (m_dialogCounter < m_dialogText.Length - 1)
                         {
-                            TextObj textObj = m_dialogContainer.GetChildAt(2) as TextObj;
+                            var textObj = m_dialogContainer.GetChildAt(2) as TextObj;
                             if (!textObj.IsTypewriting)
                             {
                                 m_dialogCounter += 1;
@@ -223,13 +223,13 @@ namespace RogueCastle
                         {
                             (m_dialogContainer.GetChildAt(2) as TextObj).StopTypeWriting(true);
                         }
-                        SpriteObj spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
+                        var spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
                         if (m_dialogCounter == m_dialogText.Length - 1)
                         {
                             spriteObj.ChangeSprite("EndTextIcon_Sprite");
                             if (m_runChoiceDialogue)
                             {
-                                TextObj textObj2 = m_dialogContainer.GetChildAt(2) as TextObj;
+                                var textObj2 = m_dialogContainer.GetChildAt(2) as TextObj;
                                 textObj2.StopTypeWriting(true);
                                 m_dialogChoiceContainer.Visible = true;
                                 Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
@@ -315,11 +315,11 @@ namespace RogueCastle
             }
             if (!m_dialogChoiceContainer.Visible && m_dialogCounter == m_dialogText.Length - 1 && m_runChoiceDialogue)
             {
-                SpriteObj spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
+                var spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
                 spriteObj.ChangeSprite("EndTextIcon_Sprite");
                 if (m_runChoiceDialogue)
                 {
-                    TextObj textObj = m_dialogContainer.GetChildAt(2) as TextObj;
+                    var textObj = m_dialogContainer.GetChildAt(2) as TextObj;
                     textObj.StopTypeWriting(true);
                     m_dialogChoiceContainer.Visible = true;
                     Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
@@ -354,10 +354,10 @@ namespace RogueCastle
             m_dialogChoiceContainer.GetChildAt(1).Y = m_dialogChoiceContainer.GetChildAt(m_highlightedChoice).Y +
                                                       m_dialogChoiceContainer.GetChildAt(1).Height/2 + 3f;
             m_dialogChoiceContainer.Scale = Vector2.Zero;
-            DialogueObj text = DialogueManager.GetText(m_dialogueObjName);
-            string[] speakers = text.Speakers;
-            string[] dialogue = text.Dialogue;
-            SpriteObj spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
+            var text = DialogueManager.GetText(m_dialogueObjName);
+            var speakers = text.Speakers;
+            var dialogue = text.Dialogue;
+            var spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
             if (dialogue.Length > 1)
             {
                 spriteObj.ChangeSprite("ContinueTextIcon_Sprite");

@@ -16,20 +16,20 @@ namespace RogueCastle
 {
     public class ShadowmapResolver
     {
-        private GraphicsDevice graphicsDevice;
-        private int reductionChainCount;
-        private int baseSize;
-        private int depthBufferSize;
-        private Effect resolveShadowsEffect;
-        private Effect reductionEffect;
         public static Effect blender;
+        private readonly int baseSize;
+        private readonly GraphicsDevice graphicsDevice;
+        private readonly QuadRenderComponent quadRender;
+        private readonly int reductionChainCount;
+        private int depthBufferSize;
+        private RenderTarget2D distancesRT;
         private RenderTarget2D distortRT;
+        private RenderTarget2D processedShadowsRT;
+        private Effect reductionEffect;
+        private RenderTarget2D[] reductionRT;
+        private Effect resolveShadowsEffect;
         private RenderTarget2D shadowMap;
         private RenderTarget2D shadowsRT;
-        private RenderTarget2D processedShadowsRT;
-        private QuadRenderComponent quadRender;
-        private RenderTarget2D distancesRT;
-        private RenderTarget2D[] reductionRT;
 
         public ShadowmapResolver(GraphicsDevice graphicsDevice, QuadRenderComponent quadRender,
             ShadowmapSize maxShadowmapSize, ShadowmapSize maxDepthBufferSize)
@@ -46,13 +46,13 @@ namespace RogueCastle
             reductionEffect = content.Load<Effect>("Shaders\\reductionEffect");
             resolveShadowsEffect = content.Load<Effect>("Shaders\\resolveShadowsEffect");
             blender = content.Load<Effect>("Shaders\\2xMultiBlend");
-            SurfaceFormat preferredFormat = SurfaceFormat.Color;
+            var preferredFormat = SurfaceFormat.Color;
             distortRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize, false, preferredFormat, DepthFormat.None);
             distancesRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize, false, preferredFormat,
                 DepthFormat.None);
             shadowMap = new RenderTarget2D(graphicsDevice, 2, baseSize, false, preferredFormat, DepthFormat.None);
             reductionRT = new RenderTarget2D[reductionChainCount];
-            for (int i = 0; i < reductionChainCount; i++)
+            for (var i = 0; i < reductionChainCount; i++)
             {
                 reductionRT[i] = new RenderTarget2D(graphicsDevice, 2 << i, baseSize, false, preferredFormat,
                     DepthFormat.None);
@@ -80,7 +80,7 @@ namespace RogueCastle
         private void ExecuteTechnique(Texture2D source, RenderTarget2D destination, string techniqueName,
             Texture2D shadowMap)
         {
-            Vector2 value = new Vector2(baseSize, baseSize);
+            var value = new Vector2(baseSize, baseSize);
             graphicsDevice.SetRenderTarget(destination);
             graphicsDevice.Clear(Color.White);
             resolveShadowsEffect.Parameters["renderTargetSize"].SetValue(value);
@@ -93,7 +93,7 @@ namespace RogueCastle
                 resolveShadowsEffect.Parameters["ShadowMapTexture"].SetValue(shadowMap);
             }
             resolveShadowsEffect.CurrentTechnique = resolveShadowsEffect.Techniques[techniqueName];
-            foreach (EffectPass current in resolveShadowsEffect.CurrentTechnique.Passes)
+            foreach (var current in resolveShadowsEffect.CurrentTechnique.Passes)
             {
                 current.Apply();
                 quadRender.Render(Vector2.One*-1f, Vector2.One);
@@ -103,9 +103,9 @@ namespace RogueCastle
 
         private void ApplyHorizontalReduction(RenderTarget2D source, RenderTarget2D destination)
         {
-            int i = reductionChainCount - 1;
-            RenderTarget2D renderTarget2D = source;
-            RenderTarget2D renderTarget2D2 = reductionRT[i];
+            var i = reductionChainCount - 1;
+            var renderTarget2D = source;
+            var renderTarget2D2 = reductionRT[i];
             reductionEffect.CurrentTechnique = reductionEffect.Techniques["HorizontalReduction"];
             while (i >= 0)
             {
@@ -113,9 +113,9 @@ namespace RogueCastle
                 graphicsDevice.SetRenderTarget(renderTarget2D2);
                 graphicsDevice.Clear(Color.White);
                 reductionEffect.Parameters["SourceTexture"].SetValue(renderTarget2D);
-                Vector2 value = new Vector2(1f/renderTarget2D.Width, 1f/renderTarget2D.Height);
+                var value = new Vector2(1f/renderTarget2D.Width, 1f/renderTarget2D.Height);
                 reductionEffect.Parameters["TextureDimensions"].SetValue(value);
-                foreach (EffectPass current in reductionEffect.CurrentTechnique.Passes)
+                foreach (var current in reductionEffect.CurrentTechnique.Passes)
                 {
                     current.Apply();
                     quadRender.Render(Vector2.One*-1f, new Vector2(1f, 1f));
@@ -127,7 +127,7 @@ namespace RogueCastle
             graphicsDevice.SetRenderTarget(destination);
             reductionEffect.CurrentTechnique = reductionEffect.Techniques["Copy"];
             reductionEffect.Parameters["SourceTexture"].SetValue(renderTarget2D2);
-            foreach (EffectPass current2 in reductionEffect.CurrentTechnique.Passes)
+            foreach (var current2 in reductionEffect.CurrentTechnique.Passes)
             {
                 current2.Apply();
                 quadRender.Render(Vector2.One*-1f, new Vector2(1f, 1f));

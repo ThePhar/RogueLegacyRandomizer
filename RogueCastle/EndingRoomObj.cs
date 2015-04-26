@@ -20,18 +20,18 @@ namespace RogueCastle
 {
     internal class EndingRoomObj : RoomObj
     {
-        private SpriteObj m_endingMask;
-        private List<Vector2> m_cameraPosList;
-        private int m_waypointIndex;
-        private List<SpriteObj> m_frameList;
-        private List<TextObj> m_nameList;
-        private List<TextObj> m_slainCountText;
-        private List<SpriteObj> m_plaqueList;
+        private readonly float m_waypointSpeed = 5f;
         private BackgroundObj m_background;
+        private EnemyObj_Blob m_blobBoss;
+        private List<Vector2> m_cameraPosList;
         private KeyIconTextObj m_continueText;
         private bool m_displayingContinueText;
-        private float m_waypointSpeed = 5f;
-        private EnemyObj_Blob m_blobBoss;
+        private SpriteObj m_endingMask;
+        private List<SpriteObj> m_frameList;
+        private List<TextObj> m_nameList;
+        private List<SpriteObj> m_plaqueList;
+        private List<TextObj> m_slainCountText;
+        private int m_waypointIndex;
 
         public EndingRoomObj()
         {
@@ -71,32 +71,32 @@ namespace RogueCastle
             m_frameList = new List<SpriteObj>();
             m_nameList = new List<TextObj>();
             m_slainCountText = new List<TextObj>();
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current is WaypointObj)
                 {
                     m_cameraPosList.Add(default(Vector2));
                 }
             }
-            CultureInfo cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+            var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
             cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
-            foreach (GameObj current2 in GameObjList)
+            foreach (var current2 in GameObjList)
             {
                 if (current2 is WaypointObj)
                 {
-                    int index = int.Parse(current2.Name, NumberStyles.Any, cultureInfo);
+                    var index = int.Parse(current2.Name, NumberStyles.Any, cultureInfo);
                     m_cameraPosList[index] = current2.Position;
                 }
             }
-            float num = 150f;
-            foreach (EnemyObj current3 in EnemyList)
+            var num = 150f;
+            foreach (var current3 in EnemyList)
             {
                 current3.Initialize();
                 current3.PauseEnemy(true);
                 current3.IsWeighted = false;
                 current3.PlayAnimation();
                 current3.UpdateCollisionBoxes();
-                SpriteObj spriteObj = new SpriteObj("LineageScreenFrame_Sprite");
+                var spriteObj = new SpriteObj("LineageScreenFrame_Sprite");
                 spriteObj.DropShadow = new Vector2(4f, 6f);
                 if (current3.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
                 {
@@ -115,7 +115,7 @@ namespace RogueCastle
                 }
                 spriteObj.Position = new Vector2(current3.X, current3.Bounds.Top + current3.Height/2f);
                 m_frameList.Add(spriteObj);
-                TextObj textObj = new TextObj(Game.JunicodeFont);
+                var textObj = new TextObj(Game.JunicodeFont);
                 textObj.FontSize = 12f;
                 textObj.Align = Types.TextAlign.Centre;
                 textObj.Text = current3.Name;
@@ -123,7 +123,7 @@ namespace RogueCastle
                 textObj.OutlineWidth = 2;
                 textObj.Position = new Vector2(spriteObj.X, spriteObj.Bounds.Bottom + 40);
                 m_nameList.Add(textObj);
-                TextObj textObj2 = new TextObj(Game.JunicodeFont);
+                var textObj2 = new TextObj(Game.JunicodeFont);
                 textObj2.FontSize = 10f;
                 textObj2.Align = Types.TextAlign.Centre;
                 textObj2.OutlineColour = new Color(181, 142, 39);
@@ -133,7 +133,7 @@ namespace RogueCastle
                 textObj2.HeadingY = (float) current3.Difficulty;
                 textObj2.Position = new Vector2(spriteObj.X, spriteObj.Bounds.Bottom + 80);
                 m_slainCountText.Add(textObj2);
-                byte type = current3.Type;
+                var type = current3.Type;
                 if (type <= 15)
                 {
                     if (type != 1)
@@ -200,7 +200,7 @@ namespace RogueCastle
                     current3.ChangeSprite("EnemyZombieWalk_Character");
                     current3.PlayAnimation();
                 }
-                SpriteObj spriteObj2 = new SpriteObj("LineageScreenPlaque1Long_Sprite");
+                var spriteObj2 = new SpriteObj("LineageScreenPlaque1Long_Sprite");
                 spriteObj2.Scale = new Vector2(1.8f, 1.8f);
                 spriteObj2.Position = new Vector2(spriteObj.X, spriteObj.Bounds.Bottom + 80);
                 m_plaqueList.Add(spriteObj2);
@@ -210,7 +210,7 @@ namespace RogueCastle
 
         private void FixMiniboss(EnemyObj enemy)
         {
-            byte type = enemy.Type;
+            var type = enemy.Type;
             switch (type)
             {
                 case 2:
@@ -276,7 +276,7 @@ namespace RogueCastle
         public override void OnEnter()
         {
             m_blobBoss.PlayAnimation();
-            foreach (EnemyObj current in EnemyList)
+            foreach (var current in EnemyList)
             {
                 if (current.Type == 5)
                 {
@@ -305,11 +305,11 @@ namespace RogueCastle
 
         private void UpdateEnemiesSlainText()
         {
-            foreach (TextObj current in m_slainCountText)
+            foreach (var current in m_slainCountText)
             {
                 int index = (byte) current.HeadingX;
-                int num = (int) current.HeadingY;
-                int num2 = 0;
+                var num = (int) current.HeadingY;
+                var num2 = 0;
                 switch (num)
                 {
                     case 0:
@@ -334,33 +334,33 @@ namespace RogueCastle
             if (m_waypointIndex < m_cameraPosList.Count)
             {
                 object arg_91_0 = Player.AttachedLevel.Camera;
-                float arg_91_1 = 1.5f;
+                var arg_91_1 = 1.5f;
                 Easing arg_91_2 = Quad.EaseInOut;
-                string[] array = new string[4];
+                var array = new string[4];
                 array[0] = "X";
-                string[] arg_66_0 = array;
-                int arg_66_1 = 1;
-                float x = m_cameraPosList[m_waypointIndex].X;
+                var arg_66_0 = array;
+                var arg_66_1 = 1;
+                var x = m_cameraPosList[m_waypointIndex].X;
                 arg_66_0[arg_66_1] = x.ToString();
                 array[2] = "Y";
-                string[] arg_8F_0 = array;
-                int arg_8F_1 = 3;
-                float y = m_cameraPosList[m_waypointIndex].Y;
+                var arg_8F_0 = array;
+                var arg_8F_1 = 3;
+                var y = m_cameraPosList[m_waypointIndex].Y;
                 arg_8F_0[arg_8F_1] = y.ToString();
                 Tween.To(arg_91_0, arg_91_1, arg_91_2, array);
                 object arg_10A_0 = Player;
-                float arg_10A_1 = 1.5f;
+                var arg_10A_1 = 1.5f;
                 Easing arg_10A_2 = Quad.EaseInOut;
-                string[] array2 = new string[4];
+                var array2 = new string[4];
                 array2[0] = "X";
-                string[] arg_DE_0 = array2;
-                int arg_DE_1 = 1;
-                float x2 = m_cameraPosList[m_waypointIndex].X;
+                var arg_DE_0 = array2;
+                var arg_DE_1 = 1;
+                var x2 = m_cameraPosList[m_waypointIndex].X;
                 arg_DE_0[arg_DE_1] = x2.ToString();
                 array2[2] = "Y";
-                string[] arg_108_0 = array2;
-                int arg_108_1 = 3;
-                float y2 = m_cameraPosList[m_waypointIndex].Y;
+                var arg_108_0 = array2;
+                var arg_108_1 = 3;
+                var y2 = m_cameraPosList[m_waypointIndex].Y;
                 arg_108_0[arg_108_1] = y2.ToString();
                 Tween.To(arg_10A_0, arg_10A_1, arg_10A_2, array2);
                 m_waypointIndex++;
@@ -422,11 +422,11 @@ namespace RogueCastle
                 m_background.X = camera.X - 1320f;
             }
             m_background.Draw(camera);
-            foreach (SpriteObj current in m_frameList)
+            foreach (var current in m_frameList)
             {
                 current.Draw(camera);
             }
-            foreach (SpriteObj current2 in m_plaqueList)
+            foreach (var current2 in m_plaqueList)
             {
                 current2.Draw(camera);
             }
@@ -442,11 +442,11 @@ namespace RogueCastle
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null,
                     camera.GetTransformation());
             }
-            foreach (TextObj current3 in m_nameList)
+            foreach (var current3 in m_nameList)
             {
                 current3.Draw(camera);
             }
-            foreach (TextObj current4 in m_slainCountText)
+            foreach (var current4 in m_slainCountText)
             {
                 current4.Draw(camera);
             }
@@ -471,13 +471,13 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                foreach (SpriteObj current in m_frameList)
+                foreach (var current in m_frameList)
                 {
                     current.Dispose();
                 }
                 m_frameList.Clear();
                 m_frameList = null;
-                foreach (SpriteObj current2 in m_plaqueList)
+                foreach (var current2 in m_plaqueList)
                 {
                     current2.Dispose();
                 }
@@ -485,13 +485,13 @@ namespace RogueCastle
                 m_plaqueList = null;
                 m_cameraPosList.Clear();
                 m_cameraPosList = null;
-                foreach (TextObj current3 in m_nameList)
+                foreach (var current3 in m_nameList)
                 {
                     current3.Dispose();
                 }
                 m_nameList.Clear();
                 m_nameList = null;
-                foreach (TextObj current4 in m_slainCountText)
+                foreach (var current4 in m_slainCountText)
                 {
                     current4.Dispose();
                 }

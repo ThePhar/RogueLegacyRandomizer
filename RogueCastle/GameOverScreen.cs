@@ -22,29 +22,30 @@ namespace RogueCastle
 {
     public class GameOverScreen : Screen
     {
-        private PlayerObj m_player;
-        private ObjContainer m_dialoguePlate;
+        private int m_bagsCollected;
+        private int m_coinsCollected;
         private KeyIconTextObj m_continueText;
-        private SpriteObj m_playerGhost;
-        private SpriteObj m_spotlight;
+        private ObjContainer m_dialoguePlate;
+        private int m_diamondsCollected;
+        private bool m_droppingStats;
         private List<EnemyObj> m_enemyList;
         private List<Vector2> m_enemyStoredPositions;
-        private int m_coinsCollected;
-        private int m_bagsCollected;
-        private int m_diamondsCollected;
-        private FrameSoundObj m_playerFallSound;
-        private FrameSoundObj m_playerSwordSpinSound;
-        private FrameSoundObj m_playerSwordFallSound;
-        private GameObj m_objKilledPlayer;
-        private LineageObj m_playerFrame;
         private bool m_lockControls;
-        private bool m_droppingStats;
-        public float BackBufferOpacity { get; set; }
+        private GameObj m_objKilledPlayer;
+        private PlayerObj m_player;
+        private FrameSoundObj m_playerFallSound;
+        private LineageObj m_playerFrame;
+        private SpriteObj m_playerGhost;
+        private FrameSoundObj m_playerSwordFallSound;
+        private FrameSoundObj m_playerSwordSpinSound;
+        private SpriteObj m_spotlight;
 
         public GameOverScreen()
         {
             m_enemyStoredPositions = new List<Vector2>();
         }
+
+        public float BackBufferOpacity { get; set; }
 
         public override void PassInData(List<object> objList)
         {
@@ -79,19 +80,19 @@ namespace RogueCastle
             m_continueText.Opacity = 0f;
             m_continueText.Position = new Vector2(1270f, 30f);
             m_continueText.ForceDraw = true;
-            Vector2 dropShadow = new Vector2(2f, 2f);
-            Color textureColor = new Color(255, 254, 128);
+            var dropShadow = new Vector2(2f, 2f);
+            var textureColor = new Color(255, 254, 128);
             m_dialoguePlate = new ObjContainer("DialogBox_Character");
             m_dialoguePlate.Position = new Vector2(660f, 610f);
             m_dialoguePlate.ForceDraw = true;
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.Align = Types.TextAlign.Centre;
             textObj.Text = "Your valor shown in battle shall never be forgotten.";
             textObj.FontSize = 17f;
             textObj.DropShadow = dropShadow;
             textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height/2 + 25);
             m_dialoguePlate.AddChild(textObj);
-            KeyIconTextObj keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
+            var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 12f;
             keyIconTextObj.Align = Types.TextAlign.Centre;
             keyIconTextObj.Text = "\"Arrrrggghhhh\"";
@@ -99,7 +100,7 @@ namespace RogueCastle
             keyIconTextObj.Y = 0f;
             keyIconTextObj.TextureColor = textureColor;
             m_dialoguePlate.AddChild(keyIconTextObj);
-            TextObj textObj2 = new TextObj(Game.JunicodeFont);
+            var textObj2 = new TextObj(Game.JunicodeFont);
             textObj2.FontSize = 8f;
             textObj2.Text = "-Player X's parting words";
             textObj2.Y = keyIconTextObj.Y;
@@ -130,7 +131,7 @@ namespace RogueCastle
                 Game.PlayerStats.ChestPiece);
             m_playerFrame.UpdateData();
             Tween.To(m_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
-            FamilyTreeNode item = new FamilyTreeNode
+            var item = new FamilyTreeNode
             {
                 Name = Game.PlayerStats.PlayerName,
                 Age = Game.PlayerStats.Age,
@@ -144,7 +145,7 @@ namespace RogueCastle
                 Traits = Game.PlayerStats.Traits,
                 IsFemale = Game.PlayerStats.IsFemale
             };
-            Vector2 traits = Game.PlayerStats.Traits;
+            var traits = Game.PlayerStats.Traits;
             Game.PlayerStats.FamilyTreeArray.Add(item);
             if (Game.PlayerStats.CurrentBranches != null)
             {
@@ -234,14 +235,14 @@ namespace RogueCastle
         public void DropStats()
         {
             m_droppingStats = true;
-            Vector2 arg_0C_0 = Vector2.Zero;
-            float num = 0f;
-            Vector2 topLeftCorner = Camera.TopLeftCorner;
+            var arg_0C_0 = Vector2.Zero;
+            var num = 0f;
+            var topLeftCorner = Camera.TopLeftCorner;
             topLeftCorner.X += 200f;
             topLeftCorner.Y += 450f;
             if (m_enemyList != null)
             {
-                foreach (EnemyObj current in m_enemyList)
+                foreach (var current in m_enemyList)
                 {
                     m_enemyStoredPositions.Add(current.Position);
                     current.Position = topLeftCorner;
@@ -257,7 +258,7 @@ namespace RogueCastle
                     current.Scale /= 2f;
                     current.Opacity = 0f;
                     num += 0.05f;
-                    EnemyObj_Eyeball enemyObj_Eyeball = current as EnemyObj_Eyeball;
+                    var enemyObj_Eyeball = current as EnemyObj_Eyeball;
                     if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
                     {
                         enemyObj_Eyeball.ChangeToBossPupil();
@@ -281,11 +282,11 @@ namespace RogueCastle
 
         private void SetObjectKilledPlayerText()
         {
-            TextObj textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
+            var textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
             if (m_objKilledPlayer != null)
             {
-                EnemyObj enemyObj = m_objKilledPlayer as EnemyObj;
-                ProjectileObj projectileObj = m_objKilledPlayer as ProjectileObj;
+                var enemyObj = m_objKilledPlayer as EnemyObj;
+                var projectileObj = m_objKilledPlayer as ProjectileObj;
                 if (enemyObj != null)
                 {
                     if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS || enemyObj is EnemyObj_LastBoss)
@@ -316,7 +317,7 @@ namespace RogueCastle
                         textObj.Text = Game.PlayerStats.PlayerName + " was done in by a projectile";
                     }
                 }
-                HazardObj hazardObj = m_objKilledPlayer as HazardObj;
+                var hazardObj = m_objKilledPlayer as HazardObj;
                 if (hazardObj != null)
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " slipped and was impaled by spikes";
@@ -336,7 +337,7 @@ namespace RogueCastle
             {
                 if (m_enemyList.Count > 0 && m_enemyList[m_enemyList.Count - 1].Opacity != 1f)
                 {
-                    foreach (EnemyObj current in m_enemyList)
+                    foreach (var current in m_enemyList)
                     {
                         Tween.StopAllContaining(current, false);
                         current.Opacity = 1f;
@@ -376,7 +377,7 @@ namespace RogueCastle
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X - 10, (int) Camera.TopLeftCorner.Y - 10, 1420, 820),
                 Color.Black*BackBufferOpacity);
-            foreach (EnemyObj current in m_enemyList)
+            foreach (var current in m_enemyList)
             {
                 current.Draw(Camera);
             }

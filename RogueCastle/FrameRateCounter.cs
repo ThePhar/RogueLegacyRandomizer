@@ -17,12 +17,12 @@ namespace RogueCastle
 {
     public class FrameRateCounter : DrawableGameComponent
     {
-        private ContentManager content;
+        private readonly ContentManager content;
+        private TimeSpan elapsedTime = TimeSpan.Zero;
+        private int frameCounter;
+        private int frameRate;
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private int frameRate;
-        private int frameCounter;
-        private TimeSpan elapsedTime = TimeSpan.Zero;
 
         public FrameRateCounter(Game game) : base(game)
         {
@@ -54,7 +54,7 @@ namespace RogueCastle
         public override void Draw(GameTime gameTime)
         {
             frameCounter++;
-            string text = string.Format("fps: {0}", frameRate);
+            var text = string.Format("fps: {0}", frameRate);
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, text, new Vector2(1220f, 33f), Color.Black);
             spriteBatch.DrawString(spriteFont, text, new Vector2(1221f, 32f), Color.White);

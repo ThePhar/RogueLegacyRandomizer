@@ -21,23 +21,22 @@ namespace RogueCastle
 {
     public class LoadingScreen : Screen
     {
-        private TextObj m_loadingText;
-        private byte m_screenTypeToLoad;
-        private bool m_isLoading;
-        private bool m_loadingComplete;
-        private Screen m_levelToLoad;
-        private ImpactEffectPool m_effectPool;
-        private ObjContainer m_gateSprite;
-        private SpriteObj m_blackTransitionIn;
+        private readonly byte m_screenTypeToLoad;
+        private readonly bool m_wipeTransition;
         private SpriteObj m_blackScreen;
+        private SpriteObj m_blackTransitionIn;
         private SpriteObj m_blackTransitionOut;
-        private bool m_wipeTransition;
+        private ImpactEffectPool m_effectPool;
         private bool m_gameCrashed;
+        private ObjContainer m_gateSprite;
         private bool m_horizontalShake;
-        private bool m_verticalShake;
-        private bool m_shakeScreen;
+        private bool m_isLoading;
+        private Screen m_levelToLoad;
+        private bool m_loadingComplete;
+        private TextObj m_loadingText;
         private float m_screenShakeMagnitude;
-        public float BackBufferOpacity { get; set; }
+        private bool m_shakeScreen;
+        private bool m_verticalShake;
 
         public LoadingScreen(byte screenType, bool wipeTransition)
         {
@@ -45,6 +44,8 @@ namespace RogueCastle
             m_effectPool = new ImpactEffectPool(50);
             m_wipeTransition = wipeTransition;
         }
+
+        public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
@@ -135,7 +136,7 @@ namespace RogueCastle
         public void BeginThreading()
         {
             Tween.StopAll(false);
-            Thread thread = new Thread(BeginLoading);
+            var thread = new Thread(BeginLoading);
             if (thread.CurrentCulture.Name != "en-US")
             {
                 thread.CurrentCulture = new CultureInfo("en-US", false);
@@ -148,7 +149,7 @@ namespace RogueCastle
         {
             m_isLoading = true;
             m_loadingComplete = false;
-            byte screenTypeToLoad = m_screenTypeToLoad;
+            var screenTypeToLoad = m_screenTypeToLoad;
             if (screenTypeToLoad <= 9)
             {
                 switch (screenTypeToLoad)
@@ -176,33 +177,30 @@ namespace RogueCastle
                         goto IL_1CF;
                 }
             }
-            else
+            if (screenTypeToLoad == 15)
             {
-                if (screenTypeToLoad == 15)
-                {
+                goto IL_205;
+            }
+            if (screenTypeToLoad == 18)
+            {
+                goto IL_11E;
+            }
+            switch (screenTypeToLoad)
+            {
+                case 23:
+                case 24:
                     goto IL_205;
-                }
-                if (screenTypeToLoad == 18)
-                {
-                    goto IL_11E;
-                }
-                switch (screenTypeToLoad)
-                {
-                    case 23:
-                    case 24:
-                        goto IL_205;
-                    case 25:
-                    case 26:
-                        return;
-                    case 27:
-                        goto IL_199;
-                    case 28:
-                        goto IL_E8;
-                    case 29:
-                        break;
-                    default:
-                        return;
-                }
+                case 25:
+                case 26:
+                    return;
+                case 27:
+                    goto IL_199;
+                case 28:
+                    goto IL_E8;
+                case 29:
+                    break;
+                default:
+                    return;
             }
             m_levelToLoad = new DemoEndScreen();
             lock (m_levelToLoad)
@@ -219,11 +217,11 @@ namespace RogueCastle
             }
             IL_11E:
             m_levelToLoad = new CreditsScreen();
-            bool isEnding = true;
-            Screen[] screens = ScreenManager.GetScreens();
-            for (int i = 0; i < screens.Length; i++)
+            var isEnding = true;
+            var screens = ScreenManager.GetScreens();
+            for (var i = 0; i < screens.Length; i++)
             {
-                Screen screen = screens[i];
+                var screen = screens[i];
                 if (screen is TitleScreen)
                 {
                     isEnding = false;
@@ -251,8 +249,8 @@ namespace RogueCastle
                 return;
             }
             IL_205:
-            RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
-            AreaStruct[] area1List = Game.Area1List;
+            var rCScreenManager = ScreenManager as RCScreenManager;
+            var area1List = Game.Area1List;
             m_levelToLoad = null;
             if (m_screenTypeToLoad == 15)
             {
@@ -268,7 +266,7 @@ namespace RogueCastle
             }
             else
             {
-                ProceduralLevelScreen levelScreen = (ScreenManager as RCScreenManager).GetLevelScreen();
+                var levelScreen = (ScreenManager as RCScreenManager).GetLevelScreen();
                 if (levelScreen != null)
                 {
                     if (Game.PlayerStats.LockCastle)
@@ -322,10 +320,10 @@ namespace RogueCastle
             {
                 lock (m_levelToLoad)
                 {
-                    ProceduralLevelScreen proceduralLevelScreen = m_levelToLoad as ProceduralLevelScreen;
+                    var proceduralLevelScreen = m_levelToLoad as ProceduralLevelScreen;
                     proceduralLevelScreen.Player = rCScreenManager.Player;
                     rCScreenManager.Player.AttachLevel(proceduralLevelScreen);
-                    for (int j = 0; j < proceduralLevelScreen.RoomList.Count; j++)
+                    for (var j = 0; j < proceduralLevelScreen.RoomList.Count; j++)
                     {
                         proceduralLevelScreen.RoomList[j].RoomNumber = j + 1;
                     }
@@ -349,7 +347,7 @@ namespace RogueCastle
             {
                 EndLoading();
             }
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             m_gateSprite.GetChildAt(1).Rotation += 120f*num;
             m_gateSprite.GetChildAt(2).Rotation -= 120f*num;
             if (m_shakeScreen)
@@ -362,11 +360,11 @@ namespace RogueCastle
         public void EndLoading()
         {
             m_isLoading = false;
-            ScreenManager screenManager = ScreenManager;
-            Screen[] screens = ScreenManager.GetScreens();
-            for (int i = 0; i < screens.Length; i++)
+            var screenManager = ScreenManager;
+            var screens = ScreenManager.GetScreens();
+            for (var i = 0; i < screens.Length; i++)
             {
-                Screen screen = screens[i];
+                var screen = screens[i];
                 if (screen != this)
                 {
                     screenManager.RemoveScreen(screen, true);

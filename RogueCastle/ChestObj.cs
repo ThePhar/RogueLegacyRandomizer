@@ -19,13 +19,26 @@ namespace RogueCastle
 {
     public class ChestObj : PhysicsObj
     {
-        private byte m_chestType;
-        private float GoldIncreasePerLevel = 1.425f;
+        private readonly float GoldIncreasePerLevel = 1.425f;
         private Vector2 BronzeChestGoldRange = new Vector2(9f, 14f);
-        private Vector2 SilverChestGoldRange = new Vector2(20f, 28f);
         private Vector2 GoldChestGoldRange = new Vector2(47f, 57f);
         public int Level;
         private SpriteObj m_arrowIcon;
+        private byte m_chestType;
+        private Vector2 SilverChestGoldRange = new Vector2(20f, 28f);
+
+        public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
+        {
+            DisableHitboxUpdating = true;
+            IsWeighted = false;
+            Layer = 1f;
+            OutlineWidth = 2;
+            IsProcedural = true;
+            m_arrowIcon = new SpriteObj("UpArrowSquare_Sprite");
+            m_arrowIcon.OutlineWidth = 2;
+            m_arrowIcon.Visible = false;
+        }
+
         public bool IsEmpty { get; set; }
         public bool IsLocked { get; set; }
         public int ForcedItemType { get; set; }
@@ -38,7 +51,7 @@ namespace RogueCastle
             set
             {
                 m_chestType = value;
-                bool isOpen = IsOpen;
+                var isOpen = IsOpen;
                 if (m_chestType == 5)
                 {
                     ForcedItemType = 14;
@@ -72,18 +85,6 @@ namespace RogueCastle
             get { return CurrentFrame == 2; }
         }
 
-        public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
-        {
-            DisableHitboxUpdating = true;
-            IsWeighted = false;
-            Layer = 1f;
-            OutlineWidth = 2;
-            IsProcedural = true;
-            m_arrowIcon = new SpriteObj("UpArrowSquare_Sprite");
-            m_arrowIcon.OutlineWidth = 2;
-            m_arrowIcon.Visible = false;
-        }
-
         public virtual void OpenChest(ItemDropManager itemDropManager, PlayerObj player)
         {
             if (!IsOpen && !IsLocked)
@@ -100,8 +101,8 @@ namespace RogueCastle
                 }
                 if (ForcedItemType == 0)
                 {
-                    int num = CDGMath.RandomInt(1, 100);
-                    int num2 = 0;
+                    var num = CDGMath.RandomInt(1, 100);
+                    var num2 = 0;
                     int[] array;
                     if (ChestType == 1)
                     {
@@ -115,8 +116,8 @@ namespace RogueCastle
                     {
                         array = GameEV.GOLDCHEST_ITEMDROP_CHANCE;
                     }
-                    int num3 = 0;
-                    for (int i = 0; i < array.Length; i++)
+                    var num3 = 0;
+                    for (var i = 0; i < array.Length; i++)
                     {
                         num3 += array[i];
                         if (num <= num3)
@@ -195,13 +196,13 @@ namespace RogueCastle
             {
                 num = amount;
             }
-            int num2 = num/500;
+            var num2 = num/500;
             num -= num2*500;
-            int num3 = num/100;
+            var num3 = num/100;
             num -= num3*100;
-            int num4 = num/10;
-            float num5 = 0f;
-            for (int i = 0; i < num2; i++)
+            var num4 = num/10;
+            var num5 = 0f;
+            for (var i = 0; i < num2; i++)
             {
                 Tween.To(this, num5, Linear.EaseNone);
                 Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem",
@@ -209,7 +210,7 @@ namespace RogueCastle
                 num5 += 0.1f;
             }
             num5 = 0f;
-            for (int j = 0; j < num3; j++)
+            for (var j = 0; j < num3; j++)
             {
                 Tween.To(this, num5, Linear.EaseNone);
                 Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem",
@@ -217,7 +218,7 @@ namespace RogueCastle
                 num5 += 0.1f;
             }
             num5 = 0f;
-            for (int k = 0; k < num4; k++)
+            for (var k = 0; k < num4; k++)
             {
                 Tween.To(this, num5, Linear.EaseNone);
                 Tween.AddEndHandlerToLastTween(itemDropManager, "DropItem",
@@ -228,14 +229,14 @@ namespace RogueCastle
 
         public void GiveStatDrop(ItemDropManager manager, PlayerObj player, int numDrops, int statDropType)
         {
-            int[] array = new int[numDrops];
-            for (int i = 0; i < numDrops; i++)
+            var array = new int[numDrops];
+            for (var i = 0; i < numDrops; i++)
             {
                 if (statDropType == 0)
                 {
-                    int num = CDGMath.RandomInt(1, 100);
-                    int num2 = 0;
-                    int j = 0;
+                    var num = CDGMath.RandomInt(1, 100);
+                    var num2 = 0;
+                    var j = 0;
                     while (j < GameEV.STATDROP_CHANCE.Length)
                     {
                         num2 += GameEV.STATDROP_CHANCE[j];
@@ -275,10 +276,7 @@ namespace RogueCastle
                             Game.PlayerStats.BonusWeight++;
                             break;
                         }
-                        else
-                        {
-                            j++;
-                        }
+                        j++;
                     }
                 }
                 else
@@ -307,7 +305,7 @@ namespace RogueCastle
                     array[i] = statDropType;
                 }
             }
-            List<object> list = new List<object>();
+            var list = new List<object>();
             list.Add(new Vector2(X, Y - Height/2f));
             if (statDropType >= 15 && statDropType <= 19)
             {
@@ -344,18 +342,18 @@ namespace RogueCastle
             }
             else
             {
-                List<byte[]> getBlueprintArray = Game.PlayerStats.GetBlueprintArray;
-                List<Vector2> list = new List<Vector2>();
-                int num = 0;
-                foreach (byte[] current in getBlueprintArray)
+                var getBlueprintArray = Game.PlayerStats.GetBlueprintArray;
+                var list = new List<Vector2>();
+                var num = 0;
+                foreach (var current in getBlueprintArray)
                 {
-                    int num2 = 0;
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
+                    var num2 = 0;
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
                     {
                         if (array[i] == 0)
                         {
-                            EquipmentData equipmentData = Game.EquipmentSystem.GetEquipmentData(num, num2);
+                            var equipmentData = Game.EquipmentSystem.GetEquipmentData(num, num2);
                             if (Level >= equipmentData.LevelRequirement &&
                                 ChestType >= equipmentData.ChestColourRequirement)
                             {
@@ -368,9 +366,9 @@ namespace RogueCastle
                 }
                 if (list.Count > 0)
                 {
-                    Vector2 vector = list[CDGMath.RandomInt(0, list.Count - 1)];
+                    var vector = list[CDGMath.RandomInt(0, list.Count - 1)];
                     Game.PlayerStats.GetBlueprintArray[(int) vector.X][(int) vector.Y] = 1;
-                    List<object> list2 = new List<object>();
+                    var list2 = new List<object>();
                     list2.Add(new Vector2(X, Y - Height/2f));
                     list2.Add(1);
                     list2.Add(new Vector2(vector.X, vector.Y));
@@ -385,7 +383,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+            var playerObj = otherBox.AbsParent as PlayerObj;
             if (!IsLocked && !IsOpen && playerObj != null && playerObj.IsTouchingGround)
             {
                 m_arrowIcon.Visible = true;
@@ -423,7 +421,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            ChestObj chestObj = obj as ChestObj;
+            var chestObj = obj as ChestObj;
             chestObj.IsProcedural = IsProcedural;
             chestObj.ChestType = ChestType;
             chestObj.Level = Level;

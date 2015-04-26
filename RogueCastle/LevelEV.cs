@@ -52,7 +52,7 @@ namespace RogueCastle
         public const int LEVEL_DUNGEON_BOTTOMDOOR = 100;
         public const string GAME_VERSION = "v1.2.0c";
 
-        public static byte[] DEMENTIA_FLIGHT_LIST = new byte[]
+        public static byte[] DEMENTIA_FLIGHT_LIST =
         {
             9,
             11,
@@ -63,7 +63,7 @@ namespace RogueCastle
             31
         };
 
-        public static byte[] DEMENTIA_GROUND_LIST = new byte[]
+        public static byte[] DEMENTIA_GROUND_LIST =
         {
             15,
             12,
@@ -77,7 +77,7 @@ namespace RogueCastle
             10
         };
 
-        public static byte[] CASTLE_ENEMY_LIST = new byte[]
+        public static byte[] CASTLE_ENEMY_LIST =
         {
             15,
             12,
@@ -93,7 +93,7 @@ namespace RogueCastle
             28
         };
 
-        public static byte[] GARDEN_ENEMY_LIST = new byte[]
+        public static byte[] GARDEN_ENEMY_LIST =
         {
             15,
             2,
@@ -111,7 +111,7 @@ namespace RogueCastle
             10
         };
 
-        public static byte[] TOWER_ENEMY_LIST = new byte[]
+        public static byte[] TOWER_ENEMY_LIST =
         {
             12,
             1,
@@ -131,7 +131,7 @@ namespace RogueCastle
             33
         };
 
-        public static byte[] DUNGEON_ENEMY_LIST = new byte[]
+        public static byte[] DUNGEON_ENEMY_LIST =
         {
             15,
             12,
@@ -187,9 +187,9 @@ namespace RogueCastle
         static LevelEV()
         {
             // Note: this type is marked as 'beforefieldinit'.
-            byte[] cASTLE_ENEMY_DIFFICULTY_LIST = new byte[12];
+            var cASTLE_ENEMY_DIFFICULTY_LIST = new byte[12];
             CASTLE_ENEMY_DIFFICULTY_LIST = cASTLE_ENEMY_DIFFICULTY_LIST;
-            byte[] array = new byte[14];
+            var array = new byte[14];
             array[0] = 1;
             array[4] = 1;
             GARDEN_ENEMY_DIFFICULTY_LIST = array;

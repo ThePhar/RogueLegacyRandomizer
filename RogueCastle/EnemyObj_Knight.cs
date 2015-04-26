@@ -15,25 +15,35 @@ namespace RogueCastle
 {
     public class EnemyObj_Knight : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private float AttackThrustDelay = 0.65f;
-        private float AttackThrustSpeed = 1850f;
-        private float AttackThrustDuration = 0.4f;
-        private float AttackProjectileDelay = 0.35f;
-        private float AttackThrustDelayExpert = 0.65f;
-        private float AttackThrustSpeedExpert = 1750f;
-        private float AttackThrustDurationExpert = 0.25f;
-        private float AttackProjectileExpertDelay = 0.425f;
-        private float AttackThrustDelayMiniBoss = 0.65f;
-        private float AttackThrustSpeedMiniBoss = 2300f;
-        private float AttackThrustDurationMiniBoss = 0.25f;
-        private float AttackProjectileMinibossDelay = 0.5f;
+        private readonly float AttackProjectileDelay = 0.35f;
+        private readonly float AttackProjectileExpertDelay = 0.425f;
+        private readonly float AttackProjectileMinibossDelay = 0.5f;
+        private readonly float AttackThrustDelay = 0.65f;
+        private readonly float AttackThrustDelayExpert = 0.65f;
+        private readonly float AttackThrustDelayMiniBoss = 0.65f;
+        private readonly float AttackThrustDuration = 0.4f;
+        private readonly float AttackThrustDurationExpert = 0.25f;
+        private readonly float AttackThrustDurationMiniBoss = 0.25f;
+        private readonly float AttackThrustSpeed = 1850f;
+        private readonly float AttackThrustSpeedExpert = 1750f;
+        private readonly float AttackThrustSpeedMiniBoss = 2300f;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
         private FrameSoundObj m_walkSound;
         private FrameSoundObj m_walkSound2;
+
+        public EnemyObj_Knight(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySpearKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            TintablePart = _objectList[1];
+            Type = 12;
+            m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
+            m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
+        }
 
         protected override void InitializeEV()
         {
@@ -154,19 +164,19 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightWalk_Character"));
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new DelayLogicAction(0.2f, 1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightWalk_Character"));
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(0.2f, 1f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.2f, 1f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
@@ -183,7 +193,7 @@ namespace RogueCastle
             logicSet4.AddAction(new DelayLogicAction(0.3f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
@@ -200,7 +210,7 @@ namespace RogueCastle
             logicSet5.AddAction(new DelayLogicAction(0.3f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack_Character"));
@@ -245,7 +255,7 @@ namespace RogueCastle
             logicSet6.AddAction(new DelayLogicAction(0.3f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.Tag = 2;
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EnemySpearKnightWave_Sprite",
                 SourceAnchor = new Vector2(30f, 0f),
@@ -258,7 +268,7 @@ namespace RogueCastle
                 Angle = new Vector2(0f, 0f),
                 Scale = ProjectileScale
             };
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
@@ -271,7 +281,7 @@ namespace RogueCastle
             logicSet7.AddAction(new DelayLogicAction(0.3f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet7.Tag = 2;
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
@@ -281,7 +291,7 @@ namespace RogueCastle
             logicSet8.AddAction(new DelayLogicAction(0.3f));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet8.Tag = 2;
-            LogicSet logicSet9 = new LogicSet(this);
+            var logicSet9 = new LogicSet(this);
             logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet9.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
@@ -303,7 +313,7 @@ namespace RogueCastle
             logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet9.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
             logicSet9.Tag = 2;
-            LogicSet logicSet10 = new LogicSet(this);
+            var logicSet10 = new LogicSet(this);
             logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightAttack2_Character"));
@@ -325,7 +335,7 @@ namespace RogueCastle
             logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet10.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
             logicSet10.Tag = 2;
-            LogicSet logicSet11 = new LogicSet(this);
+            var logicSet11 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySpearKnightIdle_Character"));
             logicSet11.AddAction(new MoveLogicAction(m_target, false, 300f));
             logicSet11.AddAction(new JumpLogicAction());
@@ -362,7 +372,7 @@ namespace RogueCastle
 
         private void ThrowThreeProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EnemySpearKnightWave_Sprite",
                 SourceAnchor = new Vector2(30f, 0f),
@@ -387,7 +397,7 @@ namespace RogueCastle
 
         private void ThrowTwoProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EnemySpearKnightWave_Sprite",
                 SourceAnchor = new Vector2(30f, 0f),
@@ -409,7 +419,7 @@ namespace RogueCastle
 
         private void ThrowRapidProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EnemySpearKnightWave_Sprite",
                 SourceAnchor = new Vector2(130f, -28f),
@@ -435,9 +445,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_AA_1 = true;
-                    LogicBlock arg_AA_2 = m_generalBasicLB;
-                    int[] array = new int[5];
+                    var arg_AA_1 = true;
+                    var arg_AA_2 = m_generalBasicLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_AA_1, arg_AA_2, array);
                     return;
@@ -462,9 +472,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_B4_1 = true;
-                    LogicBlock arg_B4_2 = m_generalAdvancedLB;
-                    int[] array = new int[5];
+                    var arg_B4_1 = true;
+                    var arg_B4_2 = m_generalAdvancedLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
@@ -489,9 +499,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_B4_1 = true;
-                    LogicBlock arg_B4_2 = m_generalExpertLB;
-                    int[] array = new int[5];
+                    var arg_B4_1 = true;
+                    var arg_B4_2 = m_generalExpertLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
@@ -539,16 +549,6 @@ namespace RogueCastle
         {
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Knight_Hit01", "Knight_Hit02", "Knight_Hit03");
             base.HitEnemy(damage, position, isPlayer);
-        }
-
-        public EnemyObj_Knight(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySpearKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            TintablePart = _objectList[1];
-            Type = 12;
-            m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
-            m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
         }
 
         public override void Dispose()

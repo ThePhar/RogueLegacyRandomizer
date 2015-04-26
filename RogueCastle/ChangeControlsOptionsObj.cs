@@ -21,49 +21,28 @@ namespace RogueCastle
 {
     public class ChangeControlsOptionsObj : OptionsObj
     {
+        private readonly int m_startingY = -200;
         private List<TextObj> m_buttonTitle;
-        private List<KeyIconTextObj> m_keyboardControls;
+        private int[] m_controlKeys;
         private List<KeyIconTextObj> m_gamepadControls;
-        private int m_selectedEntryIndex;
-        private TextObj m_selectedEntry;
+        private List<KeyIconTextObj> m_keyboardControls;
+        private bool m_lockControls;
         private KeyIconTextObj m_selectedButton;
+        private TextObj m_selectedEntry;
+        private int m_selectedEntryIndex;
+        private SpriteObj m_selectionBar;
         private ObjContainer m_setKeyPlate;
         private bool m_settingKey;
-        private int[] m_controlKeys;
-        private bool m_lockControls;
-        private int m_startingY = -200;
-        private SpriteObj m_selectionBar;
-
-        public override bool IsActive
-        {
-            get { return base.IsActive; }
-            set
-            {
-                if (value)
-                {
-                    OnEnter();
-                }
-                else
-                {
-                    OnExit();
-                }
-                if (value != m_isActive)
-                {
-                    m_parentScreen.ToggleControlsConfig();
-                }
-                base.IsActive = value;
-            }
-        }
 
         public ChangeControlsOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Change Controls")
         {
             m_buttonTitle = new List<TextObj>();
             m_keyboardControls = new List<KeyIconTextObj>();
             m_gamepadControls = new List<KeyIconTextObj>();
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
             textObj.DropShadow = new Vector2(2f, 2f);
-            string[] array = new[]
+            string[] array =
             {
                 "Up",
                 "Down",
@@ -91,21 +70,21 @@ namespace RogueCastle
                 24,
                 -1
             };
-            for (int i = 0; i < array.Length; i++)
+            for (var i = 0; i < array.Length; i++)
             {
-                TextObj textObj2 = textObj.Clone() as TextObj;
+                var textObj2 = textObj.Clone() as TextObj;
                 textObj2.Text = array[i];
                 textObj2.X = 1320f;
                 textObj2.Y = m_startingY + i*30;
                 AddChild(textObj2);
                 m_buttonTitle.Add(textObj2);
-                KeyIconTextObj keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
+                var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
                 keyIconTextObj.FontSize = 9f;
                 keyIconTextObj.X = textObj2.X + 200f;
                 keyIconTextObj.Y = textObj2.Y + 5f;
                 AddChild(keyIconTextObj);
                 m_keyboardControls.Add(keyIconTextObj);
-                KeyIconTextObj keyIconTextObj2 = new KeyIconTextObj(Game.JunicodeFont);
+                var keyIconTextObj2 = new KeyIconTextObj(Game.JunicodeFont);
                 keyIconTextObj2.FontSize = 9f;
                 keyIconTextObj2.X = keyIconTextObj.X + 200f;
                 keyIconTextObj2.Y = keyIconTextObj.Y;
@@ -116,7 +95,7 @@ namespace RogueCastle
             m_setKeyPlate = new ObjContainer("GameOverStatPlate_Character");
             m_setKeyPlate.ForceDraw = true;
             m_setKeyPlate.Scale = Vector2.Zero;
-            TextObj textObj3 = new TextObj(Game.JunicodeFont);
+            var textObj3 = new TextObj(Game.JunicodeFont);
             textObj3.FontSize = 12f;
             textObj3.Align = Types.TextAlign.Centre;
             textObj3.DropShadow = new Vector2(2f, 2f);
@@ -125,6 +104,27 @@ namespace RogueCastle
             textObj3.Y -= textObj3.Height/2f;
             m_setKeyPlate.AddChild(textObj3);
             m_selectionBar = new SpriteObj("OptionsBar_Sprite");
+        }
+
+        public override bool IsActive
+        {
+            get { return base.IsActive; }
+            set
+            {
+                if (value)
+                {
+                    OnEnter();
+                }
+                else
+                {
+                    OnExit();
+                }
+                if (value != m_isActive)
+                {
+                    m_parentScreen.ToggleControlsConfig();
+                }
+                base.IsActive = value;
+            }
         }
 
         private void OnEnter()
@@ -157,7 +157,7 @@ namespace RogueCastle
             {
                 if (!m_settingKey)
                 {
-                    int selectedEntryIndex = m_selectedEntryIndex;
+                    var selectedEntryIndex = m_selectedEntryIndex;
                     if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
                         SoundManager.PlaySound("frame_swap");
@@ -188,7 +188,7 @@ namespace RogueCastle
                         m_lockControls = true;
                         if (m_selectedEntryIndex == m_controlKeys.Length - 1)
                         {
-                            RCScreenManager screenManager = Game.ScreenManager;
+                            var screenManager = Game.ScreenManager;
                             screenManager.DialogueScreen.SetDialogue("RestoreDefaultControlsWarning");
                             screenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                             screenManager.DialogueScreen.SetConfirmEndHandler(this, "RestoreControls");
@@ -225,13 +225,13 @@ namespace RogueCastle
         {
             if (InputManager.AnyKeyPressed())
             {
-                Keys keys = InputManager.KeysPressedArray[0];
+                var keys = InputManager.KeysPressedArray[0];
                 if (InputReader.GetInputString(keys, false, false, false).ToUpper() == "")
                 {
                     return;
                 }
-                bool flag = false;
-                Keys[] array = new[]
+                var flag = false;
+                Keys[] array =
                 {
                     Keys.Tab,
                     Keys.CapsLock,
@@ -249,10 +249,10 @@ namespace RogueCastle
                     Keys.Up,
                     Keys.Down
                 };
-                Keys[] array2 = array;
-                for (int i = 0; i < array2.Length; i++)
+                var array2 = array;
+                for (var i = 0; i < array2.Length; i++)
                 {
-                    Keys keys2 = array2[i];
+                    var keys2 = array2[i];
                     if (keys == keys2)
                     {
                         flag = true;
@@ -272,7 +272,7 @@ namespace RogueCastle
             }
             else if (InputManager.AnyButtonPressed(PlayerIndex.One))
             {
-                Buttons buttons = InputManager.ButtonsPressedArray(PlayerIndex.One)[0];
+                var buttons = InputManager.ButtonsPressedArray(PlayerIndex.One)[0];
                 if (buttons == Buttons.Start || buttons == Buttons.Back)
                 {
                     return;
@@ -283,7 +283,7 @@ namespace RogueCastle
             m_settingKey = false;
             if (InputManager.AnyButtonPressed(PlayerIndex.One))
             {
-                int[] array3 = new[]
+                int[] array3 =
                 {
                     0,
                     1,
@@ -295,14 +295,14 @@ namespace RogueCastle
                     7,
                     5
                 };
-                Buttons buttons2 = InputManager.ButtonsPressedArray(PlayerIndex.One)[0];
-                for (int j = 0; j < Game.GlobalInput.ButtonList.Count; j++)
+                var buttons2 = InputManager.ButtonsPressedArray(PlayerIndex.One)[0];
+                for (var j = 0; j < Game.GlobalInput.ButtonList.Count; j++)
                 {
-                    bool flag2 = true;
-                    int[] array4 = array3;
-                    for (int k = 0; k < array4.Length; k++)
+                    var flag2 = true;
+                    var array4 = array3;
+                    for (var k = 0; k < array4.Length; k++)
                     {
-                        int num = array4[k];
+                        var num = array4[k];
                         if (j == num)
                         {
                             flag2 = false;
@@ -319,8 +319,8 @@ namespace RogueCastle
             }
             else if (InputManager.AnyKeyPressed())
             {
-                Keys keys3 = InputManager.KeysPressedArray[0];
-                int[] array5 = new[]
+                var keys3 = InputManager.KeysPressedArray[0];
+                int[] array5 =
                 {
                     0,
                     1,
@@ -332,13 +332,13 @@ namespace RogueCastle
                     7,
                     5
                 };
-                for (int l = 0; l < Game.GlobalInput.KeyList.Count; l++)
+                for (var l = 0; l < Game.GlobalInput.KeyList.Count; l++)
                 {
-                    bool flag3 = true;
-                    int[] array6 = array5;
-                    for (int m = 0; m < array6.Length; m++)
+                    var flag3 = true;
+                    var array6 = array5;
+                    for (var m = 0; m < array6.Length; m++)
                     {
-                        int num2 = array6[m];
+                        var num2 = array6[m];
                         if (l == num2)
                         {
                             flag3 = false;
@@ -357,7 +357,7 @@ namespace RogueCastle
 
         private void UpdateKeyBindings()
         {
-            for (int i = 0; i < m_keyboardControls.Count; i++)
+            for (var i = 0; i < m_keyboardControls.Count; i++)
             {
                 if (m_controlKeys[i] == -1)
                 {
@@ -366,7 +366,7 @@ namespace RogueCastle
                 }
                 else
                 {
-                    int num = m_controlKeys[i];
+                    var num = m_controlKeys[i];
                     if (num != 10)
                     {
                         switch (num)

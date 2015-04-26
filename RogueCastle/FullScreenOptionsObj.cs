@@ -17,6 +17,14 @@ namespace RogueCastle
     {
         private TextObj m_toggleText;
 
+        public FullScreenOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Fullscreen")
+        {
+            m_toggleText = (m_nameText.Clone() as TextObj);
+            m_toggleText.X = m_optionsTextOffset;
+            m_toggleText.Text = "No";
+            AddChild(m_toggleText);
+        }
+
         public override bool IsActive
         {
             get { return base.IsActive; }
@@ -30,14 +38,6 @@ namespace RogueCastle
                 }
                 m_toggleText.TextureColor = Color.White;
             }
-        }
-
-        public FullScreenOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Fullscreen")
-        {
-            m_toggleText = (m_nameText.Clone() as TextObj);
-            m_toggleText.X = m_optionsTextOffset;
-            m_toggleText.Text = "No";
-            AddChild(m_toggleText);
         }
 
         public override void Initialize()
@@ -71,7 +71,7 @@ namespace RogueCastle
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 SoundManager.PlaySound("Option_Menu_Select");
-                GraphicsDeviceManager graphics = (m_parentScreen.ScreenManager.Game as Game).graphics;
+                var graphics = (m_parentScreen.ScreenManager.Game as Game).graphics;
                 if ((m_toggleText.Text == "No" && graphics.IsFullScreen) ||
                     (m_toggleText.Text == "Yes" && !graphics.IsFullScreen))
                 {

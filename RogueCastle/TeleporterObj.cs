@@ -17,7 +17,6 @@ namespace RogueCastle
     public class TeleporterObj : PhysicsObj
     {
         private SpriteObj m_arrowIcon;
-        public bool Activated { get; set; }
 
         public TeleporterObj() : base("TeleporterBase_Sprite", null)
         {
@@ -30,6 +29,8 @@ namespace RogueCastle
             m_arrowIcon.OutlineWidth = 2;
             m_arrowIcon.Visible = false;
         }
+
+        public bool Activated { get; set; }
 
         public void SetCollision(bool collides)
         {
@@ -53,7 +54,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+            var playerObj = otherBox.AbsParent as PlayerObj;
             if (!Game.ScreenManager.Player.ControlsLocked && playerObj != null && playerObj.IsTouchingGround)
             {
                 m_arrowIcon.Visible = true;
@@ -69,7 +70,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            TeleporterObj teleporterObj = obj as TeleporterObj;
+            var teleporterObj = obj as TeleporterObj;
             teleporterObj.Activated = Activated;
         }
 

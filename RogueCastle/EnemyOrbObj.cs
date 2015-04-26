@@ -25,7 +25,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            EnemyOrbObj enemyOrbObj = obj as EnemyOrbObj;
+            var enemyOrbObj = obj as EnemyOrbObj;
             enemyOrbObj.OrbType = OrbType;
             enemyOrbObj.ForceFlying = ForceFlying;
         }

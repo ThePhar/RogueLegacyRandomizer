@@ -20,26 +20,26 @@ namespace RogueCastle
 {
     public class IntroRoomObj : RoomObj
     {
-        private List<RaindropObj> m_rainFG;
-        private Cue m_rainSFX;
-        private TextObj m_introText;
-        private SpriteObj m_mountain1;
-        private SpriteObj m_mountain2;
-        private GameObj m_tree1;
-        private GameObj m_tree2;
-        private GameObj m_tree3;
         private GameObj m_fern1;
         private GameObj m_fern2;
         private GameObj m_fern3;
-        private float m_smokeCounter;
         private bool m_inSecondPart;
+        private TextObj m_introText;
+        private SpriteObj m_mountain1;
+        private SpriteObj m_mountain2;
+        private List<RaindropObj> m_rainFG;
+        private Cue m_rainSFX;
+        private float m_smokeCounter;
+        private GameObj m_tree1;
+        private GameObj m_tree2;
+        private GameObj m_tree3;
 
         public IntroRoomObj()
         {
             m_rainFG = new List<RaindropObj>();
-            for (int i = 0; i < 500; i++)
+            for (var i = 0; i < 500; i++)
             {
-                RaindropObj item =
+                var item =
                     new RaindropObj(new Vector2(CDGMath.RandomInt(-100, 2640), CDGMath.RandomInt(-400, 720)));
                 m_rainFG.Add(item);
             }
@@ -51,7 +51,7 @@ namespace RogueCastle
             TerrainObj terrainObj2 = null;
             TerrainObj terrainObj3 = null;
             TerrainObj terrainObj4 = null;
-            foreach (TerrainObj current in TerrainObjList)
+            foreach (var current in TerrainObjList)
             {
                 if (current.Name == "BlacksmithBlock")
                 {
@@ -88,7 +88,7 @@ namespace RogueCastle
             }
             if (m_tree1 == null)
             {
-                foreach (GameObj current2 in GameObjList)
+                foreach (var current2 in GameObjList)
                 {
                     if (current2.Name == "Mountains 1")
                     {
@@ -160,7 +160,7 @@ namespace RogueCastle
             Player.UpdateCollisionBoxes();
             Player.Position = new Vector2(10f, 660f - (Player.Bounds.Bottom - Player.Y));
             Player.State = 1;
-            LogicSet logicSet = new LogicSet(Player);
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
             logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
             logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
@@ -174,7 +174,7 @@ namespace RogueCastle
 
         public void Intro1()
         {
-            List<object> list = new List<object>();
+            var list = new List<object>();
             list.Add(1f);
             list.Add(0.2f);
             list.Add(4f);
@@ -189,7 +189,7 @@ namespace RogueCastle
         {
             m_inSecondPart = true;
             Tween.RunFunction(3f, Player.AttachedLevel, "LightningEffectTwice");
-            LogicSet logicSet = new LogicSet(Player);
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new DelayLogicAction(5f));
             logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
             logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
@@ -202,7 +202,7 @@ namespace RogueCastle
 
         public void Intro3()
         {
-            List<object> list = new List<object>();
+            var list = new List<object>();
             m_introText.Text = "But I am loyal only to myself.";
             list.Add(1f);
             list.Add(0.2f);
@@ -232,14 +232,14 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            float totalGameTime = Game.TotalGameTime;
+            var totalGameTime = Game.TotalGameTime;
             m_tree1.Rotation = -(float) Math.Sin(totalGameTime)*2f;
             m_tree2.Rotation = (float) Math.Sin(totalGameTime*2f);
             m_tree3.Rotation = (float) Math.Sin(totalGameTime*2f)*2f;
             m_fern1.Rotation = (float) Math.Sin(totalGameTime*3f)/2f;
             m_fern2.Rotation = -(float) Math.Sin(totalGameTime*4f);
             m_fern3.Rotation = (float) Math.Sin(totalGameTime*4f)/2f;
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.Update(TerrainObjList, gameTime);
             }
@@ -264,7 +264,7 @@ namespace RogueCastle
             m_mountain2.X = m_mountain1.X + 2640f;
             base.Draw(camera);
             camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 2640, 720), Color.Black*0.6f);
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.Draw(camera);
             }
@@ -276,7 +276,7 @@ namespace RogueCastle
 
         public override void PauseRoom()
         {
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.PauseAnimation();
             }
@@ -288,7 +288,7 @@ namespace RogueCastle
 
         public override void UnpauseRoom()
         {
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.ResumeAnimation();
             }
@@ -302,7 +302,7 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                foreach (RaindropObj current in m_rainFG)
+                foreach (var current in m_rainFG)
                 {
                     current.Dispose();
                 }

@@ -113,7 +113,7 @@ namespace RogueCastle
 
         public static ProjectileData GetProjData(byte spellType, PlayerObj player)
         {
-            ProjectileData projectileData = new ProjectileData(player)
+            var projectileData = new ProjectileData(player)
             {
                 SpriteName = "BoneProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,

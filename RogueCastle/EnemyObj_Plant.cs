@@ -15,12 +15,19 @@ namespace RogueCastle
 {
     public class EnemyObj_Plant : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private LogicBlock m_generalCooldownExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_Plant(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyPlantIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 22;
+        }
 
         protected override void InitializeEV()
         {
@@ -138,7 +145,7 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "PlantProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -151,7 +158,7 @@ namespace RogueCastle
                 CollidesWithTerrain = true,
                 Scale = ProjectileScale
             };
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01",
                 "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03"));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
@@ -166,7 +173,7 @@ namespace RogueCastle
             logicSet.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet.Tag = 2;
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
             logicSet2.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
@@ -183,7 +190,7 @@ namespace RogueCastle
             logicSet2.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet2.Tag = 2;
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
             logicSet3.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
@@ -208,7 +215,7 @@ namespace RogueCastle
             logicSet3.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet3.Tag = 2;
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantAttack_Character", false, false));
             logicSet4.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
@@ -229,21 +236,21 @@ namespace RogueCastle
             logicSet4.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet5.AddAction(new DelayLogicAction(0.25f));
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01",
                 "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03", "Blank", "Blank", "Blank"));
             logicSet6.AddAction(new MoveLogicAction(m_target, true));
             logicSet6.AddAction(new DelayLogicAction(0.25f, 0.45f));
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01",
                 "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03", "Blank", "Blank", "Blank"));
             logicSet7.AddAction(new MoveLogicAction(m_target, false));
             logicSet7.AddAction(new DelayLogicAction(0.25f, 0.45f));
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Squirm_01",
                 "Enemy_Venus_Squirm_02", "Enemy_Venus_Squirm_03", "Blank", "Blank", "Blank"));
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
@@ -264,8 +271,8 @@ namespace RogueCastle
             SetCooldownLogicBlock(m_generalCooldownLB, 100);
             if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
             {
-                LogicBlock arg_AA5_1 = m_generalCooldownExpertLB;
-                int[] array = new int[3];
+                var arg_AA5_1 = m_generalCooldownExpertLB;
+                var array = new int[3];
                 array[0] = 50;
                 array[1] = 50;
                 SetCooldownLogicBlock(arg_AA5_1, array);
@@ -335,13 +342,6 @@ namespace RogueCastle
                 default:
                     return;
             }
-        }
-
-        public EnemyObj_Plant(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyPlantIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 22;
         }
     }
 }

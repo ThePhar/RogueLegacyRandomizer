@@ -20,12 +20,12 @@ namespace RogueCastle
     public class JukeboxBonusRoom : BonusRoomObj
     {
         private GameObj m_jukeBox;
-        private string[] m_songList;
-        private string[] m_songTitleList;
-        private int m_songIndex;
-        private bool m_rotatedLeft;
         private TextObj m_nowPlayingText;
+        private bool m_rotatedLeft;
+        private int m_songIndex;
+        private string[] m_songList;
         private TextObj m_songTitle;
+        private string[] m_songTitleList;
         private SpriteObj m_speechBubble;
 
         public JukeboxBonusRoom()
@@ -76,7 +76,7 @@ namespace RogueCastle
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             m_speechBubble.Visible = false;
             GameObjList.Add(m_speechBubble);
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "Jukebox")
                 {
@@ -192,7 +192,7 @@ namespace RogueCastle
             m_nowPlayingText.Position = m_songTitle.Position;
             m_nowPlayingText.Y -= 50f;
             base.Draw(camera);
-            SamplerState value = camera.GraphicsDevice.SamplerStates[0];
+            var value = camera.GraphicsDevice.SamplerStates[0];
             camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             m_songTitle.Draw(camera);
             m_nowPlayingText.Draw(camera);

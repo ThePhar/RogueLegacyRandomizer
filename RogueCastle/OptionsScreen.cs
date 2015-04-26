@@ -20,25 +20,24 @@ namespace RogueCastle
 {
     public class OptionsScreen : Screen
     {
+        private OptionsObj m_backToMenuObj;
+        private ObjContainer m_bgSprite;
+        private KeyIconTextObj m_cancelText;
+        private SpriteObj m_changeControlsTitle;
+        private bool m_changingControls;
+        private KeyIconTextObj m_confirmText;
+        private OptionsObj m_enableSteamCloudObj;
+        private KeyIconTextObj m_navigationText;
+        private List<OptionsObj> m_optionsArray;
+        private SpriteObj m_optionsBar;
+        private SpriteObj m_optionsTitle;
+        private OptionsObj m_quickDropObj;
+        private TextObj m_quickDropText;
+        private OptionsObj m_reduceQualityObj;
         private OptionsObj m_selectedOption;
         private int m_selectedOptionIndex;
-        private bool m_changingControls;
-        private List<OptionsObj> m_optionsArray;
-        private ObjContainer m_bgSprite;
-        private bool m_transitioning;
-        private OptionsObj m_backToMenuObj;
-        private KeyIconTextObj m_confirmText;
-        private KeyIconTextObj m_cancelText;
-        private KeyIconTextObj m_navigationText;
-        private SpriteObj m_optionsTitle;
-        private SpriteObj m_changeControlsTitle;
-        private SpriteObj m_optionsBar;
-        private TextObj m_quickDropText;
-        private OptionsObj m_quickDropObj;
-        private OptionsObj m_reduceQualityObj;
-        private OptionsObj m_enableSteamCloudObj;
         private bool m_titleScreenOptions;
-        public float BackBufferOpacity { get; set; }
+        private bool m_transitioning;
 
         public OptionsScreen()
         {
@@ -47,6 +46,8 @@ namespace RogueCastle
             DrawIfCovered = true;
             m_titleScreenOptions = true;
         }
+
+        public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
@@ -72,7 +73,7 @@ namespace RogueCastle
             m_optionsArray.Add(new ExitProgramOptionsObj(this));
             m_backToMenuObj = new BackToMenuOptionsObj(this);
             m_backToMenuObj.X = 420f;
-            for (int i = 0; i < m_optionsArray.Count; i++)
+            for (var i = 0; i < m_optionsArray.Count; i++)
             {
                 m_optionsArray[i].X = 420f;
                 m_optionsArray[i].Y = 160 + i*30;
@@ -159,8 +160,8 @@ namespace RogueCastle
             Tween.To(m_bgSprite, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
             Tween.AddEndHandlerToLastTween(this, "EndTransition");
             Tween.To(m_bgSprite, 0.2f, Tween.EaseNone, "Opacity", "1");
-            int num = 0;
-            foreach (OptionsObj current in m_optionsArray)
+            var num = 0;
+            foreach (var current in m_optionsArray)
             {
                 current.Y = 160 + num*30 - 360f;
                 current.Opacity = 0f;
@@ -192,8 +193,8 @@ namespace RogueCastle
             m_bgSprite.Opacity = 1f;
             Tween.To(m_bgSprite, 0.5f, Quad.EaseOut, "Y", "0");
             Tween.To(m_bgSprite, 0.2f, Tween.EaseNone, "Opacity", "0");
-            int num = 0;
-            foreach (OptionsObj current in m_optionsArray)
+            var num = 0;
+            foreach (var current in m_optionsArray)
             {
                 current.Y = 160 + num*30;
                 current.Opacity = 1f;
@@ -226,7 +227,7 @@ namespace RogueCastle
                 {
                     if (!m_selectedOption.IsActive)
                     {
-                        int selectedOptionIndex = m_selectedOptionIndex;
+                        var selectedOptionIndex = m_selectedOptionIndex;
                         if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                         {
                             if (m_selectedOptionIndex > 0)
@@ -303,7 +304,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            foreach (OptionsObj current in m_optionsArray)
+            foreach (var current in m_optionsArray)
             {
                 current.Update(gameTime);
             }
@@ -315,7 +316,7 @@ namespace RogueCastle
         {
             if (!m_changingControls)
             {
-                foreach (OptionsObj current in m_optionsArray)
+                foreach (var current in m_optionsArray)
                 {
                     Tween.By(current, 0.3f, Quad.EaseInOut, "X", "-1320");
                 }
@@ -324,7 +325,7 @@ namespace RogueCastle
                 m_changingControls = true;
                 return;
             }
-            foreach (OptionsObj current2 in m_optionsArray)
+            foreach (var current2 in m_optionsArray)
             {
                 Tween.By(current2, 0.3f, Quad.EaseInOut, "X", "1320");
             }
@@ -338,7 +339,7 @@ namespace RogueCastle
             Camera.Begin();
             Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
             m_bgSprite.Draw(Camera);
-            foreach (OptionsObj current in m_optionsArray)
+            foreach (var current in m_optionsArray)
             {
                 current.Draw(Camera);
             }
@@ -356,7 +357,7 @@ namespace RogueCastle
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Options Screen");
-                foreach (OptionsObj current in m_optionsArray)
+                foreach (var current in m_optionsArray)
                 {
                     current.Dispose();
                 }

@@ -14,17 +14,17 @@ namespace RogueCastle
 {
     public class WordBuilder
     {
-        private static string[] intro = new[]
+        private static readonly string[] intro =
         {
             "Sir Skunky the Knight\n"
         };
 
-        private static string[] middle = new[]
+        private static readonly string[] middle =
         {
             "Gigantism - You are larger\n"
         };
 
-        private static string[] end = new[]
+        private static readonly string[] end =
         {
             "Dextrocardia - HP/MP pools are swapped\n"
         };

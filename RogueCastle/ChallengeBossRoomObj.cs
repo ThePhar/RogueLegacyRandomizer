@@ -19,35 +19,26 @@ namespace RogueCastle
 {
     public abstract class ChallengeBossRoomObj : RoomObj
     {
-        protected bool m_cutsceneRunning;
         protected ChestObj m_bossChest;
-        private float m_sparkleTimer;
-        private bool m_teleportingOut;
-        private float m_roomFloor;
+        private SpriteObj m_bossDivider;
         private TextObj m_bossTitle1;
         private TextObj m_bossTitle2;
-        private SpriteObj m_bossDivider;
-        private PlayerStats m_storedPlayerStats;
-        private int m_storedHealth;
-        private float m_storedMana;
-        private Vector2 m_storedScale;
+        protected bool m_cutsceneRunning;
         private List<RaindropObj> m_rainFG;
-        public abstract bool BossKilled { get; }
-
-        public int StoredHP
-        {
-            get { return m_storedHealth; }
-        }
-
-        public float StoredMP
-        {
-            get { return m_storedMana; }
-        }
+        private float m_roomFloor;
+        private float m_sparkleTimer;
+        private PlayerStats m_storedPlayerStats;
+        private Vector2 m_storedScale;
+        private bool m_teleportingOut;
 
         public ChallengeBossRoomObj()
         {
             m_storedPlayerStats = new PlayerStats();
         }
+
+        public abstract bool BossKilled { get; }
+        public int StoredHP { get; private set; }
+        public float StoredMP { get; private set; }
 
         public override void Initialize()
         {
@@ -61,7 +52,7 @@ namespace RogueCastle
             m_bossTitle2.FontSize = 40f;
             m_bossDivider = new SpriteObj("Blank_Sprite");
             m_bossDivider.OutlineWidth = 2;
-            foreach (DoorObj current in DoorList)
+            foreach (var current in DoorList)
             {
                 m_roomFloor = current.Bounds.Bottom;
             }
@@ -69,9 +60,9 @@ namespace RogueCastle
             m_bossChest.Position = new Vector2(Bounds.Center.X - m_bossChest.Width/2f, Bounds.Center.Y);
             GameObjList.Add(m_bossChest);
             m_rainFG = new List<RaindropObj>();
-            for (int i = 0; i < 50; i++)
+            for (var i = 0; i < 50; i++)
             {
-                RaindropObj raindropObj =
+                var raindropObj =
                     new RaindropObj(new Vector2(CDGMath.RandomFloat(X - Width, X), CDGMath.RandomFloat(Y, Y + Height)));
                 m_rainFG.Add(raindropObj);
                 raindropObj.ChangeToParticle();
@@ -88,8 +79,8 @@ namespace RogueCastle
             Player.Scale = new Vector2(2f, 2f);
             SkillSystem.ResetAllTraits();
             Player.OverrideInternalScale(Player.Scale);
-            m_storedHealth = Player.CurrentHealth;
-            m_storedMana = Player.CurrentMana;
+            StoredHP = Player.CurrentHealth;
+            StoredMP = Player.CurrentMana;
         }
 
         public void LoadPlayerData()
@@ -124,7 +115,7 @@ namespace RogueCastle
             m_bossDivider.Opacity = 0f;
             if (LevelEV.WEAKEN_BOSSES)
             {
-                foreach (EnemyObj current in EnemyList)
+                foreach (var current in EnemyList)
                 {
                     current.CurrentHealth = 1;
                 }
@@ -142,8 +133,8 @@ namespace RogueCastle
             Player.AttachedLevel.UpdatePlayerSpellIcon();
             Player.UpdateEquipmentColours();
             Player.AttachedLevel.RefreshPlayerHUDPos();
-            Player.CurrentHealth = m_storedHealth;
-            Player.CurrentMana = m_storedMana;
+            Player.CurrentHealth = StoredHP;
+            Player.CurrentMana = StoredMP;
             if (BossKilled)
             {
                 SaveCompletionData();
@@ -162,7 +153,7 @@ namespace RogueCastle
             SoundManager.PlaySound("Boss_Title");
             m_bossTitle1.Text = bossTitle1;
             m_bossTitle2.Text = bossTitle2;
-            Camera2D camera = Player.AttachedLevel.Camera;
+            var camera = Player.AttachedLevel.Camera;
             if (Player.AttachedLevel.CurrentRoom is LastBossRoom)
             {
                 m_bossTitle1.Position = new Vector2(camera.X - 550f, camera.Y + 100f);
@@ -209,7 +200,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.UpdateNoCollision(gameTime);
             }
@@ -263,9 +254,9 @@ namespace RogueCastle
         public void TeleportPlayer()
         {
             Player.CurrentSpeed = 0f;
-            Vector2 position = Player.Position;
-            Vector2 scale = Player.Scale;
-            LogicSet logicSet = new LogicSet(Player);
+            var position = Player.Position;
+            var scale = Player.Scale;
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
             logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
             logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false));
@@ -340,9 +331,9 @@ namespace RogueCastle
         {
             Player.AttachedLevel.UnpauseScreen();
             Player.CurrentSpeed = 0f;
-            Vector2 position = Player.Position;
-            Vector2 scale = Player.Scale;
-            LogicSet logicSet = new LogicSet(Player);
+            var position = Player.Position;
+            var scale = Player.Scale;
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
             logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
             logicSet.AddAction(new DelayLogicAction(1.3f));
@@ -395,7 +386,7 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.Draw(camera);
             }
@@ -418,7 +409,7 @@ namespace RogueCastle
                 m_bossTitle1 = null;
                 m_bossTitle2.Dispose();
                 m_bossTitle2 = null;
-                foreach (RaindropObj current in m_rainFG)
+                foreach (var current in m_rainFG)
                 {
                     current.Dispose();
                 }

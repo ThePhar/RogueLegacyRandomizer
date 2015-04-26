@@ -19,19 +19,18 @@ namespace RogueCastle
 {
     public class ProfileSelectScreen : Screen
     {
-        private KeyIconTextObj m_confirmText;
         private KeyIconTextObj m_cancelText;
-        private KeyIconTextObj m_navigationText;
+        private KeyIconTextObj m_confirmText;
         private KeyIconTextObj m_deleteProfileText;
-        private SpriteObj m_title;
+        private bool m_lockControls;
+        private KeyIconTextObj m_navigationText;
+        private int m_selectedIndex;
+        private ObjContainer m_selectedSlot;
         private ObjContainer m_slot1Container;
         private ObjContainer m_slot2Container;
         private ObjContainer m_slot3Container;
-        private int m_selectedIndex;
-        private bool m_lockControls;
         private List<ObjContainer> m_slotArray;
-        private ObjContainer m_selectedSlot;
-        public float BackBufferOpacity { get; set; }
+        private SpriteObj m_title;
 
         public ProfileSelectScreen()
         {
@@ -39,11 +38,13 @@ namespace RogueCastle
             DrawIfCovered = true;
         }
 
+        public float BackBufferOpacity { get; set; }
+
         public override void LoadContent()
         {
             m_title = new SpriteObj("ProfileSelectTitle_Sprite");
             m_title.ForceDraw = true;
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.Align = Types.TextAlign.Centre;
             textObj.Text = "- START NEW LEGACY - ";
             textObj.TextureColor = Color.White;
@@ -51,41 +52,41 @@ namespace RogueCastle
             textObj.FontSize = 10f;
             textObj.Position = new Vector2(0f, -(textObj.Height/2f));
             m_slot1Container = new ObjContainer("ProfileSlotBG_Container");
-            TextObj obj = textObj.Clone() as TextObj;
+            var obj = textObj.Clone() as TextObj;
             m_slot1Container.AddChild(obj);
-            SpriteObj spriteObj = new SpriteObj("ProfileSlot1Text_Sprite");
+            var spriteObj = new SpriteObj("ProfileSlot1Text_Sprite");
             spriteObj.Position = new Vector2(-130f, -35f);
             m_slot1Container.AddChild(spriteObj);
-            TextObj textObj2 = textObj.Clone() as TextObj;
+            var textObj2 = textObj.Clone() as TextObj;
             m_slot1Container.AddChild(textObj2);
             textObj2.Position = new Vector2(120f, 15f);
-            TextObj textObj3 = textObj.Clone() as TextObj;
+            var textObj3 = textObj.Clone() as TextObj;
             textObj3.Position = new Vector2(-120f, 15f);
             m_slot1Container.AddChild(textObj3);
             m_slot1Container.ForceDraw = true;
             m_slot2Container = new ObjContainer("ProfileSlotBG_Container");
-            TextObj obj2 = textObj.Clone() as TextObj;
+            var obj2 = textObj.Clone() as TextObj;
             m_slot2Container.AddChild(obj2);
-            SpriteObj spriteObj2 = new SpriteObj("ProfileSlot2Text_Sprite");
+            var spriteObj2 = new SpriteObj("ProfileSlot2Text_Sprite");
             spriteObj2.Position = new Vector2(-130f, -35f);
             m_slot2Container.AddChild(spriteObj2);
-            TextObj textObj4 = textObj.Clone() as TextObj;
+            var textObj4 = textObj.Clone() as TextObj;
             m_slot2Container.AddChild(textObj4);
             textObj4.Position = new Vector2(120f, 15f);
-            TextObj textObj5 = textObj.Clone() as TextObj;
+            var textObj5 = textObj.Clone() as TextObj;
             textObj5.Position = new Vector2(-120f, 15f);
             m_slot2Container.AddChild(textObj5);
             m_slot2Container.ForceDraw = true;
             m_slot3Container = new ObjContainer("ProfileSlotBG_Container");
-            TextObj obj3 = textObj.Clone() as TextObj;
+            var obj3 = textObj.Clone() as TextObj;
             m_slot3Container.AddChild(obj3);
-            SpriteObj spriteObj3 = new SpriteObj("ProfileSlot3Text_Sprite");
+            var spriteObj3 = new SpriteObj("ProfileSlot3Text_Sprite");
             spriteObj3.Position = new Vector2(-130f, -35f);
             m_slot3Container.AddChild(spriteObj3);
-            TextObj textObj6 = textObj.Clone() as TextObj;
+            var textObj6 = textObj.Clone() as TextObj;
             m_slot3Container.AddChild(textObj6);
             textObj6.Position = new Vector2(120f, 15f);
-            TextObj textObj7 = textObj.Clone() as TextObj;
+            var textObj7 = textObj.Clone() as TextObj;
             textObj7.Position = new Vector2(-120f, 15f);
             m_slot3Container.AddChild(textObj7);
             m_slot3Container.ForceDraw = true;
@@ -176,16 +177,16 @@ namespace RogueCastle
 
         private void CheckSaveHeaders(ObjContainer container, byte profile)
         {
-            TextObj textObj = container.GetChildAt(1) as TextObj;
-            TextObj textObj2 = container.GetChildAt(3) as TextObj;
-            TextObj textObj3 = container.GetChildAt(4) as TextObj;
+            var textObj = container.GetChildAt(1) as TextObj;
+            var textObj2 = container.GetChildAt(3) as TextObj;
+            var textObj3 = container.GetChildAt(4) as TextObj;
             textObj2.Text = "";
             textObj3.Text = "";
             string text = null;
             byte classType = 0;
-            int num = 0;
-            bool flag = false;
-            int num2 = 0;
+            var num = 0;
+            var flag = false;
+            var num2 = 0;
             try
             {
                 (ScreenManager.Game as Game).SaveManager.GetSaveHeader(profile, out classType, out text, out num,
@@ -197,7 +198,7 @@ namespace RogueCastle
                 }
                 else
                 {
-                    bool isFemale = text.Contains("Lady");
+                    var isFemale = text.Contains("Lady");
                     if (!flag)
                     {
                         textObj.Text = text + " the " + ClassType.ToString(classType, isFemale);
@@ -269,7 +270,7 @@ namespace RogueCastle
         {
             if (!m_lockControls)
             {
-                ObjContainer selectedSlot = m_selectedSlot;
+                var selectedSlot = m_selectedSlot;
                 if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
                 {
                     m_selectedIndex++;
@@ -313,7 +314,7 @@ namespace RogueCastle
                 {
                     SoundManager.PlaySound("Map_On");
                     Game.GameConfig.ProfileSlot = (byte) (m_selectedIndex + 1);
-                    Game game = ScreenManager.Game as Game;
+                    var game = ScreenManager.Game as Game;
                     game.SaveConfig();
                     if (game.SaveManager.FileExists(SaveType.PlayerData))
                     {
@@ -357,7 +358,7 @@ namespace RogueCastle
 
         public void DeleteSaveAsk()
         {
-            RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
+            var rCScreenManager = ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("Delete Save");
             rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSaveAskAgain");
@@ -366,7 +367,7 @@ namespace RogueCastle
 
         public void DeleteSaveAskAgain()
         {
-            RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
+            var rCScreenManager = ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("Delete Save2");
             rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSave");
@@ -375,8 +376,8 @@ namespace RogueCastle
 
         public void DeleteSave()
         {
-            bool flag = false;
-            byte profileSlot = Game.GameConfig.ProfileSlot;
+            var flag = false;
+            var profileSlot = Game.GameConfig.ProfileSlot;
             if (Game.GameConfig.ProfileSlot == m_selectedIndex + 1)
             {
                 flag = true;

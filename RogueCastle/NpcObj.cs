@@ -18,12 +18,6 @@ namespace RogueCastle
     public class NpcObj : ObjContainer
     {
         private SpriteObj m_talkIcon;
-        public bool CanTalk { get; set; }
-
-        public bool IsTouching
-        {
-            get { return m_talkIcon.Visible; }
-        }
 
         public NpcObj(string spriteName) : base(spriteName)
         {
@@ -35,9 +29,16 @@ namespace RogueCastle
             OutlineWidth = 2;
         }
 
+        public bool CanTalk { get; set; }
+
+        public bool IsTouching
+        {
+            get { return m_talkIcon.Visible; }
+        }
+
         public void Update(GameTime gameTime, PlayerObj player)
         {
-            bool flag = false;
+            var flag = false;
             if (Flip == SpriteEffects.None && player.X > X)
             {
                 flag = true;

@@ -19,9 +19,9 @@ namespace RogueCastle
 {
     public class SpecialItemRoomObj : BonusRoomObj
     {
-        private SpriteObj m_pedestal;
         private SpriteObj m_icon;
         private float m_iconYPos;
+        private SpriteObj m_pedestal;
         private SpriteObj m_speechBubble;
         public byte ItemType { get; set; }
 
@@ -31,7 +31,7 @@ namespace RogueCastle
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             m_icon = new SpriteObj("Blank_Sprite");
             m_icon.Scale = new Vector2(2f, 2f);
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "pedestal")
                 {
@@ -78,8 +78,8 @@ namespace RogueCastle
 
         private byte GetRandomItem()
         {
-            List<byte> list = new List<byte>();
-            for (int i = 1; i < 7; i++)
+            var list = new List<byte>();
+            for (var i = 1; i < 7; i++)
             {
                 list.Add((byte) i);
             }
@@ -163,7 +163,7 @@ namespace RogueCastle
                     m_speechBubble.Visible = true;
                     if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
-                        RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                        var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                         rCScreenManager.DialogueScreen.SetDialogue("Special Item Prayer");
                         rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                         rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "TakeItem");
@@ -203,7 +203,7 @@ namespace RogueCastle
             m_icon.Visible = false;
             (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
             (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerSpellIcon();
-            List<object> list = new List<object>();
+            var list = new List<object>();
             list.Add(new Vector2(m_pedestal.X, m_pedestal.Y - m_pedestal.Height/2f));
             list.Add(5);
             list.Add(new Vector2(Game.PlayerStats.SpecialItem, 0f));

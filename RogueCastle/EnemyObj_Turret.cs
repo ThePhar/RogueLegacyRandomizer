@@ -16,10 +16,22 @@ namespace RogueCastle
 {
     public class EnemyObj_Turret : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_Turret(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyTurretFire_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            IsCollidable = false;
+            ForceDraw = true;
+            Type = 17;
+            StopAnimation();
+            PlayAnimationOnRestart = false;
+            NonKillable = true;
+        }
 
         protected override void InitializeEV()
         {
@@ -54,15 +66,15 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            float rotation = Rotation;
-            float num = ParseTagToFloat("delay");
-            float num2 = ParseTagToFloat("speed");
+            var rotation = Rotation;
+            var num = ParseTagToFloat("delay");
+            var num2 = ParseTagToFloat("speed");
             if (num == 0f)
             {
                 Console.WriteLine("ERROR: Turret set with delay of 0. Shoots too fast.");
                 num = 10000f;
             }
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "TurretProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -76,7 +88,7 @@ namespace RogueCastle
                 CollidesWithTerrain = true,
                 Scale = ProjectileScale
             };
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
             logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
             logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
@@ -102,9 +114,9 @@ namespace RogueCastle
                 case 1:
                 case 2:
                 case 3:*/
-                    //IL_1D:
-                    RunLogicBlock(false, m_generalBasicLB, 100);
-                    //return;
+            //IL_1D:
+            RunLogicBlock(false, m_generalBasicLB, 100);
+            //return;
             //}
             //goto IL_1D;
         }
@@ -143,18 +155,6 @@ namespace RogueCastle
                 case 3:
                     return;
             }
-        }
-
-        public EnemyObj_Turret(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyTurretFire_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            IsCollidable = false;
-            ForceDraw = true;
-            Type = 17;
-            StopAnimation();
-            PlayAnimationOnRestart = false;
-            NonKillable = true;
         }
     }
 }

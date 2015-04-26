@@ -15,28 +15,28 @@ namespace RogueCastle
 {
     public class EquipmentSystem
     {
-        private List<EquipmentData[]> m_equipmentDataArray;
-        private List<int[]> m_abilityCostArray;
-        private float AbilityCostMod = 175f;
-        private int AbilityCostBase = 175;
+        private readonly int AbilityCostBase = 175;
+        private readonly float AbilityCostMod = 175f;
+        private readonly List<int[]> m_abilityCostArray;
+        private readonly List<EquipmentData[]> m_equipmentDataArray;
 
         public EquipmentSystem()
         {
             m_equipmentDataArray = new List<EquipmentData[]>();
-            for (int i = 0; i < 5; i++)
+            for (var i = 0; i < 5; i++)
             {
-                EquipmentData[] array = new EquipmentData[15];
-                for (int j = 0; j < 15; j++)
+                var array = new EquipmentData[15];
+                for (var j = 0; j < 15; j++)
                 {
                     array[j] = new EquipmentData();
                 }
                 m_equipmentDataArray.Add(array);
             }
             m_abilityCostArray = new List<int[]>();
-            for (int k = 0; k < 5; k++)
+            for (var k = 0; k < 5; k++)
             {
-                int[] array2 = new int[11];
-                for (int l = 0; l < 11; l++)
+                var array2 = new int[11];
+                for (var l = 0; l < 11; l++)
                 {
                     array2[l] = 9999;
                 }
@@ -231,7 +231,7 @@ namespace RogueCastle
             int equipmentIndex, int cost, int weight, int bonusHealth, int bonusDamage, int BonusArmor, int bonusMana,
             int bonusMagic, Color firstColour, Color secondColour, params Vector2[] secondaryAttributes)
         {
-            EquipmentData equipmentData = new EquipmentData();
+            var equipmentData = new EquipmentData();
             equipmentData.BonusDamage = bonusDamage;
             equipmentData.BonusHealth = bonusHealth;
             equipmentData.BonusArmor = BonusArmor;
@@ -244,7 +244,7 @@ namespace RogueCastle
             equipmentData.LevelRequirement = levelRequirement;
             equipmentData.ChestColourRequirement = chestColourRequirement;
             equipmentData.SecondaryAttribute = new Vector2[secondaryAttributes.Length];
-            for (int i = 0; i < secondaryAttributes.Length; i++)
+            for (var i = 0; i < secondaryAttributes.Length; i++)
             {
                 equipmentData.SecondaryAttribute[i] = secondaryAttributes[i];
             }
@@ -270,9 +270,9 @@ namespace RogueCastle
 
         public void SetBlueprintState(byte state)
         {
-            foreach (byte[] current in Game.PlayerStats.GetBlueprintArray)
+            foreach (var current in Game.PlayerStats.GetBlueprintArray)
             {
-                for (int i = 0; i < current.Length; i++)
+                for (var i = 0; i < current.Length; i++)
                 {
                     if (current[i] < state)
                     {
@@ -280,9 +280,9 @@ namespace RogueCastle
                     }
                 }
             }
-            foreach (byte[] current2 in Game.PlayerStats.GetRuneArray)
+            foreach (var current2 in Game.PlayerStats.GetRuneArray)
             {
-                for (int j = 0; j < current2.Length; j++)
+                for (var j = 0; j < current2.Length; j++)
                 {
                     if (current2[j] < state)
                     {

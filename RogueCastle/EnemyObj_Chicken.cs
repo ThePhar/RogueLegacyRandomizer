@@ -16,7 +16,14 @@ namespace RogueCastle
 {
     public class EnemyObj_Chicken : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+
+        public EnemyObj_Chicken(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyChickenRun_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 26;
+        }
 
         protected override void InitializeEV()
         {
@@ -74,7 +81,7 @@ namespace RogueCastle
                     ProjectileRadius = 20;
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Advanced_KnockBack;
-                    goto IL_40A;
+                    break;
                 case GameTypes.EnemyDifficulty.EXPERT:
                     Name = "Chicken";
                     MaxHealth = 1;
@@ -101,7 +108,7 @@ namespace RogueCastle
                     EngageRadius = 30;
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Expert_KnockBack;
-                    goto IL_40A;
+                    break;
                 case GameTypes.EnemyDifficulty.MINIBOSS:
                     Name = "Delicious";
                     MaxHealth = 1;
@@ -128,21 +135,22 @@ namespace RogueCastle
                     EngageRadius = 30;
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Miniboss_KnockBack;
-                    goto IL_40A;
+                    break;
+                default:
+                    Scale = new Vector2(2f, 2f);
+                    break;
             }
-            Scale = new Vector2(2f, 2f);
-            IL_40A:
             IsWeighted = true;
         }
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyChickenRun_Character"));
             logicSet.AddAction(new ChangePropertyLogicAction(this, "Flip", SpriteEffects.FlipHorizontally));
             logicSet.AddAction(new MoveDirectionLogicAction());
             logicSet.AddAction(new DelayLogicAction(0.5f, 1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyChickenRun_Character"));
             logicSet2.AddAction(new ChangePropertyLogicAction(this, "Flip", SpriteEffects.None));
             logicSet2.AddAction(new MoveDirectionLogicAction());
@@ -154,62 +162,22 @@ namespace RogueCastle
 
         protected override void RunBasicLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    //IL_1D:*/
-                    RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    //return;
-            //}
-            //goto IL_1D;
+            RunLogicBlock(true, m_generalBasicLB, 50, 50);
         }
 
         protected override void RunAdvancedLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    //IL_1D:*/
-                    RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    //return;
-            //}
-            //goto IL_1D;
+            RunLogicBlock(true, m_generalBasicLB, 50, 50);
         }
 
         protected override void RunExpertLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:*/
-                    //IL_1D:
-                    RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    //return;
-            //}
-            //goto IL_1D;
+            RunLogicBlock(true, m_generalBasicLB, 50, 50);
         }
 
         protected override void RunMinibossLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:*/
-                    //IL_1D:
-                    RunLogicBlock(true, m_generalBasicLB, 50, 50);
-                    //return;
-            //}
-            //goto IL_1D;
+            RunLogicBlock(true, m_generalBasicLB, 50, 50);
         }
 
         public void MakeCollideable()
@@ -225,13 +193,6 @@ namespace RogueCastle
                 Kill();
             }
             base.Update(gameTime);
-        }
-
-        public EnemyObj_Chicken(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyChickenRun_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 26;
         }
 
         public override void HitEnemy(int damage, Vector2 collisionPt, bool isPlayer)

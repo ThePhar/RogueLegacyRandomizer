@@ -23,44 +23,44 @@ namespace RogueCastle
 {
     public class TitleScreen : Screen
     {
-        private TextObj m_titleText;
         private SpriteObj m_bg;
-        private SpriteObj m_logo;
         private SpriteObj m_castle;
+        private TextObj m_copyrightText;
+        private SpriteObj m_creditsIcon;
+        private KeyIconTextObj m_creditsKey;
+        private SpriteObj m_crown;
+        private SpriteObj m_dlcIcon;
+        private CrepuscularRays m_godRay;
+        private RenderTarget2D m_godRayTexture;
+        private float m_hardCoreModeOpacity;
+        private bool m_heroIsDead;
+        private SpriteObj m_largeCloud1;
+        private SpriteObj m_largeCloud2;
+        private SpriteObj m_largeCloud3;
+        private SpriteObj m_largeCloud4;
+        private bool m_loadStartingRoom;
+        private SpriteObj m_logo;
+        private bool m_optionsEntered;
+        private SpriteObj m_optionsIcon;
+        private KeyIconTextObj m_optionsKey;
+        private PostProcessingManager m_ppm;
+        private KeyIconTextObj m_pressStartText;
+        private TextObj m_pressStartText2;
+        private SpriteObj m_profileCard;
+        private KeyIconTextObj m_profileCardKey;
+        private KeyIconTextObj m_profileSelectKey;
+        private float m_randomSeagullSFX;
+        private Cue m_seagullCue;
         private SpriteObj m_smallCloud1;
         private SpriteObj m_smallCloud2;
         private SpriteObj m_smallCloud3;
         private SpriteObj m_smallCloud4;
         private SpriteObj m_smallCloud5;
-        private SpriteObj m_largeCloud1;
-        private SpriteObj m_largeCloud2;
-        private SpriteObj m_largeCloud3;
-        private SpriteObj m_largeCloud4;
-        private KeyIconTextObj m_pressStartText;
-        private TextObj m_pressStartText2;
-        private TextObj m_copyrightText;
-        private bool m_startPressed;
-        private RenderTarget2D m_godRayTexture;
-        private CrepuscularRays m_godRay;
-        private PostProcessingManager m_ppm;
-        private float m_randomSeagullSFX;
-        private Cue m_seagullCue;
-        private SpriteObj m_profileCard;
-        private SpriteObj m_optionsIcon;
-        private SpriteObj m_creditsIcon;
-        private KeyIconTextObj m_profileCardKey;
-        private KeyIconTextObj m_optionsKey;
-        private KeyIconTextObj m_creditsKey;
-        private KeyIconTextObj m_profileSelectKey;
-        private SpriteObj m_crown;
-        private TextObj m_versionNumber;
-        private float m_hardCoreModeOpacity;
-        private bool m_optionsEntered;
-        private bool m_startNewLegacy;
-        private bool m_heroIsDead;
         private bool m_startNewGamePlus;
-        private bool m_loadStartingRoom;
-        private SpriteObj m_dlcIcon;
+        private bool m_startNewLegacy;
+        private bool m_startPressed;
+        private TextObj m_titleText;
+        private TextObj m_versionNumber;
 
         public override void LoadContent()
         {
@@ -375,7 +375,7 @@ namespace RogueCastle
                     m_randomSeagullSFX = CDGMath.RandomInt(10, 15);
                 }
             }
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             m_smallCloud1.Rotation += 1.8f*num;
             m_smallCloud2.Rotation += 1.2f*num;
             m_smallCloud3.Rotation += 3f*num;
@@ -421,7 +421,7 @@ namespace RogueCastle
             if (Game.GlobalInput.JustPressed(4))
             {
                 m_optionsEntered = true;
-                List<object> list = new List<object>();
+                var list = new List<object>();
                 list.Add(true);
                 (ScreenManager as RCScreenManager).DisplayScreen(4, false, list);
             }

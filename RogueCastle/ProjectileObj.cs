@@ -20,10 +20,20 @@ namespace RogueCastle
     public class ProjectileObj : PhysicsObj, IDealsDamageObj
     {
         public float LifeSpan;
-        private float m_elapsedLifeSpan;
         private Color m_blinkColour = Color.White;
         private float m_blinkTimer;
-        public int Damage { get; set; }
+        private float m_elapsedLifeSpan;
+
+        public ProjectileObj(string spriteName) : base(spriteName, null)
+        {
+            CollisionTypeTag = 3;
+            CollidesWithTerrain = true;
+            ChaseTarget = false;
+            IsDying = false;
+            DestroysWithEnemy = true;
+            DestroyOnRoomTransition = true;
+        }
+
         public float RotationSpeed { get; set; }
         public bool IsAlive { get; internal set; }
         public bool CollidesWithTerrain { get; set; }
@@ -52,20 +62,12 @@ namespace RogueCastle
         {
             get
             {
-                EnemyObj enemyObj = Source as EnemyObj;
+                var enemyObj = Source as EnemyObj;
                 return enemyObj != null && enemyObj.IsDemented;
             }
         }
 
-        public ProjectileObj(string spriteName) : base(spriteName, null)
-        {
-            CollisionTypeTag = 3;
-            CollidesWithTerrain = true;
-            ChaseTarget = false;
-            IsDying = false;
-            DestroysWithEnemy = true;
-            DestroyOnRoomTransition = true;
-        }
+        public int Damage { get; set; }
 
         public void Reset()
         {
@@ -105,7 +107,7 @@ namespace RogueCastle
         {
             if (ChaseTarget && Target != null)
             {
-                Vector2 position = Target.Position;
+                var position = Target.Position;
                 TurnToFace(position, TurnSpeed, 0.0166666675f);
                 HeadingX = (float) Math.Cos(Orientation);
                 HeadingY = (float) Math.Sin(Orientation);
@@ -116,8 +118,8 @@ namespace RogueCastle
         {
             if (!IsPaused)
             {
-                float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-                int spell = Spell;
+                var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+                var spell = Spell;
                 switch (spell)
                 {
                     case 3:
@@ -143,7 +145,7 @@ namespace RogueCastle
                             AltY -= num;
                             if (AltY <= 0f)
                             {
-                                ProceduralLevelScreen proceduralLevelScreen =
+                                var proceduralLevelScreen =
                                     Game.ScreenManager.CurrentScreen as ProceduralLevelScreen;
                                 if (proceduralLevelScreen != null)
                                 {
@@ -154,7 +156,7 @@ namespace RogueCastle
                         }
                         if (AltX <= 0f)
                         {
-                            Vector2 position = Target.Position;
+                            var position = Target.Position;
                             TurnToFace(position, TurnSpeed, num);
                         }
                         else
@@ -175,7 +177,7 @@ namespace RogueCastle
                         else
                         {
                             Flip = SpriteEffects.FlipHorizontally;
-                            float num2 = MathHelper.ToDegrees(Orientation);
+                            var num2 = MathHelper.ToDegrees(Orientation);
                             if (num2 < 0f)
                             {
                                 Rotation = (180f + num2)*60f*num;
@@ -188,7 +190,7 @@ namespace RogueCastle
                         Rotation = MathHelper.Clamp(Rotation, -90f, 90f);
                         if (Target != null)
                         {
-                            EnemyObj enemyObj = Target as EnemyObj;
+                            var enemyObj = Target as EnemyObj;
                             if (enemyObj != null && enemyObj.IsKilled)
                             {
                                 RunDestroyAnimation(false);
@@ -218,7 +220,7 @@ namespace RogueCastle
                                 break;
                             case 11:
                             {
-                                PlayerObj player = Game.ScreenManager.Player;
+                                var player = Game.ScreenManager.Player;
                                 if (player.CastingDamageShield || Source is EnemyObj)
                                 {
                                     AltX += CurrentSpeed*60f*num;
@@ -265,7 +267,7 @@ namespace RogueCastle
                 }
                 if (ChaseTarget && Target != null)
                 {
-                    Vector2 position2 = Target.Position;
+                    var position2 = Target.Position;
                     TurnToFace(position2, TurnSpeed, num);
                     HeadingX = (float) Math.Cos(Orientation);
                     HeadingY = (float) Math.Sin(Orientation);
@@ -276,7 +278,7 @@ namespace RogueCastle
                 }
                 if (FollowArc && !ChaseTarget && !IsDying)
                 {
-                    float radians = (float) Math.Atan2(AccelerationY, AccelerationX);
+                    var radians = (float) Math.Atan2(AccelerationY, AccelerationX);
                     Rotation = MathHelper.ToDegrees(radians);
                 }
                 else if (!ChaseTarget)
@@ -309,11 +311,11 @@ namespace RogueCastle
 
         private void TurnToFace(Vector2 facePosition, float turnSpeed, float elapsedSeconds)
         {
-            float num = facePosition.X - Position.X;
-            float num2 = facePosition.Y - Position.Y;
-            float num3 = (float) Math.Atan2(num2, num);
-            float num4 = MathHelper.WrapAngle(num3 - Orientation);
-            float num5 = turnSpeed*60f*elapsedSeconds;
+            var num = facePosition.X - Position.X;
+            var num2 = facePosition.Y - Position.Y;
+            var num3 = (float) Math.Atan2(num2, num);
+            var num4 = MathHelper.WrapAngle(num3 - Orientation);
+            var num5 = turnSpeed*60f*elapsedSeconds;
             num4 = MathHelper.Clamp(num4, -num5, num5);
             Orientation = MathHelper.WrapAngle(Orientation + num4);
         }
@@ -322,18 +324,18 @@ namespace RogueCastle
         {
             if (Spell == 20)
             {
-                ProjectileObj projectileObj = otherBox.AbsParent as ProjectileObj;
+                var projectileObj = otherBox.AbsParent as ProjectileObj;
                 if (projectileObj != null && projectileObj.CollisionTypeTag != 2 && projectileObj.CanBeFusRohDahed)
                 {
                     projectileObj.RunDestroyAnimation(false);
                 }
             }
-            TerrainObj terrainObj = otherBox.Parent as TerrainObj;
+            var terrainObj = otherBox.Parent as TerrainObj;
             if (CollidesWithTerrain && !(otherBox.Parent is DoorObj) && terrainObj != null &&
                 ((terrainObj.CollidesTop && terrainObj.CollidesBottom && terrainObj.CollidesLeft &&
                   terrainObj.CollidesRight) || CollidesWith1Ways))
             {
-                int spell = Spell;
+                var spell = Spell;
                 if (spell != 3)
                 {
                     if (spell == 7)
@@ -356,16 +358,16 @@ namespace RogueCastle
                     }
                     else
                     {
-                        Vector2 value = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
+                        var value = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
                             Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
                         if (value != Vector2.Zero)
                         {
                             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Spike_Bounce_01",
                                 "Spike_Bounce_02", "Spike_Bounce_03");
-                            Vector2 heading = Heading;
-                            Vector2 vector = new Vector2(value.Y, value.X*-1f);
-                            Vector2 pt = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
-                                         vector - heading;
+                            var heading = Heading;
+                            var vector = new Vector2(value.Y, value.X*-1f);
+                            var pt = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
+                                     vector - heading;
                             X += value.X;
                             Y += value.Y;
                             Orientation = MathHelper.ToRadians(CDGMath.VectorToAngle(pt));
@@ -375,7 +377,7 @@ namespace RogueCastle
                 else if (terrainObj.CollidesBottom && terrainObj.CollidesTop && terrainObj.CollidesLeft &&
                          terrainObj.CollidesRight)
                 {
-                    Vector2 vector2 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
+                    var vector2 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
                         Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
                     base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                     if ((vector2.Y <= 0f && vector2.X == 0f) || otherBox.AbsRotation != 0f)
@@ -388,7 +390,7 @@ namespace RogueCastle
                 else if (!terrainObj.CollidesBottom && terrainObj.CollidesTop && !terrainObj.CollidesLeft &&
                          !terrainObj.CollidesRight)
                 {
-                    Vector2 vector3 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect,
+                    var vector3 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect,
                         thisBox.AbsRotation, Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
                     if (vector3.Y <= 0f && AccelerationY > 0f)
                     {
@@ -404,7 +406,7 @@ namespace RogueCastle
             }
             else if (otherBox.Type != 0)
             {
-                int spell2 = Spell;
+                var spell2 = Spell;
                 if (spell2 == 5)
                 {
                     if (otherBox.AbsParent == Target)
@@ -421,13 +423,13 @@ namespace RogueCastle
 
         public void RunDisplacerEffect(RoomObj room, PlayerObj player)
         {
-            int num = 2147483647;
+            var num = 2147483647;
             TerrainObj terrainObj = null;
-            Vector2 value = Vector2.Zero;
-            foreach (TerrainObj current in room.TerrainObjList)
+            var value = Vector2.Zero;
+            foreach (var current in room.TerrainObjList)
             {
                 value = Vector2.Zero;
-                float num2 = 3.40282347E+38f;
+                var num2 = 3.40282347E+38f;
                 if (player.Flip == SpriteEffects.None)
                 {
                     if (current.X > X && current.Bounds.Top < Bounds.Bottom && current.Bounds.Bottom > Bounds.Top)
@@ -523,8 +525,8 @@ namespace RogueCastle
                         if (hitPlayer)
                         {
                             Tween.By(this, 0.3f, Linear.EaseNone, "Rotation", "270");
-                            int num2 = CDGMath.RandomInt(-50, 50);
-                            int num3 = CDGMath.RandomInt(-100, -50);
+                            var num2 = CDGMath.RandomInt(-50, 50);
+                            var num3 = CDGMath.RandomInt(-100, -50);
                             Tween.By(this, 0.3f, Linear.EaseNone, "X", num2.ToString(), "Y", num3.ToString());
                             Tween.To(this, 0.3f, Linear.EaseNone, "Opacity", "0");
                             Tween.AddEndHandlerToLastTween(this, "KillProjectile");
@@ -542,8 +544,8 @@ namespace RogueCastle
                     {
                         Tween.StopAllContaining(this, false);
                         IsCollidable = false;
-                        int num4 = CDGMath.RandomInt(-50, 50);
-                        int num5 = CDGMath.RandomInt(-100, 100);
+                        var num4 = CDGMath.RandomInt(-50, 50);
+                        var num5 = CDGMath.RandomInt(-100, 100);
                         Tween.By(this, 0.3f, Linear.EaseNone, "X", num4.ToString(), "Y", num5.ToString());
                         Tween.To(this, 0.3f, Linear.EaseNone, "Opacity", "0");
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
@@ -551,7 +553,7 @@ namespace RogueCastle
                     }
                     case "HomingProjectile_Sprite":
                     {
-                        ProceduralLevelScreen proceduralLevelScreen =
+                        var proceduralLevelScreen =
                             Game.ScreenManager.CurrentScreen as ProceduralLevelScreen;
                         if (proceduralLevelScreen != null)
                         {
@@ -580,7 +582,7 @@ namespace RogueCastle
                         IsCollidable = false;
                         Tween.StopAllContaining(this, false);
                         Tween.By(this, 0.3f, Linear.EaseNone, "Rotation", "270");
-                        int num6 = CDGMath.RandomInt(-100, -50);
+                        var num6 = CDGMath.RandomInt(-100, -50);
                         Tween.By(this, 0.3f, Linear.EaseNone, "Y", num6.ToString());
                         Tween.To(this, 0.3f, Linear.EaseNone, "Opacity", "0");
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
@@ -588,7 +590,7 @@ namespace RogueCastle
                     }
                     case "SpellNuke_Sprite":
                     {
-                        ProceduralLevelScreen proceduralLevelScreen2 =
+                        var proceduralLevelScreen2 =
                             Game.ScreenManager.CurrentScreen as ProceduralLevelScreen;
                         if (proceduralLevelScreen2 != null)
                         {
@@ -611,7 +613,7 @@ namespace RogueCastle
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Ice_Wizard_Break_01",
                         "Ice_Wizard_Break_02", "Ice_Wizard_Break_03");
                 }
-                string text = SpriteName.Replace("_", "Explosion_");
+                var text = SpriteName.Replace("_", "Explosion_");
                 ChangeSprite(text);
                 AnimationDelay = 0.0333333351f;
                 PlayAnimation(false);
@@ -627,7 +629,7 @@ namespace RogueCastle
 
         public void ActivateEffect()
         {
-            int spell = Spell;
+            var spell = Spell;
             switch (spell)
             {
                 case 3:
@@ -654,7 +656,7 @@ namespace RogueCastle
                 case 7:
                 {
                     RunDestroyAnimation(false);
-                    PlayerObj player = (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).Player;
+                    var player = (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).Player;
                     player.Translocate(Position);
                     return;
                 }
@@ -704,7 +706,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            ProjectileObj projectileObj = obj as ProjectileObj;
+            var projectileObj = obj as ProjectileObj;
             projectileObj.Target = Target;
             projectileObj.CollidesWithTerrain = CollidesWithTerrain;
             projectileObj.ChaseTarget = ChaseTarget;

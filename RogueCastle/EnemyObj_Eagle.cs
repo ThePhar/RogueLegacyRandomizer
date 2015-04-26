@@ -15,9 +15,16 @@ namespace RogueCastle
 {
     public class EnemyObj_Eagle : EnemyObj
     {
+        private readonly LogicBlock m_basicAttackLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
         private bool m_flyingLeft;
-        private LogicBlock m_basicAttackLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
+
+        public EnemyObj_Eagle(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("Dummy_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 4;
+        }
 
         protected override void InitializeEV()
         {
@@ -49,10 +56,10 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
             logicSet.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new MoveDirectionLogicAction(new Vector2(-1f, 0f)));
             logicSet2.AddAction(new DelayLogicAction(1f));
             m_basicAttackLB.AddLogicSet(logicSet2, logicSet);
@@ -71,9 +78,9 @@ namespace RogueCastle
                 case 3:
                     if (m_flyingLeft)
                     {
-                        bool arg_3B_1 = false;
-                        LogicBlock arg_3B_2 = m_basicAttackLB;
-                        int[] array = new int[2];
+                        var arg_3B_1 = false;
+                        var arg_3B_2 = m_basicAttackLB;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                     }
@@ -141,13 +148,6 @@ namespace RogueCastle
                 PlayAnimation();
             }
             base.Update(gameTime);
-        }
-
-        public EnemyObj_Eagle(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("Dummy_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 4;
         }
     }
 }

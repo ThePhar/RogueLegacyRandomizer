@@ -17,18 +17,12 @@ namespace RogueCastle
 {
     internal class VirtualScreen
     {
-        public readonly int VirtualWidth;
-        public readonly int VirtualHeight;
         public readonly float VirtualAspectRatio;
-        private GraphicsDevice graphicsDevice;
-        private RenderTarget2D screen;
-        private bool areaIsDirty = true;
+        public readonly int VirtualHeight;
+        public readonly int VirtualWidth;
         private Rectangle area;
-
-        public RenderTarget2D RenderTarget
-        {
-            get { return screen; }
-        }
+        private bool areaIsDirty = true;
+        private GraphicsDevice graphicsDevice;
 
         public VirtualScreen(int virtualWidth, int virtualHeight, GraphicsDevice graphicsDevice)
         {
@@ -36,18 +30,20 @@ namespace RogueCastle
             VirtualHeight = virtualHeight;
             VirtualAspectRatio = virtualWidth/(float) virtualHeight;
             this.graphicsDevice = graphicsDevice;
-            screen = new RenderTarget2D(graphicsDevice, virtualWidth, virtualHeight);
+            RenderTarget = new RenderTarget2D(graphicsDevice, virtualWidth, virtualHeight);
         }
+
+        public RenderTarget2D RenderTarget { get; private set; }
 
         public void ReinitializeRTs(GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
-            if (!screen.IsDisposed)
+            if (!RenderTarget.IsDisposed)
             {
-                screen.Dispose();
-                screen = null;
+                RenderTarget.Dispose();
+                RenderTarget = null;
             }
-            screen = new RenderTarget2D(graphicsDevice, VirtualWidth, VirtualHeight);
+            RenderTarget = new RenderTarget2D(graphicsDevice, VirtualWidth, VirtualHeight);
         }
 
         public void PhysicalResolutionChanged()
@@ -62,9 +58,9 @@ namespace RogueCastle
                 return;
             }
             areaIsDirty = false;
-            int width = graphicsDevice.Viewport.Width;
-            int height = graphicsDevice.Viewport.Height;
-            float aspectRatio = graphicsDevice.Viewport.AspectRatio;
+            var width = graphicsDevice.Viewport.Width;
+            var height = graphicsDevice.Viewport.Height;
+            var aspectRatio = graphicsDevice.Viewport.AspectRatio;
             if ((int) (aspectRatio*10f) == (int) (VirtualAspectRatio*10f))
             {
                 area = new Rectangle(0, 0, width, height);
@@ -72,24 +68,24 @@ namespace RogueCastle
             }
             if (VirtualAspectRatio > aspectRatio)
             {
-                float num = width/(float) VirtualWidth;
-                float num2 = VirtualWidth*num;
-                float num3 = VirtualHeight*num;
-                int y = (int) ((height - num3)/2f);
+                var num = width/(float) VirtualWidth;
+                var num2 = VirtualWidth*num;
+                var num3 = VirtualHeight*num;
+                var y = (int) ((height - num3)/2f);
                 area = new Rectangle(0, y, (int) num2, (int) num3);
                 return;
             }
-            float num4 = height/(float) VirtualHeight;
-            float num5 = VirtualWidth*num4;
-            float num6 = VirtualHeight*num4;
-            int x = (int) ((width - num5)/2f);
+            var num4 = height/(float) VirtualHeight;
+            var num5 = VirtualWidth*num4;
+            var num6 = VirtualHeight*num4;
+            var x = (int) ((width - num5)/2f);
             area = new Rectangle(x, 0, (int) num5, (int) num6);
         }
 
         public void RecreateGraphics()
         {
             Console.WriteLine("GraphicsDevice Virtualization failed");
-            GraphicsDevice graphicsDevice = (Game.ScreenManager.Game as Game).graphics.GraphicsDevice;
+            var graphicsDevice = (Game.ScreenManager.Game as Game).graphics.GraphicsDevice;
             Game.ScreenManager.ReinitializeCamera(graphicsDevice);
             SpriteLibrary.ClearLibrary();
             (Game.ScreenManager.Game as Game).LoadAllSpriteFonts();
@@ -113,7 +109,7 @@ namespace RogueCastle
             {
                 RecreateGraphics();
             }
-            graphicsDevice.SetRenderTarget(screen);
+            graphicsDevice.SetRenderTarget(RenderTarget);
         }
 
         public void EndCapture()
@@ -129,10 +125,11 @@ namespace RogueCastle
                 (Game.PlayerStats.Traits.X == 20f || Game.PlayerStats.Traits.Y == 20f) &&
                 Game.PlayerStats.SpecialItem != 8)
             {
-                spriteBatch.Draw(screen, area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0f);
+                spriteBatch.Draw(RenderTarget, area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.FlipVertically,
+                    0f);
                 return;
             }
-            spriteBatch.Draw(screen, area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            spriteBatch.Draw(RenderTarget, area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
         }
     }
 }

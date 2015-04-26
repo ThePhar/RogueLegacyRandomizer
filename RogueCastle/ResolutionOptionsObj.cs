@@ -17,10 +17,18 @@ namespace RogueCastle
     public class ResolutionOptionsObj : OptionsObj
     {
         private List<Vector2> m_displayModeList;
-        private TextObj m_toggleText;
-        private Vector2 m_selectedResolution;
-        private int m_selectedResIndex;
         private float m_resetCounter;
+        private int m_selectedResIndex;
+        private Vector2 m_selectedResolution;
+        private TextObj m_toggleText;
+
+        public ResolutionOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Resolution")
+        {
+            m_toggleText = (m_nameText.Clone() as TextObj);
+            m_toggleText.X = m_optionsTextOffset;
+            m_toggleText.Text = "null";
+            AddChild(m_toggleText);
+        }
 
         public override bool IsActive
         {
@@ -38,14 +46,6 @@ namespace RogueCastle
             }
         }
 
-        public ResolutionOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Resolution")
-        {
-            m_toggleText = (m_nameText.Clone() as TextObj);
-            m_toggleText.X = m_optionsTextOffset;
-            m_toggleText.Text = "null";
-            AddChild(m_toggleText);
-        }
-
         public override void Initialize()
         {
             m_resetCounter = 0f;
@@ -58,7 +58,7 @@ namespace RogueCastle
             m_displayModeList = (m_parentScreen.ScreenManager.Game as Game).GetSupportedResolutions();
             m_toggleText.Text = m_selectedResolution.X + "x" + m_selectedResolution.Y;
             m_selectedResIndex = 0;
-            for (int i = 0; i < m_displayModeList.Count; i++)
+            for (var i = 0; i < m_displayModeList.Count; i++)
             {
                 if (m_selectedResolution == m_displayModeList[i])
                 {
@@ -70,7 +70,7 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            int selectedResIndex = m_selectedResIndex;
+            var selectedResIndex = m_selectedResIndex;
             if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
             {
                 m_selectedResIndex--;
@@ -97,7 +97,7 @@ namespace RogueCastle
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 SoundManager.PlaySound("Option_Menu_Select");
-                Vector2 vector = m_displayModeList[m_selectedResIndex];
+                var vector = m_displayModeList[m_selectedResIndex];
                 if (m_selectedResolution != vector)
                 {
                     (m_parentScreen.ScreenManager.Game as Game).graphics.PreferredBackBufferWidth = (int) vector.X;
@@ -106,7 +106,7 @@ namespace RogueCastle
                     (m_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
                     if ((m_parentScreen.ScreenManager.Game as Game).graphics.IsFullScreen)
                     {
-                        RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                        var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                         rCScreenManager.DialogueScreen.SetDialogue("Resolution Changed");
                         rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                         rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "SaveResolution", vector);
@@ -135,7 +135,7 @@ namespace RogueCastle
                 m_resetCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_resetCounter <= 0f)
                 {
-                    RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                     rCScreenManager.HideCurrentScreen();
                     CancelResolution();
                 }

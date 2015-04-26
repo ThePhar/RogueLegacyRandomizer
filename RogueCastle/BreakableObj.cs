@@ -18,9 +18,6 @@ namespace RogueCastle
     public class BreakableObj : PhysicsObjContainer
     {
         private bool m_internalIsWeighted;
-        public bool Broken { get; internal set; }
-        public bool DropItem { get; set; }
-        public bool HitBySpellsOnly { get; set; }
 
         public BreakableObj(string spriteName) : base(spriteName, null)
         {
@@ -32,7 +29,7 @@ namespace RogueCastle
             CollidesLeft = false;
             CollidesRight = false;
             CollidesBottom = false;
-            foreach (GameObj current in _objectList)
+            foreach (var current in _objectList)
             {
                 current.Visible = false;
             }
@@ -40,14 +37,18 @@ namespace RogueCastle
             DropItem = true;
         }
 
+        public bool Broken { get; internal set; }
+        public bool DropItem { get; set; }
+        public bool HitBySpellsOnly { get; set; }
+
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+            var playerObj = otherBox.AbsParent as PlayerObj;
             if (playerObj != null && otherBox.Type == 1 && !HitBySpellsOnly && !Broken)
             {
                 Break();
             }
-            ProjectileObj projectileObj = otherBox.AbsParent as ProjectileObj;
+            var projectileObj = otherBox.AbsParent as ProjectileObj;
             if (projectileObj != null && (projectileObj.CollisionTypeTag == 2 || projectileObj.CollisionTypeTag == 10) &&
                 otherBox.Type == 1)
             {
@@ -69,8 +70,8 @@ namespace RogueCastle
 
         public void Break()
         {
-            PlayerObj player = Game.ScreenManager.Player;
-            foreach (GameObj current in _objectList)
+            var player = Game.ScreenManager.Player;
+            foreach (var current in _objectList)
             {
                 current.Visible = true;
             }
@@ -81,7 +82,7 @@ namespace RogueCastle
             IsCollidable = false;
             if (DropItem)
             {
-                bool flag = false;
+                var flag = false;
                 if (Name == "Health")
                 {
                     player.AttachedLevel.ItemDropManager.DropItem(Position, 2, 0.1f);
@@ -94,7 +95,7 @@ namespace RogueCastle
                 }
                 if (flag)
                 {
-                    for (int i = 0; i < NumChildren; i++)
+                    for (var i = 0; i < NumChildren; i++)
                     {
                         Tween.By(GetChildAt(i), 0.3f, Linear.EaseNone, "X", CDGMath.RandomInt(-50, 50).ToString(), "Y",
                             "50", "Rotation", CDGMath.RandomInt(-360, 360).ToString());
@@ -111,9 +112,9 @@ namespace RogueCastle
                     }
                     return;
                 }
-                int num = CDGMath.RandomInt(1, 100);
-                int num2 = 0;
-                int j = 0;
+                var num = CDGMath.RandomInt(1, 100);
+                var num2 = 0;
+                var j = 0;
                 while (j < GameEV.BREAKABLE_ITEMDROP_CHANCE.Length)
                 {
                     num2 += GameEV.BREAKABLE_ITEMDROP_CHANCE[j];
@@ -126,7 +127,7 @@ namespace RogueCastle
                                 player.AttachedLevel.ItemDropManager.DropItem(Position, 2, 0.1f);
                                 break;
                             }
-                            EnemyObj_Chicken enemyObj_Chicken = new EnemyObj_Chicken(null, null, null,
+                            var enemyObj_Chicken = new EnemyObj_Chicken(null, null, null,
                                 GameTypes.EnemyDifficulty.BASIC);
                             enemyObj_Chicken.AccelerationY = -500f;
                             enemyObj_Chicken.Position = Position;
@@ -139,32 +140,26 @@ namespace RogueCastle
                                 "Chicken_Cluck_02", "Chicken_Cluck_03");
                             break;
                         }
-                        else
+                        if (j == 1)
                         {
-                            if (j == 1)
-                            {
-                                player.AttachedLevel.ItemDropManager.DropItem(Position, 3, 0.1f);
-                                break;
-                            }
-                            if (j == 2)
-                            {
-                                player.AttachedLevel.ItemDropManager.DropItem(Position, 1, 10f);
-                                break;
-                            }
-                            if (j == 3)
-                            {
-                                player.AttachedLevel.ItemDropManager.DropItem(Position, 10, 100f);
-                            }
+                            player.AttachedLevel.ItemDropManager.DropItem(Position, 3, 0.1f);
                             break;
                         }
+                        if (j == 2)
+                        {
+                            player.AttachedLevel.ItemDropManager.DropItem(Position, 1, 10f);
+                            break;
+                        }
+                        if (j == 3)
+                        {
+                            player.AttachedLevel.ItemDropManager.DropItem(Position, 10, 100f);
+                        }
+                        break;
                     }
-                    else
-                    {
-                        j++;
-                    }
+                    j++;
                 }
             }
-            for (int k = 0; k < NumChildren; k++)
+            for (var k = 0; k < NumChildren; k++)
             {
                 Tween.By(GetChildAt(k), 0.3f, Linear.EaseNone, "X", CDGMath.RandomInt(-50, 50).ToString(), "Y", "50",
                     "Rotation", CDGMath.RandomInt(-360, 360).ToString());
@@ -183,7 +178,7 @@ namespace RogueCastle
 
         public void ForceBreak()
         {
-            foreach (GameObj current in _objectList)
+            foreach (var current in _objectList)
             {
                 current.Visible = true;
                 current.Opacity = 0f;
@@ -202,12 +197,12 @@ namespace RogueCastle
             IsWeighted = m_internalIsWeighted;
             IsCollidable = true;
             ChangeSprite(_spriteName);
-            for (int i = 0; i < NumChildren; i++)
+            for (var i = 0; i < NumChildren; i++)
             {
                 GetChildAt(i).Opacity = 1f;
                 GetChildAt(i).Rotation = 0f;
             }
-            foreach (GameObj current in _objectList)
+            foreach (var current in _objectList)
             {
                 current.Visible = false;
             }
@@ -216,7 +211,7 @@ namespace RogueCastle
 
         public void UpdateTerrainBox()
         {
-            foreach (CollisionBox current in CollisionBoxes)
+            foreach (var current in CollisionBoxes)
             {
                 if (current.Type == 0)
                 {
@@ -234,7 +229,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            BreakableObj breakableObj = obj as BreakableObj;
+            var breakableObj = obj as BreakableObj;
             breakableObj.HitBySpellsOnly = HitBySpellsOnly;
             breakableObj.DropItem = DropItem;
         }

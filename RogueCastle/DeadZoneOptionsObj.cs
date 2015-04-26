@@ -16,8 +16,20 @@ namespace RogueCastle
 {
     public class DeadZoneOptionsObj : OptionsObj
     {
-        private SpriteObj m_deadZoneBarBG;
         private SpriteObj m_deadZoneBar;
+        private SpriteObj m_deadZoneBarBG;
+
+        public DeadZoneOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Joystick Dead Zone")
+        {
+            m_deadZoneBarBG = new SpriteObj("OptionsScreenVolumeBG_Sprite");
+            m_deadZoneBarBG.X = m_optionsTextOffset;
+            m_deadZoneBarBG.Y = m_deadZoneBarBG.Height/2f - 2f;
+            AddChild(m_deadZoneBarBG);
+            m_deadZoneBar = new SpriteObj("OptionsScreenVolumeBar_Sprite");
+            m_deadZoneBar.X = m_deadZoneBarBG.X + 6f;
+            m_deadZoneBar.Y = m_deadZoneBarBG.Y + 5f;
+            AddChild(m_deadZoneBar);
+        }
 
         public override bool IsActive
         {
@@ -32,18 +44,6 @@ namespace RogueCastle
                 }
                 m_deadZoneBar.TextureColor = Color.White;
             }
-        }
-
-        public DeadZoneOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Joystick Dead Zone")
-        {
-            m_deadZoneBarBG = new SpriteObj("OptionsScreenVolumeBG_Sprite");
-            m_deadZoneBarBG.X = m_optionsTextOffset;
-            m_deadZoneBarBG.Y = m_deadZoneBarBG.Height/2f - 2f;
-            AddChild(m_deadZoneBarBG);
-            m_deadZoneBar = new SpriteObj("OptionsScreenVolumeBar_Sprite");
-            m_deadZoneBar.X = m_deadZoneBarBG.X + 6f;
-            m_deadZoneBar.Y = m_deadZoneBarBG.Y + 5f;
-            AddChild(m_deadZoneBar);
         }
 
         public override void Initialize()

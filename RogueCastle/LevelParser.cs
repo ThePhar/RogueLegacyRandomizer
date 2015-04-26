@@ -25,9 +25,9 @@ namespace RogueCastle
 
         public static void ParseRooms(string filePath, ContentManager contentManager = null, bool isDLCMap = false)
         {
-            CultureInfo cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+            var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
             cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
-            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+            var xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.IgnoreComments = true;
             xmlReaderSettings.IgnoreWhitespace = true;
             XmlReader xmlReader;
@@ -65,7 +65,7 @@ namespace RogueCastle
                     if (xmlReader.Name == "GameObject")
                     {
                         xmlReader.MoveToAttribute("Type");
-                        string value = xmlReader.Value;
+                        var value = xmlReader.Value;
                         GameObj gameObj = null;
                         string key;
                         switch (key = value)
@@ -105,9 +105,9 @@ namespace RogueCastle
                                 if (!bool.Parse(xmlReader.Value))
                                 {
                                     xmlReader.MoveToAttribute("EnemyType");
-                                    byte enemyType = byte.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
+                                    var enemyType = byte.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
                                     xmlReader.MoveToAttribute("Difficulty");
-                                    GameTypes.EnemyDifficulty difficulty =
+                                    var difficulty =
                                         (GameTypes.EnemyDifficulty)
                                             Enum.Parse(typeof (GameTypes.EnemyDifficulty), xmlReader.Value, true);
                                     gameObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, difficulty);
@@ -124,7 +124,7 @@ namespace RogueCastle
                                 else
                                 {
                                     xmlReader.MoveToAttribute("EnemyType");
-                                    string value2 = xmlReader.Value;
+                                    var value2 = xmlReader.Value;
                                     gameObj = new EnemyTagObj();
                                     (gameObj as EnemyTagObj).EnemyType = value2;
                                 }
@@ -132,8 +132,8 @@ namespace RogueCastle
                             case "EnemyOrbObj":
                             {
                                 xmlReader.MoveToAttribute("OrbType");
-                                int orbType = int.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
-                                bool flag = false;
+                                var orbType = int.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
+                                var flag = false;
                                 if (xmlReader.MoveToAttribute("IsWaypoint"))
                                 {
                                     flag = bool.Parse(xmlReader.Value);
@@ -169,7 +169,7 @@ namespace RogueCastle
                             {
                                 xmlReader.MoveToAttribute("SpriteName");
                                 gameObj = new PhysicsObj(xmlReader.Value);
-                                PhysicsObj physicsObj = gameObj as PhysicsObj;
+                                var physicsObj = gameObj as PhysicsObj;
                                 physicsObj.CollisionTypeTag = 5;
                                 physicsObj.CollidesBottom = false;
                                 physicsObj.CollidesLeft = false;
@@ -178,7 +178,7 @@ namespace RogueCastle
                             }
                             case "PhysicsObjContainer":
                             {
-                                bool flag2 = false;
+                                var flag2 = false;
                                 if (xmlReader.MoveToAttribute("Breakable"))
                                 {
                                     flag2 = bool.Parse(xmlReader.Value);
@@ -203,7 +203,7 @@ namespace RogueCastle
                                 break;
                         }
                         ParseGenericXML(xmlReader, gameObj);
-                        GameTypes.LevelType levelType = GameTypes.LevelType.NONE;
+                        var levelType = GameTypes.LevelType.NONE;
                         if (xmlReader.MoveToAttribute("LevelType"))
                         {
                             levelType = (GameTypes.LevelType) int.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
@@ -214,7 +214,7 @@ namespace RogueCastle
                             StoreSwappedObj(gameObj, GameTypes.LevelType.DUNGEON, roomObj3);
                             StoreSwappedObj(gameObj, GameTypes.LevelType.TOWER, roomObj5);
                             StoreSwappedObj(gameObj, GameTypes.LevelType.GARDEN, roomObj4);
-                            SpriteObj spriteObj = gameObj as SpriteObj;
+                            var spriteObj = gameObj as SpriteObj;
                             if (spriteObj != null && spriteObj.SpriteName == "CastleAssetFrame_Sprite")
                             {
                                 spriteObj.ChangeSprite("FramePicture" + CDGMath.RandomInt(1, 16) + "_Sprite");
@@ -254,7 +254,7 @@ namespace RogueCastle
                         }
                         if (gameObj is PlayerStartObj)
                         {
-                            RoomObj expr_65E = roomObj;
+                            var expr_65E = roomObj;
                             expr_65E.Name += "DEBUG_ROOM";
                         }
                     }
@@ -306,10 +306,10 @@ namespace RogueCastle
 
         public static void ParseGenericXML(XmlReader reader, GameObj obj)
         {
-            CultureInfo cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+            var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
             cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
             obj.PopulateFromXMLReader(reader, cultureInfo);
-            bool flag = false;
+            var flag = false;
             if (reader.MoveToAttribute("BGLayer"))
             {
                 flag = bool.Parse(reader.Value);
@@ -318,7 +318,7 @@ namespace RogueCastle
             {
                 obj.Layer = -1f;
             }
-            BreakableObj breakableObj = obj as BreakableObj;
+            var breakableObj = obj as BreakableObj;
             if (breakableObj != null)
             {
                 breakableObj.IsCollidable = true;
@@ -342,26 +342,26 @@ namespace RogueCastle
                 default:
                     throw new Exception("Cannot find asset swaplist for leveltype " + levelType);
             }
-            BreakableObj breakableObj = obj as BreakableObj;
+            var breakableObj = obj as BreakableObj;
             if (breakableObj != null && breakableObj.SpriteName.Contains("CastleAssetUrn"))
             {
                 breakableObj.CollidesTop = false;
             }
-            bool flag = false;
-            IAnimateableObj animateableObj = obj.Clone() as IAnimateableObj;
+            var flag = false;
+            var animateableObj = obj.Clone() as IAnimateableObj;
             if (animateableObj != null)
             {
-                int i = 0;
+                var i = 0;
                 while (i < LevelEV.CASTLE_ASSETSWAP_LIST.Length)
                 {
                     if (animateableObj.SpriteName == LevelEV.CASTLE_ASSETSWAP_LIST[i])
                     {
-                        string text = array[i];
+                        var text = array[i];
                         if (text.Contains("RANDOM"))
                         {
-                            int max = int.Parse(Convert.ToString(text[text.IndexOf("RANDOM") + 6]));
-                            int num = CDGMath.RandomInt(1, max);
-                            text = text.Replace("RANDOM" + max.ToString(), num.ToString());
+                            var max = int.Parse(Convert.ToString(text[text.IndexOf("RANDOM") + 6]));
+                            var num = CDGMath.RandomInt(1, max);
+                            text = text.Replace("RANDOM" + max, num.ToString());
                             if (text.Contains("TowerHole"))
                             {
                                 (animateableObj as GameObj).X += CDGMath.RandomInt(-50, 50);
@@ -401,10 +401,7 @@ namespace RogueCastle
                         }
                         break;
                     }
-                    else
-                    {
-                        i++;
-                    }
+                    i++;
                 }
             }
             if (flag)

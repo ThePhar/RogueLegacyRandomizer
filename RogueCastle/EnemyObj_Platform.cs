@@ -16,10 +16,25 @@ namespace RogueCastle
 {
     public class EnemyObj_Platform : EnemyObj
     {
+        private bool m_blinkedWarning;
         private bool m_isExtended;
         private float m_retractCounter;
-        private bool m_blinkedWarning;
         private float RetractDelay;
+
+        public EnemyObj_Platform(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyPlatform_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            CollisionTypeTag = 1;
+            Type = 27;
+            CollidesBottom = false;
+            CollidesLeft = false;
+            CollidesRight = false;
+            StopAnimation();
+            PlayAnimationOnRestart = false;
+            NonKillable = true;
+            DisableCollisionBoxRotations = false;
+        }
 
         protected override void InitializeEV()
         {
@@ -48,20 +63,20 @@ namespace RogueCastle
                 case GameTypes.EnemyDifficulty.ADVANCED:
                 case GameTypes.EnemyDifficulty.EXPERT:
                 case GameTypes.EnemyDifficulty.MINIBOSS:*/
-                    //IL_DE:
-                    if (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f)
-                    {
-                        m_isExtended = true;
-                        PlayAnimation("EndRetract", "EndRetract");
-                    }
-                    //return;
+            //IL_DE:
+            if (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f)
+            {
+                m_isExtended = true;
+                PlayAnimation("EndRetract", "EndRetract");
+            }
+            //return;
             //}
             //goto IL_DE;
         }
 
         public override void Update(GameTime gameTime)
         {
-            bool flag = (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f);
+            var flag = (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f);
             if (!flag)
             {
                 if (m_retractCounter > 0f)
@@ -70,8 +85,8 @@ namespace RogueCastle
                     if (m_retractCounter <= 1.5f && !m_blinkedWarning)
                     {
                         m_blinkedWarning = true;
-                        float num = 0f;
-                        for (int i = 0; i < 10; i++)
+                        var num = 0f;
+                        for (var i = 0; i < 10; i++)
                         {
                             Tween.RunFunction(num, this, "Blink", Color.Red, 0.05f);
                             num += 0.1f;
@@ -141,21 +156,6 @@ namespace RogueCastle
             m_retractCounter = 0f;
             base.Reset();
             StopAnimation();
-        }
-
-        public EnemyObj_Platform(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyPlatform_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            CollisionTypeTag = 1;
-            Type = 27;
-            CollidesBottom = false;
-            CollidesLeft = false;
-            CollidesRight = false;
-            StopAnimation();
-            PlayAnimationOnRestart = false;
-            NonKillable = true;
-            DisableCollisionBoxRotations = false;
         }
     }
 }

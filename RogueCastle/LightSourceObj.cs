@@ -14,8 +14,8 @@ namespace RogueCastle
 {
     public class LightSourceObj : SpriteObj
     {
-        private float m_growthRate;
         private float m_growthDifference;
+        private float m_growthRate;
 
         public LightSourceObj() : base("LightSource_Sprite")
         {

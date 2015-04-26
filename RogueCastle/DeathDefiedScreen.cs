@@ -19,13 +19,13 @@ namespace RogueCastle
 {
     public class DeathDefiedScreen : Screen
     {
-        private PlayerObj m_player;
-        private SpriteObj m_spotlight;
-        private SpriteObj m_titlePlate;
-        private SpriteObj m_title;
         private Vector2 m_cameraPos;
+        private PlayerObj m_player;
         private string m_songName;
+        private SpriteObj m_spotlight;
         private float m_storedMusicVolume;
+        private SpriteObj m_title;
+        private SpriteObj m_titlePlate;
         public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()

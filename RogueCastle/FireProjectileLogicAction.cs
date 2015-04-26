@@ -14,8 +14,8 @@ namespace RogueCastle
 {
     public class FireProjectileLogicAction : LogicAction
     {
-        private ProjectileManager m_projectileManager;
         private ProjectileData m_data;
+        private ProjectileManager m_projectileManager;
 
         public FireProjectileLogicAction(ProjectileManager projectileManager, ProjectileData data)
         {
@@ -27,7 +27,7 @@ namespace RogueCastle
         {
             if (ParentLogicSet != null && ParentLogicSet.IsActive)
             {
-                GameObj arg_20_0 = ParentLogicSet.ParentGameObj;
+                var arg_20_0 = ParentLogicSet.ParentGameObj;
                 m_projectileManager.FireProjectile(m_data);
                 base.Execute();
             }

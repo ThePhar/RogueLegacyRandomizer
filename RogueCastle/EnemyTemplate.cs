@@ -14,6 +14,12 @@ namespace RogueCastle
 {
     public class EnemyTemplate : EnemyObj
     {
+        public EnemyTemplate(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySpriteNameGoesHere", target, physicsManager, levelToAttachTo, difficulty)
+        {
+        }
+
         protected override void InitializeEV()
         {
             switch (Difficulty)
@@ -77,12 +83,6 @@ namespace RogueCastle
                 case 3:
                     return;
             }
-        }
-
-        public EnemyTemplate(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySpriteNameGoesHere", target, physicsManager, levelToAttachTo, difficulty)
-        {
         }
     }
 }

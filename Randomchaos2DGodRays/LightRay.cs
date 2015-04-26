@@ -15,11 +15,11 @@ namespace Randomchaos2DGodRays
 {
     public class LightRay : BasePostProcess
     {
-        public Vector2 lighScreenSourcePos;
-        public float Density = 0.5f;
         public float Decay = 0.95f;
-        public float Weight = 1f;
+        public float Density = 0.5f;
         public float Exposure = 0.15f;
+        public Vector2 lighScreenSourcePos;
+        public float Weight = 1f;
 
         public LightRay(Game game, Vector2 sourcePos, float density, float decay, float weight, float exposure)
             : base(game)

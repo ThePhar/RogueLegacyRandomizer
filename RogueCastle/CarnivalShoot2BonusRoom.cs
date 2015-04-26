@@ -20,28 +20,38 @@ namespace RogueCastle
 {
     public class CarnivalShoot2BonusRoom : BonusRoomObj
     {
-        private int m_numTries = 5;
-        private Rectangle m_targetBounds;
-        private byte m_storedPlayerSpell;
-        private float m_storedPlayerMana;
-        private bool m_isPlayingGame;
-        private int m_axesThrown;
-        private List<BreakableObj> m_targetList;
+        private readonly int m_numTries = 5;
         private ObjContainer m_axeIcons;
+        private int m_axesThrown;
+        private List<ObjContainer> m_balloonList;
         private NpcObj m_elf;
         private PhysicsObj m_gate;
         private bool m_gateClosed;
-        private List<TextObj> m_targetDataText;
-        private List<TextObj> m_targetText;
-        private List<ObjContainer> m_balloonList;
+        private bool m_isPlayingGame;
         private ChestObj m_rewardChest;
+        private float m_storedPlayerMana;
+        private byte m_storedPlayerSpell;
+        private Rectangle m_targetBounds;
+        private List<TextObj> m_targetDataText;
+        private List<BreakableObj> m_targetList;
+        private List<TextObj> m_targetText;
+
+        public CarnivalShoot2BonusRoom()
+        {
+            m_targetList = new List<BreakableObj>();
+            m_elf = new NpcObj("Clown_Character");
+            m_elf.Scale = new Vector2(2f, 2f);
+            m_targetText = new List<TextObj>();
+            m_targetDataText = new List<TextObj>();
+            m_balloonList = new List<ObjContainer>();
+        }
 
         public int TargetsDestroyed
         {
             get
             {
-                int num = 0;
-                foreach (BreakableObj current in m_targetList)
+                var num = 0;
+                foreach (var current in m_targetList)
                 {
                     if (current.Broken)
                     {
@@ -56,8 +66,8 @@ namespace RogueCastle
         {
             get
             {
-                int num = 0;
-                foreach (BreakableObj current in m_targetList)
+                var num = 0;
+                foreach (var current in m_targetList)
                 {
                     if (!current.Broken)
                     {
@@ -68,19 +78,9 @@ namespace RogueCastle
             }
         }
 
-        public CarnivalShoot2BonusRoom()
-        {
-            m_targetList = new List<BreakableObj>();
-            m_elf = new NpcObj("Clown_Character");
-            m_elf.Scale = new Vector2(2f, 2f);
-            m_targetText = new List<TextObj>();
-            m_targetDataText = new List<TextObj>();
-            m_balloonList = new List<ObjContainer>();
-        }
-
         public override void LoadContent(GraphicsDevice graphics)
         {
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 25f;
             textObj.Text = "test text";
             textObj.DropShadow = new Vector2(2f, 2f);
@@ -92,22 +92,22 @@ namespace RogueCastle
             {
                 textObj.Position = new Vector2(Bounds.Left + 300, Bounds.Top + 200);
             }
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
-                TextObj textObj2 = textObj.Clone() as TextObj;
+                var textObj2 = textObj.Clone() as TextObj;
                 textObj2.Y += i*100;
                 m_targetText.Add(textObj2);
-                TextObj textObj3 = textObj.Clone() as TextObj;
+                var textObj3 = textObj.Clone() as TextObj;
                 textObj3.Y += i*100;
                 textObj3.X = textObj2.X + 500f;
                 m_targetDataText.Add(textObj3);
             }
             m_axeIcons = new ObjContainer();
-            int num = 0;
-            int num2 = 10;
-            for (int j = 0; j < m_numTries; j++)
+            var num = 0;
+            var num2 = 10;
+            for (var j = 0; j < m_numTries; j++)
             {
-                SpriteObj spriteObj = new SpriteObj("SpellAxe_Sprite");
+                var spriteObj = new SpriteObj("SpellAxe_Sprite");
                 spriteObj.Scale = new Vector2(2f, 2f);
                 spriteObj.X = num + 10;
                 spriteObj.Y = num2;
@@ -128,8 +128,8 @@ namespace RogueCastle
             m_gate.Layer = -1f;
             m_gate.OutlineWidth = 2;
             GameObjList.Add(m_gate);
-            Rectangle rectangle = default(Rectangle);
-            Color[] array = new[]
+            var rectangle = default(Rectangle);
+            Color[] array =
             {
                 Color.Red,
                 Color.Blue,
@@ -141,7 +141,7 @@ namespace RogueCastle
                 Color.MediumTurquoise,
                 Color.CornflowerBlue
             };
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current is WaypointObj)
                 {
@@ -153,7 +153,7 @@ namespace RogueCastle
                     (current as ObjContainer).GetChildAt(1).TextureColor = array[CDGMath.RandomInt(0, array.Length - 1)];
                 }
             }
-            foreach (TerrainObj current2 in TerrainObjList)
+            foreach (var current2 in TerrainObjList)
             {
                 if (current2.Name == "Floor")
                 {
@@ -171,7 +171,7 @@ namespace RogueCastle
                 m_elf.Flip = SpriteEffects.FlipHorizontally;
             }
             GameObjList.Add(m_elf);
-            foreach (TerrainObj current3 in TerrainObjList)
+            foreach (var current3 in TerrainObjList)
             {
                 if (current3.Name == "Boundary")
                 {
@@ -180,15 +180,15 @@ namespace RogueCastle
                     break;
                 }
             }
-            float num = 10f;
+            var num = 10f;
             float num2 = m_targetBounds.X + 40;
             float num3 = m_targetBounds.Y;
-            float num4 = m_targetBounds.Width/num;
-            float num5 = m_targetBounds.Height/num;
-            int num6 = 0;
+            var num4 = m_targetBounds.Width/num;
+            var num5 = m_targetBounds.Height/num;
+            var num6 = 0;
             while (num6 < num*num)
             {
-                BreakableObj breakableObj = new BreakableObj("Target2_Character");
+                var breakableObj = new BreakableObj("Target2_Character");
                 breakableObj.X = num2;
                 breakableObj.Y = num3;
                 breakableObj.Scale = new Vector2(1.6f, 1.6f);
@@ -240,12 +240,12 @@ namespace RogueCastle
             m_targetDataText[0].Text = "50";
             m_targetDataText[1].Text = "10";
             m_targetDataText[2].Text = "100 gold";
-            for (int i = 0; i < m_targetText.Count; i++)
+            for (var i = 0; i < m_targetText.Count; i++)
             {
                 m_targetText[i].Opacity = 0f;
                 m_targetDataText[i].Opacity = 0f;
             }
-            foreach (BreakableObj current in m_targetList)
+            foreach (var current in m_targetList)
             {
                 current.Opacity = 0f;
                 current.Visible = false;
@@ -259,9 +259,9 @@ namespace RogueCastle
 
         private void ReflipPosters()
         {
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
-                SpriteObj spriteObj = current as SpriteObj;
+                var spriteObj = current as SpriteObj;
                 if (spriteObj != null && spriteObj.Flip == SpriteEffects.FlipHorizontally &&
                     (spriteObj.SpriteName == "CarnivalPoster1_Sprite" ||
                      spriteObj.SpriteName == "CarnivalPoster2_Sprite" ||
@@ -288,8 +288,8 @@ namespace RogueCastle
             Tween.By(m_gate, 0.5f, Quad.EaseInOut, "Y", (-m_gate.Height).ToString());
             m_isPlayingGame = true;
             EquipPlayer();
-            float num = 0f;
-            foreach (BreakableObj current in m_targetList)
+            var num = 0f;
+            foreach (var current in m_targetList)
             {
                 current.Visible = true;
                 Tween.To(current, 0.5f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "1");
@@ -301,7 +301,7 @@ namespace RogueCastle
         {
             Player.LockControls();
             Player.CurrentSpeed = 0f;
-            foreach (BreakableObj current in m_targetList)
+            foreach (var current in m_targetList)
             {
                 Tween.To(current, 0.5f, Tween.EaseNone, "Opacity", "0");
             }
@@ -313,10 +313,10 @@ namespace RogueCastle
         {
             m_targetDataText[0].Text = TargetsDestroyed.ToString();
             m_targetDataText[1].Text = TargetsRemaining.ToString();
-            int num = (int) (TargetsDestroyed/2f)*10;
+            var num = (int) (TargetsDestroyed/2f)*10;
             m_targetDataText[2].Text = num + " gold";
-            float num2 = 0f;
-            for (int i = 0; i < m_targetDataText.Count; i++)
+            var num2 = 0f;
+            for (var i = 0; i < m_targetDataText.Count; i++)
             {
                 Tween.To(m_targetText[i], 0.5f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "1");
                 Tween.To(m_targetDataText[i], 0.5f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "1");
@@ -349,14 +349,14 @@ namespace RogueCastle
         {
             if (TargetsRemaining <= 10)
             {
-                RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                 rCScreenManager.DialogueScreen.SetDialogue("CarnivalRoom2-Reward");
                 (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
                 RevealChest();
                 GameUtil.UnlockAchievement("LOVE_OF_CLOWNS");
                 return;
             }
-            RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
+            var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
             rCScreenManager2.DialogueScreen.SetDialogue("CarnivalRoom2-Fail");
             (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
         }
@@ -429,7 +429,7 @@ namespace RogueCastle
             {
                 if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                 {
-                    RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                    var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("CarnivalRoom2-Start");
                     rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                     rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "BeginGame");
@@ -441,7 +441,7 @@ namespace RogueCastle
             else if (m_elf.IsTouching && RoomCompleted &&
                      (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
             {
-                RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
                 rCScreenManager2.DialogueScreen.SetDialogue("CarnivalRoom1-End");
                 (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
             }
@@ -453,9 +453,9 @@ namespace RogueCastle
             {
                 Player.X = Bounds.Right - 10;
             }
-            float totalGameTime = Game.TotalGameTime;
-            float num = 2f;
-            foreach (ObjContainer current in m_balloonList)
+            var totalGameTime = Game.TotalGameTime;
+            var num = 2f;
+            foreach (var current in m_balloonList)
             {
                 current.Rotation = (float) Math.Sin(totalGameTime*num)*num;
                 num += 0.2f;
@@ -487,7 +487,7 @@ namespace RogueCastle
         {
             base.Draw(camera);
             camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-            for (int i = 0; i < m_targetText.Count; i++)
+            for (var i = 0; i < m_targetText.Count; i++)
             {
                 m_targetText[i].Draw(camera);
                 m_targetDataText[i].Draw(camera);
@@ -504,7 +504,7 @@ namespace RogueCastle
                 m_elf = null;
                 m_axeIcons = null;
                 m_gate = null;
-                for (int i = 0; i < m_targetText.Count; i++)
+                for (var i = 0; i < m_targetText.Count; i++)
                 {
                     m_targetText[i].Dispose();
                     m_targetDataText[i].Dispose();

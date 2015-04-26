@@ -19,9 +19,9 @@ namespace RogueCastle
 {
     public class SpellSwapRoomObj : BonusRoomObj
     {
-        private SpriteObj m_pedestal;
         private SpriteObj m_icon;
         private float m_iconYPos;
+        private SpriteObj m_pedestal;
         private SpriteObj m_speechBubble;
         public byte Spell { get; set; }
 
@@ -30,7 +30,7 @@ namespace RogueCastle
             m_speechBubble = new SpriteObj("UpArrowSquare_Sprite");
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             m_icon = new SpriteObj("Blank_Sprite");
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "pedestal")
                 {
@@ -55,7 +55,7 @@ namespace RogueCastle
         {
             if (Game.PlayerStats.Class != 16 && Game.PlayerStats.Class != 17)
             {
-                byte[] spellList = ClassType.GetSpellList(Game.PlayerStats.Class);
+                var spellList = ClassType.GetSpellList(Game.PlayerStats.Class);
                 do
                 {
                     Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
@@ -150,7 +150,7 @@ namespace RogueCastle
             m_speechBubble.Visible = false;
             m_icon.Visible = false;
             (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerSpellIcon();
-            List<object> list = new List<object>();
+            var list = new List<object>();
             list.Add(new Vector2(m_icon.X, m_icon.Y - m_icon.Height/2f));
             list.Add(4);
             list.Add(new Vector2(Game.PlayerStats.Spell, 0f));

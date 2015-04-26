@@ -15,8 +15,8 @@ namespace RogueCastle
 {
     public class LockFaceDirectionLogicAction : LogicAction
     {
-        private int m_forceDirection;
-        private bool m_lockFace;
+        private readonly int m_forceDirection;
+        private readonly bool m_lockFace;
 
         public LockFaceDirectionLogicAction(bool lockFace, int forceDirection = 0)
         {
@@ -28,7 +28,7 @@ namespace RogueCastle
         {
             if (ParentLogicSet != null && ParentLogicSet.IsActive)
             {
-                CharacterObj characterObj = ParentLogicSet.ParentGameObj as CharacterObj;
+                var characterObj = ParentLogicSet.ParentGameObj as CharacterObj;
                 if (characterObj != null)
                 {
                     characterObj.LockFlip = m_lockFace;

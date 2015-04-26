@@ -22,7 +22,7 @@ namespace RogueCastle
 
         public static void SetConditionState(FairyChestObj chest, PlayerObj player)
         {
-            int num = 100;
+            var num = 100;
             switch (chest.ConditionType)
             {
                 case 0:
@@ -43,7 +43,7 @@ namespace RogueCastle
                     break;
                 case 3:
                 {
-                    SpriteEffects spriteEffects = SpriteEffects.None;
+                    var spriteEffects = SpriteEffects.None;
                     if (chest.AbsPosition.X < player.AbsPosition.X)
                     {
                         spriteEffects = SpriteEffects.FlipHorizontally;
@@ -85,7 +85,7 @@ namespace RogueCastle
                     }
                     break;
                 case 7:
-                    foreach (EnemyObj current in player.AttachedLevel.CurrentRoom.EnemyList)
+                    foreach (var current in player.AttachedLevel.CurrentRoom.EnemyList)
                     {
                         if (current.CurrentHealth < current.MaxHealth)
                         {

@@ -17,23 +17,22 @@ namespace RogueCastle
 {
     public class PlayerHUDObj : SpriteObj
     {
-        private int m_maxBarLength = 360;
-        private TextObj m_playerLevelText;
+        private readonly int m_maxBarLength = 360;
+        private SpriteObj[] m_abilitiesSpriteArray;
         private SpriteObj m_coin;
         private TextObj m_goldText;
         private SpriteObj m_hpBar;
-        private TextObj m_hpText;
-        private SpriteObj m_mpBar;
-        private TextObj m_mpText;
-        private SpriteObj[] m_abilitiesSpriteArray;
         private ObjContainer m_hpBarContainer;
-        private ObjContainer m_mpBarContainer;
-        private SpriteObj m_specialItemIcon;
-        private SpriteObj m_spellIcon;
-        private TextObj m_spellCost;
+        private TextObj m_hpText;
         private SpriteObj m_iconHolder1;
         private SpriteObj m_iconHolder2;
-        public bool ShowBarsOnly { get; set; }
+        private SpriteObj m_mpBar;
+        private ObjContainer m_mpBarContainer;
+        private TextObj m_mpText;
+        private TextObj m_playerLevelText;
+        private SpriteObj m_specialItemIcon;
+        private TextObj m_spellCost;
+        private SpriteObj m_spellIcon;
 
         public PlayerHUDObj() : base("PlayerHUDLvlText_Sprite")
         {
@@ -60,9 +59,9 @@ namespace RogueCastle
             m_mpText.DropShadow = new Vector2(1f, 1f);
             m_mpText.ForceDraw = true;
             m_abilitiesSpriteArray = new SpriteObj[5];
-            Vector2 position = new Vector2(130f, 690f);
-            int num = 35;
-            for (int i = 0; i < m_abilitiesSpriteArray.Length; i++)
+            var position = new Vector2(130f, 690f);
+            var num = 35;
+            for (var i = 0; i < m_abilitiesSpriteArray.Length; i++)
             {
                 m_abilitiesSpriteArray[i] = new SpriteObj("Blank_Sprite");
                 m_abilitiesSpriteArray[i].ForceDraw = true;
@@ -97,6 +96,8 @@ namespace RogueCastle
             UpdateSpecialItemIcon();
             UpdateSpellIcon();
         }
+
+        public bool ShowBarsOnly { get; set; }
 
         public void SetPosition(Vector2 position)
         {
@@ -166,13 +167,13 @@ namespace RogueCastle
 
         public void Update(PlayerObj player)
         {
-            int num = Game.PlayerStats.CurrentLevel;
+            var num = Game.PlayerStats.CurrentLevel;
             if (num < 0)
             {
                 num = 0;
             }
             m_playerLevelText.Text = num.ToString();
-            int num2 = Game.PlayerStats.Gold;
+            var num2 = Game.PlayerStats.Gold;
             if (num2 < 0)
             {
                 num2 = 0;
@@ -186,14 +187,14 @@ namespace RogueCastle
 
         private void UpdatePlayerHP(PlayerObj player)
         {
-            int num = player.MaxHealth - player.BaseHealth;
-            float num2 = player.CurrentHealth/(float) player.MaxHealth;
-            int num3 = (int) (88f + num/5f);
+            var num = player.MaxHealth - player.BaseHealth;
+            var num2 = player.CurrentHealth/(float) player.MaxHealth;
+            var num3 = (int) (88f + num/5f);
             if (num3 > m_maxBarLength)
             {
                 num3 = m_maxBarLength;
             }
-            float scaleX = (num3 - 28 - 28)/32f;
+            var scaleX = (num3 - 28 - 28)/32f;
             m_hpBarContainer.GetChildAt(1).ScaleX = scaleX;
             m_hpBarContainer.GetChildAt(2).X = m_hpBarContainer.GetChildAt(1).Bounds.Right;
             m_hpBarContainer.CalculateBounds();
@@ -203,14 +204,14 @@ namespace RogueCastle
 
         private void UpdatePlayerMP(PlayerObj player)
         {
-            int num = (int) (player.MaxMana - player.BaseMana);
-            float num2 = player.CurrentMana/player.MaxMana;
-            int num3 = (int) (88f + num/5f);
+            var num = (int) (player.MaxMana - player.BaseMana);
+            var num2 = player.CurrentMana/player.MaxMana;
+            var num3 = (int) (88f + num/5f);
             if (num3 > m_maxBarLength)
             {
                 num3 = m_maxBarLength;
             }
-            float scaleX = (num3 - 28 - 28)/32f;
+            var scaleX = (num3 - 28 - 28)/32f;
             m_mpBarContainer.GetChildAt(1).ScaleX = scaleX;
             m_mpBarContainer.GetChildAt(2).X = m_mpBarContainer.GetChildAt(1).Bounds.Right;
             m_mpBarContainer.CalculateBounds();
@@ -225,17 +226,17 @@ namespace RogueCastle
 
         public void UpdateAbilityIcons()
         {
-            SpriteObj[] abilitiesSpriteArray = m_abilitiesSpriteArray;
-            for (int i = 0; i < abilitiesSpriteArray.Length; i++)
+            var abilitiesSpriteArray = m_abilitiesSpriteArray;
+            for (var i = 0; i < abilitiesSpriteArray.Length; i++)
             {
-                SpriteObj spriteObj = abilitiesSpriteArray[i];
+                var spriteObj = abilitiesSpriteArray[i];
                 spriteObj.ChangeSprite("Blank_Sprite");
             }
-            int num = 0;
-            sbyte[] getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
-            for (int j = 0; j < getEquippedRuneArray.Length; j++)
+            var num = 0;
+            var getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
+            for (var j = 0; j < getEquippedRuneArray.Length; j++)
             {
-                sbyte b = getEquippedRuneArray[j];
+                var b = getEquippedRuneArray[j];
                 if (b != -1)
                 {
                     m_abilitiesSpriteArray[num].ChangeSprite(EquipmentAbilityType.Icon(b));
@@ -285,10 +286,10 @@ namespace RogueCastle
                     m_playerLevelText.Draw(camera);
                     m_goldText.Draw(camera);
                     camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-                    SpriteObj[] abilitiesSpriteArray = m_abilitiesSpriteArray;
-                    for (int i = 0; i < abilitiesSpriteArray.Length; i++)
+                    var abilitiesSpriteArray = m_abilitiesSpriteArray;
+                    for (var i = 0; i < abilitiesSpriteArray.Length; i++)
                     {
-                        SpriteObj spriteObj = abilitiesSpriteArray[i];
+                        var spriteObj = abilitiesSpriteArray[i];
                         spriteObj.Draw(camera);
                     }
                     m_iconHolder1.Draw(camera);
@@ -314,10 +315,10 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                SpriteObj[] abilitiesSpriteArray = m_abilitiesSpriteArray;
-                for (int i = 0; i < abilitiesSpriteArray.Length; i++)
+                var abilitiesSpriteArray = m_abilitiesSpriteArray;
+                for (var i = 0; i < abilitiesSpriteArray.Length; i++)
                 {
-                    SpriteObj spriteObj = abilitiesSpriteArray[i];
+                    var spriteObj = abilitiesSpriteArray[i];
                     spriteObj.Dispose();
                 }
                 Array.Clear(m_abilitiesSpriteArray, 0, m_abilitiesSpriteArray.Length);

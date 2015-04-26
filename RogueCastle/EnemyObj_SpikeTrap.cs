@@ -15,9 +15,19 @@ namespace RogueCastle
 {
     public class EnemyObj_SpikeTrap : EnemyObj
     {
-        private LogicSet m_extractLS;
-        private float ExtractDelay;
         private Rectangle DetectionRect;
+        private float ExtractDelay;
+        private LogicSet m_extractLS;
+
+        public EnemyObj_SpikeTrap(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySpikeTrap_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 21;
+            StopAnimation();
+            PlayAnimationOnRestart = false;
+            NonKillable = true;
+        }
 
         private Rectangle AbsDetectionRect
         {
@@ -56,9 +66,9 @@ namespace RogueCastle
                 case GameTypes.EnemyDifficulty.ADVANCED:
                 case GameTypes.EnemyDifficulty.EXPERT:
                 case GameTypes.EnemyDifficulty.MINIBOSS:*/
-                    //IL_F5:
-                    IsCollidable = false;
-                    //return;
+            //IL_F5:
+            IsCollidable = false;
+            //return;
             //}
             //goto IL_F5;
         }
@@ -148,16 +158,6 @@ namespace RogueCastle
                 }
             }
             base.Update(gameTime);
-        }
-
-        public EnemyObj_SpikeTrap(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySpikeTrap_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 21;
-            StopAnimation();
-            PlayAnimationOnRestart = false;
-            NonKillable = true;
         }
 
         public override void Reset()

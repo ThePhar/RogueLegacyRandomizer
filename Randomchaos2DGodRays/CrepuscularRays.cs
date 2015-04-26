@@ -18,6 +18,15 @@ namespace Randomchaos2DGodRays
         public LightSourceMask lsMask;
         public LightRay rays;
 
+        public CrepuscularRays(Game game, Vector2 lightScreenSourcePos, string lightSourceImage, float lightSourceSize,
+            float density, float decay, float weight, float exposure) : base(game)
+        {
+            lsMask = new LightSourceMask(game, lightScreenSourcePos, lightSourceImage, lightSourceSize);
+            rays = new LightRay(game, lightScreenSourcePos, density, decay, weight, exposure);
+            AddPostProcess(lsMask);
+            AddPostProcess(rays);
+        }
+
         public Vector2 lightSource
         {
             get { return rays.lighScreenSourcePos; }
@@ -82,15 +91,6 @@ namespace Randomchaos2DGodRays
         {
             get { return rays.Exposure; }
             set { rays.Exposure = value; }
-        }
-
-        public CrepuscularRays(Game game, Vector2 lightScreenSourcePos, string lightSourceImage, float lightSourceSize,
-            float density, float decay, float weight, float exposure) : base(game)
-        {
-            lsMask = new LightSourceMask(game, lightScreenSourcePos, lightSourceImage, lightSourceSize);
-            rays = new LightRay(game, lightScreenSourcePos, density, decay, weight, exposure);
-            AddPostProcess(lsMask);
-            AddPostProcess(rays);
         }
     }
 }

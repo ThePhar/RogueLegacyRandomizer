@@ -14,6 +14,10 @@ namespace RogueCastle
 {
     public class DeleteSaveOptionsObj : OptionsObj
     {
+        public DeleteSaveOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Delete Save")
+        {
+        }
+
         public override bool IsActive
         {
             get { return base.IsActive; }
@@ -22,7 +26,7 @@ namespace RogueCastle
                 base.IsActive = value;
                 if (IsActive)
                 {
-                    RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("Delete Save");
                     rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                     rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSaveAskAgain");
@@ -32,10 +36,6 @@ namespace RogueCastle
             }
         }
 
-        public DeleteSaveOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Delete Save")
-        {
-        }
-
         public void CancelCommand()
         {
             IsActive = false;
@@ -43,7 +43,7 @@ namespace RogueCastle
 
         public void DeleteSaveAskAgain()
         {
-            RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+            var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("Delete Save2");
             rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "DeleteSave");

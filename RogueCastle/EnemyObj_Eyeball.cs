@@ -20,25 +20,37 @@ namespace RogueCastle
 {
     public class EnemyObj_Eyeball : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private LogicBlock m_generalNeoLB = new LogicBlock();
-        private SpriteObj m_pupil;
-        private FrameSoundObj m_squishSound;
-        private bool m_shake;
-        private bool m_shookLeft;
-        private float FireballDelay = 0.5f;
-        private float m_shakeTimer;
-        private float m_shakeDuration = 0.03f;
-        private int m_bossCoins = 30;
-        private int m_bossMoneyBags = 7;
-        private int m_bossDiamonds = 1;
+        private readonly float FireballDelay = 0.5f;
+        private readonly int m_bossCoins = 30;
+        private readonly int m_bossDiamonds = 1;
+        private readonly int m_bossMoneyBags = 7;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+        private readonly LogicBlock m_generalNeoLB = new LogicBlock();
+        private readonly float m_shakeDuration = 0.03f;
         private Cue m_deathLoop;
-        private bool m_playDeathLoop;
         private bool m_isNeo;
+        private bool m_playDeathLoop;
+        private SpriteObj m_pupil;
+        private bool m_shake;
+        private float m_shakeTimer;
+        private bool m_shookLeft;
+        private FrameSoundObj m_squishSound;
+
+        public EnemyObj_Eyeball(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyEyeballIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            m_pupil = new SpriteObj("EnemyEyeballPupil_Sprite");
+            AddChild(m_pupil);
+            m_squishSound = new FrameSoundObj(this, m_target, 2, "Eyeball_Prefire");
+            Type = 6;
+            DisableCollisionBoxRotations = false;
+        }
+
         public int PupilOffset { get; set; }
 
         public bool BossVersionKilled
@@ -188,7 +200,7 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EyeballProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -201,7 +213,7 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
             logicSet.AddAction(new DelayLogicAction(FireballDelay));
             logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Eyeball_ProjectileAttack"));
@@ -209,7 +221,7 @@ namespace RogueCastle
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
             logicSet.AddAction(new DelayLogicAction(1f, 3f));
             logicSet.Tag = 2;
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
             logicSet2.AddAction(new DelayLogicAction(FireballDelay));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
@@ -223,7 +235,7 @@ namespace RogueCastle
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
             logicSet2.AddAction(new DelayLogicAction(0.75f, 2f));
             logicSet2.Tag = 2;
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
             logicSet3.AddAction(new DelayLogicAction(FireballDelay));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
@@ -232,7 +244,7 @@ namespace RogueCastle
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
             logicSet3.AddAction(new DelayLogicAction(1f, 3f));
             logicSet3.Tag = 2;
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet4.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
             logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
@@ -245,7 +257,7 @@ namespace RogueCastle
             logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
             logicSet4.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet5.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
             logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
@@ -258,7 +270,7 @@ namespace RogueCastle
             logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
             logicSet5.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet6.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
             logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
@@ -273,7 +285,7 @@ namespace RogueCastle
             logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
             logicSet6.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
             logicSet6.Tag = 2;
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet7.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
             logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
@@ -294,7 +306,7 @@ namespace RogueCastle
             logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupil_Sprite"));
             logicSet7.AddAction(new RunFunctionLogicAction(this, "UnlockEyeball"));
             logicSet7.Tag = 2;
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new DelayLogicAction(0.2f, 0.5f));
             m_generalBasicLB.AddLogicSet(logicSet, logicSet8);
             m_generalAdvancedLB.AddLogicSet(logicSet2, logicSet8);
@@ -315,7 +327,7 @@ namespace RogueCastle
 
         private void ThrowThreeProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EyeballProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -329,7 +341,7 @@ namespace RogueCastle
                 Scale = ProjectileScale,
                 Angle = new Vector2(0f, 0f)
             };
-            for (int i = 0; i <= 3; i++)
+            for (var i = 0; i <= 3; i++)
             {
                 projectileData.AngleOffset = 0f;
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
@@ -344,7 +356,7 @@ namespace RogueCastle
 
         private void ThrowCardinalProjectiles(LogicSet ls)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EyeballProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -358,8 +370,8 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Angle = new Vector2(0f, 0f)
             };
-            int num = CDGMath.RandomPlusMinus();
-            for (int i = 0; i <= 170; i += 10)
+            var num = CDGMath.RandomPlusMinus();
+            for (var i = 0; i <= 170; i += 10)
             {
                 projectileData.AngleOffset = i*num;
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
@@ -378,7 +390,7 @@ namespace RogueCastle
         {
             if (startProjIndex < 17)
             {
-                ProjectileData projectileData = new ProjectileData(this)
+                var projectileData = new ProjectileData(this)
                 {
                     SpriteName = "EyeballProjectile_Sprite",
                     SourceAnchor = Vector2.Zero,
@@ -414,7 +426,7 @@ namespace RogueCastle
         {
             if (startProjIndex < 13)
             {
-                ProjectileData projectileData = new ProjectileData(this)
+                var projectileData = new ProjectileData(this)
                 {
                     SpriteName = "EyeballProjectile_Sprite",
                     SourceAnchor = Vector2.Zero,
@@ -464,7 +476,7 @@ namespace RogueCastle
 
         public void ThrowSprayProjectiles(bool firstShot)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EyeballProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -478,8 +490,8 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            int num = 30;
-            for (int i = 0; i <= 360; i += num)
+            var num = 30;
+            for (var i = 0; i <= 360; i += num)
             {
                 if (firstShot)
                 {
@@ -500,7 +512,7 @@ namespace RogueCastle
 
         public void ThrowRandomProjectiles()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "EyeballProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -544,9 +556,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalBasicLB;
-                    int[] array = new int[2];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalBasicLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -567,9 +579,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalAdvancedLB;
-                    int[] array = new int[2];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalAdvancedLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -590,9 +602,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalExpertLB;
-                    int[] array = new int[2];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalExpertLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -613,18 +625,18 @@ namespace RogueCastle
                 {
                     if (!IsNeo)
                     {
-                        bool arg_45_1 = true;
-                        LogicBlock arg_45_2 = m_generalMiniBossLB;
-                        int[] array = new int[4];
+                        var arg_45_1 = true;
+                        var arg_45_2 = m_generalMiniBossLB;
+                        var array = new int[4];
                         array[0] = 40;
                         array[1] = 20;
                         array[2] = 40;
                         RunLogicBlock(arg_45_1, arg_45_2, array);
                         return;
                     }
-                    bool arg_6A_1 = false;
-                    LogicBlock arg_6A_2 = m_generalNeoLB;
-                    int[] array2 = new int[4];
+                    var arg_6A_1 = false;
+                    var arg_6A_2 = m_generalNeoLB;
+                    var array2 = new int[4];
                     array2[0] = 53;
                     array2[1] = 12;
                     array2[2] = 35;
@@ -636,26 +648,15 @@ namespace RogueCastle
             }
         }
 
-        public EnemyObj_Eyeball(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyEyeballIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            m_pupil = new SpriteObj("EnemyEyeballPupil_Sprite");
-            AddChild(m_pupil);
-            m_squishSound = new FrameSoundObj(this, m_target, 2, "Eyeball_Prefire");
-            Type = 6;
-            DisableCollisionBoxRotations = false;
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (m_playDeathLoop && (m_deathLoop == null || !m_deathLoop.IsPlaying))
             {
                 m_deathLoop = SoundManager.PlaySound("Boss_Eyeball_Death_Loop");
             }
-            float num = m_target.Y - Y;
-            float num2 = m_target.X - X;
-            float num3 = (float) Math.Atan2(num, num2);
+            var num = m_target.Y - Y;
+            var num2 = m_target.X - X;
+            var num3 = (float) Math.Atan2(num, num2);
             m_pupil.X = (float) Math.Cos(num3)*PupilOffset;
             m_pupil.Y = (float) Math.Sin(num3)*PupilOffset;
             if (m_shake && m_shakeTimer > 0f)
@@ -684,7 +685,7 @@ namespace RogueCastle
         {
             if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS && !m_bossVersionKilled)
             {
-                PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+                var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
                 {
                     playerObj.HitPlayer(this);
@@ -749,26 +750,26 @@ namespace RogueCastle
                 m_target.InvincibleToSpikes = true;
             }
             object arg_106_0 = m_levelScreen.Camera;
-            float arg_106_1 = 0.5f;
+            var arg_106_1 = 0.5f;
             Easing arg_106_2 = Quad.EaseInOut;
-            string[] array = new string[4];
+            var array = new string[4];
             array[0] = "X";
-            string[] arg_CF_0 = array;
-            int arg_CF_1 = 1;
-            int x = m_levelScreen.CurrentRoom.Bounds.Center.X;
+            var arg_CF_0 = array;
+            var arg_CF_1 = 1;
+            var x = m_levelScreen.CurrentRoom.Bounds.Center.X;
             arg_CF_0[arg_CF_1] = x.ToString();
             array[2] = "Y";
-            string[] arg_103_0 = array;
-            int arg_103_1 = 3;
-            int y = m_levelScreen.CurrentRoom.Bounds.Center.Y;
+            var arg_103_0 = array;
+            var arg_103_1 = 3;
+            var y = m_levelScreen.CurrentRoom.Bounds.Center.Y;
             arg_103_0[arg_103_1] = y.ToString();
             Tween.To(arg_106_0, arg_106_1, arg_106_2, array);
             m_shake = true;
             m_shakeTimer = m_shakeDuration;
             m_playDeathLoop = true;
-            for (int i = 0; i < 40; i++)
+            for (var i = 0; i < 40; i++)
             {
-                Vector2 vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right),
+                var vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right),
                     CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
                 Tween.RunFunction(i*0.1f, typeof (SoundManager), "Play3DSound", this, m_target, new[]
                 {
@@ -781,24 +782,24 @@ namespace RogueCastle
             Tween.AddEndHandlerToLastTween(this, "Part3");
             if (!IsNeo)
             {
-                List<int> list = new List<int>();
-                for (int j = 0; j < m_bossCoins; j++)
+                var list = new List<int>();
+                for (var j = 0; j < m_bossCoins; j++)
                 {
                     list.Add(0);
                 }
-                for (int k = 0; k < m_bossMoneyBags; k++)
+                for (var k = 0; k < m_bossMoneyBags; k++)
                 {
                     list.Add(1);
                 }
-                for (int l = 0; l < m_bossDiamonds; l++)
+                for (var l = 0; l < m_bossDiamonds; l++)
                 {
                     list.Add(2);
                 }
                 CDGMath.Shuffle(list);
-                float num = 2.5f/list.Count;
-                for (int m = 0; m < list.Count; m++)
+                var num = 2.5f/list.Count;
+                for (var m = 0; m < list.Count; m++)
                 {
-                    Vector2 vector2 = new Vector2(CDGMath.RandomInt(m_pupil.AbsBounds.Left, m_pupil.AbsBounds.Right),
+                    var vector2 = new Vector2(CDGMath.RandomInt(m_pupil.AbsBounds.Left, m_pupil.AbsBounds.Right),
                         CDGMath.RandomInt(m_pupil.AbsBounds.Top, m_pupil.AbsBounds.Bottom));
                     if (list[m] == 0)
                     {

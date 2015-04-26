@@ -23,6 +23,14 @@ namespace RogueCastle
         private List<KeyIconObj> m_iconList;
         private List<float> m_iconOffset;
         private float m_yOffset;
+
+        public KeyIconTextObj(SpriteFont font = null) : base(font)
+        {
+            ForcedScale = Vector2.One;
+            m_iconList = new List<KeyIconObj>();
+            m_iconOffset = new List<float>();
+        }
+
         public Vector2 ForcedScale { get; set; }
 
         public override string Text
@@ -30,16 +38,16 @@ namespace RogueCastle
             get { return base.Text; }
             set
             {
-                foreach (KeyIconObj current in m_iconList)
+                foreach (var current in m_iconList)
                 {
                     current.Dispose();
                 }
                 m_iconList.Clear();
                 m_iconOffset.Clear();
-                string text = value;
-                for (int num = text.IndexOf("["); num != -1; num = text.IndexOf("["))
+                var text = value;
+                for (var num = text.IndexOf("["); num != -1; num = text.IndexOf("["))
                 {
-                    int num2 = text.IndexOf("]");
+                    var num2 = text.IndexOf("]");
                     if (num2 == -1)
                     {
                         throw new Exception(
@@ -51,82 +59,75 @@ namespace RogueCastle
             }
         }
 
-        public KeyIconTextObj(SpriteFont font = null) : base(font)
-        {
-            ForcedScale = Vector2.One;
-            m_iconList = new List<KeyIconObj>();
-            m_iconOffset = new List<float>();
-        }
-
         public string AddKeyIcon(string text, int startIndex, int endIndex)
         {
-            KeyIconObj keyIconObj = new KeyIconObj();
-            Vector2 arg_0B_0 = Vector2.Zero;
-            string text2 = text.Substring(startIndex, endIndex - startIndex + 1);
-            string oldValue = text2;
+            var keyIconObj = new KeyIconObj();
+            var arg_0B_0 = Vector2.Zero;
+            var text2 = text.Substring(startIndex, endIndex - startIndex + 1);
+            var oldValue = text2;
             if (text2.Contains("Input"))
             {
-                string text3 = text2.Replace("[Input:", "");
+                var text3 = text2.Replace("[Input:", "");
                 text3 = text3.Replace("]", "");
-                byte index = byte.Parse(text3);
+                var index = byte.Parse(text3);
                 if (InputManager.GamePadIsConnected(PlayerIndex.One))
                 {
-                    Buttons buttons = Game.GlobalInput.ButtonList[index];
+                    var buttons = Game.GlobalInput.ButtonList[index];
                     text2 = text2.Replace(text3, buttons.ToString());
                     text2 = text2.Replace("Input", "Button");
                 }
                 else
                 {
-                    Keys keys = Game.GlobalInput.KeyList[index];
+                    var keys = Game.GlobalInput.KeyList[index];
                     text2 = text2.Replace(text3, keys.ToString());
                     text2 = text2.Replace("Input", "Key");
                 }
             }
             if (text2.Contains("Key"))
             {
-                string text4 = text2.Replace("[Key:", "");
+                var text4 = text2.Replace("[Key:", "");
                 text4 = text4.Replace("]", "");
-                bool upperCase = true;
+                var upperCase = true;
                 if (text4 == "Enter" || text4 == "Space")
                 {
                     upperCase = false;
                 }
                 keyIconObj.SetKey((Keys) Enum.Parse(typeof (Keys), text4), upperCase);
-                float y = (Font.MeasureString("0")*m_internalFontSizeScale*Scale).Y;
+                var y = (Font.MeasureString("0")*m_internalFontSizeScale*Scale).Y;
                 keyIconObj.Scale = new Vector2(y/keyIconObj.Height, y/keyIconObj.Height)*ForcedScale;
                 m_yOffset = y/2f;
-                string text5 = " ";
+                var text5 = " ";
                 while (Font.MeasureString(text5).X*m_internalFontSizeScale.X*Scale.X < keyIconObj.Width)
                 {
                     text5 += " ";
                 }
-                string text6 = text.Substring(0, text.IndexOf("["));
+                var text6 = text.Substring(0, text.IndexOf("["));
                 text = text.Replace(oldValue, text5);
-                float num = Font.MeasureString(text5).X*m_internalFontSizeScale.X*Scale.X;
+                var num = Font.MeasureString(text5).X*m_internalFontSizeScale.X*Scale.X;
                 num /= 2f;
-                float num2 = Font.MeasureString(text6).X*m_internalFontSizeScale.X*Scale.X;
-                float item = num2 + num;
+                var num2 = Font.MeasureString(text6).X*m_internalFontSizeScale.X*Scale.X;
+                var item = num2 + num;
                 m_iconOffset.Add(item);
             }
             else
             {
-                string text7 = text2.Replace("[Button:", "");
+                var text7 = text2.Replace("[Button:", "");
                 text7 = text7.Replace("]", "");
                 keyIconObj.SetButton((Buttons) Enum.Parse(typeof (Buttons), text7));
-                float y2 = (Font.MeasureString("0")*m_internalFontSizeScale*Scale).Y;
+                var y2 = (Font.MeasureString("0")*m_internalFontSizeScale*Scale).Y;
                 keyIconObj.Scale = new Vector2(y2/keyIconObj.Height, y2/keyIconObj.Height)*ForcedScale;
                 m_yOffset = y2/2f;
-                string text8 = " ";
+                var text8 = " ";
                 while (Font.MeasureString(text8).X*m_internalFontSizeScale.X*Scale.X < keyIconObj.Width)
                 {
                     text8 += " ";
                 }
-                string text9 = text.Substring(0, text.IndexOf("["));
+                var text9 = text.Substring(0, text.IndexOf("["));
                 text = text.Replace(oldValue, text8);
-                float num3 = Font.MeasureString(text8).X*m_internalFontSizeScale.X*Scale.X;
+                var num3 = Font.MeasureString(text8).X*m_internalFontSizeScale.X*Scale.X;
                 num3 /= 2f;
-                float num4 = Font.MeasureString(text9).X*m_internalFontSizeScale.X*Scale.X;
-                float item2 = num4 + num3;
+                var num4 = Font.MeasureString(text9).X*m_internalFontSizeScale.X*Scale.X;
+                var item2 = num4 + num3;
                 m_iconOffset.Add(item2);
             }
             m_iconList.Add(keyIconObj);
@@ -136,10 +137,10 @@ namespace RogueCastle
         public override void Draw(Camera2D camera)
         {
             base.Draw(camera);
-            int i = 0;
+            var i = 0;
             while (i < m_iconList.Count)
             {
-                KeyIconObj keyIconObj = m_iconList[i];
+                var keyIconObj = m_iconList[i];
                 switch (Align)
                 {
                     case Types.TextAlign.Left:
@@ -168,12 +169,12 @@ namespace RogueCastle
 
         public override void WordWrap(int width)
         {
-            List<KeyIconObj> list = new List<KeyIconObj>();
-            foreach (KeyIconObj current in m_iconList)
+            var list = new List<KeyIconObj>();
+            foreach (var current in m_iconList)
             {
                 list.Add(current.Clone() as KeyIconObj);
             }
-            List<float> list2 = new List<float>();
+            var list2 = new List<float>();
             list2.AddRange(m_iconOffset);
             base.WordWrap(width);
             m_iconList = list;
@@ -184,7 +185,7 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                foreach (KeyIconObj current in m_iconList)
+                foreach (var current in m_iconList)
                 {
                     current.Dispose();
                 }

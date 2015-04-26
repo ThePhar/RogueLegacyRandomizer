@@ -14,7 +14,7 @@ namespace RogueCastle
 {
     public class JumpLogicAction : LogicAction
     {
-        private float m_overriddenHeight;
+        private readonly float m_overriddenHeight;
 
         public JumpLogicAction(float overriddenHeight = 0f)
         {
@@ -25,7 +25,7 @@ namespace RogueCastle
         {
             if (ParentLogicSet != null && ParentLogicSet.IsActive)
             {
-                CharacterObj characterObj = ParentLogicSet.ParentGameObj as CharacterObj;
+                var characterObj = ParentLogicSet.ParentGameObj as CharacterObj;
                 if (characterObj != null)
                 {
                     if (m_overriddenHeight > 0f)

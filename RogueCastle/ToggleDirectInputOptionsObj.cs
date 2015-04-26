@@ -18,6 +18,14 @@ namespace RogueCastle
     {
         private TextObj m_toggleText;
 
+        public ToggleDirectInputOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Use DInput Gamepads")
+        {
+            m_toggleText = (m_nameText.Clone() as TextObj);
+            m_toggleText.X = m_optionsTextOffset;
+            m_toggleText.Text = "No";
+            AddChild(m_toggleText);
+        }
+
         public override bool IsActive
         {
             get { return base.IsActive; }
@@ -31,14 +39,6 @@ namespace RogueCastle
                 }
                 m_toggleText.TextureColor = Color.White;
             }
-        }
-
-        public ToggleDirectInputOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Use DInput Gamepads")
-        {
-            m_toggleText = (m_nameText.Clone() as TextObj);
-            m_toggleText.X = m_optionsTextOffset;
-            m_toggleText.Text = "No";
-            AddChild(m_toggleText);
         }
 
         public override void Initialize()

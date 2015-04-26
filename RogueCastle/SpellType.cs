@@ -163,18 +163,18 @@ namespace RogueCastle
 
         public static Vector3 GetNext3Spells()
         {
-            byte[] spellList = ClassType.GetSpellList(9);
-            List<byte> list = new List<byte>();
-            byte[] array = spellList;
-            for (int i = 0; i < array.Length; i++)
+            var spellList = ClassType.GetSpellList(9);
+            var list = new List<byte>();
+            var array = spellList;
+            for (var i = 0; i < array.Length; i++)
             {
-                byte item = array[i];
+                var item = array[i];
                 list.Add(item);
             }
-            int num = list.IndexOf(Game.PlayerStats.Spell);
+            var num = list.IndexOf(Game.PlayerStats.Spell);
             list.Clear();
-            byte[] array2 = new byte[3];
-            for (int j = 0; j < 3; j++)
+            var array2 = new byte[3];
+            for (var j = 0; j < 3; j++)
             {
                 array2[j] = spellList[num];
                 num++;

@@ -18,12 +18,6 @@ namespace RogueCastle
     {
         public int DropType;
         private float m_amount;
-        public float CollectionCounter { get; set; }
-
-        public bool IsCollectable
-        {
-            get { return CollectionCounter <= 0f; }
-        }
 
         public ItemDropObj(string spriteName) : base(spriteName, null)
         {
@@ -32,6 +26,13 @@ namespace RogueCastle
             CollisionTypeTag = 3;
             StopAnimation();
             OutlineWidth = 2;
+        }
+
+        public float CollectionCounter { get; set; }
+
+        public bool IsCollectable
+        {
+            get { return CollectionCounter <= 0f; }
         }
 
         public void ConvertDrop(int dropType, float amount)
@@ -94,12 +95,12 @@ namespace RogueCastle
                 case 11:
                 {
                     player.AttachedLevel.ItemDropCollected(DropType);
-                    float num = 1f;
+                    var num = 1f;
                     if (Game.PlayerStats.HasArchitectFee)
                     {
                         num = 0.6f;
                     }
-                    int num2 =
+                    var num2 =
                         (int) Math.Round(m_amount*(1f + player.TotalGoldBonus)*num, MidpointRounding.AwayFromZero);
                     Game.PlayerStats.Gold += num2;
                     textManager.DisplayNumberStringText(num2, "gold", Color.Yellow, new Vector2(X, Bounds.Top));
@@ -111,7 +112,7 @@ namespace RogueCastle
                 }
                 case 2:
                 {
-                    int num3 =
+                    var num3 =
                         (int) (player.MaxHealth*(m_amount + SkillSystem.GetSkill(SkillType.Potion_Up).ModifierAmount));
                     player.CurrentHealth += num3;
                     textManager.DisplayNumberStringText(num3, "hp recovered", Color.LawnGreen,
@@ -121,7 +122,7 @@ namespace RogueCastle
                 }
                 case 3:
                 {
-                    int num4 =
+                    var num4 =
                         (int) (player.MaxMana*(m_amount + SkillSystem.GetSkill(SkillType.Potion_Up).ModifierAmount));
                     player.CurrentMana += num4;
                     textManager.DisplayNumberStringText(num4, "mp recovered", Color.LawnGreen,

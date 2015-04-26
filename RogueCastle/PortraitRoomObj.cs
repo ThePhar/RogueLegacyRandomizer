@@ -15,13 +15,13 @@ namespace RogueCastle
 {
     public class PortraitRoomObj : BonusRoomObj
     {
+        private SpriteObj m_portrait;
         private SpriteObj m_portraitFrame;
         private int m_portraitIndex;
-        private SpriteObj m_portrait;
 
         public override void Initialize()
         {
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "portrait")
                 {
@@ -59,10 +59,10 @@ namespace RogueCastle
         {
             if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
             {
-                Rectangle b = new Rectangle(Bounds.Center.X - 100, Bounds.Bottom - 300, 200, 200);
+                var b = new Rectangle(Bounds.Center.X - 100, Bounds.Bottom - 300, 200, 200);
                 if (CollisionMath.Intersects(Player.Bounds, b) && Player.IsTouchingGround && ID > -1)
                 {
-                    RCScreenManager screenManager = Game.ScreenManager;
+                    var screenManager = Game.ScreenManager;
                     screenManager.DialogueScreen.SetDialogue("PortraitRoomText" + ID);
                     screenManager.DisplayScreen(13, true);
                 }

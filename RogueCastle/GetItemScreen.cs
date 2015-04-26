@@ -21,27 +21,26 @@ namespace RogueCastle
 {
     public class GetItemScreen : Screen
     {
-        private SpriteObj m_levelUpBGImage;
-        private SpriteObj[] m_levelUpParticles;
-        private byte m_itemType;
-        private Vector2 m_itemInfo;
-        private SpriteObj m_itemSprite;
+        private readonly Vector2 m_itemEndPos;
+        private Cue m_buildUpSound;
+        private KeyIconTextObj m_continueText;
         private SpriteObj m_itemFoundSprite;
         private TextObj m_itemFoundText;
-        private Vector2 m_itemStartPos;
-        private Vector2 m_itemEndPos;
+        private Vector2 m_itemInfo;
         private bool m_itemSpinning;
-        private KeyIconTextObj m_continueText;
+        private SpriteObj m_itemSprite;
+        private Vector2 m_itemStartPos;
+        private byte m_itemType;
+        private SpriteObj m_levelUpBGImage;
+        private SpriteObj[] m_levelUpParticles;
         private bool m_lockControls;
-        private Cue m_buildUpSound;
         private string m_songName;
         private float m_storedMusicVolume;
         private SpriteObj m_tripStat1;
-        private SpriteObj m_tripStat2;
         private TextObj m_tripStat1FoundText;
+        private SpriteObj m_tripStat2;
         private TextObj m_tripStat2FoundText;
         private Vector2 m_tripStatData;
-        public float BackBufferOpacity { get; set; }
 
         public GetItemScreen()
         {
@@ -50,13 +49,15 @@ namespace RogueCastle
             m_itemEndPos = new Vector2(660f, 410f);
         }
 
+        public float BackBufferOpacity { get; set; }
+
         public override void LoadContent()
         {
             m_levelUpBGImage = new SpriteObj("BlueprintFoundBG_Sprite");
             m_levelUpBGImage.ForceDraw = true;
             m_levelUpBGImage.Visible = false;
             m_levelUpParticles = new SpriteObj[10];
-            for (int i = 0; i < m_levelUpParticles.Length; i++)
+            for (var i = 0; i < m_levelUpParticles.Length; i++)
             {
                 m_levelUpParticles[i] = new SpriteObj("LevelUpParticleFX_Sprite");
                 m_levelUpParticles[i].AnimationDelay = 0.0416666679f;
@@ -93,7 +94,7 @@ namespace RogueCastle
         public override void PassInData(List<object> objList)
         {
             m_itemStartPos = (Vector2) objList[0];
-            m_itemType = (byte) objList[1];
+            m_itemType = Convert.ToByte(objList[1]);
             m_itemInfo = (Vector2) objList[2];
             if (m_itemType == 6)
             {
@@ -235,9 +236,9 @@ namespace RogueCastle
 
         public void ItemSpinAnimation3()
         {
-            Vector2 scale = m_itemSprite.Scale;
+            var scale = m_itemSprite.Scale;
             m_itemSprite.Scale = Vector2.One;
-            float num = 130f/m_itemSprite.Height;
+            var num = 130f/m_itemSprite.Height;
             m_itemSprite.Scale = scale;
             Tween.To(m_itemSprite, 0.2f, Tween.EaseNone, "ScaleX", num.ToString(), "ScaleY", num.ToString());
             Tween.To(m_itemSprite, 0.2f, Tween.EaseNone, "X", 660.ToString(), "Y", 390.ToString());
@@ -257,7 +258,7 @@ namespace RogueCastle
             Tween.To(m_tripStat2, 0.2f, Tween.EaseNone, "X", 490.ToString(), "Y", 390.ToString());
             Tween.To(m_tripStat1FoundText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
             Tween.To(m_tripStat2FoundText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
-            for (int i = 0; i < m_levelUpParticles.Length; i++)
+            for (var i = 0; i < m_levelUpParticles.Length; i++)
             {
                 m_levelUpParticles[i].AnimationDelay = 0f;
                 m_levelUpParticles[i].Visible = true;
@@ -265,7 +266,7 @@ namespace RogueCastle
                 m_levelUpParticles[i].Opacity = 0f;
                 m_levelUpParticles[i].Position = new Vector2(660f, 360f);
                 m_levelUpParticles[i].Position += new Vector2(CDGMath.RandomInt(-100, 100), CDGMath.RandomInt(-50, 50));
-                float duration = CDGMath.RandomFloat(0f, 0.5f);
+                var duration = CDGMath.RandomFloat(0f, 0.5f);
                 Tween.To(m_levelUpParticles[i], 0.2f, Linear.EaseNone, "delay", duration.ToString(), "Opacity", "1");
                 Tween.To(m_levelUpParticles[i], 0.5f, Linear.EaseNone, "delay", duration.ToString(), "ScaleX", "2",
                     "ScaleY", "2");
@@ -300,7 +301,7 @@ namespace RogueCastle
             if ((int) m_itemInfo.X == 19)
             {
                 m_itemInfo = Vector2.Zero;
-                List<object> list = new List<object>();
+                var list = new List<object>();
                 list.Add(17);
                 Game.ScreenManager.DisplayScreen(19, true, list);
                 return;
@@ -345,10 +346,10 @@ namespace RogueCastle
             Camera.Begin(SpriteSortMode.Immediate, null, SamplerState.LinearClamp, null, null);
             Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
             m_levelUpBGImage.Draw(Camera);
-            SpriteObj[] levelUpParticles = m_levelUpParticles;
-            for (int i = 0; i < levelUpParticles.Length; i++)
+            var levelUpParticles = m_levelUpParticles;
+            for (var i = 0; i < levelUpParticles.Length; i++)
             {
-                SpriteObj spriteObj = levelUpParticles[i];
+                var spriteObj = levelUpParticles[i];
                 spriteObj.Draw(Camera);
             }
             m_itemFoundSprite.Draw(Camera);
@@ -435,10 +436,10 @@ namespace RogueCastle
                 m_continueText = null;
                 m_levelUpBGImage.Dispose();
                 m_levelUpBGImage = null;
-                SpriteObj[] levelUpParticles = m_levelUpParticles;
-                for (int i = 0; i < levelUpParticles.Length; i++)
+                var levelUpParticles = m_levelUpParticles;
+                for (var i = 0; i < levelUpParticles.Length; i++)
                 {
-                    SpriteObj spriteObj = levelUpParticles[i];
+                    var spriteObj = levelUpParticles[i];
                     spriteObj.Dispose();
                 }
                 Array.Clear(m_levelUpParticles, 0, m_levelUpParticles.Length);

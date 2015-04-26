@@ -15,15 +15,15 @@ namespace RogueCastle
 {
     public class EnemyHUDObj : SpriteObj
     {
-        private TextObj m_enemyNameText;
-        private TextObj m_enemyLevelText;
-        private SpriteObj m_enemyHPBar;
-        private float m_enemyHPPercent;
-        private int m_enemyHPBarLength;
-        private int m_blinkNumber = 13;
-        private float m_blinkDuration = 0.05f;
+        private readonly float m_blinkDuration = 0.05f;
+        private readonly int m_blinkNumber = 13;
+        private readonly int m_enemyHPBarLength;
         private int m_blinkCounter;
         private float m_blinkDurationCounter;
+        private SpriteObj m_enemyHPBar;
+        private float m_enemyHPPercent;
+        private TextObj m_enemyLevelText;
+        private TextObj m_enemyNameText;
         private float m_opacity = 1f;
 
         public EnemyHUDObj() : base("EnemyHUD_Sprite")

@@ -15,10 +15,19 @@ namespace RogueCastle
 {
     public class ProjectileIconObj : GameObj
     {
+        private readonly int m_iconOffset = 60;
+        private ProjectileObj m_attachedProjectile;
         private SpriteObj m_iconBG;
         private SpriteObj m_iconProjectile;
-        private ProjectileObj m_attachedProjectile;
-        private int m_iconOffset = 60;
+
+        public ProjectileIconObj()
+        {
+            ForceDraw = true;
+            m_iconBG = new SpriteObj("ProjectileIcon_Sprite");
+            m_iconBG.ForceDraw = true;
+            m_iconProjectile = new SpriteObj("Blank_Sprite");
+            m_iconProjectile.ForceDraw = true;
+        }
 
         public ProjectileObj AttachedProjectile
         {
@@ -32,15 +41,6 @@ namespace RogueCastle
                     m_iconProjectile.Scale = new Vector2(0.7f, 0.7f);
                 }
             }
-        }
-
-        public ProjectileIconObj()
-        {
-            ForceDraw = true;
-            m_iconBG = new SpriteObj("ProjectileIcon_Sprite");
-            m_iconBG.ForceDraw = true;
-            m_iconProjectile = new SpriteObj("Blank_Sprite");
-            m_iconProjectile.ForceDraw = true;
         }
 
         public void Update(Camera2D camera)
@@ -107,7 +107,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            ProjectileIconObj projectileIconObj = obj as ProjectileIconObj;
+            var projectileIconObj = obj as ProjectileIconObj;
             projectileIconObj.AttachedProjectile = AttachedProjectile;
         }
     }

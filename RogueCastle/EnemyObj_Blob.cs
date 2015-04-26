@@ -18,24 +18,36 @@ namespace RogueCastle
 {
     public class EnemyObj_Blob : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalBossCooldownLB = new LogicBlock();
-        private LogicBlock m_generalNeoLB = new LogicBlock();
-        private int NumHits;
+        private readonly float ExpertBlobProjectileDuration = 5f;
+        private readonly float JumpDelay = 0.4f;
+        private readonly int m_bossCoins = 40;
+        private readonly int m_bossDiamonds = 8;
+        private readonly int m_bossEarthWizardLevelReduction = 12;
+        private readonly int m_bossMoneyBags = 16;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalBossCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+        private readonly LogicBlock m_generalNeoLB = new LogicBlock();
         private Vector2 BlobSizeChange = new Vector2(0.4f, 0.4f);
         private float BlobSpeedChange = 1.2f;
-        private float ExpertBlobProjectileDuration = 5f;
-        private float JumpDelay = 0.4f;
-        public RoomObj SpawnRoom;
-        private int m_bossCoins = 40;
-        private int m_bossMoneyBags = 16;
-        private int m_bossDiamonds = 8;
-        private int m_bossEarthWizardLevelReduction = 12;
         private bool m_isNeo;
+        private int NumHits;
+        public RoomObj SpawnRoom;
+
+        public EnemyObj_Blob(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyBlobIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            MainBlob = true;
+            TintablePart = _objectList[0];
+            PlayAnimation();
+            m_invincibleCounter = 0.5f;
+            Type = 2;
+        }
+
         public bool MainBlob { get; set; }
         public Vector2 SavedStartingPos { get; set; }
 
@@ -213,20 +225,20 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03",
                 "Blank", "Blank", "Blank", "Blank", "Blank"));
             logicSet.AddAction(new DelayLogicAction(1.1f, 1.9f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03",
                 "Blank", "Blank", "Blank", "Blank", "Blank"));
             logicSet2.AddAction(new DelayLogicAction(1f, 1.5f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.5f, 0.9f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.AddAction(new GroundCheckLogicAction());
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -248,7 +260,7 @@ namespace RogueCastle
             logicSet4.AddAction(new DelayLogicAction(0.2f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.Tag = 2;
-            ProjectileData data = new ProjectileData(this)
+            var data = new ProjectileData(this)
             {
                 SpriteName = "SpellDamageShield_Sprite",
                 SourceAnchor = new Vector2(0f, 10f),
@@ -263,7 +275,7 @@ namespace RogueCastle
                 Lifespan = ExpertBlobProjectileDuration,
                 LockPosition = true
             };
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.AddAction(new GroundCheckLogicAction());
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -286,7 +298,7 @@ namespace RogueCastle
             logicSet5.AddAction(new DelayLogicAction(0.2f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.AddAction(new GroundCheckLogicAction());
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -313,20 +325,20 @@ namespace RogueCastle
             logicSet6.AddAction(new DelayLogicAction(0.2f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.Tag = 2;
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new MoveLogicAction(m_target, true));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03",
                 "Blank", "Blank", "Blank", "Blank", "Blank"));
             logicSet7.AddAction(new DelayLogicAction(1.1f, 1.9f));
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new MoveLogicAction(m_target, false));
             logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Move01", "Blob_Move02", "Blob_Move03",
                 "Blank", "Blank", "Blank", "Blank", "Blank"));
             logicSet8.AddAction(new DelayLogicAction(1f, 1.5f));
-            LogicSet logicSet9 = new LogicSet(this);
+            var logicSet9 = new LogicSet(this);
             logicSet9.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet9.AddAction(new DelayLogicAction(0.5f, 0.9f));
-            LogicSet logicSet10 = new LogicSet(this);
+            var logicSet10 = new LogicSet(this);
             logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet10.AddAction(new GroundCheckLogicAction());
             logicSet10.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -348,7 +360,7 @@ namespace RogueCastle
             logicSet10.AddAction(new DelayLogicAction(0.2f));
             logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet10.Tag = 2;
-            LogicSet logicSet11 = new LogicSet(this);
+            var logicSet11 = new LogicSet(this);
             logicSet11.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossAir_Character"));
             logicSet11.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyMove1", "FairyMove2",
                 "FairyMove3"));
@@ -465,17 +477,6 @@ namespace RogueCastle
             }
         }
 
-        public EnemyObj_Blob(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyBlobIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            MainBlob = true;
-            TintablePart = _objectList[0];
-            PlayAnimation();
-            m_invincibleCounter = 0.5f;
-            Type = 2;
-        }
-
         public void SetNumberOfHits(int hits)
         {
             NumHits = hits;
@@ -483,7 +484,7 @@ namespace RogueCastle
 
         private void CreateBlob(GameTypes.EnemyDifficulty difficulty, int numHits, bool isNeo = false)
         {
-            EnemyObj_Blob enemyObj_Blob = new EnemyObj_Blob(null, null, null, difficulty);
+            var enemyObj_Blob = new EnemyObj_Blob(null, null, null, difficulty);
             enemyObj_Blob.InitializeEV();
             enemyObj_Blob.Position = Position;
             if (m_target.X < enemyObj_Blob.X)
@@ -514,8 +515,8 @@ namespace RogueCastle
                 enemyObj_Blob.Damage = Damage;
                 enemyObj_Blob.ChangeNeoStats(BlobSizeChange.X, BlobSpeedChange, numHits);
             }
-            int num = CDGMath.RandomInt(-500, -300);
-            int num2 = CDGMath.RandomInt(300, 700);
+            var num = CDGMath.RandomInt(-500, -300);
+            var num2 = CDGMath.RandomInt(300, 700);
             if (enemyObj_Blob.X < m_target.X)
             {
                 enemyObj_Blob.AccelerationX += -(m_target.EnemyKnockBack.X + num);
@@ -527,7 +528,7 @@ namespace RogueCastle
             enemyObj_Blob.AccelerationY += -(m_target.EnemyKnockBack.Y + num2);
             if (enemyObj_Blob.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
             {
-                for (int i = 0; i < NumChildren; i++)
+                for (var i = 0; i < NumChildren; i++)
                 {
                     enemyObj_Blob.GetChildAt(i).Opacity = GetChildAt(i).Opacity;
                     enemyObj_Blob.GetChildAt(i).TextureColor = GetChildAt(i).TextureColor;
@@ -550,7 +551,7 @@ namespace RogueCastle
 
         public void CreateWizard()
         {
-            EnemyObj_EarthWizard enemyObj_EarthWizard = new EnemyObj_EarthWizard(null, null, null,
+            var enemyObj_EarthWizard = new EnemyObj_EarthWizard(null, null, null,
                 GameTypes.EnemyDifficulty.ADVANCED);
             enemyObj_EarthWizard.PublicInitializeEV();
             enemyObj_EarthWizard.Position = Position;
@@ -566,8 +567,8 @@ namespace RogueCastle
             enemyObj_EarthWizard.Level -= m_bossEarthWizardLevelReduction;
             m_levelScreen.AddEnemyToCurrentRoom(enemyObj_EarthWizard);
             enemyObj_EarthWizard.SavedStartingPos = enemyObj_EarthWizard.Position;
-            int num = CDGMath.RandomInt(-500, -300);
-            int num2 = CDGMath.RandomInt(300, 700);
+            var num = CDGMath.RandomInt(-500, -300);
+            var num2 = CDGMath.RandomInt(300, 700);
             if (enemyObj_EarthWizard.X < m_target.X)
             {
                 enemyObj_EarthWizard.AccelerationX += -(m_target.EnemyKnockBack.X + num);
@@ -616,26 +617,26 @@ namespace RogueCastle
             }
             if (IsNeo)
             {
-                foreach (EnemyObj current in m_levelScreen.CurrentRoom.EnemyList)
+                foreach (var current in m_levelScreen.CurrentRoom.EnemyList)
                 {
                     if (current != this && current is EnemyObj_Blob)
                     {
-                        float num = Vector2.Distance(Position, current.Position);
+                        var num = Vector2.Distance(Position, current.Position);
                         if (num < 150f)
                         {
-                            Vector2 facePosition = 2f*Position - current.Position;
+                            var facePosition = 2f*Position - current.Position;
                             CDGMath.TurnToFace(this, facePosition);
                         }
                     }
                 }
-                foreach (EnemyObj current2 in m_levelScreen.CurrentRoom.TempEnemyList)
+                foreach (var current2 in m_levelScreen.CurrentRoom.TempEnemyList)
                 {
                     if (current2 != this && current2 is EnemyObj_Blob)
                     {
-                        float num2 = Vector2.Distance(Position, current2.Position);
+                        var num2 = Vector2.Distance(Position, current2.Position);
                         if (num2 < 150f)
                         {
-                            Vector2 facePosition2 = 2f*Position - current2.Position;
+                            var facePosition2 = 2f*Position - current2.Position;
                             CDGMath.TurnToFace(this, facePosition2);
                         }
                     }
@@ -694,7 +695,7 @@ namespace RogueCastle
         {
             if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS && !m_bossVersionKilled)
             {
-                PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+                var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
                 {
                     playerObj.HitPlayer(this);
@@ -712,8 +713,8 @@ namespace RogueCastle
             }
             if (m_target.CurrentHealth > 0)
             {
-                BlobBossRoom blobBossRoom = m_levelScreen.CurrentRoom as BlobBossRoom;
-                BlobChallengeRoom blobChallengeRoom = m_levelScreen.CurrentRoom as BlobChallengeRoom;
+                var blobBossRoom = m_levelScreen.CurrentRoom as BlobBossRoom;
+                var blobChallengeRoom = m_levelScreen.CurrentRoom as BlobChallengeRoom;
                 if (((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1) ||
                      (blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1)) && !m_bossVersionKilled)
                 {
@@ -757,7 +758,7 @@ namespace RogueCastle
             }
             m_target.CurrentSpeed = 0f;
             m_target.ForceInvincible = true;
-            foreach (EnemyObj current in m_levelScreen.CurrentRoom.TempEnemyList)
+            foreach (var current in m_levelScreen.CurrentRoom.TempEnemyList)
             {
                 if (!current.IsKilled)
                 {
@@ -768,24 +769,24 @@ namespace RogueCastle
             base.Kill();
             if (!IsNeo)
             {
-                List<int> list = new List<int>();
-                for (int i = 0; i < m_bossCoins; i++)
+                var list = new List<int>();
+                for (var i = 0; i < m_bossCoins; i++)
                 {
                     list.Add(0);
                 }
-                for (int j = 0; j < m_bossMoneyBags; j++)
+                for (var j = 0; j < m_bossMoneyBags; j++)
                 {
                     list.Add(1);
                 }
-                for (int k = 0; k < m_bossDiamonds; k++)
+                for (var k = 0; k < m_bossDiamonds; k++)
                 {
                     list.Add(2);
                 }
                 CDGMath.Shuffle(list);
-                float num = 0f;
-                for (int l = 0; l < list.Count; l++)
+                var num = 0f;
+                for (var l = 0; l < list.Count; l++)
                 {
-                    Vector2 position = Position;
+                    var position = Position;
                     if (list[l] == 0)
                     {
                         Tween.RunFunction(l*num, m_levelScreen.ItemDropManager, "DropItemWide", position, 1, 10);

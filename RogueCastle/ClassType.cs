@@ -182,7 +182,7 @@ namespace RogueCastle
 
         public static byte GetRandomClass()
         {
-            List<byte> list = new List<byte> {0, 1, 2, 3};
+            var list = new List<byte> {0, 1, 2, 3};
             if (SkillSystem.GetSkill(SkillType.Ninja_Unlock).ModifierAmount > 0f)
             {
                 list.Add(4);
@@ -207,7 +207,7 @@ namespace RogueCastle
             {
                 list.Add(17);
             }
-            byte b = list[CDGMath.RandomInt(0, list.Count - 1)];
+            var b = list[CDGMath.RandomInt(0, list.Count - 1)];
             if (Upgraded(b))
             {
                 b += 8;

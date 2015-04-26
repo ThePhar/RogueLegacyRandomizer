@@ -15,8 +15,21 @@ namespace RogueCastle
 {
     public class EnemyObj_Zombie : EnemyObj
     {
-        private LogicBlock m_basicWalkLS = new LogicBlock();
-        private LogicBlock m_basicRiseLowerLS = new LogicBlock();
+        private readonly LogicBlock m_basicRiseLowerLS = new LogicBlock();
+        private readonly LogicBlock m_basicWalkLS = new LogicBlock();
+
+        public EnemyObj_Zombie(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyZombieLower_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            GoToFrame(TotalFrames);
+            Lowered = true;
+            ForceDraw = true;
+            StopAnimation();
+            Type = 20;
+            PlayAnimationOnRestart = false;
+        }
+
         public bool Risen { get; set; }
         public bool Lowered { get; set; }
 
@@ -139,7 +152,7 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyZombieWalk_Character"));
             logicSet.AddAction(new MoveLogicAction(m_target, true));
@@ -147,7 +160,7 @@ namespace RogueCastle
             logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Zombie_Groan_01",
                 "Zombie_Groan_02", "Zombie_Groan_03", "Blank", "Blank", "Blank", "Blank", "Blank"));
             logicSet.AddAction(new DelayLogicAction(0.5f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet2.AddAction(new MoveLogicAction(m_target, false, 0f));
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyZombieRise_Character", false, false));
@@ -155,7 +168,7 @@ namespace RogueCastle
             logicSet2.AddAction(new PlayAnimationLogicAction(false));
             logicSet2.AddAction(new ChangePropertyLogicAction(this, "Risen", true));
             logicSet2.AddAction(new ChangePropertyLogicAction(this, "Lowered", false));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet3.AddAction(new MoveLogicAction(m_target, false, 0f));
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyZombieLower_Character", false, false));
@@ -185,9 +198,9 @@ namespace RogueCastle
                 case 3:
                     if (!Risen)
                     {
-                        bool arg_3B_1 = false;
-                        LogicBlock arg_3B_2 = m_basicRiseLowerLS;
-                        int[] array = new int[2];
+                        var arg_3B_1 = false;
+                        var arg_3B_2 = m_basicRiseLowerLS;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
@@ -214,9 +227,9 @@ namespace RogueCastle
                 case 3:
                     if (!Risen)
                     {
-                        bool arg_3B_1 = false;
-                        LogicBlock arg_3B_2 = m_basicRiseLowerLS;
-                        int[] array = new int[2];
+                        var arg_3B_1 = false;
+                        var arg_3B_2 = m_basicRiseLowerLS;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
@@ -243,9 +256,9 @@ namespace RogueCastle
                 case 3:
                     if (!Risen)
                     {
-                        bool arg_3B_1 = false;
-                        LogicBlock arg_3B_2 = m_basicRiseLowerLS;
-                        int[] array = new int[2];
+                        var arg_3B_1 = false;
+                        var arg_3B_2 = m_basicRiseLowerLS;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
@@ -272,9 +285,9 @@ namespace RogueCastle
                 case 3:
                     if (!Risen)
                     {
-                        bool arg_3B_1 = false;
-                        LogicBlock arg_3B_2 = m_basicRiseLowerLS;
-                        int[] array = new int[2];
+                        var arg_3B_1 = false;
+                        var arg_3B_2 = m_basicRiseLowerLS;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
@@ -319,18 +332,6 @@ namespace RogueCastle
             Lowered = true;
             Risen = false;
             base.Reset();
-        }
-
-        public EnemyObj_Zombie(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyZombieLower_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            GoToFrame(TotalFrames);
-            Lowered = true;
-            ForceDraw = true;
-            StopAnimation();
-            Type = 20;
-            PlayAnimationOnRestart = false;
         }
     }
 }

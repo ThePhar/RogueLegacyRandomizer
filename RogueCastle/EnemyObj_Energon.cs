@@ -18,15 +18,38 @@ namespace RogueCastle
         private const byte TYPE_SWORD = 0;
         private const byte TYPE_SHIELD = 1;
         private const byte TYPE_DOWNSWORD = 2;
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private SpriteObj m_shield;
-        private DS2DPool<EnergonProjectileObj> m_projectilePool;
-        private byte m_poolSize = 10;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+        private readonly byte m_poolSize = 10;
         private byte m_currentAttackType;
+        private DS2DPool<EnergonProjectileObj> m_projectilePool;
+        private SpriteObj m_shield;
+
+        public EnemyObj_Energon(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyEnergonIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 23;
+            m_shield = new SpriteObj("EnergonSwordShield_Sprite");
+            m_shield.AnimationDelay = 0.1f;
+            m_shield.PlayAnimation();
+            m_shield.Opacity = 0.5f;
+            m_shield.Scale = new Vector2(1.2f, 1.2f);
+            m_projectilePool = new DS2DPool<EnergonProjectileObj>();
+            for (var i = 0; i < (int) m_poolSize; i++)
+            {
+                var energonProjectileObj = new EnergonProjectileObj("EnergonSwordProjectile_Sprite",
+                    this);
+                energonProjectileObj.Visible = false;
+                energonProjectileObj.CollidesWithTerrain = false;
+                energonProjectileObj.PlayAnimation();
+                energonProjectileObj.AnimationDelay = 0.05f;
+                m_projectilePool.AddToPool(energonProjectileObj);
+            }
+        }
 
         protected override void InitializeEV()
         {
@@ -147,19 +170,19 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEnergonWalk_Character"));
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEnergonWalk_Character"));
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEnergonAttack_Character", false, false));
             logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack"));
@@ -167,7 +190,7 @@ namespace RogueCastle
             logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEnergonIdle_Character"));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEnergonAttack_Character", false, false));
             logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeAttack"));
@@ -245,7 +268,7 @@ namespace RogueCastle
 
         public void FireProjectile(byte type)
         {
-            EnergonProjectileObj energonProjectileObj = m_projectilePool.CheckOut();
+            var energonProjectileObj = m_projectilePool.CheckOut();
             energonProjectileObj.SetType(type);
             PhysicsMngr.AddObject(energonProjectileObj);
             energonProjectileObj.Target = m_target;
@@ -274,10 +297,10 @@ namespace RogueCastle
         public void DestroyAllProjectiles()
         {
             ProjectileObj[] array = m_projectilePool.ActiveObjsList.ToArray();
-            ProjectileObj[] array2 = array;
-            for (int i = 0; i < array2.Length; i++)
+            var array2 = array;
+            for (var i = 0; i < array2.Length; i++)
             {
-                EnergonProjectileObj projectile = (EnergonProjectileObj) array2[i];
+                var projectile = (EnergonProjectileObj) array2[i];
                 DestroyProjectile(projectile);
             }
         }
@@ -311,7 +334,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            foreach (EnergonProjectileObj current in m_projectilePool.ActiveObjsList)
+            foreach (var current in m_projectilePool.ActiveObjsList)
             {
                 current.Update(gameTime);
             }
@@ -343,13 +366,13 @@ namespace RogueCastle
                     m_target.AccelerationX = m_target.EnemyKnockBack.X;
                 }
                 m_target.AccelerationY = -m_target.EnemyKnockBack.Y;
-                Point center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
-                Vector2 position = new Vector2(center.X, center.Y);
+                var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
+                var position = new Vector2(center.X, center.Y);
                 m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, Vector2.One);
                 m_levelScreen.SetLastEnemyHit(this);
                 m_invincibleCounter = InvincibilityTime;
                 Blink(Color.LightBlue, 0.1f);
-                ProjectileObj projectileObj = otherBox.AbsParent as ProjectileObj;
+                var projectileObj = otherBox.AbsParent as ProjectileObj;
                 if (projectileObj != null)
                 {
                     m_levelScreen.ProjectileManager.DestroyProjectile(projectileObj);
@@ -357,11 +380,11 @@ namespace RogueCastle
             }
             else if (otherBox.AbsParent is EnergonProjectileObj)
             {
-                EnergonProjectileObj energonProjectileObj = otherBox.AbsParent as EnergonProjectileObj;
+                var energonProjectileObj = otherBox.AbsParent as EnergonProjectileObj;
                 if (energonProjectileObj != null)
                 {
-                    Point center2 = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
-                    Vector2 vector = new Vector2(center2.X, center2.Y);
+                    var center2 = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
+                    var vector = new Vector2(center2.X, center2.Y);
                     DestroyProjectile(energonProjectileObj);
                     if (energonProjectileObj.AttackType == m_currentAttackType)
                     {
@@ -388,29 +411,6 @@ namespace RogueCastle
         {
             m_shield.Visible = true;
             base.Reset();
-        }
-
-        public EnemyObj_Energon(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyEnergonIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 23;
-            m_shield = new SpriteObj("EnergonSwordShield_Sprite");
-            m_shield.AnimationDelay = 0.1f;
-            m_shield.PlayAnimation();
-            m_shield.Opacity = 0.5f;
-            m_shield.Scale = new Vector2(1.2f, 1.2f);
-            m_projectilePool = new DS2DPool<EnergonProjectileObj>();
-            for (int i = 0; i < (int) m_poolSize; i++)
-            {
-                EnergonProjectileObj energonProjectileObj = new EnergonProjectileObj("EnergonSwordProjectile_Sprite",
-                    this);
-                energonProjectileObj.Visible = false;
-                energonProjectileObj.CollidesWithTerrain = false;
-                energonProjectileObj.PlayAnimation();
-                energonProjectileObj.AnimationDelay = 0.05f;
-                m_projectilePool.AddToPool(energonProjectileObj);
-            }
         }
 
         public override void Dispose()

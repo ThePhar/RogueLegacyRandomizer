@@ -17,21 +17,10 @@ namespace RogueCastle
 {
     public class ItemDropManager : IDisposableObj
     {
+        private readonly int m_poolSize;
         private DS2DPool<ItemDropObj> m_itemDropPool;
         private List<ItemDropObj> m_itemDropsToRemoveList;
-        private int m_poolSize;
         private PhysicsManager m_physicsManager;
-        private bool m_isDisposed;
-
-        public int AvailableItems
-        {
-            get { return m_itemDropPool.CurrentPoolSize; }
-        }
-
-        public bool IsDisposed
-        {
-            get { return m_isDisposed; }
-        }
 
         public ItemDropManager(int poolSize, PhysicsManager physicsManager)
         {
@@ -41,11 +30,33 @@ namespace RogueCastle
             m_physicsManager = physicsManager;
         }
 
+        public int AvailableItems
+        {
+            get { return m_itemDropPool.CurrentPoolSize; }
+        }
+
+        public bool IsDisposed { get; private set; }
+
+        public void Dispose()
+        {
+            if (!IsDisposed)
+            {
+                Console.WriteLine("Disposing Item Drop Manager");
+                DestroyAllItemDrops();
+                m_itemDropsToRemoveList.Clear();
+                m_itemDropsToRemoveList = null;
+                m_itemDropPool.Dispose();
+                m_itemDropPool = null;
+                m_physicsManager = null;
+                IsDisposed = true;
+            }
+        }
+
         public void Initialize()
         {
-            for (int i = 0; i < m_poolSize; i++)
+            for (var i = 0; i < m_poolSize; i++)
             {
-                ItemDropObj itemDropObj = new ItemDropObj("Coin_Sprite");
+                var itemDropObj = new ItemDropObj("Coin_Sprite");
                 itemDropObj.Visible = false;
                 m_itemDropPool.AddToPool(itemDropObj);
             }
@@ -53,7 +64,7 @@ namespace RogueCastle
 
         public void DropItem(Vector2 position, int dropType, float amount)
         {
-            ItemDropObj itemDropObj = m_itemDropPool.CheckOutReturnNull();
+            var itemDropObj = m_itemDropPool.CheckOutReturnNull();
             if (itemDropObj == null)
             {
                 return;
@@ -75,7 +86,7 @@ namespace RogueCastle
 
         public void DropItemWide(Vector2 position, int dropType, float amount)
         {
-            ItemDropObj itemDropObj = m_itemDropPool.CheckOutReturnNull();
+            var itemDropObj = m_itemDropPool.CheckOutReturnNull();
             if (itemDropObj == null)
             {
                 return;
@@ -106,18 +117,18 @@ namespace RogueCastle
 
         public void DestroyAllItemDrops()
         {
-            ItemDropObj[] array = m_itemDropPool.ActiveObjsList.ToArray();
-            ItemDropObj[] array2 = array;
-            for (int i = 0; i < array2.Length; i++)
+            var array = m_itemDropPool.ActiveObjsList.ToArray();
+            var array2 = array;
+            for (var i = 0; i < array2.Length; i++)
             {
-                ItemDropObj itemDrop = array2[i];
+                var itemDrop = array2[i];
                 DestroyItemDrop(itemDrop);
             }
         }
 
         public void PauseAllAnimations()
         {
-            foreach (ItemDropObj current in m_itemDropPool.ActiveObjsList)
+            foreach (var current in m_itemDropPool.ActiveObjsList)
             {
                 current.PauseAnimation();
             }
@@ -125,7 +136,7 @@ namespace RogueCastle
 
         public void ResumeAllAnimations()
         {
-            foreach (ItemDropObj current in m_itemDropPool.ActiveObjsList)
+            foreach (var current in m_itemDropPool.ActiveObjsList)
             {
                 current.ResumeAnimation();
             }
@@ -133,24 +144,9 @@ namespace RogueCastle
 
         public void Draw(Camera2D camera)
         {
-            foreach (ItemDropObj current in m_itemDropPool.ActiveObjsList)
+            foreach (var current in m_itemDropPool.ActiveObjsList)
             {
                 current.Draw(camera);
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                Console.WriteLine("Disposing Item Drop Manager");
-                DestroyAllItemDrops();
-                m_itemDropsToRemoveList.Clear();
-                m_itemDropsToRemoveList = null;
-                m_itemDropPool.Dispose();
-                m_itemDropPool = null;
-                m_physicsManager = null;
-                m_isDisposed = true;
             }
         }
     }

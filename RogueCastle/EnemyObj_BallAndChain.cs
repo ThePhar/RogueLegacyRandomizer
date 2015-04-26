@@ -17,39 +17,51 @@ namespace RogueCastle
 {
     public class EnemyObj_BallAndChain : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private ProjectileObj m_ballAndChain;
-        private ProjectileObj m_ballAndChain2;
-        private SpriteObj m_chain;
-        private int m_numChainLinks = 10;
-        private List<Vector2> m_chainLinksList;
-        private List<Vector2> m_chainLinks2List;
-        private float m_chainRadius;
+        private readonly float m_BallSpeedDivider = 1.5f;
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly int m_numChainLinks = 10;
         private float m_actualChainRadius;
         private float m_ballAngle;
+        private SpriteObj m_chain;
         private float m_chainLinkDistance;
-        private float m_BallSpeedDivider = 1.5f;
+        private List<Vector2> m_chainLinks2List;
+        private List<Vector2> m_chainLinksList;
         private FrameSoundObj m_walkSound;
         private FrameSoundObj m_walkSound2;
+
+        public EnemyObj_BallAndChain(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyFlailKnight_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            BallAndChain = new ProjectileObj("EnemyFlailKnightBall_Sprite");
+            BallAndChain.IsWeighted = false;
+            BallAndChain.CollidesWithTerrain = false;
+            BallAndChain.IgnoreBoundsCheck = true;
+            BallAndChain.OutlineWidth = 2;
+            BallAndChain2 = (BallAndChain.Clone() as ProjectileObj);
+            m_chain = new SpriteObj("EnemyFlailKnightLink_Sprite");
+            m_chainLinksList = new List<Vector2>();
+            m_chainLinks2List = new List<Vector2>();
+            for (var i = 0; i < m_numChainLinks; i++)
+            {
+                m_chainLinksList.Add(default(Vector2));
+            }
+            for (var j = 0; j < m_numChainLinks/2; j++)
+            {
+                m_chainLinks2List.Add(default(Vector2));
+            }
+            Type = 1;
+            TintablePart = _objectList[3];
+            m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
+            m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
+        }
+
         public float ChainSpeed { get; set; }
         public float ChainSpeed2Modifier { get; set; }
-
-        private float ChainRadius
-        {
-            get { return m_chainRadius; }
-            set { m_chainRadius = value; }
-        }
-
-        public ProjectileObj BallAndChain
-        {
-            get { return m_ballAndChain; }
-        }
-
-        public ProjectileObj BallAndChain2
-        {
-            get { return m_ballAndChain2; }
-        }
+        private float ChainRadius { get; set; }
+        public ProjectileObj BallAndChain { get; private set; }
+        public ProjectileObj BallAndChain2 { get; private set; }
 
         protected override void InitializeEV()
         {
@@ -169,21 +181,21 @@ namespace RogueCastle
                     break;
             }
             _objectList[1].TextureColor = TintablePart.TextureColor;
-            m_ballAndChain.Damage = Damage;
-            m_ballAndChain.Scale = ProjectileScale;
-            m_ballAndChain2.Damage = Damage;
-            m_ballAndChain2.Scale = ProjectileScale;
+            BallAndChain.Damage = Damage;
+            BallAndChain.Scale = ProjectileScale;
+            BallAndChain2.Damage = Damage;
+            BallAndChain2.Scale = ProjectileScale;
         }
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new DelayLogicAction(1.25f, 2.75f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(1.25f, 2.75f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new StopAnimationLogicAction());
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(1f, 1.5f));
@@ -258,49 +270,22 @@ namespace RogueCastle
             }
         }
 
-        public EnemyObj_BallAndChain(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyFlailKnight_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            m_ballAndChain = new ProjectileObj("EnemyFlailKnightBall_Sprite");
-            m_ballAndChain.IsWeighted = false;
-            m_ballAndChain.CollidesWithTerrain = false;
-            m_ballAndChain.IgnoreBoundsCheck = true;
-            m_ballAndChain.OutlineWidth = 2;
-            m_ballAndChain2 = (m_ballAndChain.Clone() as ProjectileObj);
-            m_chain = new SpriteObj("EnemyFlailKnightLink_Sprite");
-            m_chainLinksList = new List<Vector2>();
-            m_chainLinks2List = new List<Vector2>();
-            for (int i = 0; i < m_numChainLinks; i++)
-            {
-                m_chainLinksList.Add(default(Vector2));
-            }
-            for (int j = 0; j < m_numChainLinks/2; j++)
-            {
-                m_chainLinks2List.Add(default(Vector2));
-            }
-            Type = 1;
-            TintablePart = _objectList[3];
-            m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
-            m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (!IsPaused)
             {
                 if (!IsKilled && m_initialDelayCounter <= 0f)
                 {
-                    float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+                    var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
                     if (m_actualChainRadius < ChainRadius)
                     {
                         m_actualChainRadius += num*200f;
                         m_chainLinkDistance = m_actualChainRadius/m_numChainLinks;
                     }
-                    float num2 = 0f;
-                    m_ballAndChain.Position = CDGMath.GetCirclePosition(m_ballAngle, m_actualChainRadius,
+                    var num2 = 0f;
+                    BallAndChain.Position = CDGMath.GetCirclePosition(m_ballAngle, m_actualChainRadius,
                         new Vector2(X, Bounds.Top));
-                    for (int i = 0; i < m_chainLinksList.Count; i++)
+                    for (var i = 0; i < m_chainLinksList.Count; i++)
                     {
                         m_chainLinksList[i] = CDGMath.GetCirclePosition(m_ballAngle, num2, new Vector2(X, Bounds.Top));
                         num2 += m_chainLinkDistance;
@@ -308,15 +293,15 @@ namespace RogueCastle
                     num2 = 0f;
                     if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
                     {
-                        m_ballAndChain2.Position = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier,
+                        BallAndChain2.Position = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier,
                             m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
                     }
                     else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
                     {
-                        m_ballAndChain2.Position = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier,
+                        BallAndChain2.Position = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier,
                             -m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
                     }
-                    for (int j = 0; j < m_chainLinks2List.Count; j++)
+                    for (var j = 0; j < m_chainLinks2List.Count; j++)
                     {
                         if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
                         {
@@ -349,20 +334,20 @@ namespace RogueCastle
         {
             if (!IsKilled)
             {
-                foreach (Vector2 current in m_chainLinksList)
+                foreach (var current in m_chainLinksList)
                 {
                     m_chain.Position = current;
                     m_chain.Draw(camera);
                 }
-                m_ballAndChain.Draw(camera);
+                BallAndChain.Draw(camera);
                 if (Difficulty > GameTypes.EnemyDifficulty.BASIC)
                 {
-                    foreach (Vector2 current2 in m_chainLinks2List)
+                    foreach (var current2 in m_chainLinks2List)
                     {
                         m_chain.Position = current2;
                         m_chain.Draw(camera);
                     }
-                    m_ballAndChain2.Draw(camera);
+                    BallAndChain2.Draw(camera);
                 }
             }
             base.Draw(camera);
@@ -370,13 +355,13 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            m_levelScreen.PhysicsManager.RemoveObject(m_ballAndChain);
-            EnemyObj_BouncySpike enemyObj_BouncySpike = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
+            m_levelScreen.PhysicsManager.RemoveObject(BallAndChain);
+            var enemyObj_BouncySpike = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
                 Difficulty);
             enemyObj_BouncySpike.SavedStartingPos = Position;
             enemyObj_BouncySpike.Position = Position;
             m_levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike);
-            enemyObj_BouncySpike.Position = m_ballAndChain.Position;
+            enemyObj_BouncySpike.Position = BallAndChain.Position;
             enemyObj_BouncySpike.Speed = ChainSpeed*200f/m_BallSpeedDivider;
             enemyObj_BouncySpike.HeadingX =
                 (float) Math.Cos(MathHelper.WrapAngle(MathHelper.ToRadians(m_ballAngle + 90f)));
@@ -384,13 +369,13 @@ namespace RogueCastle
                 (float) Math.Sin(MathHelper.WrapAngle(MathHelper.ToRadians(m_ballAngle + 90f)));
             if (Difficulty > GameTypes.EnemyDifficulty.BASIC)
             {
-                m_levelScreen.PhysicsManager.RemoveObject(m_ballAndChain2);
-                EnemyObj_BouncySpike enemyObj_BouncySpike2 = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
+                m_levelScreen.PhysicsManager.RemoveObject(BallAndChain2);
+                var enemyObj_BouncySpike2 = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
                     Difficulty);
                 enemyObj_BouncySpike2.SavedStartingPos = Position;
                 enemyObj_BouncySpike2.Position = Position;
                 m_levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike2);
-                enemyObj_BouncySpike2.Position = m_ballAndChain2.Position;
+                enemyObj_BouncySpike2.Position = BallAndChain2.Position;
                 enemyObj_BouncySpike2.Speed = ChainSpeed*200f*ChainSpeed2Modifier/m_BallSpeedDivider;
                 if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
                 {
@@ -431,10 +416,10 @@ namespace RogueCastle
             base.ResetState();
             m_actualChainRadius = 0f;
             m_chainLinkDistance = m_actualChainRadius/m_numChainLinks;
-            float num = 0f;
-            m_ballAndChain.Position = CDGMath.GetCirclePosition(m_ballAngle, m_actualChainRadius,
+            var num = 0f;
+            BallAndChain.Position = CDGMath.GetCirclePosition(m_ballAngle, m_actualChainRadius,
                 new Vector2(X, Bounds.Top));
-            for (int i = 0; i < m_chainLinksList.Count; i++)
+            for (var i = 0; i < m_chainLinksList.Count; i++)
             {
                 m_chainLinksList[i] = CDGMath.GetCirclePosition(m_ballAngle, num, new Vector2(X, Bounds.Top));
                 num += m_chainLinkDistance;
@@ -442,15 +427,15 @@ namespace RogueCastle
             num = 0f;
             if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
             {
-                m_ballAndChain2.Position = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier,
+                BallAndChain2.Position = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier,
                     m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
             }
             else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
             {
-                m_ballAndChain2.Position = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier,
+                BallAndChain2.Position = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier,
                     -m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
             }
-            for (int j = 0; j < m_chainLinks2List.Count; j++)
+            for (var j = 0; j < m_chainLinks2List.Count; j++)
             {
                 if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
                 {
@@ -478,10 +463,10 @@ namespace RogueCastle
             {
                 m_chain.Dispose();
                 m_chain = null;
-                m_ballAndChain.Dispose();
-                m_ballAndChain = null;
-                m_ballAndChain2.Dispose();
-                m_ballAndChain2 = null;
+                BallAndChain.Dispose();
+                BallAndChain = null;
+                BallAndChain2.Dispose();
+                BallAndChain2 = null;
                 m_chainLinksList.Clear();
                 m_chainLinksList = null;
                 m_chainLinks2List.Clear();

@@ -15,8 +15,8 @@ namespace RogueCastle
 {
     public class QuadRenderComponent : DrawableGameComponent
     {
-        private VertexPositionTexture[] verts;
         private short[] ib;
+        private VertexPositionTexture[] verts;
 
         public QuadRenderComponent(Game game) : base(game)
         {

@@ -8,8 +8,6 @@
   Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 */
 
-using System.Collections.Generic;
-using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Tweener;
 using Tweener.Ease;
@@ -19,12 +17,12 @@ namespace RogueCastle
     public class ArenaBonusRoom : BonusRoomObj
     {
         private ChestObj m_chest;
-        private float m_chestStartingY;
         private bool m_chestRevealed;
+        private float m_chestStartingY;
 
         public override void Initialize()
         {
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current is ChestObj)
                 {
@@ -49,35 +47,36 @@ namespace RogueCastle
                 m_chest.IsEmpty = true;
                 m_chest.ForceOpen();
                 m_chestRevealed = true;
-                using (List<EnemyObj>.Enumerator enumerator = EnemyList.GetEnumerator())
+                using (var enumerator = EnemyList.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
-                        EnemyObj current = enumerator.Current;
+                        var current = enumerator.Current;
                         if (!current.IsKilled)
                         {
                             current.KillSilently();
                         }
                     }
-                    goto IL_137;
                 }
-            }
-            if (ActiveEnemies == 0)
-            {
-                m_chest.Opacity = 1f;
-                m_chest.Y = m_chestStartingY + 200f;
-                m_chest.IsEmpty = false;
-                m_chest.IsLocked = false;
-                m_chestRevealed = true;
             }
             else
             {
-                m_chest.Opacity = 0f;
-                m_chest.Y = m_chestStartingY;
-                m_chest.IsLocked = true;
-                m_chestRevealed = false;
+                if (ActiveEnemies == 0)
+                {
+                    m_chest.Opacity = 1f;
+                    m_chest.Y = m_chestStartingY + 200f;
+                    m_chest.IsEmpty = false;
+                    m_chest.IsLocked = false;
+                    m_chestRevealed = true;
+                }
+                else
+                {
+                    m_chest.Opacity = 0f;
+                    m_chest.Y = m_chestStartingY;
+                    m_chest.IsLocked = true;
+                    m_chestRevealed = false;
+                }
             }
-            IL_137:
             if (m_chest.PhysicsMngr == null)
             {
                 Player.PhysicsMngr.AddObject(m_chest);
@@ -87,8 +86,8 @@ namespace RogueCastle
 
         private void UpdateEnemyNames()
         {
-            bool flag = false;
-            foreach (EnemyObj current in EnemyList)
+            var flag = false;
+            foreach (var current in EnemyList)
             {
                 if (current is EnemyObj_EarthWizard)
                 {
@@ -148,11 +147,11 @@ namespace RogueCastle
 
         public override void OnExit()
         {
-            bool flag = false;
-            bool flag2 = false;
-            bool flag3 = false;
-            bool flag4 = false;
-            bool flag5 = false;
+            var flag = false;
+            var flag2 = false;
+            var flag3 = false;
+            var flag4 = false;
+            var flag5 = false;
             if (Game.PlayerStats.EnemiesKilledList[15].W > 0f)
             {
                 flag = true;

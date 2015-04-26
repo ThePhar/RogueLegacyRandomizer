@@ -16,12 +16,12 @@ namespace Randomchaos2DGodRays
 {
     public class BasePostProcessingEffect
     {
+        public bool Enabled = true;
+        protected Game Game;
         public Vector2 HalfPixel;
         public Texture2D lastScene;
         public Texture2D orgScene;
         protected List<BasePostProcess> postProcesses = new List<BasePostProcess>();
-        protected Game Game;
-        public bool Enabled = true;
 
         public BasePostProcessingEffect(Game game)
         {
@@ -40,9 +40,9 @@ namespace Randomchaos2DGodRays
                 return;
             }
             orgScene = scene;
-            int count = postProcesses.Count;
+            var count = postProcesses.Count;
             lastScene = null;
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 if (!postProcesses[i].Enabled) continue;
                 postProcesses[i].HalfPixel = HalfPixel;

@@ -19,20 +19,20 @@ namespace RogueCastle
 {
     public class TextScreen : Screen
     {
-        private TextObj m_text;
-        private float m_fadeInSpeed;
         private float m_backBufferOpacity;
-        private bool m_typewriteText;
-        private float m_textDuration;
+        private float m_fadeInSpeed;
         private bool m_loadEndingAfterward;
         private SpriteObj m_smoke1;
         private SpriteObj m_smoke2;
         private SpriteObj m_smoke3;
+        private TextObj m_text;
+        private float m_textDuration;
+        private bool m_typewriteText;
         public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
-            Color textureColor = new Color(200, 150, 55);
+            var textureColor = new Color(200, 150, 55);
             m_smoke1 = new SpriteObj("TextSmoke_Sprite");
             m_smoke1.ForceDraw = true;
             m_smoke1.Scale = new Vector2(2f, 2f);
@@ -53,7 +53,7 @@ namespace RogueCastle
             m_fadeInSpeed = (float) objList[1];
             m_textDuration = (float) objList[2];
             m_typewriteText = (bool) objList[3];
-            TextObj textObj = objList[4] as TextObj;
+            var textObj = objList[4] as TextObj;
             if (m_text != null)
             {
                 m_text.Dispose();
@@ -108,7 +108,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             m_smoke1.X += 5f*num;
             m_smoke2.X += 15f*num;
             m_smoke3.X += 10f*num;

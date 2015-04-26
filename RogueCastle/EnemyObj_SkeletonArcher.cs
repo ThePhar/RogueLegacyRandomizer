@@ -16,10 +16,18 @@ namespace RogueCastle
 {
     public class EnemyObj_SkeletonArcher : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private float m_fireDelay = 0.5f;
+        private readonly float m_fireDelay = 0.5f;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+
+        public EnemyObj_SkeletonArcher(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySkeletonArcherIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 25;
+            TintablePart = _objectList[0];
+        }
 
         protected override void InitializeEV()
         {
@@ -143,11 +151,11 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherIdle_Character"));
             logicSet.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet.AddAction(new DelayLogicAction(0.2f, 0.75f));
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "ArrowProjectile_Sprite",
                 SourceAnchor = new Vector2(10f, -20f),
@@ -161,7 +169,7 @@ namespace RogueCastle
                 Scale = ProjectileScale,
                 FollowArc = true
             };
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-20f, -20f);
             logicSet2.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -177,7 +185,7 @@ namespace RogueCastle
             logicSet2.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet2.AddAction(new DelayLogicAction(0.5f));
             logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-20f, -20f);
             logicSet3.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -196,7 +204,7 @@ namespace RogueCastle
             logicSet3.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet3.AddAction(new DelayLogicAction(0.5f));
             logicSet3.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-35f, -35f);
             logicSet4.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -217,7 +225,7 @@ namespace RogueCastle
             logicSet4.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet4.AddAction(new DelayLogicAction(0.5f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-50f, -50f);
             logicSet5.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -234,7 +242,7 @@ namespace RogueCastle
             logicSet5.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet5.AddAction(new DelayLogicAction(0.5f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-50f, -50f);
             logicSet6.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -253,7 +261,7 @@ namespace RogueCastle
             logicSet6.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet6.AddAction(new DelayLogicAction(0.5f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-60f, -60f);
             logicSet7.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -274,7 +282,7 @@ namespace RogueCastle
             logicSet7.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet7.AddAction(new DelayLogicAction(0.5f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-70f, -70f);
             logicSet8.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -291,7 +299,7 @@ namespace RogueCastle
             logicSet8.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet8.AddAction(new DelayLogicAction(0.5f));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet9 = new LogicSet(this);
+            var logicSet9 = new LogicSet(this);
             logicSet9.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-55f, -55f);
             logicSet9.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -310,7 +318,7 @@ namespace RogueCastle
             logicSet9.AddAction(new ChangePropertyLogicAction(GetChildAt(1), "Rotation", 0));
             logicSet9.AddAction(new DelayLogicAction(0.5f));
             logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet10 = new LogicSet(this);
+            var logicSet10 = new LogicSet(this);
             logicSet10.AddAction(new ChangeSpriteLogicAction("EnemySkeletonArcherAttack_Character", false, false));
             projectileData.Angle = new Vector2(-90f, -90f);
             logicSet10.AddAction(new RunFunctionLogicAction(this, "AngleArcher", projectileData.Angle.X));
@@ -348,9 +356,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_B4_1 = false;
-                    LogicBlock arg_B4_2 = m_generalBasicLB;
-                    int[] array = new int[4];
+                    var arg_B4_1 = false;
+                    var arg_B4_2 = m_generalBasicLB;
+                    var array = new int[4];
                     array[0] = 100;
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
@@ -375,9 +383,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_B4_1 = false;
-                    LogicBlock arg_B4_2 = m_generalAdvancedLB;
-                    int[] array = new int[4];
+                    var arg_B4_1 = false;
+                    var arg_B4_2 = m_generalAdvancedLB;
+                    var array = new int[4];
                     array[0] = 100;
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
@@ -402,9 +410,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_B4_1 = false;
-                    LogicBlock arg_B4_2 = m_generalExpertLB;
-                    int[] array = new int[4];
+                    var arg_B4_1 = false;
+                    var arg_B4_2 = m_generalExpertLB;
+                    var array = new int[4];
                     array[0] = 100;
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
@@ -429,9 +437,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_B4_1 = false;
-                    LogicBlock arg_B4_2 = m_generalBasicLB;
-                    int[] array = new int[4];
+                    var arg_B4_1 = false;
+                    var arg_B4_2 = m_generalBasicLB;
+                    var array = new int[4];
                     array[0] = 100;
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
@@ -475,14 +483,6 @@ namespace RogueCastle
         {
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "SkeletonAttack1");
             base.HitEnemy(damage, position, isPlayer);
-        }
-
-        public EnemyObj_SkeletonArcher(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySkeletonArcherIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 25;
-            TintablePart = _objectList[0];
         }
     }
 }

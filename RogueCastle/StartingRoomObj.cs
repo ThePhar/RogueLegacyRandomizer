@@ -23,108 +23,48 @@ namespace RogueCastle
     {
         private const int ENCHANTRESS_HEAD_LAYER = 4;
         private const byte ARCHITECT_HEAD_LAYER = 1;
-        private BlacksmithObj m_blacksmith;
-        private SpriteObj m_blacksmithIcon;
-        private Vector2 m_blacksmithIconPosition;
-        private ObjContainer m_enchantress;
-        private SpriteObj m_enchantressIcon;
-        private Vector2 m_enchantressIconPosition;
         private ObjContainer m_architect;
+        private TerrainObj m_architectBlock;
         private SpriteObj m_architectIcon;
         private Vector2 m_architectIconPosition;
         private bool m_architectRenovating;
-        private float m_screenShakeCounter;
+        private BlacksmithObj m_blacksmith;
         private FrameSoundObj m_blacksmithAnvilSound;
-        private GameObj m_tree1;
-        private GameObj m_tree2;
-        private GameObj m_tree3;
+        private TerrainObj m_blacksmithBlock;
+        private SpriteObj m_blacksmithBoard;
+        private SpriteObj m_blacksmithIcon;
+        private Vector2 m_blacksmithIconPosition;
+        private SpriteObj m_blacksmithNewIcon;
+        private bool m_controlsLocked;
+        private ObjContainer m_enchantress;
+        private TerrainObj m_enchantressBlock;
+        private SpriteObj m_enchantressIcon;
+        private Vector2 m_enchantressIconPosition;
+        private SpriteObj m_enchantressNewIcon;
         private GameObj m_fern1;
         private GameObj m_fern2;
         private GameObj m_fern3;
+        private bool m_horizontalShake;
         private bool m_isRaining;
-        private List<RaindropObj> m_rainFG;
-        private Cue m_rainSFX;
-        private SpriteObj m_tent;
-        private SpriteObj m_blacksmithBoard;
-        private SpriteObj m_screw;
-        private PhysicsObjContainer m_tollCollector;
-        private SpriteObj m_tollCollectorIcon;
-        private bool m_playerWalkedOut;
+        private bool m_isSnowing;
+        private float m_lightningTimer;
         private SpriteObj m_mountain1;
         private SpriteObj m_mountain2;
-        private float m_lightningTimer;
-        private SpriteObj m_blacksmithNewIcon;
-        private SpriteObj m_enchantressNewIcon;
-        private TerrainObj m_blacksmithBlock;
-        private TerrainObj m_enchantressBlock;
-        private TerrainObj m_architectBlock;
-        private bool m_controlsLocked;
-        private bool m_isSnowing;
-        private bool m_horizontalShake;
-        private bool m_verticalShake;
-        private bool m_shakeScreen;
+        private bool m_playerWalkedOut;
+        private List<RaindropObj> m_rainFG;
+        private Cue m_rainSFX;
+        private float m_screenShakeCounter;
         private float m_screenShakeMagnitude;
+        private SpriteObj m_screw;
+        private bool m_shakeScreen;
         private Vector2 m_shakeStartingPos;
-
-        private bool BlacksmithNewIconVisible
-        {
-            get
-            {
-                foreach (byte[] current in Game.PlayerStats.GetBlueprintArray)
-                {
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        byte b = array[i];
-                        if (b == 1)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-        }
-
-        private bool EnchantressNewIconVisible
-        {
-            get
-            {
-                foreach (byte[] current in Game.PlayerStats.GetRuneArray)
-                {
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        byte b = array[i];
-                        if (b == 1)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-        }
-
-        private bool SmithyAvailable
-        {
-            get { return SkillSystem.GetSkill(SkillType.Smithy).ModifierAmount > 0f; }
-        }
-
-        private bool EnchantressAvailable
-        {
-            get { return SkillSystem.GetSkill(SkillType.Enchanter).ModifierAmount > 0f; }
-        }
-
-        private bool ArchitectAvailable
-        {
-            get { return SkillSystem.GetSkill(SkillType.Architect).ModifierAmount > 0f; }
-        }
-
-        private bool TollCollectorAvailable
-        {
-            get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
-        }
+        private SpriteObj m_tent;
+        private PhysicsObjContainer m_tollCollector;
+        private SpriteObj m_tollCollectorIcon;
+        private GameObj m_tree1;
+        private GameObj m_tree2;
+        private GameObj m_tree3;
+        private bool m_verticalShake;
 
         public StartingRoomObj()
         {
@@ -205,22 +145,82 @@ namespace RogueCastle
             m_tollCollectorIcon.Flip = m_tollCollector.Flip;
             m_tollCollectorIcon.OutlineWidth = 2;
             m_rainFG = new List<RaindropObj>();
-            int num = 400;
+            var num = 400;
             if (LevelEV.SAVE_FRAMES)
             {
                 num /= 2;
             }
-            for (int i = 0; i < num; i++)
+            for (var i = 0; i < num; i++)
             {
-                RaindropObj item =
+                var item =
                     new RaindropObj(new Vector2(CDGMath.RandomInt(-100, 2540), CDGMath.RandomInt(-400, 720)));
                 m_rainFG.Add(item);
             }
         }
 
+        private bool BlacksmithNewIconVisible
+        {
+            get
+            {
+                foreach (var current in Game.PlayerStats.GetBlueprintArray)
+                {
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
+                    {
+                        var b = array[i];
+                        if (b == 1)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+
+        private bool EnchantressNewIconVisible
+        {
+            get
+            {
+                foreach (var current in Game.PlayerStats.GetRuneArray)
+                {
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
+                    {
+                        var b = array[i];
+                        if (b == 1)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+
+        private bool SmithyAvailable
+        {
+            get { return SkillSystem.GetSkill(SkillType.Smithy).ModifierAmount > 0f; }
+        }
+
+        private bool EnchantressAvailable
+        {
+            get { return SkillSystem.GetSkill(SkillType.Enchanter).ModifierAmount > 0f; }
+        }
+
+        private bool ArchitectAvailable
+        {
+            get { return SkillSystem.GetSkill(SkillType.Architect).ModifierAmount > 0f; }
+        }
+
+        private bool TollCollectorAvailable
+        {
+            get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
+        }
+
         public override void Initialize()
         {
-            foreach (TerrainObj current in TerrainObjList)
+            foreach (var current in TerrainObjList)
             {
                 if (current.Name == "BlacksmithBlock")
                 {
@@ -239,7 +239,7 @@ namespace RogueCastle
                     current.ShowTerrain = false;
                 }
             }
-            for (int i = 0; i < GameObjList.Count; i++)
+            for (var i = 0; i < GameObjList.Count; i++)
             {
                 if (GameObjList[i].Name == "Mountains 1")
                 {
@@ -257,7 +257,7 @@ namespace RogueCastle
         {
             if (m_tree1 == null)
             {
-                foreach (GameObj current in GameObjList)
+                foreach (var current in GameObjList)
                 {
                     if (current.Name == "Tree1")
                     {
@@ -314,7 +314,7 @@ namespace RogueCastle
             m_isSnowing = (DateTime.Now.Month == 12 || DateTime.Now.Month == 1);
             if (m_isSnowing)
             {
-                foreach (RaindropObj current in m_rainFG)
+                foreach (var current in m_rainFG)
                 {
                     current.ChangeToSnowflake();
                 }
@@ -354,7 +354,7 @@ namespace RogueCastle
             Player.State = 1;
             Player.IsWeighted = false;
             Player.IsCollidable = false;
-            LogicSet logicSet = new LogicSet(Player);
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
             logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
             logicSet.AddAction(new ChangeSpriteLogicAction("PlayerWalking_Character"));
@@ -416,7 +416,7 @@ namespace RogueCastle
             m_enchantressBlock.Visible = EnchantressAvailable;
             m_blacksmithBlock.Visible = SmithyAvailable;
             m_architectBlock.Visible = ArchitectAvailable;
-            float totalGameTime = Game.TotalGameTime;
+            var totalGameTime = Game.TotalGameTime;
             if (!m_playerWalkedOut)
             {
                 if (!Player.ControlsLocked && Player.X < Bounds.Left)
@@ -434,11 +434,11 @@ namespace RogueCastle
             }
             if (m_isRaining)
             {
-                foreach (TerrainObj current in TerrainObjList)
+                foreach (var current in TerrainObjList)
                 {
                     current.UseCachedValues = true;
                 }
-                foreach (RaindropObj current2 in m_rainFG)
+                foreach (var current2 in m_rainFG)
                 {
                     current2.Update(TerrainObjList, gameTime);
                 }
@@ -470,7 +470,7 @@ namespace RogueCastle
             m_blacksmithIcon.Position = new Vector2(m_blacksmithIconPosition.X,
                 m_blacksmithIconPosition.Y - 70f + (float) Math.Sin(totalGameTime*20f)*2f);
             m_enchantressIcon.Visible = false;
-            Rectangle b = new Rectangle((int) (m_enchantress.X - 100f), (int) m_enchantress.Y,
+            var b = new Rectangle((int) (m_enchantress.X - 100f), (int) m_enchantress.Y,
                 m_enchantress.Bounds.Width + 100, m_enchantress.Bounds.Height);
             if (Player != null && CollisionMath.Intersects(Player.TerrainBounds, b) && Player.IsTouchingGround &&
                 EnchantressAvailable)
@@ -589,7 +589,7 @@ namespace RogueCastle
                     if (m_architectIcon.Visible &&
                         (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
                     {
-                        RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                        var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                         if ((Game.ScreenManager.Game as Game).SaveManager.FileExists(SaveType.Map))
                         {
                             if (!Game.PlayerStats.LockCastle)
@@ -623,7 +623,7 @@ namespace RogueCastle
                 if (m_tollCollectorIcon.Visible &&
                     (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
                 {
-                    RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                    var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     if (Game.PlayerStats.SpecialItem == 1)
                     {
                         Tween.RunFunction(0.1f, this, "TollPaid", false);
@@ -667,7 +667,7 @@ namespace RogueCastle
                     }
                     else
                     {
-                        float num = SkillSystem.GetSkill(SkillType.Prices_Down).ModifierAmount*100f;
+                        var num = SkillSystem.GetSkill(SkillType.Prices_Down).ModifierAmount*100f;
                         rCScreenManager2.DialogueScreen.SetDialogue("Meet Toll Collector Skip" +
                                                                     (int) Math.Round(num, MidpointRounding.AwayFromZero));
                     }
@@ -693,8 +693,8 @@ namespace RogueCastle
                 {
                     Player.Flip = SpriteEffects.FlipHorizontally;
                 }
-                float num = CDGMath.DistanceBetweenPts(Player.Position, new Vector2(target.X - 150f, target.Y))/
-                            Player.Speed;
+                var num = CDGMath.DistanceBetweenPts(Player.Position, new Vector2(target.X - 150f, target.Y))/
+                          Player.Speed;
                 Player.UpdateCollisionBoxes();
                 Player.State = 1;
                 Player.IsWeighted = false;
@@ -705,7 +705,7 @@ namespace RogueCastle
                 Player.LockControls();
                 Player.ChangeSprite("PlayerWalking_Character");
                 Player.PlayAnimation();
-                LogicSet logicSet = new LogicSet(Player);
+                var logicSet = new LogicSet(Player);
                 logicSet.AddAction(new DelayLogicAction(num));
                 Player.RunExternalLogicSet(logicSet);
                 Tween.To(Player, num, Tween.EaseNone, "X", (target.Position.X - 150f).ToString());
@@ -731,11 +731,11 @@ namespace RogueCastle
                         Game.PlayerStats.SpokeToEnchantress = true;
                         (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen.SetDialogue(
                             "Meet Enchantress");
-                        DialogueScreen arg_1A1_0 =
+                        var arg_1A1_0 =
                             (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen;
                         object arg_1A1_1 = Player.AttachedLevel.ScreenManager;
-                        string arg_1A1_2 = "DisplayScreen";
-                        object[] array = new object[3];
+                        var arg_1A1_2 = "DisplayScreen";
+                        var array = new object[3];
                         array[0] = 11;
                         array[1] = true;
                         arg_1A1_0.SetConfirmEndHandler(arg_1A1_1, arg_1A1_2, array);
@@ -750,10 +750,10 @@ namespace RogueCastle
             {
                 Game.PlayerStats.SpokeToBlacksmith = true;
                 (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen.SetDialogue("Meet Blacksmith");
-                DialogueScreen arg_CA_0 = (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen;
+                var arg_CA_0 = (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen;
                 object arg_CA_1 = Player.AttachedLevel.ScreenManager;
-                string arg_CA_2 = "DisplayScreen";
-                object[] array2 = new object[3];
+                var arg_CA_2 = "DisplayScreen";
+                var array2 = new object[3];
                 array2[0] = 10;
                 array2[1] = true;
                 arg_CA_0.SetConfirmEndHandler(arg_CA_1, arg_CA_2, array2);
@@ -767,7 +767,7 @@ namespace RogueCastle
         {
             if (chargeFee)
             {
-                float num = Game.PlayerStats.Gold*(1f - SkillSystem.GetSkill(SkillType.Prices_Down).ModifierAmount);
+                var num = Game.PlayerStats.Gold*(1f - SkillSystem.GetSkill(SkillType.Prices_Down).ModifierAmount);
                 Game.PlayerStats.Gold -= (int) num;
                 if (num > 0f)
                 {
@@ -859,26 +859,26 @@ namespace RogueCastle
             Player.UnlockControls();
             Game.PlayerStats.LockCastle = true;
             Game.PlayerStats.HasArchitectFee = true;
-            foreach (ChestObj current in Player.AttachedLevel.ChestList)
+            foreach (var current in Player.AttachedLevel.ChestList)
             {
-                FairyChestObj fairyChestObj = current as FairyChestObj;
+                var fairyChestObj = current as FairyChestObj;
                 if (fairyChestObj != null && fairyChestObj.State == 2)
                 {
                     fairyChestObj.ResetChest();
                 }
             }
-            foreach (RoomObj current2 in Player.AttachedLevel.RoomList)
+            foreach (var current2 in Player.AttachedLevel.RoomList)
             {
-                foreach (GameObj current3 in current2.GameObjList)
+                foreach (var current3 in current2.GameObjList)
                 {
-                    BreakableObj breakableObj = current3 as BreakableObj;
+                    var breakableObj = current3 as BreakableObj;
                     if (breakableObj != null)
                     {
                         breakableObj.Reset();
                     }
                 }
             }
-            RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+            var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("Castle Lock Complete Architect");
             rCScreenManager.DisplayScreen(13, true);
         }
@@ -925,7 +925,7 @@ namespace RogueCastle
             m_enchantressNewIcon.Draw(camera);
             if (m_isRaining)
             {
-                foreach (RaindropObj current in m_rainFG)
+                foreach (var current in m_rainFG)
                 {
                     current.Draw(camera);
                 }
@@ -934,7 +934,7 @@ namespace RogueCastle
 
         public override void PauseRoom()
         {
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.PauseAnimation();
             }
@@ -951,7 +951,7 @@ namespace RogueCastle
 
         public override void UnpauseRoom()
         {
-            foreach (RaindropObj current in m_rainFG)
+            foreach (var current in m_rainFG)
             {
                 current.ResumeAnimation();
             }
@@ -1045,7 +1045,7 @@ namespace RogueCastle
                 m_fern1 = null;
                 m_fern2 = null;
                 m_fern3 = null;
-                foreach (RaindropObj current in m_rainFG)
+                foreach (var current in m_rainFG)
                 {
                     current.Dispose();
                 }

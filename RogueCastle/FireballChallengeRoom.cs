@@ -19,14 +19,14 @@ namespace RogueCastle
     {
         private EnemyObj_Fireball m_boss;
 
-        public override bool BossKilled
-        {
-            get { return m_boss.IsKilled; }
-        }
-
         public FireballChallengeRoom()
         {
             m_roomActivityDelay = 0.5f;
+        }
+
+        public override bool BossKilled
+        {
+            get { return m_boss.IsKilled; }
         }
 
         public override void Initialize()
@@ -82,7 +82,7 @@ namespace RogueCastle
             m_boss.PlayAnimation();
             Player.AttachedLevel.Camera.X = Player.X;
             Player.AttachedLevel.Camera.Y = Player.Y;
-            Vector2 arg_8E_0 = Player.AttachedLevel.Camera.Position;
+            var arg_8E_0 = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
@@ -113,7 +113,7 @@ namespace RogueCastle
         {
             if (m_boss.CurrentHealth <= 0 && ActiveEnemies > 1)
             {
-                foreach (EnemyObj current in EnemyList)
+                foreach (var current in EnemyList)
                 {
                     if (current is EnemyObj_BouncySpike)
                     {

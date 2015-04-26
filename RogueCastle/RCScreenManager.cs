@@ -22,66 +22,43 @@ namespace RogueCastle
 {
     public class RCScreenManager : ScreenManager
     {
-        private GameOverScreen m_gameOverScreen;
-        private SkillScreen m_traitScreen;
-        private EnchantressScreen m_enchantressScreen;
-        private BlacksmithScreen m_blacksmithScreen;
-        private GetItemScreen m_getItemScreen;
-        private DialogueScreen m_dialogueScreen;
-        private MapScreen m_mapScreen;
-        private PauseScreen m_pauseScreen;
-        private OptionsScreen m_optionsScreen;
-        private ProfileCardScreen m_profileCardScreen;
-        private CreditsScreen m_creditsScreen;
-        private SkillUnlockScreen m_skillUnlockScreen;
-        private DiaryEntryScreen m_diaryEntryScreen;
-        private DeathDefiedScreen m_deathDefyScreen;
-        private DiaryFlashbackScreen m_flashbackScreen;
-        private TextScreen m_textScreen;
-        private GameOverBossScreen m_gameOverBossScreen;
-        private ProfileSelectScreen m_profileSelectScreen;
-        private VirtualScreen m_virtualScreen;
-        private bool m_isTransitioning;
-        private bool m_inventoryVisible;
-        private PlayerObj m_player;
-        private SpriteObj m_blackTransitionIn;
         private SpriteObj m_blackScreen;
+        private BlacksmithScreen m_blacksmithScreen;
+        private SpriteObj m_blackTransitionIn;
         private SpriteObj m_blackTransitionOut;
+        private CreditsScreen m_creditsScreen;
+        private DeathDefiedScreen m_deathDefyScreen;
+        private DiaryEntryScreen m_diaryEntryScreen;
+        private EnchantressScreen m_enchantressScreen;
+        private DiaryFlashbackScreen m_flashbackScreen;
+        private GameOverBossScreen m_gameOverBossScreen;
+        private GameOverScreen m_gameOverScreen;
+        private GetItemScreen m_getItemScreen;
         private bool m_isWipeTransitioning;
+        private MapScreen m_mapScreen;
+        private OptionsScreen m_optionsScreen;
+        private PauseScreen m_pauseScreen;
+        private ProfileCardScreen m_profileCardScreen;
+        private ProfileSelectScreen m_profileSelectScreen;
+        private SkillUnlockScreen m_skillUnlockScreen;
+        private TextScreen m_textScreen;
+        private VirtualScreen m_virtualScreen;
 
-        public bool InventoryVisible
+        public RCScreenManager(Game Game) : base(Game)
         {
-            get { return m_inventoryVisible; }
         }
+
+        public bool InventoryVisible { get; private set; }
 
         public RenderTarget2D RenderTarget
         {
             get { return m_virtualScreen.RenderTarget; }
         }
 
-        public DialogueScreen DialogueScreen
-        {
-            get { return m_dialogueScreen; }
-        }
-
-        public SkillScreen SkillScreen
-        {
-            get { return m_traitScreen; }
-        }
-
-        public PlayerObj Player
-        {
-            get { return m_player; }
-        }
-
-        public bool IsTransitioning
-        {
-            get { return m_isTransitioning; }
-        }
-
-        public RCScreenManager(Game Game) : base(Game)
-        {
-        }
+        public DialogueScreen DialogueScreen { get; private set; }
+        public SkillScreen SkillScreen { get; private set; }
+        public PlayerObj Player { get; private set; }
+        public bool IsTransitioning { get; private set; }
 
         public override void Initialize()
         {
@@ -90,7 +67,7 @@ namespace RogueCastle
             m_virtualScreen = new VirtualScreen(1320, 720, Camera.GraphicsDevice);
             Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
             Game.Deactivated += PauseGame;
-            Form form = Control.FromHandle(Game.Window.Handle) as Form;
+            var form = Control.FromHandle(Game.Window.Handle) as Form;
             if (form != null)
             {
                 form.MouseCaptureChanged += PauseGame;
@@ -100,7 +77,7 @@ namespace RogueCastle
 
         public void PauseGame(object sender, EventArgs e)
         {
-            ProceduralLevelScreen proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
+            var proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
             if (proceduralLevelScreen != null && !(proceduralLevelScreen.CurrentRoom is EndingRoomObj))
             {
                 DisplayScreen(16, true);
@@ -110,11 +87,11 @@ namespace RogueCastle
         public void ReinitializeContent(object sender, EventArgs e)
         {
             m_virtualScreen.ReinitializeRTs(Game.GraphicsDevice);
-            foreach (Screen current in m_screenArray)
+            foreach (var current in m_screenArray)
             {
                 current.DisposeRTs();
             }
-            foreach (Screen current2 in m_screenArray)
+            foreach (var current2 in m_screenArray)
             {
                 current2.ReinitializeRTs();
             }
@@ -129,11 +106,11 @@ namespace RogueCastle
         public void InitializeScreens()
         {
             m_gameOverScreen = new GameOverScreen();
-            m_traitScreen = new SkillScreen();
+            SkillScreen = new SkillScreen();
             m_blacksmithScreen = new BlacksmithScreen();
             m_getItemScreen = new GetItemScreen();
             m_enchantressScreen = new EnchantressScreen();
-            m_dialogueScreen = new DialogueScreen();
+            DialogueScreen = new DialogueScreen();
             m_pauseScreen = new PauseScreen();
             m_optionsScreen = new OptionsScreen();
             m_profileCardScreen = new ProfileCardScreen();
@@ -150,11 +127,11 @@ namespace RogueCastle
         public override void LoadContent()
         {
             m_gameOverScreen.LoadContent();
-            m_traitScreen.LoadContent();
+            SkillScreen.LoadContent();
             m_blacksmithScreen.LoadContent();
             m_getItemScreen.LoadContent();
             m_enchantressScreen.LoadContent();
-            m_dialogueScreen.LoadContent();
+            DialogueScreen.LoadContent();
             m_pauseScreen.LoadContent();
             m_optionsScreen.LoadContent();
             m_profileCardScreen.LoadContent();
@@ -200,12 +177,12 @@ namespace RogueCastle
 
         private void LoadPlayer()
         {
-            if (m_player == null)
+            if (Player == null)
             {
-                m_player = new PlayerObj("PlayerIdle_Character", PlayerIndex.One, (Game as Game).PhysicsManager, null,
+                Player = new PlayerObj("PlayerIdle_Character", PlayerIndex.One, (Game as Game).PhysicsManager, null,
                     Game as Game);
-                m_player.Position = new Vector2(200f, 200f);
-                m_player.Initialize();
+                Player.Position = new Vector2(200f, 200f);
+                Player.Initialize();
             }
         }
 
@@ -214,10 +191,10 @@ namespace RogueCastle
             LoadPlayer();
             if (pauseOtherScreens)
             {
-                Screen[] screens = GetScreens();
-                for (int i = 0; i < screens.Length; i++)
+                var screens = GetScreens();
+                for (var i = 0; i < screens.Length; i++)
                 {
-                    Screen screen = screens[i];
+                    var screen = screens[i];
                     if (screen == CurrentScreen)
                     {
                         screen.PauseScreen();
@@ -251,7 +228,7 @@ namespace RogueCastle
                     }
                     break;
                 case 6:
-                    AddScreen(m_traitScreen, null);
+                    AddScreen(SkillScreen, null);
                     break;
                 case 7:
                     m_gameOverScreen.PassInData(objList);
@@ -259,21 +236,21 @@ namespace RogueCastle
                     break;
                 case 10:
                     AddScreen(m_blacksmithScreen, null);
-                    m_blacksmithScreen.Player = m_player;
+                    m_blacksmithScreen.Player = Player;
                     break;
                 case 11:
                     AddScreen(m_enchantressScreen, null);
-                    m_enchantressScreen.Player = m_player;
+                    m_enchantressScreen.Player = Player;
                     break;
                 case 12:
                     m_getItemScreen.PassInData(objList);
                     AddScreen(m_getItemScreen, null);
                     break;
                 case 13:
-                    AddScreen(m_dialogueScreen, null);
+                    AddScreen(DialogueScreen, null);
                     break;
                 case 14:
-                    m_mapScreen.SetPlayer(m_player);
+                    m_mapScreen.SetPlayer(Player);
                     AddScreen(m_mapScreen, null);
                     break;
                 case 16:
@@ -349,7 +326,7 @@ namespace RogueCastle
         public void HideCurrentScreen()
         {
             RemoveScreen(CurrentScreen, false);
-            ProceduralLevelScreen proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
+            var proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
             if (proceduralLevelScreen != null)
             {
                 proceduralLevelScreen.UnpauseScreen();
@@ -368,14 +345,14 @@ namespace RogueCastle
 
         private void LoadScreen(byte screenType, bool wipeTransition)
         {
-            foreach (Screen current in m_screenArray)
+            foreach (var current in m_screenArray)
             {
                 current.DrawIfCovered = true;
-                ProceduralLevelScreen proceduralLevelScreen = current as ProceduralLevelScreen;
+                var proceduralLevelScreen = current as ProceduralLevelScreen;
                 if (proceduralLevelScreen != null)
                 {
-                    m_player.AttachLevel(proceduralLevelScreen);
-                    proceduralLevelScreen.Player = m_player;
+                    Player.AttachLevel(proceduralLevelScreen);
+                    proceduralLevelScreen.Player = Player;
                     AttachMap(proceduralLevelScreen);
                 }
             }
@@ -384,8 +361,8 @@ namespace RogueCastle
                 InitializeScreens();
                 LoadContent();
             }
-            LoadingScreen screen = new LoadingScreen(screenType, wipeTransition);
-            m_isTransitioning = true;
+            var screen = new LoadingScreen(screenType, wipeTransition);
+            IsTransitioning = true;
             AddScreen(screen, PlayerIndex.One);
             GC.Collect();
         }
@@ -394,7 +371,7 @@ namespace RogueCastle
         {
             if (screen is LoadingScreen)
             {
-                m_isTransitioning = false;
+                IsTransitioning = false;
             }
             base.RemoveScreen(screen, disposeScreen);
         }
@@ -411,7 +388,7 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             m_virtualScreen.Update();
-            if (!m_isTransitioning)
+            if (!IsTransitioning)
             {
                 base.Update(gameTime);
                 return;
@@ -476,11 +453,11 @@ namespace RogueCastle
 
         public ProceduralLevelScreen GetLevelScreen()
         {
-            Screen[] screens = GetScreens();
-            for (int i = 0; i < screens.Length; i++)
+            var screens = GetScreens();
+            for (var i = 0; i < screens.Length; i++)
             {
-                Screen screen = screens[i];
-                ProceduralLevelScreen proceduralLevelScreen = screen as ProceduralLevelScreen;
+                var screen = screens[i];
+                var proceduralLevelScreen = screen as ProceduralLevelScreen;
                 if (proceduralLevelScreen != null)
                 {
                     return proceduralLevelScreen;

@@ -18,13 +18,13 @@ namespace RogueCastle
 {
     public class TextManager : IDisposableObj
     {
-        private int m_poolSize;
+        private readonly int m_poolSize;
         private DS2DPool<TextObj> m_resourcePool;
-        private bool m_isDisposed;
 
-        public bool IsDisposed
+        public TextManager(int poolSize)
         {
-            get { return m_isDisposed; }
+            m_poolSize = poolSize;
+            m_resourcePool = new DS2DPool<TextObj>();
         }
 
         public int ActiveTextObjs
@@ -42,17 +42,24 @@ namespace RogueCastle
             get { return TotalPoolSize - ActiveTextObjs; }
         }
 
-        public TextManager(int poolSize)
+        public bool IsDisposed { get; private set; }
+
+        public void Dispose()
         {
-            m_poolSize = poolSize;
-            m_resourcePool = new DS2DPool<TextObj>();
+            if (!IsDisposed)
+            {
+                Console.WriteLine("Disposing Text Manager");
+                m_resourcePool.Dispose();
+                m_resourcePool = null;
+                IsDisposed = true;
+            }
         }
 
         public void Initialize()
         {
-            for (int i = 0; i < m_poolSize; i++)
+            for (var i = 0; i < m_poolSize; i++)
             {
-                TextObj textObj = new TextObj();
+                var textObj = new TextObj();
                 textObj.Visible = false;
                 textObj.TextureColor = Color.White;
                 textObj.OutlineWidth = 2;
@@ -62,13 +69,13 @@ namespace RogueCastle
 
         public void DisplayNumberStringText(int amount, string text, Color color, Vector2 position)
         {
-            TextObj textObj = m_resourcePool.CheckOut();
+            var textObj = m_resourcePool.CheckOut();
             textObj.Font = Game.JunicodeFont;
             textObj.FontSize = 14f;
             textObj.Text = amount + " " + text;
-            int width = textObj.Width;
+            var width = textObj.Width;
             m_resourcePool.CheckIn(textObj);
-            TextObj textObj2 = m_resourcePool.CheckOut();
+            var textObj2 = m_resourcePool.CheckOut();
             textObj2.Font = Game.HerzogFont;
             textObj2.Text = amount.ToString();
             textObj2.Align = Types.TextAlign.Left;
@@ -76,7 +83,7 @@ namespace RogueCastle
             textObj2.TextureColor = color;
             textObj2.Position = new Vector2(position.X - width/2f, position.Y - textObj2.Height/2f);
             textObj2.Visible = true;
-            TextObj textObj3 = m_resourcePool.CheckOut();
+            var textObj3 = m_resourcePool.CheckOut();
             textObj3.Font = Game.JunicodeFont;
             textObj3.Text = " " + text;
             textObj3.FontSize = 14f;
@@ -96,20 +103,20 @@ namespace RogueCastle
 
         public void DisplayStringNumberText(string text, int amount, Color color, Vector2 position)
         {
-            TextObj textObj = m_resourcePool.CheckOut();
+            var textObj = m_resourcePool.CheckOut();
             textObj.Font = Game.JunicodeFont;
             textObj.FontSize = 14f;
             textObj.Text = text + " " + amount;
-            int width = textObj.Width;
+            var width = textObj.Width;
             m_resourcePool.CheckIn(textObj);
-            TextObj textObj2 = m_resourcePool.CheckOut();
+            var textObj2 = m_resourcePool.CheckOut();
             textObj2.Font = Game.JunicodeFont;
             textObj2.Text = text + " ";
             textObj2.FontSize = 14f;
             textObj2.TextureColor = color;
             textObj2.Position = new Vector2(position.X - width/2f, position.Y - textObj2.Height/2f);
             textObj2.Visible = true;
-            TextObj textObj3 = m_resourcePool.CheckOut();
+            var textObj3 = m_resourcePool.CheckOut();
             textObj3.Font = Game.HerzogFont;
             textObj3.Text = amount.ToString();
             textObj3.FontSize = 18f;
@@ -126,7 +133,7 @@ namespace RogueCastle
 
         public void DisplayNumberText(int amount, Color color, Vector2 position)
         {
-            TextObj textObj = m_resourcePool.CheckOut();
+            var textObj = m_resourcePool.CheckOut();
             textObj.Font = Game.HerzogFont;
             textObj.Text = amount.ToString();
             textObj.FontSize = 18f;
@@ -142,7 +149,7 @@ namespace RogueCastle
 
         public void DisplayStringText(string text, Color color, Vector2 position)
         {
-            TextObj textObj = m_resourcePool.CheckOut();
+            var textObj = m_resourcePool.CheckOut();
             textObj.Font = Game.JunicodeFont;
             textObj.Text = text;
             textObj.Align = Types.TextAlign.Centre;
@@ -165,20 +172,9 @@ namespace RogueCastle
 
         public void Draw(Camera2D camera)
         {
-            foreach (TextObj current in m_resourcePool.ActiveObjsList)
+            foreach (var current in m_resourcePool.ActiveObjsList)
             {
                 current.Draw(camera);
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                Console.WriteLine("Disposing Text Manager");
-                m_resourcePool.Dispose();
-                m_resourcePool = null;
-                m_isDisposed = true;
             }
         }
     }

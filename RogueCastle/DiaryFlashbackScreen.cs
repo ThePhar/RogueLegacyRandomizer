@@ -21,16 +21,17 @@ namespace RogueCastle
     internal class DiaryFlashbackScreen : Screen
     {
         private BackgroundObj m_background;
-        private List<LineageObj> m_lineageArray;
-        private Vector2 m_storedCameraPos;
-        private RenderTarget2D m_sepiaRT;
         private SpriteObj m_filmGrain;
-        public float BackBufferOpacity { get; set; }
+        private List<LineageObj> m_lineageArray;
+        private RenderTarget2D m_sepiaRT;
+        private Vector2 m_storedCameraPos;
 
         public DiaryFlashbackScreen()
         {
             m_lineageArray = new List<LineageObj>();
         }
+
+        public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
@@ -90,7 +91,7 @@ namespace RogueCastle
 
         public void Cutscene2()
         {
-            LineageObj lineageObj = m_lineageArray[0];
+            var lineageObj = m_lineageArray[0];
             lineageObj.ForceDraw = true;
             Tween.RunFunction(1f, lineageObj, "DropFrame");
             Tween.RunFunction(4.5f, this, "ExitTransition");
@@ -105,7 +106,7 @@ namespace RogueCastle
 
         public override void OnExit()
         {
-            foreach (LineageObj current in m_lineageArray)
+            foreach (var current in m_lineageArray)
             {
                 current.Dispose();
             }
@@ -116,15 +117,15 @@ namespace RogueCastle
 
         private void CreateLineageObjs()
         {
-            int num = 700;
-            int num2 = 400;
-            int num3 = 0;
+            var num = 700;
+            var num2 = 400;
+            var num3 = 0;
             if (Game.PlayerStats.FamilyTreeArray.Count > 10)
             {
-                for (int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
-                    FamilyTreeNode familyTreeNode = Game.PlayerStats.FamilyTreeArray[i];
-                    LineageObj lineageObj = new LineageObj(null, true);
+                    var familyTreeNode = Game.PlayerStats.FamilyTreeArray[i];
+                    var lineageObj = new LineageObj(null, true);
                     lineageObj.IsDead = true;
                     lineageObj.Age = familyTreeNode.Age;
                     lineageObj.ChildAge = familyTreeNode.ChildAge;
@@ -146,9 +147,9 @@ namespace RogueCastle
                 }
                 return;
             }
-            foreach (FamilyTreeNode current in Game.PlayerStats.FamilyTreeArray)
+            foreach (var current in Game.PlayerStats.FamilyTreeArray)
             {
-                LineageObj lineageObj2 = new LineageObj(null, true);
+                var lineageObj2 = new LineageObj(null, true);
                 lineageObj2.IsDead = true;
                 lineageObj2.Age = current.Age;
                 lineageObj2.ChildAge = current.ChildAge;
@@ -171,10 +172,10 @@ namespace RogueCastle
 
         private void CreateLineageObjDebug()
         {
-            int num = 700;
-            int num2 = 400;
-            int num3 = 0;
-            for (int i = 0; i < 10; i++)
+            var num = 700;
+            var num2 = 400;
+            var num3 = 0;
+            for (var i = 0; i < 10; i++)
             {
                 FamilyTreeNode familyTreeNode;
                 if (i > Game.PlayerStats.FamilyTreeArray.Count - 1)
@@ -193,7 +194,7 @@ namespace RogueCastle
                 {
                     familyTreeNode = Game.PlayerStats.FamilyTreeArray[i];
                 }
-                LineageObj lineageObj = new LineageObj(null, true);
+                var lineageObj = new LineageObj(null, true);
                 lineageObj.IsDead = true;
                 lineageObj.Age = familyTreeNode.Age;
                 lineageObj.ChildAge = familyTreeNode.ChildAge;
@@ -227,7 +228,7 @@ namespace RogueCastle
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, null,
                 Camera.GetTransformation());
             m_background.Draw(Camera);
-            foreach (LineageObj current in m_lineageArray)
+            foreach (var current in m_lineageArray)
             {
                 current.Draw(Camera);
             }
@@ -241,7 +242,7 @@ namespace RogueCastle
             Camera.End();
             Camera.GraphicsDevice.SetRenderTarget((ScreenManager as RCScreenManager).RenderTarget);
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
-            Color color = new Color(180, 150, 80);
+            var color = new Color(180, 150, 80);
             Camera.Draw(m_sepiaRT, Vector2.Zero, color);
             m_filmGrain.Draw(Camera);
             Camera.End();
@@ -258,7 +259,7 @@ namespace RogueCastle
                 Console.WriteLine("Disposing Diary Flashback Screen");
                 m_background.Dispose();
                 m_background = null;
-                foreach (LineageObj current in m_lineageArray)
+                foreach (var current in m_lineageArray)
                 {
                     current.Dispose();
                 }

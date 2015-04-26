@@ -20,21 +20,21 @@ namespace RogueCastle
 {
     public class TutorialRoomObj : RoomObj
     {
-        private KeyIconTextObj m_tutorialText;
-        private int m_waypointIndex;
-        private List<GameObj> m_waypointList;
-        private string[] m_tutorialTextList;
-        private string[] m_tutorialControllerTextList;
+        private int m_creditsIndex;
+        private Vector2 m_creditsPosition;
         private TextObj m_creditsText;
-        private TextObj m_creditsTitleText;
         private string[] m_creditsTextList;
         private string[] m_creditsTextTitleList;
-        private Vector2 m_creditsPosition;
-        private int m_creditsIndex;
+        private TextObj m_creditsTitleText;
         private SpriteObj m_diary;
-        private SpriteObj m_doorSprite;
         private DoorObj m_door;
+        private SpriteObj m_doorSprite;
         private SpriteObj m_speechBubble;
+        private string[] m_tutorialControllerTextList;
+        private KeyIconTextObj m_tutorialText;
+        private string[] m_tutorialTextList;
+        private int m_waypointIndex;
+        private List<GameObj> m_waypointList;
 
         public TutorialRoomObj()
         {
@@ -43,7 +43,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "diary")
                 {
@@ -98,7 +98,7 @@ namespace RogueCastle
                 "Rogue Legacy"
             };
             m_creditsPosition = new Vector2(50f, 580f);
-            foreach (GameObj current2 in GameObjList)
+            foreach (var current2 in GameObjList)
             {
                 if (current2.Name == "waypoint1")
                 {
@@ -138,7 +138,7 @@ namespace RogueCastle
             m_creditsText.DropShadow = new Vector2(2f, 2f);
             m_creditsTitleText = (m_creditsText.Clone() as TextObj);
             m_creditsTitleText.FontSize = 14f;
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
             textObj.Text = "Down Attack this";
             textObj.OutlineWidth = 2;
@@ -173,7 +173,7 @@ namespace RogueCastle
             }
             m_creditsTitleText.Opacity = 0f;
             m_creditsText.Opacity = 0f;
-            foreach (EnemyObj current in EnemyList)
+            foreach (var current in EnemyList)
             {
                 current.Damage = 0;
             }
@@ -214,7 +214,7 @@ namespace RogueCastle
 
         private int PlayerNearWaypoint()
         {
-            for (int i = 0; i < m_waypointList.Count; i++)
+            for (var i = 0; i < m_waypointList.Count; i++)
             {
                 if (CDGMath.DistanceBetweenPts(Player.Position, m_waypointList[i].Position) < 500f)
                 {
@@ -228,7 +228,7 @@ namespace RogueCastle
         {
             if (!Game.PlayerStats.TutorialComplete)
             {
-                int waypointIndex = m_waypointIndex;
+                var waypointIndex = m_waypointIndex;
                 m_waypointIndex = PlayerNearWaypoint();
                 if (m_waypointIndex != waypointIndex)
                 {
@@ -253,7 +253,7 @@ namespace RogueCastle
             }
             else
             {
-                Rectangle bounds = m_diary.Bounds;
+                var bounds = m_diary.Bounds;
                 bounds.X -= 50;
                 bounds.Width += 100;
                 m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
@@ -268,14 +268,14 @@ namespace RogueCastle
                     {
                         if (!Game.PlayerStats.ReadLastDiary)
                         {
-                            RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                            var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                             rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + 24);
                             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "RunFlashback");
                             rCScreenManager.DisplayScreen(13, true);
                         }
                         else
                         {
-                            RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                            var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
                             rCScreenManager2.DisplayScreen(20, true);
                         }
                     }
@@ -315,7 +315,7 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            Vector2 topLeftCorner = Game.ScreenManager.Camera.TopLeftCorner;
+            var topLeftCorner = Game.ScreenManager.Camera.TopLeftCorner;
             m_creditsTitleText.Position = new Vector2(topLeftCorner.X + m_creditsPosition.X,
                 topLeftCorner.Y + m_creditsPosition.Y);
             m_creditsText.Position = m_creditsTitleText.Position;

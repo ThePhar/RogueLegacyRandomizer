@@ -19,45 +19,24 @@ namespace RogueCastle
 {
     public class MapObj : GameObj
     {
-        private PlayerObj m_player;
-        private ProceduralLevelScreen m_level;
-        private List<SpriteObj> m_roomSpriteList;
-        private List<SpriteObj> m_doorSpriteList;
-        private List<SpriteObj> m_iconSpriteList;
-        private List<Vector2> m_roomSpritePosList;
-        private List<Vector2> m_doorSpritePosList;
-        private List<Vector2> m_iconSpritePosList;
-        private SpriteObj m_playerSprite;
         public Vector2 CameraOffset;
-        private Vector2 m_spriteScale;
-        private List<RoomObj> m_addedRooms;
-        private RenderTarget2D m_alphaMaskRT;
-        private RenderTarget2D m_mapScreenRT;
         private Rectangle m_alphaMaskRect;
+        private RenderTarget2D m_alphaMaskRT;
+        private List<SpriteObj> m_doorSpriteList;
+        private List<Vector2> m_doorSpritePosList;
+        private List<SpriteObj> m_iconSpriteList;
+        private List<Vector2> m_iconSpritePosList;
+        private ProceduralLevelScreen m_level;
+        private RenderTarget2D m_mapScreenRT;
+        private PlayerObj m_player;
+        private SpriteObj m_playerSprite;
+        private List<SpriteObj> m_roomSpriteList;
+        private List<Vector2> m_roomSpritePosList;
+        private Vector2 m_spriteScale;
         private List<SpriteObj> m_teleporterList;
         private List<Vector2> m_teleporterPosList;
         private TweenObject m_xOffsetTween;
         private TweenObject m_yOffsetTween;
-        public bool DrawTeleportersOnly { get; set; }
-        public bool DrawNothing { get; set; }
-        public bool FollowPlayer { get; set; }
-
-        public List<RoomObj> AddedRoomsList
-        {
-            get { return m_addedRooms; }
-        }
-
-        public float CameraOffsetX
-        {
-            get { return CameraOffset.X; }
-            set { CameraOffset.X = value; }
-        }
-
-        public float CameraOffsetY
-        {
-            get { return CameraOffset.Y; }
-            set { CameraOffset.Y = value; }
-        }
 
         public MapObj(bool followPlayer, ProceduralLevelScreen level)
         {
@@ -76,9 +55,26 @@ namespace RogueCastle
             m_playerSprite.ForceDraw = true;
             m_playerSprite.PlayAnimation();
             m_spriteScale = new Vector2(22f, 22.5f);
-            m_addedRooms = new List<RoomObj>();
+            AddedRoomsList = new List<RoomObj>();
             m_teleporterList = new List<SpriteObj>();
             m_teleporterPosList = new List<Vector2>();
+        }
+
+        public bool DrawTeleportersOnly { get; set; }
+        public bool DrawNothing { get; set; }
+        public bool FollowPlayer { get; set; }
+        public List<RoomObj> AddedRoomsList { get; private set; }
+
+        public float CameraOffsetX
+        {
+            get { return CameraOffset.X; }
+            set { CameraOffset.X = value; }
+        }
+
+        public float CameraOffsetY
+        {
+            get { return CameraOffset.Y; }
+            set { CameraOffset.Y = value; }
         }
 
         public void InitializeAlphaMap(Rectangle mapSize, Camera2D camera)
@@ -87,7 +83,7 @@ namespace RogueCastle
             m_mapScreenRT = new RenderTarget2D(camera.GraphicsDevice, 1320, 720);
             m_alphaMaskRT = new RenderTarget2D(camera.GraphicsDevice, 1320, 720);
             CameraOffset = new Vector2(mapSize.X, mapSize.Y);
-            SpriteObj spriteObj = new SpriteObj("MapMask_Sprite");
+            var spriteObj = new SpriteObj("MapMask_Sprite");
             spriteObj.ForceDraw = true;
             spriteObj.Position = new Vector2(mapSize.X, mapSize.Y);
             spriteObj.Scale = new Vector2(mapSize.Width/(float) spriteObj.Width, mapSize.Height/(float) spriteObj.Height);
@@ -122,9 +118,9 @@ namespace RogueCastle
 
         public void AddRoom(RoomObj room)
         {
-            if (!m_addedRooms.Contains(room) && room.Width/1320 < 5)
+            if (!AddedRoomsList.Contains(room) && room.Width/1320 < 5)
             {
-                SpriteObj spriteObj =
+                var spriteObj =
                     new SpriteObj(string.Concat("MapRoom", room.Width/1320, "x", room.Height/720, "_Sprite"));
                 spriteObj.Position = new Vector2(room.X/m_spriteScale.X, room.Y/m_spriteScale.Y);
                 spriteObj.Scale = new Vector2((spriteObj.Width - 3f)/spriteObj.Width,
@@ -133,12 +129,12 @@ namespace RogueCastle
                 spriteObj.TextureColor = room.TextureColor;
                 m_roomSpriteList.Add(spriteObj);
                 m_roomSpritePosList.Add(spriteObj.Position);
-                foreach (DoorObj current in room.DoorList)
+                foreach (var current in room.DoorList)
                 {
                     if (!(room.Name == "CastleEntrance") || !(current.DoorPosition == "Left"))
                     {
-                        bool flag = false;
-                        SpriteObj spriteObj2 = new SpriteObj("MapDoor_Sprite");
+                        var flag = false;
+                        var spriteObj2 = new SpriteObj("MapDoor_Sprite");
                         spriteObj2.ForceDraw = true;
                         string doorPosition;
                         if ((doorPosition = current.DoorPosition) != null)
@@ -189,9 +185,9 @@ namespace RogueCastle
                 }
                 if (room.Name != "Bonus" && Game.PlayerStats.Class != 13)
                 {
-                    foreach (GameObj current2 in room.GameObjList)
+                    foreach (var current2 in room.GameObjList)
                     {
-                        ChestObj chestObj = current2 as ChestObj;
+                        var chestObj = current2 as ChestObj;
                         if (chestObj != null)
                         {
                             SpriteObj spriteObj3;
@@ -227,7 +223,7 @@ namespace RogueCastle
                 }
                 if (room.Name == "EntranceBoss")
                 {
-                    SpriteObj spriteObj4 = new SpriteObj("MapBossIcon_Sprite");
+                    var spriteObj4 = new SpriteObj("MapBossIcon_Sprite");
                     spriteObj4.AnimationDelay = 0.0333333351f;
                     spriteObj4.ForceDraw = true;
                     spriteObj4.PlayAnimation();
@@ -241,7 +237,7 @@ namespace RogueCastle
                 }
                 else if (room.Name == "Linker")
                 {
-                    SpriteObj spriteObj5 = new SpriteObj("MapTeleporterIcon_Sprite");
+                    var spriteObj5 = new SpriteObj("MapTeleporterIcon_Sprite");
                     spriteObj5.AnimationDelay = 0.0333333351f;
                     spriteObj5.ForceDraw = true;
                     spriteObj5.PlayAnimation();
@@ -255,7 +251,7 @@ namespace RogueCastle
                 }
                 else if (room.Name == "CastleEntrance")
                 {
-                    SpriteObj spriteObj6 = new SpriteObj("MapTeleporterIcon_Sprite");
+                    var spriteObj6 = new SpriteObj("MapTeleporterIcon_Sprite");
                     spriteObj6.AnimationDelay = 0.0333333351f;
                     spriteObj6.ForceDraw = true;
                     spriteObj6.PlayAnimation();
@@ -269,7 +265,7 @@ namespace RogueCastle
                 }
                 if (Game.PlayerStats.Class != 13 && room.Name == "Bonus")
                 {
-                    SpriteObj spriteObj7 = new SpriteObj("MapBonusIcon_Sprite");
+                    var spriteObj7 = new SpriteObj("MapBonusIcon_Sprite");
                     spriteObj7.PlayAnimation();
                     spriteObj7.AnimationDelay = 0.0333333351f;
                     spriteObj7.ForceDraw = true;
@@ -279,13 +275,13 @@ namespace RogueCastle
                     m_iconSpriteList.Add(spriteObj7);
                     m_iconSpritePosList.Add(spriteObj7.Position);
                 }
-                m_addedRooms.Add(room);
+                AddedRoomsList.Add(room);
             }
         }
 
         public void AddAllRooms(List<RoomObj> roomList)
         {
-            foreach (RoomObj current in roomList)
+            foreach (var current in roomList)
             {
                 AddRoom(current);
             }
@@ -293,18 +289,18 @@ namespace RogueCastle
 
         public void AddAllIcons(List<RoomObj> roomList)
         {
-            foreach (RoomObj current in roomList)
+            foreach (var current in roomList)
             {
-                if (!m_addedRooms.Contains(current))
+                if (!AddedRoomsList.Contains(current))
                 {
                     if (current.Name != "Bonus")
                     {
-                        using (List<GameObj>.Enumerator enumerator2 = current.GameObjList.GetEnumerator())
+                        using (var enumerator2 = current.GameObjList.GetEnumerator())
                         {
                             while (enumerator2.MoveNext())
                             {
-                                GameObj current2 = enumerator2.Current;
-                                ChestObj chestObj = current2 as ChestObj;
+                                var current2 = enumerator2.Current;
+                                var chestObj = current2 as ChestObj;
                                 if (chestObj != null)
                                 {
                                     SpriteObj spriteObj;
@@ -342,7 +338,7 @@ namespace RogueCastle
                     }
                     if (current.Name == "Bonus")
                     {
-                        SpriteObj spriteObj2 = new SpriteObj("MapBonusIcon_Sprite");
+                        var spriteObj2 = new SpriteObj("MapBonusIcon_Sprite");
                         spriteObj2.PlayAnimation();
                         spriteObj2.AnimationDelay = 0.0333333351f;
                         spriteObj2.ForceDraw = true;
@@ -358,7 +354,7 @@ namespace RogueCastle
 
         public void AddLinkerRoom(GameTypes.LevelType levelType, List<RoomObj> roomList)
         {
-            foreach (RoomObj current in roomList)
+            foreach (var current in roomList)
             {
                 if (current.Name == "Linker" && current.LevelType == levelType)
                 {
@@ -369,13 +365,13 @@ namespace RogueCastle
 
         public void RefreshChestIcons(RoomObj room)
         {
-            foreach (GameObj current in room.GameObjList)
+            foreach (var current in room.GameObjList)
             {
-                ChestObj chestObj = current as ChestObj;
+                var chestObj = current as ChestObj;
                 if (chestObj != null && chestObj.IsOpen)
                 {
-                    Vector2 pt = new Vector2(chestObj.X/m_spriteScale.X - 8f, chestObj.Y/m_spriteScale.Y - 12f);
-                    for (int i = 0; i < m_iconSpritePosList.Count; i++)
+                    var pt = new Vector2(chestObj.X/m_spriteScale.X - 8f, chestObj.Y/m_spriteScale.Y - 12f);
+                    for (var i = 0; i < m_iconSpritePosList.Count; i++)
                     {
                         if (CDGMath.DistanceBetweenPts(pt, m_iconSpritePosList[i]) < 15f)
                         {
@@ -424,7 +420,7 @@ namespace RogueCastle
         {
             if (m_teleporterList.Count > 0)
             {
-                Vector2 position = m_teleporterPosList[index];
+                var position = m_teleporterPosList[index];
                 position.X += 10f;
                 position.Y += 10f;
                 position.X *= m_spriteScale.X;
@@ -445,7 +441,7 @@ namespace RogueCastle
 
         public void CentreAroundTeleporter(int index, bool tween = false)
         {
-            Vector2 pos = m_teleporterPosList[index];
+            var pos = m_teleporterPosList[index];
             pos.X *= m_spriteScale.X;
             pos.Y *= m_spriteScale.Y;
             CentreAroundPos(pos, tween);
@@ -460,19 +456,19 @@ namespace RogueCastle
             }
             camera.GraphicsDevice.SetRenderTarget(m_mapScreenRT);
             camera.GraphicsDevice.Clear(Color.Transparent);
-            for (int i = 0; i < m_roomSpriteList.Count; i++)
+            for (var i = 0; i < m_roomSpriteList.Count; i++)
             {
                 m_roomSpriteList[i].Position = CameraOffset + m_roomSpritePosList[i];
                 m_roomSpriteList[i].Draw(camera);
             }
-            for (int j = 0; j < m_doorSpriteList.Count; j++)
+            for (var j = 0; j < m_doorSpriteList.Count; j++)
             {
                 m_doorSpriteList[j].Position = CameraOffset + m_doorSpritePosList[j];
                 m_doorSpriteList[j].Draw(camera);
             }
             if (!DrawTeleportersOnly)
             {
-                for (int k = 0; k < m_iconSpriteList.Count; k++)
+                for (var k = 0; k < m_iconSpriteList.Count; k++)
                 {
                     m_iconSpriteList[k].Position = CameraOffset + m_iconSpritePosList[k];
                     m_iconSpriteList[k].Draw(camera);
@@ -480,7 +476,7 @@ namespace RogueCastle
             }
             else
             {
-                for (int l = 0; l < m_teleporterList.Count; l++)
+                for (var l = 0; l < m_teleporterList.Count; l++)
                 {
                     m_teleporterList[l].Position = CameraOffset + m_teleporterPosList[l];
                     m_teleporterList[l].Draw(camera);
@@ -489,9 +485,9 @@ namespace RogueCastle
             if (Game.PlayerStats.Traits.X == 28f || Game.PlayerStats.Traits.Y == 28f)
             {
                 m_playerSprite.TextureColor = Color.Red;
-                foreach (RoomObj current in m_addedRooms)
+                foreach (var current in AddedRoomsList)
                 {
-                    foreach (EnemyObj current2 in current.EnemyList)
+                    foreach (var current2 in current.EnemyList)
                     {
                         if (!current2.IsKilled && !current2.IsDemented && current2.SaveToFile && current2.Type != 21 &&
                             current2.Type != 27 && current2.Type != 17)
@@ -535,7 +531,7 @@ namespace RogueCastle
 
         public void ClearRoomsAdded()
         {
-            m_addedRooms.Clear();
+            AddedRoomsList.Clear();
         }
 
         public override void Dispose()
@@ -554,26 +550,26 @@ namespace RogueCastle
                     m_mapScreenRT.Dispose();
                 }
                 m_mapScreenRT = null;
-                foreach (SpriteObj current in m_roomSpriteList)
+                foreach (var current in m_roomSpriteList)
                 {
                     current.Dispose();
                 }
                 m_roomSpriteList.Clear();
                 m_roomSpriteList = null;
-                foreach (SpriteObj current2 in m_doorSpriteList)
+                foreach (var current2 in m_doorSpriteList)
                 {
                     current2.Dispose();
                 }
                 m_doorSpriteList.Clear();
                 m_doorSpriteList = null;
-                foreach (SpriteObj current3 in m_iconSpriteList)
+                foreach (var current3 in m_iconSpriteList)
                 {
                     current3.Dispose();
                 }
                 m_iconSpriteList.Clear();
                 m_iconSpriteList = null;
-                m_addedRooms.Clear();
-                m_addedRooms = null;
+                AddedRoomsList.Clear();
+                AddedRoomsList = null;
                 m_roomSpritePosList.Clear();
                 m_roomSpritePosList = null;
                 m_doorSpritePosList.Clear();
@@ -582,7 +578,7 @@ namespace RogueCastle
                 m_iconSpritePosList = null;
                 m_playerSprite.Dispose();
                 m_playerSprite = null;
-                foreach (SpriteObj current4 in m_teleporterList)
+                foreach (var current4 in m_teleporterList)
                 {
                     current4.Dispose();
                 }
@@ -604,13 +600,13 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            MapObj mapObj = obj as MapObj;
+            var mapObj = obj as MapObj;
             mapObj.DrawTeleportersOnly = DrawTeleportersOnly;
             mapObj.CameraOffsetX = CameraOffsetX;
             mapObj.CameraOffsetY = CameraOffsetY;
             mapObj.InitializeAlphaMap(m_mapScreenRT, m_alphaMaskRT, m_alphaMaskRect);
             mapObj.SetPlayer(m_player);
-            mapObj.AddAllRooms(m_addedRooms);
+            mapObj.AddAllRooms(AddedRoomsList);
         }
 
         public SpriteObj[] TeleporterList()

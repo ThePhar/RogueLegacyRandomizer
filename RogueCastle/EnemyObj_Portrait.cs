@@ -16,11 +16,23 @@ namespace RogueCastle
 {
     public class EnemyObj_Portrait : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_Portrait(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyPortrait_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 32;
+            var spriteName = "FramePicture" + CDGMath.RandomInt(1, 16) + "_Sprite";
+            GetChildAt(0).ChangeSprite(spriteName);
+            GetChildAt(0);
+            DisableCollisionBoxRotations = false;
+        }
+
         public bool Shake { get; set; }
         public bool Chasing { get; set; }
 
@@ -144,20 +156,20 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangePropertyLogicAction(this, "Shake", true));
             logicSet.AddAction(new DelayLogicAction(1f));
             logicSet.AddAction(new ChangePropertyLogicAction(this, "Shake", false));
             logicSet.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.75f));
             ThrowAdvancedProjectiles(logicSet3, true);
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.75f));
             ThrowExpertProjectiles(logicSet4, true);
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChaseLogicAction(m_target, Vector2.Zero, Vector2.Zero, true, 1.25f));
             ThrowProjectiles(logicSet5, true);
             m_generalBasicLB.AddLogicSet(logicSet, logicSet2);
@@ -192,7 +204,7 @@ namespace RogueCastle
 
         private void ThrowProjectiles(LogicSet ls, bool useBossProjectile = false)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "GhostProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -220,7 +232,7 @@ namespace RogueCastle
 
         private void ThrowExpertProjectiles(LogicSet ls, bool useBossProjectile = false)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "GhostProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -248,7 +260,7 @@ namespace RogueCastle
 
         private void ThrowAdvancedProjectiles(LogicSet ls, bool useBossProjectile = false)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "GhostProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -280,9 +292,9 @@ namespace RogueCastle
                         break;
                     case 1:
                     {
-                        bool arg_42_1 = true;
-                        LogicBlock arg_42_2 = m_generalBasicLB;
-                        int[] array = new int[2];
+                        var arg_42_1 = true;
+                        var arg_42_2 = m_generalBasicLB;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_42_1, arg_42_2, array);
                         return;
@@ -311,9 +323,9 @@ namespace RogueCastle
                         break;
                     case 1:
                     {
-                        bool arg_42_1 = true;
-                        LogicBlock arg_42_2 = m_generalAdvancedLB;
-                        int[] array = new int[2];
+                        var arg_42_1 = true;
+                        var arg_42_2 = m_generalAdvancedLB;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_42_1, arg_42_2, array);
                         return;
@@ -342,9 +354,9 @@ namespace RogueCastle
                         break;
                     case 1:
                     {
-                        bool arg_42_1 = true;
-                        LogicBlock arg_42_2 = m_generalExpertLB;
-                        int[] array = new int[2];
+                        var arg_42_1 = true;
+                        var arg_42_2 = m_generalExpertLB;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_42_1, arg_42_2, array);
                         return;
@@ -373,9 +385,9 @@ namespace RogueCastle
                         break;
                     case 1:
                     {
-                        bool arg_43_1 = true;
-                        LogicBlock arg_43_2 = m_generalMiniBossLB;
-                        int[] array = new int[2];
+                        var arg_43_1 = true;
+                        var arg_43_2 = m_generalMiniBossLB;
+                        var array = new int[2];
                         array[0] = 100;
                         RunLogicBlock(arg_43_1, arg_43_2, array);
                         return;
@@ -396,7 +408,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (!Chasing)
             {
                 if (Difficulty != GameTypes.EnemyDifficulty.MINIBOSS)
@@ -421,7 +433,7 @@ namespace RogueCastle
                 {
                     Rotation += 600f*num;
                 }
-                SpriteObj spriteObj = GetChildAt(0) as SpriteObj;
+                var spriteObj = GetChildAt(0) as SpriteObj;
                 if (spriteObj.SpriteName != "EnemyPortrait" + (int) Difficulty + "_Sprite")
                 {
                     ChangePortrait();
@@ -469,21 +481,10 @@ namespace RogueCastle
             base.Reset();
         }
 
-        public EnemyObj_Portrait(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyPortrait_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 32;
-            string spriteName = "FramePicture" + CDGMath.RandomInt(1, 16) + "_Sprite";
-            GetChildAt(0).ChangeSprite(spriteName);
-            GetChildAt(0);
-            DisableCollisionBoxRotations = false;
-        }
-
         public void ChangePortrait()
         {
             SoundManager.PlaySound("FinalBoss_St2_BlockLaugh");
-            SpriteObj spriteObj = GetChildAt(0) as SpriteObj;
+            var spriteObj = GetChildAt(0) as SpriteObj;
             spriteObj.ChangeSprite("EnemyPortrait" + (int) Difficulty + "_Sprite");
             if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
             {

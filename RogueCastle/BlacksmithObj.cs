@@ -21,9 +21,9 @@ namespace RogueCastle
         private const int PART_HEAD = 3;
         private const int PART_HEADTRIM = 4;
         private const int PART_ARM = 5;
+        private float m_hammerAnimCounter;
         private SpriteObj m_hammerSprite;
         private SpriteObj m_headSprite;
-        private float m_hammerAnimCounter;
 
         public BlacksmithObj() : base("Blacksmith_Character")
         {

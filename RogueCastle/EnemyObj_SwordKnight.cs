@@ -15,15 +15,24 @@ namespace RogueCastle
 {
     public class EnemyObj_SwordKnight : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
-        private float SlashDelay;
-        private float SlashTripleDelay = 1.25f;
-        private float TripleAttackSpeed = 500f;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly float SlashTripleDelay = 1.25f;
         private FrameSoundObj m_walkSound;
         private FrameSoundObj m_walkSound2;
+        private float SlashDelay;
+        private float TripleAttackSpeed = 500f;
+
+        public EnemyObj_SwordKnight(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySwordKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 16;
+            m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
+            m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
+        }
 
         protected override void InitializeEV()
         {
@@ -150,19 +159,19 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightWalk_Character"));
             logicSet.AddAction(new MoveLogicAction(m_target, true));
             logicSet.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightWalk_Character"));
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.5f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightAttack_Character", false, false));
@@ -173,7 +182,7 @@ namespace RogueCastle
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightAttack_Character", false, false));
@@ -191,7 +200,7 @@ namespace RogueCastle
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            ProjectileData data = new ProjectileData(this)
+            var data = new ProjectileData(this)
             {
                 SpriteName = "EnemySpearKnightWave_Sprite",
                 SourceAnchor = new Vector2(60f, 0f),
@@ -205,7 +214,7 @@ namespace RogueCastle
                 CollidesWithTerrain = true,
                 Scale = ProjectileScale
             };
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightAttack_Character", false, false));
@@ -217,7 +226,7 @@ namespace RogueCastle
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.Tag = 2;
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightAttack_Character", false, false));
@@ -243,7 +252,7 @@ namespace RogueCastle
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet7.Tag = 2;
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightAttack_Character", false, false));
@@ -274,8 +283,8 @@ namespace RogueCastle
                     break;
                 case GameTypes.EnemyDifficulty.MINIBOSS:
                 {
-                    LogicBlock arg_9C4_1 = m_generalCooldownLB;
-                    int[] array = new int[3];
+                    var arg_9C4_1 = m_generalCooldownLB;
+                    var array = new int[3];
                     array[0] = 100;
                     SetCooldownLogicBlock(arg_9C4_1, array);
                     break;
@@ -290,9 +299,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_73_1 = true;
-                    LogicBlock arg_73_2 = m_generalBasicLB;
-                    int[] array = new int[4];
+                    var arg_73_1 = true;
+                    var arg_73_2 = m_generalBasicLB;
+                    var array = new int[4];
                     array[2] = 100;
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
@@ -300,9 +309,9 @@ namespace RogueCastle
                 case 1:
                 case 2:
                 {
-                    bool arg_58_1 = true;
-                    LogicBlock arg_58_2 = m_generalBasicLB;
-                    int[] array2 = new int[4];
+                    var arg_58_1 = true;
+                    var arg_58_2 = m_generalBasicLB;
+                    var array2 = new int[4];
                     array2[0] = 15;
                     array2[1] = 15;
                     array2[2] = 70;
@@ -323,9 +332,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_78_1 = true;
-                    LogicBlock arg_78_2 = m_generalAdvancedLB;
-                    int[] array = new int[5];
+                    var arg_78_1 = true;
+                    var arg_78_2 = m_generalAdvancedLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_78_1, arg_78_2, array);
                     return;
@@ -333,9 +342,9 @@ namespace RogueCastle
                 case 1:
                 case 2:
                 {
-                    bool arg_5D_1 = true;
-                    LogicBlock arg_5D_2 = m_generalAdvancedLB;
-                    int[] array2 = new int[5];
+                    var arg_5D_1 = true;
+                    var arg_5D_2 = m_generalAdvancedLB;
+                    var array2 = new int[5];
                     array2[0] = 60;
                     array2[1] = 20;
                     array2[2] = 20;
@@ -356,9 +365,9 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_78_1 = true;
-                    LogicBlock arg_78_2 = m_generalBasicLB;
-                    int[] array = new int[4];
+                    var arg_78_1 = true;
+                    var arg_78_2 = m_generalBasicLB;
+                    var array = new int[4];
                     array[2] = 100;
                     RunLogicBlock(arg_78_1, arg_78_2, array);
                     return;
@@ -366,9 +375,9 @@ namespace RogueCastle
                 case 1:
                 case 2:
                 {
-                    bool arg_5D_1 = true;
-                    LogicBlock arg_5D_2 = m_generalBasicLB;
-                    int[] array2 = new int[4];
+                    var arg_5D_1 = true;
+                    var arg_5D_2 = m_generalBasicLB;
+                    var array2 = new int[4];
                     array2[0] = 60;
                     array2[1] = 20;
                     array2[2] = 20;
@@ -392,9 +401,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalBasicLB;
-                    int[] array = new int[4];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalBasicLB;
+                    var array = new int[4];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -412,15 +421,6 @@ namespace RogueCastle
                 m_walkSound2.Update();
             }
             base.Update(gameTime);
-        }
-
-        public EnemyObj_SwordKnight(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySwordKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 16;
-            m_walkSound = new FrameSoundObj(this, m_target, 1, "KnightWalk1", "KnightWalk2");
-            m_walkSound2 = new FrameSoundObj(this, m_target, 6, "KnightWalk1", "KnightWalk2");
         }
 
         public override void HitEnemy(int damage, Vector2 position, bool isPlayer)

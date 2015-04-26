@@ -12,6 +12,10 @@ namespace RogueCastle
 {
     public class BackToMenuOptionsObj : OptionsObj
     {
+        public BackToMenuOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit to Title Screen")
+        {
+        }
+
         public override bool IsActive
         {
             get { return base.IsActive; }
@@ -20,7 +24,7 @@ namespace RogueCastle
                 base.IsActive = value;
                 if (IsActive)
                 {
-                    RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("Back to Menu");
                     rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                     rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "GoBackToTitle");
@@ -28,10 +32,6 @@ namespace RogueCastle
                     rCScreenManager.DisplayScreen(13, false);
                 }
             }
-        }
-
-        public BackToMenuOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit to Title Screen")
-        {
         }
 
         public override void Initialize()
@@ -50,7 +50,7 @@ namespace RogueCastle
         public void GoBackToTitle()
         {
             IsActive = false;
-            ProceduralLevelScreen levelScreen = Game.ScreenManager.GetLevelScreen();
+            var levelScreen = Game.ScreenManager.GetLevelScreen();
             if (levelScreen != null &&
                 (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom ||
                  levelScreen.CurrentRoom is CarnivalShoot2BonusRoom))
@@ -66,7 +66,7 @@ namespace RogueCastle
             }
             if (levelScreen != null)
             {
-                ChallengeBossRoomObj challengeBossRoomObj = levelScreen.CurrentRoom as ChallengeBossRoomObj;
+                var challengeBossRoomObj = levelScreen.CurrentRoom as ChallengeBossRoomObj;
                 if (challengeBossRoomObj != null)
                 {
                     challengeBossRoomObj.LoadPlayerData();

@@ -12,6 +12,10 @@ namespace RogueCastle
 {
     public class ExitProgramOptionsObj : OptionsObj
     {
+        public ExitProgramOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit Rogue Legacy")
+        {
+        }
+
         public override bool IsActive
         {
             get { return base.IsActive; }
@@ -20,7 +24,7 @@ namespace RogueCastle
                 base.IsActive = value;
                 if (IsActive)
                 {
-                    RCScreenManager rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("Quit Rogue Legacy");
                     rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                     rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "QuitProgram");
@@ -28,10 +32,6 @@ namespace RogueCastle
                     rCScreenManager.DisplayScreen(13, false);
                 }
             }
-        }
-
-        public ExitProgramOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit Rogue Legacy")
-        {
         }
 
         public void QuitProgram()

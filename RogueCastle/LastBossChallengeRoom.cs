@@ -21,14 +21,14 @@ namespace RogueCastle
         private EnemyObj_LastBoss m_boss;
         private EnemyObj_LastBoss m_boss2;
 
-        public override bool BossKilled
-        {
-            get { return m_boss.IsKilled && m_boss2.IsKilled; }
-        }
-
         public LastBossChallengeRoom()
         {
             m_roomActivityDelay = 0.5f;
+        }
+
+        public override bool BossKilled
+        {
+            get { return m_boss.IsKilled && m_boss2.IsKilled; }
         }
 
         public override void Initialize()
@@ -108,7 +108,7 @@ namespace RogueCastle
             m_boss2.PlayAnimation();
             Player.AttachedLevel.Camera.X = Player.X;
             Player.AttachedLevel.Camera.Y = Player.Y;
-            Vector2 arg_8A_0 = Player.AttachedLevel.Camera.Position;
+            var arg_8A_0 = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
@@ -123,7 +123,7 @@ namespace RogueCastle
         {
             if (!BossKilled)
             {
-                foreach (EnemyObj current in EnemyList)
+                foreach (var current in EnemyList)
                 {
                     current.Reset();
                 }

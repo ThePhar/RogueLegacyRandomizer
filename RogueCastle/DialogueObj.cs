@@ -15,15 +15,6 @@ namespace RogueCastle
 {
     public class DialogueObj : IDisposableObj
     {
-        private bool m_isDisposed;
-        public string[] Speakers { get; set; }
-        public string[] Dialogue { get; set; }
-
-        public bool IsDisposed
-        {
-            get { return m_isDisposed; }
-        }
-
         public DialogueObj(string[] speakers, string[] dialogue)
         {
             if (speakers.Length != dialogue.Length)
@@ -34,15 +25,19 @@ namespace RogueCastle
             Dialogue = dialogue;
         }
 
+        public string[] Speakers { get; set; }
+        public string[] Dialogue { get; set; }
+        public bool IsDisposed { get; private set; }
+
         public void Dispose()
         {
-            if (!m_isDisposed)
+            if (!IsDisposed)
             {
                 Array.Clear(Dialogue, 0, Dialogue.Length);
                 Dialogue = null;
                 Array.Clear(Speakers, 0, Speakers.Length);
                 Speakers = null;
-                m_isDisposed = true;
+                IsDisposed = true;
             }
         }
     }

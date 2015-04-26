@@ -20,62 +20,62 @@ namespace RogueCastle
     public class CreditsScreen : Screen
     {
         private const float m_scrollDuration = 75f;
-        private bool m_allowExit;
         public bool IsEnding;
-        private List<TextObj> m_creditsNameList;
-        private List<TextObj> m_creditsTitleList;
+        private bool m_allowExit;
+        private int m_backgroundIndex;
+        private RenderTarget2D m_backgroundRenderTarget;
+        private string[] m_backgroundStrings;
+        private float m_backgroundSwapTimer;
         private SpriteObj m_bg1;
         private SpriteObj m_bg2;
         private SpriteObj m_bg3;
         private SpriteObj m_bgOutside;
-        private SpriteObj m_ground1;
-        private SpriteObj m_ground2;
-        private SpriteObj m_ground3;
         private SpriteObj m_border1;
         private SpriteObj m_border2;
         private SpriteObj m_border3;
+        private int m_child1Chest;
+        private int m_child1Head;
+        private int m_child1Shoulders;
+        private int m_child2Chest;
+        private int m_child2Head;
+        private int m_child2Shoulders;
+        private ObjContainer m_childSprite1;
+        private ObjContainer m_childSprite2;
+        private KeyIconTextObj m_continueText;
+        private List<TextObj> m_creditsNameList;
+        private List<TextObj> m_creditsTitleList;
+        private bool m_displayingContinueText;
+        private SpriteObj m_glauber;
+        private SpriteObj m_gordon;
+        private SpriteObj m_ground1;
+        private SpriteObj m_ground2;
+        private SpriteObj m_ground3;
+        private SpriteObj m_judson;
+        private SpriteObj m_kenny;
+        private Color m_lichColour1 = new Color(255, 255, 255, 255);
+        private Color m_lichColour2 = new Color(198, 198, 198, 255);
+        private ObjContainer m_manor;
+        private ObjContainer m_playerSprite;
         private SpriteObj m_prop1;
         private ObjContainer m_prop2;
         private ObjContainer m_prop3;
-        private ObjContainer m_playerSprite;
-        private ObjContainer m_wifeSprite;
-        private ObjContainer m_childSprite1;
-        private ObjContainer m_childSprite2;
-        private int m_wifeChest;
-        private int m_wifeShoulders;
-        private int m_wifeHead;
-        private int m_child1Chest;
-        private int m_child1Shoulders;
-        private int m_child1Head;
-        private int m_child2Chest;
-        private int m_child2Shoulders;
-        private int m_child2Head;
+        private float m_scrollDistance;
+        private SpriteObj m_sideBorderBottom;
         private SpriteObj m_sideBorderLeft;
         private SpriteObj m_sideBorderRight;
         private SpriteObj m_sideBorderTop;
-        private SpriteObj m_sideBorderBottom;
-        private ObjContainer m_manor;
-        private string[] m_backgroundStrings;
-        private int m_backgroundIndex;
-        private float m_backgroundSwapTimer;
-        private TextObj m_thanksForPlayingText;
-        private TextObj m_totalPlayTime;
-        private TextObj m_totalDeaths;
-        private SkyObj m_sky;
-        private RenderTarget2D m_skyRenderTarget;
-        private RenderTarget2D m_backgroundRenderTarget;
-        private KeyIconTextObj m_continueText;
-        private bool m_displayingContinueText;
-        private float m_scrollDistance;
-        private SpriteObj m_glauber;
-        private SpriteObj m_teddy;
-        private SpriteObj m_kenny;
-        private SpriteObj m_gordon;
-        private SpriteObj m_judson;
         private Color m_skinColour1 = new Color(231, 175, 131, 255);
         private Color m_skinColour2 = new Color(199, 109, 112, 255);
-        private Color m_lichColour1 = new Color(255, 255, 255, 255);
-        private Color m_lichColour2 = new Color(198, 198, 198, 255);
+        private SkyObj m_sky;
+        private RenderTarget2D m_skyRenderTarget;
+        private SpriteObj m_teddy;
+        private TextObj m_thanksForPlayingText;
+        private TextObj m_totalDeaths;
+        private TextObj m_totalPlayTime;
+        private int m_wifeChest;
+        private int m_wifeHead;
+        private int m_wifeShoulders;
+        private ObjContainer m_wifeSprite;
 
         public override void LoadContent()
         {
@@ -121,7 +121,7 @@ namespace RogueCastle
             m_playerSprite.AnimationDelay = 0.1f;
             m_playerSprite.Flip = SpriteEffects.FlipHorizontally;
             m_playerSprite.OutlineWidth = 2;
-            Color textureColor = new Color(251, 156, 172);
+            var textureColor = new Color(251, 156, 172);
             m_wifeSprite = new ObjContainer("PlayerWalking_Character");
             m_wifeSprite.Position = new Vector2(-200f, 400f);
             m_wifeSprite.PlayAnimation();
@@ -173,11 +173,11 @@ namespace RogueCastle
             m_manor = new ObjContainer("TraitsCastle_Character");
             m_manor.Scale = new Vector2(2f, 2f);
             m_manor.Visible = false;
-            for (int i = 0; i < m_manor.NumChildren; i++)
+            for (var i = 0; i < m_manor.NumChildren; i++)
             {
                 m_manor.GetChildAt(i).Visible = false;
             }
-            foreach (SkillObj current in SkillSystem.SkillArray)
+            foreach (var current in SkillSystem.SkillArray)
             {
                 if (current.CurrentLevel > 0)
                 {
@@ -207,7 +207,7 @@ namespace RogueCastle
             m_continueText.Position = new Vector2(1270f, 650f);
             m_continueText.ForceDraw = true;
             m_continueText.Opacity = 0f;
-            int num = 200;
+            var num = 200;
             m_glauber = new SpriteObj("Glauber_Sprite");
             m_glauber.Scale = new Vector2(2f, 2f);
             m_glauber.ForceDraw = true;
@@ -257,7 +257,7 @@ namespace RogueCastle
                 "Outside",
                 "Manor"
             };
-            string[] array = new[]
+            string[] array =
             {
                 "Cellar Door Games",
                 "Teddy Lee",
@@ -303,7 +303,7 @@ namespace RogueCastle
                 "",
                 "Thanks to all our fans for their support!"
             };
-            string[] array2 = new[]
+            string[] array2 =
             {
                 "Developed by",
                 "Design & Story",
@@ -320,10 +320,10 @@ namespace RogueCastle
                 "Mac/Linux Developer",
                 "Mac/Linux QA Team"
             };
-            int num = 0;
-            for (int i = 0; i < array.Length; i++)
+            var num = 0;
+            for (var i = 0; i < array.Length; i++)
             {
-                TextObj textObj = new TextObj(Game.JunicodeFont);
+                var textObj = new TextObj(Game.JunicodeFont);
                 textObj.FontSize = 12f;
                 textObj.DropShadow = new Vector2(2f, 2f);
                 textObj.Align = Types.TextAlign.Centre;
@@ -345,7 +345,7 @@ namespace RogueCastle
                 {
                     num += 40;
                 }
-                TextObj textObj2 = textObj.Clone() as TextObj;
+                var textObj2 = textObj.Clone() as TextObj;
                 textObj2.Text = array[i];
                 textObj2.FontSize = 16f;
                 textObj2.Y += 40f;
@@ -389,10 +389,10 @@ namespace RogueCastle
         public override void OnEnter()
         {
             m_allowExit = false;
-            float num = Game.PlayerStats.TotalHoursPlayed + Game.GetTotalGameTimeHours();
-            int num2 = (int) ((num - (int) num)*60f);
+            var num = Game.PlayerStats.TotalHoursPlayed + Game.GetTotalGameTimeHours();
+            var num2 = (int) ((num - (int) num)*60f);
             Console.WriteLine(string.Concat("Hours played: ", num, " minutes: ", num2));
-            m_totalDeaths.Text = "Total Children: " + Game.PlayerStats.TimesDead.ToString();
+            m_totalDeaths.Text = "Total Children: " + Game.PlayerStats.TimesDead;
             if (num2 < 10)
             {
                 m_totalPlayTime.Text = string.Concat("Time Played - ", (int) num, ":0", num2);
@@ -417,11 +417,11 @@ namespace RogueCastle
                 SoundManager.PlayMusic("CreditsSong", true, 1f);
             }
             m_scrollDistance = -(m_creditsNameList[m_creditsNameList.Count - 1].Y + 100f);
-            foreach (TextObj current in m_creditsTitleList)
+            foreach (var current in m_creditsTitleList)
             {
                 Tween.By(current, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             }
-            foreach (TextObj current2 in m_creditsNameList)
+            foreach (var current2 in m_creditsNameList)
             {
                 Tween.By(current2, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             }
@@ -442,8 +442,8 @@ namespace RogueCastle
         public void SetPlayerStyle(string animationType)
         {
             m_playerSprite.ChangeSprite("Player" + animationType + "_Character");
-            PlayerObj player = (ScreenManager as RCScreenManager).Player;
-            for (int i = 0; i < m_playerSprite.NumChildren; i++)
+            var player = (ScreenManager as RCScreenManager).Player;
+            for (var i = 0; i < m_playerSprite.NumChildren; i++)
             {
                 m_playerSprite.GetChildAt(i).TextureColor = player.GetChildAt(i).TextureColor;
                 m_playerSprite.GetChildAt(i).Visible = player.GetChildAt(i).Visible;
@@ -538,8 +538,8 @@ namespace RogueCastle
                 m_playerSprite.GetChildAt(10).Visible = true;
                 m_playerSprite.GetChildAt(11).Visible = true;
             }
-            string text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
-            int startIndex = text.IndexOf("_") - 1;
+            var text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
+            var startIndex = text.IndexOf("_") - 1;
             text = text.Remove(startIndex, 1);
             if (Game.PlayerStats.Class == 16)
             {
@@ -554,17 +554,17 @@ namespace RogueCastle
                 text = text.Replace("_", Game.PlayerStats.HeadPiece + "_");
             }
             m_playerSprite.GetChildAt(12).ChangeSprite(text);
-            string text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
+            var text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
             startIndex = text2.IndexOf("_") - 1;
             text2 = text2.Remove(startIndex, 1);
             text2 = text2.Replace("_", Game.PlayerStats.ChestPiece + "_");
             m_playerSprite.GetChildAt(4).ChangeSprite(text2);
-            string text3 = (m_playerSprite.GetChildAt(9) as IAnimateableObj).SpriteName;
+            var text3 = (m_playerSprite.GetChildAt(9) as IAnimateableObj).SpriteName;
             startIndex = text3.IndexOf("_") - 1;
             text3 = text3.Remove(startIndex, 1);
             text3 = text3.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
             m_playerSprite.GetChildAt(9).ChangeSprite(text3);
-            string text4 = (m_playerSprite.GetChildAt(3) as IAnimateableObj).SpriteName;
+            var text4 = (m_playerSprite.GetChildAt(3) as IAnimateableObj).SpriteName;
             startIndex = text4.IndexOf("_") - 1;
             text4 = text4.Remove(startIndex, 1);
             text4 = text4.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
@@ -585,7 +585,7 @@ namespace RogueCastle
             if (IsEnding)
             {
                 m_sky.Update(gameTime);
-                float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+                var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
                 UpdateBackground(num);
                 if (m_backgroundIndex < m_backgroundStrings.Length)
                 {
@@ -603,12 +603,12 @@ namespace RogueCastle
 
         public void ResetScroll()
         {
-            foreach (TextObj current in m_creditsTitleList)
+            foreach (var current in m_creditsTitleList)
             {
                 current.Y += -m_scrollDistance;
                 Tween.By(current, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             }
-            foreach (TextObj current2 in m_creditsNameList)
+            foreach (var current2 in m_creditsNameList)
             {
                 current2.Y += -m_scrollDistance;
                 Tween.By(current2, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
@@ -652,7 +652,7 @@ namespace RogueCastle
 
         private void UpdateBackground(float elapsedTime)
         {
-            int num = 200;
+            var num = 200;
             m_bg1.X += num*elapsedTime;
             m_bg2.X += num*elapsedTime;
             m_bg3.X += num*elapsedTime;
@@ -936,7 +936,7 @@ namespace RogueCastle
             m_child1Chest = CDGMath.RandomInt(1, 5);
             m_child1Head = CDGMath.RandomInt(1, 5);
             m_child1Shoulders = CDGMath.RandomInt(1, 5);
-            bool flag = false;
+            var flag = false;
             if (CDGMath.RandomInt(0, 1) > 0)
             {
                 flag = true;
@@ -990,7 +990,7 @@ namespace RogueCastle
             m_childSprite2.GetChildAt(15).Visible = false;
             m_childSprite2.GetChildAt(16).Visible = false;
             m_childSprite2.GetChildAt(0).Visible = false;
-            bool flag = false;
+            var flag = false;
             if (CDGMath.RandomInt(0, 1) > 0)
             {
                 flag = true;
@@ -1130,15 +1130,15 @@ namespace RogueCastle
             Camera.End();
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
-            Rectangle b = new Rectangle(0, 0, 1320, 720);
-            foreach (TextObj current in m_creditsTitleList)
+            var b = new Rectangle(0, 0, 1320, 720);
+            foreach (var current in m_creditsTitleList)
             {
                 if (CollisionMath.Intersects(current.Bounds, b))
                 {
                     current.Draw(Camera);
                 }
             }
-            foreach (TextObj current2 in m_creditsNameList)
+            foreach (var current2 in m_creditsNameList)
             {
                 if (CollisionMath.Intersects(current2.Bounds, b))
                 {
@@ -1188,13 +1188,13 @@ namespace RogueCastle
                 m_skyRenderTarget = null;
                 m_backgroundRenderTarget.Dispose();
                 m_backgroundRenderTarget = null;
-                foreach (TextObj current in m_creditsTitleList)
+                foreach (var current in m_creditsTitleList)
                 {
                     current.Dispose();
                 }
                 m_creditsTitleList.Clear();
                 m_creditsTitleList = null;
-                foreach (TextObj current2 in m_creditsNameList)
+                foreach (var current2 in m_creditsNameList)
                 {
                     current2.Dispose();
                 }

@@ -15,10 +15,10 @@ namespace Randomchaos2DGodRays
 {
     public class LightSourceMask : BasePostProcess
     {
-        public Texture lishsourceTexture;
         public Vector2 lighScreenSourcePos;
-        public string lightSourceasset;
         public float lightSize = 1500f;
+        public string lightSourceasset;
+        public Texture lishsourceTexture;
 
         public LightSourceMask(Game game, Vector2 sourcePos, string lightSourceasset, float lightSize) : base(game)
         {

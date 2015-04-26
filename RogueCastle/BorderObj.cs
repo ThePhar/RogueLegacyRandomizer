@@ -19,17 +19,11 @@ namespace RogueCastle
 {
     public class BorderObj : GameObj
     {
-        public bool BorderTop;
         public bool BorderBottom;
         public bool BorderLeft;
         public bool BorderRight;
+        public bool BorderTop;
         public GameTypes.LevelType LevelType = GameTypes.LevelType.CASTLE;
-        public Texture2D BorderTexture { get; internal set; }
-        public SpriteObj CornerTexture { get; internal set; }
-        public SpriteObj CornerLTexture { get; internal set; }
-        public Texture2D NeoTexture { get; set; }
-        public Vector2 TextureScale { get; set; }
-        public Vector2 TextureOffset { get; set; }
 
         public BorderObj()
         {
@@ -39,6 +33,13 @@ namespace RogueCastle
             CornerLTexture = new SpriteObj("Blank_Sprite");
             CornerLTexture.Scale = new Vector2(2f, 2f);
         }
+
+        public Texture2D BorderTexture { get; internal set; }
+        public SpriteObj CornerTexture { get; internal set; }
+        public SpriteObj CornerLTexture { get; internal set; }
+        public Texture2D NeoTexture { get; set; }
+        public Vector2 TextureScale { get; set; }
+        public Vector2 TextureOffset { get; set; }
 
         public void SetBorderTextures(Texture2D borderTexture, string cornerTextureString, string cornerLTextureString)
         {
@@ -66,7 +67,7 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            Texture2D texture2D = BorderTexture;
+            var texture2D = BorderTexture;
             if (Game.PlayerStats.Traits.X == 32f || Game.PlayerStats.Traits.Y == 32f)
             {
                 TextureOffset = Vector2.Zero;
@@ -103,9 +104,9 @@ namespace RogueCastle
                 }
                 else
                 {
-                    Vector2 position = CollisionMath.UpperLeftCorner(new Rectangle((int) X, (int) Y, _width, _height),
+                    var position = CollisionMath.UpperLeftCorner(new Rectangle((int) X, (int) Y, _width, _height),
                         Rotation, Vector2.Zero);
-                    Vector2 position2 = CollisionMath.UpperRightCorner(
+                    var position2 = CollisionMath.UpperRightCorner(
                         new Rectangle((int) X, (int) Y, _width, _height), Rotation, Vector2.Zero);
                     if (Rotation > 0f && Rotation < 80f)
                     {
@@ -258,7 +259,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            BorderObj borderObj = obj as BorderObj;
+            var borderObj = obj as BorderObj;
             borderObj.LevelType = LevelType;
             borderObj.BorderTop = BorderTop;
             borderObj.BorderBottom = BorderBottom;

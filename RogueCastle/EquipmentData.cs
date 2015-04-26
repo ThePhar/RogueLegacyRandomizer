@@ -15,18 +15,18 @@ namespace RogueCastle
 {
     public class EquipmentData
     {
-        public int BonusDamage;
-        public int BonusMagic;
-        public int Weight;
-        public int BonusMana;
-        public int BonusHealth;
         public int BonusArmor;
+        public int BonusDamage;
+        public int BonusHealth;
+        public int BonusMagic;
+        public int BonusMana;
+        public byte ChestColourRequirement;
         public int Cost = 9999;
         public Color FirstColour = Color.White;
-        public Color SecondColour = Color.White;
-        public Vector2[] SecondaryAttribute;
-        public byte ChestColourRequirement;
         public byte LevelRequirement;
+        public Vector2[] SecondaryAttribute;
+        public Color SecondColour = Color.White;
+        public int Weight;
 
         public void Dispose()
         {

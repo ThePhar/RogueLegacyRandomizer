@@ -17,11 +17,21 @@ namespace RogueCastle
 {
     public class EnemyObj_HomingTurret : EnemyObj
     {
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
         private float FireDelay = 5f;
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_HomingTurret(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyHomingTurret_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            StopAnimation();
+            ForceDraw = true;
+            Type = 28;
+            PlayAnimationOnRestart = false;
+        }
 
         protected override void InitializeEV()
         {
@@ -147,9 +157,9 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            float arg_06_0 = Rotation;
-            float num = ParseTagToFloat("delay");
-            float num2 = ParseTagToFloat("speed");
+            var arg_06_0 = Rotation;
+            var num = ParseTagToFloat("delay");
+            var num2 = ParseTagToFloat("speed");
             if (num == 0f)
             {
                 Console.WriteLine("ERROR: Turret set with delay of 0. Shoots too fast.");
@@ -159,7 +169,7 @@ namespace RogueCastle
             {
                 num2 = ProjectileSpeed;
             }
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "HomingProjectile_Sprite",
                 SourceAnchor = new Vector2(35f, 0f),
@@ -176,16 +186,16 @@ namespace RogueCastle
                 StartingRotation = 0f,
                 Lifespan = 10f
             };
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new DelayLogicAction(0.5f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
             logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
             logicSet2.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
                 "Turret_Attack03"));
             logicSet2.AddAction(new DelayLogicAction(num));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
             logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
@@ -200,7 +210,7 @@ namespace RogueCastle
                 "Turret_Attack03"));
             logicSet3.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
             logicSet3.AddAction(new DelayLogicAction(num));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
             projectileData.ChaseTarget = true;
             projectileData.Target = m_target;
@@ -224,7 +234,7 @@ namespace RogueCastle
 
         public void FireProjectileEffect()
         {
-            Vector2 position = Position;
+            var position = Position;
             if (Flip == SpriteEffects.None)
             {
                 position.X += 30f;
@@ -246,17 +256,17 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_34_1 = false;
-                    LogicBlock arg_34_2 = m_generalBasicLB;
-                    int[] array = new int[2];
+                    var arg_34_1 = false;
+                    var arg_34_2 = m_generalBasicLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_34_1, arg_34_2, array);
                     return;
                 }
             }
-            bool arg_4F_1 = false;
-            LogicBlock arg_4F_2 = m_generalBasicLB;
-            int[] array2 = new int[2];
+            var arg_4F_1 = false;
+            var arg_4F_2 = m_generalBasicLB;
+            var array2 = new int[2];
             array2[0] = 100;
             RunLogicBlock(arg_4F_1, arg_4F_2, array2);
         }
@@ -269,17 +279,17 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_34_1 = false;
-                    LogicBlock arg_34_2 = m_generalAdvancedLB;
-                    int[] array = new int[2];
+                    var arg_34_1 = false;
+                    var arg_34_2 = m_generalAdvancedLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_34_1, arg_34_2, array);
                     return;
                 }
             }
-            bool arg_4F_1 = false;
-            LogicBlock arg_4F_2 = m_generalAdvancedLB;
-            int[] array2 = new int[2];
+            var arg_4F_1 = false;
+            var arg_4F_2 = m_generalAdvancedLB;
+            var array2 = new int[2];
             array2[0] = 100;
             RunLogicBlock(arg_4F_1, arg_4F_2, array2);
         }
@@ -292,9 +302,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_34_1 = false;
-                    LogicBlock arg_34_2 = m_generalExpertLB;
-                    int[] array = new int[2];
+                    var arg_34_1 = false;
+                    var arg_34_2 = m_generalExpertLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_34_1, arg_34_2, array);
                     return;
@@ -311,17 +321,17 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_34_1 = false;
-                    LogicBlock arg_34_2 = m_generalBasicLB;
-                    int[] array = new int[2];
+                    var arg_34_1 = false;
+                    var arg_34_2 = m_generalBasicLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_34_1, arg_34_2, array);
                     return;
                 }
             }
-            bool arg_4F_1 = false;
-            LogicBlock arg_4F_2 = m_generalBasicLB;
-            int[] array2 = new int[2];
+            var arg_4F_1 = false;
+            var arg_4F_2 = m_generalBasicLB;
+            var array2 = new int[2];
             array2[0] = 100;
             RunLogicBlock(arg_4F_1, arg_4F_2, array2);
         }
@@ -329,16 +339,6 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-        }
-
-        public EnemyObj_HomingTurret(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyHomingTurret_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            StopAnimation();
-            ForceDraw = true;
-            Type = 28;
-            PlayAnimationOnRestart = false;
         }
     }
 }

@@ -22,14 +22,14 @@ namespace RogueCastle
         private Vector2 m_startingCamPos;
         private bool m_teleportingOut;
 
-        public override bool BossKilled
-        {
-            get { return m_boss.IsKilled; }
-        }
-
         public FairyChallengeRoom()
         {
             m_roomActivityDelay = 0.5f;
+        }
+
+        public override bool BossKilled
+        {
+            get { return m_boss.IsKilled; }
         }
 
         public override void Initialize()
@@ -141,7 +141,7 @@ namespace RogueCastle
 
         public override void OnExit()
         {
-            foreach (EnemyObj current in TempEnemyList)
+            foreach (var current in TempEnemyList)
             {
                 current.KillSilently();
                 current.Dispose();

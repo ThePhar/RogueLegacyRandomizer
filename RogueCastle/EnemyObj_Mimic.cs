@@ -15,9 +15,18 @@ namespace RogueCastle
 {
     public class EnemyObj_Mimic : EnemyObj
     {
-        private bool m_isAttacking;
-        private LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
         private FrameSoundObj m_closeSound;
+        private bool m_isAttacking;
+
+        public EnemyObj_Mimic(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyMimicIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 33;
+            OutlineWidth = 0;
+            m_closeSound = new FrameSoundObj(this, m_target, 1, "Chest_Snap");
+        }
 
         protected override void InitializeEV()
         {
@@ -135,12 +144,12 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyMimicShake_Character", false, false));
             logicSet.AddAction(new PlayAnimationLogicAction(false));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyMimicIdle_Character", true, false));
             logicSet.AddAction(new DelayLogicAction(3f));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new GroundCheckLogicAction());
             logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet2.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -159,98 +168,34 @@ namespace RogueCastle
 
         protected override void RunBasicLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:*/
-                    //IL_1D:
-                    if (!m_isAttacking)
-                    {
-                        bool arg_3A_1 = false;
-                        LogicBlock arg_3A_2 = m_generalBasicLB;
-                        int[] array = new int[2];
-                        array[0] = 100;
-                        RunLogicBlock(arg_3A_1, arg_3A_2, array);
-                        return;
-                    }
-                    RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    //return;
-            //}
-            //goto IL_1D;
+            if (!m_isAttacking)
+                RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            else
+                RunLogicBlock(false, m_generalBasicLB, 0, 100);
         }
 
         protected override void RunAdvancedLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:*/
-                    //IL_1D:
-                    if (!m_isAttacking)
-                    {
-                        bool arg_3A_1 = false;
-                        LogicBlock arg_3A_2 = m_generalBasicLB;
-                        int[] array = new int[2];
-                        array[0] = 100;
-                        RunLogicBlock(arg_3A_1, arg_3A_2, array);
-                        return;
-                    }
-                    RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    //return;
-            //}
-            //goto IL_1D;
+            if (!m_isAttacking)
+                RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            else
+                RunLogicBlock(false, m_generalBasicLB, 0, 100);
         }
 
         protected override void RunExpertLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:*/
-                    //IL_1D:
-                    if (!m_isAttacking)
-                    {
-                        bool arg_3A_1 = false;
-                        LogicBlock arg_3A_2 = m_generalBasicLB;
-                        int[] array = new int[2];
-                        array[0] = 100;
-                        RunLogicBlock(arg_3A_1, arg_3A_2, array);
-                        return;
-                    }
-                    RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    //return;
-            //}
-            //goto IL_1D;
+            if (!m_isAttacking)
+                RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            else
+                RunLogicBlock(false, m_generalBasicLB, 0, 100);
         }
 
         protected override void RunMinibossLogic()
         {
-            /*switch (State)
-            {
-                case 0:
-                case 1:
-                case 2:
-                case 3:*/
-                    //IL_1D:
-                    if (!m_isAttacking)
-                    {
-                        bool arg_3A_1 = false;
-                        LogicBlock arg_3A_2 = m_generalBasicLB;
-                        int[] array = new int[2];
-                        array[0] = 100;
-                        RunLogicBlock(arg_3A_1, arg_3A_2, array);
-                        return;
-                    }
-                    RunLogicBlock(false, m_generalBasicLB, 0, 100);
-                    //return;
-            //}
-            //goto IL_1D;
+            if (!m_isAttacking)
+                RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            else
+                RunLogicBlock(false, m_generalBasicLB, 0, 100);
         }
 
         public override void HitEnemy(int damage, Vector2 collisionPt, bool isPlayer)
@@ -273,15 +218,6 @@ namespace RogueCastle
                 LockFlip = false;
             }
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
-        }
-
-        public EnemyObj_Mimic(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyMimicIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 33;
-            OutlineWidth = 0;
-            m_closeSound = new FrameSoundObj(this, m_target, 1, "Chest_Snap");
         }
 
         public override void Update(GameTime gameTime)

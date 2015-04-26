@@ -18,23 +18,10 @@ namespace RogueCastle
     public class KeyIconObj : ObjContainer
     {
         private TextObj m_buttonText;
-        private Keys m_storedKey;
-        private Buttons m_storedButton;
-        public bool IsGamepadButton { get; internal set; }
-
-        public Keys Key
-        {
-            get { return m_storedKey; }
-        }
-
-        public Buttons Button
-        {
-            get { return m_storedButton; }
-        }
 
         public KeyIconObj()
         {
-            SpriteObj obj = new SpriteObj("KeyboardButton_Sprite");
+            var obj = new SpriteObj("KeyboardButton_Sprite");
             AddChild(obj);
             m_buttonText = new TextObj(Game.PixelArtFont);
             m_buttonText.FontSize = 16f;
@@ -45,12 +32,16 @@ namespace RogueCastle
             m_buttonText.Visible = false;
         }
 
+        public bool IsGamepadButton { get; internal set; }
+        public Keys Key { get; private set; }
+        public Buttons Button { get; private set; }
+
         public void SetKey(Keys? key, bool upperCase = true)
         {
-            m_storedKey = key.Value;
+            Key = key.Value;
             m_buttonText.FontSize = 20f;
-            bool flag = true;
-            Keys valueOrDefault = key.GetValueOrDefault();
+            var flag = true;
+            var valueOrDefault = key.GetValueOrDefault();
             if (key.HasValue)
             {
                 if (valueOrDefault <= Keys.Escape)
@@ -164,7 +155,7 @@ namespace RogueCastle
 
         public void SetButton(Buttons button)
         {
-            m_storedButton = button;
+            Button = button;
             IsGamepadButton = true;
             m_buttonText.Visible = false;
             if (button <= Buttons.LeftShoulder)
@@ -282,7 +273,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            KeyIconObj keyIconObj = obj as KeyIconObj;
+            var keyIconObj = obj as KeyIconObj;
             if (IsGamepadButton)
             {
                 keyIconObj.SetButton(Button);

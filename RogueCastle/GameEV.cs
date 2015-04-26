@@ -72,7 +72,7 @@ namespace RogueCastle
         public const float TRAIT_MOVESPEED_AMOUNT = 0.3f;
         public const float TRAIT_DEMENTIA_SPAWN_CHANCE = 0.2f;
 
-        public static int[] BREAKABLE_ITEMDROP_CHANCE = new[]
+        public static int[] BREAKABLE_ITEMDROP_CHANCE =
         {
             3,
             4,
@@ -91,7 +91,7 @@ namespace RogueCastle
         static GameEV()
         {
             // Note: this type is marked as 'beforefieldinit'.
-            int[] array = new int[3];
+            var array = new int[3];
             array[0] = 87;
             array[1] = 13;
             CHEST_TYPE_CHANCE = array;

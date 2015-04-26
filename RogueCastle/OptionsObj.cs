@@ -15,11 +15,22 @@ namespace RogueCastle
 {
     public abstract class OptionsObj : ObjContainer
     {
-        protected bool m_isSelected;
         protected bool m_isActive;
+        protected bool m_isSelected;
         protected TextObj m_nameText;
-        protected OptionsScreen m_parentScreen;
         protected int m_optionsTextOffset = 250;
+        protected OptionsScreen m_parentScreen;
+
+        public OptionsObj(OptionsScreen parentScreen, string name)
+        {
+            m_parentScreen = parentScreen;
+            m_nameText = new TextObj(Game.JunicodeFont);
+            m_nameText.FontSize = 12f;
+            m_nameText.Text = name;
+            m_nameText.DropShadow = new Vector2(2f, 2f);
+            AddChild(m_nameText);
+            ForceDraw = true;
+        }
 
         public virtual bool IsActive
         {
@@ -55,17 +66,6 @@ namespace RogueCastle
                 }
                 m_nameText.TextureColor = Color.White;
             }
-        }
-
-        public OptionsObj(OptionsScreen parentScreen, string name)
-        {
-            m_parentScreen = parentScreen;
-            m_nameText = new TextObj(Game.JunicodeFont);
-            m_nameText.FontSize = 12f;
-            m_nameText.Text = name;
-            m_nameText.DropShadow = new Vector2(2f, 2f);
-            AddChild(m_nameText);
-            ForceDraw = true;
         }
 
         public virtual void Initialize()

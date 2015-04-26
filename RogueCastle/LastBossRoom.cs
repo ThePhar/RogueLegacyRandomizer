@@ -19,18 +19,24 @@ namespace RogueCastle
 {
     public class LastBossRoom : BossRoomObj
     {
+        private readonly int m_bossCoins = 40;
+        private readonly int m_bossDiamonds = 12;
+        private readonly int m_bossMoneyBags = 16;
+        private readonly float m_shakeDuration = 0.03f;
         private EnemyObj_LastBoss m_boss;
-        private bool m_shake;
-        private bool m_shookLeft;
-        private float m_shakeTimer = 0.03f;
-        private float m_shakeDuration = 0.03f;
-        private ObjContainer m_fountain;
         private DoorObj m_bossDoor;
         private SpriteObj m_bossDoorSprite;
-        private int m_bossCoins = 40;
-        private int m_bossMoneyBags = 16;
-        private int m_bossDiamonds = 12;
+        private ObjContainer m_fountain;
         private float m_playerX;
+        private bool m_shake;
+        private float m_shakeTimer = 0.03f;
+        private bool m_shookLeft;
+
+        public LastBossRoom()
+        {
+            m_roomActivityDelay = 0.5f;
+        }
+
         public float BackBufferOpacity { get; set; }
 
         public override bool BossKilled
@@ -38,15 +44,10 @@ namespace RogueCastle
             get { return m_boss.IsKilled && m_boss.IsSecondForm; }
         }
 
-        public LastBossRoom()
-        {
-            m_roomActivityDelay = 0.5f;
-        }
-
         public override void Initialize()
         {
             m_boss = (EnemyList[0] as EnemyObj_LastBoss);
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "fountain")
                 {
@@ -61,7 +62,7 @@ namespace RogueCastle
                     m_bossDoorSprite = (current as SpriteObj);
                 }
             }
-            foreach (DoorObj current2 in DoorList)
+            foreach (var current2 in DoorList)
             {
                 if (current2.Name == "FinalBossDoor")
                 {
@@ -92,7 +93,7 @@ namespace RogueCastle
             Player.AttachedLevel.RunCinematicBorders(8f);
             Player.Flip = SpriteEffects.None;
             Player.State = 1;
-            LogicSet logicSet = new LogicSet(Player);
+            var logicSet = new LogicSet(Player);
             logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", false));
             logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", false));
             logicSet.AddAction(new MoveDirectionLogicAction(new Vector2(1f, 0f)));
@@ -116,7 +117,7 @@ namespace RogueCastle
         public void Cutscene3()
         {
             Tween.RunFunction(0.5f, this, "Cutscene4");
-            RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+            var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
             if (Game.PlayerStats.Class == 17)
             {
                 rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk01_Special");
@@ -151,7 +152,7 @@ namespace RogueCastle
         public void RunFountainCutscene()
         {
             Player.AttachedLevel.CameraLockedToPlayer = false;
-            Camera2D camera = Player.AttachedLevel.Camera;
+            var camera = Player.AttachedLevel.Camera;
             m_playerX = camera.X;
             SoundManager.PlaySound("Cutsc_CameraMove");
             Tween.To(camera, 1f, Quad.EaseInOut, "X", (m_fountain.Bounds.Center.X - 400).ToString());
@@ -213,7 +214,7 @@ namespace RogueCastle
                 m_shakeTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_shakeTimer <= 0f)
                 {
-                    Camera2D camera = Player.AttachedLevel.Camera;
+                    var camera = Player.AttachedLevel.Camera;
                     m_shakeTimer = m_shakeDuration;
                     if (m_shookLeft)
                     {
@@ -229,14 +230,14 @@ namespace RogueCastle
             }
             if (!m_cutsceneRunning)
             {
-                foreach (EnemyObj current in EnemyList)
+                foreach (var current in EnemyList)
                 {
                     if (!current.IsKilled)
                     {
                         current.Update(gameTime);
                     }
                 }
-                foreach (EnemyObj current2 in TempEnemyList)
+                foreach (var current2 in TempEnemyList)
                 {
                     if (!current2.IsKilled)
                     {
@@ -255,7 +256,7 @@ namespace RogueCastle
 
         public void ChangeWindowOpacity()
         {
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "stainglass")
                 {
@@ -278,7 +279,7 @@ namespace RogueCastle
         private void AddEnemyKilled()
         {
             Game.PlayerStats.NumEnemiesBeaten++;
-            Vector4 value = Game.PlayerStats.EnemiesKilledList[m_boss.Type];
+            var value = Game.PlayerStats.EnemiesKilledList[m_boss.Type];
             value.X += 1f;
             value.Y += 1f;
             Game.PlayerStats.EnemiesKilledList[m_boss.Type] = value;
@@ -286,25 +287,25 @@ namespace RogueCastle
 
         private void DropGold()
         {
-            List<int> list = new List<int>();
-            for (int i = 0; i < m_bossCoins; i++)
+            var list = new List<int>();
+            for (var i = 0; i < m_bossCoins; i++)
             {
                 list.Add(0);
             }
-            for (int j = 0; j < m_bossMoneyBags; j++)
+            for (var j = 0; j < m_bossMoneyBags; j++)
             {
                 list.Add(1);
             }
-            for (int k = 0; k < m_bossDiamonds; k++)
+            for (var k = 0; k < m_bossDiamonds; k++)
             {
                 list.Add(2);
             }
             CDGMath.Shuffle(list);
-            float num = 0f;
+            var num = 0f;
             SoundManager.PlaySound("Boss_Flash");
-            for (int l = 0; l < list.Count; l++)
+            for (var l = 0; l < list.Count; l++)
             {
-                Vector2 position = m_boss.Position;
+                var position = m_boss.Position;
                 if (list[l] == 0)
                 {
                     Tween.RunFunction(l*num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 1, 10);

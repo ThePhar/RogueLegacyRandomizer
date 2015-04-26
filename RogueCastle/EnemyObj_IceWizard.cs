@@ -17,19 +17,28 @@ namespace RogueCastle
 {
     public class EnemyObj_IceWizard : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalCooldownLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly float MoveDuration = 1f;
+        private readonly float TeleportDelay = 0.5f;
+        private readonly float TeleportDuration = 1f;
+        private Vector2 IceScale = Vector2.One;
+        private ProjectileObj m_iceballSummon;
+        private float m_iceParticleEffectCounter = 0.5f;
+        private Vector2 m_spellOffset = new Vector2(40f, -80f);
         private float SpellDelay = 0.8f;
         private int SpellProjectileCount = 7;
-        private ProjectileObj m_iceballSummon;
-        private Vector2 m_spellOffset = new Vector2(40f, -80f);
-        private float TeleportDelay = 0.5f;
-        private float TeleportDuration = 1f;
-        private float MoveDuration = 1f;
-        private Vector2 IceScale = Vector2.One;
-        private float m_iceParticleEffectCounter = 0.5f;
+
+        public EnemyObj_IceWizard(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyWizardIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            PlayAnimation();
+            TintablePart = _objectList[0];
+            Type = 11;
+        }
 
         protected override void InitializeEV()
         {
@@ -158,18 +167,18 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character"));
             logicSet.AddAction(new ChaseLogicAction(m_target, new Vector2(-255f, -175f), new Vector2(255f, -75f), true,
                 MoveDuration));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character"));
             logicSet2.AddAction(new ChaseLogicAction(m_target, false, 1f));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyWizardIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.5f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyWizardSpell_Character"));
@@ -183,7 +192,7 @@ namespace RogueCastle
             logicSet4.AddAction(new DelayLogicAction(0.5f));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyWizardSpell_Character"));
@@ -209,7 +218,7 @@ namespace RogueCastle
             logicSet5.AddAction(new DelayLogicAction(0.5f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet6.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0333333351f));
@@ -233,8 +242,8 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalAdvancedLB);
             logicBlocksToDispose.Add(m_generalExpertLB);
             logicBlocksToDispose.Add(m_generalCooldownLB);
-            LogicBlock arg_6EB_1 = m_generalCooldownLB;
-            int[] array = new int[3];
+            var arg_6EB_1 = m_generalCooldownLB;
+            var array = new int[3];
             array[0] = 100;
             SetCooldownLogicBlock(arg_6EB_1, array);
             base.InitializeLogic();
@@ -246,18 +255,18 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_6E_1 = true;
-                    LogicBlock arg_6E_2 = m_generalBasicLB;
-                    int[] array = new int[5];
+                    var arg_6E_1 = true;
+                    var arg_6E_2 = m_generalBasicLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
                 case 1:
                 {
-                    bool arg_53_1 = true;
-                    LogicBlock arg_53_2 = m_generalBasicLB;
-                    int[] array2 = new int[5];
+                    var arg_53_1 = true;
+                    var arg_53_2 = m_generalBasicLB;
+                    var array2 = new int[5];
                     array2[0] = 100;
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
@@ -265,9 +274,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_38_1 = true;
-                    LogicBlock arg_38_2 = m_generalBasicLB;
-                    int[] array3 = new int[5];
+                    var arg_38_1 = true;
+                    var arg_38_2 = m_generalBasicLB;
+                    var array3 = new int[5];
                     array3[0] = 40;
                     array3[3] = 60;
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
@@ -284,18 +293,18 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_6E_1 = true;
-                    LogicBlock arg_6E_2 = m_generalBasicLB;
-                    int[] array = new int[5];
+                    var arg_6E_1 = true;
+                    var arg_6E_2 = m_generalBasicLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
                 case 1:
                 {
-                    bool arg_53_1 = true;
-                    LogicBlock arg_53_2 = m_generalBasicLB;
-                    int[] array2 = new int[5];
+                    var arg_53_1 = true;
+                    var arg_53_2 = m_generalBasicLB;
+                    var array2 = new int[5];
                     array2[0] = 100;
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
@@ -303,9 +312,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_38_1 = true;
-                    LogicBlock arg_38_2 = m_generalBasicLB;
-                    int[] array3 = new int[5];
+                    var arg_38_1 = true;
+                    var arg_38_2 = m_generalBasicLB;
+                    var array3 = new int[5];
                     array3[0] = 40;
                     array3[3] = 60;
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
@@ -322,18 +331,18 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    bool arg_6E_1 = true;
-                    LogicBlock arg_6E_2 = m_generalExpertLB;
-                    int[] array = new int[5];
+                    var arg_6E_1 = true;
+                    var arg_6E_2 = m_generalExpertLB;
+                    var array = new int[5];
                     array[2] = 100;
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
                 case 1:
                 {
-                    bool arg_53_1 = true;
-                    LogicBlock arg_53_2 = m_generalExpertLB;
-                    int[] array2 = new int[5];
+                    var arg_53_1 = true;
+                    var arg_53_2 = m_generalExpertLB;
+                    var array2 = new int[5];
                     array2[0] = 100;
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
@@ -341,9 +350,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_38_1 = true;
-                    LogicBlock arg_38_2 = m_generalExpertLB;
-                    int[] array3 = new int[5];
+                    var arg_38_1 = true;
+                    var arg_38_2 = m_generalExpertLB;
+                    var array3 = new int[5];
                     array3[0] = 40;
                     array3[3] = 60;
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
@@ -364,15 +373,6 @@ namespace RogueCastle
                 case 3:
                     return;
             }
-        }
-
-        public EnemyObj_IceWizard(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyWizardIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            PlayAnimation();
-            TintablePart = _objectList[0];
-            Type = 11;
         }
 
         public override void Update(GameTime gameTime)
@@ -403,7 +403,7 @@ namespace RogueCastle
         public void SummonIceball()
         {
             ResetIceball();
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "WizardIceSpell_Sprite",
                 SourceAnchor = m_spellOffset,
@@ -431,7 +431,7 @@ namespace RogueCastle
             {
                 m_iceballSummon.PlayAnimation("Grown", "End");
             }
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "WizardIceProjectile_Sprite",
                 SourceAnchor = m_spellOffset,
@@ -444,12 +444,12 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            float num = 0f;
+            var num = 0f;
             float num2 = 360/numIceballs;
-            for (int i = 0; i < numIceballs; i++)
+            for (var i = 0; i < numIceballs; i++)
             {
                 projectileData.Angle = new Vector2(num, num);
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num += num2;
             }
@@ -463,7 +463,7 @@ namespace RogueCastle
             {
                 m_iceballSummon.PlayAnimation("Grown", "End");
             }
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "WizardIceProjectile_Sprite",
                 SourceAnchor = m_spellOffset,
@@ -476,12 +476,12 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            float num = 60f;
-            for (int i = 0; i < numIceballs; i++)
+            var num = 60f;
+            for (var i = 0; i < numIceballs; i++)
             {
                 float num2 = CDGMath.RandomInt(0, 360);
                 projectileData.Angle = new Vector2(num2, num2);
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num2 += num;
             }
@@ -525,7 +525,7 @@ namespace RogueCastle
             }
             if (!(otherBox.AbsParent is PlayerObj))
             {
-                IPhysicsObj physicsObj = otherBox.AbsParent as IPhysicsObj;
+                var physicsObj = otherBox.AbsParent as IPhysicsObj;
                 if (physicsObj.CollidesBottom && physicsObj.CollidesTop && physicsObj.CollidesLeft &&
                     physicsObj.CollidesRight)
                 {

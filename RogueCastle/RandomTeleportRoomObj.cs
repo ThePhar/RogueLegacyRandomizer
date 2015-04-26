@@ -21,7 +21,7 @@ namespace RogueCastle
         {
             m_teleporter = new TeleporterObj();
             SpriteObj item = null;
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "teleporter")
                 {
@@ -48,19 +48,19 @@ namespace RogueCastle
 
         private void TeleportPlayer()
         {
-            ProceduralLevelScreen levelScreen = Game.ScreenManager.GetLevelScreen();
-            PlayerObj player = Game.ScreenManager.Player;
+            var levelScreen = Game.ScreenManager.GetLevelScreen();
+            var player = Game.ScreenManager.Player;
             player.UpdateCollisionBoxes();
             if (levelScreen != null)
             {
-                Vector2 position = default(Vector2);
-                int num = levelScreen.RoomList.Count - 1;
+                var position = default(Vector2);
+                var num = levelScreen.RoomList.Count - 1;
                 if (num < 1)
                 {
                     num = 1;
                 }
-                int index = CDGMath.RandomInt(0, num);
-                RoomObj roomObj = levelScreen.RoomList[index];
+                var index = CDGMath.RandomInt(0, num);
+                var roomObj = levelScreen.RoomList[index];
                 while (roomObj.Name == "Boss" || roomObj.Name == "Start" || roomObj.Name == "Ending" ||
                        roomObj.Name == "Compass" || roomObj.Name == "ChallengeBoss" || roomObj.Name == "Throne" ||
                        roomObj.Name == "Tutorial" || roomObj.Name == "EntranceBoss" || roomObj.Name == "Bonus" ||
@@ -70,9 +70,9 @@ namespace RogueCastle
                     index = CDGMath.RandomInt(0, num);
                     roomObj = levelScreen.RoomList[index];
                 }
-                foreach (DoorObj current in roomObj.DoorList)
+                foreach (var current in roomObj.DoorList)
                 {
-                    bool flag = false;
+                    var flag = false;
                     position.X = current.Bounds.Center.X;
                     string doorPosition;
                     if ((doorPosition = current.DoorPosition) != null)

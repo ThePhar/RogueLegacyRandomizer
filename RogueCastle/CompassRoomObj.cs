@@ -23,9 +23,9 @@ namespace RogueCastle
             }
             SoundManager.StopMusic(2f);
             Player.UnlockControls();
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
-                ChestObj chestObj = current as ChestObj;
+                var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
                     chestObj.ResetChest();

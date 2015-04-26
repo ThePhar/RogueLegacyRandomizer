@@ -15,11 +15,11 @@ namespace Randomchaos2DGodRays
 {
     public class ScreenQuad
     {
+        private readonly Game Game;
         private VertexPositionTexture[] corners;
-        private VertexBuffer vb;
         private short[] ib;
+        private VertexBuffer vb;
         private VertexDeclaration vertDec;
-        private Game Game;
 
         public ScreenQuad(Game game)
         {

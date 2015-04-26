@@ -17,15 +17,12 @@ namespace RogueCastle
 {
     public class RaindropObj : SpriteObj
     {
-        private float m_speedY;
-        private float m_speedX;
-        private Vector2 m_startingPos;
-        private bool m_splashing;
-        private bool m_isSnowflake;
         private bool m_isParticle;
-        public bool IsCollidable { get; set; }
-        public Vector2 MaxYSpeed { get; set; }
-        public Vector2 MaxXSpeed { get; set; }
+        private bool m_isSnowflake;
+        private float m_speedX;
+        private float m_speedY;
+        private bool m_splashing;
+        private Vector2 m_startingPos;
 
         public RaindropObj(Vector2 startingPos) : base("Raindrop_Sprite")
         {
@@ -38,6 +35,10 @@ namespace RogueCastle
             AnimationDelay = 0.0333333351f;
             Scale = new Vector2(2f, 2f);
         }
+
+        public bool IsCollidable { get; set; }
+        public Vector2 MaxYSpeed { get; set; }
+        public Vector2 MaxXSpeed { get; set; }
 
         public void ChangeToSnowflake()
         {
@@ -72,7 +73,7 @@ namespace RogueCastle
             Rotation = -90f;
             m_speedY = CDGMath.RandomFloat(MaxYSpeed.X, MaxYSpeed.Y);
             m_speedX = CDGMath.RandomFloat(MaxXSpeed.X, MaxXSpeed.Y);
-            float num = CDGMath.RandomFloat(2f, 8f);
+            var num = CDGMath.RandomFloat(2f, 8f);
             Scale = new Vector2(num, num);
         }
 
@@ -80,16 +81,16 @@ namespace RogueCastle
         {
             if (!m_splashing)
             {
-                float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+                var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
                 Y += m_speedY*num;
                 X += m_speedX*num;
                 if (IsCollidable)
                 {
-                    Rectangle bounds = Bounds;
-                    foreach (TerrainObj current in collisionList)
+                    var bounds = Bounds;
+                    foreach (var current in collisionList)
                     {
-                        TerrainObj terrainObj = current;
-                        Rectangle bounds2 = terrainObj.Bounds;
+                        var terrainObj = current;
+                        var bounds2 = terrainObj.Bounds;
                         if (terrainObj.Visible && terrainObj.CollidesTop && terrainObj.Y > 120f &&
                             CollisionMath.Intersects(bounds, bounds2))
                         {
@@ -130,7 +131,7 @@ namespace RogueCastle
 
         public void UpdateNoCollision(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             Y += m_speedY*num;
             X += m_speedX*num;
             if (X > m_startingPos.X + 4000f || X < m_startingPos.X - 4000f)

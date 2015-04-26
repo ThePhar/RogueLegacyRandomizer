@@ -17,16 +17,20 @@ namespace RogueCastle
 {
     public class ProjectileIconPool : IDisposable
     {
-        private bool m_isDisposed;
-        private DS2DPool<ProjectileIconObj> m_resourcePool;
-        private int m_poolSize;
+        private readonly int m_poolSize;
         private ProjectileManager m_projectileManager;
+        private DS2DPool<ProjectileIconObj> m_resourcePool;
         private RCScreenManager m_screenManager;
 
-        public bool IsDisposed
+        public ProjectileIconPool(int poolSize, ProjectileManager projectileManager, RCScreenManager screenManager)
         {
-            get { return m_isDisposed; }
+            m_poolSize = poolSize;
+            m_resourcePool = new DS2DPool<ProjectileIconObj>();
+            m_projectileManager = projectileManager;
+            m_screenManager = screenManager;
         }
+
+        public bool IsDisposed { get; private set; }
 
         public int ActiveTextObjs
         {
@@ -43,19 +47,24 @@ namespace RogueCastle
             get { return TotalPoolSize - ActiveTextObjs; }
         }
 
-        public ProjectileIconPool(int poolSize, ProjectileManager projectileManager, RCScreenManager screenManager)
+        public void Dispose()
         {
-            m_poolSize = poolSize;
-            m_resourcePool = new DS2DPool<ProjectileIconObj>();
-            m_projectileManager = projectileManager;
-            m_screenManager = screenManager;
+            if (!IsDisposed)
+            {
+                Console.WriteLine("Disposing Projectile Icon Pool");
+                m_resourcePool.Dispose();
+                m_resourcePool = null;
+                IsDisposed = true;
+                m_projectileManager = null;
+                m_screenManager = null;
+            }
         }
 
         public void Initialize()
         {
-            for (int i = 0; i < m_poolSize; i++)
+            for (var i = 0; i < m_poolSize; i++)
             {
-                ProjectileIconObj projectileIconObj = new ProjectileIconObj();
+                var projectileIconObj = new ProjectileIconObj();
                 projectileIconObj.Visible = false;
                 projectileIconObj.ForceDraw = true;
                 projectileIconObj.TextureColor = Color.White;
@@ -65,7 +74,7 @@ namespace RogueCastle
 
         public void AddIcon(ProjectileObj projectile)
         {
-            ProjectileIconObj projectileIconObj = m_resourcePool.CheckOut();
+            var projectileIconObj = m_resourcePool.CheckOut();
             projectileIconObj.Visible = true;
             projectileIconObj.ForceDraw = true;
             projectileIconObj.AttachedProjectile = projectile;
@@ -74,7 +83,7 @@ namespace RogueCastle
 
         public void DestroyIcon(ProjectileObj projectile)
         {
-            ProjectileIconObj attachedIcon = projectile.AttachedIcon;
+            var attachedIcon = projectile.AttachedIcon;
             attachedIcon.Visible = false;
             attachedIcon.Rotation = 0f;
             attachedIcon.TextureColor = Color.White;
@@ -88,7 +97,7 @@ namespace RogueCastle
 
         public void DestroyAllIcons()
         {
-            foreach (ProjectileObj current in m_projectileManager.ActiveProjectileList)
+            foreach (var current in m_projectileManager.ActiveProjectileList)
             {
                 if (current.AttachedIcon != null)
                 {
@@ -99,8 +108,8 @@ namespace RogueCastle
 
         public void Update(Camera2D camera)
         {
-            PlayerObj player = m_screenManager.Player;
-            foreach (ProjectileObj current in m_projectileManager.ActiveProjectileList)
+            var player = m_screenManager.Player;
+            foreach (var current in m_projectileManager.ActiveProjectileList)
             {
                 if (current.ShowIcon)
                 {
@@ -125,7 +134,7 @@ namespace RogueCastle
                     }
                 }
             }
-            for (int i = 0; i < m_resourcePool.ActiveObjsList.Count; i++)
+            for (var i = 0; i < m_resourcePool.ActiveObjsList.Count; i++)
             {
                 if (!m_resourcePool.ActiveObjsList[i].AttachedProjectile.IsAlive)
                 {
@@ -133,7 +142,7 @@ namespace RogueCastle
                     i--;
                 }
             }
-            foreach (ProjectileIconObj current2 in m_resourcePool.ActiveObjsList)
+            foreach (var current2 in m_resourcePool.ActiveObjsList)
             {
                 current2.Update(camera);
             }
@@ -143,23 +152,10 @@ namespace RogueCastle
         {
             if (Game.PlayerStats.Traits.X != 21f && Game.PlayerStats.Traits.Y != 21f)
             {
-                foreach (ProjectileIconObj current in m_resourcePool.ActiveObjsList)
+                foreach (var current in m_resourcePool.ActiveObjsList)
                 {
                     current.Draw(camera);
                 }
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                Console.WriteLine("Disposing Projectile Icon Pool");
-                m_resourcePool.Dispose();
-                m_resourcePool = null;
-                m_isDisposed = true;
-                m_projectileManager = null;
-                m_screenManager = null;
             }
         }
     }

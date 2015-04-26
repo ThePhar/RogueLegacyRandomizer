@@ -17,13 +17,27 @@ namespace RogueCastle
 {
     public class DialogueManager : IDisposable
     {
-        private static bool m_isDisposed;
         private static Dictionary<string, Dictionary<string, DialogueObj>> m_languageArray;
         private static string m_currentLanguage;
+        public static bool IsDisposed { get; private set; }
 
-        public static bool IsDisposed
+        public void Dispose()
         {
-            get { return m_isDisposed; }
+            if (!IsDisposed)
+            {
+                Console.WriteLine("Disposing Dialogue Manager");
+                foreach (var current in m_languageArray)
+                {
+                    foreach (var current2 in current.Value)
+                    {
+                        current2.Value.Dispose();
+                    }
+                    current.Value.Clear();
+                }
+                m_languageArray.Clear();
+                m_languageArray = null;
+                IsDisposed = true;
+            }
         }
 
         public static void Initialize()
@@ -38,8 +52,8 @@ namespace RogueCastle
 
         public static void LoadLanguageDocument(string fullFilePath)
         {
-            FileInfo fileInfo = new FileInfo(fullFilePath);
-            using (StreamReader streamReader = fileInfo.OpenText())
+            var fileInfo = new FileInfo(fullFilePath);
+            using (var streamReader = fileInfo.OpenText())
             {
                 ParseDocument(streamReader);
             }
@@ -47,19 +61,19 @@ namespace RogueCastle
 
         private static void ParseDocument(StreamReader reader)
         {
-            int num = 0;
-            string key = "";
-            string item = "";
+            var num = 0;
+            var key = "";
+            var item = "";
             string text = null;
-            List<string> list = new List<string>();
-            List<string> list2 = new List<string>();
-            bool flag = true;
+            var list = new List<string>();
+            var list2 = new List<string>();
+            var flag = true;
             string text2;
             while ((text2 = reader.ReadLine()) != null)
             {
                 if (text2 != "" && text2.IndexOf("//") != 0)
                 {
-                    string text3 = text2.Substring(text2.IndexOf(" ") + 1);
+                    var text3 = text2.Substring(text2.IndexOf(" ") + 1);
                     if (num == 0 && !text2.Contains("@language"))
                     {
                         throw new Exception("Cannot create text dictionary from file. Unspecified language type.");
@@ -119,23 +133,23 @@ namespace RogueCastle
 
         public static void LoadLanguageBinFile(string filePath)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                using (var binaryReader = new BinaryReader(fileStream))
                 {
-                    int num = 0;
-                    string key = "";
-                    string item = "";
+                    var num = 0;
+                    var key = "";
+                    var item = "";
                     string text = null;
-                    List<string> list = new List<string>();
-                    List<string> list2 = new List<string>();
-                    bool flag = true;
+                    var list = new List<string>();
+                    var list2 = new List<string>();
+                    var flag = true;
                     while (true)
                     {
-                        string text2 = binaryReader.ReadString();
+                        var text2 = binaryReader.ReadString();
                         if (text2 != "" && text2.IndexOf("//") != 0)
                         {
-                            string text3 = text2.Substring(text2.IndexOf(" ") + 1);
+                            var text3 = text2.Substring(text2.IndexOf(" ") + 1);
                             if (num == 0 && !text2.Contains("@language"))
                             {
                                 break;
@@ -185,7 +199,7 @@ namespace RogueCastle
                             }
                         }
                         num++;
-                        if (!(text2 != "eof"))
+                        if (text2 == "eof")
                         {
                             goto Block_18;
                         }
@@ -226,7 +240,7 @@ namespace RogueCastle
                 Console.WriteLine("Cannot add text. Text with title already specified.");
                 return;
             }
-            DialogueObj value = new DialogueObj(speakers, text);
+            var value = new DialogueObj(speakers, text);
             m_languageArray[m_currentLanguage].Add(key, value);
         }
 
@@ -238,25 +252,6 @@ namespace RogueCastle
         public static string GetCurrentLanguage()
         {
             return m_currentLanguage;
-        }
-
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                Console.WriteLine("Disposing Dialogue Manager");
-                foreach (KeyValuePair<string, Dictionary<string, DialogueObj>> current in m_languageArray)
-                {
-                    foreach (KeyValuePair<string, DialogueObj> current2 in current.Value)
-                    {
-                        current2.Value.Dispose();
-                    }
-                    current.Value.Clear();
-                }
-                m_languageArray.Clear();
-                m_languageArray = null;
-                m_isDisposed = true;
-            }
         }
     }
 }

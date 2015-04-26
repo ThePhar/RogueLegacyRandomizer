@@ -8,7 +8,6 @@
   Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 */
 
-using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +22,11 @@ namespace RogueCastle
         private EnemyObj_Blob m_boss2;
         private Vector2 m_startingCamPos;
 
+        public BlobChallengeRoom()
+        {
+            m_roomActivityDelay = 0.5f;
+        }
+
         public override bool BossKilled
         {
             get { return NumActiveBlobs == 0; }
@@ -32,15 +36,15 @@ namespace RogueCastle
         {
             get
             {
-                int num = 0;
-                foreach (EnemyObj current in EnemyList)
+                var num = 0;
+                foreach (var current in EnemyList)
                 {
                     if (current.Type == 2 && !current.IsKilled)
                     {
                         num++;
                     }
                 }
-                foreach (EnemyObj current2 in TempEnemyList)
+                foreach (var current2 in TempEnemyList)
                 {
                     if (current2.Type == 2 && !current2.IsKilled)
                     {
@@ -49,11 +53,6 @@ namespace RogueCastle
                 }
                 return num;
             }
-        }
-
-        public BlobChallengeRoom()
-        {
-            m_roomActivityDelay = 0.5f;
         }
 
         public override void Initialize()
@@ -153,20 +152,20 @@ namespace RogueCastle
         public void Intro2()
         {
             object arg_96_0 = Player.AttachedLevel.Camera;
-            float arg_96_1 = 1f;
+            var arg_96_1 = 1f;
             Easing arg_96_2 = Quad.EaseInOut;
-            string[] array = new string[8];
+            var array = new string[8];
             array[0] = "delay";
             array[1] = "0.5";
             array[2] = "X";
-            string[] arg_5D_0 = array;
-            int arg_5D_1 = 3;
-            int x = Bounds.Center.X;
+            var arg_5D_0 = array;
+            var arg_5D_1 = 3;
+            var x = Bounds.Center.X;
             arg_5D_0[arg_5D_1] = x.ToString();
             array[4] = "Y";
-            string[] arg_84_0 = array;
-            int arg_84_1 = 5;
-            int y = Bounds.Center.Y;
+            var arg_84_0 = array;
+            var arg_84_1 = 5;
+            var y = Bounds.Center.Y;
             arg_84_0[arg_84_1] = y.ToString();
             array[6] = "Zoom";
             array[7] = "0.5";
@@ -186,7 +185,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            Rectangle bounds = Bounds;
+            var bounds = Bounds;
             if (Player.Y > bounds.Bottom)
             {
                 Player.Y = bounds.Top + 20;
@@ -203,8 +202,8 @@ namespace RogueCastle
             {
                 Player.X = bounds.Right - 20;
             }
-            List<EnemyObj> list = Player.AttachedLevel.CurrentRoom.EnemyList;
-            foreach (EnemyObj current in list)
+            var list = Player.AttachedLevel.CurrentRoom.EnemyList;
+            foreach (var current in list)
             {
                 if (current.Y > bounds.Bottom - 10)
                 {
@@ -224,7 +223,7 @@ namespace RogueCastle
                 }
             }
             list = Player.AttachedLevel.CurrentRoom.TempEnemyList;
-            foreach (EnemyObj current2 in list)
+            foreach (var current2 in list)
             {
                 if (current2.Y > bounds.Bottom - 10)
                 {
@@ -249,7 +248,7 @@ namespace RogueCastle
         public override void Draw(Camera2D camera)
         {
             base.Draw(camera);
-            Vector2 position = Player.Position;
+            var position = Player.Position;
             if (Player.X - Player.Width/2f < X)
             {
                 Player.Position = new Vector2(Player.X + Width, Player.Y);
@@ -271,10 +270,10 @@ namespace RogueCastle
                 Player.Draw(camera);
             }
             Player.Position = position;
-            foreach (EnemyObj current in EnemyList)
+            foreach (var current in EnemyList)
             {
-                Vector2 position2 = current.Position;
-                Rectangle pureBounds = current.PureBounds;
+                var position2 = current.Position;
+                var pureBounds = current.PureBounds;
                 if (current.X - current.Width/2f < X)
                 {
                     current.Position = new Vector2(current.X + Width, current.Y);
@@ -297,11 +296,11 @@ namespace RogueCastle
                 }
                 current.Position = position2;
             }
-            foreach (EnemyObj current2 in TempEnemyList)
+            foreach (var current2 in TempEnemyList)
             {
                 current2.ForceDraw = true;
-                Vector2 position3 = current2.Position;
-                Rectangle pureBounds2 = current2.PureBounds;
+                var position3 = current2.Position;
+                var pureBounds2 = current2.PureBounds;
                 if (current2.X - current2.Width/2f < X)
                 {
                     current2.Position = new Vector2(current2.X + Width, current2.Y);
@@ -330,12 +329,12 @@ namespace RogueCastle
         {
             if (!BossKilled)
             {
-                foreach (EnemyObj current in EnemyList)
+                foreach (var current in EnemyList)
                 {
                     current.Reset();
                 }
             }
-            foreach (EnemyObj current2 in TempEnemyList)
+            foreach (var current2 in TempEnemyList)
             {
                 current2.KillSilently();
                 current2.Dispose();

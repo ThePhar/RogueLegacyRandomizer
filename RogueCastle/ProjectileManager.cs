@@ -19,16 +19,20 @@ namespace RogueCastle
 {
     public class ProjectileManager : IDisposable
     {
+        private readonly int m_poolSize;
         private ProceduralLevelScreen m_levelScreen;
         private DS2DPool<ProjectileObj> m_projectilePool;
         private List<ProjectileObj> m_projectilesToRemoveList;
-        private int m_poolSize;
-        private bool m_isDisposed;
 
-        public bool IsDisposed
+        public ProjectileManager(ProceduralLevelScreen level, int poolSize)
         {
-            get { return m_isDisposed; }
+            m_projectilesToRemoveList = new List<ProjectileObj>();
+            m_levelScreen = level;
+            m_projectilePool = new DS2DPool<ProjectileObj>();
+            m_poolSize = poolSize;
         }
+
+        public bool IsDisposed { get; private set; }
 
         public List<ProjectileObj> ActiveProjectileList
         {
@@ -50,19 +54,25 @@ namespace RogueCastle
             get { return TotalPoolSize - ActiveProjectiles; }
         }
 
-        public ProjectileManager(ProceduralLevelScreen level, int poolSize)
+        public void Dispose()
         {
-            m_projectilesToRemoveList = new List<ProjectileObj>();
-            m_levelScreen = level;
-            m_projectilePool = new DS2DPool<ProjectileObj>();
-            m_poolSize = poolSize;
+            if (!IsDisposed)
+            {
+                Console.WriteLine("Disposing Projectile Manager");
+                m_levelScreen = null;
+                m_projectilePool.Dispose();
+                m_projectilePool = null;
+                m_projectilesToRemoveList.Clear();
+                m_projectilesToRemoveList = null;
+                IsDisposed = true;
+            }
         }
 
         public void Initialize()
         {
-            for (int i = 0; i < m_poolSize; i++)
+            for (var i = 0; i < m_poolSize; i++)
             {
-                ProjectileObj projectileObj = new ProjectileObj("BoneProjectile_Sprite");
+                var projectileObj = new ProjectileObj("BoneProjectile_Sprite");
                 projectileObj.Visible = false;
                 projectileObj.AnimationDelay = 0.05f;
                 projectileObj.OutlineWidth = 2;
@@ -76,10 +86,10 @@ namespace RogueCastle
             {
                 throw new Exception("Cannot have a projectile with no source");
             }
-            ProjectileObj projectileObj = m_projectilePool.CheckOut();
+            var projectileObj = m_projectilePool.CheckOut();
             projectileObj.Reset();
             projectileObj.LifeSpan = data.Lifespan;
-            GameObj source = data.Source;
+            var source = data.Source;
             projectileObj.ChaseTarget = data.ChaseTarget;
             projectileObj.Source = source;
             projectileObj.Target = data.Target;
@@ -97,11 +107,11 @@ namespace RogueCastle
             projectileObj.CanBeFusRohDahed = data.CanBeFusRohDahed;
             projectileObj.IgnoreInvincibleCounter = data.IgnoreInvincibleCounter;
             projectileObj.WrapProjectile = data.WrapProjectile;
-            float num = 0f;
+            var num = 0f;
             if (data.Target != null)
             {
-                float num2 = data.Target.X - source.X;
-                float num3 = data.Target.Y - source.Y - data.SourceAnchor.Y;
+                var num2 = data.Target.X - source.X;
+                var num3 = data.Target.Y - source.Y - data.SourceAnchor.Y;
                 if (source.Flip == SpriteEffects.FlipHorizontally)
                 {
                     num = 180f - num;
@@ -152,8 +162,8 @@ namespace RogueCastle
             }
             projectileObj.Y = source.AbsY + data.SourceAnchor.Y;
             projectileObj.IsWeighted = data.IsWeighted;
-            Vector2 vector = new Vector2((float) Math.Cos(num), (float) Math.Sin(num));
-            float num4 = data.Speed.X;
+            var vector = new Vector2((float) Math.Cos(num), (float) Math.Sin(num));
+            var num4 = data.Speed.X;
             if (data.Speed.X != data.Speed.Y)
             {
                 num4 = CDGMath.RandomFloat(data.Speed.X, data.Speed.Y);
@@ -223,11 +233,11 @@ namespace RogueCastle
 
         public void DestroyAllProjectiles(bool destroyRoomTransitionProjectiles)
         {
-            ProjectileObj[] array = m_projectilePool.ActiveObjsList.ToArray();
-            ProjectileObj[] array2 = array;
-            for (int i = 0; i < array2.Length; i++)
+            var array = m_projectilePool.ActiveObjsList.ToArray();
+            var array2 = array;
+            for (var i = 0; i < array2.Length; i++)
             {
-                ProjectileObj projectileObj = array2[i];
+                var projectileObj = array2[i];
                 if (destroyRoomTransitionProjectiles ||
                     (!destroyRoomTransitionProjectiles && projectileObj.DestroyOnRoomTransition))
                 {
@@ -239,7 +249,7 @@ namespace RogueCastle
 
         public void PauseAllProjectiles(bool pausePlayerProjectiles)
         {
-            foreach (ProjectileObj current in m_projectilePool.ActiveObjsList)
+            foreach (var current in m_projectilePool.ActiveObjsList)
             {
                 if (current.CollisionTypeTag != 2 || pausePlayerProjectiles)
                 {
@@ -257,7 +267,7 @@ namespace RogueCastle
 
         public void UnpauseAllProjectiles()
         {
-            foreach (ProjectileObj current in m_projectilePool.ActiveObjsList)
+            foreach (var current in m_projectilePool.ActiveObjsList)
             {
                 if (current.GamePaused)
                 {
@@ -275,8 +285,8 @@ namespace RogueCastle
 
         public void Update(GameTime gameTime)
         {
-            RoomObj currentRoom = m_levelScreen.CurrentRoom;
-            foreach (ProjectileObj current in m_projectilePool.ActiveObjsList)
+            var currentRoom = m_levelScreen.CurrentRoom;
+            foreach (var current in m_projectilePool.ActiveObjsList)
             {
                 if (current.WrapProjectile)
                 {
@@ -297,7 +307,7 @@ namespace RogueCastle
                 {
                     m_projectilesToRemoveList.Clear();
                 }
-                foreach (ProjectileObj current2 in m_projectilePool.ActiveObjsList)
+                foreach (var current2 in m_projectilePool.ActiveObjsList)
                 {
                     if (current2.IsAlive && !current2.IsDying && !current2.IgnoreBoundsCheck)
                     {
@@ -316,7 +326,7 @@ namespace RogueCastle
                         m_projectilesToRemoveList.Add(current2);
                     }
                 }
-                foreach (ProjectileObj current3 in m_projectilesToRemoveList)
+                foreach (var current3 in m_projectilesToRemoveList)
                 {
                     DestroyProjectile(current3);
                 }
@@ -331,7 +341,7 @@ namespace RogueCastle
                 {
                     m_projectilesToRemoveList.Clear();
                 }
-                foreach (ProjectileObj current in m_projectilePool.ActiveObjsList)
+                foreach (var current in m_projectilePool.ActiveObjsList)
                 {
                     if (current.IsAlive && !current.IsDying && !current.IgnoreBoundsCheck)
                     {
@@ -350,7 +360,7 @@ namespace RogueCastle
                         m_projectilesToRemoveList.Add(current);
                     }
                 }
-                foreach (ProjectileObj current2 in m_projectilesToRemoveList)
+                foreach (var current2 in m_projectilesToRemoveList)
                 {
                     DestroyProjectile(current2);
                 }
@@ -359,23 +369,9 @@ namespace RogueCastle
 
         public void Draw(Camera2D camera)
         {
-            foreach (ProjectileObj current in m_projectilePool.ActiveObjsList)
+            foreach (var current in m_projectilePool.ActiveObjsList)
             {
                 current.Draw(camera);
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                Console.WriteLine("Disposing Projectile Manager");
-                m_levelScreen = null;
-                m_projectilePool.Dispose();
-                m_projectilePool = null;
-                m_projectilesToRemoveList.Clear();
-                m_projectilesToRemoveList = null;
-                m_isDisposed = true;
             }
         }
     }

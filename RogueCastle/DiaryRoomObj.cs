@@ -17,16 +17,16 @@ namespace RogueCastle
 {
     public class DiaryRoomObj : BonusRoomObj
     {
-        private SpriteObj m_speechBubble;
         private SpriteObj m_diary;
         private int m_diaryIndex;
+        private SpriteObj m_speechBubble;
 
         public override void Initialize()
         {
             m_speechBubble = new SpriteObj("UpArrowSquare_Sprite");
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             GameObjList.Add(m_speechBubble);
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "diary")
                 {
@@ -64,7 +64,7 @@ namespace RogueCastle
         {
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
                                (float) Math.Sin(Game.TotalGameTime*20f)*2f;
-            Rectangle bounds = m_diary.Bounds;
+            var bounds = m_diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;
             if (!CollisionMath.Intersects(Player.Bounds, bounds) && m_speechBubble.SpriteName == "UpArrowSquare_Sprite")
@@ -93,17 +93,17 @@ namespace RogueCastle
                 {
                     if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 24)
                     {
-                        RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                        var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                         rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
                         rCScreenManager.DisplayScreen(13, true);
-                        PlayerStats expr_1DB = Game.PlayerStats;
+                        var expr_1DB = Game.PlayerStats;
                         expr_1DB.DiaryEntry += 1;
                         RoomCompleted = true;
                     }
                     else
                     {
                         RoomCompleted = true;
-                        RCScreenManager rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                        var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
                         rCScreenManager2.DisplayScreen(20, true);
                     }
                 }

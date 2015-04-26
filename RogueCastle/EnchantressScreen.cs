@@ -22,44 +22,45 @@ namespace RogueCastle
     public class EnchantressScreen : Screen
     {
         private const int m_startingCategoryIndex = 6;
-        private ObjContainer m_enchantressUI;
-        private SpriteObj m_selectionIcon;
+        private SpriteObj[] m_activeIconArray;
+        private KeyIconTextObj m_cancelText;
+        private KeyIconTextObj m_confirmText;
         private int m_currentCategoryIndex;
         private int m_currentEquipmentIndex;
+        private TextObj m_descriptionText;
+        private ObjContainer m_enchantressUI;
+        private TextObj m_equipmentDescriptionText;
+        private TextObj m_equipmentTitleText;
+        private SpriteObj m_equippedIcon;
+        private bool m_inCategoryMenu = true;
+        private KeyIconTextObj m_instructionsText;
+        private TextObj m_instructionsTitleText;
+        private bool m_lockControls;
         private List<SpriteObj[]> m_masterIconArray;
-        private SpriteObj[] m_activeIconArray;
+        private KeyIconTextObj m_navigationText;
         private List<SpriteObj> m_newIconList;
         private int m_newIconListIndex;
         private TextObj m_playerMoney;
-        private SpriteObj m_equippedIcon;
-        private TextObj m_equipmentDescriptionText;
-        private TextObj m_descriptionText;
-        private ObjContainer m_unlockCostContainer;
-        private TextObj m_instructionsTitleText;
-        private KeyIconTextObj m_instructionsText;
-        private TextObj m_equipmentTitleText;
-        private bool m_inCategoryMenu = true;
-        private bool m_lockControls;
-        private KeyIconTextObj m_confirmText;
-        private KeyIconTextObj m_cancelText;
-        private KeyIconTextObj m_navigationText;
         private Cue m_rainSound;
+        private SpriteObj m_selectionIcon;
+        private ObjContainer m_unlockCostContainer;
+
+        public EnchantressScreen()
+        {
+            m_currentCategoryIndex = 6;
+            m_masterIconArray = new List<SpriteObj[]>();
+            for (var i = 0; i < 5; i++)
+            {
+                m_masterIconArray.Add(new SpriteObj[11]);
+            }
+        }
+
         public float BackBufferOpacity { get; set; }
         public PlayerObj Player { get; set; }
 
         private int CurrentCategoryIndex
         {
             get { return m_currentCategoryIndex - 6; }
-        }
-
-        public EnchantressScreen()
-        {
-            m_currentCategoryIndex = 6;
-            m_masterIconArray = new List<SpriteObj[]>();
-            for (int i = 0; i < 5; i++)
-            {
-                m_masterIconArray.Add(new SpriteObj[11]);
-            }
         }
 
         public override void LoadContent()
@@ -75,7 +76,7 @@ namespace RogueCastle
             m_playerMoney.AnchorY = 10f;
             m_enchantressUI.AddChild(m_playerMoney);
             m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3).ChangeSprite("EnchantressUI_Title_Sprite");
-            for (int i = 0; i < m_enchantressUI.NumChildren; i++)
+            for (var i = 0; i < m_enchantressUI.NumChildren; i++)
             {
                 m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
             }
@@ -92,14 +93,14 @@ namespace RogueCastle
             m_equipmentDescriptionText.WordWrap(190);
             m_equipmentDescriptionText.Scale = Vector2.Zero;
             m_enchantressUI.AddChild(m_equipmentDescriptionText);
-            foreach (SpriteObj[] current in m_masterIconArray)
+            foreach (var current in m_masterIconArray)
             {
-                Vector2 absPosition = m_enchantressUI.GetChildAt(6).AbsPosition;
+                var absPosition = m_enchantressUI.GetChildAt(6).AbsPosition;
                 absPosition.X += 85f;
-                float x = absPosition.X;
-                float num = 70f;
-                float num2 = 80f;
-                for (int j = 0; j < current.Length; j++)
+                var x = absPosition.X;
+                var num = 70f;
+                var num2 = 80f;
+                for (var j = 0; j < current.Length; j++)
                 {
                     current[j] = new SpriteObj("BlacksmithUI_QuestionMarkIcon_Sprite");
                     current[j].Position = absPosition;
@@ -131,9 +132,9 @@ namespace RogueCastle
             m_navigationText.Position = new Vector2(m_confirmText.X, m_confirmText.Y + 80f);
             m_navigationText.ForceDraw = true;
             m_newIconList = new List<SpriteObj>();
-            for (int k = 0; k < 55; k++)
+            for (var k = 0; k < 55; k++)
             {
-                SpriteObj spriteObj = new SpriteObj("BlacksmithUI_NewIcon_Sprite");
+                var spriteObj = new SpriteObj("BlacksmithUI_NewIcon_Sprite");
                 spriteObj.Visible = false;
                 spriteObj.Scale = new Vector2(1.1f, 1.1f);
                 m_newIconList.Add(spriteObj);
@@ -154,7 +155,7 @@ namespace RogueCastle
             m_instructionsText.Font = Game.JunicodeFont;
             m_instructionsText.FontSize = 10f;
             m_unlockCostContainer = new ObjContainer();
-            TextObj textObj = new TextObj();
+            var textObj = new TextObj();
             textObj.Font = Game.JunicodeFont;
             textObj.FontSize = 10f;
             textObj.TextureColor = Color.Yellow;
@@ -181,11 +182,11 @@ namespace RogueCastle
 
         private void DisplayCategory(int equipmentType)
         {
-            float duration = 0.2f;
-            float num = 0f;
+            var duration = 0.2f;
+            var num = 0f;
             if (m_activeIconArray != null)
             {
-                for (int i = 0; i < 11; i++)
+                for (var i = 0; i < 11; i++)
                 {
                     Tween.StopAllContaining(m_activeIconArray[i], false);
                     Tween.To(m_activeIconArray[i], duration, Back.EaseIn, "delay", num.ToString(), "ScaleX", "0",
@@ -194,12 +195,12 @@ namespace RogueCastle
             }
             m_activeIconArray = m_masterIconArray[equipmentType];
             num = 0.25f;
-            for (int j = 0; j < 11; j++)
+            for (var j = 0; j < 11; j++)
             {
                 Tween.To(m_activeIconArray[j], duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY",
                     "1");
             }
-            foreach (SpriteObj current in m_newIconList)
+            foreach (var current in m_newIconList)
             {
                 Tween.StopAllContaining(current, false);
                 current.Scale = Vector2.Zero;
@@ -213,11 +214,11 @@ namespace RogueCastle
 
         public void EaseInMenu()
         {
-            float duration = 0.4f;
+            var duration = 0.4f;
             Tween.To(m_enchantressUI.GetChildAt(0), duration, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
             Tween.To(m_selectionIcon, duration, Back.EaseOut, "delay", "0.25", "ScaleX", "1", "ScaleY", "1");
-            float num = 0.2f;
-            for (int i = 6; i < m_enchantressUI.NumChildren - 3; i++)
+            var num = 0.2f;
+            for (var i = 6; i < m_enchantressUI.NumChildren - 3; i++)
             {
                 num += 0.05f;
                 Tween.To(m_enchantressUI.GetChildAt(i), duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1",
@@ -239,7 +240,7 @@ namespace RogueCastle
 
         private void EaseOutMenu()
         {
-            foreach (SpriteObj current in m_newIconList)
+            foreach (var current in m_newIconList)
             {
                 current.Visible = false;
             }
@@ -247,15 +248,15 @@ namespace RogueCastle
             Tween.To(m_confirmText, 0.2f, Linear.EaseNone, "Opacity", "0");
             Tween.To(m_cancelText, 0.2f, Linear.EaseNone, "Opacity", "0");
             Tween.To(m_navigationText, 0.2f, Linear.EaseNone, "Opacity", "0");
-            float num = 0.4f;
-            float num2 = 0f;
+            var num = 0.4f;
+            var num2 = 0f;
             Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 2), num, Back.EaseIn, "ScaleX", "0",
                 "ScaleY", "0");
             Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3), num, Back.EaseIn, "ScaleX", "0",
                 "ScaleY", "0");
             Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 4), num, Back.EaseIn, "ScaleX", "0",
                 "ScaleY", "0");
-            for (int i = 6; i < 11; i++)
+            for (var i = 6; i < 11; i++)
             {
                 if (m_currentCategoryIndex == i)
                 {
@@ -265,11 +266,11 @@ namespace RogueCastle
                     "ScaleY", "0");
                 num2 += 0.05f;
             }
-            for (int j = 1; j < 6; j++)
+            for (var j = 1; j < 6; j++)
             {
                 m_enchantressUI.GetChildAt(j).Scale = Vector2.Zero;
             }
-            for (int k = 0; k < m_activeIconArray.Length; k++)
+            for (var k = 0; k < m_activeIconArray.Length; k++)
             {
                 Tween.To(m_activeIconArray[k], num, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
             }
@@ -279,11 +280,11 @@ namespace RogueCastle
 
         private void UpdateIconStates()
         {
-            for (int i = 0; i < Game.PlayerStats.GetRuneArray.Count; i++)
+            for (var i = 0; i < Game.PlayerStats.GetRuneArray.Count; i++)
             {
-                for (int j = 0; j < Game.PlayerStats.GetRuneArray[i].Length; j++)
+                for (var j = 0; j < Game.PlayerStats.GetRuneArray[i].Length; j++)
                 {
-                    byte b = Game.PlayerStats.GetRuneArray[i][j];
+                    var b = Game.PlayerStats.GetRuneArray[i][j];
                     if (b == 0)
                     {
                         m_masterIconArray[i][j].ChangeSprite("BlacksmithUI_QuestionMarkIcon_Sprite");
@@ -355,24 +356,24 @@ namespace RogueCastle
             {
                 m_rainSound.Stop(AudioStopOptions.Immediate);
             }
-            for (int i = 0; i < m_enchantressUI.NumChildren; i++)
+            for (var i = 0; i < m_enchantressUI.NumChildren; i++)
             {
                 m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
             }
-            foreach (SpriteObj[] current in m_masterIconArray)
+            foreach (var current in m_masterIconArray)
             {
-                for (int j = 0; j < current.Length; j++)
+                for (var j = 0; j < current.Length; j++)
                 {
                     current[j].Scale = Vector2.Zero;
                 }
             }
             m_selectionIcon.Scale = Vector2.Zero;
             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
-            bool flag = true;
-            sbyte[] getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
-            for (int k = 0; k < getEquippedRuneArray.Length; k++)
+            var flag = true;
+            var getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
+            for (var k = 0; k < getEquippedRuneArray.Length; k++)
             {
-                sbyte b = getEquippedRuneArray[k];
+                var b = getEquippedRuneArray[k];
                 if (b == -1)
                 {
                     flag = false;
@@ -404,7 +405,7 @@ namespace RogueCastle
 
         private void CategorySelectionInput()
         {
-            int currentCategoryIndex = m_currentCategoryIndex;
+            var currentCategoryIndex = m_currentCategoryIndex;
             if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
             {
                 m_currentCategoryIndex--;
@@ -425,7 +426,7 @@ namespace RogueCastle
             {
                 SoundManager.PlaySound("ShopBSMenuMove");
                 m_selectionIcon.Position = m_enchantressUI.GetChildAt(m_currentCategoryIndex).AbsPosition;
-                for (int i = 1; i < 6; i++)
+                for (var i = 1; i < 6; i++)
                 {
                     if (i == 1)
                     {
@@ -458,7 +459,7 @@ namespace RogueCastle
                 m_inCategoryMenu = false;
                 m_currentEquipmentIndex = 0;
                 m_selectionIcon.Position = m_activeIconArray[m_currentEquipmentIndex].AbsPosition;
-                byte b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex];
+                var b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex];
                 if (b == 1)
                 {
                     Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex] = 2;
@@ -471,7 +472,7 @@ namespace RogueCastle
 
         private void EquipmentSelectionInput()
         {
-            int currentEquipmentIndex = m_currentEquipmentIndex;
+            var currentEquipmentIndex = m_currentEquipmentIndex;
             if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
             {
                 if (m_currentEquipmentIndex > 4)
@@ -512,7 +513,7 @@ namespace RogueCastle
             }
             if (currentEquipmentIndex != m_currentEquipmentIndex)
             {
-                byte b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex];
+                var b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex];
                 if (b == 1)
                 {
                     Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex] = 2;
@@ -531,12 +532,12 @@ namespace RogueCastle
             }
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
-                int num = m_currentCategoryIndex - 6;
+                var num = m_currentCategoryIndex - 6;
                 int num2 = Game.PlayerStats.GetRuneArray[num][m_currentEquipmentIndex];
                 int num3 = Game.PlayerStats.GetEquippedRuneArray[num];
                 if (num2 < 3 && num2 > 0)
                 {
-                    int abilityCost = Game.EquipmentSystem.GetAbilityCost(num, m_currentEquipmentIndex);
+                    var abilityCost = Game.EquipmentSystem.GetAbilityCost(num, m_currentEquipmentIndex);
                     if (Game.PlayerStats.Gold >= abilityCost)
                     {
                         SoundManager.PlaySound("ShopMenuUnlock");
@@ -544,7 +545,7 @@ namespace RogueCastle
                         Game.PlayerStats.GetRuneArray[num][m_currentEquipmentIndex] = 3;
                         Game.PlayerStats.GetEquippedRuneArray[num] = (sbyte) m_currentEquipmentIndex;
                         Player.AttachedLevel.UpdatePlayerHUDAbilities();
-                        SpriteObj spriteObj = m_masterIconArray[num][m_currentEquipmentIndex];
+                        var spriteObj = m_masterIconArray[num][m_currentEquipmentIndex];
                         spriteObj.Opacity = 1f;
                         num2 = 3;
                         UpdateIconSelectionText();
@@ -594,7 +595,7 @@ namespace RogueCastle
             {
                 m_equipmentDescriptionText.Text = "Purchase Info Here";
                 (m_unlockCostContainer.GetChildAt(1) as TextObj).Text =
-                    Game.EquipmentSystem.GetAbilityCost(m_currentCategoryIndex - 6, m_currentEquipmentIndex).ToString() +
+                    Game.EquipmentSystem.GetAbilityCost(m_currentCategoryIndex - 6, m_currentEquipmentIndex) +
                     " to unlock";
                 m_unlockCostContainer.Visible = true;
                 m_descriptionText.Visible = true;
@@ -637,17 +638,17 @@ namespace RogueCastle
         {
             UpdateMoneyText();
             m_newIconListIndex = 0;
-            foreach (SpriteObj current in m_newIconList)
+            foreach (var current in m_newIconList)
             {
                 current.Visible = false;
             }
-            for (int i = 0; i < Game.PlayerStats.GetRuneArray[CurrentCategoryIndex].Length; i++)
+            for (var i = 0; i < Game.PlayerStats.GetRuneArray[CurrentCategoryIndex].Length; i++)
             {
-                byte b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][i];
+                var b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][i];
                 if (b == 1)
                 {
-                    SpriteObj arg_7A_0 = m_masterIconArray[CurrentCategoryIndex][i];
-                    SpriteObj spriteObj = m_newIconList[m_newIconListIndex];
+                    var arg_7A_0 = m_masterIconArray[CurrentCategoryIndex][i];
+                    var spriteObj = m_newIconList[m_newIconListIndex];
                     spriteObj.Visible = true;
                     spriteObj.Position = m_masterIconArray[CurrentCategoryIndex][i].AbsPosition;
                     spriteObj.X -= 20f;
@@ -655,7 +656,7 @@ namespace RogueCastle
                     m_newIconListIndex++;
                 }
             }
-            sbyte b2 = Game.PlayerStats.GetEquippedRuneArray[CurrentCategoryIndex];
+            var b2 = Game.PlayerStats.GetEquippedRuneArray[CurrentCategoryIndex];
             if (b2 > -1)
             {
                 m_equippedIcon.Position = new Vector2(m_activeIconArray[b2].AbsPosition.X + 18f,
@@ -669,7 +670,7 @@ namespace RogueCastle
         private void UpdateMoneyText()
         {
             m_playerMoney.Text = Game.PlayerStats.Gold.ToString();
-            ProceduralLevelScreen levelScreen = Game.ScreenManager.GetLevelScreen();
+            var levelScreen = Game.ScreenManager.GetLevelScreen();
             if (levelScreen != null)
             {
                 levelScreen.UpdatePlayerHUD();
@@ -687,9 +688,9 @@ namespace RogueCastle
             m_instructionsText.Draw(Camera);
             m_unlockCostContainer.Draw(Camera);
             m_equipmentTitleText.Draw(Camera);
-            foreach (SpriteObj[] current in m_masterIconArray)
+            foreach (var current in m_masterIconArray)
             {
-                for (int i = 0; i < current.Length; i++)
+                for (var i = 0; i < current.Length; i++)
                 {
                     current[i].Draw(Camera);
                 }
@@ -698,7 +699,7 @@ namespace RogueCastle
             m_cancelText.Draw(Camera);
             m_confirmText.Draw(Camera);
             m_equippedIcon.Draw(Camera);
-            foreach (SpriteObj current2 in m_newIconList)
+            foreach (var current2 in m_newIconList)
             {
                 current2.Draw(Camera);
             }
@@ -725,9 +726,9 @@ namespace RogueCastle
                 m_equipmentTitleText.Dispose();
                 m_equipmentTitleText = null;
                 m_activeIconArray = null;
-                foreach (SpriteObj[] current in m_masterIconArray)
+                foreach (var current in m_masterIconArray)
                 {
-                    for (int i = 0; i < current.Length; i++)
+                    for (var i = 0; i < current.Length; i++)
                     {
                         current[i].Dispose();
                         current[i] = null;
@@ -754,7 +755,7 @@ namespace RogueCastle
                 m_navigationText.Dispose();
                 m_navigationText = null;
                 m_playerMoney = null;
-                foreach (SpriteObj current2 in m_newIconList)
+                foreach (var current2 in m_newIconList)
                 {
                     current2.Dispose();
                 }

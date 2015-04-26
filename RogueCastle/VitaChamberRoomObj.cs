@@ -25,7 +25,7 @@ namespace RogueCastle
             m_speechBubble = new SpriteObj("UpArrowSquare_Sprite");
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             GameObjList.Add(m_speechBubble);
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
                 if (current.Name == "fountain")
                 {
@@ -56,7 +56,7 @@ namespace RogueCastle
         {
             if (!RoomCompleted)
             {
-                Rectangle bounds = m_fountain.Bounds;
+                var bounds = m_fountain.Bounds;
                 bounds.X -= 50;
                 bounds.Width += 100;
                 if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
@@ -70,8 +70,8 @@ namespace RogueCastle
                 }
                 if (m_speechBubble.Visible && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
                 {
-                    int num = (int) (Player.MaxHealth*0.3f);
-                    int num2 = (int) (Player.MaxMana*0.3f);
+                    var num = (int) (Player.MaxHealth*0.3f);
+                    var num2 = (int) (Player.MaxMana*0.3f);
                     Player.CurrentHealth += num;
                     Player.CurrentMana += num2;
                     Console.WriteLine("Healed");

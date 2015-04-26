@@ -16,16 +16,66 @@ namespace RogueCastle
 {
     public class PlayerStats : IDisposableObj
     {
-        private int m_gold;
-        private List<byte[]> m_blueprintArray;
-        private List<byte[]> m_runeArray;
-        private sbyte[] m_equippedArray;
-        private sbyte[] m_equippedRuneArray;
         public List<PlayerLineageData> CurrentBranches;
-        public List<FamilyTreeNode> FamilyTreeArray;
-        public List<Vector4> EnemiesKilledList;
         public List<Vector2> EnemiesKilledInRun;
-        private bool m_isDisposed;
+        public List<Vector4> EnemiesKilledList;
+        public List<FamilyTreeNode> FamilyTreeArray;
+        private int m_gold;
+
+        public PlayerStats()
+        {
+            if (!LevelEV.RUN_TUTORIAL && !TutorialComplete && LevelEV.RUN_TESTROOM)
+            {
+                TutorialComplete = true;
+            }
+            PlayerName = "Sir Lee";
+            SpecialItem = 0;
+            Class = 0;
+            Spell = 1;
+            Age = 30;
+            ChildAge = 5;
+            LichHealthMod = 1f;
+            IsFemale = false;
+            TimesCastleBeaten = 0;
+            EnemiesKilledList = new List<Vector4>();
+            for (var i = 0; i < 34; i++)
+            {
+                EnemiesKilledList.Add(default(Vector4));
+            }
+            WizardSpellList = new Vector3(1f, 2f, 8f);
+            Traits = new Vector2(0f, 0f);
+            Gold = 0;
+            CurrentLevel = 0;
+            HeadPiece = 1;
+            ShoulderPiece = 1;
+            ChestPiece = 1;
+            LoadStartingRoom = true;
+            GetBlueprintArray = new List<byte[]>();
+            GetRuneArray = new List<byte[]>();
+            GetEquippedArray = new sbyte[5];
+            GetEquippedRuneArray = new sbyte[5];
+            FamilyTreeArray = new List<FamilyTreeNode>();
+            InitializeFirstChild();
+            EnemiesKilledInRun = new List<Vector2>();
+            CurrentBranches = null;
+            for (var j = 0; j < 5; j++)
+            {
+                GetBlueprintArray.Add(new byte[15]);
+                GetRuneArray.Add(new byte[11]);
+                GetEquippedArray[j] = -1;
+                GetEquippedRuneArray[j] = -1;
+            }
+            HeadPiece = (byte) CDGMath.RandomInt(1, 5);
+            ShoulderPiece = (byte) CDGMath.RandomInt(1, 5);
+            ChestPiece = (byte) CDGMath.RandomInt(1, 5);
+            CDGMath.RandomInt(0, 14);
+            GetBlueprintArray[1][0] = 1;
+            GetBlueprintArray[3][0] = 1;
+            GetBlueprintArray[0][0] = 1;
+            GetRuneArray[1][0] = 1;
+            GetRuneArray[0][1] = 1;
+        }
+
         public int CurrentLevel { get; set; }
 
         public int Gold
@@ -100,33 +150,20 @@ namespace RogueCastle
         public bool ChallengeBlobBeaten { get; set; }
         public bool ChallengeSkullBeaten { get; set; }
         public bool ChallengeLastBossBeaten { get; set; }
-
-        public bool IsDisposed
-        {
-            get { return m_isDisposed; }
-        }
-
-        public List<byte[]> GetBlueprintArray
-        {
-            get { return m_blueprintArray; }
-        }
-
-        public sbyte[] GetEquippedArray
-        {
-            get { return m_equippedArray; }
-        }
+        public List<byte[]> GetBlueprintArray { get; private set; }
+        public sbyte[] GetEquippedArray { get; private set; }
 
         public byte TotalBlueprintsPurchased
         {
             get
             {
                 byte b = 0;
-                foreach (byte[] current in GetBlueprintArray)
+                foreach (var current in GetBlueprintArray)
                 {
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
                     {
-                        byte b2 = array[i];
+                        var b2 = array[i];
                         if (b2 >= 3)
                         {
                             b += 1;
@@ -142,12 +179,12 @@ namespace RogueCastle
             get
             {
                 byte b = 0;
-                foreach (byte[] current in GetRuneArray)
+                foreach (var current in GetRuneArray)
                 {
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
                     {
-                        byte b2 = array[i];
+                        var b2 = array[i];
                         if (b2 >= 3)
                         {
                             b += 1;
@@ -163,12 +200,12 @@ namespace RogueCastle
             get
             {
                 byte b = 0;
-                foreach (byte[] current in GetBlueprintArray)
+                foreach (var current in GetBlueprintArray)
                 {
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
                     {
-                        byte b2 = array[i];
+                        var b2 = array[i];
                         if (b2 >= 1)
                         {
                             b += 1;
@@ -184,12 +221,12 @@ namespace RogueCastle
             get
             {
                 byte b = 0;
-                foreach (byte[] current in GetRuneArray)
+                foreach (var current in GetRuneArray)
                 {
-                    byte[] array = current;
-                    for (int i = 0; i < array.Length; i++)
+                    var array = current;
+                    for (var i = 0; i < array.Length; i++)
                     {
-                        byte b2 = array[i];
+                        var b2 = array[i];
                         if (b2 >= 1)
                         {
                             b += 1;
@@ -200,73 +237,25 @@ namespace RogueCastle
             }
         }
 
-        public List<byte[]> GetRuneArray
-        {
-            get { return m_runeArray; }
-        }
+        public List<byte[]> GetRuneArray { get; private set; }
+        public sbyte[] GetEquippedRuneArray { get; private set; }
+        public bool IsDisposed { get; private set; }
 
-        public sbyte[] GetEquippedRuneArray
+        public void Dispose()
         {
-            get { return m_equippedRuneArray; }
-        }
-
-        public PlayerStats()
-        {
-            if (!LevelEV.RUN_TUTORIAL && !TutorialComplete && LevelEV.RUN_TESTROOM)
+            if (!IsDisposed)
             {
-                TutorialComplete = true;
+                GetBlueprintArray.Clear();
+                GetBlueprintArray = null;
+                GetRuneArray.Clear();
+                GetRuneArray = null;
+                IsDisposed = true;
             }
-            PlayerName = "Sir Lee";
-            SpecialItem = 0;
-            Class = 0;
-            Spell = 1;
-            Age = 30;
-            ChildAge = 5;
-            LichHealthMod = 1f;
-            IsFemale = false;
-            TimesCastleBeaten = 0;
-            EnemiesKilledList = new List<Vector4>();
-            for (int i = 0; i < 34; i++)
-            {
-                EnemiesKilledList.Add(default(Vector4));
-            }
-            WizardSpellList = new Vector3(1f, 2f, 8f);
-            Traits = new Vector2(0f, 0f);
-            Gold = 0;
-            CurrentLevel = 0;
-            HeadPiece = 1;
-            ShoulderPiece = 1;
-            ChestPiece = 1;
-            LoadStartingRoom = true;
-            m_blueprintArray = new List<byte[]>();
-            m_runeArray = new List<byte[]>();
-            m_equippedArray = new sbyte[5];
-            m_equippedRuneArray = new sbyte[5];
-            FamilyTreeArray = new List<FamilyTreeNode>();
-            InitializeFirstChild();
-            EnemiesKilledInRun = new List<Vector2>();
-            CurrentBranches = null;
-            for (int j = 0; j < 5; j++)
-            {
-                m_blueprintArray.Add(new byte[15]);
-                m_runeArray.Add(new byte[11]);
-                m_equippedArray[j] = -1;
-                m_equippedRuneArray[j] = -1;
-            }
-            HeadPiece = (byte) CDGMath.RandomInt(1, 5);
-            ShoulderPiece = (byte) CDGMath.RandomInt(1, 5);
-            ChestPiece = (byte) CDGMath.RandomInt(1, 5);
-            CDGMath.RandomInt(0, 14);
-            m_blueprintArray[1][0] = 1;
-            m_blueprintArray[3][0] = 1;
-            m_blueprintArray[0][0] = 1;
-            m_runeArray[1][0] = 1;
-            m_runeArray[0][1] = 1;
         }
 
         private void InitializeFirstChild()
         {
-            FamilyTreeNode item = new FamilyTreeNode
+            var item = new FamilyTreeNode
             {
                 Name = "Johannes",
                 Age = 30,
@@ -283,18 +272,6 @@ namespace RogueCastle
             FamilyTreeArray.Add(item);
         }
 
-        public void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                m_blueprintArray.Clear();
-                m_blueprintArray = null;
-                m_runeArray.Clear();
-                m_runeArray = null;
-                m_isDisposed = true;
-            }
-        }
-
         public byte GetNumberOfEquippedRunes(int equipmentAbilityType)
         {
             byte b = 0;
@@ -302,10 +279,10 @@ namespace RogueCastle
             {
                 return 5;
             }
-            sbyte[] equippedRuneArray = m_equippedRuneArray;
-            for (int i = 0; i < equippedRuneArray.Length; i++)
+            var equippedRuneArray = GetEquippedRuneArray;
+            for (var i = 0; i < equippedRuneArray.Length; i++)
             {
-                sbyte b2 = equippedRuneArray[i];
+                var b2 = equippedRuneArray[i];
                 if (b2 == equipmentAbilityType)
                 {
                     b += 1;

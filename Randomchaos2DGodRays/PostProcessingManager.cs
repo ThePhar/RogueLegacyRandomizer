@@ -18,22 +18,18 @@ namespace Randomchaos2DGodRays
     public class PostProcessingManager
     {
         protected Game Game;
-        public Texture2D Scene;
+        public Vector2 HalfPixel;
         public RenderTarget2D newScene;
         protected List<BasePostProcessingEffect> postProcessingEffects = new List<BasePostProcessingEffect>();
-        public Vector2 HalfPixel;
-        private SpriteBatch m_spriteBatch;
-
-        public SpriteBatch spriteBatch
-        {
-            get { return m_spriteBatch; }
-        }
+        public Texture2D Scene;
 
         public PostProcessingManager(Game game, SpriteBatch spriteBatch)
         {
             Game = game;
-            m_spriteBatch = spriteBatch;
+            this.spriteBatch = spriteBatch;
         }
+
+        public SpriteBatch spriteBatch { get; private set; }
 
         public void AddEffect(BasePostProcessingEffect ppEfect)
         {
@@ -43,9 +39,9 @@ namespace Randomchaos2DGodRays
         public virtual void Draw(GameTime gameTime, Texture2D scene)
         {
             HalfPixel = -new Vector2(0.5f/Game.GraphicsDevice.Viewport.Width, 0.5f/Game.GraphicsDevice.Viewport.Height);
-            int count = postProcessingEffects.Count;
+            var count = postProcessingEffects.Count;
             Scene = scene;
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 if (!postProcessingEffects[i].Enabled) continue;
                 postProcessingEffects[i].HalfPixel = HalfPixel;
@@ -62,7 +58,7 @@ namespace Randomchaos2DGodRays
 
         protected void SaveTexture(Texture2D texture, string name)
         {
-            FileStream fileStream = new FileStream(name, FileMode.Create);
+            var fileStream = new FileStream(name, FileMode.Create);
             texture.SaveAsJpeg(fileStream, texture.Width, texture.Height);
             fileStream.Close();
         }

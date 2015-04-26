@@ -20,56 +20,80 @@ namespace RogueCastle
 {
     public class EnemyObj_LastBoss : EnemyObj
     {
-        private FrameSoundObj m_walkUpSoundFinalBoss;
-        private FrameSoundObj m_walkDownSoundFinalBoss;
-        private Vector2 AxeSpellScale = new Vector2(3f, 3f);
-        private float AxeProjectileSpeed = 1100f;
-        private Vector2 DaggerSpellScale = new Vector2(3.5f, 3.5f);
-        private float DaggerProjectileSpeed = 900f;
-        private float m_Spell_Close_Lifespan = 6f;
-        private float m_Spell_Close_Scale = 3.5f;
-        private int MegaFlyingDaggerProjectileSpeed = 2350;
-        private int MegaFlyingSwordAmount = 29;
-        private int MegaUpwardSwordProjectileSpeed = 2450;
-        private int MegaUpwardSwordProjectileAmount = 8;
-        private int m_Mega_Shield_Distance = 525;
-        private float m_Mega_Shield_Scale = 4f;
-        private float m_Mega_Shield_Speed = 1f;
-        private int m_numSpears = 26;
-        private float m_spearDuration = 1.75f;
-        private bool m_isHurt;
-        private bool m_isDashing;
-        private bool m_inSecondForm;
-        private float m_smokeCounter = 0.05f;
-        private float m_castDelay = 0.25f;
-        private int m_orbsEasy = 1;
-        private int m_orbsNormal = 2;
-        private int m_orbsHard = 3;
-        private float m_lastBossAttackDelay = 0.35f;
-        private bool m_shake;
-        private bool m_shookLeft;
-        private float m_shakeTimer;
-        private float m_shakeDuration = 0.03f;
+        private readonly float AxeProjectileSpeed = 1100f;
+        private readonly Vector2 AxeSpellScale = new Vector2(3f, 3f);
+        private readonly float DaggerProjectileSpeed = 900f;
+        private readonly Vector2 DaggerSpellScale = new Vector2(3.5f, 3.5f);
+        private readonly float m_castDelay = 0.25f;
+        private readonly LogicBlock m_cooldownLB = new LogicBlock();
+        private readonly LogicBlock m_damageShieldLB = new LogicBlock();
+        private readonly LogicBlock m_firstFormDashAwayLB = new LogicBlock();
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicNeoLB = new LogicBlock();
+        private readonly float m_lastBossAttackDelay = 0.35f;
+        private readonly int m_Mega_Shield_Distance = 525;
+        private readonly float m_Mega_Shield_Scale = 4f;
+        private readonly float m_Mega_Shield_Speed = 1f;
+        private readonly int m_numSpears = 26;
+        private readonly int m_orbsEasy = 1;
+        private readonly int m_orbsHard = 3;
+        private readonly int m_orbsNormal = 2;
+        private readonly LogicBlock m_secondFormCooldownLB = new LogicBlock();
+        private readonly float m_shakeDuration = 0.03f;
+        private readonly float m_spearDuration = 1.75f;
+        private readonly float m_Spell_Close_Lifespan = 6f;
+        private readonly float m_Spell_Close_Scale = 3.5f;
+        private readonly FrameSoundObj m_walkDownSoundFinalBoss;
+        private readonly FrameSoundObj m_walkUpSoundFinalBoss;
+        private readonly int MegaFlyingDaggerProjectileSpeed = 2350;
+        private readonly int MegaFlyingSwordAmount = 29;
+        private readonly int MegaUpwardSwordProjectileAmount = 8;
+        private readonly int MegaUpwardSwordProjectileSpeed = 2450;
+        private ProjectileData m_axeProjData;
+        private ProjectileData m_daggerProjData;
         private List<ProjectileObj> m_damageShieldProjectiles;
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_damageShieldLB = new LogicBlock();
-        private LogicBlock m_cooldownLB = new LogicBlock();
-        private LogicBlock m_secondFormCooldownLB = new LogicBlock();
-        private LogicBlock m_firstFormDashAwayLB = new LogicBlock();
-        private LogicBlock m_generalBasicNeoLB = new LogicBlock();
-        private bool m_firstFormDying;
-        private float m_teleportDuration;
         private BlankObj m_delayObj;
+        private bool m_firstFormDying;
+        private bool m_isDashing;
+        private bool m_isHurt;
         private bool m_isNeo;
         private bool m_neoDying;
-        private ProjectileData m_daggerProjData;
-        private ProjectileData m_axeProjData;
+        private bool m_shake;
+        private float m_shakeTimer;
+        private bool m_shookLeft;
+        private float m_smokeCounter = 0.05f;
+        private float m_teleportDuration;
 
-        public bool IsSecondForm
+        public EnemyObj_LastBoss(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("PlayerIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
-            get { return m_inSecondForm; }
+            foreach (var current in _objectList)
+            {
+                current.TextureColor = new Color(100, 100, 100);
+            }
+            Type = 29;
+            m_damageShieldProjectiles = new List<ProjectileObj>();
+            _objectList[5].Visible = false;
+            _objectList[15].Visible = false;
+            _objectList[16].Visible = false;
+            _objectList[14].Visible = false;
+            _objectList[13].Visible = false;
+            _objectList[0].Visible = false;
+            var text = (_objectList[12] as IAnimateableObj).SpriteName;
+            var startIndex = text.IndexOf("_") - 1;
+            text = text.Remove(startIndex, 1);
+            text = text.Replace("_", 7 + "_");
+            _objectList[12].ChangeSprite(text);
+            PlayAnimation();
+            m_delayObj = new BlankObj(0, 0);
+            m_walkDownSoundFinalBoss = new FrameSoundObj(this, 3, "FinalBoss_St2_Foot_01", "FinalBoss_St2_Foot_02",
+                "FinalBoss_St2_Foot_03");
+            m_walkUpSoundFinalBoss = new FrameSoundObj(this, 6, "FinalBoss_St2_Foot_04", "FinalBoss_St2_Foot_05");
         }
+
+        public bool IsSecondForm { get; private set; }
 
         public bool IsNeo
         {
@@ -209,7 +233,7 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new DebugTraceLogicAction("WalkTowardSLS"));
             logicSet.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet.AddAction(new GroundCheckLogicAction());
@@ -218,7 +242,7 @@ namespace RogueCastle
             logicSet.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet.AddAction(new DelayLogicAction(0.3f, 0.75f));
             logicSet.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new DebugTraceLogicAction("WalkAway"));
             logicSet2.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet2.AddAction(new GroundCheckLogicAction());
@@ -226,14 +250,14 @@ namespace RogueCastle
             logicSet2.AddAction(new MoveLogicAction(m_target, false));
             logicSet2.AddAction(new DelayLogicAction(0.2f, 0.75f));
             logicSet2.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new DebugTraceLogicAction("walkStop"));
             logicSet3.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet3.AddAction(new GroundCheckLogicAction());
             logicSet3.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character"));
             logicSet3.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet3.AddAction(new DelayLogicAction(0.25f, 0.5f));
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new DebugTraceLogicAction("attack"));
             logicSet4.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet4.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -247,7 +271,7 @@ namespace RogueCastle
             logicSet4.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character"));
             logicSet4.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet4.Tag = 2;
-            LogicSet logicSet5 = new LogicSet(this);
+            var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new DebugTraceLogicAction("moveattack"));
             logicSet5.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet5.AddAction(new MoveLogicAction(m_target, true));
@@ -261,7 +285,7 @@ namespace RogueCastle
             logicSet5.AddAction(new ChangeSpriteLogicAction("PlayerIdle_Character"));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet5.Tag = 2;
-            LogicSet logicSet6 = new LogicSet(this);
+            var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new DebugTraceLogicAction("Throwing Daggers"));
             logicSet6.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
@@ -270,7 +294,7 @@ namespace RogueCastle
             logicSet6.AddAction(new RunFunctionLogicAction(this, "CastCloseShield"));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet6.Tag = 2;
-            LogicSet logicSet7 = new LogicSet(this);
+            var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new DebugTraceLogicAction("Throwing Daggers"));
             logicSet7.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet7.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -285,7 +309,7 @@ namespace RogueCastle
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet7.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
             logicSet7.Tag = 2;
-            LogicSet logicSet8 = new LogicSet(this);
+            var logicSet8 = new LogicSet(this);
             logicSet8.AddAction(new DebugTraceLogicAction("Throwing Daggers"));
             logicSet8.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet8.AddAction(new MoveLogicAction(m_target, true, 0f));
@@ -300,7 +324,7 @@ namespace RogueCastle
             logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet8.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.1f));
             logicSet8.Tag = 2;
-            LogicSet logicSet9 = new LogicSet(this);
+            var logicSet9 = new LogicSet(this);
             logicSet9.AddAction(new DebugTraceLogicAction("jumpLS"));
             logicSet9.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet9.AddAction(new GroundCheckLogicAction());
@@ -313,7 +337,7 @@ namespace RogueCastle
             logicSet9.AddAction(new DelayLogicAction(0.75f));
             logicSet9.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet9.AddAction(new GroundCheckLogicAction());
-            LogicSet logicSet10 = new LogicSet(this);
+            var logicSet10 = new LogicSet(this);
             logicSet10.AddAction(new DebugTraceLogicAction("jumpLS"));
             logicSet10.AddAction(new ChangePropertyLogicAction(this, "CanBeKnockedBack", true));
             logicSet10.AddAction(new GroundCheckLogicAction());
@@ -326,41 +350,41 @@ namespace RogueCastle
             logicSet10.AddAction(new DelayLogicAction(0.75f));
             logicSet10.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet10.AddAction(new GroundCheckLogicAction());
-            LogicSet logicSet11 = new LogicSet(this);
+            var logicSet11 = new LogicSet(this);
             logicSet11.AddAction(new DebugTraceLogicAction("dashLS"));
             logicSet11.AddAction(new RunFunctionLogicAction(this, "CastCloseShield"));
             logicSet11.AddAction(new RunFunctionLogicAction(this, "Dash", 0));
             logicSet11.AddAction(new DelayLogicAction(0.25f));
             logicSet11.AddAction(new RunFunctionLogicAction(this, "DashComplete"));
-            LogicSet logicSet12 = new LogicSet(this);
+            var logicSet12 = new LogicSet(this);
             logicSet12.AddAction(new DebugTraceLogicAction("dashAwayRightLS"));
             logicSet12.AddAction(new RunFunctionLogicAction(this, "Dash", 1));
             logicSet12.AddAction(new DelayLogicAction(0.25f));
             logicSet12.AddAction(new RunFunctionLogicAction(this, "DashComplete"));
-            LogicSet logicSet13 = new LogicSet(this);
+            var logicSet13 = new LogicSet(this);
             logicSet13.AddAction(new DebugTraceLogicAction("dashAwayLeftLS"));
             logicSet13.AddAction(new RunFunctionLogicAction(this, "Dash", -1));
             logicSet13.AddAction(new DelayLogicAction(0.25f));
             logicSet13.AddAction(new RunFunctionLogicAction(this, "DashComplete"));
-            LogicSet logicSet14 = new LogicSet(this);
+            var logicSet14 = new LogicSet(this);
             logicSet14.AddAction(new GroundCheckLogicAction());
             logicSet14.AddAction(new ChangeSpriteLogicAction("EnemyLastBossRun_Character"));
             logicSet14.AddAction(new MoveLogicAction(m_target, true));
             logicSet14.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet14.AddAction(new DelayLogicAction(0.35f, 1.15f));
             logicSet14.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet15 = new LogicSet(this);
+            var logicSet15 = new LogicSet(this);
             logicSet15.AddAction(new GroundCheckLogicAction());
             logicSet15.AddAction(new ChangeSpriteLogicAction("EnemyLastBossRun_Character"));
             logicSet15.AddAction(new MoveLogicAction(m_target, false));
             logicSet15.AddAction(new DelayLogicAction(0.2f, 1f));
             logicSet15.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet16 = new LogicSet(this);
+            var logicSet16 = new LogicSet(this);
             logicSet16.AddAction(new GroundCheckLogicAction());
             logicSet16.AddAction(new ChangeSpriteLogicAction("EnemyLastBossIdle_Character"));
             logicSet16.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet16.AddAction(new DelayLogicAction(0.2f, 0.5f));
-            LogicSet logicSet17 = new LogicSet(this);
+            var logicSet17 = new LogicSet(this);
             logicSet17.AddAction(new MoveLogicAction(m_target, true, 0f));
             logicSet17.AddAction(new LockFaceDirectionLogicAction(true));
             logicSet17.AddAction(new ChangeSpriteLogicAction("EnemyLastBossAttack_Character", false, false));
@@ -373,7 +397,7 @@ namespace RogueCastle
             logicSet17.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet17.AddAction(new ChangeSpriteLogicAction("EnemyLastBossIdle_Character"));
             logicSet17.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet18 = new LogicSet(this);
+            var logicSet18 = new LogicSet(this);
             RunTeleportLS(logicSet18, "Centre");
             logicSet18.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false));
             logicSet18.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam_Prime"));
@@ -383,7 +407,7 @@ namespace RogueCastle
             logicSet18.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSlam"));
             logicSet18.AddAction(new PlayAnimationLogicAction("BeforeCast", "End"));
             logicSet18.AddAction(new DelayLogicAction(m_spearDuration + 1f));
-            LogicSet logicSet19 = new LogicSet(this);
+            var logicSet19 = new LogicSet(this);
             logicSet19.AddAction(new ChangePropertyLogicAction(this, "CurrentSpeed", 0));
             logicSet19.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell2_Character", false, false));
             logicSet19.AddAction(new Play3DSoundLogicAction(this, m_target, "FinalBoss_St2_SwordSummon_a"));
@@ -392,7 +416,7 @@ namespace RogueCastle
             logicSet19.AddAction(new RunFunctionLogicAction(this, "CastSwordsRandom"));
             logicSet19.AddAction(new PlayAnimationLogicAction("Cast", "End"));
             logicSet19.AddAction(new DelayLogicAction(1f));
-            LogicSet logicSet20 = new LogicSet(this);
+            var logicSet20 = new LogicSet(this);
             logicSet20.AddAction(new LockFaceDirectionLogicAction(true, 1));
             RunTeleportLS(logicSet20, "Left");
             logicSet20.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false));
@@ -404,7 +428,7 @@ namespace RogueCastle
             logicSet20.AddAction(new PlayAnimationLogicAction("BeforeCast", "End"));
             logicSet20.AddAction(new DelayLogicAction(1f));
             logicSet20.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet21 = new LogicSet(this);
+            var logicSet21 = new LogicSet(this);
             logicSet21.AddAction(new LockFaceDirectionLogicAction(true, -1));
             RunTeleportLS(logicSet21, "Right");
             logicSet21.AddAction(new ChangeSpriteLogicAction("EnemyLastBossSpell_Character", false, false));
@@ -417,13 +441,13 @@ namespace RogueCastle
             logicSet21.AddAction(new PlayAnimationLogicAction("BeforeCast", "End"));
             logicSet21.AddAction(new DelayLogicAction(1f));
             logicSet21.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet22 = new LogicSet(this);
+            var logicSet22 = new LogicSet(this);
             logicSet22.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", m_orbsEasy));
             logicSet22.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet23 = new LogicSet(this);
+            var logicSet23 = new LogicSet(this);
             logicSet23.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", m_orbsNormal));
             logicSet23.AddAction(new LockFaceDirectionLogicAction(false));
-            LogicSet logicSet24 = new LogicSet(this);
+            var logicSet24 = new LogicSet(this);
             logicSet24.AddAction(new RunFunctionLogicAction(this, "CastDamageShield", m_orbsHard));
             logicSet24.AddAction(new DelayLogicAction(0f));
             logicSet24.AddAction(new LockFaceDirectionLogicAction(false));
@@ -445,8 +469,8 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalBasicNeoLB);
             m_firstFormDashAwayLB.AddLogicSet(logicSet13, logicSet12);
             logicBlocksToDispose.Add(m_firstFormDashAwayLB);
-            LogicBlock arg_139D_1 = m_cooldownLB;
-            int[] array = new int[8];
+            var arg_139D_1 = m_cooldownLB;
+            var array = new int[8];
             array[0] = 70;
             array[2] = 30;
             SetCooldownLogicBlock(arg_139D_1, array);
@@ -599,7 +623,7 @@ namespace RogueCastle
 
         public void CastCloseShield()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "SpellClose_Sprite",
                 Speed = new Vector2(0f, 0f),
@@ -623,7 +647,7 @@ namespace RogueCastle
         {
             if (CurrentHealth > 0)
             {
-                if (!m_inSecondForm)
+                if (!IsSecondForm)
                 {
                     if (!m_isHurt)
                     {
@@ -633,17 +657,17 @@ namespace RogueCastle
                             {
                                 if (!IsNeo)
                                 {
-                                    bool arg_182_1 = true;
-                                    LogicBlock arg_182_2 = m_generalBasicLB;
-                                    int[] array = new int[8];
+                                    var arg_182_1 = true;
+                                    var arg_182_2 = m_generalBasicLB;
+                                    var array = new int[8];
                                     array[0] = 50;
                                     array[6] = 50;
                                     RunLogicBlock(arg_182_1, arg_182_2, array);
                                     return;
                                 }
-                                bool arg_1B2_1 = true;
-                                LogicBlock arg_1B2_2 = m_generalBasicNeoLB;
-                                int[] array2 = new int[8];
+                                var arg_1B2_1 = true;
+                                var arg_1B2_2 = m_generalBasicNeoLB;
+                                var array2 = new int[8];
                                 array2[0] = 50;
                                 array2[2] = 10;
                                 array2[3] = 10;
@@ -655,18 +679,18 @@ namespace RogueCastle
                             {
                                 if (!IsNeo)
                                 {
-                                    bool arg_126_1 = true;
-                                    LogicBlock arg_126_2 = m_generalBasicLB;
-                                    int[] array3 = new int[8];
+                                    var arg_126_1 = true;
+                                    var arg_126_2 = m_generalBasicLB;
+                                    var array3 = new int[8];
                                     array3[0] = 40;
                                     array3[3] = 20;
                                     array3[6] = 40;
                                     RunLogicBlock(arg_126_1, arg_126_2, array3);
                                     return;
                                 }
-                                bool arg_156_1 = true;
-                                LogicBlock arg_156_2 = m_generalBasicNeoLB;
-                                int[] array4 = new int[8];
+                                var arg_156_1 = true;
+                                var arg_156_2 = m_generalBasicNeoLB;
+                                var array4 = new int[8];
                                 array4[0] = 40;
                                 array4[2] = 20;
                                 array4[3] = 20;
@@ -727,7 +751,7 @@ namespace RogueCastle
         {
             if (CurrentHealth > 0)
             {
-                if (!m_inSecondForm)
+                if (!IsSecondForm)
                 {
                     if (!m_isHurt)
                     {
@@ -737,9 +761,9 @@ namespace RogueCastle
                             {
                                 if (!m_target.IsJumping)
                                 {
-                                    bool arg_1C2_1 = true;
-                                    LogicBlock arg_1C2_2 = m_generalBasicLB;
-                                    int[] array = new int[8];
+                                    var arg_1C2_1 = true;
+                                    var arg_1C2_2 = m_generalBasicLB;
+                                    var array = new int[8];
                                     array[0] = 50;
                                     array[2] = 10;
                                     array[3] = 20;
@@ -747,9 +771,9 @@ namespace RogueCastle
                                     RunLogicBlock(arg_1C2_1, arg_1C2_2, array);
                                     return;
                                 }
-                                bool arg_1F2_1 = true;
-                                LogicBlock arg_1F2_2 = m_generalBasicLB;
-                                int[] array2 = new int[8];
+                                var arg_1F2_1 = true;
+                                var arg_1F2_2 = m_generalBasicLB;
+                                var array2 = new int[8];
                                 array2[0] = 50;
                                 array2[2] = 10;
                                 array2[3] = 20;
@@ -795,17 +819,17 @@ namespace RogueCastle
 
         protected override void RunMinibossLogic()
         {
-            bool arg_15_1 = true;
-            LogicBlock arg_15_2 = m_generalAdvancedLB;
-            int[] array = new int[8];
+            var arg_15_1 = true;
+            var arg_15_2 = m_generalAdvancedLB;
+            var array = new int[8];
             array[4] = 100;
             RunLogicBlock(arg_15_1, arg_15_2, array);
         }
 
         public void TeleportTo(string roomPosition)
         {
-            Vector2 zero = Vector2.Zero;
-            float x = 0f;
+            var zero = Vector2.Zero;
+            var x = 0f;
             if (roomPosition != null)
             {
                 if (!(roomPosition == "Left"))
@@ -828,7 +852,7 @@ namespace RogueCastle
                 }
             }
             zero = new Vector2(x, Y);
-            float num = Math.Abs(CDGMath.DistanceBetweenPts(Position, zero));
+            var num = Math.Abs(CDGMath.DistanceBetweenPts(Position, zero));
             m_teleportDuration = num*0.001f;
             m_delayObj.X = m_teleportDuration;
             Tween.To(this, m_teleportDuration, Quad.EaseInOut, "X", zero.X.ToString());
@@ -837,7 +861,7 @@ namespace RogueCastle
 
         public void CastSwords(bool castLeft)
         {
-            ProjectileData data = new ProjectileData(this)
+            var data = new ProjectileData(this)
             {
                 SpriteName = "LastBossSwordProjectile_Sprite",
                 Target = null,
@@ -850,17 +874,17 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 DestroysWithEnemy = false
             };
-            float num = 1f;
-            int num2 = MegaFlyingDaggerProjectileSpeed;
+            var num = 1f;
+            var num2 = MegaFlyingDaggerProjectileSpeed;
             if (!castLeft)
             {
                 num2 = MegaFlyingDaggerProjectileSpeed*-1;
             }
             SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_SwordSummon_b");
-            for (int i = 0; i < MegaFlyingSwordAmount; i++)
+            for (var i = 0; i < MegaFlyingSwordAmount; i++)
             {
-                Vector2 vector = new Vector2(X, Y + CDGMath.RandomInt(-1320, 100));
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+                var vector = new Vector2(X, Y + CDGMath.RandomInt(-1320, 100));
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.Position = vector;
                 Tween.By(projectileObj, 2.5f, Tween.EaseNone, "delay", num.ToString(), "X", num2.ToString());
                 Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
@@ -882,7 +906,7 @@ namespace RogueCastle
 
         public void CastSpears(int numSpears, float duration)
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "LastBossSpearProjectile_Sprite",
                 Target = null,
@@ -898,14 +922,14 @@ namespace RogueCastle
                 LockPosition = true,
                 CanBeFusRohDahed = false
             };
-            int num = 0;
-            int num2 = 0;
-            float num3 = 0.5f;
+            var num = 0;
+            var num2 = 0;
+            var num3 = 0.5f;
             UpdateCollisionBoxes();
-            Vector2 vector = new Vector2(m_levelScreen.CurrentRoom.Bounds.Center.X, Y);
-            for (int i = 0; i < numSpears; i++)
+            var vector = new Vector2(m_levelScreen.CurrentRoom.Bounds.Center.X, Y);
+            for (var i = 0; i < numSpears; i++)
             {
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj.Scale = new Vector2(2f, 2f);
                 projectileObj.X = vector.X + 50f + num;
                 projectileObj.Y = Y + (Bounds.Bottom - Y);
@@ -934,7 +958,7 @@ namespace RogueCastle
                     "FinalBoss_St2_Lance_Retract_06"
                 });
                 Tween.RunFunction(num3 + duration + 1f, projectileObj, "KillProjectile");
-                ProjectileObj projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj2.Scale = new Vector2(2f, 2f);
                 projectileObj2.X = vector.X - 50f + num2;
                 projectileObj2.Y = Y + (Bounds.Bottom - Y);
@@ -950,9 +974,9 @@ namespace RogueCastle
 
         public void CastSwordsRandom()
         {
-            Vector2 vector = new Vector2(m_levelScreen.CurrentRoom.Bounds.Center.X, Y);
+            var vector = new Vector2(m_levelScreen.CurrentRoom.Bounds.Center.X, Y);
             UpdateCollisionBoxes();
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "LastBossSwordVerticalProjectile_Sprite",
                 Target = null,
@@ -966,13 +990,13 @@ namespace RogueCastle
                 DestroysWithEnemy = false,
                 LockPosition = true
             };
-            int megaUpwardSwordProjectileSpeed = MegaUpwardSwordProjectileSpeed;
-            int num = 0;
-            int num2 = 0;
-            float num3 = 1f;
-            for (int i = 0; i < MegaUpwardSwordProjectileAmount; i++)
+            var megaUpwardSwordProjectileSpeed = MegaUpwardSwordProjectileSpeed;
+            var num = 0;
+            var num2 = 0;
+            var num3 = 1f;
+            for (var i = 0; i < MegaUpwardSwordProjectileAmount; i++)
             {
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj.Scale = new Vector2(1.5f, 1.5f);
                 projectileObj.X = vector.X + 50f + num;
                 projectileObj.Y = vector.Y + (Bounds.Bottom - Y) + 120f;
@@ -982,7 +1006,7 @@ namespace RogueCastle
                     (-megaUpwardSwordProjectileSpeed).ToString());
                 Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
                 num = CDGMath.RandomInt(50, 1000);
-                ProjectileObj projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj2.Scale = new Vector2(2f, 2f);
                 projectileObj2.X = vector.X - 50f + num2;
                 projectileObj2.Y = vector.Y + (Bounds.Bottom - Y) + 120f;
@@ -1005,12 +1029,12 @@ namespace RogueCastle
 
         public void CastDamageShield(int numOrbs)
         {
-            foreach (ProjectileObj current in m_damageShieldProjectiles)
+            foreach (var current in m_damageShieldProjectiles)
             {
                 current.KillProjectile();
             }
             m_damageShieldProjectiles.Clear();
-            ProjectileData data = new ProjectileData(this)
+            var data = new ProjectileData(this)
             {
                 SpriteName = "LastBossOrbProjectile_Sprite",
                 Angle = new Vector2(-65f, -65f),
@@ -1027,11 +1051,11 @@ namespace RogueCastle
                 Damage = Damage/2
             };
             SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_SwordSummon_b");
-            int mega_Shield_Distance = m_Mega_Shield_Distance;
-            for (int i = 0; i < numOrbs; i++)
+            var mega_Shield_Distance = m_Mega_Shield_Distance;
+            for (var i = 0; i < numOrbs; i++)
             {
-                float num = 360f/numOrbs*i;
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+                var num = 360f/numOrbs*i;
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.AltX = num;
                 projectileObj.AltY = mega_Shield_Distance;
                 projectileObj.Spell = 11;
@@ -1123,7 +1147,7 @@ namespace RogueCastle
                     }
                 }
             }
-            if (m_smokeCounter > 0f && !m_inSecondForm)
+            if (m_smokeCounter > 0f && !IsSecondForm)
             {
                 m_smokeCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_smokeCounter <= 0f)
@@ -1136,7 +1160,7 @@ namespace RogueCastle
                     m_levelScreen.ImpactEffectPool.BlackSmokeEffect(this);
                 }
             }
-            if (!m_inSecondForm)
+            if (!IsSecondForm)
             {
                 if (!m_isTouchingGround && m_currentActiveLB != null && SpriteName != "PlayerAttacking3_Character" &&
                     !m_isDashing && SpriteName != "PlayerLevelUp_Character")
@@ -1155,7 +1179,7 @@ namespace RogueCastle
                 else if (m_isTouchingGround && m_currentActiveLB != null && SpriteName == "PlayerAttacking3_Character" &&
                          CurrentSpeed != 0f)
                 {
-                    SpriteObj spriteObj = GetChildAt(2) as SpriteObj;
+                    var spriteObj = GetChildAt(2) as SpriteObj;
                     if (spriteObj.SpriteName != "PlayerWalkingLegs_Sprite")
                     {
                         spriteObj.ChangeSprite("PlayerWalkingLegs_Sprite");
@@ -1171,7 +1195,7 @@ namespace RogueCastle
                 m_walkUpSoundFinalBoss.Update();
                 m_walkDownSoundFinalBoss.Update();
             }
-            if (!m_inSecondForm && CurrentHealth <= 0 && m_target.CurrentHealth > 0 && !IsNeo)
+            if (!IsSecondForm && CurrentHealth <= 0 && m_target.CurrentHealth > 0 && !IsNeo)
             {
                 if (IsTouchingGround && !m_firstFormDying)
                 {
@@ -1208,17 +1232,17 @@ namespace RogueCastle
                         m_currentActiveLB.StopLogicBlock();
                     }
                 }
-                if (m_target.IsTouchingGround && !m_inSecondForm && SpriteName == "PlayerDeath_Character")
+                if (m_target.IsTouchingGround && !IsSecondForm && SpriteName == "PlayerDeath_Character")
                 {
                     MovePlayerTo();
                 }
             }
-            if ((!m_firstFormDying && !m_inSecondForm) || (m_firstFormDying && m_inSecondForm) ||
+            if ((!m_firstFormDying && !IsSecondForm) || (m_firstFormDying && IsSecondForm) ||
                 (IsNeo && CurrentHealth > 0))
             {
                 base.Update(gameTime);
             }
-            if (!m_inSecondForm && CurrentHealth <= 0 && m_target.CurrentHealth > 0 && IsNeo && IsTouchingGround &&
+            if (!IsSecondForm && CurrentHealth <= 0 && m_target.CurrentHealth > 0 && IsNeo && IsTouchingGround &&
                 !m_firstFormDying)
             {
                 KillPlayerNeo();
@@ -1230,12 +1254,12 @@ namespace RogueCastle
         {
             m_target.StopAllSpells();
             m_levelScreen.ProjectileManager.DestroyAllProjectiles(true);
-            m_inSecondForm = true;
+            IsSecondForm = true;
             m_isKilled = true;
             m_levelScreen.RunCinematicBorders(16f);
             m_currentActiveLB.StopLogicBlock();
-            int num = 250;
-            Vector2 zero = Vector2.Zero;
+            var num = 250;
+            var zero = Vector2.Zero;
             if ((m_target.X < X && X > m_levelScreen.CurrentRoom.X + 500f) ||
                 X > m_levelScreen.CurrentRoom.Bounds.Right - 500)
             {
@@ -1254,7 +1278,7 @@ namespace RogueCastle
             {
                 m_target.Flip = SpriteEffects.FlipHorizontally;
             }
-            float num2 = CDGMath.DistanceBetweenPts(m_target.Position, zero)/m_target.Speed;
+            var num2 = CDGMath.DistanceBetweenPts(m_target.Position, zero)/m_target.Speed;
             m_target.UpdateCollisionBoxes();
             m_target.State = 1;
             m_target.IsWeighted = false;
@@ -1265,7 +1289,7 @@ namespace RogueCastle
             m_target.CurrentSpeed = 0f;
             m_target.LockControls();
             m_target.ChangeSprite("PlayerWalking_Character");
-            LogicSet logicSet = new LogicSet(m_target);
+            var logicSet = new LogicSet(m_target);
             logicSet.AddAction(new DelayLogicAction(num2));
             m_target.RunExternalLogicSet(logicSet);
             m_target.PlayAnimation();
@@ -1288,9 +1312,9 @@ namespace RogueCastle
             Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "Player_Death_SwordTwirl");
             Tween.RunFunction(0.7f, typeof (SoundManager), "PlaySound", "Player_Death_SwordLand");
             Tween.RunFunction(1.2f, typeof (SoundManager), "PlaySound", "Player_Death_BodyFall");
-            float num = 2f;
+            var num = 2f;
             Tween.RunFunction(2f, this, "PlayBlackSmokeSounds");
-            for (int i = 0; i < 30; i++)
+            for (var i = 0; i < 30; i++)
             {
                 Tween.RunFunction(num, m_levelScreen.ImpactEffectPool, "BlackSmokeEffect", Position,
                     new Vector2(1f + num*1f, 1f + num*1f));
@@ -1312,7 +1336,7 @@ namespace RogueCastle
 
         public void SecondFormDialogue()
         {
-            RCScreenManager rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+            var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk02");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(m_levelScreen.CurrentRoom, "RunFountainCutscene");
             rCScreenManager.DisplayScreen(13, true);
@@ -1374,7 +1398,7 @@ namespace RogueCastle
 
         public override void HitEnemy(int damage, Vector2 collisionPt, bool isPlayer)
         {
-            if (!m_inSecondForm)
+            if (!IsSecondForm)
             {
                 if (!m_isHurt && !m_isDashing)
                 {
@@ -1399,7 +1423,7 @@ namespace RogueCastle
         {
             if (m_target.CurrentHealth > 0)
             {
-                if (m_inSecondForm && !m_bossVersionKilled)
+                if (IsSecondForm && !m_bossVersionKilled)
                 {
                     m_bossVersionKilled = true;
                     SetPlayerData();
@@ -1464,7 +1488,7 @@ namespace RogueCastle
 
         public void SetPlayerData()
         {
-            FamilyTreeNode item = new FamilyTreeNode
+            var item = new FamilyTreeNode
             {
                 Name = Game.PlayerStats.PlayerName,
                 Age = Game.PlayerStats.Age,
@@ -1494,8 +1518,8 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            Vector2 vector = CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect);
-            PlayerObj playerObj = otherBox.AbsParent as PlayerObj;
+            var vector = CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect);
+            var playerObj = otherBox.AbsParent as PlayerObj;
             if (playerObj != null && otherBox.Type == 0 && !playerObj.IsInvincible && playerObj.State != 3)
             {
                 playerObj.HitPlayer(this);
@@ -1503,7 +1527,7 @@ namespace RogueCastle
             if (m_isTouchingGround && m_isHurt)
             {
                 m_isHurt = false;
-                if (!m_inSecondForm)
+                if (!IsSecondForm)
                 {
                     ChangeSprite("PlayerIdle_Character");
                 }
@@ -1512,8 +1536,8 @@ namespace RogueCastle
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
             }
-            TerrainObj terrainObj = otherBox.AbsParent as TerrainObj;
-            if (terrainObj != null && !m_isTouchingGround && !(terrainObj is DoorObj) && !m_inSecondForm)
+            var terrainObj = otherBox.AbsParent as TerrainObj;
+            if (terrainObj != null && !m_isTouchingGround && !(terrainObj is DoorObj) && !IsSecondForm)
             {
                 if (m_currentActiveLB != null && m_currentActiveLB.IsActive)
                 {
@@ -1526,9 +1550,9 @@ namespace RogueCastle
                 }
                 if (vector.X < 0f)
                 {
-                    bool arg_11D_1 = true;
-                    LogicBlock arg_11D_2 = m_firstFormDashAwayLB;
-                    int[] array = new int[2];
+                    var arg_11D_1 = true;
+                    var arg_11D_2 = m_firstFormDashAwayLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_11D_1, arg_11D_2, array);
                 }
@@ -1553,7 +1577,7 @@ namespace RogueCastle
 
         public void Part3()
         {
-            RCScreenManager rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+            var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk03");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Part4");
             rCScreenManager.DisplayScreen(13, true);
@@ -1561,46 +1585,18 @@ namespace RogueCastle
 
         public void Part4()
         {
-            List<object> list = new List<object>();
+            var list = new List<object>();
             list.Add(this);
             (m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(26, true, list);
-        }
-
-        public EnemyObj_LastBoss(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("PlayerIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            foreach (GameObj current in _objectList)
-            {
-                current.TextureColor = new Color(100, 100, 100);
-            }
-            Type = 29;
-            m_damageShieldProjectiles = new List<ProjectileObj>();
-            _objectList[5].Visible = false;
-            _objectList[15].Visible = false;
-            _objectList[16].Visible = false;
-            _objectList[14].Visible = false;
-            _objectList[13].Visible = false;
-            _objectList[0].Visible = false;
-            string text = (_objectList[12] as IAnimateableObj).SpriteName;
-            int startIndex = text.IndexOf("_") - 1;
-            text = text.Remove(startIndex, 1);
-            text = text.Replace("_", 7 + "_");
-            _objectList[12].ChangeSprite(text);
-            PlayAnimation();
-            m_delayObj = new BlankObj(0, 0);
-            m_walkDownSoundFinalBoss = new FrameSoundObj(this, 3, "FinalBoss_St2_Foot_01", "FinalBoss_St2_Foot_02",
-                "FinalBoss_St2_Foot_03");
-            m_walkUpSoundFinalBoss = new FrameSoundObj(this, 6, "FinalBoss_St2_Foot_04", "FinalBoss_St2_Foot_05");
         }
 
         public override void ChangeSprite(string spriteName)
         {
             base.ChangeSprite(spriteName);
-            if (!m_inSecondForm)
+            if (!IsSecondForm)
             {
-                string text = (_objectList[12] as IAnimateableObj).SpriteName;
-                int startIndex = text.IndexOf("_") - 1;
+                var text = (_objectList[12] as IAnimateableObj).SpriteName;
+                var startIndex = text.IndexOf("_") - 1;
                 text = text.Remove(startIndex, 1);
                 text = text.Replace("_", 7 + "_");
                 _objectList[12].ChangeSprite(text);
@@ -1626,7 +1622,7 @@ namespace RogueCastle
         public override void Reset()
         {
             m_neoDying = false;
-            m_inSecondForm = false;
+            IsSecondForm = false;
             m_firstFormDying = false;
             CanBeKnockedBack = true;
             base.Reset();
@@ -1656,7 +1652,7 @@ namespace RogueCastle
 
         public void ForceSecondForm(bool value)
         {
-            m_inSecondForm = value;
+            IsSecondForm = value;
         }
     }
 }

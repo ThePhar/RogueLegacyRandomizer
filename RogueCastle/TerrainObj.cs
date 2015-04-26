@@ -18,30 +18,18 @@ namespace RogueCastle
 {
     public class TerrainObj : BlankObj
     {
-        private struct CornerPoint
-        {
-            public Vector2 Position;
-            public float Rotation;
-
-            public CornerPoint(Vector2 position, float rotation)
-            {
-                Position = position;
-                Rotation = MathHelper.ToRadians(rotation);
-            }
-        }
-
         public bool ShowTerrain = true;
-
-        public Rectangle NonRotatedBounds
-        {
-            get { return new Rectangle((int) X, (int) Y, Width, Height); }
-        }
 
         public TerrainObj(int width, int height) : base(width, height)
         {
             CollisionTypeTag = 1;
             IsCollidable = true;
             IsWeighted = false;
+        }
+
+        public Rectangle NonRotatedBounds
+        {
+            get { return new Rectangle((int) X, (int) Y, Width, Height); }
         }
 
         public override void Draw(Camera2D camera)
@@ -61,9 +49,9 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            TerrainObj terrainObj = obj as TerrainObj;
+            var terrainObj = obj as TerrainObj;
             terrainObj.ShowTerrain = ShowTerrain;
-            foreach (CollisionBox current in CollisionBoxes)
+            foreach (var current in CollisionBoxes)
             {
                 terrainObj.AddCollisionBox(current.X, current.Y, current.Width, current.Height, current.Type);
             }
@@ -79,6 +67,18 @@ namespace RogueCastle
             if (CollidesTop && !CollidesBottom && !CollidesLeft && !CollidesRight)
             {
                 SetHeight(Height/2);
+            }
+        }
+
+        private struct CornerPoint
+        {
+            public Vector2 Position;
+            public float Rotation;
+
+            public CornerPoint(Vector2 position, float rotation)
+            {
+                Position = position;
+                Rotation = MathHelper.ToRadians(rotation);
             }
         }
     }

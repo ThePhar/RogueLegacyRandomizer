@@ -21,6 +21,14 @@ namespace RogueCastle
     {
         private Texture2D m_texture;
 
+        public HazardObj(int width, int height) : base("Spikes_Sprite", null)
+        {
+            IsWeighted = false;
+            IsCollidable = true;
+            CollisionTypeTag = 10;
+            DisableHitboxUpdating = true;
+        }
+
         public override int Width
         {
             get { return _width; }
@@ -35,7 +43,7 @@ namespace RogueCastle
         {
             get
             {
-                foreach (CollisionBox current in CollisionBoxes)
+                foreach (var current in CollisionBoxes)
                 {
                     if (current.Type == 0)
                     {
@@ -50,15 +58,15 @@ namespace RogueCastle
         {
             get
             {
-                PlayerObj player = Game.ScreenManager.Player;
-                int num =
+                var player = Game.ScreenManager.Player;
+                var num =
                     (int)
                         Math.Round(
                             player.BaseHealth + player.GetEquipmentHealth() + Game.PlayerStats.BonusHealth*5 +
                             SkillSystem.GetSkill(SkillType.Health_Up).ModifierAmount +
                             SkillSystem.GetSkill(SkillType.Health_Up_Final).ModifierAmount,
                             MidpointRounding.AwayFromZero);
-                int num2 = (int) (num*0.2f);
+                var num2 = (int) (num*0.2f);
                 if (num2 < 1)
                 {
                     num2 = 1;
@@ -67,17 +75,9 @@ namespace RogueCastle
             }
         }
 
-        public HazardObj(int width, int height) : base("Spikes_Sprite", null)
-        {
-            IsWeighted = false;
-            IsCollidable = true;
-            CollisionTypeTag = 10;
-            DisableHitboxUpdating = true;
-        }
-
         public void InitializeTextures(Camera2D camera)
         {
-            Vector2 vector = new Vector2(60f/_width, 60f/_height);
+            var vector = new Vector2(60f/_width, 60f/_height);
             _width = (int) (_width*vector.X);
             _height = (int) (_height*vector.Y);
             m_texture = ConvertToTexture(camera);
@@ -89,7 +89,7 @@ namespace RogueCastle
         public void SetWidth(int width)
         {
             _width = width;
-            foreach (CollisionBox current in CollisionBoxes)
+            foreach (var current in CollisionBoxes)
             {
                 if (current.Type == 0)
                 {
@@ -121,7 +121,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            HazardObj hazardObj = obj as HazardObj;
+            var hazardObj = obj as HazardObj;
             hazardObj.SetWidth(Width);
             hazardObj.SetHeight(Height);
         }

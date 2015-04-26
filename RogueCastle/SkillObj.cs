@@ -18,6 +18,22 @@ namespace RogueCastle
         private TextObj LevelText;
         private SpriteObj m_coinIcon;
         private int m_currentLevel;
+
+        public SkillObj(string spriteName) : base(spriteName)
+        {
+            StatType = 0;
+            DisplayStat = false;
+            Visible = false;
+            ForceDraw = true;
+            LevelText = new TextObj(Game.JunicodeFont);
+            LevelText.FontSize = 10f;
+            LevelText.Align = Types.TextAlign.Centre;
+            LevelText.OutlineWidth = 2;
+            InputDescription = "";
+            OutlineWidth = 2;
+            m_coinIcon = new SpriteObj("UpgradeIcon_Sprite");
+        }
+
         public string Description { get; set; }
         public string InputDescription { get; set; }
         public float PerLevelModifier { get; set; }
@@ -54,26 +70,11 @@ namespace RogueCastle
             get { return CurrentLevel*PerLevelModifier; }
         }
 
-        public SkillObj(string spriteName) : base(spriteName)
-        {
-            StatType = 0;
-            DisplayStat = false;
-            Visible = false;
-            ForceDraw = true;
-            LevelText = new TextObj(Game.JunicodeFont);
-            LevelText.FontSize = 10f;
-            LevelText.Align = Types.TextAlign.Centre;
-            LevelText.OutlineWidth = 2;
-            InputDescription = "";
-            OutlineWidth = 2;
-            m_coinIcon = new SpriteObj("UpgradeIcon_Sprite");
-        }
-
         public override void Draw(Camera2D camera)
         {
             if (Opacity > 0f)
             {
-                float opacity = Opacity;
+                var opacity = Opacity;
                 TextureColor = Color.Black;
                 Opacity = 0.5f;
                 X += 8f;
@@ -114,7 +115,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            SkillObj skillObj = obj as SkillObj;
+            var skillObj = obj as SkillObj;
             skillObj.Description = Description;
             skillObj.PerLevelModifier = PerLevelModifier;
             skillObj.BaseCost = BaseCost;

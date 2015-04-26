@@ -42,95 +42,149 @@ namespace RogueCastle
         public const int STATE_FLYING = 7;
         public const int STATE_TANOOKI = 8;
         public const int STATE_DRAGON = 9;
-        private Game m_game;
-        private float JumpDeceleration;
-        private float m_currentMana;
-        private float DashTime;
-        private float DashSpeed;
-        private float DashCoolDown;
-        private float m_manaGain;
-        private float ComboDelay = 1f;
-        private Vector2 m_enemyKnockBack = Vector2.Zero;
-        private float BaseStatDropChance;
-        private float m_flightCounter;
-        private bool m_isFlying;
-        private int DamageGainPerLevel;
-        private int ManaGainPerLevel;
-        private int HealthGainPerLevel;
-        private int m_invincibleCounter;
-        private float m_dropThroughGroundTimer;
-        private float m_dropThroughGroundDuration = 0.1f;
-        private float m_blockInvincibleCounter;
-        private PlayerIndex m_playerIndex;
-        private float m_attackCounter;
-        private int m_attackNumber;
-        private bool m_isJumping;
-        private byte m_doubleJumpCount;
-        private byte m_airDashCount;
-        private int m_dashCounter;
-        private int m_dashCooldownCounter;
-        private float m_startingAnimationDelay;
-        private LogicSet m_currentLogicSet;
-        private LogicSet m_standingAttack3LogicSet;
-        private LogicSet m_airAttackLS;
-        private bool m_lockControls;
-        private InputMap m_debugInputMap;
-        private SpriteObj m_playerHead;
-        private SpriteObj m_playerLegs;
-        private FrameSoundObj m_walkUpSound;
-        private FrameSoundObj m_walkUpSoundLow;
-        private FrameSoundObj m_walkUpSoundHigh;
-        private FrameSoundObj m_walkDownSound;
-        private FrameSoundObj m_walkDownSoundLow;
-        private FrameSoundObj m_walkDownSoundHigh;
-        private TeleporterObj m_lastTouchedTeleporter;
-        private LogicSet m_externalLS;
-        private TextObj m_flightDurationText;
-        private byte m_attacksNeededForMana;
-        private byte m_numSequentialAttacks;
-        private float m_blockManaDrain;
+        private readonly float AxeProjectileSpeed = 1100f;
+        private readonly Vector2 AxeSpellScale = new Vector2(3f, 3f);
+        private readonly float DaggerProjectileSpeed = 900f;
+        private readonly Vector2 DaggerSpellScale = new Vector2(3.5f, 3.5f);
+        private readonly ProjectileData m_axeProjData;
+        private readonly float m_dropThroughGroundDuration = 0.1f;
+        private readonly ProjectileData m_rapidDaggerProjData;
+        private readonly float m_Spell_Close_Lifespan = 6f;
+        private readonly float m_Spell_Close_Scale = 3.5f;
         private int ArmorReductionMod;
-        private float RunSpeedMultiplier;
-        private ObjContainer m_translocatorSprite;
-        private SpriteObj m_swearBubble;
-        private float m_swearBubbleCounter;
-        private bool m_previousIsTouchingGround;
-        private TweenObject m_flipTween;
-        private Color m_skinColour1 = new Color(231, 175, 131, 255);
-        private Color m_skinColour2 = new Color(199, 109, 112, 255);
-        private Color m_lichColour1 = new Color(255, 255, 255, 255);
-        private Color m_lichColour2 = new Color(198, 198, 198, 255);
+        private float BaseStatDropChance;
+        private float ComboDelay = 1f;
+        private int DamageGainPerLevel;
+        private float DashCoolDown;
+        private float DashSpeed;
+        private float DashTime;
+        private int HealthGainPerLevel;
+        private float JumpDeceleration;
+        private LogicSet m_airAttackLS;
+        private byte m_airDashCount;
+        private float m_ambilevousTimer = 0.5f;
+        private float m_assassinDrainCounter;
         private float m_assassinSmokeTimer = 0.5f;
         private bool m_assassinSpecialActive;
-        private float m_assassinDrainCounter;
-        private bool m_timeStopCast;
-        private float m_timeStopDrainCounter;
-        private bool m_megaDamageShieldCast;
-        private bool m_damageShieldCast;
-        private float m_damageShieldDrainCounter;
-        private float m_tanookiDrainCounter;
-        private float m_dragonManaRechargeCounter;
-        private bool m_lightOn;
-        private float m_lightDrainCounter;
-        private List<byte> m_wizardSpellList;
-        private float m_wizardSparkleCounter = 0.2f;
-        private float m_ninjaTeleportDelay;
-        private float m_spellCastDelay;
-        private float m_rapidSpellCastDelay;
+        private float m_attackCounter;
+        private int m_attackNumber;
+        private float m_blockInvincibleCounter;
+        private float m_blockManaDrain;
         private IPhysicsObj m_closestGround;
         private bool m_collidingLeft;
-        private bool m_collidingRight;
         private bool m_collidingLeftOnly;
+        private bool m_collidingRight;
         private bool m_collidingRightOnly;
-        private float m_ambilevousTimer = 0.5f;
-        private Vector2 AxeSpellScale = new Vector2(3f, 3f);
-        private float AxeProjectileSpeed = 1100f;
-        private Vector2 DaggerSpellScale = new Vector2(3.5f, 3.5f);
-        private float DaggerProjectileSpeed = 900f;
-        private float m_Spell_Close_Lifespan = 6f;
-        private float m_Spell_Close_Scale = 3.5f;
-        private ProjectileData m_axeProjData;
-        private ProjectileData m_rapidDaggerProjData;
+        private LogicSet m_currentLogicSet;
+        private float m_currentMana;
+        private float m_damageShieldDrainCounter;
+        private int m_dashCooldownCounter;
+        private int m_dashCounter;
+        private InputMap m_debugInputMap;
+        private byte m_doubleJumpCount;
+        private float m_dragonManaRechargeCounter;
+        private float m_dropThroughGroundTimer;
+        private Vector2 m_enemyKnockBack = Vector2.Zero;
+        private LogicSet m_externalLS;
+        private float m_flightCounter;
+        private TextObj m_flightDurationText;
+        private TweenObject m_flipTween;
+        private int m_invincibleCounter;
+        private TeleporterObj m_lastTouchedTeleporter;
+        private Color m_lichColour1 = new Color(255, 255, 255, 255);
+        private Color m_lichColour2 = new Color(198, 198, 198, 255);
+        private float m_lightDrainCounter;
+        private float m_manaGain;
+        private bool m_megaDamageShieldCast;
+        private float m_ninjaTeleportDelay;
+        private SpriteObj m_playerHead;
+        private SpriteObj m_playerLegs;
+        private bool m_previousIsTouchingGround;
+        private float m_rapidSpellCastDelay;
+        private Color m_skinColour1 = new Color(231, 175, 131, 255);
+        private Color m_skinColour2 = new Color(199, 109, 112, 255);
+        private LogicSet m_standingAttack3LogicSet;
+        private float m_startingAnimationDelay;
+        private SpriteObj m_swearBubble;
+        private float m_swearBubbleCounter;
+        private float m_tanookiDrainCounter;
+        private bool m_timeStopCast;
+        private float m_timeStopDrainCounter;
+        private ObjContainer m_translocatorSprite;
+        private FrameSoundObj m_walkDownSound;
+        private FrameSoundObj m_walkDownSoundHigh;
+        private FrameSoundObj m_walkDownSoundLow;
+        private FrameSoundObj m_walkUpSound;
+        private FrameSoundObj m_walkUpSoundHigh;
+        private FrameSoundObj m_walkUpSoundLow;
+        private float m_wizardSparkleCounter = 0.2f;
+        private List<byte> m_wizardSpellList;
+        private int ManaGainPerLevel;
+        private float RunSpeedMultiplier;
+
+        public PlayerObj(string spriteName, PlayerIndex playerIndex, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo, Game game) : base(spriteName, physicsManager, levelToAttachTo)
+        {
+            Game = game;
+            m_playerLegs = (GetChildAt(2) as SpriteObj);
+            m_playerHead = (GetChildAt(12) as SpriteObj);
+            PlayerIndex = playerIndex;
+            m_currentLogicSet = new LogicSet(null);
+            State = 0;
+            CollisionTypeTag = 2;
+            m_debugInputMap = new InputMap(PlayerIndex.Two, false);
+            InitializeInputMap();
+            m_walkDownSound = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01", "Player_WalkDown02");
+            m_walkUpSound = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01", "Player_WalkUp02");
+            m_walkUpSoundHigh = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01_High", "Player_WalkUp02_High");
+            m_walkDownSoundHigh = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01_High", "Player_WalkDown02_High");
+            m_walkUpSoundLow = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01_Low", "Player_WalkUp02_Low");
+            m_walkDownSoundLow = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01_Low", "Player_WalkDown02_Low");
+            m_externalLS = new LogicSet(null);
+            m_flightDurationText = new TextObj(Game.JunicodeFont);
+            m_flightDurationText.FontSize = 12f;
+            m_flightDurationText.Align = Types.TextAlign.Centre;
+            m_flightDurationText.DropShadow = new Vector2(2f, 2f);
+            OutlineWidth = 2;
+            m_translocatorSprite = new ObjContainer("PlayerIdle_Character");
+            m_translocatorSprite.Visible = false;
+            m_translocatorSprite.OutlineColour = Color.Blue;
+            m_translocatorSprite.OutlineWidth = 2;
+            m_swearBubble = new SpriteObj("SwearBubble1_Sprite");
+            m_swearBubble.Scale = new Vector2(2f, 2f);
+            m_swearBubble.Flip = SpriteEffects.FlipHorizontally;
+            m_swearBubble.Visible = false;
+            m_axeProjData = new ProjectileData(this)
+            {
+                SpriteName = "SpellAxe_Sprite",
+                SourceAnchor = new Vector2(20f, -20f),
+                Target = null,
+                Speed = new Vector2(AxeProjectileSpeed, AxeProjectileSpeed),
+                IsWeighted = true,
+                RotationSpeed = 10f,
+                Damage = Damage,
+                AngleOffset = 0f,
+                Angle = new Vector2(-90f, -90f),
+                CollidesWithTerrain = false,
+                Scale = AxeSpellScale,
+                IgnoreInvincibleCounter = true
+            };
+            m_rapidDaggerProjData = new ProjectileData(this)
+            {
+                SpriteName = "SpellDagger_Sprite",
+                SourceAnchor = Vector2.Zero,
+                Speed = new Vector2(DaggerProjectileSpeed, DaggerProjectileSpeed),
+                IsWeighted = false,
+                RotationSpeed = 0f,
+                Damage = Damage,
+                AngleOffset = 0f,
+                CollidesWithTerrain = false,
+                Scale = DaggerSpellScale,
+                FollowArc = true,
+                IgnoreInvincibleCounter = true
+            };
+        }
+
         private int BaseDamage { get; set; }
         public float BaseMana { get; internal set; }
 
@@ -186,42 +240,19 @@ namespace RogueCastle
             get { return new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + 40); }
         }
 
-        public PlayerIndex PlayerIndex
-        {
-            get { return m_playerIndex; }
-        }
+        public PlayerIndex PlayerIndex { get; private set; }
 
         public ProceduralLevelScreen AttachedLevel
         {
             get { return m_levelScreen; }
         }
 
-        public int Damage
-        {
-            get
-            {
-                int num =
-                    (int)
-                        ((RandomDamage + SkillSystem.GetSkill(SkillType.Attack_Up).ModifierAmount +
-                          SkillSystem.GetSkill(SkillType.Damage_Up_Final).ModifierAmount)*ClassDamageGivenMultiplier);
-                if (IsAirAttacking)
-                {
-                    num = (int) (num*TotalAirAttackDamageMod);
-                }
-                if (num < 1)
-                {
-                    num = 1;
-                }
-                return num;
-            }
-        }
-
         public float TotalAirAttackDamageMod
         {
             get
             {
-                float num = SkillSystem.GetSkill(SkillType.Down_Strike_Up).ModifierAmount*NumAirBounces;
-                float num2 = AirAttackDamageMod + num;
+                var num = SkillSystem.GetSkill(SkillType.Down_Strike_Up).ModifierAmount*NumAirBounces;
+                var num2 = AirAttackDamageMod + num;
                 if (num2 > 1f)
                 {
                     num2 = 1f;
@@ -234,7 +265,7 @@ namespace RogueCastle
         {
             get
             {
-                int num =
+                var num =
                     (int)
                         ((BaseMagicDamage + SkillSystem.GetSkill(SkillType.Magic_Damage_Up).ModifierAmount +
                           GetEquipmentMagicDamage() + Game.PlayerStats.BonusMagic)*ClassMagicDamageGivenMultiplier);
@@ -286,7 +317,7 @@ namespace RogueCastle
             {
                 if (Game.PlayerStats.Traits.X == 12f || Game.PlayerStats.Traits.Y == 12f)
                 {
-                    int num =
+                    var num =
                         (int)
                             Math.Round(
                                 (BaseHealth + GetEquipmentHealth() + HealthGainPerLevel*Game.PlayerStats.CurrentLevel +
@@ -301,7 +332,7 @@ namespace RogueCastle
                     }
                     return num;
                 }
-                int num2 =
+                var num2 =
                     (int)
                         ((BaseMana + GetEquipmentMana() + ManaGainPerLevel*Game.PlayerStats.CurrentLevel +
                           Game.PlayerStats.BonusMana*5 + SkillSystem.GetSkill(SkillType.Mana_Up).ModifierAmount +
@@ -321,7 +352,7 @@ namespace RogueCastle
             {
                 if (Game.PlayerStats.Traits.X == 12f || Game.PlayerStats.Traits.Y == 12f)
                 {
-                    int num =
+                    var num =
                         (int)
                             ((BaseMana + GetEquipmentMana() + ManaGainPerLevel*Game.PlayerStats.CurrentLevel +
                               Game.PlayerStats.BonusMana*5 + SkillSystem.GetSkill(SkillType.Mana_Up).ModifierAmount +
@@ -333,7 +364,7 @@ namespace RogueCastle
                     }
                     return num;
                 }
-                int num2 =
+                var num2 =
                     (int)
                         Math.Round(
                             (BaseHealth + GetEquipmentHealth() + HealthGainPerLevel*Game.PlayerStats.CurrentLevel +
@@ -399,28 +430,15 @@ namespace RogueCastle
             get { return true; }
         }
 
-        public bool IsJumping
-        {
-            get { return m_isJumping; }
-        }
-
-        public byte NumSequentialAttacks
-        {
-            get { return m_numSequentialAttacks; }
-            set { m_numSequentialAttacks = value; }
-        }
-
-        public byte AttacksNeededForMana
-        {
-            get { return m_attacksNeededForMana; }
-            set { m_attacksNeededForMana = value; }
-        }
+        public bool IsJumping { get; private set; }
+        public byte NumSequentialAttacks { get; set; }
+        public byte AttacksNeededForMana { get; set; }
 
         public float ManaGain
         {
             get
             {
-                int num = 0;
+                var num = 0;
                 if (Game.PlayerStats.Class == 1 || Game.PlayerStats.Class == 9)
                 {
                     num = 6;
@@ -453,9 +471,9 @@ namespace RogueCastle
         {
             get
             {
-                float num = BaseCriticalChance + SkillSystem.GetSkill(SkillType.Crit_Chance_Up).ModifierAmount +
-                            GetEquipmentSecondaryAttrib(1);
-                byte @class = Game.PlayerStats.Class;
+                var num = BaseCriticalChance + SkillSystem.GetSkill(SkillType.Crit_Chance_Up).ModifierAmount +
+                          GetEquipmentSecondaryAttrib(1);
+                var @class = Game.PlayerStats.Class;
                 switch (@class)
                 {
                     case 3:
@@ -484,9 +502,9 @@ namespace RogueCastle
         {
             get
             {
-                float num = BaseCriticalDamageMod + SkillSystem.GetSkill(SkillType.Crit_Damage_Up).ModifierAmount +
-                            GetEquipmentSecondaryAttrib(2);
-                byte @class = Game.PlayerStats.Class;
+                var num = BaseCriticalDamageMod + SkillSystem.GetSkill(SkillType.Crit_Damage_Up).ModifierAmount +
+                          GetEquipmentSecondaryAttrib(2);
+                var @class = Game.PlayerStats.Class;
                 if (@class == 3 || @class == 11)
                 {
                     return num + 1.25f;
@@ -504,9 +522,9 @@ namespace RogueCastle
         {
             get
             {
-                float num = SkillSystem.GetSkill(SkillType.Gold_Gain_Up).ModifierAmount + GetEquipmentSecondaryAttrib(3) +
-                            Game.PlayerStats.GetNumberOfEquippedRunes(6)*0.1f + 0.5f*Game.PlayerStats.TimesCastleBeaten;
-                byte @class = Game.PlayerStats.Class;
+                var num = SkillSystem.GetSkill(SkillType.Gold_Gain_Up).ModifierAmount + GetEquipmentSecondaryAttrib(3) +
+                          Game.PlayerStats.GetNumberOfEquippedRunes(6)*0.1f + 0.5f*Game.PlayerStats.TimesCastleBeaten;
+                var @class = Game.PlayerStats.Class;
                 if (@class == 5 || @class == 13)
                 {
                     return num + 0.3f;
@@ -562,7 +580,7 @@ namespace RogueCastle
         {
             get
             {
-                float num = 0f;
+                var num = 0f;
                 if (State == 7 || State == 9)
                 {
                     num = FlightSpeedMod;
@@ -575,7 +593,7 @@ namespace RogueCastle
         {
             get
             {
-                float num = 0f;
+                var num = 0f;
                 if (Game.PlayerStats.Traits.X == 14f || Game.PlayerStats.Traits.Y == 14f)
                 {
                     num = 0.3f;
@@ -590,20 +608,9 @@ namespace RogueCastle
             get { return GetEquipmentSecondaryAttrib(4) + Game.PlayerStats.GetNumberOfEquippedRunes(5)*0.5f; }
         }
 
-        public bool ControlsLocked
-        {
-            get { return m_lockControls; }
-        }
-
-        public bool IsFlying
-        {
-            get { return m_isFlying; }
-        }
-
-        public Game Game
-        {
-            get { return m_game; }
-        }
+        public bool ControlsLocked { get; private set; }
+        public bool IsFlying { get; private set; }
+        public Game Game { get; private set; }
 
         public bool IsInvincible
         {
@@ -646,7 +653,7 @@ namespace RogueCastle
         {
             get
             {
-                byte @class = Game.PlayerStats.Class;
+                var @class = Game.PlayerStats.Class;
                 if (@class == 3 || @class == 11)
                 {
                     return 1f;
@@ -659,7 +666,7 @@ namespace RogueCastle
         {
             get
             {
-                byte @class = Game.PlayerStats.Class;
+                var @class = Game.PlayerStats.Class;
                 if (@class != 1)
                 {
                     switch (@class)
@@ -762,7 +769,7 @@ namespace RogueCastle
         {
             get
             {
-                byte @class = Game.PlayerStats.Class;
+                var @class = Game.PlayerStats.Class;
                 if (@class == 4 || @class == 12)
                 {
                     return 0.3f;
@@ -775,15 +782,8 @@ namespace RogueCastle
             }
         }
 
-        public float SpellCastDelay
-        {
-            get { return m_spellCastDelay; }
-        }
-
-        public bool LightOn
-        {
-            get { return m_lightOn; }
-        }
+        public float SpellCastDelay { get; private set; }
+        public bool LightOn { get; private set; }
 
         public override SpriteEffects Flip
         {
@@ -796,7 +796,7 @@ namespace RogueCastle
                     {
                         m_flipTween.StopTween(false);
                     }
-                    float x = m_internalScale.X;
+                    var x = m_internalScale.X;
                     ScaleX = 0f;
                     m_flipTween = Tween.To(this, 0.15f, Tween.EaseNone, "ScaleX", x.ToString());
                 }
@@ -804,9 +804,26 @@ namespace RogueCastle
             }
         }
 
-        public bool CastingDamageShield
+        public bool CastingDamageShield { get; private set; }
+
+        public int Damage
         {
-            get { return m_damageShieldCast; }
+            get
+            {
+                var num =
+                    (int)
+                        ((RandomDamage + SkillSystem.GetSkill(SkillType.Attack_Up).ModifierAmount +
+                          SkillSystem.GetSkill(SkillType.Damage_Up_Final).ModifierAmount)*ClassDamageGivenMultiplier);
+                if (IsAirAttacking)
+                {
+                    num = (int) (num*TotalAirAttackDamageMod);
+                }
+                if (num < 1)
+                {
+                    num = 1;
+                }
+                return num;
+            }
         }
 
         protected override void InitializeEV()
@@ -892,69 +909,6 @@ namespace RogueCastle
             m_airAttackLS.AddAction(new ChangePropertyLogicAction(this, "IsAirAttacking", false));
         }
 
-        public PlayerObj(string spriteName, PlayerIndex playerIndex, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, Game game) : base(spriteName, physicsManager, levelToAttachTo)
-        {
-            m_game = game;
-            m_playerLegs = (GetChildAt(2) as SpriteObj);
-            m_playerHead = (GetChildAt(12) as SpriteObj);
-            m_playerIndex = playerIndex;
-            m_currentLogicSet = new LogicSet(null);
-            State = 0;
-            CollisionTypeTag = 2;
-            m_debugInputMap = new InputMap(PlayerIndex.Two, false);
-            InitializeInputMap();
-            m_walkDownSound = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01", "Player_WalkDown02");
-            m_walkUpSound = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01", "Player_WalkUp02");
-            m_walkUpSoundHigh = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01_High", "Player_WalkUp02_High");
-            m_walkDownSoundHigh = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01_High", "Player_WalkDown02_High");
-            m_walkUpSoundLow = new FrameSoundObj(m_playerLegs, 1, "Player_WalkUp01_Low", "Player_WalkUp02_Low");
-            m_walkDownSoundLow = new FrameSoundObj(m_playerLegs, 4, "Player_WalkDown01_Low", "Player_WalkDown02_Low");
-            m_externalLS = new LogicSet(null);
-            m_flightDurationText = new TextObj(Game.JunicodeFont);
-            m_flightDurationText.FontSize = 12f;
-            m_flightDurationText.Align = Types.TextAlign.Centre;
-            m_flightDurationText.DropShadow = new Vector2(2f, 2f);
-            OutlineWidth = 2;
-            m_translocatorSprite = new ObjContainer("PlayerIdle_Character");
-            m_translocatorSprite.Visible = false;
-            m_translocatorSprite.OutlineColour = Color.Blue;
-            m_translocatorSprite.OutlineWidth = 2;
-            m_swearBubble = new SpriteObj("SwearBubble1_Sprite");
-            m_swearBubble.Scale = new Vector2(2f, 2f);
-            m_swearBubble.Flip = SpriteEffects.FlipHorizontally;
-            m_swearBubble.Visible = false;
-            m_axeProjData = new ProjectileData(this)
-            {
-                SpriteName = "SpellAxe_Sprite",
-                SourceAnchor = new Vector2(20f, -20f),
-                Target = null,
-                Speed = new Vector2(AxeProjectileSpeed, AxeProjectileSpeed),
-                IsWeighted = true,
-                RotationSpeed = 10f,
-                Damage = Damage,
-                AngleOffset = 0f,
-                Angle = new Vector2(-90f, -90f),
-                CollidesWithTerrain = false,
-                Scale = AxeSpellScale,
-                IgnoreInvincibleCounter = true
-            };
-            m_rapidDaggerProjData = new ProjectileData(this)
-            {
-                SpriteName = "SpellDagger_Sprite",
-                SourceAnchor = Vector2.Zero,
-                Speed = new Vector2(DaggerProjectileSpeed, DaggerProjectileSpeed),
-                IsWeighted = false,
-                RotationSpeed = 0f,
-                Damage = Damage,
-                AngleOffset = 0f,
-                CollidesWithTerrain = false,
-                Scale = DaggerSpellScale,
-                FollowArc = true,
-                IgnoreInvincibleCounter = true
-            };
-        }
-
         public void Initialize()
         {
             InitializeEV();
@@ -994,8 +948,8 @@ namespace RogueCastle
             base.ChangeSprite(spriteName);
             if (State != 8)
             {
-                string text = (_objectList[12] as IAnimateableObj).SpriteName;
-                int startIndex = text.IndexOf("_") - 1;
+                var text = (_objectList[12] as IAnimateableObj).SpriteName;
+                var startIndex = text.IndexOf("_") - 1;
                 text = text.Remove(startIndex, 1);
                 if (Game.PlayerStats.Class == 16)
                 {
@@ -1010,17 +964,17 @@ namespace RogueCastle
                     text = text.Replace("_", Game.PlayerStats.HeadPiece + "_");
                 }
                 _objectList[12].ChangeSprite(text);
-                string text2 = (_objectList[4] as IAnimateableObj).SpriteName;
+                var text2 = (_objectList[4] as IAnimateableObj).SpriteName;
                 startIndex = text2.IndexOf("_") - 1;
                 text2 = text2.Remove(startIndex, 1);
                 text2 = text2.Replace("_", Game.PlayerStats.ChestPiece + "_");
                 _objectList[4].ChangeSprite(text2);
-                string text3 = (_objectList[9] as IAnimateableObj).SpriteName;
+                var text3 = (_objectList[9] as IAnimateableObj).SpriteName;
                 startIndex = text3.IndexOf("_") - 1;
                 text3 = text3.Remove(startIndex, 1);
                 text3 = text3.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
                 _objectList[9].ChangeSprite(text3);
-                string text4 = (_objectList[3] as IAnimateableObj).SpriteName;
+                var text4 = (_objectList[3] as IAnimateableObj).SpriteName;
                 startIndex = text4.IndexOf("_") - 1;
                 text4 = text4.Remove(startIndex, 1);
                 text4 = text4.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
@@ -1057,37 +1011,37 @@ namespace RogueCastle
                 }
                 _objectList[16].Opacity = 0.3f;
                 _objectList[16].Visible = false;
-                if (Game.PlayerStats.Class == 13 && spriteName != "PlayerDeath_Character" && m_lightOn)
+                if (Game.PlayerStats.Class == 13 && spriteName != "PlayerDeath_Character" && LightOn)
                 {
                     _objectList[16].Visible = true;
                 }
                 if (Game.PlayerStats.Class == 0 || Game.PlayerStats.Class == 8)
                 {
-                    string spriteName2 = spriteName.Replace("_Character", "Shield_Sprite");
+                    var spriteName2 = spriteName.Replace("_Character", "Shield_Sprite");
                     _objectList[15].Visible = true;
                     _objectList[15].ChangeSprite(spriteName2);
                 }
                 else if (Game.PlayerStats.Class == 5 || Game.PlayerStats.Class == 13)
                 {
-                    string spriteName3 = spriteName.Replace("_Character", "Lamp_Sprite");
+                    var spriteName3 = spriteName.Replace("_Character", "Lamp_Sprite");
                     _objectList[15].Visible = true;
                     _objectList[15].ChangeSprite(spriteName3);
                 }
                 else if (Game.PlayerStats.Class == 4 || Game.PlayerStats.Class == 12)
                 {
-                    string spriteName4 = spriteName.Replace("_Character", "Headband_Sprite");
+                    var spriteName4 = spriteName.Replace("_Character", "Headband_Sprite");
                     _objectList[15].Visible = true;
                     _objectList[15].ChangeSprite(spriteName4);
                 }
                 else if (Game.PlayerStats.Class == 1 || Game.PlayerStats.Class == 9)
                 {
-                    string spriteName5 = spriteName.Replace("_Character", "Beard_Sprite");
+                    var spriteName5 = spriteName.Replace("_Character", "Beard_Sprite");
                     _objectList[15].Visible = true;
                     _objectList[15].ChangeSprite(spriteName5);
                 }
                 else if (Game.PlayerStats.Class == 2 || Game.PlayerStats.Class == 10)
                 {
-                    string spriteName6 = spriteName.Replace("_Character", "Horns_Sprite");
+                    var spriteName6 = spriteName.Replace("_Character", "Horns_Sprite");
                     _objectList[15].Visible = true;
                     _objectList[15].ChangeSprite(spriteName6);
                 }
@@ -1132,12 +1086,12 @@ namespace RogueCastle
 
         public void LockControls()
         {
-            m_lockControls = true;
+            ControlsLocked = true;
         }
 
         public void UnlockControls()
         {
-            m_lockControls = false;
+            ControlsLocked = false;
         }
 
         public override void HandleInput()
@@ -1146,15 +1100,15 @@ namespace RogueCastle
             {
                 DebugInputControls();
             }
-            if (!m_lockControls && !IsKilled && State != 3)
+            if (!ControlsLocked && !IsKilled && State != 3)
             {
                 InputControls();
             }
             if (Game.PlayerStats.Class == 17 && !(AttachedLevel.CurrentRoom is CarnivalShoot1BonusRoom) &&
                 !(AttachedLevel.CurrentRoom is CarnivalShoot2BonusRoom) && !IsKilled && State == 4 &&
-                Game.GlobalInput.JustPressed(24) && m_spellCastDelay <= 0f && CurrentMana >= 30f)
+                Game.GlobalInput.JustPressed(24) && SpellCastDelay <= 0f && CurrentMana >= 30f)
             {
-                m_spellCastDelay = 0.5f;
+                SpellCastDelay = 0.5f;
                 CurrentMana -= 30f;
                 CastCloseShield();
             }
@@ -1164,7 +1118,7 @@ namespace RogueCastle
         {
             if (m_debugInputMap.JustPressed(0))
             {
-                PlayerStats expr_13 = Game.PlayerStats;
+                var expr_13 = Game.PlayerStats;
                 expr_13.Spell += 1;
                 if (Game.PlayerStats.Spell > 16)
                 {
@@ -1195,7 +1149,7 @@ namespace RogueCastle
             m_debugInputMap.JustPressed(5);
             if (m_debugInputMap.JustPressed(7))
             {
-                RCScreenManager rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+                var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
                 if (rCScreenManager != null)
                 {
                     Kill();
@@ -1338,7 +1292,7 @@ namespace RogueCastle
                     CurrentSpeed = 0f;
                 }
             }
-            bool flag = false;
+            var flag = false;
             if (State != 6 && State != 7 && State != 8 && Game.PlayerStats.Class != 16)
             {
                 if ((Game.GlobalInput.JustPressed(10) || Game.GlobalInput.JustPressed(11)) && m_isTouchingGround &&
@@ -1346,7 +1300,7 @@ namespace RogueCastle
                 {
                     State = 2;
                     AccelerationY = -JumpHeight;
-                    m_isJumping = true;
+                    IsJumping = true;
                     if (Game.PlayerStats.Traits.X == 6f || Game.PlayerStats.Traits.Y == 6f)
                     {
                         SoundManager.PlaySound("Player_Jump_04_Low");
@@ -1376,7 +1330,7 @@ namespace RogueCastle
                     State = 2;
                     AccelerationY = -DoubleJumpHeight;
                     m_levelScreen.ImpactEffectPool.DisplayDoubleJumpEffect(new Vector2(X, Bounds.Bottom + 10));
-                    m_isJumping = true;
+                    IsJumping = true;
                     m_doubleJumpCount += 1;
                     SoundManager.PlaySound("Player_DoubleJump");
                     if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) &&
@@ -1480,7 +1434,7 @@ namespace RogueCastle
             }
             if (Game.PlayerStats.TutorialComplete)
             {
-                bool flag2 = false;
+                var flag2 = false;
                 if (Game.PlayerStats.Spell == 15 && (Game.GlobalInput.Pressed(12) || Game.GlobalInput.Pressed(24)) &&
                     m_rapidSpellCastDelay <= 0f)
                 {
@@ -1488,7 +1442,7 @@ namespace RogueCastle
                     CastSpell(false);
                     flag2 = true;
                 }
-                if ((m_spellCastDelay <= 0f || Game.PlayerStats.Class == 16) &&
+                if ((SpellCastDelay <= 0f || Game.PlayerStats.Class == 16) &&
                     (Game.GlobalInput.JustPressed(24) ||
                      (Game.PlayerStats.Class == 16 && Game.GlobalInput.JustPressed(12))) &&
                     (Game.PlayerStats.Class != 16 || !flag2))
@@ -1497,11 +1451,11 @@ namespace RogueCastle
                 }
                 if (Game.GlobalInput.JustPressed(13))
                 {
-                    RoomObj currentRoom = m_levelScreen.CurrentRoom;
+                    var currentRoom = m_levelScreen.CurrentRoom;
                     if (!(currentRoom is CarnivalShoot1BonusRoom) && !(currentRoom is CarnivalShoot2BonusRoom) &&
                         !(currentRoom is ChestBonusRoomObj))
                     {
-                        if (Game.PlayerStats.Class == 14 && m_spellCastDelay <= 0f)
+                        if (Game.PlayerStats.Class == 14 && SpellCastDelay <= 0f)
                         {
                             CastSpell(false, true);
                         }
@@ -1543,10 +1497,10 @@ namespace RogueCastle
                         {
                             CastFuhRohDah();
                         }
-                        else if (Game.PlayerStats.Class == 17 && CurrentMana >= 30f && m_spellCastDelay <= 0f)
+                        else if (Game.PlayerStats.Class == 17 && CurrentMana >= 30f && SpellCastDelay <= 0f)
                         {
                             CurrentMana -= 30f;
-                            m_spellCastDelay = 0.5f;
+                            SpellCastDelay = 0.5f;
                             ThrowAxeProjectiles();
                         }
                     }
@@ -1560,28 +1514,28 @@ namespace RogueCastle
                         {
                             State = 9;
                             DisableGravity = true;
-                            m_isFlying = true;
+                            IsFlying = true;
                             AccelerationY = 0f;
                         }
                         else
                         {
                             State = 2;
                             DisableGravity = false;
-                            m_isFlying = false;
+                            IsFlying = false;
                         }
                     }
                     else if (Game.PlayerStats.Class == 13)
                     {
-                        if (m_lightOn)
+                        if (LightOn)
                         {
                             SoundManager.PlaySound("HeadLampOff");
-                            m_lightOn = false;
+                            LightOn = false;
                             _objectList[16].Visible = false;
                         }
                         else
                         {
                             SoundManager.PlaySound("HeadLampOn");
-                            m_lightOn = true;
+                            LightOn = true;
                             _objectList[16].Visible = true;
                         }
                     }
@@ -1593,14 +1547,14 @@ namespace RogueCastle
                     {
                         State = 9;
                         DisableGravity = true;
-                        m_isFlying = true;
+                        IsFlying = true;
                         AccelerationY = 0f;
                     }
                     else
                     {
                         State = 2;
                         DisableGravity = false;
-                        m_isFlying = false;
+                        IsFlying = false;
                     }
                 }
             }
@@ -1690,7 +1644,7 @@ namespace RogueCastle
                 {
                     State = 2;
                     DisableGravity = false;
-                    m_isFlying = false;
+                    IsFlying = false;
                 }
             }
             else if ((Game.GlobalInput.JustPressed(10) || Game.GlobalInput.JustPressed(11)) && !m_isTouchingGround &&
@@ -1700,7 +1654,7 @@ namespace RogueCastle
                 AccelerationY = 0f;
                 State = 7;
                 DisableGravity = true;
-                m_isFlying = true;
+                IsFlying = true;
             }
         }
 
@@ -1723,7 +1677,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            float num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (m_dropThroughGroundTimer > 0f)
             {
                 m_dropThroughGroundTimer -= num;
@@ -1794,7 +1748,7 @@ namespace RogueCastle
                 {
                     State = 2;
                     DisableGravity = false;
-                    m_isFlying = false;
+                    IsFlying = false;
                 }
             }
             if (AccelerationX < 0f)
@@ -1915,7 +1869,7 @@ namespace RogueCastle
                         }
                     }
                 }
-                if (m_damageShieldCast)
+                if (CastingDamageShield)
                 {
                     m_damageShieldDrainCounter += num;
                     if (m_damageShieldDrainCounter >= 0.33f)
@@ -1931,12 +1885,12 @@ namespace RogueCastle
                         }
                         if (CurrentMana <= 0f)
                         {
-                            m_damageShieldCast = false;
+                            CastingDamageShield = false;
                             m_megaDamageShieldCast = false;
                         }
                     }
                 }
-                if (m_lightOn)
+                if (LightOn)
                 {
                     m_lightDrainCounter += num;
                     if (m_lightDrainCounter >= 1f)
@@ -1945,7 +1899,7 @@ namespace RogueCastle
                         CurrentMana -= 0f;
                         if (CurrentMana <= 0f)
                         {
-                            m_lightOn = false;
+                            LightOn = false;
                             _objectList[16].Visible = false;
                         }
                     }
@@ -1963,9 +1917,9 @@ namespace RogueCastle
                         }
                     }
                 }
-                if (m_spellCastDelay > 0f)
+                if (SpellCastDelay > 0f)
                 {
-                    m_spellCastDelay -= num;
+                    SpellCastDelay -= num;
                 }
                 base.Update(gameTime);
                 return;
@@ -2085,13 +2039,13 @@ namespace RogueCastle
             m_isTouchingGround = false;
             m_collidingLeft = (m_collidingRight = false);
             m_collidingLeftOnly = (m_collidingRightOnly = false);
-            bool flag = false;
+            var flag = false;
             IPhysicsObj physicsObj = null;
-            float num = 3.40282347E+38f;
+            var num = 3.40282347E+38f;
             IPhysicsObj physicsObj2 = null;
-            float num2 = 3.40282347E+38f;
-            Rectangle rectangle = new Rectangle(TerrainBounds.Left, TerrainBounds.Bottom - 78, TerrainBounds.Width, 88);
-            foreach (IPhysicsObj current in PhysicsMngr.ObjectList)
+            var num2 = 3.40282347E+38f;
+            var rectangle = new Rectangle(TerrainBounds.Left, TerrainBounds.Bottom - 78, TerrainBounds.Width, 88);
+            foreach (var current in PhysicsMngr.ObjectList)
             {
                 if (((Game.PlayerStats.Traits.X != 33f && Game.PlayerStats.Traits.Y != 33f) || !(current is PhysicsObj) ||
                      current is HazardObj) && current != this && current.Visible && current.IsCollidable &&
@@ -2101,21 +2055,21 @@ namespace RogueCastle
                     (!current.CollidesTop || current.CollidesBottom || (State != 7 && State != 9)) &&
                     (!current.CollidesTop || !current.CollidesBottom || current.CollidesLeft || current.CollidesRight))
                 {
-                    HazardObj hazardObj = current as HazardObj;
+                    var hazardObj = current as HazardObj;
                     if (current.Rotation == 0f || hazardObj != null)
                     {
-                        Rectangle rectangle2 = current.TerrainBounds;
+                        var rectangle2 = current.TerrainBounds;
                         if (hazardObj != null)
                         {
                             rectangle2 = current.Bounds;
                         }
-                        Vector2 vector = CollisionMath.CalculateMTD(rectangle, rectangle2);
-                        Rectangle rectA = new Rectangle(TerrainBounds.X, TerrainBounds.Y, TerrainBounds.Width,
+                        var vector = CollisionMath.CalculateMTD(rectangle, rectangle2);
+                        var rectA = new Rectangle(TerrainBounds.X, TerrainBounds.Y, TerrainBounds.Width,
                             TerrainBounds.Height);
-                        Vector2 intersectionDepth = CollisionMath.GetIntersectionDepth(rectA, rectangle2);
-                        Rectangle left = new Rectangle(rectangle.X - 10, rectangle.Y, rectangle.Width + 20,
+                        var intersectionDepth = CollisionMath.GetIntersectionDepth(rectA, rectangle2);
+                        var left = new Rectangle(rectangle.X - 10, rectangle.Y, rectangle.Width + 20,
                             rectangle.Height);
-                        Vector2 vector2 = CollisionMath.CalculateMTD(left, rectangle2);
+                        var vector2 = CollisionMath.CalculateMTD(left, rectangle2);
                         if (vector2.X > 0f && current.CollidesRight)
                         {
                             m_collidingLeft = true;
@@ -2124,7 +2078,7 @@ namespace RogueCastle
                         {
                             m_collidingRight = true;
                         }
-                        Vector2 vector3 = CollisionMath.CalculateMTD(TerrainBounds, rectangle2);
+                        var vector3 = CollisionMath.CalculateMTD(TerrainBounds, rectangle2);
                         if (vector3.X > 0f)
                         {
                             m_collidingLeftOnly = true;
@@ -2144,15 +2098,15 @@ namespace RogueCastle
                         if (current.CollidesBottom || Math.Abs(rectangle2.Top - TerrainBounds.Bottom) <= 20 ||
                             AccelerationY >= 1100f)
                         {
-                            int num3 = (int) Math.Abs(intersectionDepth.X);
-                            int num4 = (int) Math.Abs(intersectionDepth.Y);
+                            var num3 = (int) Math.Abs(intersectionDepth.X);
+                            var num4 = (int) Math.Abs(intersectionDepth.Y);
                             if ((num3 <= 1 || num3 >= num4) &&
-                                ((!m_isJumping && AccelerationY >= 0f) || (m_isJumping && AccelerationY >= 0f)) &&
+                                ((!IsJumping && AccelerationY >= 0f) || (IsJumping && AccelerationY >= 0f)) &&
                                 (vector.Y < 0f ||
                                  (vector.Y == 0f && vector.X != 0f && rectangle2.Top > TerrainBounds.Top &&
                                   current.Y > Y)))
                             {
-                                int num5 = Math.Abs(rectangle2.Top - TerrainBounds.Bottom);
+                                var num5 = Math.Abs(rectangle2.Top - TerrainBounds.Bottom);
                                 if (num5 < num)
                                 {
                                     physicsObj = current;
@@ -2162,14 +2116,14 @@ namespace RogueCastle
                             }
                         }
                     }
-                    else if (((!m_isJumping && AccelerationY >= 0f) || (m_isJumping && AccelerationY >= 0f)) &&
+                    else if (((!IsJumping && AccelerationY >= 0f) || (IsJumping && AccelerationY >= 0f)) &&
                              !(current is HazardObj))
                     {
-                        Vector2 vector4 = CollisionMath.RotatedRectIntersectsMTD(rectangle, Rotation, Vector2.Zero,
+                        var vector4 = CollisionMath.RotatedRectIntersectsMTD(rectangle, Rotation, Vector2.Zero,
                             current.TerrainBounds, current.Rotation, Vector2.Zero);
                         if (vector4.Y < 0f)
                         {
-                            float y = vector4.Y;
+                            var y = vector4.Y;
                             if (y < num2)
                             {
                                 physicsObj2 = current;
@@ -2238,13 +2192,13 @@ namespace RogueCastle
                     AccelerationYEnabled = true;
                 }
                 NumAirBounces = 0;
-                m_isFlying = false;
+                IsFlying = false;
                 DisableGravity = false;
                 if (State == 8)
                 {
                     CurrentSpeed = 0f;
                 }
-                m_isJumping = false;
+                IsJumping = false;
                 m_doubleJumpCount = 0;
                 if (State != 6 && State != 8 && State != 4)
                 {
@@ -2260,7 +2214,7 @@ namespace RogueCastle
                     AccelerationY = 0f;
                     Y += 15f;
                     m_isTouchingGround = false;
-                    m_isJumping = true;
+                    IsJumping = true;
                     m_dropThroughGroundTimer = m_dropThroughGroundDuration;
                 }
             }
@@ -2271,14 +2225,14 @@ namespace RogueCastle
             if (State != 4)
             {
                 UpdateCollisionBoxes();
-                Rectangle terrainBounds = TerrainBounds;
+                var terrainBounds = TerrainBounds;
                 terrainBounds.Height += 20;
-                float num = X;
+                var num = X;
                 if (
                     CollisionMath.RotatedRectIntersectsMTD(terrainBounds, Rotation, Vector2.Zero,
                         collisionObj.TerrainBounds, collisionObj.Rotation, Vector2.Zero).Y < 0f)
                 {
-                    bool flag = false;
+                    var flag = false;
                     Vector2 vector;
                     Vector2 vector2;
                     if (collisionObj.Width > collisionObj.Height)
@@ -2326,11 +2280,11 @@ namespace RogueCastle
                     }
                     if (flag)
                     {
-                        float num2 = vector2.X - vector.X;
-                        float num3 = vector2.Y - vector.Y;
-                        float x = vector.X;
-                        float y = vector.Y;
-                        float num4 = y + (num - x)*(num3/num2);
+                        var num2 = vector2.X - vector.X;
+                        var num3 = vector2.Y - vector.Y;
+                        var x = vector.X;
+                        var y = vector.Y;
+                        var num4 = y + (num - x)*(num3/num2);
                         num4 -= TerrainBounds.Bottom - Y - 2f;
                         Y = (int) num4;
                     }
@@ -2340,8 +2294,8 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            IPhysicsObj physicsObj = otherBox.AbsParent as IPhysicsObj;
-            TeleporterObj teleporterObj = otherBox.Parent as TeleporterObj;
+            var physicsObj = otherBox.AbsParent as IPhysicsObj;
+            var teleporterObj = otherBox.Parent as TeleporterObj;
             if (teleporterObj != null && !ControlsLocked && IsTouchingGround &&
                 (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
             {
@@ -2350,7 +2304,7 @@ namespace RogueCastle
                 m_lastTouchedTeleporter = teleporterObj;
                 Tween.RunFunction(0f, AttachedLevel, "DisplayMap", true);
             }
-            DoorObj doorObj = otherBox.Parent as DoorObj;
+            var doorObj = otherBox.Parent as DoorObj;
             if (doorObj != null && !ControlsLocked && IsTouchingGround && doorObj.IsBossDoor && !doorObj.Locked &&
                 (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
             {
@@ -2360,10 +2314,10 @@ namespace RogueCastle
                 }
                 else
                 {
-                    RoomObj linkedRoom = doorObj.Room.LinkedRoom;
+                    var linkedRoom = doorObj.Room.LinkedRoom;
                     if (linkedRoom != null)
                     {
-                        foreach (DoorObj current in linkedRoom.DoorList)
+                        foreach (var current in linkedRoom.DoorList)
                         {
                             if (current.IsBossDoor)
                             {
@@ -2375,7 +2329,7 @@ namespace RogueCastle
                                 CurrentSpeed = 0f;
                                 LockControls();
                                 (m_levelScreen.ScreenManager as RCScreenManager).StartWipeTransition();
-                                Vector2 vector = new Vector2(current.X + current.Width/2f,
+                                var vector = new Vector2(current.X + current.Width/2f,
                                     current.Bounds.Bottom - (Bounds.Bottom - Y));
                                 Tween.RunFunction(0.2f, this, "EnterBossRoom", vector);
                                 Tween.RunFunction(0.2f, m_levelScreen.ScreenManager, "EndWipeTransition");
@@ -2385,7 +2339,7 @@ namespace RogueCastle
                     }
                 }
             }
-            BreakableObj breakableObj = physicsObj as BreakableObj;
+            var breakableObj = physicsObj as BreakableObj;
             if (breakableObj != null && IsAirAttacking && thisBox.Type == 1)
             {
                 IsAirAttacking = false;
@@ -2408,11 +2362,11 @@ namespace RogueCastle
                 (physicsObj.CollisionTypeTag == 1 || physicsObj.CollisionTypeTag == 5 ||
                  physicsObj.CollisionTypeTag == 4 || physicsObj.CollisionTypeTag == 10))
             {
-                Vector2 vector2 = CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect);
-                float arg_325_0 = AccelerationY;
-                Vector2 vector3 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
+                var vector2 = CollisionMath.CalculateMTD(thisBox.AbsRect, otherBox.AbsRect);
+                var arg_325_0 = AccelerationY;
+                var vector3 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
                     Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
-                bool flag = true;
+                var flag = true;
                 if (m_dropThroughGroundTimer > 0f && !physicsObj.CollidesBottom && physicsObj.CollidesTop)
                 {
                     flag = false;
@@ -2481,12 +2435,12 @@ namespace RogueCastle
                 (physicsObj.CollisionTypeTag == 3 || physicsObj.CollisionTypeTag == 4 ||
                  physicsObj.CollisionTypeTag == 10) && State != 3 && m_invincibleCounter <= 0)
             {
-                EnemyObj enemyObj = physicsObj as EnemyObj;
+                var enemyObj = physicsObj as EnemyObj;
                 if (enemyObj != null && enemyObj.IsDemented)
                 {
                     return;
                 }
-                ProjectileObj projectileObj = physicsObj as ProjectileObj;
+                var projectileObj = physicsObj as ProjectileObj;
                 if (projectileObj != null && projectileObj.IsDemented)
                 {
                     return;
@@ -2499,8 +2453,8 @@ namespace RogueCastle
                     {
                         if (CanBeKnockedBack)
                         {
-                            Point center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
-                            Vector2 position = new Vector2(center.X, center.Y);
+                            var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
+                            var position = new Vector2(center.X, center.Y);
                             if (position == Vector2.Zero)
                             {
                                 position = Position;
@@ -2531,14 +2485,14 @@ namespace RogueCastle
                     {
                         HitPlayer(otherBox.AbsParent);
                     }
-                    ProjectileObj projectileObj2 = otherBox.AbsParent as ProjectileObj;
+                    var projectileObj2 = otherBox.AbsParent as ProjectileObj;
                     if (projectileObj2 != null && projectileObj2.DestroysWithEnemy && !m_assassinSpecialActive)
                     {
                         projectileObj2.RunDestroyAnimation(true);
                     }
                 }
             }
-            ItemDropObj itemDropObj = physicsObj as ItemDropObj;
+            var itemDropObj = physicsObj as ItemDropObj;
             if (itemDropObj != null && itemDropObj.IsCollectable)
             {
                 itemDropObj.GiveReward(this, m_levelScreen.TextManager);
@@ -2552,7 +2506,7 @@ namespace RogueCastle
                 Tween.AddEndHandlerToLastTween(m_levelScreen.ItemDropManager, "DestroyItemDrop", itemDropObj);
                 SoundManager.PlaySound("CoinDrop1", "CoinDrop2", "CoinDrop3", "CoinDrop4", "CoinDrop5");
             }
-            ChestObj chestObj = physicsObj as ChestObj;
+            var chestObj = physicsObj as ChestObj;
             if (chestObj != null && !ControlsLocked && m_isTouchingGround &&
                 (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)) && !chestObj.IsOpen)
             {
@@ -2624,12 +2578,12 @@ namespace RogueCastle
             Console.WriteLine(string.Concat("Player pos: ", Position, " teleporter: ", teleporter.Position));
             Tween.To(this, 0.4f, Linear.EaseNone, "X", teleporter.X.ToString());
             Tween.To(this, 0.05f, Linear.EaseNone, "delay", "1.5", "ScaleX", "0");
-            Vector2 scale = Scale;
+            var scale = Scale;
             ScaleX = 0f;
             Tween.To(this, 0.05f, Linear.EaseNone, "delay", "3.3", "ScaleX", scale.X.ToString());
             ScaleX = scale.X;
-            Vector2 relativePos = new Vector2(position.X, position.Y - (TerrainBounds.Bottom - Y));
-            LogicSet logicSet = new LogicSet(this);
+            var relativePos = new Vector2(position.X, position.Y - (TerrainBounds.Bottom - Y));
+            var logicSet = new LogicSet(this);
             logicSet.AddAction(new RunFunctionLogicAction(this, "LockControls"));
             logicSet.AddAction(new ChangeSpriteLogicAction("PlayerJumping_Character"));
             logicSet.AddAction(new JumpLogicAction(500f));
@@ -2693,12 +2647,12 @@ namespace RogueCastle
 
         public void HitPlayer(GameObj obj)
         {
-            bool flag = true;
+            var flag = true;
             if (obj is HazardObj && ((Game.PlayerStats.SpecialItem == 4 && obj.Bounds.Top > Y) || InvincibleToSpikes))
             {
                 flag = false;
             }
-            ProjectileObj projectileObj = obj as ProjectileObj;
+            var projectileObj = obj as ProjectileObj;
             if (projectileObj != null)
             {
                 if (projectileObj.IsDemented)
@@ -2712,7 +2666,7 @@ namespace RogueCastle
                     m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
                         CDGMath.AngleBetweenPts(Position, projectileObj.Position), false);
                 }
-                EnemyObj enemyObj = projectileObj.Source as EnemyObj;
+                var enemyObj = projectileObj.Source as EnemyObj;
                 if (enemyObj != null &&
                     (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS || enemyObj is EnemyObj_LastBoss) &&
                     enemyObj.CurrentHealth <= 0)
@@ -2720,7 +2674,7 @@ namespace RogueCastle
                     flag = false;
                 }
             }
-            EnemyObj enemyObj2 = obj as EnemyObj;
+            var enemyObj2 = obj as EnemyObj;
             if (enemyObj2 != null && enemyObj2.IsDemented)
             {
                 flag = false;
@@ -2737,7 +2691,7 @@ namespace RogueCastle
                 m_levelScreen.ImpactEffectPool.DisplayPlayerImpactEffect(Position);
                 AccelerationYEnabled = true;
                 UnlockControls();
-                int num = (obj as IDealsDamageObj).Damage;
+                var num = (obj as IDealsDamageObj).Damage;
                 num = (int) ((num - num*TotalDamageReduc)*ClassDamageTakenMultiplier);
                 if (num < 0)
                 {
@@ -2748,10 +2702,10 @@ namespace RogueCastle
                     num = 0;
                 }
                 CurrentHealth -= num;
-                EnemyObj enemyObj3 = obj as EnemyObj;
+                var enemyObj3 = obj as EnemyObj;
                 if (enemyObj3 != null && CurrentHealth > 0)
                 {
-                    int num2 = (int) (num*TotalDamageReturn);
+                    var num2 = (int) (num*TotalDamageReturn);
                     if (num2 > 0)
                     {
                         enemyObj3.HitEnemy(num2, enemyObj3.Position, true);
@@ -2759,24 +2713,24 @@ namespace RogueCastle
                 }
                 if (projectileObj != null && projectileObj.CollisionTypeTag == 3)
                 {
-                    EnemyObj enemyObj4 = projectileObj.Source as EnemyObj;
+                    var enemyObj4 = projectileObj.Source as EnemyObj;
                     if (enemyObj4 != null && !enemyObj4.IsKilled && !enemyObj4.IsDemented && CurrentHealth > 0)
                     {
-                        int num3 = (int) (num*TotalDamageReturn);
+                        var num3 = (int) (num*TotalDamageReturn);
                         if (num3 > 0)
                         {
                             enemyObj4.HitEnemy(num3, enemyObj4.Position, true);
                         }
                     }
                 }
-                m_isJumping = false;
-                m_isFlying = false;
+                IsJumping = false;
+                IsFlying = false;
                 DisableGravity = false;
                 if (CanBeKnockedBack)
                 {
                     if (Game.PlayerStats.Traits.X == 13f || Game.PlayerStats.Traits.Y == 13f)
                     {
-                        int num4 = CDGMath.RandomInt(1, 4);
+                        var num4 = CDGMath.RandomInt(1, 4);
                         m_swearBubble.ChangeSprite("SwearBubble" + num4 + "_Sprite");
                         m_swearBubble.Visible = true;
                         m_swearBubbleCounter = 1f;
@@ -2790,7 +2744,7 @@ namespace RogueCastle
                     IsAirAttacking = false;
                     AnimationDelay = m_startingAnimationDelay;
                     CurrentSpeed = 0f;
-                    float num5 = 1f;
+                    var num5 = 1f;
                     if (Game.PlayerStats.Traits.X == 10f || Game.PlayerStats.Traits.Y == 10f)
                     {
                         num5 = 1.85f;
@@ -2825,7 +2779,7 @@ namespace RogueCastle
                     }
                     else
                     {
-                        int num6 = CDGMath.RandomInt(1, 100);
+                        var num6 = CDGMath.RandomInt(1, 100);
                         if (num6 <= SkillSystem.GetSkill(SkillType.Death_Dodge).ModifierAmount*100f)
                         {
                             CurrentHealth = (int) (MaxHealth*0.1f);
@@ -2834,7 +2788,7 @@ namespace RogueCastle
                         }
                         else
                         {
-                            ChallengeBossRoomObj challengeBossRoomObj =
+                            var challengeBossRoomObj =
                                 AttachedLevel.CurrentRoom as ChallengeBossRoomObj;
                             if (challengeBossRoomObj != null)
                             {
@@ -2862,21 +2816,21 @@ namespace RogueCastle
                 }
                 if (Game.PlayerStats.SpecialItem == 2)
                 {
-                    int num7 = (int) (Game.PlayerStats.Gold*0.25f/10f);
+                    var num7 = (int) (Game.PlayerStats.Gold*0.25f/10f);
                     if (num7 > 50)
                     {
                         num7 = 50;
                     }
                     if (num7 > 0 && AttachedLevel.ItemDropManager.AvailableItems > num7)
                     {
-                        float num8 = 1f;
+                        var num8 = 1f;
                         if (Game.PlayerStats.HasArchitectFee)
                         {
                             num8 = 0.6f;
                         }
-                        int num9 = (int) (num7*10*(1f + TotalGoldBonus)*num8);
+                        var num9 = (int) (num7*10*(1f + TotalGoldBonus)*num8);
                         Game.PlayerStats.Gold -= num9;
-                        for (int i = 0; i < num7; i++)
+                        for (var i = 0; i < num7; i++)
                         {
                             m_levelScreen.ItemDropManager.DropItemWide(Position, 1, 10f);
                         }
@@ -2910,7 +2864,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            ChallengeBossRoomObj challengeBossRoomObj = AttachedLevel.CurrentRoom as ChallengeBossRoomObj;
+            var challengeBossRoomObj = AttachedLevel.CurrentRoom as ChallengeBossRoomObj;
             if (challengeBossRoomObj != null)
             {
                 challengeBossRoomObj.LoadPlayerData();
@@ -2986,7 +2940,7 @@ namespace RogueCastle
             IsAirAttacking = false;
             NumSequentialAttacks = 0;
             m_flightCounter = TotalFlightTime;
-            m_isFlying = false;
+            IsFlying = false;
             AccelerationYEnabled = true;
             Position = Vector2.One;
             UpdateEquipmentColours();
@@ -3014,13 +2968,13 @@ namespace RogueCastle
         {
             if (State != 8)
             {
-                for (int i = 0; i < Game.PlayerStats.GetEquippedArray.Length; i++)
+                for (var i = 0; i < Game.PlayerStats.GetEquippedArray.Length; i++)
                 {
                     int num = Game.PlayerStats.GetEquippedArray[i];
                     if (num != -1)
                     {
-                        EquipmentData equipmentData = Game.EquipmentSystem.GetEquipmentData(i, num);
-                        Vector3 partIndices = PlayerPart.GetPartIndices(i);
+                        var equipmentData = Game.EquipmentSystem.GetEquipmentData(i, num);
+                        var partIndices = PlayerPart.GetPartIndices(i);
                         if (partIndices.X != -1f)
                         {
                             GetChildAt((int) partIndices.X).TextureColor = equipmentData.FirstColour;
@@ -3040,7 +2994,7 @@ namespace RogueCastle
                     }
                     else
                     {
-                        Vector3 partIndices2 = PlayerPart.GetPartIndices(i);
+                        var partIndices2 = PlayerPart.GetPartIndices(i);
                         if (partIndices2.X != -1f)
                         {
                             GetChildAt((int) partIndices2.X).TextureColor = Color.White;
@@ -3076,7 +3030,7 @@ namespace RogueCastle
                         {
                             GetChildAt((int) partIndices2.Y).TextureColor = new Color(11, 172, 239);
                         }
-                        Color textureColor = new Color(251, 156, 172);
+                        var textureColor = new Color(251, 156, 172);
                         GetChildAt(13).TextureColor = textureColor;
                     }
                 }
@@ -3085,22 +3039,22 @@ namespace RogueCastle
 
         public void CastSpell(bool activateSecondary, bool megaSpell = false)
         {
-            byte spell = Game.PlayerStats.Spell;
-            Color white = Color.White;
-            ProjectileData projData = SpellEV.GetProjData(spell, this);
-            float damageMultiplier = SpellEV.GetDamageMultiplier(spell);
+            var spell = Game.PlayerStats.Spell;
+            var white = Color.White;
+            var projData = SpellEV.GetProjData(spell, this);
+            var damageMultiplier = SpellEV.GetDamageMultiplier(spell);
             projData.Damage = (int) (TotalMagicDamage*damageMultiplier);
-            int num =
+            var num =
                 (int) (SpellEV.GetManaCost(spell)*(1f - SkillSystem.GetSkill(SkillType.Mana_Cost_Down).ModifierAmount));
             if (CurrentMana >= num)
             {
-                m_spellCastDelay = 0.5f;
+                SpellCastDelay = 0.5f;
                 if (!(AttachedLevel.CurrentRoom is CarnivalShoot1BonusRoom) &&
                     !(AttachedLevel.CurrentRoom is CarnivalShoot2BonusRoom) &&
                     (Game.PlayerStats.Traits.X == 31f || Game.PlayerStats.Traits.Y == 31f) &&
                     Game.PlayerStats.Class != 16 && Game.PlayerStats.Class != 17)
                 {
-                    byte[] spellList = ClassType.GetSpellList(Game.PlayerStats.Class);
+                    var spellList = ClassType.GetSpellList(Game.PlayerStats.Class);
                     do
                     {
                         Game.PlayerStats.Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
@@ -3108,8 +3062,8 @@ namespace RogueCastle
                     AttachedLevel.UpdatePlayerSpellIcon();
                 }
             }
-            float xValue = SpellEV.GetXValue(spell);
-            float yValue = SpellEV.GetYValue(spell);
+            var xValue = SpellEV.GetXValue(spell);
+            var yValue = SpellEV.GetYValue(spell);
             if (megaSpell)
             {
                 num = (int) (num*2f);
@@ -3120,7 +3074,7 @@ namespace RogueCastle
             {
                 SoundManager.PlaySound("Error_Spell");
             }
-            else if (spell != 6 && spell != 5 && !m_damageShieldCast && num > 0)
+            else if (spell != 6 && spell != 5 && !CastingDamageShield && num > 0)
             {
                 m_levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue, new Vector2(X, Bounds.Top));
             }
@@ -3128,7 +3082,7 @@ namespace RogueCastle
             {
                 projData.SourceAnchor = new Vector2(projData.SourceAnchor.X*-1f, projData.SourceAnchor.Y);
             }
-            byte b = spell;
+            var b = spell;
             switch (b)
             {
                 case 1:
@@ -3167,7 +3121,7 @@ namespace RogueCastle
                             SoundManager.PlaySound("Enemy_WallTurret_Fire_01", "Enemy_WallTurret_Fire_02",
                                 "Enemy_WallTurret_Fire_03", "Enemy_WallTurret_Fire_04");
                         }
-                        ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                        var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projData);
                         projectileObj.Spell = spell;
                         projectileObj.TextureColor = white;
                         projectileObj.AltY = yValue;
@@ -3247,8 +3201,8 @@ namespace RogueCastle
                     break;
                 case 5:
                 {
-                    int num2 = AttachedLevel.CurrentRoom.ActiveEnemies;
-                    int num3 = 9;
+                    var num2 = AttachedLevel.CurrentRoom.ActiveEnemies;
+                    var num3 = 9;
                     if (num2 > num3)
                     {
                         num2 = num3;
@@ -3256,15 +3210,15 @@ namespace RogueCastle
                     if (CurrentMana >= num && !activateSecondary && num2 > 0)
                     {
                         SoundManager.PlaySound("Cast_Crowstorm");
-                        int num4 = 200;
-                        float num5 = 360f/num2;
-                        float num6 = 0f;
-                        int num7 = 0;
-                        foreach (EnemyObj current in AttachedLevel.CurrentRoom.EnemyList)
+                        var num4 = 200;
+                        var num5 = 360f/num2;
+                        var num6 = 0f;
+                        var num7 = 0;
+                        foreach (var current in AttachedLevel.CurrentRoom.EnemyList)
                         {
                             if (!current.NonKillable && !current.IsKilled)
                             {
-                                ProjectileObj projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                                var projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projData);
                                 projectileObj2.LifeSpan = 10f;
                                 projectileObj2.AltX = 0.25f;
                                 projectileObj2.AltY = 0.05f;
@@ -3285,11 +3239,11 @@ namespace RogueCastle
                                 break;
                             }
                         }
-                        foreach (EnemyObj current2 in AttachedLevel.CurrentRoom.TempEnemyList)
+                        foreach (var current2 in AttachedLevel.CurrentRoom.TempEnemyList)
                         {
                             if (!current2.NonKillable && !current2.IsKilled)
                             {
-                                ProjectileObj projectileObj3 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                                var projectileObj3 = m_levelScreen.ProjectileManager.FireProjectile(projData);
                                 projectileObj3.LifeSpan = 99f;
                                 projectileObj3.AltX = 0.25f;
                                 projectileObj3.AltY = 0.05f;
@@ -3327,7 +3281,7 @@ namespace RogueCastle
                         m_translocatorSprite.Flip = Flip;
                         m_translocatorSprite.TextureColor = Color.Black;
                         m_translocatorSprite.Scale = Vector2.Zero;
-                        for (int i = 0; i < NumChildren; i++)
+                        for (var i = 0; i < NumChildren; i++)
                         {
                             (m_translocatorSprite.GetChildAt(i) as SpriteObj).ChangeSprite(
                                 (_objectList[i] as SpriteObj).SpriteName);
@@ -3357,7 +3311,7 @@ namespace RogueCastle
                     if (CurrentMana >= num && !activateSecondary)
                     {
                         SoundManager.PlaySound("Cast_Boomerang");
-                        ProjectileObj projectileObj4 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                        var projectileObj4 = m_levelScreen.ProjectileManager.FireProjectile(projData);
                         projectileObj4.Spell = spell;
                         projectileObj4.IgnoreBoundsCheck = true;
                         projectileObj4.TextureColor = white;
@@ -3377,24 +3331,24 @@ namespace RogueCastle
                     }
                     break;
                 case 11:
-                    if (m_damageShieldCast)
+                    if (CastingDamageShield)
                     {
-                        m_damageShieldCast = false;
+                        CastingDamageShield = false;
                         m_megaDamageShieldCast = false;
                     }
                     else if (CurrentMana >= num && !activateSecondary)
                     {
-                        m_damageShieldCast = true;
+                        CastingDamageShield = true;
                         if (megaSpell)
                         {
                             m_megaDamageShieldCast = true;
                         }
                         SoundManager.PlaySound("Cast_FireShield");
-                        int num8 = 200;
-                        for (int j = 0; j < (int) yValue; j++)
+                        var num8 = 200;
+                        for (var j = 0; j < (int) yValue; j++)
                         {
-                            float altX = 360f/yValue*j;
-                            ProjectileObj projectileObj5 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                            var altX = 360f/yValue*j;
+                            var projectileObj5 = m_levelScreen.ProjectileManager.FireProjectile(projData);
                             projectileObj5.LifeSpan = xValue;
                             projectileObj5.AltX = altX;
                             projectileObj5.AltY = num8;
@@ -3412,9 +3366,9 @@ namespace RogueCastle
                     if (CurrentMana >= num && !activateSecondary)
                     {
                         SoundManager.PlaySound("Cast_Dagger");
-                        for (int k = 0; k < 4; k++)
+                        for (var k = 0; k < 4; k++)
                         {
-                            ProjectileObj projectileObj6 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                            var projectileObj6 = m_levelScreen.ProjectileManager.FireProjectile(projData);
                             projectileObj6.Orientation = MathHelper.ToRadians(projData.Angle.X);
                             projectileObj6.Spell = spell;
                             projectileObj6.ShowIcon = true;
@@ -3451,7 +3405,7 @@ namespace RogueCastle
                     {
                         if (CurrentMana >= num && !activateSecondary)
                         {
-                            ProjectileObj projectileObj7 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                            var projectileObj7 = m_levelScreen.ProjectileManager.FireProjectile(projData);
                             projectileObj7.AltX = 1f;
                             projectileObj7.AltY = 0.5f;
                             projectileObj7.Opacity = 0f;
@@ -3492,9 +3446,9 @@ namespace RogueCastle
         {
             if (MaxHealth > 1)
             {
-                int num = (int) ((MaxHealth - Game.PlayerStats.LichHealth)*0.5f);
-                int num2 = (int) (Game.PlayerStats.LichHealth*0.5f);
-                int num3 =
+                var num = (int) ((MaxHealth - Game.PlayerStats.LichHealth)*0.5f);
+                var num2 = (int) (Game.PlayerStats.LichHealth*0.5f);
+                var num3 =
                     (int)
                         ((BaseMana + GetEquipmentMana() + Game.PlayerStats.BonusMana*5 +
                           SkillSystem.GetSkill(SkillType.Mana_Up).ModifierAmount +
@@ -3549,7 +3503,7 @@ namespace RogueCastle
             m_wizardSpellList[0] = (byte) Game.PlayerStats.WizardSpellList.X;
             m_wizardSpellList[1] = (byte) Game.PlayerStats.WizardSpellList.Y;
             m_wizardSpellList[2] = (byte) Game.PlayerStats.WizardSpellList.Z;
-            int num = m_wizardSpellList.IndexOf(Game.PlayerStats.Spell);
+            var num = m_wizardSpellList.IndexOf(Game.PlayerStats.Spell);
             num++;
             if (num >= m_wizardSpellList.Count)
             {
@@ -3557,9 +3511,9 @@ namespace RogueCastle
             }
             Game.PlayerStats.Spell = m_wizardSpellList[num];
             m_levelScreen.UpdatePlayerSpellIcon();
-            if (m_damageShieldCast)
+            if (CastingDamageShield)
             {
-                m_damageShieldCast = false;
+                CastingDamageShield = false;
                 m_megaDamageShieldCast = false;
             }
             if (m_timeStopCast)
@@ -3576,9 +3530,9 @@ namespace RogueCastle
                 CurrentMana -= 5f;
                 m_ninjaTeleportDelay = 0.5f;
                 m_levelScreen.ImpactEffectPool.NinjaDisappearEffect(this);
-                int num = 350;
-                int num2 = 2147483647;
-                TerrainObj terrainObj = CalculateClosestWall(out num2);
+                var num = 350;
+                var num2 = 2147483647;
+                var terrainObj = CalculateClosestWall(out num2);
                 if (terrainObj != null)
                 {
                     if (num2 < num)
@@ -3639,16 +3593,16 @@ namespace RogueCastle
 
         public TerrainObj CalculateClosestWall(out int dist)
         {
-            int num = 2147483647;
+            var num = 2147483647;
             TerrainObj result = null;
-            Vector2 value = Vector2.Zero;
-            RoomObj currentRoom = m_levelScreen.CurrentRoom;
-            foreach (TerrainObj current in currentRoom.TerrainObjList)
+            var value = Vector2.Zero;
+            var currentRoom = m_levelScreen.CurrentRoom;
+            foreach (var current in currentRoom.TerrainObjList)
             {
                 if (current.CollidesBottom || current.CollidesLeft || current.CollidesRight)
                 {
                     value = Vector2.Zero;
-                    float num2 = 3.40282347E+38f;
+                    var num2 = 3.40282347E+38f;
                     if (Flip == SpriteEffects.None)
                     {
                         if (current.X > X && current.Bounds.Top + 5 < TerrainBounds.Bottom &&
@@ -3742,7 +3696,7 @@ namespace RogueCastle
             if (CurrentMana >= 20f)
             {
                 CurrentMana -= 20f;
-                ProjectileData data = new ProjectileData(this)
+                var data = new ProjectileData(this)
                 {
                     SpriteName = "SpellShout_Sprite",
                     IsWeighted = false,
@@ -3754,7 +3708,7 @@ namespace RogueCastle
                     Damage = 0,
                     Scale = Vector2.One
                 };
-                ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.Opacity = 0f;
                 projectileObj.CollisionTypeTag = 2;
                 projectileObj.Spell = 20;
@@ -3770,7 +3724,7 @@ namespace RogueCastle
 
         private void CastCloseShield()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "SpellClose_Sprite",
                 Speed = new Vector2(0f, 0f),
@@ -3787,7 +3741,7 @@ namespace RogueCastle
             projectileData.Damage = (int) (TotalMagicDamage*1f);
             SoundManager.PlaySound("Cast_GiantSword");
             m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 90f, true);
-            ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileObj.TextureColor = Color.CadetBlue;
             projectileData.Dispose();
         }
@@ -3806,7 +3760,7 @@ namespace RogueCastle
         public void CastAxe()
         {
             m_axeProjData.AngleOffset = CDGMath.RandomInt(-70, 70);
-            ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
+            var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
             projectileObj.TextureColor = Color.CadetBlue;
             SoundManager.PlaySound("Cast_Axe");
             m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 45f, true);
@@ -3829,7 +3783,7 @@ namespace RogueCastle
             {
                 m_rapidDaggerProjData.AngleOffset = CDGMath.RandomInt(-8, 8);
             }
-            ProjectileObj projectileObj = m_levelScreen.ProjectileManager.FireProjectile(m_rapidDaggerProjData);
+            var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(m_rapidDaggerProjData);
             projectileObj.TextureColor = Color.CadetBlue;
             SoundManager.PlaySound("Cast_Dagger");
             m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 0f, true);
@@ -3841,9 +3795,9 @@ namespace RogueCastle
             {
                 DeactivateTanooki();
             }
-            if (m_damageShieldCast)
+            if (CastingDamageShield)
             {
-                m_damageShieldCast = false;
+                CastingDamageShield = false;
                 m_megaDamageShieldCast = false;
             }
             if (m_timeStopCast)
@@ -3855,13 +3809,13 @@ namespace RogueCastle
             {
                 DisableAssassinAbility();
             }
-            m_lightOn = false;
+            LightOn = false;
             m_translocatorSprite.Visible = false;
             if (State == 9)
             {
                 State = 2;
                 DisableGravity = false;
-                m_isFlying = false;
+                IsFlying = false;
             }
         }
 
@@ -3902,7 +3856,7 @@ namespace RogueCastle
                 m_lastTouchedTeleporter = null;
                 m_flightDurationText.Dispose();
                 m_flightDurationText = null;
-                m_game = null;
+                Game = null;
                 m_translocatorSprite.Dispose();
                 m_translocatorSprite = null;
                 m_swearBubble.Dispose();
@@ -3972,8 +3926,8 @@ namespace RogueCastle
 
         public void FadeSword()
         {
-            SpriteObj spriteObj = _objectList[10] as SpriteObj;
-            SpriteObj spriteObj2 = _objectList[11] as SpriteObj;
+            var spriteObj = _objectList[10] as SpriteObj;
+            var spriteObj2 = _objectList[11] as SpriteObj;
             Tween.StopAllContaining(spriteObj, false);
             Tween.StopAllContaining(spriteObj2, false);
             spriteObj.Opacity = 0f;
@@ -4013,12 +3967,12 @@ namespace RogueCastle
 
         public int GetEquipmentDamage()
         {
-            int num = 0;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
                     num += Game.EquipmentSystem.GetEquipmentData(num2, b).BonusDamage;
@@ -4030,12 +3984,12 @@ namespace RogueCastle
 
         public int GetEquipmentMana()
         {
-            int num = 0;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
                     num += Game.EquipmentSystem.GetEquipmentData(num2, b).BonusMana;
@@ -4047,12 +4001,12 @@ namespace RogueCastle
 
         public int GetEquipmentHealth()
         {
-            int num = 0;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
                     num += Game.EquipmentSystem.GetEquipmentData(num2, b).BonusHealth;
@@ -4064,12 +4018,12 @@ namespace RogueCastle
 
         public int GetEquipmentArmor()
         {
-            int num = 0;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
                     num += Game.EquipmentSystem.GetEquipmentData(num2, b).BonusArmor;
@@ -4081,12 +4035,12 @@ namespace RogueCastle
 
         public int GetEquipmentWeight()
         {
-            int num = 0;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
                     num += Game.EquipmentSystem.GetEquipmentData(num2, b).Weight;
@@ -4098,12 +4052,12 @@ namespace RogueCastle
 
         public int GetEquipmentMagicDamage()
         {
-            int num = 0;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
                     num += Game.EquipmentSystem.GetEquipmentData(num2, b).BonusMagic;
@@ -4115,19 +4069,19 @@ namespace RogueCastle
 
         public float GetEquipmentSecondaryAttrib(int secondaryAttribType)
         {
-            float num = 0f;
-            int num2 = 0;
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            for (int i = 0; i < getEquippedArray.Length; i++)
+            var num = 0f;
+            var num2 = 0;
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            for (var i = 0; i < getEquippedArray.Length; i++)
             {
-                sbyte b = getEquippedArray[i];
+                var b = getEquippedArray[i];
                 if (b > -1)
                 {
-                    EquipmentData equipmentData = Game.EquipmentSystem.GetEquipmentData(num2, b);
-                    Vector2[] secondaryAttribute = equipmentData.SecondaryAttribute;
-                    for (int j = 0; j < secondaryAttribute.Length; j++)
+                    var equipmentData = Game.EquipmentSystem.GetEquipmentData(num2, b);
+                    var secondaryAttribute = equipmentData.SecondaryAttribute;
+                    for (var j = 0; j < secondaryAttribute.Length; j++)
                     {
-                        Vector2 vector = secondaryAttribute[j];
+                        var vector = secondaryAttribute[j];
                         if ((int) vector.X == secondaryAttribType)
                         {
                             num += vector.Y;

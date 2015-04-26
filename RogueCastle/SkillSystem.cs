@@ -48,235 +48,17 @@ namespace RogueCastle
         private const int Trait_LeftTree2 = 29;
         private const int Trait_RightTree1 = 30;
         private const int TOTAL = 31;
-        private static SkillType StartingTrait = SkillType.Smithy;
+        private static readonly SkillType StartingTrait = SkillType.Smithy;
         private static SkillObj m_blankTrait;
-        private static SkillType[,] m_skillTypeArray;
-        private static Vector2[,] m_skillPositionArray;
-        private static int[,] m_manorPieceArray;
+        private static readonly SkillType[,] m_skillTypeArray;
+        private static readonly Vector2[,] m_skillPositionArray;
+        private static readonly int[,] m_manorPieceArray;
         private static SkillLinker[,] m_skillLinkerArray;
-        private static List<SkillObj> m_skillArray;
-        private static bool m_iconsVisible;
-
-        public static List<SkillObj> SkillArray
-        {
-            get { return m_skillArray; }
-        }
-
-        public static bool IconsVisible
-        {
-            get { return m_iconsVisible; }
-        }
-
-        public static void Initialize()
-        {
-            m_blankTrait = new SkillObj("Icon_Sword_Sprite");
-            if (m_skillTypeArray.Length != m_skillPositionArray.Length)
-            {
-                throw new Exception(
-                    "Cannot create Trait System. The type array is not the same length as the position array.");
-            }
-            m_skillArray = new List<SkillObj>();
-            for (int i = 2; i < 34; i++)
-            {
-                SkillObj skillObj = SkillBuilder.BuildSkill((SkillType) i);
-                skillObj.Position = GetSkillPosition(skillObj);
-                m_skillArray.Add(skillObj);
-            }
-            GetSkill(StartingTrait).Visible = true;
-            m_skillLinkerArray = new SkillLinker[10, 10];
-            for (int j = 0; j < 10; j++)
-            {
-                for (int k = 0; k < 10; k++)
-                {
-                    m_skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
-                }
-            }
-        }
-
-        public static void LevelUpTrait(SkillObj trait, bool giveGoldBonus)
-        {
-            Game.PlayerStats.CurrentLevel++;
-            trait.CurrentLevel++;
-            UpdateTraitSprite(trait);
-            if (trait.TraitType == SkillType.Gold_Flat_Bonus && giveGoldBonus)
-            {
-                Game.PlayerStats.Gold += (int) trait.ModifierAmount;
-            }
-            bool flag = true;
-            foreach (SkillObj current in SkillArray)
-            {
-                if (current.CurrentLevel < 1)
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag)
-            {
-                GameUtil.UnlockAchievement("FEAR_OF_DECISIONS");
-            }
-            if (Game.PlayerStats.CurrentLevel >= 50)
-            {
-                GameUtil.UnlockAchievement("FEAR_OF_WEALTH");
-            }
-        }
-
-        public static void ResetAllTraits()
-        {
-            foreach (SkillObj current in m_skillArray)
-            {
-                current.CurrentLevel = 0;
-                current.Visible = false;
-            }
-            GetSkill(StartingTrait).Visible = true;
-            Game.PlayerStats.CurrentLevel = 0;
-        }
-
-        public static void UpdateAllTraitSprites()
-        {
-            foreach (SkillObj current in m_skillArray)
-            {
-                UpdateTraitSprite(current);
-            }
-        }
-
-        public static void UpdateTraitSprite(SkillObj trait)
-        {
-            string text = trait.IconName;
-            if (trait.CurrentLevel > 0 && trait.CurrentLevel < trait.MaxLevel)
-            {
-                text = text.Replace("Locked", "");
-            }
-            else if (trait.CurrentLevel > 0 && trait.CurrentLevel >= trait.MaxLevel)
-            {
-                text = text.Replace("Locked", "Max");
-            }
-            trait.ChangeSprite(text);
-        }
-
-        public static List<SkillObj> GetAllConnectingTraits(SkillObj trait)
-        {
-            int typeArrayColumns = GetTypeArrayColumns();
-            int typeArrayRows = GetTypeArrayRows();
-            Vector2 traitTypeIndex = GetTraitTypeIndex(trait);
-            SkillObj[] array = new SkillObj[4];
-            if (traitTypeIndex.X + 1f < typeArrayColumns)
-            {
-                array[0] = GetSkill((int) traitTypeIndex.X + 1, (int) traitTypeIndex.Y);
-            }
-            if (traitTypeIndex.X - 1f >= 0f)
-            {
-                array[1] = GetSkill((int) traitTypeIndex.X - 1, (int) traitTypeIndex.Y);
-            }
-            if (traitTypeIndex.Y - 1f >= 0f)
-            {
-                array[2] = GetSkill((int) traitTypeIndex.X, (int) traitTypeIndex.Y - 1);
-            }
-            if (traitTypeIndex.Y + 1f < typeArrayRows)
-            {
-                array[3] = GetSkill((int) traitTypeIndex.X, (int) traitTypeIndex.Y + 1);
-            }
-            List<SkillObj> list = new List<SkillObj>();
-            SkillObj[] array2 = array;
-            for (int i = 0; i < array2.Length; i++)
-            {
-                SkillObj skillObj = array2[i];
-                if (skillObj != null)
-                {
-                    list.Add(skillObj);
-                }
-            }
-            return list;
-        }
-
-        public static SkillObj GetSkill(SkillType skillType)
-        {
-            foreach (SkillObj current in m_skillArray)
-            {
-                if (current.TraitType == skillType)
-                {
-                    return current;
-                }
-            }
-            return m_blankTrait;
-        }
-
-        public static SkillObj GetSkill(int indexX, int indexY)
-        {
-            return GetSkill(m_skillTypeArray[indexY, indexX]);
-        }
-
-        public static Vector2 GetTraitTypeIndex(SkillObj trait)
-        {
-            Vector2 result = new Vector2(-1f, -1f);
-            SkillType traitType = trait.TraitType;
-            for (int i = 0; i < m_skillTypeArray.GetLength(1); i++)
-            {
-                for (int j = 0; j < m_skillTypeArray.GetLength(0); j++)
-                {
-                    if (m_skillTypeArray[j, i] == traitType)
-                    {
-                        result = new Vector2(i, j);
-                    }
-                }
-            }
-            return result;
-        }
-
-        public static Vector2 GetSkillPosition(SkillObj skill)
-        {
-            Vector2 traitTypeIndex = GetTraitTypeIndex(skill);
-            return m_skillPositionArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
-        }
-
-        public static int GetTypeArrayRows()
-        {
-            return m_skillTypeArray.GetLength(0);
-        }
-
-        public static int GetTypeArrayColumns()
-        {
-            return m_skillTypeArray.GetLength(1);
-        }
-
-        public static SkillObj[] GetSkillArray()
-        {
-            return m_skillArray.ToArray();
-        }
-
-        public static int GetManorPiece(SkillObj trait)
-        {
-            Vector2 traitTypeIndex = GetTraitTypeIndex(trait);
-            return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
-        }
-
-        public static SkillLinker GetSkillLink(int x, int y)
-        {
-            return m_skillLinkerArray[x, y];
-        }
-
-        public static void HideAllIcons()
-        {
-            foreach (SkillObj current in m_skillArray)
-            {
-                current.Opacity = 0f;
-            }
-            m_iconsVisible = false;
-        }
-
-        public static void ShowAllIcons()
-        {
-            foreach (SkillObj current in m_skillArray)
-            {
-                current.Opacity = 1f;
-            }
-            m_iconsVisible = true;
-        }
 
         static SkillSystem()
         {
             // Note: this type is marked as 'beforefieldinit'.
-            SkillType[,] array = new SkillType[10, 10];
+            var array = new SkillType[10, 10];
             array[0, 8] = SkillType.Randomize_Children;
             array[1, 7] = SkillType.SuperSecret;
             array[1, 8] = SkillType.Mana_Cost_Down;
@@ -310,7 +92,7 @@ namespace RogueCastle
             array[9, 5] = SkillType.Smithy;
             array[9, 6] = SkillType.Mana_Up;
             m_skillTypeArray = array;
-            Vector2[,] array2 = new Vector2[10, 10];
+            var array2 = new Vector2[10, 10];
             array2[0, 0] = new Vector2(0f, 0f);
             array2[0, 1] = new Vector2(0f, 0f);
             array2[0, 2] = new Vector2(0f, 0f);
@@ -544,7 +326,216 @@ namespace RogueCastle
                     -1
                 }
             };
-            m_iconsVisible = true;
+            IconsVisible = true;
+        }
+
+        public static List<SkillObj> SkillArray { get; private set; }
+        public static bool IconsVisible { get; private set; }
+
+        public static void Initialize()
+        {
+            m_blankTrait = new SkillObj("Icon_Sword_Sprite");
+            if (m_skillTypeArray.Length != m_skillPositionArray.Length)
+            {
+                throw new Exception(
+                    "Cannot create Trait System. The type array is not the same length as the position array.");
+            }
+            SkillArray = new List<SkillObj>();
+            for (var i = 2; i < 34; i++)
+            {
+                var skillObj = SkillBuilder.BuildSkill((SkillType) i);
+                skillObj.Position = GetSkillPosition(skillObj);
+                SkillArray.Add(skillObj);
+            }
+            GetSkill(StartingTrait).Visible = true;
+            m_skillLinkerArray = new SkillLinker[10, 10];
+            for (var j = 0; j < 10; j++)
+            {
+                for (var k = 0; k < 10; k++)
+                {
+                    m_skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
+                }
+            }
+        }
+
+        public static void LevelUpTrait(SkillObj trait, bool giveGoldBonus)
+        {
+            Game.PlayerStats.CurrentLevel++;
+            trait.CurrentLevel++;
+            UpdateTraitSprite(trait);
+            if (trait.TraitType == SkillType.Gold_Flat_Bonus && giveGoldBonus)
+            {
+                Game.PlayerStats.Gold += (int) trait.ModifierAmount;
+            }
+            var flag = true;
+            foreach (var current in SkillArray)
+            {
+                if (current.CurrentLevel < 1)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                GameUtil.UnlockAchievement("FEAR_OF_DECISIONS");
+            }
+            if (Game.PlayerStats.CurrentLevel >= 50)
+            {
+                GameUtil.UnlockAchievement("FEAR_OF_WEALTH");
+            }
+        }
+
+        public static void ResetAllTraits()
+        {
+            foreach (var current in SkillArray)
+            {
+                current.CurrentLevel = 0;
+                current.Visible = false;
+            }
+            GetSkill(StartingTrait).Visible = true;
+            Game.PlayerStats.CurrentLevel = 0;
+        }
+
+        public static void UpdateAllTraitSprites()
+        {
+            foreach (var current in SkillArray)
+            {
+                UpdateTraitSprite(current);
+            }
+        }
+
+        public static void UpdateTraitSprite(SkillObj trait)
+        {
+            var text = trait.IconName;
+            if (trait.CurrentLevel > 0 && trait.CurrentLevel < trait.MaxLevel)
+            {
+                text = text.Replace("Locked", "");
+            }
+            else if (trait.CurrentLevel > 0 && trait.CurrentLevel >= trait.MaxLevel)
+            {
+                text = text.Replace("Locked", "Max");
+            }
+            trait.ChangeSprite(text);
+        }
+
+        public static List<SkillObj> GetAllConnectingTraits(SkillObj trait)
+        {
+            var typeArrayColumns = GetTypeArrayColumns();
+            var typeArrayRows = GetTypeArrayRows();
+            var traitTypeIndex = GetTraitTypeIndex(trait);
+            var array = new SkillObj[4];
+            if (traitTypeIndex.X + 1f < typeArrayColumns)
+            {
+                array[0] = GetSkill((int) traitTypeIndex.X + 1, (int) traitTypeIndex.Y);
+            }
+            if (traitTypeIndex.X - 1f >= 0f)
+            {
+                array[1] = GetSkill((int) traitTypeIndex.X - 1, (int) traitTypeIndex.Y);
+            }
+            if (traitTypeIndex.Y - 1f >= 0f)
+            {
+                array[2] = GetSkill((int) traitTypeIndex.X, (int) traitTypeIndex.Y - 1);
+            }
+            if (traitTypeIndex.Y + 1f < typeArrayRows)
+            {
+                array[3] = GetSkill((int) traitTypeIndex.X, (int) traitTypeIndex.Y + 1);
+            }
+            var list = new List<SkillObj>();
+            var array2 = array;
+            for (var i = 0; i < array2.Length; i++)
+            {
+                var skillObj = array2[i];
+                if (skillObj != null)
+                {
+                    list.Add(skillObj);
+                }
+            }
+            return list;
+        }
+
+        public static SkillObj GetSkill(SkillType skillType)
+        {
+            foreach (var current in SkillArray)
+            {
+                if (current.TraitType == skillType)
+                {
+                    return current;
+                }
+            }
+            return m_blankTrait;
+        }
+
+        public static SkillObj GetSkill(int indexX, int indexY)
+        {
+            return GetSkill(m_skillTypeArray[indexY, indexX]);
+        }
+
+        public static Vector2 GetTraitTypeIndex(SkillObj trait)
+        {
+            var result = new Vector2(-1f, -1f);
+            var traitType = trait.TraitType;
+            for (var i = 0; i < m_skillTypeArray.GetLength(1); i++)
+            {
+                for (var j = 0; j < m_skillTypeArray.GetLength(0); j++)
+                {
+                    if (m_skillTypeArray[j, i] == traitType)
+                    {
+                        result = new Vector2(i, j);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static Vector2 GetSkillPosition(SkillObj skill)
+        {
+            var traitTypeIndex = GetTraitTypeIndex(skill);
+            return m_skillPositionArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+        }
+
+        public static int GetTypeArrayRows()
+        {
+            return m_skillTypeArray.GetLength(0);
+        }
+
+        public static int GetTypeArrayColumns()
+        {
+            return m_skillTypeArray.GetLength(1);
+        }
+
+        public static SkillObj[] GetSkillArray()
+        {
+            return SkillArray.ToArray();
+        }
+
+        public static int GetManorPiece(SkillObj trait)
+        {
+            var traitTypeIndex = GetTraitTypeIndex(trait);
+            return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+        }
+
+        public static SkillLinker GetSkillLink(int x, int y)
+        {
+            return m_skillLinkerArray[x, y];
+        }
+
+        public static void HideAllIcons()
+        {
+            foreach (var current in SkillArray)
+            {
+                current.Opacity = 0f;
+            }
+            IconsVisible = false;
+        }
+
+        public static void ShowAllIcons()
+        {
+            foreach (var current in SkillArray)
+            {
+                current.Opacity = 1f;
+            }
+            IconsVisible = true;
         }
     }
 }

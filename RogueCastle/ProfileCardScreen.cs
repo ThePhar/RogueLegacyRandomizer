@@ -21,35 +21,34 @@ namespace RogueCastle
 {
     public class ProfileCardScreen : Screen
     {
-        private ObjContainer m_frontCard;
-        private ObjContainer m_backCard;
-        private PlayerHUDObj m_playerHUD;
-        private TextObj m_playerName;
-        private TextObj m_money;
-        private TextObj m_levelClass;
-        private SpriteObj m_playerBG;
-        private TextObj m_frontTrait1;
-        private TextObj m_frontTrait2;
         private TextObj m_author;
-        private TextObj m_playerStats;
-        private SpriteObj m_spellIcon;
+        private ObjContainer m_backCard;
+        private KeyIconTextObj m_cancelText;
         private TextObj m_classDescription;
         private List<TextObj> m_dataList1;
         private List<TextObj> m_dataList2;
-        private TextObj m_equipmentTitle;
-        private TextObj m_runesTitle;
         private List<TextObj> m_equipmentList;
-        private List<TextObj> m_runeBackTitleList;
-        private List<TextObj> m_runeBackDescriptionList;
-        private ObjContainer m_playerSprite;
-        private SpriteObj m_tombStoneSprite;
-        private bool m_playerInAir;
-        private Color m_skinColour1 = new Color(231, 175, 131, 255);
-        private Color m_skinColour2 = new Color(199, 109, 112, 255);
+        private TextObj m_equipmentTitle;
+        private ObjContainer m_frontCard;
+        private TextObj m_frontTrait1;
+        private TextObj m_frontTrait2;
+        private TextObj m_levelClass;
         private Color m_lichColour1 = new Color(255, 255, 255, 255);
         private Color m_lichColour2 = new Color(198, 198, 198, 255);
-        private KeyIconTextObj m_cancelText;
-        public float BackBufferOpacity { get; set; }
+        private TextObj m_money;
+        private SpriteObj m_playerBG;
+        private PlayerHUDObj m_playerHUD;
+        private bool m_playerInAir;
+        private TextObj m_playerName;
+        private ObjContainer m_playerSprite;
+        private TextObj m_playerStats;
+        private List<TextObj> m_runeBackDescriptionList;
+        private List<TextObj> m_runeBackTitleList;
+        private TextObj m_runesTitle;
+        private Color m_skinColour1 = new Color(231, 175, 131, 255);
+        private Color m_skinColour2 = new Color(199, 109, 112, 255);
+        private SpriteObj m_spellIcon;
+        private SpriteObj m_tombStoneSprite;
 
         public ProfileCardScreen()
         {
@@ -57,6 +56,8 @@ namespace RogueCastle
             m_runeBackTitleList = new List<TextObj>();
             m_runeBackDescriptionList = new List<TextObj>();
         }
+
+        public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
@@ -97,7 +98,7 @@ namespace RogueCastle
 
         private void LoadFrontCard()
         {
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.Text = "";
             textObj.FontSize = 10f;
             textObj.ForceDraw = true;
@@ -154,46 +155,46 @@ namespace RogueCastle
 
         private void LoadBackCard()
         {
-            TextObj textObj = new TextObj(Game.JunicodeFont);
+            var textObj = new TextObj(Game.JunicodeFont);
             textObj.Text = "";
             textObj.FontSize = 9f;
             textObj.ForceDraw = true;
             textObj.TextureColor = Color.Black;
             m_dataList1 = new List<TextObj>();
             m_dataList2 = new List<TextObj>();
-            string[] array = new[]
+            string[] array =
             {
                 "Health",
                 "Mana",
                 "Armor",
                 "Weight"
             };
-            string[] array2 = new[]
+            string[] array2 =
             {
                 "Strength",
                 "Intelligence",
                 "Crit. Chance",
                 "Crit. Damage"
             };
-            int num = 90;
-            for (int i = 0; i < array.Length; i++)
+            var num = 90;
+            for (var i = 0; i < array.Length; i++)
             {
-                TextObj textObj2 = textObj.Clone() as TextObj;
+                var textObj2 = textObj.Clone() as TextObj;
                 textObj2.Align = Types.TextAlign.Right;
                 textObj2.Text = array[i];
                 textObj2.Position = new Vector2(120f, num);
                 m_backCard.AddChild(textObj2);
-                TextObj textObj3 = textObj.Clone() as TextObj;
+                var textObj3 = textObj.Clone() as TextObj;
                 textObj3.Text = "0";
                 textObj3.Position = new Vector2(textObj2.X + 20f, num);
                 m_dataList1.Add(textObj3);
                 m_backCard.AddChild(textObj3);
-                TextObj textObj4 = textObj.Clone() as TextObj;
+                var textObj4 = textObj.Clone() as TextObj;
                 textObj4.Align = Types.TextAlign.Right;
                 textObj4.Text = array2[i];
                 textObj4.Position = new Vector2(330f, num);
                 m_backCard.AddChild(textObj4);
-                TextObj textObj5 = textObj.Clone() as TextObj;
+                var textObj5 = textObj.Clone() as TextObj;
                 textObj5.Text = "0";
                 textObj5.Position = new Vector2(textObj4.X + 20f, num);
                 m_dataList2.Add(textObj5);
@@ -210,46 +211,46 @@ namespace RogueCastle
             m_runesTitle.Text = "Enchantments:";
             m_runesTitle.Position = new Vector2(m_equipmentTitle.X, 330f);
             m_backCard.AddChild(m_runesTitle);
-            for (int j = 0; j < Game.PlayerStats.GetEquippedArray.Length; j++)
+            for (var j = 0; j < Game.PlayerStats.GetEquippedArray.Length; j++)
             {
-                TextObj textObj6 = textObj.Clone() as TextObj;
+                var textObj6 = textObj.Clone() as TextObj;
                 textObj6.Text = "test";
                 textObj6.Position = new Vector2(80f, m_equipmentTitle.Y + 50f);
                 m_equipmentList.Add(textObj6);
                 m_backCard.AddChild(textObj6);
             }
-            for (int k = 0; k < 10; k++)
+            for (var k = 0; k < 10; k++)
             {
-                TextObj textObj7 = textObj.Clone() as TextObj;
+                var textObj7 = textObj.Clone() as TextObj;
                 textObj7.X = 60f;
                 textObj7.Text = EquipmentAbilityType.ToString(k);
                 textObj7.FontSize = 7f;
                 m_runeBackTitleList.Add(textObj7);
                 m_backCard.AddChild(textObj7);
-                TextObj textObj8 = textObj.Clone() as TextObj;
+                var textObj8 = textObj.Clone() as TextObj;
                 textObj8.X = textObj7.Bounds.Right + 10;
                 textObj8.FontSize = 7f;
                 m_runeBackDescriptionList.Add(textObj8);
                 m_backCard.AddChild(textObj8);
             }
-            TextObj textObj9 = textObj.Clone() as TextObj;
+            var textObj9 = textObj.Clone() as TextObj;
             textObj9.X = 60f;
             textObj9.Text = EquipmentAbilityType.ToString(20);
             textObj9.FontSize = 7f;
             m_runeBackTitleList.Add(textObj9);
             m_backCard.AddChild(textObj9);
-            TextObj textObj10 = textObj.Clone() as TextObj;
+            var textObj10 = textObj.Clone() as TextObj;
             textObj10.X = textObj9.Bounds.Right + 10;
             textObj10.FontSize = 7f;
             m_runeBackDescriptionList.Add(textObj10);
             m_backCard.AddChild(textObj10);
-            TextObj textObj11 = textObj.Clone() as TextObj;
+            var textObj11 = textObj.Clone() as TextObj;
             textObj11.X = 60f;
             textObj11.Text = EquipmentAbilityType.ToString(21);
             textObj11.FontSize = 7f;
             m_runeBackTitleList.Add(textObj11);
             m_backCard.AddChild(textObj11);
-            TextObj textObj12 = textObj.Clone() as TextObj;
+            var textObj12 = textObj.Clone() as TextObj;
             textObj12.X = textObj11.Bounds.Right + 10;
             textObj12.FontSize = 7f;
             m_runeBackDescriptionList.Add(textObj12);
@@ -261,7 +262,7 @@ namespace RogueCastle
             SoundManager.PlaySound("StatCard_In");
             LoadCardColour();
             m_spellIcon.ChangeSprite(SpellType.Icon(Game.PlayerStats.Spell));
-            string[] array = new[]
+            string[] array =
             {
                 "CardCastleBG_Sprite",
                 "CardGardenBG_Sprite",
@@ -274,7 +275,7 @@ namespace RogueCastle
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.7");
             Tween.To(m_frontCard, 0.4f, Back.EaseOut, "Y", "30");
             Tween.To(m_backCard, 0.4f, Back.EaseOut, "delay", "0.2", "Y", "30");
-            PlayerObj player = (ScreenManager as RCScreenManager).Player;
+            var player = (ScreenManager as RCScreenManager).Player;
             LoadFrontCardStats(player);
             LoadBackCardStats(player);
             ChangeParts(player);
@@ -290,7 +291,7 @@ namespace RogueCastle
             m_cancelText.Text = "[Input:" + 2 + "] to exit profile card";
             m_cancelText.Opacity = 0f;
             Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
-            string[] array2 = new[]
+            string[] array2 =
             {
                 "Glauber Kotaki",
                 "Kenny Lee",
@@ -357,14 +358,14 @@ namespace RogueCastle
                 m_playerInAir = false;
                 SetPlayerStyle(array[CDGMath.RandomInt(0, array.Length - 1)]);
             }
-            for (int i = 0; i < player.NumChildren; i++)
+            for (var i = 0; i < player.NumChildren; i++)
             {
-                SpriteObj spriteObj = player.GetChildAt(i) as SpriteObj;
-                SpriteObj spriteObj2 = m_playerSprite.GetChildAt(i) as SpriteObj;
+                var spriteObj = player.GetChildAt(i) as SpriteObj;
+                var spriteObj2 = m_playerSprite.GetChildAt(i) as SpriteObj;
                 spriteObj2.TextureColor = spriteObj.TextureColor;
             }
-            string text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
-            int startIndex = text.IndexOf("_") - 1;
+            var text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
+            var startIndex = text.IndexOf("_") - 1;
             text = text.Remove(startIndex, 1);
             if (Game.PlayerStats.Class == 16)
             {
@@ -379,17 +380,17 @@ namespace RogueCastle
                 text = text.Replace("_", Game.PlayerStats.HeadPiece + "_");
             }
             m_playerSprite.GetChildAt(12).ChangeSprite(text);
-            string text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
+            var text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
             startIndex = text2.IndexOf("_") - 1;
             text2 = text2.Remove(startIndex, 1);
             text2 = text2.Replace("_", Game.PlayerStats.ChestPiece + "_");
             m_playerSprite.GetChildAt(4).ChangeSprite(text2);
-            string text3 = (m_playerSprite.GetChildAt(9) as IAnimateableObj).SpriteName;
+            var text3 = (m_playerSprite.GetChildAt(9) as IAnimateableObj).SpriteName;
             startIndex = text3.IndexOf("_") - 1;
             text3 = text3.Remove(startIndex, 1);
             text3 = text3.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
             m_playerSprite.GetChildAt(9).ChangeSprite(text3);
-            string text4 = (m_playerSprite.GetChildAt(3) as IAnimateableObj).SpriteName;
+            var text4 = (m_playerSprite.GetChildAt(3) as IAnimateableObj).SpriteName;
             startIndex = text4.IndexOf("_") - 1;
             text4 = text4.Remove(startIndex, 1);
             text4 = text4.Replace("_", Game.PlayerStats.ShoulderPiece + "_");
@@ -399,8 +400,8 @@ namespace RogueCastle
         public void SetPlayerStyle(string animationType)
         {
             m_playerSprite.ChangeSprite("Player" + animationType + "_Character");
-            PlayerObj player = (ScreenManager as RCScreenManager).Player;
-            for (int i = 0; i < m_playerSprite.NumChildren; i++)
+            var player = (ScreenManager as RCScreenManager).Player;
+            for (var i = 0; i < m_playerSprite.NumChildren; i++)
             {
                 m_playerSprite.GetChildAt(i).TextureColor = player.GetChildAt(i).TextureColor;
                 m_playerSprite.GetChildAt(i).Visible = player.GetChildAt(i).Visible;
@@ -506,8 +507,8 @@ namespace RogueCastle
 
         private void LoadCardColour()
         {
-            Color textureColor = Color.Red;
-            Color textureColor2 = Color.Red;
+            var textureColor = Color.Red;
+            var textureColor2 = Color.Red;
             switch (Game.PlayerStats.Class)
             {
                 case 0:
@@ -560,13 +561,13 @@ namespace RogueCastle
         {
             m_frontTrait1.Visible = false;
             m_frontTrait2.Visible = false;
-            byte b = (byte) Game.PlayerStats.Traits.X;
+            var b = (byte) Game.PlayerStats.Traits.X;
             if (b != 0)
             {
                 m_frontTrait1.Text = TraitType.ToString(b) + ": " + TraitType.ProfileCardDescription(b);
                 m_frontTrait1.Visible = true;
             }
-            byte b2 = (byte) Game.PlayerStats.Traits.Y;
+            var b2 = (byte) Game.PlayerStats.Traits.Y;
             if (b2 != 0)
             {
                 m_frontTrait2.Y = m_frontTrait1.Y;
@@ -587,7 +588,7 @@ namespace RogueCastle
 
         private void LoadBackCardStats(PlayerObj player)
         {
-            for (int i = 0; i < m_dataList1.Count; i++)
+            for (var i = 0; i < m_dataList1.Count; i++)
             {
                 switch (i)
                 {
@@ -603,19 +604,19 @@ namespace RogueCastle
                     {
                         m_dataList1[i].Text = string.Concat(player.TotalArmor.ToString(), "(",
                             (int) (player.TotalDamageReduc*100f), "%)");
-                        float num = player.TotalCritChance*100f;
-                        m_dataList2[i].Text = ((int) Math.Round(num, MidpointRounding.AwayFromZero)).ToString() + "%";
+                        var num = player.TotalCritChance*100f;
+                        m_dataList2[i].Text = ((int) Math.Round(num, MidpointRounding.AwayFromZero)) + "%";
                         break;
                     }
                     case 3:
                         m_dataList1[i].Text = player.CurrentWeight + "/" + player.MaxWeight;
-                        m_dataList2[i].Text = ((int) (player.TotalCriticalDamage*100f)).ToString() + "%";
+                        m_dataList2[i].Text = ((int) (player.TotalCriticalDamage*100f)) + "%";
                         break;
                 }
             }
-            sbyte[] getEquippedArray = Game.PlayerStats.GetEquippedArray;
-            int num2 = (int) m_equipmentTitle.Y + 40;
-            for (int j = 0; j < Game.PlayerStats.GetEquippedArray.Length; j++)
+            var getEquippedArray = Game.PlayerStats.GetEquippedArray;
+            var num2 = (int) m_equipmentTitle.Y + 40;
+            for (var j = 0; j < Game.PlayerStats.GetEquippedArray.Length; j++)
             {
                 m_equipmentList[j].Visible = false;
                 m_equipmentList[j].Y = num2;
@@ -628,13 +629,13 @@ namespace RogueCastle
                 }
             }
             num2 = (int) m_runesTitle.Y + 40;
-            for (int k = 0; k < m_runeBackTitleList.Count; k++)
+            for (var k = 0; k < m_runeBackTitleList.Count; k++)
             {
                 m_runeBackTitleList[k].Y = num2;
                 m_runeBackDescriptionList[k].Y = num2;
                 m_runeBackTitleList[k].Visible = false;
                 m_runeBackDescriptionList[k].Visible = false;
-                float num3 = 0f;
+                var num3 = 0f;
                 switch (k)
                 {
                     case 0:

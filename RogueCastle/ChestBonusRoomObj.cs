@@ -21,26 +21,10 @@ namespace RogueCastle
     public class ChestBonusRoomObj : BonusRoomObj
     {
         private const int TOTAL_UNLOCKED_CHESTS = 1;
-        private bool m_paid;
         private List<ChestObj> m_chestList;
         private NpcObj m_elf;
         private PhysicsObj m_gate;
-
-        private int NumberOfChestsOpen
-        {
-            get
-            {
-                int num = 0;
-                foreach (ChestObj current in m_chestList)
-                {
-                    if (current.IsOpen)
-                    {
-                        num++;
-                    }
-                }
-                return num;
-            }
-        }
+        private bool m_paid;
 
         public ChestBonusRoomObj()
         {
@@ -54,18 +38,34 @@ namespace RogueCastle
             m_gate.Layer = -1f;
         }
 
+        private int NumberOfChestsOpen
+        {
+            get
+            {
+                var num = 0;
+                foreach (var current in m_chestList)
+                {
+                    if (current.IsOpen)
+                    {
+                        num++;
+                    }
+                }
+                return num;
+            }
+        }
+
         public override void Initialize()
         {
-            Vector2 vector = Vector2.Zero;
-            Vector2 zero = Vector2.Zero;
-            foreach (GameObj current in GameObjList)
+            var vector = Vector2.Zero;
+            var zero = Vector2.Zero;
+            foreach (var current in GameObjList)
             {
                 if (current is WaypointObj)
                 {
                     zero.X = current.X;
                 }
             }
-            foreach (TerrainObj current2 in TerrainObjList)
+            foreach (var current2 in TerrainObjList)
             {
                 if (current2.Name == "GatePosition")
                 {
@@ -90,9 +90,9 @@ namespace RogueCastle
         public override void OnEnter()
         {
             ID = 1;
-            foreach (GameObj current in GameObjList)
+            foreach (var current in GameObjList)
             {
-                ChestObj chestObj = current as ChestObj;
+                var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
                     chestObj.ChestType = 2;
@@ -106,21 +106,21 @@ namespace RogueCastle
 
         private void ShuffleChests(int goldPaid)
         {
-            int[] array = new[]
+            int[] array =
             {
                 1,
                 2,
                 3
             };
             CDGMath.Shuffle(array);
-            int num = 0;
-            foreach (GameObj current in GameObjList)
+            var num = 0;
+            foreach (var current in GameObjList)
             {
-                ChestObj chestObj = current as ChestObj;
+                var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
                     chestObj.ForcedItemType = 1;
-                    int num2 = array[num];
+                    var num2 = array[num];
                     if (num2 == 1)
                     {
                         chestObj.IsEmpty = true;
@@ -164,8 +164,8 @@ namespace RogueCastle
                 }
                 if (NumberOfChestsOpen >= 1)
                 {
-                    bool flag = false;
-                    foreach (ChestObj current in m_chestList)
+                    var flag = false;
+                    foreach (var current in m_chestList)
                     {
                         if (current.IsEmpty && current.IsOpen)
                         {
@@ -174,7 +174,7 @@ namespace RogueCastle
                         current.IsLocked = true;
                     }
                     RoomCompleted = true;
-                    RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                    var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     if (!flag)
                     {
                         rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Won");
@@ -194,7 +194,7 @@ namespace RogueCastle
         {
             if (m_elf.IsTouching && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
             {
-                RCScreenManager rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                 if (!RoomCompleted)
                 {
                     if (!m_paid)
@@ -236,7 +236,7 @@ namespace RogueCastle
                 {
                     num = 0.75f;
                 }
-                int num2 = (int) (Game.PlayerStats.Gold*num);
+                var num2 = (int) (Game.PlayerStats.Gold*num);
                 Game.PlayerStats.Gold -= num2;
                 ShuffleChests(num2);
                 Player.AttachedLevel.TextManager.DisplayNumberStringText(-num2, "gold", Color.Yellow,
@@ -252,7 +252,7 @@ namespace RogueCastle
 
         public override void Reset()
         {
-            foreach (ChestObj current in m_chestList)
+            foreach (var current in m_chestList)
             {
                 current.ResetChest();
             }

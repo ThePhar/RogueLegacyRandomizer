@@ -18,8 +18,8 @@ namespace RogueCastle
 {
     public class DemoEndScreen : Screen
     {
-        private TextObj m_text;
         private SpriteObj m_playerShrug;
+        private TextObj m_text;
         public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()

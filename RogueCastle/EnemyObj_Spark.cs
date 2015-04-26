@@ -16,8 +16,18 @@ namespace RogueCastle
 {
     public class EnemyObj_Spark : EnemyObj
     {
+        private readonly byte m_collisionBoxSize = 10;
         private bool m_hookedToGround;
-        private byte m_collisionBoxSize = 10;
+
+        public EnemyObj_Spark(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemySpark_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            IsWeighted = false;
+            ForceDraw = true;
+            Type = 24;
+            NonKillable = true;
+        }
 
         private Rectangle TopRect
         {
@@ -215,9 +225,9 @@ namespace RogueCastle
         public void HookToGround()
         {
             m_hookedToGround = true;
-            float num = 1000f;
+            var num = 1000f;
             TerrainObj terrainObj = null;
-            foreach (TerrainObj current in m_levelScreen.CurrentRoom.TerrainObjList)
+            foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
             {
                 if (current.Y >= Y && current.Y - Y < num &&
                     CollisionMath.Intersects(current.Bounds,
@@ -297,15 +307,15 @@ namespace RogueCastle
 
         private void CollisionCheckRight()
         {
-            bool flag = false;
-            bool flag2 = false;
-            bool flag3 = false;
-            bool flag4 = false;
-            bool flag5 = false;
-            bool flag6 = false;
-            bool flag7 = false;
-            bool flag8 = false;
-            float num = 0f;
+            var flag = false;
+            var flag2 = false;
+            var flag3 = false;
+            var flag4 = false;
+            var flag5 = false;
+            var flag6 = false;
+            var flag7 = false;
+            var flag8 = false;
+            var num = 0f;
             if (Bounds.Right >= m_levelScreen.CurrentRoom.Bounds.Right)
             {
                 flag6 = true;
@@ -330,9 +340,9 @@ namespace RogueCastle
                 flag2 = true;
                 flag8 = true;
             }
-            foreach (TerrainObj current in m_levelScreen.CurrentRoom.TerrainObjList)
+            foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
             {
-                Rectangle b = new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height);
+                var b = new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height);
                 if (CollisionMath.RotatedRectIntersects(TopLeftPoint, 0f, Vector2.Zero, b, current.Rotation,
                     Vector2.Zero))
                 {
@@ -349,7 +359,7 @@ namespace RogueCastle
                     flag8 = true;
                     if (current.Rotation != 0f)
                     {
-                        Vector2 vector = CollisionMath.RotatedRectIntersectsMTD(BottomRightPoint, 0f, Vector2.Zero, b,
+                        var vector = CollisionMath.RotatedRectIntersectsMTD(BottomRightPoint, 0f, Vector2.Zero, b,
                             current.Rotation, Vector2.Zero);
                         if (vector.X < 0f && vector.Y < 0f)
                         {
@@ -363,7 +373,7 @@ namespace RogueCastle
                     flag7 = true;
                     if (current.Rotation != 0f)
                     {
-                        Vector2 vector2 = CollisionMath.RotatedRectIntersectsMTD(BottomLeftPoint, 0f, Vector2.Zero, b,
+                        var vector2 = CollisionMath.RotatedRectIntersectsMTD(BottomLeftPoint, 0f, Vector2.Zero, b,
                             current.Rotation, Vector2.Zero);
                         if (vector2.X > 0f && vector2.Y < 0f)
                         {
@@ -426,16 +436,6 @@ namespace RogueCastle
             }
             HeadingX = (float) Math.Cos(Orientation);
             HeadingY = (float) Math.Sin(Orientation);
-        }
-
-        public EnemyObj_Spark(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemySpark_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            IsWeighted = false;
-            ForceDraw = true;
-            Type = 24;
-            NonKillable = true;
         }
     }
 }

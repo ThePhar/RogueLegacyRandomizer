@@ -16,9 +16,9 @@ namespace RogueCastle
 {
     public class HoverObj : SpriteObj
     {
-        private Vector2 m_startPos;
-        public float HoverSpeed = 1f;
         public float Amplitude = 1f;
+        public float HoverSpeed = 1f;
+        private Vector2 m_startPos;
 
         public HoverObj(string spriteName) : base(spriteName)
         {
@@ -43,7 +43,7 @@ namespace RogueCastle
         protected override void FillCloneInstance(object obj)
         {
             base.FillCloneInstance(obj);
-            HoverObj hoverObj = obj as HoverObj;
+            var hoverObj = obj as HoverObj;
             hoverObj.HoverSpeed = HoverSpeed;
             hoverObj.Amplitude = Amplitude;
             hoverObj.SetStartingPos(m_startPos);

@@ -20,14 +20,13 @@ namespace RogueCastle
 {
     public class DiaryEntryScreen : Screen
     {
-        private SpriteObj m_titleText;
         private List<ObjContainer> m_diaryList;
         private int m_entryIndex;
         private int m_entryRow;
-        private ObjContainer m_selectedEntry;
-        private int m_unlockedEntries;
         private float m_inputDelay;
-        public float BackBufferOpacity { get; set; }
+        private ObjContainer m_selectedEntry;
+        private SpriteObj m_titleText;
+        private int m_unlockedEntries;
 
         public DiaryEntryScreen()
         {
@@ -35,27 +34,29 @@ namespace RogueCastle
             DrawIfCovered = true;
         }
 
+        public float BackBufferOpacity { get; set; }
+
         public override void LoadContent()
         {
             m_titleText = new SpriteObj("DiaryEntryTitleText_Sprite");
             m_titleText.ForceDraw = true;
             m_titleText.X = 660f;
             m_titleText.Y = 72f;
-            int num = 260;
-            int num2 = 150;
-            int num3 = num;
-            int num4 = num2;
-            int num5 = 100;
-            int num6 = 200;
-            int num7 = 5;
-            int num8 = 0;
-            for (int i = 0; i < 25; i++)
+            var num = 260;
+            var num2 = 150;
+            var num3 = num;
+            var num4 = num2;
+            var num5 = 100;
+            var num6 = 200;
+            var num7 = 5;
+            var num8 = 0;
+            for (var i = 0; i < 25; i++)
             {
-                ObjContainer objContainer = new ObjContainer("DialogBox_Character");
+                var objContainer = new ObjContainer("DialogBox_Character");
                 objContainer.ForceDraw = true;
                 objContainer.Scale = new Vector2(180f/objContainer.Width, 50f/objContainer.Height);
                 objContainer.Position = new Vector2(num3, num4);
-                TextObj textObj = new TextObj(Game.JunicodeFont);
+                var textObj = new TextObj(Game.JunicodeFont);
                 textObj.Text = "Entry #" + (i + 1);
                 textObj.OverrideParentScale = true;
                 textObj.OutlineWidth = 2;
@@ -92,7 +93,7 @@ namespace RogueCastle
             {
                 GameUtil.UnlockAchievement("LOVE_OF_BOOKS");
             }
-            for (int i = 0; i < m_diaryList.Count; i++)
+            for (var i = 0; i < m_diaryList.Count; i++)
             {
                 if (i < m_unlockedEntries)
                 {
@@ -107,9 +108,9 @@ namespace RogueCastle
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.7");
             m_titleText.Opacity = 0f;
             Tween.To(m_titleText, 0.25f, Tween.EaseNone, "Opacity", "1");
-            int num = 0;
-            float num2 = 0f;
-            foreach (ObjContainer current in m_diaryList)
+            var num = 0;
+            var num2 = 0f;
+            foreach (var current in m_diaryList)
             {
                 if (current.Visible)
                 {
@@ -130,9 +131,9 @@ namespace RogueCastle
         private void ExitTransition()
         {
             SoundManager.PlaySound("DialogMenuClose");
-            int num = 0;
-            float num2 = 0f;
-            foreach (ObjContainer current in m_diaryList)
+            var num = 0;
+            var num2 = 0f;
+            foreach (var current in m_diaryList)
             {
                 if (current.Visible)
                 {
@@ -221,7 +222,7 @@ namespace RogueCastle
 
         private void DisplayEntry()
         {
-            RCScreenManager rCScreenManager = ScreenManager as RCScreenManager;
+            var rCScreenManager = ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_entryIndex);
             rCScreenManager.DisplayScreen(13, true);
         }
@@ -251,7 +252,7 @@ namespace RogueCastle
             Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             m_titleText.Draw(Camera);
-            foreach (ObjContainer current in m_diaryList)
+            foreach (var current in m_diaryList)
             {
                 current.Draw(Camera);
             }
@@ -264,7 +265,7 @@ namespace RogueCastle
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Diary Entry Screen");
-                foreach (ObjContainer current in m_diaryList)
+                foreach (var current in m_diaryList)
                 {
                     current.Dispose();
                 }

@@ -15,11 +15,18 @@ namespace RogueCastle
 {
     public class EnemyObj_Starburst : EnemyObj
     {
-        private LogicBlock m_generalBasicLB = new LogicBlock();
-        private LogicBlock m_generalAdvancedLB = new LogicBlock();
-        private LogicBlock m_generalExpertLB = new LogicBlock();
-        private LogicBlock m_generalMiniBossLB = new LogicBlock();
-        private float FireballDelay = 0.5f;
+        private readonly float FireballDelay = 0.5f;
+        private readonly LogicBlock m_generalAdvancedLB = new LogicBlock();
+        private readonly LogicBlock m_generalBasicLB = new LogicBlock();
+        private readonly LogicBlock m_generalExpertLB = new LogicBlock();
+        private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
+
+        public EnemyObj_Starburst(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+            GameTypes.EnemyDifficulty difficulty)
+            : base("EnemyStarburstIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
+        {
+            Type = 31;
+        }
 
         protected override void InitializeEV()
         {
@@ -140,7 +147,7 @@ namespace RogueCastle
 
         protected override void InitializeLogic()
         {
-            ProjectileData projectileData = new ProjectileData(this)
+            var projectileData = new ProjectileData(this)
             {
                 SpriteName = "TurretProjectile_Sprite",
                 SourceAnchor = Vector2.Zero,
@@ -152,7 +159,7 @@ namespace RogueCastle
                 CollidesWithTerrain = true,
                 Scale = ProjectileScale
             };
-            LogicSet logicSet = new LogicSet(this);
+            var logicSet = new LogicSet(this);
             projectileData.Angle = new Vector2(0f, 0f);
             logicSet.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
             logicSet.AddAction(new DelayLogicAction(FireballDelay));
@@ -167,7 +174,7 @@ namespace RogueCastle
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
             logicSet.AddAction(new DelayLogicAction(1f, 1f));
             logicSet.Tag = 2;
-            LogicSet logicSet2 = new LogicSet(this);
+            var logicSet2 = new LogicSet(this);
             projectileData.Angle = new Vector2(45f, 45f);
             logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet2.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
@@ -193,7 +200,7 @@ namespace RogueCastle
             logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet2.AddAction(new DelayLogicAction(1f, 1f));
             logicSet2.Tag = 2;
-            LogicSet logicSet3 = new LogicSet(this);
+            var logicSet3 = new LogicSet(this);
             projectileData.Angle = new Vector2(45f, 45f);
             projectileData.CollidesWithTerrain = false;
             projectileData.SpriteName = "GhostProjectile_Sprite";
@@ -241,7 +248,7 @@ namespace RogueCastle
             logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet3.AddAction(new DelayLogicAction(1.25f, 1.25f));
             logicSet3.Tag = 2;
-            LogicSet logicSet4 = new LogicSet(this);
+            var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new DelayLogicAction(0.5f, 0.5f));
             m_generalBasicLB.AddLogicSet(logicSet, logicSet4);
             m_generalAdvancedLB.AddLogicSet(logicSet2, logicSet4);
@@ -273,9 +280,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalBasicLB;
-                    int[] array = new int[2];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalBasicLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -296,9 +303,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalAdvancedLB;
-                    int[] array = new int[2];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalAdvancedLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -319,9 +326,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_33_1 = true;
-                    LogicBlock arg_33_2 = m_generalExpertLB;
-                    int[] array = new int[2];
+                    var arg_33_1 = true;
+                    var arg_33_2 = m_generalExpertLB;
+                    var array = new int[2];
                     array[0] = 100;
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
@@ -340,9 +347,9 @@ namespace RogueCastle
                 case 2:
                 case 3:
                 {
-                    bool arg_38_1 = true;
-                    LogicBlock arg_38_2 = m_generalMiniBossLB;
-                    int[] array = new int[3];
+                    var arg_38_1 = true;
+                    var arg_38_2 = m_generalMiniBossLB;
+                    var array = new int[3];
                     array[0] = 60;
                     array[1] = 40;
                     RunLogicBlock(arg_38_1, arg_38_2, array);
@@ -351,13 +358,6 @@ namespace RogueCastle
                 default:
                     return;
             }
-        }
-
-        public EnemyObj_Starburst(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
-            : base("EnemyStarburstIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
-        {
-            Type = 31;
         }
     }
 }

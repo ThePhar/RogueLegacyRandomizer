@@ -12,40 +12,6 @@ namespace RogueCastle
 {
     public class GameTypes
     {
-        public enum EnemyDifficulty
-        {
-            BASIC,
-            ADVANCED,
-            EXPERT,
-            MINIBOSS
-        }
-
-        public enum DoorType
-        {
-            NULL,
-            OPEN,
-            LOCKED,
-            BLOCKED
-        }
-
-        public enum LevelType
-        {
-            NONE,
-            CASTLE,
-            GARDEN,
-            DUNGEON,
-            TOWER
-        }
-
-        public enum WeaponType
-        {
-            NONE,
-            DAGGER,
-            SWORD,
-            SPEAR,
-            AXE
-        }
-
         public enum ArmorType
         {
             NONE,
@@ -57,11 +23,43 @@ namespace RogueCastle
             ALL
         }
 
+        public enum DoorType
+        {
+            NULL,
+            OPEN,
+            LOCKED,
+            BLOCKED
+        }
+
+        public enum EnemyDifficulty
+        {
+            BASIC,
+            ADVANCED,
+            EXPERT,
+            MINIBOSS
+        }
+
         public enum EquipmentType
         {
             NONE,
             WEAPON,
             ARMOR
+        }
+
+        public enum LevelType
+        {
+            NONE,
+            CASTLE,
+            GARDEN,
+            DUNGEON,
+            TOWER
+        }
+
+        public enum SkillType
+        {
+            STRENGTH,
+            HEALTH,
+            DEFENSE
         }
 
         public enum StatType
@@ -72,11 +70,13 @@ namespace RogueCastle
             EQUIPLOAD
         }
 
-        public enum SkillType
+        public enum WeaponType
         {
-            STRENGTH,
-            HEALTH,
-            DEFENSE
+            NONE,
+            DAGGER,
+            SWORD,
+            SPEAR,
+            AXE
         }
 
         public const int CollisionType_NULL = 0;
