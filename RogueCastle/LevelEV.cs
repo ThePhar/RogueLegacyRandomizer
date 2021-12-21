@@ -181,6 +181,7 @@ namespace RogueCastle
         public static bool ENABLE_OFFSCREEN_CONTROL;
         public static bool ENABLE_BACKUP_SAVING;
         public static bool CREATE_RETAIL_VERSION;
+        public static bool DEBUG_MODE;
         public static bool SHOW_FPS;
         public static bool SAVE_FRAMES;
 
@@ -369,6 +370,7 @@ namespace RogueCastle
             ENABLE_OFFSCREEN_CONTROL = false;
             ENABLE_BACKUP_SAVING = true;
             CREATE_RETAIL_VERSION = true;
+            DEBUG_MODE = true;
             SHOW_FPS = false;
             SAVE_FRAMES = false;
         }

@@ -1387,6 +1387,9 @@ namespace RogueCastle
                         else
                         {
                             m_currentLogicSet = m_standingAttack3LogicSet;
+                            
+                            // TODO: Remove debug code.
+                            ArchipelagoManager.GiveTrait(SkillSystem.GetSkill(SkillType.Health_Up), this);
                         }
                         if (Game.PlayerStats.Class == 6 || Game.PlayerStats.Class == 14)
                         {

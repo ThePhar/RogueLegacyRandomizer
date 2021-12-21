@@ -45,6 +45,16 @@ namespace RogueCastle
                     LevelEV.SHOW_FPS = false;
                     LevelEV.SAVE_FRAMES = false;
                 }
+
+                if (LevelEV.DEBUG_MODE)
+                {
+                    // LevelEV.SHOW_DEBUG_TEXT = true;
+                    // LevelEV.WEAKEN_BOSSES = true;
+                    // LevelEV.SHOW_FPS = true;
+                    LevelEV.DELETE_SAVEFILE = true;
+                    LevelEV.DISABLE_SAVING = true;
+                }
+                
                 if (args.Length == 1 && !LevelEV.CREATE_RETAIL_VERSION)
                 {
                     using (var game = new Game(args[0]))

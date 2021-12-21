@@ -261,7 +261,7 @@ namespace RogueCastle
 
         public void InitializeStartingText()
         {
-            m_pressStartText2.Text = "Start Your Multi-World Legacy";
+            m_pressStartText2.Text = "Start Your Randomized Legacy";
         }
 
         public void StartPressed()
