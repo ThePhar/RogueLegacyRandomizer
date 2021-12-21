@@ -96,7 +96,7 @@ namespace RogueCastle
             Content.RootDirectory = "Content";
             EngineEV.ScreenWidth = 1320;
             EngineEV.ScreenHeight = 720;
-            Window.Title = "Rogue Legacy Enhanced";
+            Window.Title = "Rogue Legacy Archipelago";
             ScreenManager = new RCScreenManager(this);
             SaveManager = new SaveGameManager(this);
             IsFixedTimeStep = false;
@@ -743,12 +743,12 @@ namespace RogueCastle
         {
             Console.WriteLine("Saving Config file");
             var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
+            var path = Path.Combine(folderPath, "Rogue Legacy Archipelago");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            var path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
+            var path2 = Path.Combine(folderPath, "Rogue Legacy Archipelago", "GameConfig.ini");
             using (var streamWriter = new StreamWriter(path2, false))
             {
                 streamWriter.WriteLine("[Screen Resolution]");
@@ -811,7 +811,7 @@ namespace RogueCastle
             try
             {
                 var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var path = Path.Combine(folderPath, "Rogue Legacy Enhanced", "GameConfig.ini");
+                var path = Path.Combine(folderPath, "Rogue Legacy Archipelago", "GameConfig.ini");
                 using (var streamReader = new StreamReader(path))
                 {
                     var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();

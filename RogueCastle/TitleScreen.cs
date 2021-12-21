@@ -110,7 +110,7 @@ namespace RogueCastle
             m_copyrightText = new TextObj(Game.JunicodeFont);
             m_copyrightText.FontSize = 8f;
             m_copyrightText.Text =
-                "Copyright(C) 2011-2015, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.";
+                "Archipelago for Rogue Legacy Client, By Phar - Version 0.1\nCopyright(C) 2011-2015, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.";
             m_copyrightText.Align = Types.TextAlign.Centre;
             m_copyrightText.Position = new Vector2(660f, 720 - m_copyrightText.Height - 10);
             m_copyrightText.DropShadow = new Vector2(1f, 2f);

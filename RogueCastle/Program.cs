@@ -69,12 +69,12 @@ namespace RogueCastle
                     {
                         var str = DateTime.Now.ToString("dd-mm-yyyy_HH-mm-ss");
                         var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                        var path = Path.Combine(folderPath, "Rogue Legacy Enhanced");
+                        var path = Path.Combine(folderPath, "Rogue Legacy Archipelago");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
                         }
-                        var path2 = Path.Combine(folderPath, "Rogue Legacy Enhanced", "CrashLog_" + str + ".log");
+                        var path2 = Path.Combine(folderPath, "Rogue Legacy Archipelago", "CrashLog_" + str + ".log");
                         using (var streamWriter = new StreamWriter(path2, false))
                         {
                             streamWriter.WriteLine(ex.ToString());
