@@ -24,10 +24,9 @@ namespace RogueCastle
 
         public PlayerStats()
         {
-            if (!LevelEV.RUN_TUTORIAL && !TutorialComplete && LevelEV.RUN_TESTROOM)
-            {
-                TutorialComplete = true;
-            }
+            // Complete the tutorial so we don't have to watch it.
+            TutorialComplete = true;
+
             PlayerName = "Sir Lee";
             SpecialItem = 0;
             Class = 0;

@@ -206,7 +206,7 @@ namespace RogueCastle
             m_logo.Opacity = 0f;
             m_logo.Position = new Vector2(660f, 310f);
             Tween.To(m_logo, 2f, Linear.EaseNone, "Opacity", "1");
-            Tween.To(m_logo, 3f, Quad.EaseInOut, "Y", "360");
+            Tween.To(m_logo, 3f, Quad.EaseInOut, "Y", "300");
             m_crown.Opacity = 0f;
             m_crown.Position = new Vector2(390f, 200f);
             Tween.To(m_crown, 2f, Linear.EaseNone, "Opacity", "1");
@@ -261,51 +261,7 @@ namespace RogueCastle
 
         public void InitializeStartingText()
         {
-            if (!m_startNewLegacy)
-            {
-                if (!m_heroIsDead)
-                {
-                    if (Game.PlayerStats.TimesCastleBeaten == 1)
-                    {
-                        m_pressStartText2.Text = "Continue Your Quest +";
-                        return;
-                    }
-                    if (Game.PlayerStats.TimesCastleBeaten > 1)
-                    {
-                        m_pressStartText2.Text = "Continue Your Quest +" + Game.PlayerStats.TimesCastleBeaten;
-                        return;
-                    }
-                    m_pressStartText2.Text = "Continue Your Quest";
-                }
-                else
-                {
-                    if (Game.PlayerStats.TimesCastleBeaten == 1)
-                    {
-                        m_pressStartText2.Text = "Choose Your Heir +";
-                        return;
-                    }
-                    if (Game.PlayerStats.TimesCastleBeaten > 1)
-                    {
-                        m_pressStartText2.Text = "Choose Your Heir +" + Game.PlayerStats.TimesCastleBeaten;
-                        return;
-                    }
-                    m_pressStartText2.Text = "Choose Your Heir";
-                }
-            }
-            else
-            {
-                if (!m_startNewGamePlus)
-                {
-                    m_pressStartText2.Text = "Start Your Legacy";
-                    return;
-                }
-                if (Game.PlayerStats.TimesCastleBeaten == 1)
-                {
-                    m_pressStartText2.Text = "Start Your Legacy +";
-                    return;
-                }
-                m_pressStartText2.Text = "Start Your Legacy +" + Game.PlayerStats.TimesCastleBeaten;
-            }
+            m_pressStartText2.Text = "Start Your Multi-World Legacy";
         }
 
         public void StartPressed()

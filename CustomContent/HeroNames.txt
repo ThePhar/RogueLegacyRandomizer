@@ -1,0 +1,55 @@
+// Change this file if you want to add or remove names
+// from the hero name list in the game.
+// Names longer than 8 characters will be truncated.
+// Special characters cannot be supported.
+Skunky
+Charles
+Lancelot
+Gouda
+Scorpio
+Kenny
+Teddy
+Glauber
+Jarvan
+Dude
+Useless
+Gans
+Mark
+John
+Shane
+Andac
+Darwin
+Taco
+Hirshey
+Mayes
+Lee
+Wallace
+Fleming
+Hornsby
+McGladdery
+Gordon
+Cowan
+Judson
+Kotaki
+Keima
+Gray
+Culp
+Wilco
+Erwin
+Octave
+Giardino
+Wilson
+Twijnstra
+Schroo
+Egas
+// Custom names of people I know. -Phar
+Travis
+TJ
+Joshua
+Aaron
+Devon
+Danny
+Brenden
+David
+Paul
+Chris

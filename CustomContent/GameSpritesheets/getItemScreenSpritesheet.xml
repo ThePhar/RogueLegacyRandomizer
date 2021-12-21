@@ -1,0 +1,130 @@
+<xml>
+  <instance name="OptionsScreenVolumeBar_Sprite" index="0" posX="0" posY="0" anchorX="0" anchorY="0" width="100" height="10"/>
+  <instance name="Compass_Sprite" index="0" posX="101" posY="0" anchorX="20" anchorY="20" width="40" height="40"/>
+  <instance name="TitleProfileCard_Sprite" index="0" posX="142" posY="0" anchorX="20" anchorY="25" width="40" height="50"/>
+  <instance name="ProfileSlot1Text_Sprite" index="0" posX="183" posY="0" anchorX="40.5" anchorY="13" width="81" height="26"/>
+  <instance name="ProfileSlot2Text_Sprite" index="0" posX="265" posY="0" anchorX="41" anchorY="13" width="82" height="26"/>
+  <instance name="ProfileSlot3Text_Sprite" index="0" posX="348" posY="0" anchorX="41" anchorY="13" width="82" height="26"/>
+  <instance name="TitleOptionsIcon_Sprite" index="0" posX="431" posY="0" anchorX="24" anchorY="25" width="48" height="50"/>
+  <instance name="TitleCreditsIcon_Sprite" index="0" posX="480" posY="0" anchorX="24" anchorY="25" width="48" height="50"/>
+  <instance name="OptionsScreenVolumeBG_Sprite" index="0" posX="529" posY="0" anchorX="0" anchorY="0" width="114" height="24"/>
+  <instance name="RuneIcon_Sprite" index="0" posX="644" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="1" posX="699" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="2" posX="754" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="3" posX="809" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="4" posX="864" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="5" posX="919" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="6" posX="974" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="7" posX="1029" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="8" posX="1084" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="9" posX="1139" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="10" posX="1194" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="RuneIcon_Sprite" index="11" posX="1249" posY="0" anchorX="27" anchorY="29" width="54" height="58"/>
+  <instance name="OptionsScreenTitle_Sprite" index="0" posX="1304" posY="0" anchorX="60.5" anchorY="15" width="121" height="30"/>
+  <instance name="BlueprintIcon_Sprite" index="0" posX="1426" posY="0" anchorX="30" anchorY="33" width="59" height="66"/>
+  <instance name="CompassBG_Sprite" index="0" posX="1486" posY="0" anchorX="32" anchorY="32" width="64" height="64"/>
+  <instance name="OptionsScreenChangeControls_Sprite" index="0" posX="1551" posY="0" anchorX="134.5" anchorY="15" width="269" height="30"/>
+  <instance name="Crown_Sprite" index="0" posX="1821" posY="0" anchorX="0" anchorY="0" width="138" height="86"/>
+  <instance name="OptionsBar_Sprite" index="0" posX="0" posY="51" anchorX="0" anchorY="0" width="477" height="37"/>
+  <instance name="ProfileSlotBG_Sprite" index="0" posX="478" posY="59" anchorX="188" anchorY="39" width="376" height="78"/>
+  <instance name="ProfileSelectTitle_Sprite" index="0" posX="855" posY="59" anchorX="215" anchorY="44" width="430" height="88"/>
+  <instance name="SkillUnlockTitlePlate_Sprite" index="0" posX="1286" posY="67" anchorX="209" anchorY="61" width="418" height="122"/>
+  <instance name="BlacksmithUnlockPicture_Sprite" index="0" posX="1705" posY="87" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="EnchantressUnlockPicture_Sprite" index="0" posX="0" posY="89" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="BankerUnlockPicture_Sprite" index="0" posX="281" posY="138" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="ArchitectUnlockPicture_Sprite" index="0" posX="562" posY="138" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="BarbarianUpgradePicture_Sprite" index="0" posX="843" posY="148" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="KnightUpgradePicture_Sprite" index="0" posX="1124" posY="190" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="LichUnlockPicture_Sprite" index="0" posX="1405" posY="190" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="LichUpgradePicture_Sprite" index="0" posX="1686" posY="318" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="MageUpgradePicture_Sprite" index="0" posX="0" posY="320" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="NinjaUnlockPicture_Sprite" index="0" posX="281" posY="369" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="NinjaUpgradePicture_Sprite" index="0" posX="562" posY="369" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="SpellSwordUnlockPicture_Sprite" index="0" posX="843" posY="379" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="SpellSwordUpgradePicture_Sprite" index="0" posX="1124" posY="421" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="AssassinUpgradePicture_Sprite" index="0" posX="1405" posY="421" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="BankerUpgradePicture_Sprite" index="0" posX="1686" posY="549" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="DragonUnlockPicture_Sprite" index="0" posX="0" posY="551" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="TraitorUnlockPicture_Sprite" index="0" posX="281" posY="600" anchorX="140" anchorY="115" width="280" height="230"/>
+  <instance name="ClassUpgradedText_Sprite" index="0" posX="562" posY="610" anchorX="226" anchorY="86" width="452" height="172"/>
+  <instance name="ClassUnlockedText_Sprite" index="0" posX="1015" posY="652" anchorX="230.5" anchorY="86" width="461" height="173"/>
+  <instance name="EnchantressUnlockedText_Sprite" index="0" posX="1477" posY="780" anchorX="230.5" anchorY="86" width="461" height="173"/>
+  <instance name="ArchitectUnlockedText_Sprite" index="0" posX="0" posY="831" anchorX="230.5" anchorY="87" width="461" height="174"/>
+  <instance name="SmithyUnlockedText_Sprite" index="0" posX="462" posY="831" anchorX="230.5" anchorY="87" width="461" height="174"/>
+  <instance name="RuneFoundText_Sprite" index="0" posX="924" posY="826" anchorX="225" anchorY="94" width="450" height="192"/>
+  <instance name="BlueprintFoundText_Sprite" index="0" posX="1375" posY="954" anchorX="225" anchorY="95" width="450" height="193"/>
+  <instance name="SpellFoundText_Sprite" index="0" posX="0" posY="1006" anchorX="225" anchorY="95" width="450" height="193"/>
+  <instance name="StatFoundText_Sprite" index="0" posX="451" posY="1006" anchorX="225" anchorY="95" width="450" height="193"/>
+  <instance name="ItemFoundText_Sprite" index="0" posX="902" posY="1019" anchorX="225" anchorY="98" width="450" height="196"/>
+  <instance name="DeathDefyText_Sprite" index="0" posX="1353" posY="1148" anchorX="212" anchorY="112" width="424" height="224"/>
+  <instance name="SkillUnlockPicturePlate_Sprite" index="0" posX="0" posY="1200" anchorX="0" anchorY="0" width="355" height="344"/>
+  <instance name="TitleLogo_Sprite" index="0" posX="356" posY="1200" anchorX="251" anchorY="181.9" width="508" height="340"/>
+  <instance name="LineageScreenPlate_Sprite" index="0" posX="865" posY="1216" anchorX="0" anchorY="0" width="400" height="500"/>
+  <instance name="SkillUnlockPlate_Sprite" index="0" posX="1266" posY="1373" anchorX="0" anchorY="0" width="610" height="496"/>
+  <animation frame="1" name="RuneIcon_Sprite" index="0" duration="46" label=""/>
+  <animation frame="47" name="RuneIcon_Sprite" index="1" duration="1" label=""/>
+  <animation frame="48" name="RuneIcon_Sprite" index="2" duration="1" label=""/>
+  <animation frame="49" name="RuneIcon_Sprite" index="3" duration="1" label=""/>
+  <animation frame="50" name="RuneIcon_Sprite" index="4" duration="1" label=""/>
+  <animation frame="51" name="RuneIcon_Sprite" index="5" duration="1" label=""/>
+  <animation frame="52" name="RuneIcon_Sprite" index="6" duration="29" label=""/>
+  <animation frame="81" name="RuneIcon_Sprite" index="7" duration="1" label=""/>
+  <animation frame="82" name="RuneIcon_Sprite" index="8" duration="1" label=""/>
+  <animation frame="83" name="RuneIcon_Sprite" index="9" duration="1" label=""/>
+  <animation frame="84" name="RuneIcon_Sprite" index="10" duration="1" label=""/>
+  <animation frame="85" name="RuneIcon_Sprite" index="11" duration="1" label=""/>
+  <animation frame="1" name="BlueprintIcon_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SkillUnlockPicturePlate_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SkillUnlockPlate_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SkillUnlockTitlePlate_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="BlacksmithUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="BlueprintFoundText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ItemFoundText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="RuneFoundText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SpellFoundText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="StatFoundText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ArchitectUnlockedText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ClassUnlockedText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="EnchantressUnlockedText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SmithyUnlockedText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ClassUpgradedText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="EnchantressUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="BankerUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ArchitectUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="BarbarianUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="KnightUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="LichUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="LichUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="MageUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="NinjaUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="NinjaUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SpellSwordUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SpellSwordUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="AssassinUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="BankerUpgradePicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="DragonUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="DeathDefyText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TitleLogo_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TitleProfileCard_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TitleOptionsIcon_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TitleCreditsIcon_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="OptionsScreenTitle_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="OptionsScreenVolumeBar_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="OptionsScreenVolumeBG_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="OptionsScreenChangeControls_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="OptionsBar_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="LineageScreenPlate_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="CompassBG_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Compass_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Crown_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ProfileSelectTitle_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ProfileSlot1Text_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ProfileSlot2Text_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ProfileSlot3Text_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ProfileSlotBG_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitorUnlockPicture_Sprite" index="0" duration="1" label=""/>
+  <container name="SkillUnlockPicturePlate_Character" child="SkillUnlockPicturePlate_Sprite" childX="-177.5" childY="-172" childRotation="0"/>
+  <container name="SkillUnlockPlate_Character" child="SkillUnlockPlate_Sprite" childX="-305" childY="-248" childRotation="0"/>
+  <container name="LineageScreenPlate_Character" child="LineageScreenPlate_Sprite" childX="0" childY="0" childRotation="0"/>
+  <container name="ProfileSlotBG_Container" child="ProfileSlotBG_Sprite" childX="0" childY="0" childRotation="0"/>
+</xml>

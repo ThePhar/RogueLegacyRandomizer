@@ -1,5 +1,6 @@
 bin*
 obj*
+util*
 copyrighter*
 changelog.txt
 *.bak
