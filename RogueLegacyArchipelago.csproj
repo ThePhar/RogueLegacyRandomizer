@@ -6,8 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AssemblyName>RogueLegacyArchipelago</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
@@ -279,9 +280,6 @@
     <Compile Include="RogueCastle\WaypointObj.cs" />
     <Compile Include="RogueCastle\WordBuilder.cs" />
     <Compile Include="RogueCastle\XMLCompiler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="RLE.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
