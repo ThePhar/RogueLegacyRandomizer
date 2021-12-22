@@ -10,6 +10,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -36,6 +37,10 @@
     <Reference Include="Microsoft.Xna.Framework.Game" />
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nuclex.Input, Version=4.0.0.0, Culture=neutral, PublicKeyToken=889233c3085159a5">
       <HintPath>lib\Nuclex.Input.dll</HintPath>
     </Reference>
@@ -63,7 +68,18 @@
     <Compile Include="Randomchaos2DGodRays\LightSourceMask.cs" />
     <Compile Include="Randomchaos2DGodRays\PostProcessingManager.cs" />
     <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
-    <Compile Include="RogueCastle\ArchipelagoManager.cs" />
+    <Compile Include="RogueCastle\Archipelago\ArchClient.cs" />
+    <Compile Include="RogueCastle\Archipelago\Network\DataPackage.cs" />
+    <Compile Include="RogueCastle\Archipelago\Network\GameData.cs" />
+    <Compile Include="RogueCastle\Archipelago\Network\NetworkPlayer.cs" />
+    <Compile Include="RogueCastle\Archipelago\Network\NetworkVersion.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\ConnectPacket.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\DataPackagePacket.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\DataPacketTypes.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\DataPacketConverter.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\GetDataPackagePacket.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\RoomInfoPacket.cs" />
+    <Compile Include="RogueCastle\Archipelago\Packets\IDataPacket.cs" />
     <Compile Include="RogueCastle\AreaStruct.cs" />
     <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
     <Compile Include="RogueCastle\BackToMenuOptionsObj.cs" />
@@ -280,6 +296,9 @@
     <Compile Include="RogueCastle\WaypointObj.cs" />
     <Compile Include="RogueCastle\WordBuilder.cs" />
     <Compile Include="RogueCastle\XMLCompiler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

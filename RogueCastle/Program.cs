@@ -13,6 +13,8 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using RogueCastle.Archipelago;
 
 namespace RogueCastle
 {
@@ -26,6 +28,10 @@ namespace RogueCastle
         {
             // Start our console window.
             AllocConsole();
+
+            // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
+            var archClient = new ArchClient();
+            Task.Run(() => archClient.Connect("localhost", "38281", "Phar"));
 
             if (LevelEV.CREATE_RETAIL_VERSION)
             {
