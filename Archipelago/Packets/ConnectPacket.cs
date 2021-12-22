@@ -10,10 +10,10 @@
 // 
 
 using System.Collections.Generic;
+using Archipelago.Network;
 using Newtonsoft.Json;
-using RogueCastle.Archipelago.Network;
 
-namespace RogueCastle.Archipelago.Packets
+namespace Archipelago.Packets
 {
     internal class ConnectPacket : IDataPacket
     {

@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace RogueCastle.Archipelago.Packets
+namespace Archipelago.Packets
 {
     internal class GetDataPackagePacket : IDataPacket
     {

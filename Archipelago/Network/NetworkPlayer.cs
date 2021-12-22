@@ -9,10 +9,9 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
 using Newtonsoft.Json;
 
-namespace RogueCastle.Archipelago.Network
+namespace Archipelago.Network
 {
     internal class NetworkPlayer
     {

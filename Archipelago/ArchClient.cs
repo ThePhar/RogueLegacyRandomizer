@@ -11,17 +11,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Archipelago.Network;
+using Archipelago.Packets;
 using Newtonsoft.Json;
-using RogueCastle.Archipelago.Network;
-using RogueCastle.Archipelago.Packets;
 
-namespace RogueCastle.Archipelago
+namespace Archipelago
 {
     internal class ArchClient
     {

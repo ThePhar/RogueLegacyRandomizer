@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace RogueCastle.Archipelago.Network
+namespace Archipelago.Network
 {
     internal class GameData
     {

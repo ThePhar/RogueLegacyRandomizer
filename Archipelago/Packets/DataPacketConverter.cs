@@ -10,11 +10,10 @@
 // 
 
 using System;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace RogueCastle.Archipelago.Packets
+namespace Archipelago.Packets
 {
     public class DataPacketConverter : Newtonsoft.Json.Converters.CustomCreationConverter<IDataPacket>
     {

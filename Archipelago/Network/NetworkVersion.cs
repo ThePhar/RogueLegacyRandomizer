@@ -11,7 +11,7 @@
 
 using Newtonsoft.Json;
 
-namespace RogueCastle.Archipelago.Network
+namespace Archipelago.Network
 {
     internal class NetworkVersion
     {
@@ -24,6 +24,7 @@ namespace RogueCastle.Archipelago.Network
         [JsonProperty("build")]
         public int Build { get; set; }
 
+        // What's great about this property is it isn't listed as required in the docs. :')
         [JsonProperty("class")]
         public string Class { get; set; }
 

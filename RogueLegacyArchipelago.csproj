@@ -60,6 +60,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Archipelago\ArchClient.cs" />
+    <Compile Include="Archipelago\Network\DataPackage.cs" />
+    <Compile Include="Archipelago\Network\GameData.cs" />
+    <Compile Include="Archipelago\Network\NetworkPlayer.cs" />
+    <Compile Include="Archipelago\Network\NetworkVersion.cs" />
+    <Compile Include="Archipelago\Packets\ConnectPacket.cs" />
+    <Compile Include="Archipelago\Packets\DataPackagePacket.cs" />
+    <Compile Include="Archipelago\Packets\DataPacketConverter.cs" />
+    <Compile Include="Archipelago\Packets\DataPacketTypes.cs" />
+    <Compile Include="Archipelago\Packets\GetDataPackagePacket.cs" />
+    <Compile Include="Archipelago\Packets\IDataPacket.cs" />
+    <Compile Include="Archipelago\Packets\RoomInfoPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcess.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcessingEffect.cs" />
@@ -68,18 +80,6 @@
     <Compile Include="Randomchaos2DGodRays\LightSourceMask.cs" />
     <Compile Include="Randomchaos2DGodRays\PostProcessingManager.cs" />
     <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
-    <Compile Include="RogueCastle\Archipelago\ArchClient.cs" />
-    <Compile Include="RogueCastle\Archipelago\Network\DataPackage.cs" />
-    <Compile Include="RogueCastle\Archipelago\Network\GameData.cs" />
-    <Compile Include="RogueCastle\Archipelago\Network\NetworkPlayer.cs" />
-    <Compile Include="RogueCastle\Archipelago\Network\NetworkVersion.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\ConnectPacket.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\DataPackagePacket.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\DataPacketTypes.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\DataPacketConverter.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\GetDataPackagePacket.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\RoomInfoPacket.cs" />
-    <Compile Include="RogueCastle\Archipelago\Packets\IDataPacket.cs" />
     <Compile Include="RogueCastle\AreaStruct.cs" />
     <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
     <Compile Include="RogueCastle\BackToMenuOptionsObj.cs" />

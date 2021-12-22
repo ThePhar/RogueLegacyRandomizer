@@ -1,5 +1,5 @@
 ﻿// 
-// RogueLegacyArchipelago - DataPackage.cs
+// RogueLegacyArchipelago - DataPackagePacket.cs
 // Last Modified 2021-12-22
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
@@ -9,17 +9,17 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System.Collections.Generic;
+using Archipelago.Network;
 using Newtonsoft.Json;
 
-namespace RogueCastle.Archipelago.Network
+namespace Archipelago.Packets
 {
-    internal class DataPackage
+    internal class DataPackagePacket : IDataPacket
     {
-        [JsonProperty("games")]
-        public Dictionary<string, GameData> Games { get; set; }
+        [JsonProperty("cmd")]
+        public string Command { get; set; }
 
-        [JsonProperty("version")]
-        public int Version { get; set; }
+        [JsonProperty("data")]
+        public DataPackage Data { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using RogueCastle.Archipelago;
+using Archipelago;
 
 namespace RogueCastle
 {
