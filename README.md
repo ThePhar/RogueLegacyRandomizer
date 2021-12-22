@@ -1,7 +1,6 @@
 # Rogue Legacy for Archipelago
 
-This project is based of the decompiled and cleaned source code by [ifatree](https://github.com/ifatree/RogueLegacyEnhanced)
-on GitHub. This project makes some quality of life improvements and adds support for randomization via the Archipelago service
+This project is based of the decompiled and cleaned source code by Cellar Door Games. This project makes some quality of life improvements and adds support for randomization via the Archipelago service
 by the [Archipelago Community](https://archipelago.gg).
 
 ## Building
