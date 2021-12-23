@@ -141,17 +141,82 @@ namespace RogueCastle
                             m_currentValue += HandleShift(pressedKeys, "\"", "'");
                             break;
 
+                        case Keys.OemOpenBrackets:
+                            m_currentValue += HandleShift(pressedKeys, "{", "[");
+                            break;
+
+                        case Keys.OemCloseBrackets:
+                            m_currentValue += HandleShift(pressedKeys, "}", "]");
+                            break;
+
+                        case Keys.OemBackslash:
+                            m_currentValue += HandleShift(pressedKeys, "|", "\\");
+                            break;
+
+                        case Keys.OemQuestion:
+                            m_currentValue += HandleShift(pressedKeys, "?", "/");
+                            break;
+
+                        case Keys.OemMinus:
+                            m_currentValue += HandleShift(pressedKeys, "_", "-");
+                            break;
+
+                        case Keys.OemPlus:
+                            m_currentValue += HandleShift(pressedKeys, "+", "=");
+                            break;
+
+                        case Keys.OemTilde:
+                            m_currentValue += HandleShift(pressedKeys, "~", "`");
+                            break;
+
+                        case Keys.NumPad0:
                         case Keys.D0:
+                            m_currentValue += HandleShift(pressedKeys, ")", "0");
+                            break;
+
+                        case Keys.NumPad1:
                         case Keys.D1:
+                            m_currentValue += HandleShift(pressedKeys, "!", "1");
+                            break;
+
+                        case Keys.NumPad2:
                         case Keys.D2:
+                            m_currentValue += HandleShift(pressedKeys, "@", "2");
+                            break;
+
+                        case Keys.NumPad3:
                         case Keys.D3:
+                            m_currentValue += HandleShift(pressedKeys, "#", "3");
+                            break;
+
+                        case Keys.NumPad4:
                         case Keys.D4:
+                            m_currentValue += HandleShift(pressedKeys, "$", "4");
+                            break;
+
+                        case Keys.NumPad5:
                         case Keys.D5:
+                            m_currentValue += HandleShift(pressedKeys, "%", "5");
+                            break;
+
+                        case Keys.NumPad6:
                         case Keys.D6:
+                            m_currentValue += HandleShift(pressedKeys, "^", "6");
+                            break;
+
+                        case Keys.NumPad7:
                         case Keys.D7:
+                            m_currentValue += HandleShift(pressedKeys, "&", "7");
+                            break;
+
+                        case Keys.NumPad8:
                         case Keys.D8:
+                            m_currentValue += HandleShift(pressedKeys, "*", "8");
+                            break;
+
+                        case Keys.NumPad9:
                         case Keys.D9:
-                            m_currentValue += key.ToString().Remove(0, 1);
+                            m_currentValue += HandleShift(pressedKeys, "(", "9");
                             break;
                     }
                 }
@@ -164,7 +229,7 @@ namespace RogueCastle
             if (IsActive)
             {
                 m_toggleText.TextureColor = Color.Yellow;
-                m_toggleText.Text = m_currentValue;
+                m_toggleText.Text = m_currentValue + "_";
             }
             else
             {
