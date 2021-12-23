@@ -9,7 +9,7 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using Archipelago.Network;
+using System;
 
 namespace RogueCastle
 {
@@ -56,20 +56,8 @@ namespace RogueCastle
 
         // Ideally shouldn't be touched as it's based off this version.
         public const string GAME_VERSION = "v1.2.0c";
-
-        public static readonly NetworkVersion AP_VERSION = new NetworkVersion()
-        {
-            Major = 0,
-            Minor = 2,
-            Build = 2
-        };
-
-        public static readonly NetworkVersion APC_VERSION = new NetworkVersion()
-        {
-            Major = 0,
-            Minor = 2,
-            Build = 0
-        };
+        public static readonly Version AP_VERSION = new Version(0, 2, 1);
+        public static readonly Version APC_VERSION = new Version(0, 2, 0);
 
         public static byte[] DEMENTIA_FLIGHT_LIST =
         {

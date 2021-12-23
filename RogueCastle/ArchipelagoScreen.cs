@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Archipelago;
+using Archipelago.MultiClient.Net;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -126,11 +126,11 @@ namespace RogueCastle
             base.LoadContent();
         }
 
-        public async Task Connect()
+        public void Connect()
         {
             // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
-            var archClient = new ArchClient();
-            await archClient.Connect(m_hostname.GetValue, m_port.GetValue, m_slot.GetValue, m_password.GetValue);
+            var session = ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
+            session.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue, LevelEV.AP_VERSION, password: m_password.GetValue);
 
             Console.WriteLine("ARCH-CLIENT: FIRED CONNECT SCRIPT!");
             m_titleScreen.StartPressed();

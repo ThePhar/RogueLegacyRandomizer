@@ -54,7 +54,7 @@ namespace RogueCastle
 
             var levelScreen = Game.ScreenManager.CurrentScreen as ArchipelagoScreen;
             if (levelScreen != null)
-                Task.Run(() => levelScreen.Connect());
+                levelScreen.Connect();
         }
 
         public void CancelCommand()
