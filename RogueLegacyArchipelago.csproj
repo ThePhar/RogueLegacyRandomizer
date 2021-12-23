@@ -31,16 +31,15 @@
     <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Archipelago.MultiClient.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>lib\Archipelago.MultiClient.Net.dll</HintPath>
+    </Reference>
     <Reference Include="DS2DEngine">
       <HintPath>lib\DS2DEngine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game" />
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Nuclex.Input, Version=4.0.0.0, Culture=neutral, PublicKeyToken=889233c3085159a5">
       <HintPath>lib\Nuclex.Input.dll</HintPath>
     </Reference>
@@ -60,30 +59,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Archipelago\ArchClient.cs" />
-    <Compile Include="Archipelago\Network\DataPackage.cs" />
-    <Compile Include="Archipelago\Network\GameData.cs" />
-    <Compile Include="Archipelago\Network\JsonMessagePart.cs" />
-    <Compile Include="Archipelago\Network\NetworkItem.cs" />
-    <Compile Include="Archipelago\Network\NetworkPlayer.cs" />
-    <Compile Include="Archipelago\Network\NetworkVersion.cs" />
-    <Compile Include="Archipelago\Packets\BouncedPacket.cs" />
-    <Compile Include="Archipelago\Packets\ConnectedPacket.cs" />
-    <Compile Include="Archipelago\Packets\ConnectionRefusedPacket.cs" />
-    <Compile Include="Archipelago\Packets\ConnectPacket.cs" />
-    <Compile Include="Archipelago\Packets\DataPackagePacket.cs" />
-    <Compile Include="Archipelago\Packets\DataPacketConverter.cs" />
-    <Compile Include="Archipelago\Packets\DataPacketTypes.cs" />
-    <Compile Include="Archipelago\Packets\GenericPacket.cs" />
-    <Compile Include="Archipelago\Packets\GetDataPackagePacket.cs" />
-    <Compile Include="Archipelago\Packets\IDataPacket.cs" />
-    <Compile Include="Archipelago\Packets\InvalidPacket.cs" />
-    <Compile Include="Archipelago\Packets\LocationInfoPacket.cs" />
-    <Compile Include="Archipelago\Packets\PrintJsonPacket.cs" />
-    <Compile Include="Archipelago\Packets\PrintPacket.cs" />
-    <Compile Include="Archipelago\Packets\ReceivedItemsPacket.cs" />
-    <Compile Include="Archipelago\Packets\RoomInfoPacket.cs" />
-    <Compile Include="Archipelago\Packets\RoomUpdatePacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcess.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcessingEffect.cs" />
@@ -313,9 +288,6 @@
     <Compile Include="RogueCastle\WaypointObj.cs" />
     <Compile Include="RogueCastle\WordBuilder.cs" />
     <Compile Include="RogueCastle\XMLCompiler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
