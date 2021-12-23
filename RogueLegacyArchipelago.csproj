@@ -92,8 +92,11 @@
     <Compile Include="Randomchaos2DGodRays\LightSourceMask.cs" />
     <Compile Include="Randomchaos2DGodRays\PostProcessingManager.cs" />
     <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
+    <Compile Include="RogueCastle\ArchipelagoOptionsObj.cs" />
+    <Compile Include="RogueCastle\ArchipelagoScreen.cs" />
     <Compile Include="RogueCastle\AreaStruct.cs" />
     <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
+    <Compile Include="RogueCastle\BackToMenuArchipelagoObj.cs" />
     <Compile Include="RogueCastle\BackToMenuOptionsObj.cs" />
     <Compile Include="RogueCastle\BlacksmithObj.cs" />
     <Compile Include="RogueCastle\BlacksmithScreen.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="RogueCastle\ChestType.cs" />
     <Compile Include="RogueCastle\ClassType.cs" />
     <Compile Include="RogueCastle\CompassRoomObj.cs" />
+    <Compile Include="RogueCastle\ConnectArchipelagoOptionObj.cs" />
     <Compile Include="RogueCastle\CreditsScreen.cs" />
     <Compile Include="RogueCastle\DeadZoneOptionsObj.cs" />
     <Compile Include="RogueCastle\DeathDefiedScreen.cs" />
@@ -294,6 +298,7 @@
     <Compile Include="RogueCastle\SteamCloudOptionsObj.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
+    <Compile Include="RogueCastle\TextBoxOptionsObj.cs" />
     <Compile Include="RogueCastle\TextManager.cs" />
     <Compile Include="RogueCastle\TextScreen.cs" />
     <Compile Include="RogueCastle\ThroneRoomObj.cs" />

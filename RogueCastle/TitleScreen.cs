@@ -256,6 +256,8 @@ namespace RogueCastle
 
         public void StartPressed()
         {
+            Console.WriteLine("I am pressed!");
+
             SoundManager.PlaySound("Game_Start");
             if (!m_startNewLegacy)
             {
@@ -355,7 +357,8 @@ namespace RogueCastle
         {
             if (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) || Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
             {
-                StartPressed();
+                var list = new List<object>{this};
+                (ScreenManager as RCScreenManager).DisplayScreen(80, false, list);
             }
             if (Game.GlobalInput.JustPressed(InputMapType.MenuOptions))
             {

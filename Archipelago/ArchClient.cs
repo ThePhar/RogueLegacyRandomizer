@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - ArchClient.cs
-// Last Modified 2021-12-22
+// Last Modified 2021-12-23
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -48,7 +48,6 @@ namespace Archipelago
             {
                 Console.WriteLine("ARCH-CLIENT: Connected to {0}.", uri);
                 await Receive();
-                await Task.Delay(3000);
                 await Send(new List<IDataPacket>
                 {
                     new ConnectPacket()
@@ -65,13 +64,14 @@ namespace Archipelago
                         }
                     }
                 });
-                await Task.Delay(3000);
                 await Receive();
             }
             else
             {
                 Console.WriteLine("ARCH-CLIENT: Failed to connect to {0}.", uri);
             }
+
+            Console.WriteLine("ARCH-CLIENT: Finished connecting.");
         }
 
         /// <summary>
