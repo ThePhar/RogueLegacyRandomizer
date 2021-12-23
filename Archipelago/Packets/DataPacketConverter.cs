@@ -31,12 +31,43 @@ namespace Archipelago.Packets
                 case DataPacketTypes.RoomInfo:
                     return new RoomInfoPacket();
 
+                case DataPacketTypes.ConnectionRefused:
+                    return new ConnectionRefusedPacket();
+
+                case DataPacketTypes.Connected:
+                    return new ConnectedPacket();
+
+                case DataPacketTypes.ReceivedItems:
+                    return new ReceivedItemsPacket();
+
+                case DataPacketTypes.LocationInfo:
+                    return new LocationInfoPacket();
+
+                case DataPacketTypes.RoomUpdate:
+                    return new RoomUpdatePacket();
+
+                case DataPacketTypes.Print:
+                    return new PrintPacket();
+
+                case DataPacketTypes.PrintJson:
+                    return new PrintJsonPacket();
+
                 case DataPacketTypes.DataPackage:
                     return new DataPackagePacket();
 
+                case DataPacketTypes.Bounced:
+                    return new BouncedPacket();
+
+                case DataPacketTypes.InvalidPacket:
+                    return new InvalidPacket();
+
                 default:
-                    throw new ApplicationException(String.Format("The data packet of type {0} is not supported!",
-                        type));
+                    return new GenericPacket();
+
+                // Just ignore unknown packets. /shrug
+                // default:
+                //     throw new ApplicationException(String.Format("The data packet of type {0} is not supported!",
+                //         type));
             }
         }
 
