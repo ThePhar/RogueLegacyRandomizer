@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - TitleScreen.cs
+// Last Modified 2021-12-23
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,6 @@ namespace RogueCastle
         private TextObj m_pressStartText2;
         private SpriteObj m_profileCard;
         private KeyIconTextObj m_profileCardKey;
-        private KeyIconTextObj m_profileSelectKey;
         private float m_randomSeagullSFX;
         private Cue m_seagullCue;
         private SpriteObj m_smallCloud1;
@@ -110,15 +110,15 @@ namespace RogueCastle
             m_copyrightText = new TextObj(Game.JunicodeFont);
             m_copyrightText.FontSize = 8f;
             m_copyrightText.Text =
-                "Archipelago for Rogue Legacy Client, By Phar - Version 0.1\nCopyright(C) 2011-2015, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.";
+                "Rogue Legacy for Archipelago Client\nCopyright(C) 2011-2015, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.";
             m_copyrightText.Align = Types.TextAlign.Centre;
             m_copyrightText.Position = new Vector2(660f, 720 - m_copyrightText.Height - 10);
             m_copyrightText.DropShadow = new Vector2(1f, 2f);
             m_versionNumber = (m_copyrightText.Clone() as TextObj);
-            m_versionNumber.Align = Types.TextAlign.Right;
+            m_versionNumber.Align = Types.TextAlign.Left;
             m_versionNumber.FontSize = 8f;
-            m_versionNumber.Position = new Vector2(1305f, 5f);
-            m_versionNumber.Text = "v1.2.0c";
+            m_versionNumber.Position = new Vector2(14f, 5f);
+            m_versionNumber.Text = String.Format("RL {0}\nAP v{1}\nAC v{2}", LevelEV.GAME_VERSION, LevelEV.AP_VERSION, LevelEV.APC_VERSION);
             m_pressStartText = new KeyIconTextObj(Game.JunicodeFont);
             m_pressStartText.FontSize = 20f;
             m_pressStartText.Text = "Press Enter to begin";
@@ -136,7 +136,7 @@ namespace RogueCastle
             m_profileCard.OutlineWidth = 2;
             m_profileCard.Scale = new Vector2(2f, 2f);
             m_profileCard.Position = new Vector2(m_profileCard.Width, 720 - m_profileCard.Height);
-            m_profileCard.ForceDraw = true;
+            m_profileCard.ForceDraw = false;
             m_optionsIcon = new SpriteObj("TitleOptionsIcon_Sprite");
             m_optionsIcon.Scale = new Vector2(2f, 2f);
             m_optionsIcon.OutlineWidth = m_profileCard.OutlineWidth;
@@ -153,7 +153,7 @@ namespace RogueCastle
             m_profileCardKey.Text = "[Input:" + 7 + "]";
             m_profileCardKey.Position = new Vector2(m_profileCard.X,
                 m_profileCard.Bounds.Top - m_profileCardKey.Height - 10);
-            m_profileCardKey.ForceDraw = true;
+            m_profileCardKey.ForceDraw = false;
             m_optionsKey = new KeyIconTextObj(Game.JunicodeFont);
             m_optionsKey.Align = Types.TextAlign.Centre;
             m_optionsKey.FontSize = 12f;
@@ -166,14 +166,6 @@ namespace RogueCastle
             m_creditsKey.Text = "[Input:" + 6 + "]";
             m_creditsKey.Position = new Vector2(m_creditsIcon.X, m_creditsIcon.Bounds.Top - m_creditsKey.Height - 10);
             m_creditsKey.ForceDraw = true;
-            m_profileSelectKey = new KeyIconTextObj(Game.JunicodeFont);
-            m_profileSelectKey.Align = Types.TextAlign.Left;
-            m_profileSelectKey.FontSize = 10f;
-            m_profileSelectKey.Text = string.Concat("[Input:", 25, "] to Change Profile (", Game.GameConfig.ProfileSlot,
-                ")");
-            m_profileSelectKey.Position = new Vector2(30f, 15f);
-            m_profileSelectKey.ForceDraw = true;
-            m_profileSelectKey.DropShadow = new Vector2(2f, 2f);
             m_crown = new SpriteObj("Crown_Sprite");
             m_crown.ForceDraw = true;
             m_crown.Scale = new Vector2(0.7f, 0.7f);
@@ -189,8 +181,6 @@ namespace RogueCastle
         public override void OnEnter()
         {
             Camera.Zoom = 1f;
-            m_profileSelectKey.Text = string.Concat("[Input:", 25, "] to Change Profile (", Game.GameConfig.ProfileSlot,
-                ")");
             SoundManager.PlayMusic("TitleScreenSong", true, 1f);
             Game.ScreenManager.Player.ForceInvincible = false;
             m_optionsEntered = false;
@@ -356,38 +346,27 @@ namespace RogueCastle
             {
                 m_optionsEntered = false;
                 m_optionsKey.Text = "[Input:" + 4 + "]";
-                m_profileCardKey.Text = "[Input:" + 7 + "]";
                 m_creditsKey.Text = "[Input:" + 6 + "]";
-                m_profileSelectKey.Text = string.Concat("[Input:", 25, "] to Change Profile (",
-                    Game.GameConfig.ProfileSlot, ")");
             }
             base.Update(gameTime);
         }
 
         public override void HandleInput()
         {
-            if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
+            if (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) || Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
             {
                 StartPressed();
             }
-            if (!m_startNewLegacy && Game.GlobalInput.JustPressed(7))
-            {
-                (ScreenManager as RCScreenManager).DisplayScreen(17, false);
-            }
-            if (Game.GlobalInput.JustPressed(4))
+            if (Game.GlobalInput.JustPressed(InputMapType.MenuOptions))
             {
                 m_optionsEntered = true;
                 var list = new List<object>();
                 list.Add(true);
                 (ScreenManager as RCScreenManager).DisplayScreen(4, false, list);
             }
-            if (Game.GlobalInput.JustPressed(6))
+            if (Game.GlobalInput.JustPressed(InputMapType.MenuCredits))
             {
                 (ScreenManager as RCScreenManager).DisplayScreen(18, false);
-            }
-            if (Game.GlobalInput.JustPressed(25))
-            {
-                (ScreenManager as RCScreenManager).DisplayScreen(30, false);
             }
             base.HandleInput();
         }
@@ -496,18 +475,9 @@ namespace RogueCastle
             m_pressStartText2.Opacity = m_pressStartText.Opacity;
             m_pressStartText.Draw(Camera);
             m_pressStartText2.Draw(Camera);
-            if (!m_startNewLegacy)
-            {
-                m_profileCardKey.Draw(Camera);
-            }
             m_creditsKey.Draw(Camera);
             m_optionsKey.Draw(Camera);
-            m_profileSelectKey.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-            if (!m_startNewLegacy)
-            {
-                m_profileCard.Draw(Camera);
-            }
             m_dlcIcon.Draw(Camera);
             m_optionsIcon.Draw(Camera);
             m_creditsIcon.Draw(Camera);
@@ -580,8 +550,6 @@ namespace RogueCastle
                 m_creditsKey = null;
                 m_crown.Dispose();
                 m_crown = null;
-                m_profileSelectKey.Dispose();
-                m_profileSelectKey = null;
                 m_dlcIcon.Dispose();
                 m_dlcIcon = null;
                 m_seagullCue = null;

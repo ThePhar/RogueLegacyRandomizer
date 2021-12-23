@@ -1,12 +1,15 @@
-/*
-  Rogue Legacy Enhanced
+// 
+// RogueLegacyArchipelago - LevelEV.cs
+// Last Modified 2021-12-23
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+using Archipelago.Network;
 
 namespace RogueCastle
 {
@@ -50,7 +53,23 @@ namespace RogueCastle
         public const int LEVEL_DUNGEON_RIGHTDOOR = 55;
         public const int LEVEL_DUNGEON_TOPDOOR = 45;
         public const int LEVEL_DUNGEON_BOTTOMDOOR = 100;
+
+        // Ideally shouldn't be touched as it's based off this version.
         public const string GAME_VERSION = "v1.2.0c";
+
+        public static readonly NetworkVersion AP_VERSION = new NetworkVersion()
+        {
+            Major = 0,
+            Minor = 2,
+            Build = 2
+        };
+
+        public static readonly NetworkVersion APC_VERSION = new NetworkVersion()
+        {
+            Major = 0,
+            Minor = 2,
+            Build = 0
+        };
 
         public static byte[] DEMENTIA_FLIGHT_LIST =
         {

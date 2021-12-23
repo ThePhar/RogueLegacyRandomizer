@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - NetworkVersion.cs
-// Last Modified 2021-12-22
+// Last Modified 2021-12-23
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace Archipelago.Network
 {
-    internal class NetworkVersion
+    public class NetworkVersion
     {
         [JsonProperty("major")]
         public int Major { get; set; }
