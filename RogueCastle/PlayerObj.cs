@@ -253,7 +253,7 @@ namespace RogueCastle
         {
             get
             {
-                var num = SkillSystem.GetSkill(SkillType.Down_Strike_Up).ModifierAmount*NumAirBounces;
+                var num = SkillSystem.GetSkill(SkillType.DownStrikeUp).ModifierAmount*NumAirBounces;
                 var num2 = AirAttackDamageMod + num;
                 if (num2 > 1f)
                 {
@@ -269,7 +269,7 @@ namespace RogueCastle
             {
                 var num =
                     (int)
-                        ((BaseMagicDamage + SkillSystem.GetSkill(SkillType.Magic_Damage_Up).ModifierAmount +
+                        ((BaseMagicDamage + SkillSystem.GetSkill(SkillType.MagicDamageUp).ModifierAmount +
                           GetEquipmentMagicDamage() + Game.PlayerStats.BonusMagic)*ClassMagicDamageGivenMultiplier);
                 if (num < 1)
                 {
@@ -285,9 +285,9 @@ namespace RogueCastle
             {
                 return
                     (int)
-                        (RandomDamage*(1f + SkillSystem.GetSkill(SkillType.Invuln_Attack_Up).ModifierAmount) +
-                         SkillSystem.GetSkill(SkillType.Attack_Up).ModifierAmount +
-                         SkillSystem.GetSkill(SkillType.Damage_Up_Final).ModifierAmount);
+                        (RandomDamage*(1f + SkillSystem.GetSkill(SkillType.InvulnerabilityAttackUp).ModifierAmount) +
+                         SkillSystem.GetSkill(SkillType.AttackUp).ModifierAmount +
+                         SkillSystem.GetSkill(SkillType.DamageUpFinal).ModifierAmount);
             }
         }
 
@@ -324,8 +324,8 @@ namespace RogueCastle
                             Math.Round(
                                 (BaseHealth + GetEquipmentHealth() + HealthGainPerLevel*Game.PlayerStats.CurrentLevel +
                                  Game.PlayerStats.BonusHealth*5 +
-                                 SkillSystem.GetSkill(SkillType.Health_Up).ModifierAmount +
-                                 SkillSystem.GetSkill(SkillType.Health_Up_Final).ModifierAmount)*ClassTotalHPMultiplier*
+                                 SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
+                                 SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount)*ClassTotalHPMultiplier*
                                 Game.PlayerStats.LichHealthMod, MidpointRounding.AwayFromZero) +
                         Game.PlayerStats.LichHealth;
                     if (num < 1)
@@ -337,8 +337,8 @@ namespace RogueCastle
                 var num2 =
                     (int)
                         ((BaseMana + GetEquipmentMana() + ManaGainPerLevel*Game.PlayerStats.CurrentLevel +
-                          Game.PlayerStats.BonusMana*5 + SkillSystem.GetSkill(SkillType.Mana_Up).ModifierAmount +
-                          SkillSystem.GetSkill(SkillType.Mana_Up_Final).ModifierAmount)*ClassTotalMPMultiplier) +
+                          Game.PlayerStats.BonusMana*5 + SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
+                          SkillSystem.GetSkill(SkillType.ManaUpFinal).ModifierAmount)*ClassTotalMPMultiplier) +
                     Game.PlayerStats.LichMana;
                 if (num2 < 1)
                 {
@@ -357,8 +357,8 @@ namespace RogueCastle
                     var num =
                         (int)
                             ((BaseMana + GetEquipmentMana() + ManaGainPerLevel*Game.PlayerStats.CurrentLevel +
-                              Game.PlayerStats.BonusMana*5 + SkillSystem.GetSkill(SkillType.Mana_Up).ModifierAmount +
-                              SkillSystem.GetSkill(SkillType.Mana_Up_Final).ModifierAmount)*ClassTotalMPMultiplier) +
+                              Game.PlayerStats.BonusMana*5 + SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
+                              SkillSystem.GetSkill(SkillType.ManaUpFinal).ModifierAmount)*ClassTotalMPMultiplier) +
                         Game.PlayerStats.LichMana;
                     if (num < 1)
                     {
@@ -370,8 +370,8 @@ namespace RogueCastle
                     (int)
                         Math.Round(
                             (BaseHealth + GetEquipmentHealth() + HealthGainPerLevel*Game.PlayerStats.CurrentLevel +
-                             Game.PlayerStats.BonusHealth*5 + SkillSystem.GetSkill(SkillType.Health_Up).ModifierAmount +
-                             SkillSystem.GetSkill(SkillType.Health_Up_Final).ModifierAmount)*ClassTotalHPMultiplier*
+                             Game.PlayerStats.BonusHealth*5 + SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
+                             SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount)*ClassTotalHPMultiplier*
                             Game.PlayerStats.LichHealthMod, MidpointRounding.AwayFromZero) + Game.PlayerStats.LichHealth;
                 if (num2 < 1)
                 {
@@ -383,7 +383,7 @@ namespace RogueCastle
 
         public float InvincibilityTime
         {
-            get { return BaseInvincibilityTime + SkillSystem.GetSkill(SkillType.Invuln_Time_Up).ModifierAmount; }
+            get { return BaseInvincibilityTime + SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).ModifierAmount; }
         }
 
         public override Rectangle Bounds
@@ -402,8 +402,8 @@ namespace RogueCastle
             {
                 return
                     (int)
-                        (BaseWeight + SkillSystem.GetSkill(SkillType.Equip_Up).ModifierAmount +
-                         SkillSystem.GetSkill(SkillType.Equip_Up_Final).ModifierAmount) + Game.PlayerStats.BonusWeight*5;
+                        (BaseWeight + SkillSystem.GetSkill(SkillType.EquipUp).ModifierAmount +
+                         SkillSystem.GetSkill(SkillType.EquipUpFinal).ModifierAmount) + Game.PlayerStats.BonusWeight*5;
             }
         }
 
@@ -447,7 +447,7 @@ namespace RogueCastle
                 }
                 return
                     (int)
-                        ((m_manaGain + num + SkillSystem.GetSkill(SkillType.Mana_Regen_Up).ModifierAmount +
+                        ((m_manaGain + num + SkillSystem.GetSkill(SkillType.ManaRegenUp).ModifierAmount +
                           (Game.PlayerStats.GetNumberOfEquippedRunes(4) + (int) GetEquipmentSecondaryAttrib(8))*2 +
                           Game.PlayerStats.GetNumberOfEquippedRunes(10))*(1f + Game.PlayerStats.TimesCastleBeaten*0.5f));
             }
@@ -473,7 +473,7 @@ namespace RogueCastle
         {
             get
             {
-                var num = BaseCriticalChance + SkillSystem.GetSkill(SkillType.Crit_Chance_Up).ModifierAmount +
+                var num = BaseCriticalChance + SkillSystem.GetSkill(SkillType.CritChanceUp).ModifierAmount +
                           GetEquipmentSecondaryAttrib(1);
                 var @class = Game.PlayerStats.Class;
                 switch (@class)
@@ -504,7 +504,7 @@ namespace RogueCastle
         {
             get
             {
-                var num = BaseCriticalDamageMod + SkillSystem.GetSkill(SkillType.Crit_Damage_Up).ModifierAmount +
+                var num = BaseCriticalDamageMod + SkillSystem.GetSkill(SkillType.CritDamageUp).ModifierAmount +
                           GetEquipmentSecondaryAttrib(2);
                 var @class = Game.PlayerStats.Class;
                 if (@class == 3 || @class == 11)
@@ -517,14 +517,14 @@ namespace RogueCastle
 
         public float TotalXPBonus
         {
-            get { return SkillSystem.GetSkill(SkillType.XP_Gain_Up).ModifierAmount + GetEquipmentSecondaryAttrib(5); }
+            get { return SkillSystem.GetSkill(SkillType.XpGainUp).ModifierAmount + GetEquipmentSecondaryAttrib(5); }
         }
 
         public float TotalGoldBonus
         {
             get
             {
-                var num = SkillSystem.GetSkill(SkillType.Gold_Gain_Up).ModifierAmount + GetEquipmentSecondaryAttrib(3) +
+                var num = SkillSystem.GetSkill(SkillType.GoldGainUp).ModifierAmount + GetEquipmentSecondaryAttrib(3) +
                           Game.PlayerStats.GetNumberOfEquippedRunes(6)*0.1f + 0.5f*Game.PlayerStats.TimesCastleBeaten;
                 var @class = Game.PlayerStats.Class;
                 if (@class == 5 || @class == 13)
@@ -568,7 +568,7 @@ namespace RogueCastle
         {
             get
             {
-                return SkillSystem.GetSkill(SkillType.Armor_Up).ModifierAmount + Game.PlayerStats.BonusDefense*2 +
+                return SkillSystem.GetSkill(SkillType.ArmorUp).ModifierAmount + Game.PlayerStats.BonusDefense*2 +
                        GetEquipmentArmor();
             }
         }
@@ -814,8 +814,8 @@ namespace RogueCastle
             {
                 var num =
                     (int)
-                        ((RandomDamage + SkillSystem.GetSkill(SkillType.Attack_Up).ModifierAmount +
-                          SkillSystem.GetSkill(SkillType.Damage_Up_Final).ModifierAmount)*ClassDamageGivenMultiplier);
+                        ((RandomDamage + SkillSystem.GetSkill(SkillType.AttackUp).ModifierAmount +
+                          SkillSystem.GetSkill(SkillType.DamageUpFinal).ModifierAmount)*ClassDamageGivenMultiplier);
                 if (IsAirAttacking)
                 {
                     num = (int) (num*TotalAirAttackDamageMod);
@@ -854,7 +854,7 @@ namespace RogueCastle
             MinDamage = 25;
             MaxDamage = 25;
             ComboDelay = 1.5f;
-            AttackAnimationDelay = 1f/(20f + SkillSystem.GetSkill(SkillType.Attack_Speed_Up).ModifierAmount);
+            AttackAnimationDelay = 1f/(20f + SkillSystem.GetSkill(SkillType.AttackSpeedUp).ModifierAmount);
             StrongDamage = 25;
             StrongEnemyKnockBack = new Vector2(300f, 360f);
             AirAttackKnockBack = 1425f;
@@ -2782,7 +2782,7 @@ namespace RogueCastle
                     else
                     {
                         var num6 = CDGMath.RandomInt(1, 100);
-                        if (num6 <= SkillSystem.GetSkill(SkillType.Death_Dodge).ModifierAmount*100f)
+                        if (num6 <= SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount*100f)
                         {
                             CurrentHealth = (int) (MaxHealth*0.1f);
                             m_invincibleCounter = (int) (InvincibilityTime*1000f);
@@ -3047,7 +3047,7 @@ namespace RogueCastle
             var damageMultiplier = SpellEV.GetDamageMultiplier(spell);
             projData.Damage = (int) (TotalMagicDamage*damageMultiplier);
             var num =
-                (int) (SpellEV.GetManaCost(spell)*(1f - SkillSystem.GetSkill(SkillType.Mana_Cost_Down).ModifierAmount));
+                (int) (SpellEV.GetManaCost(spell)*(1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount));
             if (CurrentMana >= num)
             {
                 SpellCastDelay = 0.5f;
@@ -3453,8 +3453,8 @@ namespace RogueCastle
                 var num3 =
                     (int)
                         ((BaseMana + GetEquipmentMana() + Game.PlayerStats.BonusMana*5 +
-                          SkillSystem.GetSkill(SkillType.Mana_Up).ModifierAmount +
-                          SkillSystem.GetSkill(SkillType.Mana_Up_Final).ModifierAmount)*2f);
+                          SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
+                          SkillSystem.GetSkill(SkillType.ManaUpFinal).ModifierAmount)*2f);
                 if (MaxMana + num + num2 < num3)
                 {
                     SoundManager.PlaySound("Lich_Swap");

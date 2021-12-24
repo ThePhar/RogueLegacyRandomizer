@@ -1,14 +1,16 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - SkillBuilder.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -24,7 +26,7 @@ namespace RogueCastle
                     skillObj.Description =
                         "This is a filler trait used to link to other traits. This text should never be visible.";
                     break;
-                case SkillType.Health_Up:
+                case SkillType.HealthUp:
                     skillObj.Name = "Health Up";
                     skillObj.Description = "Improve your cardio workout. A better heart means better health.";
                     skillObj.PerLevelModifier = 10f;
@@ -37,7 +39,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Invuln_Time_Up:
+                case SkillType.InvulnerabilityTimeUp:
                     skillObj.Name = "Invuln Time Up";
                     skillObj.Description =
                         "Strengthen your adrenal glands and be invulnerable  like Bane. Let the games begin!";
@@ -51,7 +53,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Death_Dodge:
+                case SkillType.DeathDodge:
                     skillObj.Name = "Death Defy";
                     skillObj.Description = "Release your inner cat, and avoid death. Sometimes.";
                     skillObj.PerLevelModifier = 0.015f;
@@ -64,7 +66,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Attack_Up:
+                case SkillType.AttackUp:
                     skillObj.Name = "Attack Up";
                     skillObj.Description =
                         "A proper gym will allow you to really  strengthen your arms and butt muscles.";
@@ -78,7 +80,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Down_Strike_Up:
+                case SkillType.DownStrikeUp:
                     skillObj.Name = "Down Strike Up";
                     skillObj.Description =
                         "A pogo practice room has its benefits. Deal more damage with consecutive down strikes.";
@@ -92,7 +94,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Crit_Chance_Up:
+                case SkillType.CritChanceUp:
                     skillObj.Name = "Crit Chance Up";
                     skillObj.Description =
                         "Teaching yourself about the weaknesses of enemies allows you to strike with deadly efficiency.";
@@ -106,7 +108,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Crit_Damage_Up:
+                case SkillType.CritDamageUp:
                     skillObj.Name = "Crit Damage Up";
                     skillObj.Description = "Practice the deadly strikes to be even deadlier. Enemies will be so dead.";
                     skillObj.PerLevelModifier = 0.05f;
@@ -119,7 +121,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Magic_Damage_Up:
+                case SkillType.MagicDamageUp:
                     skillObj.Name = "Magic Damage Up";
                     skillObj.Description =
                         "Learn the secrets of the universe, so you can use it to kill with spells better.";
@@ -133,7 +135,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = false;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Mana_Up:
+                case SkillType.ManaUp:
                     skillObj.Name = "Mana Up";
                     skillObj.Description = "Increase your mental fortitude in order to increase your mana pool. ";
                     skillObj.PerLevelModifier = 10f;
@@ -146,7 +148,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Mana_Cost_Down:
+                case SkillType.ManaCostDown:
                     skillObj.Name = "Mana Cost Down";
                     skillObj.Description = "Practice your basics to reduce mana costs when casting spells.";
                     skillObj.PerLevelModifier = 0.05f;
@@ -198,7 +200,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = false;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Equip_Up:
+                case SkillType.EquipUp:
                     skillObj.Name = "Equip Up";
                     skillObj.Description =
                         "Upgrading your carry capacity will allow you to wear better and heavier armor.";
@@ -212,7 +214,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Armor_Up:
+                case SkillType.ArmorUp:
                     skillObj.Name = "Armor Up";
                     skillObj.Description = "Strengthen your innards through natural means to reduce incoming damage.";
                     skillObj.PerLevelModifier = 4f;
@@ -225,7 +227,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Gold_Gain_Up:
+                case SkillType.GoldGainUp:
                     skillObj.Name = "Gold Gain Up";
                     skillObj.Description = "Improve your looting skills, and get more bang for your buck.";
                     skillObj.PerLevelModifier = 0.1f;
@@ -238,7 +240,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Prices_Down:
+                case SkillType.PricesDown:
                     skillObj.Name = "Haggle";
                     skillObj.Description = "Lower Charon's toll by learning how to barter with death itself.";
                     skillObj.PerLevelModifier = 0.1f;
@@ -251,7 +253,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Potion_Up:
+                case SkillType.PotionUp:
                     skillObj.Name = "Potion Up";
                     skillObj.Description = "Gut cleansing leads to noticable improvements from both potions and meat.";
                     skillObj.PerLevelModifier = 0.01f;
@@ -264,7 +266,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = false;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Randomize_Children:
+                case SkillType.RandomizeChildren:
                     skillObj.Name = "Randomize Children";
                     skillObj.Description =
                         "Use the power of science to make a whole new batch of babies. Just... don't ask.";
@@ -278,7 +280,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = false;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Lich_Unlock:
+                case SkillType.LichUnlock:
                     skillObj.Name = "Unlock Lich";
                     skillObj.Description = "Release the power of the Lich! A being of massive potential.";
                     skillObj.PerLevelModifier = 1f;
@@ -291,7 +293,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Banker_Unlock:
+                case SkillType.BankerUnlock:
                     skillObj.Name = "Unlock Miner";
                     skillObj.Description = "Unlock the skills of the Miner and raise your family fortune";
                     skillObj.PerLevelModifier = 1f;
@@ -304,7 +306,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Spellsword_Unlock:
+                case SkillType.SpellswordUnlock:
                     skillObj.Name = "Unlock Spell Thief";
                     skillObj.Description = "Unlock the Spellthief, and  become a martial  mage.";
                     skillObj.PerLevelModifier = 1f;
@@ -317,7 +319,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Ninja_Unlock:
+                case SkillType.NinjaUnlock:
                     skillObj.Name = "Unlock Shinobi";
                     skillObj.Description = "Unlock the Shinobi, the fleetest of fighters.";
                     skillObj.PerLevelModifier = 1f;
@@ -330,7 +332,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Knight_Up:
+                case SkillType.KnightUp:
                     skillObj.Name = "Upgrade Knight";
                     skillObj.Description = "Turn your knights into Paladins. A ferocious forefront fighter.";
                     skillObj.PerLevelModifier = 1f;
@@ -343,7 +345,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Mage_Up:
+                case SkillType.MageUp:
                     skillObj.Name = "Upgrade Mage";
                     skillObj.Description =
                         "Unlock the latent powers of the Mage and transform them into the all powerful Archmage";
@@ -357,7 +359,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Assassin_Up:
+                case SkillType.AssassinUp:
                     skillObj.Name = "Upgrade Knave";
                     skillObj.Description = "Learn the dark arts, and turn the Knave into an Assassin";
                     skillObj.PerLevelModifier = 1f;
@@ -370,7 +372,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Banker_Up:
+                case SkillType.BankerUp:
                     skillObj.Name = "Upgrade Miner";
                     skillObj.Description = "Earn your geology degree and go from Miner to Spelunker. Spiffy.";
                     skillObj.PerLevelModifier = 1f;
@@ -383,7 +385,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Barbarian_Up:
+                case SkillType.BarbarianUp:
                     skillObj.Name = "Upgrade Barbarian";
                     skillObj.Description = "Become a Barbarian King.  The king of freemen. That makes no sense.";
                     skillObj.PerLevelModifier = 1f;
@@ -397,7 +399,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Lich_Up:
+                case SkillType.LichUp:
                     skillObj.Name = "Upgrade Lich";
                     skillObj.Description = "Royalize your all-powerful Liches, and turn them into Lich Kings.";
                     skillObj.PerLevelModifier = 1f;
@@ -410,7 +412,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.Ninja_Up:
+                case SkillType.NinjaUp:
                     skillObj.Name = "Upgrade Shinobi";
                     skillObj.Description =
                         "Become the leader of your village, and turn your Shinobi into a Hokage. Believe it!";
@@ -424,7 +426,7 @@ namespace RogueCastle
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     break;
-                case SkillType.SpellSword_Up:
+                case SkillType.SpellSwordUp:
                     skillObj.Name = "Upgrade Spell Thief";
                     skillObj.Description = "Ride the vortexes of magic, and turn your Spellthiefs into Spellswords.";
                     skillObj.PerLevelModifier = 1f;
@@ -449,7 +451,7 @@ namespace RogueCastle
                     skillObj.UnitOfMeasurement = "hp";
                     skillObj.DisplayStat = true;
                     break;
-                case SkillType.Stout_Heart:
+                case SkillType.StoutHeart:
                     skillObj.Name = "Stout Heart";
                     skillObj.Description = "Your have viking ancestry.  \n\nIncrease your starting endurance.";
                     skillObj.PerLevelModifier = 20f;
@@ -458,7 +460,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 5;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Quick_of_Breath:
+                case SkillType.QuickOfBreath:
                     skillObj.Name = "Quick of Breath";
                     skillObj.Description =
                         "QUICK OF BREATH \nYou're a heavy breather.  Bad for stalking, good for walking! \n\nIncrease your natural endurance regeneration.";
@@ -468,7 +470,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 5;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Born_to_Run:
+                case SkillType.BornToRun:
                     skillObj.Name = "Born to Run";
                     skillObj.Description =
                         "You were infused with tiger blood at a young age.  You have now been infused with the power to release tiger blood when stabbed. \nRunning drains less endurance.";
@@ -479,7 +481,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 5;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Out_the_Gate:
+                case SkillType.OutTheGate:
                     skillObj.Name = "Out the Gate";
                     skillObj.Description =
                         "You're an early waker. If leveling was like waking up.\n Gain bonus HP and MP every time you level.";
@@ -509,7 +511,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Iron_Lung:
+                case SkillType.IronLung:
                     skillObj.Name = "Iron Lung";
                     skillObj.Description = "Generic SKILL.  Increase total Endurance.";
                     skillObj.Position = new Vector2(50f, 200f);
@@ -519,7 +521,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 50;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Sword_Master:
+                case SkillType.SwordMaster:
                     skillObj.Name = "Sword Master";
                     skillObj.Description = "You fight with finesse \n Attacks Drain X% less endurance.";
                     skillObj.Position = new Vector2(50f, 150f);
@@ -549,7 +551,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Second_Chance:
+                case SkillType.SecondChance:
                     skillObj.Name = "Second Chance";
                     skillObj.Description =
                         "Come back to life, just like Jesus. But you're still not jesus. \n Revive once after dying.";
@@ -560,7 +562,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Peace_of_Mind:
+                case SkillType.PeaceOfMind:
                     skillObj.Name = "Peace of Mind";
                     skillObj.Description =
                         "Clearing a room is like clearing your mind.  I don't know how. \nRegain helath for every room fully cleared.";
@@ -571,7 +573,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Cartography_Ninja:
+                case SkillType.CartographyNinja:
                     skillObj.Name = "Cartography Ninja";
                     skillObj.Description = "Cartography /n Each percentage of map revealed adds 0.1 damage.";
                     skillObj.Position = new Vector2(100f, 50f);
@@ -581,7 +583,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Strong_Man:
+                case SkillType.StrongMan:
                     skillObj.Name = "Strong Man";
                     skillObj.Description = "Generic SKILL.  Increase Attack Damage.";
                     skillObj.Position = new Vector2(100f, 50f);
@@ -602,7 +604,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Crit_Barbarian:
+                case SkillType.CritBarbarian:
                     skillObj.Name = "Crit Barbarian";
                     skillObj.Description =
                         "You have learned that hitting the balls deals massive damage. \n Crits deal more damage.";
@@ -633,7 +635,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.One_Time_Only:
+                case SkillType.OneTimeOnly:
                     skillObj.Name = "One Time Only";
                     skillObj.Description =
                         "Like a pheonix you are reborn from your crappy ashes. \n Regain all HP and MP.";
@@ -644,7 +646,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Cutting_Out_Early:
+                case SkillType.CuttingOutEarly:
                     skillObj.Name = "Cutting Out Early";
                     skillObj.Description =
                         "Retire, and invest your money wisely.  End your game early, and gain a bonus to gold found.";
@@ -665,7 +667,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Spell_Sword:
+                case SkillType.SpellSword:
                     skillObj.Name = "Spellsword";
                     skillObj.Description =
                         "You were born with absolute power in your fingertips. \nAll spells deal more damage.";
@@ -687,7 +689,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 5;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Well_Endowed:
+                case SkillType.WellEndowed:
                     skillObj.Name = "Well Endowed";
                     skillObj.Description = "By law, you are now the best man. \nGive birth to more children.";
                     skillObj.Position = new Vector2(150f, 100f);
@@ -697,7 +699,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 2;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Treasure_Hunter:
+                case SkillType.TreasureHunter:
                     skillObj.Name = "Treasure Hunter";
                     skillObj.Description =
                         "Your parents said learning how to sift for gold was useless for a farmer.  Whose laughing now? \n Display treasure rooms at the start of the game.";
@@ -708,7 +710,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 2;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Mortar_Master:
+                case SkillType.MortarMaster:
                     skillObj.Name = "Mortar Master";
                     skillObj.Description = "War is hell.  Luckily you were never in one. \n Fire more mortars.";
                     skillObj.Position = new Vector2(150f, 300f);
@@ -718,7 +720,7 @@ namespace RogueCastle
                     skillObj.MaxLevel = 3;
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
-                case SkillType.Explosive_Expert:
+                case SkillType.ExplosiveExpert:
                     skillObj.Name = "Explosive Expert";
                     skillObj.Description =
                         "As a child, you showed an affinity for blowing things up. \n Bombs have a larger radius.";

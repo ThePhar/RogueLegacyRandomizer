@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SaveGameManager.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-24
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 
 namespace RogueCastle

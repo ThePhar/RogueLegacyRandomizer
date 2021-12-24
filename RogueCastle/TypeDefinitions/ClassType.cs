@@ -257,16 +257,16 @@ namespace RogueCastle.TypeDefinitions
                 Knave
             };
 
-            if (SkillSystem.GetSkill(SkillType.Ninja_Unlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(SkillType.NinjaUnlock).ModifierAmount > 0f)
                 list.Add(Shinobi);
 
-            if (SkillSystem.GetSkill(SkillType.Banker_Unlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(SkillType.BankerUnlock).ModifierAmount > 0f)
                 list.Add(Miner);
 
-            if (SkillSystem.GetSkill(SkillType.Spellsword_Unlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(SkillType.SpellswordUnlock).ModifierAmount > 0f)
                 list.Add(Spellthief);
 
-            if (SkillSystem.GetSkill(SkillType.Lich_Unlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(SkillType.LichUnlock).ModifierAmount > 0f)
                 list.Add(Lich);
 
             if (SkillSystem.GetSkill(SkillType.SuperSecret).ModifierAmount > 0f)
@@ -293,28 +293,28 @@ namespace RogueCastle.TypeDefinitions
             switch (classType)
             {
                 case Knight:
-                    return SkillSystem.GetSkill(SkillType.Knight_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.KnightUp).ModifierAmount > 0f;
 
                 case Mage:
-                    return SkillSystem.GetSkill(SkillType.Mage_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.MageUp).ModifierAmount > 0f;
 
                 case Barbarian:
-                    return SkillSystem.GetSkill(SkillType.Barbarian_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.BarbarianUp).ModifierAmount > 0f;
 
                 case Knave:
-                    return SkillSystem.GetSkill(SkillType.Assassin_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.AssassinUp).ModifierAmount > 0f;
 
                 case Shinobi:
-                    return SkillSystem.GetSkill(SkillType.Ninja_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.NinjaUp).ModifierAmount > 0f;
 
                 case Miner:
-                    return SkillSystem.GetSkill(SkillType.Banker_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.BankerUp).ModifierAmount > 0f;
 
                 case Spellthief:
-                    return SkillSystem.GetSkill(SkillType.SpellSword_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.SpellSwordUp).ModifierAmount > 0f;
 
                 case Lich:
-                    return SkillSystem.GetSkill(SkillType.Lich_Up).ModifierAmount > 0f;
+                    return SkillSystem.GetSkill(SkillType.LichUp).ModifierAmount > 0f;
 
                 default:
                     return false;

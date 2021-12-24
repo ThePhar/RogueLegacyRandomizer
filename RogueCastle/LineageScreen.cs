@@ -300,7 +300,7 @@ namespace RogueCastle
                 m_navigationText.Text = "Arrow keys to view family tree";
             }
             m_rerollText.Text = "[Input:" + 9 + "] to re-roll your children once";
-            if (SkillSystem.GetSkill(SkillType.Randomize_Children).ModifierAmount > 0f &&
+            if (SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                 !Game.PlayerStats.RerolledChildren)
             {
                 m_rerollText.Visible = true;
@@ -489,7 +489,7 @@ namespace RogueCastle
                 var selectedLineageObj = m_selectedLineageObj;
                 var selectedLineageIndex = m_selectedLineageIndex;
                 if (Game.GlobalInput.JustPressed(9) &&
-                    SkillSystem.GetSkill(SkillType.Randomize_Children).ModifierAmount > 0f &&
+                    SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                     !Game.PlayerStats.RerolledChildren)
                 {
                     m_lockControls = true;

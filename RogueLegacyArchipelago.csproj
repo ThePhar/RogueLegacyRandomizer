@@ -177,7 +177,6 @@
     <Compile Include="RogueCastle\GameUtil.cs" />
     <Compile Include="RogueCastle\GaussianBlur.cs" />
     <Compile Include="RogueCastle\GetItemScreen.cs" />
-    <Compile Include="RogueCastle\GetItemType.cs" />
     <Compile Include="RogueCastle\GlobalEV.cs" />
     <Compile Include="RogueCastle\GroundCheckLogicAction.cs" />
     <Compile Include="RogueCastle\HazardObj.cs" />
@@ -187,7 +186,6 @@
     <Compile Include="RogueCastle\IntroRoomObj.cs" />
     <Compile Include="RogueCastle\ItemDropManager.cs" />
     <Compile Include="RogueCastle\ItemDropObj.cs" />
-    <Compile Include="RogueCastle\ItemDropType.cs" />
     <Compile Include="RogueCastle\JukeboxBonusRoom.cs" />
     <Compile Include="RogueCastle\JumpLogicAction.cs" />
     <Compile Include="RogueCastle\KeyIconObj.cs" />
@@ -210,7 +208,6 @@
     <Compile Include="RogueCastle\NpcObj.cs" />
     <Compile Include="RogueCastle\OptionsObj.cs" />
     <Compile Include="RogueCastle\OptionsScreen.cs" />
-    <Compile Include="RogueCastle\OrbType.cs" />
     <Compile Include="RogueCastle\PauseScreen.cs" />
     <Compile Include="RogueCastle\PlayerEV.cs" />
     <Compile Include="RogueCastle\PlayerHUDObj.cs" />
@@ -236,11 +233,8 @@
     <Compile Include="RogueCastle\ReduceQualityOptionsObj.cs" />
     <Compile Include="RogueCastle\ResolutionOptionsObj.cs" />
     <Compile Include="RogueCastle\RoomObj.cs" />
-    <Compile Include="RogueCastle\RoomType.cs" />
     <Compile Include="RogueCastle\SaveGameManager.cs" />
-    <Compile Include="RogueCastle\SaveType.cs" />
     <Compile Include="RogueCastle\SavingState.cs" />
-    <Compile Include="RogueCastle\ScreenType.cs" />
     <Compile Include="RogueCastle\SFXVolOptionsObj.cs" />
     <Compile Include="RogueCastle\ShadowmapResolver.cs" />
     <Compile Include="RogueCastle\ShadowmapSize.cs" />
@@ -249,13 +243,10 @@
     <Compile Include="RogueCastle\SkillObj.cs" />
     <Compile Include="RogueCastle\SkillScreen.cs" />
     <Compile Include="RogueCastle\SkillSystem.cs" />
-    <Compile Include="RogueCastle\SkillType.cs" />
     <Compile Include="RogueCastle\SkillUnlockScreen.cs" />
-    <Compile Include="RogueCastle\SkillUnlockType.cs" />
     <Compile Include="RogueCastle\SkyObj.cs" />
     <Compile Include="RogueCastle\SleepUtil.cs" />
     <Compile Include="RogueCastle\SpecialItemRoomObj.cs" />
-    <Compile Include="RogueCastle\SpecialItemType.cs" />
     <Compile Include="RogueCastle\SpellEV.cs" />
     <Compile Include="RogueCastle\SpellSwapRoomObj.cs" />
     <Compile Include="RogueCastle\SpellType.cs" />
@@ -284,7 +275,16 @@
     <Compile Include="RogueCastle\TypeDefinitions\EquipmentCategoryType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\EquipmentSecondaryDataType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\GameTypes.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\GetItemType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\InputMapType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\ItemDropType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\OrbType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\RoomType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\SaveType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\ScreenType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\SkillType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\SkillUnlockType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\SpecialItemType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
     <Compile Include="RogueCastle\WaypointObj.cs" />

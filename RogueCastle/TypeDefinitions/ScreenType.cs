@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ScreenType.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-24
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -9,7 +9,7 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-namespace RogueCastle
+namespace RogueCastle.TypeDefinitions
 {
     public static class ScreenType
     {

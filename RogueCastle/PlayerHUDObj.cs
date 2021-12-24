@@ -272,7 +272,7 @@ namespace RogueCastle
                 m_spellCost.Text =
                     (int)
                         (SpellEV.GetManaCost(Game.PlayerStats.Spell)*
-                         (1f - SkillSystem.GetSkill(SkillType.Mana_Cost_Down).ModifierAmount)) + " mp";
+                         (1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount)) + " mp";
                 m_spellCost.Visible = true;
             }
         }

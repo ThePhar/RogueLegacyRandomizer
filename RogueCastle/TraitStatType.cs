@@ -1,12 +1,15 @@
-/*
-  Rogue Legacy Enhanced
+// 
+// RogueLegacyArchipelago - TraitStatType.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -18,45 +21,45 @@ namespace RogueCastle
         {
             switch (traitType)
             {
-                case SkillType.Health_Up:
-                case SkillType.Health_Up_Final:
+                case SkillType.HealthUp:
+                case SkillType.HealthUpFinal:
                     return Game.ScreenManager.Player.MaxHealth;
-                case SkillType.Invuln_Time_Up:
+                case SkillType.InvulnerabilityTimeUp:
                     return Game.ScreenManager.Player.InvincibilityTime;
-                case SkillType.Death_Dodge:
-                    return SkillSystem.GetSkill(SkillType.Death_Dodge).ModifierAmount*100f;
-                case SkillType.Attack_Up:
-                case SkillType.Damage_Up_Final:
+                case SkillType.DeathDodge:
+                    return SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount*100f;
+                case SkillType.AttackUp:
+                case SkillType.DamageUpFinal:
                     return Game.ScreenManager.Player.Damage;
-                case SkillType.Down_Strike_Up:
-                    return SkillSystem.GetSkill(SkillType.Down_Strike_Up).ModifierAmount*100f;
-                case SkillType.Crit_Chance_Up:
+                case SkillType.DownStrikeUp:
+                    return SkillSystem.GetSkill(SkillType.DownStrikeUp).ModifierAmount*100f;
+                case SkillType.CritChanceUp:
                     return Game.ScreenManager.Player.TotalCritChance;
-                case SkillType.Crit_Damage_Up:
+                case SkillType.CritDamageUp:
                     return Game.ScreenManager.Player.TotalCriticalDamage*100f;
-                case SkillType.Magic_Damage_Up:
+                case SkillType.MagicDamageUp:
                     return Game.ScreenManager.Player.TotalMagicDamage;
-                case SkillType.Mana_Up:
-                case SkillType.Mana_Up_Final:
+                case SkillType.ManaUp:
+                case SkillType.ManaUpFinal:
                     return Game.ScreenManager.Player.MaxMana;
-                case SkillType.Mana_Cost_Down:
-                    return SkillSystem.GetSkill(SkillType.Mana_Cost_Down).ModifierAmount*100f;
-                case SkillType.Equip_Up:
-                case SkillType.Equip_Up_Final:
+                case SkillType.ManaCostDown:
+                    return SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount*100f;
+                case SkillType.EquipUp:
+                case SkillType.EquipUpFinal:
                     return Game.ScreenManager.Player.MaxWeight;
-                case SkillType.Armor_Up:
+                case SkillType.ArmorUp:
                     return Game.ScreenManager.Player.TotalArmor;
-                case SkillType.Gold_Gain_Up:
+                case SkillType.GoldGainUp:
                     return Game.ScreenManager.Player.TotalGoldBonus;
-                case SkillType.Prices_Down:
-                    return SkillSystem.GetSkill(SkillType.Prices_Down).ModifierAmount*100f;
-                case SkillType.Potion_Up:
-                    return (0.1f + SkillSystem.GetSkill(SkillType.Potion_Up).ModifierAmount)*100f;
-                case SkillType.Attack_Speed_Up:
-                    return SkillSystem.GetSkill(SkillType.Attack_Speed_Up).ModifierAmount*10f;
-                case SkillType.XP_Gain_Up:
+                case SkillType.PricesDown:
+                    return SkillSystem.GetSkill(SkillType.PricesDown).ModifierAmount*100f;
+                case SkillType.PotionUp:
+                    return (0.1f + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount)*100f;
+                case SkillType.AttackSpeedUp:
+                    return SkillSystem.GetSkill(SkillType.AttackSpeedUp).ModifierAmount*10f;
+                case SkillType.XpGainUp:
                     return Game.ScreenManager.Player.TotalXPBonus;
-                case SkillType.Mana_Regen_Up:
+                case SkillType.ManaRegenUp:
                     return Game.ScreenManager.Player.ManaGain;
             }
             return -1f;
