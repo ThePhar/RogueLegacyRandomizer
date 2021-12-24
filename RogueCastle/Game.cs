@@ -15,6 +15,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using Archipelago.MultiClient.Net;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -120,6 +121,8 @@ namespace RogueCastle
             GraphicsDeviceManager.PreparingDeviceSettings += ChangeGraphicsSettings;
             SleepUtil.DisableScreensaver();
         }
+
+        public ArchipelagoSession ArchSession;
 
         public static RCScreenManager ScreenManager { get; internal set; }
         public static float PlaySessionLength { get; set; }
@@ -308,7 +311,7 @@ namespace RogueCastle
             GameConfig.SFXVolume = 0.8f;
             GameConfig.EnableDirectInput = true;
             InputManager.Deadzone = 10f;
-            GameConfig.ProfileSlot = 1;
+            GameConfig.ProfileSlot = "_no-seed-2";
             GameConfig.EnableSteamCloud = false;
             GameConfig.ReduceQuality = false;
             InitializeGlobalInput();
@@ -860,7 +863,7 @@ namespace RogueCastle
                                     GameConfig.EnableSteamCloud = bool.Parse(text3);
                                     break;
                                 case "Slot":
-                                    GameConfig.ProfileSlot = byte.Parse(text3, NumberStyles.Any, cultureInfo);
+                                    GameConfig.ProfileSlot = text3;
                                     break;
                                 case "KeyUP":
                                     GlobalInput.KeyList[16] = (Keys) Enum.Parse(typeof (Keys), text3);
@@ -968,7 +971,7 @@ namespace RogueCastle
             public bool EnableSteamCloud;
             public bool FullScreen;
             public float MusicVolume;
-            public byte ProfileSlot;
+            public string ProfileSlot;
             public bool QuickDrop;
             public bool ReduceQuality;
             public int ScreenHeight;

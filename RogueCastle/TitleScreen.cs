@@ -244,6 +244,11 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
+            // Disconnect from Arch if we are connected.
+            if (Program.Game.ArchSession != null && Program.Game.ArchSession.Socket.Connected)
+                Program.Game.ArchSession.Socket.Disconnect();
+            Program.Game.ArchSession = null;
+
             Camera.Zoom = 1f;
             SoundManager.PlayMusic("TitleScreenSong", true, 1f);
             Game.ScreenManager.Player.ForceInvincible = false;
@@ -308,22 +313,23 @@ namespace RogueCastle
         public void StartPressed()
         {
             SoundManager.PlaySound("Game_Start");
+
             if (!m_startNewLegacy)
             {
                 if (!m_heroIsDead)
                 {
                     if (m_loadStartingRoom)
                     {
-                        (ScreenManager as RCScreenManager).DisplayScreen(15, true);
+                        (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.StartingRoom, true);
                     }
                     else
                     {
-                        (ScreenManager as RCScreenManager).DisplayScreen(5, true);
+                        (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Level, true);
                     }
                 }
                 else
                 {
-                    (ScreenManager as RCScreenManager).DisplayScreen(9, true);
+                    (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Lineage, true);
                 }
             }
             else
@@ -352,7 +358,7 @@ namespace RogueCastle
                 Game.PlayerStats.EnemiesKilledInRun.Clear();
                 (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage,
                     SaveType.UpgradeData);
-                (ScreenManager as RCScreenManager).DisplayScreen(15, true);
+                (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.StartingRoom, true);
             }
 
             SoundManager.StopMusic(0.2f);

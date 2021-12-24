@@ -12,11 +12,12 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
+using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Tweener;
 using Tweener.Ease;
 
@@ -129,11 +130,39 @@ namespace RogueCastle
         public void Connect()
         {
             // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
-            var session = ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
-            session.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue, LevelEV.AP_VERSION, password: m_password.GetValue);
+            Program.Game.ArchSession = ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
+            Program.Game.ArchSession.Socket.PacketReceived += packet =>
+            {
+                var roomInfo = packet as RoomInfoPacket;
+                if (roomInfo != null)
+                {
+                    Game.GameConfig.ProfileSlot = roomInfo.SeedName;
+                }
 
-            Console.WriteLine("ARCH-CLIENT: FIRED CONNECT SCRIPT!");
-            m_titleScreen.StartPressed();
+                var connectedPacket = packet as ConnectedPacket;
+                if (connectedPacket != null)
+                {
+                    Game.PlayerStats.Difficulty              = int.Parse(connectedPacket.SlotData["difficulty"].ToString());
+                    Game.PlayerStats.StatIncreasePool        = int.Parse(connectedPacket.SlotData["stat_increase_pool"].ToString());
+                    Game.PlayerStats.StatIncreaseApplies     = int.Parse(connectedPacket.SlotData["stat_increase_applies"].ToString());
+                    Game.PlayerStats.EarlyVendors            = int.Parse(connectedPacket.SlotData["early_vendors"].ToString());
+                    Game.PlayerStats.BossShuffle             = int.Parse(connectedPacket.SlotData["boss_shuffle"].ToString());
+                    Game.PlayerStats.Children                = int.Parse(connectedPacket.SlotData["children"].ToString());
+                    Game.PlayerStats.HereditaryBlessings     = int.Parse(connectedPacket.SlotData["hereditary_blessings"].ToString());
+                    Game.PlayerStats.EnableShop              = int.Parse(connectedPacket.SlotData["enable_shop"].ToString());
+                    Game.PlayerStats.DisableCharon           = int.Parse(connectedPacket.SlotData["disable_charon"].ToString());
+                    Game.PlayerStats.DeathLink               = int.Parse(connectedPacket.SlotData["death_link"].ToString());
+                    Game.PlayerStats.AdditionalChildrenNames =
+                        (connectedPacket.SlotData["additional_children_names"] as JArray).ToObject<string[]>();
+
+                    // Connect!
+                    Program.Game.SaveManager.CreateSaveDirectory();
+                    m_titleScreen.LoadSaveData();
+                    m_titleScreen.StartPressed();
+                }
+            };
+
+            Program.Game.ArchSession.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue, LevelEV.AP_VERSION, password: m_password.GetValue);
         }
 
         public override void OnEnter()

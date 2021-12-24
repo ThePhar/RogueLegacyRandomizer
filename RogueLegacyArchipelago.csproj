@@ -40,6 +40,9 @@
     <Reference Include="Microsoft.Xna.Framework.Game" />
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Nuclex.Input, Version=4.0.0.0, Culture=neutral, PublicKeyToken=889233c3085159a5">
       <HintPath>lib\Nuclex.Input.dll</HintPath>
     </Reference>
@@ -231,7 +234,6 @@
     <Compile Include="RogueCastle\PortraitRoomObj.cs" />
     <Compile Include="RogueCastle\ProceduralLevelScreen.cs" />
     <Compile Include="RogueCastle\ProfileCardScreen.cs" />
-    <Compile Include="RogueCastle\ProfileSelectScreen.cs" />
     <Compile Include="RogueCastle\Program.cs" />
     <Compile Include="RogueCastle\ProjectileData.cs" />
     <Compile Include="RogueCastle\ProjectileIconObj.cs" />

@@ -21,6 +21,7 @@ namespace RogueCastle
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool AllocConsole();
+        public static Game Game;
 
         private static void Main(string[] args)
         {
@@ -38,7 +39,7 @@ namespace RogueCastle
                 LevelEV.SHOW_DEBUG_TEXT = false;
                 LevelEV.LOAD_TITLE_SCREEN = false;
                 LevelEV.LOAD_SPLASH_SCREEN = true;
-                LevelEV.SHOW_SAVELOAD_DEBUG_TEXT = false;
+                LevelEV.SHOW_SAVELOAD_DEBUG_TEXT = true;
                 LevelEV.DELETE_SAVEFILE = false;
                 LevelEV.CLOSE_TESTROOM_DOORS = false;
                 LevelEV.RUN_TUTORIAL = false;
@@ -56,6 +57,7 @@ namespace RogueCastle
             {
                 using (var game = new Game(args[0]))
                 {
+                    Game = game;
                     LevelEV.RUN_TESTROOM = true;
                     LevelEV.DISABLE_SAVING = true;
                     game.Run();
@@ -68,6 +70,7 @@ namespace RogueCastle
                 {
                     using (var game2 = new Game())
                     {
+                        Game = game2;
                         game2.Run();
                     }
                     return;
@@ -94,6 +97,7 @@ namespace RogueCastle
             }
             using (var game3 = new Game())
             {
+                Game = game3;
                 game3.Run();
             }
         }

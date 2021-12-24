@@ -41,7 +41,6 @@ namespace RogueCastle
         private ArchipelagoScreen m_archipelagoScreen;
         private PauseScreen m_pauseScreen;
         private ProfileCardScreen m_profileCardScreen;
-        private ProfileSelectScreen m_profileSelectScreen;
         private SkillUnlockScreen m_skillUnlockScreen;
         private TextScreen m_textScreen;
         private VirtualScreen m_virtualScreen;
@@ -124,7 +123,6 @@ namespace RogueCastle
             m_textScreen = new TextScreen();
             m_flashbackScreen = new DiaryFlashbackScreen();
             m_gameOverBossScreen = new GameOverBossScreen();
-            m_profileSelectScreen = new ProfileSelectScreen();
         }
 
         public override void LoadContent()
@@ -146,7 +144,6 @@ namespace RogueCastle
             m_textScreen.LoadContent();
             m_flashbackScreen.LoadContent();
             m_gameOverBossScreen.LoadContent();
-            m_profileSelectScreen.LoadContent();
             m_blackTransitionIn = new SpriteObj("Blank_Sprite");
             m_blackTransitionIn.Rotation = 15f;
             m_blackTransitionIn.Scale = new Vector2(1320/m_blackTransitionIn.Width, 2000/m_blackTransitionIn.Height);
@@ -296,9 +293,6 @@ namespace RogueCastle
                 case 26:
                     m_gameOverBossScreen.PassInData(objList);
                     AddScreen(m_gameOverBossScreen, null);
-                    break;
-                case 30:
-                    AddScreen(m_profileSelectScreen, null);
                     break;
                 case 80:
                     m_archipelagoScreen.PassInData(objList);

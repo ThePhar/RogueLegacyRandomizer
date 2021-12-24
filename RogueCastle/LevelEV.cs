@@ -366,7 +366,7 @@ namespace RogueCastle
             SHOW_DEBUG_TEXT = false;
             LOAD_TITLE_SCREEN = false;
             LOAD_SPLASH_SCREEN = true;
-            SHOW_SAVELOAD_DEBUG_TEXT = false;
+            SHOW_SAVELOAD_DEBUG_TEXT = true;
             DELETE_SAVEFILE = false;
             CLOSE_TESTROOM_DOORS = false;
             RUN_TUTORIAL = false;

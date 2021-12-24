@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - SaveGameManager.cs
+// Last Modified 2021-12-23
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,11 @@ namespace RogueCastle
     public class SaveGameManager
     {
         private bool m_autosaveLoaded;
-        private string m_fileNameLineage = "RogueLegacyEnhancedLineage.rcdat";
-        private string m_fileNameMap = "RogueLegacyEnhancedMap.rcdat";
-        private string m_fileNameMapData = "RogueLegacyEnhancedMapDat.rcdat";
-        private string m_fileNamePlayer = "RogueLegacyEnhancedPlayer.rcdat";
-        private string m_fileNameUpgrades = "RogueLegacyEnhancedBP.rcdat";
+        private string m_fileNameLineage = "RogueLegacyArchipelagoLineage.rcdat";
+        private string m_fileNameMap = "RogueLegacyArchipelagoMap.rcdat";
+        private string m_fileNameMapData = "RogueLegacyArchipelagoMapDat.rcdat";
+        private string m_fileNamePlayer = "RogueLegacyArchipelagoPlayer.rcdat";
+        private string m_fileNameUpgrades = "RogueLegacyArchipelagoBP.rcdat";
         private Game m_game;
         private int m_saveFailCounter;
         private StorageContainer m_storageContainer;
@@ -40,11 +41,11 @@ namespace RogueCastle
         {
             if (LevelEV.RUN_DEMO_VERSION)
             {
-                m_fileNamePlayer = "RogueLegacyEnhancedDemoPlayer.rcdat";
-                m_fileNameUpgrades = "RogueLegacyEnhancedDemoBP.rcdat";
-                m_fileNameMap = "RogueLegacyEnhancedDemoMap.rcdat";
-                m_fileNameMapData = "RogueLegacyEnhancedDemoMapDat.rcdat";
-                m_fileNameLineage = "RogueLegacyEnhancedDemoLineage.rcdat";
+                m_fileNamePlayer = "RogueLegacyArchipelagoDemoPlayer.rcdat";
+                m_fileNameUpgrades = "RogueLegacyArchipelagoDemoBP.rcdat";
+                m_fileNameMap = "RogueLegacyArchipelagoDemoMap.rcdat";
+                m_fileNameMapData = "RogueLegacyArchipelagoDemoMapDat.rcdat";
+                m_fileNameLineage = "RogueLegacyArchipelagoDemoLineage.rcdat";
             }
             if (m_storageContainer != null)
             {
@@ -62,7 +63,7 @@ namespace RogueCastle
                 asyncResult.AsyncWaitHandle.WaitOne();
                 var storageDevice = StorageDevice.EndShowSelector(asyncResult);
                 asyncResult.AsyncWaitHandle.Close();
-                asyncResult = storageDevice.BeginOpenContainer("RogueLegacyEnhancedStorageContainer", null, null);
+                asyncResult = storageDevice.BeginOpenContainer("RogueLegacyArchipelagoStorageContainer", null, null);
                 asyncResult.AsyncWaitHandle.WaitOne();
                 m_storageContainer = storageDevice.EndOpenContainer(asyncResult);
                 asyncResult.AsyncWaitHandle.Close();
@@ -93,6 +94,17 @@ namespace RogueCastle
             if (!m_storageContainer.DirectoryExists("Profile3"))
             {
                 m_storageContainer.CreateDirectory("Profile3");
+            }
+            m_storageContainer.Dispose();
+            m_storageContainer = null;
+        }
+
+        public void CreateSaveDirectory()
+        {
+            GetStorageContainer();
+            if (!m_storageContainer.DirectoryExists(string.Format("Profile{0}", Game.GameConfig.ProfileSlot)))
+            {
+                m_storageContainer.CreateDirectory(string.Format("Profile{0}", Game.GameConfig.ProfileSlot));
             }
             m_storageContainer.Dispose();
             m_storageContainer = null;
@@ -228,6 +240,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (!LevelEV.DISABLE_SAVING)
             {
                 GetStorageContainer();
@@ -604,6 +617,7 @@ namespace RogueCastle
                     binaryWriter.Write(Game.PlayerStats.ReadLastDiary);
                     binaryWriter.Write(Game.PlayerStats.SpokenToLastBoss);
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
+                    binaryWriter.Write(Game.GameConfig.ProfileSlot);
                     var value = Game.PlayerStats.TotalHoursPlayed + Game.PlaySessionLength;
                     binaryWriter.Write(value);
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.X);
@@ -668,6 +682,7 @@ namespace RogueCastle
                         Console.WriteLine("Player read last diary: " + Game.PlayerStats.ReadLastDiary);
                         Console.WriteLine("Player has spoken to last boss: " + Game.PlayerStats.SpokenToLastBoss);
                         Console.WriteLine("Is Hardcore mode: " + Game.PlayerStats.HardcoreMode);
+                        Console.WriteLine("Seed Name: " + Game.GameConfig.ProfileSlot);
                         Console.WriteLine("Total Hours Played " + Game.PlayerStats.TotalHoursPlayed);
                         Console.WriteLine("Wizard Spell 1: " + Game.PlayerStats.WizardSpellList.X);
                         Console.WriteLine("Wizard Spell 2: " + Game.PlayerStats.WizardSpellList.Y);
@@ -1361,6 +1376,7 @@ namespace RogueCastle
                     Game.PlayerStats.ReadLastDiary = binaryReader.ReadBoolean();
                     Game.PlayerStats.SpokenToLastBoss = binaryReader.ReadBoolean();
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
+                    Game.GameConfig.ProfileSlot = binaryReader.ReadString();
                     Game.PlayerStats.TotalHoursPlayed = binaryReader.ReadSingle();
                     var b = binaryReader.ReadByte();
                     var b2 = binaryReader.ReadByte();
@@ -1426,6 +1442,7 @@ namespace RogueCastle
                         Console.WriteLine("Player read last diary: " + Game.PlayerStats.ReadLastDiary);
                         Console.WriteLine("Player has spoken to last boss: " + Game.PlayerStats.SpokenToLastBoss);
                         Console.WriteLine("Is Hardcore mode: " + Game.PlayerStats.HardcoreMode);
+                        Console.WriteLine("Seed Name: " + Game.GameConfig.ProfileSlot);
                         Console.WriteLine("Total Hours Played " + Game.PlayerStats.TotalHoursPlayed);
                         Console.WriteLine("Wizard Spell 1: " + Game.PlayerStats.WizardSpellList.X);
                         Console.WriteLine("Wizard Spell 2: " + Game.PlayerStats.WizardSpellList.Y);
