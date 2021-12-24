@@ -1,16 +1,17 @@
-/*
-  Rogue Legacy Enhanced
+// 
+// RogueLegacyArchipelago - EnemyType.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
-
-namespace RogueCastle
+namespace RogueCastle.TypeDefinitions
 {
-    internal class EnemyType
+    public static class EnemyType
     {
         public const byte None = 0;
         public const byte BallAndChain = 1;
@@ -46,6 +47,7 @@ namespace RogueCastle
         public const byte Starburst = 31;
         public const byte Portrait = 32;
         public const byte Mimic = 33;
+
         public const byte Total = 34;
     }
 }

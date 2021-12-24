@@ -154,9 +154,7 @@
     <Compile Include="RogueCastle\EnemyOrbObj.cs" />
     <Compile Include="RogueCastle\EnemyTagObj.cs" />
     <Compile Include="RogueCastle\EnemyTemplate.cs" />
-    <Compile Include="RogueCastle\EnemyType.cs" />
     <Compile Include="RogueCastle\EnergonProjectileObj.cs" />
-    <Compile Include="RogueCastle\EquipmentAbilityType.cs" />
     <Compile Include="RogueCastle\EquipmentBaseType.cs" />
     <Compile Include="RogueCastle\EquipmentCategoryType.cs" />
     <Compile Include="RogueCastle\EquipmentData.cs" />
@@ -190,7 +188,6 @@
     <Compile Include="RogueCastle\HoverObj.cs" />
     <Compile Include="RogueCastle\IDealsDamageObj.cs" />
     <Compile Include="RogueCastle\ImpactEffectPool.cs" />
-    <Compile Include="RogueCastle\InputMapType.cs" />
     <Compile Include="RogueCastle\IntroRoomObj.cs" />
     <Compile Include="RogueCastle\ItemDropManager.cs" />
     <Compile Include="RogueCastle\ItemDropObj.cs" />
@@ -285,6 +282,9 @@
     <Compile Include="RogueCastle\TypeDefinitions\ChestConditionType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\ChestType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\ClassType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\EnemyType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\EquipmentAbilityType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\InputMapType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
     <Compile Include="RogueCastle\WaypointObj.cs" />
