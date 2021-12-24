@@ -249,7 +249,6 @@
     <Compile Include="RogueCastle\SpecialItemRoomObj.cs" />
     <Compile Include="RogueCastle\SpellEV.cs" />
     <Compile Include="RogueCastle\SpellSwapRoomObj.cs" />
-    <Compile Include="RogueCastle\SpellType.cs" />
     <Compile Include="RogueCastle\StartingRoomObj.cs" />
     <Compile Include="RogueCastle\SteamCloudOptionsObj.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
@@ -261,8 +260,6 @@
     <Compile Include="RogueCastle\TitleScreen.cs" />
     <Compile Include="RogueCastle\ToggleDirectInputOptionsObj.cs" />
     <Compile Include="RogueCastle\TraitState.cs" />
-    <Compile Include="RogueCastle\TraitStatType.cs" />
-    <Compile Include="RogueCastle\TraitType.cs" />
     <Compile Include="RogueCastle\TutorialRoomObj.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\BonusRoomType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\BossRoomType.cs" />
@@ -285,6 +282,9 @@
     <Compile Include="RogueCastle\TypeDefinitions\SkillType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\SkillUnlockType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\SpecialItemType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\SpellType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\TraitStatType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\TraitType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
     <Compile Include="RogueCastle\WaypointObj.cs" />

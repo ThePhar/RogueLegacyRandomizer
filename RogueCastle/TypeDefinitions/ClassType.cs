@@ -328,114 +328,113 @@ namespace RogueCastle.TypeDefinitions
         /// <returns></returns>
         public static byte[] GetSpellList(byte classType)
         {
-            // TODO: Replace magic numbers for spells with their actual name.
             switch (classType)
             {
                 case Knight:
                 case Paladin:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        8,
-                        9,
-                        10,
-                        12
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.Close,
+                        SpellType.Bounce
                     };
 
                 case Mage:
                 case Archmage:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        4,
-                        8,
-                        9,
-                        10,
-                        11,
-                        12
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.TimeStop,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.Close,
+                        SpellType.DamageShield,
+                        SpellType.Bounce
                     };
 
                 case Barbarian:
                 case BarbarianKing:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        8,
-                        9,
-                        10
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.Close
                     };
 
                 case Knave:
                 case Assassin:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        6,
-                        8,
-                        9,
-                        12
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.Translocator,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.Bounce
                     };
 
                 case Shinobi:
                 case Hokage:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        6,
-                        8,
-                        9,
-                        10,
-                        12
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.Translocator,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.Close,
+                        SpellType.Bounce
                     };
 
                 case Miner:
                 case Spelunker:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        8,
-                        9,
-                        11,
-                        12
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.DamageShield,
+                        SpellType.Bounce
                     };
 
                 case Spellthief:
                 case Spellsword:
-                    return new byte[]
+                    return new[]
                     {
-                        2,
-                        1,
-                        8,
-                        9,
-                        10,
-                        11
+                        SpellType.Axe,
+                        SpellType.Dagger,
+                        SpellType.Boomerang,
+                        SpellType.DualBlades,
+                        SpellType.Close,
+                        SpellType.DamageShield
                     };
 
                 case Lich:
                 case LichKing:
-                    return new byte[]
+                    return new[]
                     {
-                        5,
-                        11,
-                        12
+                        SpellType.Nuke,
+                        SpellType.DamageShield,
+                        SpellType.Bounce
                     };
 
                 case Dragon:
-                    return new byte[]
+                    return new[]
                     {
-                        13
+                        SpellType.DragonFire
                     };
 
                 case Traitor:
-                    return new byte[]
+                    return new[]
                     {
-                        14
+                        SpellType.RapidDagger
                     };
 
                 default:
