@@ -155,10 +155,7 @@
     <Compile Include="RogueCastle\EnemyTagObj.cs" />
     <Compile Include="RogueCastle\EnemyTemplate.cs" />
     <Compile Include="RogueCastle\EnergonProjectileObj.cs" />
-    <Compile Include="RogueCastle\EquipmentBaseType.cs" />
-    <Compile Include="RogueCastle\EquipmentCategoryType.cs" />
     <Compile Include="RogueCastle\EquipmentData.cs" />
-    <Compile Include="RogueCastle\EquipmentSecondaryDataType.cs" />
     <Compile Include="RogueCastle\EquipmentState.cs" />
     <Compile Include="RogueCastle\EquipmentSystem.cs" />
     <Compile Include="RogueCastle\ExitProgramOptionsObj.cs" />
@@ -177,7 +174,6 @@
     <Compile Include="RogueCastle\GameEV.cs" />
     <Compile Include="RogueCastle\GameOverBossScreen.cs" />
     <Compile Include="RogueCastle\GameOverScreen.cs" />
-    <Compile Include="RogueCastle\GameTypes.cs" />
     <Compile Include="RogueCastle\GameUtil.cs" />
     <Compile Include="RogueCastle\GaussianBlur.cs" />
     <Compile Include="RogueCastle\GetItemScreen.cs" />
@@ -284,6 +280,10 @@
     <Compile Include="RogueCastle\TypeDefinitions\ClassType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\EnemyType.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\EquipmentAbilityType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\EquipmentBaseType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\EquipmentCategoryType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\EquipmentSecondaryDataType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\GameTypes.cs" />
     <Compile Include="RogueCastle\TypeDefinitions\InputMapType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />

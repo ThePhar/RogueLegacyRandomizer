@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - ProceduralLevelScreen.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -432,7 +434,7 @@ namespace RogueCastle
                 {
                     switch (CurrentRoom.LevelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
                             m_backgroundSprite.ChangeSprite("CastleBG1_Sprite", ScreenManager.Camera);
@@ -440,7 +442,7 @@ namespace RogueCastle
                             m_backgroundSprite.Scale = new Vector2(2f, 2f);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             break;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
                             m_backgroundSprite.ChangeSprite("GardenBG_Sprite", ScreenManager.Camera);
@@ -448,7 +450,7 @@ namespace RogueCastle
                             m_backgroundSprite.Scale = new Vector2(2f, 2f);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             break;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
                             m_backgroundSprite.ChangeSprite("DungeonBG1_Sprite", ScreenManager.Camera);
@@ -456,7 +458,7 @@ namespace RogueCastle
                             m_backgroundSprite.Scale = new Vector2(2f, 2f);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             break;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
                             m_backgroundSprite.ChangeSprite("TowerBG2_Sprite", ScreenManager.Camera);
@@ -512,7 +514,7 @@ namespace RogueCastle
                 if (current5 is EnemyObj_BallAndChain && !current5.IsKilled)
                 {
                     m_physicsManager.AddObject((current5 as EnemyObj_BallAndChain).BallAndChain);
-                    if (current5.Difficulty > GameTypes.EnemyDifficulty.BASIC)
+                    if (current5.Difficulty > GameTypes.EnemyDifficulty.Basic)
                     {
                         m_physicsManager.AddObject((current5 as EnemyObj_BallAndChain).BallAndChain2);
                     }
@@ -557,7 +559,7 @@ namespace RogueCastle
                     }
                     if (current2.IsProcedural)
                     {
-                        if (current2.Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+                        if (current2.Difficulty == GameTypes.EnemyDifficulty.Expert)
                         {
                             current2.Level += 4;
                         }
@@ -566,7 +568,7 @@ namespace RogueCastle
                             current2.SetDifficulty((GameTypes.EnemyDifficulty) num2, false);
                         }
                     }
-                    else if (current2.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
+                    else if (current2.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
                     {
                         if (current is ArenaBonusRoom)
                         {
@@ -813,16 +815,16 @@ namespace RogueCastle
                 var num2 = 0;
                 switch (current.LevelType)
                 {
-                    case GameTypes.LevelType.CASTLE:
+                    case GameTypes.LevelType.Castle:
                         num2 = 0;
                         break;
-                    case GameTypes.LevelType.GARDEN:
+                    case GameTypes.LevelType.Garden:
                         num2 = 0;
                         break;
-                    case GameTypes.LevelType.DUNGEON:
+                    case GameTypes.LevelType.Dungeon:
                         num2 = 0;
                         break;
-                    case GameTypes.LevelType.TOWER:
+                    case GameTypes.LevelType.Tower:
                         num2 = 0;
                         break;
                 }
@@ -905,18 +907,18 @@ namespace RogueCastle
                 {
                     switch (current.LevelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             goto IL_39E;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             current5.SetBorderTextures(m_gardenBorderTexture, cornerTextureString4,
                                 cornerLTextureString4);
                             current5.TextureOffset = new Vector2(0f, -18f);
                             break;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             current5.SetBorderTextures(m_dungeonBorderTexture, cornerTextureString3,
                                 cornerLTextureString3);
                             break;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             current5.SetBorderTextures(m_towerBorderTexture, cornerTextureString2, cornerLTextureString2);
                             break;
                         default:
@@ -938,25 +940,25 @@ namespace RogueCastle
             var flag = false;
             switch (levelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     if (Game.PlayerStats.EyeballBossBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     if (Game.PlayerStats.FairyBossBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     if (Game.PlayerStats.BlobBossBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     if (Game.PlayerStats.FireballBossBeaten)
                     {
                         flag = true;
@@ -1008,19 +1010,19 @@ namespace RogueCastle
                 if (current2.Name == "EntranceBoss")
                 {
                     var flag = false;
-                    if (current2.LevelType == GameTypes.LevelType.CASTLE && Game.PlayerStats.EyeballBossBeaten)
+                    if (current2.LevelType == GameTypes.LevelType.Castle && Game.PlayerStats.EyeballBossBeaten)
                     {
                         flag = true;
                     }
-                    else if (current2.LevelType == GameTypes.LevelType.DUNGEON && Game.PlayerStats.BlobBossBeaten)
+                    else if (current2.LevelType == GameTypes.LevelType.Dungeon && Game.PlayerStats.BlobBossBeaten)
                     {
                         flag = true;
                     }
-                    else if (current2.LevelType == GameTypes.LevelType.GARDEN && Game.PlayerStats.FairyBossBeaten)
+                    else if (current2.LevelType == GameTypes.LevelType.Garden && Game.PlayerStats.FairyBossBeaten)
                     {
                         flag = true;
                     }
-                    else if (current2.LevelType == GameTypes.LevelType.TOWER && Game.PlayerStats.FireballBossBeaten)
+                    else if (current2.LevelType == GameTypes.LevelType.Tower && Game.PlayerStats.FireballBossBeaten)
                     {
                         flag = true;
                     }
@@ -1071,28 +1073,28 @@ namespace RogueCastle
             var flag = false;
             switch (levelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     if (Game.PlayerStats.EyeballBossBeaten && !Game.PlayerStats.ChallengeEyeballBeaten &&
                         Game.PlayerStats.ChallengeEyeballUnlocked)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     if (Game.PlayerStats.FairyBossBeaten && !Game.PlayerStats.ChallengeSkullBeaten &&
                         Game.PlayerStats.ChallengeSkullUnlocked)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     if (Game.PlayerStats.BlobBossBeaten && !Game.PlayerStats.ChallengeBlobBeaten &&
                         Game.PlayerStats.ChallengeBlobUnlocked)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     if (Game.PlayerStats.FireballBossBeaten && !Game.PlayerStats.ChallengeFireballBeaten &&
                         Game.PlayerStats.ChallengeFireballUnlocked)
                     {
@@ -1214,7 +1216,7 @@ namespace RogueCastle
                             {
                                 switch (current.LevelType)
                                 {
-                                    case GameTypes.LevelType.CASTLE:
+                                    case GameTypes.LevelType.Castle:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
                                         m_backgroundSprite.ChangeSprite("CastleBG1_Sprite", ScreenManager.Camera);
@@ -1222,7 +1224,7 @@ namespace RogueCastle
                                         m_backgroundSprite.Scale = new Vector2(2f, 2f);
                                         m_foregroundSprite.Scale = new Vector2(2f, 2f);
                                         break;
-                                    case GameTypes.LevelType.GARDEN:
+                                    case GameTypes.LevelType.Garden:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
                                         m_backgroundSprite.ChangeSprite("GardenBG_Sprite", ScreenManager.Camera);
@@ -1230,7 +1232,7 @@ namespace RogueCastle
                                         m_backgroundSprite.Scale = new Vector2(2f, 2f);
                                         m_foregroundSprite.Scale = new Vector2(2f, 2f);
                                         break;
-                                    case GameTypes.LevelType.DUNGEON:
+                                    case GameTypes.LevelType.Dungeon:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
                                         m_backgroundSprite.ChangeSprite("DungeonBG1_Sprite", ScreenManager.Camera);
@@ -1238,7 +1240,7 @@ namespace RogueCastle
                                         m_backgroundSprite.Scale = new Vector2(2f, 2f);
                                         m_foregroundSprite.Scale = new Vector2(2f, 2f);
                                         break;
-                                    case GameTypes.LevelType.TOWER:
+                                    case GameTypes.LevelType.Tower:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
                                         m_backgroundSprite.ChangeSprite("TowerBG2_Sprite", ScreenManager.Camera);
@@ -1254,7 +1256,7 @@ namespace RogueCastle
                                 m_foregroundSprite.ChangeSprite("NeoFG_Sprite", ScreenManager.Camera);
                                 m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             }
-                            if (current.LevelType == GameTypes.LevelType.DUNGEON || Game.PlayerStats.Traits.X == 35f ||
+                            if (current.LevelType == GameTypes.LevelType.Dungeon || Game.PlayerStats.Traits.X == 35f ||
                                 Game.PlayerStats.Traits.Y == 35f || current.Name == "Compass")
                             {
                                 Game.ShadowEffect.Parameters["ShadowIntensity"].SetValue(0.7f);
@@ -1333,7 +1335,7 @@ namespace RogueCastle
                             m_currentRoom.Name != "Ending" && m_currentRoom.Name != "CastleEntrance" &&
                             m_currentRoom.Name != "Bonus" && m_currentRoom.Name != "Throne" &&
                             m_currentRoom.Name != "Secret" && m_currentRoom.Name != "Boss" &&
-                            m_currentRoom.LevelType != GameTypes.LevelType.NONE && m_currentRoom.Name != "ChallengeBoss" &&
+                            m_currentRoom.LevelType != GameTypes.LevelType.None && m_currentRoom.Name != "ChallengeBoss" &&
                             (Game.PlayerStats.Traits.X == 26f || Game.PlayerStats.Traits.Y == 26f) &&
                             CDGMath.RandomFloat(0f, 1f) < 0.2f)
                         {
@@ -1404,25 +1406,25 @@ namespace RogueCastle
                         SoundManager.PlayMusic("PooyanSong", true, 1f);
                         return;
                     }
-                    if (m_currentRoom.LevelType == GameTypes.LevelType.CASTLE &&
+                    if (m_currentRoom.LevelType == GameTypes.LevelType.Castle &&
                         SoundManager.GetCurrentMusicName() != "CastleSong")
                     {
                         SoundManager.PlayMusic("CastleSong", true, 1f);
                         return;
                     }
-                    if (m_currentRoom.LevelType == GameTypes.LevelType.GARDEN &&
+                    if (m_currentRoom.LevelType == GameTypes.LevelType.Garden &&
                         SoundManager.GetCurrentMusicName() != "GardenSong")
                     {
                         SoundManager.PlayMusic("GardenSong", true, 1f);
                         return;
                     }
-                    if (m_currentRoom.LevelType == GameTypes.LevelType.DUNGEON &&
+                    if (m_currentRoom.LevelType == GameTypes.LevelType.Dungeon &&
                         SoundManager.GetCurrentMusicName() != "DungeonSong")
                     {
                         SoundManager.PlayMusic("DungeonSong", true, 1f);
                         return;
                     }
-                    if (m_currentRoom.LevelType == GameTypes.LevelType.TOWER &&
+                    if (m_currentRoom.LevelType == GameTypes.LevelType.Tower &&
                         SoundManager.GetCurrentMusicName() != "TowerSong")
                     {
                         SoundManager.PlayMusic("TowerSong", true, 1f);
@@ -1437,17 +1439,17 @@ namespace RogueCastle
             }
             switch (m_currentRoom.LevelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     //IL_A8:
                     SoundManager.PlayMusic("CastleSong", true, 1f);
                     return;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     SoundManager.PlayMusic("GardenSong", true, 1f);
                     return;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     SoundManager.PlayMusic("DungeonSong", true, 1f);
                     return;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     SoundManager.PlayMusic("TowerSong", true, 1f);
                     return;
                 default:
@@ -1690,7 +1692,7 @@ namespace RogueCastle
                         enemyObj = roomObj.EnemyList[num];
                         num++;
                     }
-                    var doorObj = new DoorObj(roomObj, 120, 180, GameTypes.DoorType.OPEN);
+                    var doorObj = new DoorObj(roomObj, 120, 180, GameTypes.DoorType.Open);
                     doorObj.Position = enemyObj.Position;
                     doorObj.IsBossDoor = true;
                     doorObj.DoorPosition = "None";
@@ -1746,16 +1748,16 @@ namespace RogueCastle
                     {
                         switch (roomObj.LinkedRoom.LevelType)
                         {
-                            case GameTypes.LevelType.GARDEN:
+                            case GameTypes.LevelType.Garden:
                                 current4.SetBorderTextures(m_gardenBorderTexture, cornerTextureString4,
                                     cornerLTextureString4);
                                 current4.TextureOffset = new Vector2(0f, -18f);
                                 continue;
-                            case GameTypes.LevelType.DUNGEON:
+                            case GameTypes.LevelType.Dungeon:
                                 current4.SetBorderTextures(m_dungeonBorderTexture, cornerTextureString3,
                                     cornerLTextureString3);
                                 continue;
-                            case GameTypes.LevelType.TOWER:
+                            case GameTypes.LevelType.Tower:
                                 current4.SetBorderTextures(m_towerBorderTexture, cornerTextureString2,
                                     cornerLTextureString2);
                                 continue;
@@ -2054,13 +2056,13 @@ namespace RogueCastle
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, null,
                 Camera.GetTransformation());
             m_textManager.Draw(Camera);
-            if (CurrentRoom.LevelType == GameTypes.LevelType.TOWER)
+            if (CurrentRoom.LevelType == GameTypes.LevelType.Tower)
             {
                 m_gardenParallaxFG.Draw(Camera);
             }
             m_whiteBG.Draw(Camera);
             Camera.End();
-            if ((CurrentLevelType == GameTypes.LevelType.DUNGEON || Game.PlayerStats.Traits.X == 35f ||
+            if ((CurrentLevelType == GameTypes.LevelType.Dungeon || Game.PlayerStats.Traits.X == 35f ||
                  Game.PlayerStats.Traits.Y == 35f) &&
                 (Game.PlayerStats.Class != 13 || (Game.PlayerStats.Class == 13 && !Player.LightOn)))
             {
@@ -2258,7 +2260,7 @@ namespace RogueCastle
                     array = LevelEV.DEMENTIA_FLIGHT_LIST;
                 }
                 var enemyObj2 = EnemyBuilder.BuildEnemy(array[CDGMath.RandomInt(0, array.Length - 1)], null, null,
-                    null, GameTypes.EnemyDifficulty.BASIC, true);
+                    null, GameTypes.EnemyDifficulty.Basic, true);
                 enemyObj2.Position = enemyObj.Position;
                 enemyObj2.SaveToFile = false;
                 enemyObj2.IsDemented = true;
@@ -2973,7 +2975,7 @@ namespace RogueCastle
         {
             switch (levelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
                     m_backgroundSprite.ChangeSprite("CastleBG1_Sprite", ScreenManager.Camera);
@@ -2981,7 +2983,7 @@ namespace RogueCastle
                     m_backgroundSprite.Scale = new Vector2(2f, 2f);
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
                     m_backgroundSprite.ChangeSprite("GardenBG_Sprite", ScreenManager.Camera);
@@ -2989,7 +2991,7 @@ namespace RogueCastle
                     m_backgroundSprite.Scale = new Vector2(2f, 2f);
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
                     m_backgroundSprite.ChangeSprite("DungeonBG1_Sprite", ScreenManager.Camera);
@@ -2997,7 +2999,7 @@ namespace RogueCastle
                     m_backgroundSprite.Scale = new Vector2(2f, 2f);
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
                     m_backgroundSprite.ChangeSprite("TowerBG2_Sprite", ScreenManager.Camera);
@@ -3006,7 +3008,7 @@ namespace RogueCastle
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
             }
-            if (levelType == GameTypes.LevelType.DUNGEON)
+            if (levelType == GameTypes.LevelType.Dungeon)
             {
                 Game.ShadowEffect.Parameters["ShadowIntensity"].SetValue(0.7f);
                 return;

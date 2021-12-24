@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - Program.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-24
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -35,7 +36,7 @@ namespace RogueCastle
                 LevelEV.SHOW_ENEMY_RADII = false;
                 LevelEV.ENABLE_PLAYER_DEBUG = false;
                 LevelEV.UNLOCK_ALL_ABILITIES = false;
-                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.CASTLE;
+                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.Castle;
                 LevelEV.TESTROOM_REVERSE = false;
                 LevelEV.RUN_TESTROOM = false;
                 LevelEV.SHOW_DEBUG_TEXT = false;

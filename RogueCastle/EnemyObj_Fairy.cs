@@ -1,17 +1,19 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - EnemyObj_Fairy.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -102,7 +104,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.Fairy_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.ADVANCED:
+                case GameTypes.EnemyDifficulty.Advanced:
                     Name = "Rage";
                     MaxHealth = 37;
                     Damage = 22;
@@ -129,7 +131,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.EXPERT:
+                case GameTypes.EnemyDifficulty.Expert:
                     Name = "Wrath";
                     MaxHealth = 72;
                     Damage = 24;
@@ -156,7 +158,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MiniBoss:
                     Name = "Alexander";
                     MaxHealth = 635;
                     Damage = 30;
@@ -188,7 +190,7 @@ namespace RogueCastle
                     }
                     break;
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
+            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyFairyGhostBossIdle_Character";
             }
@@ -298,7 +300,7 @@ namespace RogueCastle
             m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet6);
             m_generalMiniBossLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
             m_generalNeoLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
-            if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
+            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
             {
                 m_generalCooldownLB.AddLogicSet(logicSet7, logicSet8, logicSet9);
             }
@@ -340,7 +342,7 @@ namespace RogueCastle
             {
                 projectileData.SpriteName = "GhostProjectileBoss_Sprite";
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
+            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
             {
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Roar_01",
                     "Boss_Flameskull_Roar_02", "Boss_Flameskull_Roar_03");
@@ -555,7 +557,7 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS && !IsPaused)
+            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !IsPaused)
             {
                 if (m_summonCounter > 0f)
                 {
@@ -572,13 +574,13 @@ namespace RogueCastle
                         {
                             if (Game.PlayerStats.TimesCastleBeaten <= 0 || IsNeo)
                             {
-                                CreateFairy(GameTypes.EnemyDifficulty.BASIC);
-                                CreateFairy(GameTypes.EnemyDifficulty.BASIC);
+                                CreateFairy(GameTypes.EnemyDifficulty.Basic);
+                                CreateFairy(GameTypes.EnemyDifficulty.Basic);
                             }
                             else
                             {
-                                CreateFairy(GameTypes.EnemyDifficulty.ADVANCED);
-                                CreateFairy(GameTypes.EnemyDifficulty.ADVANCED);
+                                CreateFairy(GameTypes.EnemyDifficulty.Advanced);
+                                CreateFairy(GameTypes.EnemyDifficulty.Advanced);
                             }
                             NumHits = 1;
                         }
@@ -630,7 +632,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS && !m_bossVersionKilled)
+            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
             {
                 var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
@@ -682,7 +684,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            if (Difficulty != GameTypes.EnemyDifficulty.MINIBOSS)
+            if (Difficulty != GameTypes.EnemyDifficulty.MiniBoss)
             {
                 base.Kill(giveXP);
                 return;

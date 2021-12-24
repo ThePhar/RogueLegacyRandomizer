@@ -1,13 +1,13 @@
-//
+// 
 // RogueLegacyArchipelago - PlayerObj.cs
-// Last Modified 2021-12-22
-//
+// Last Modified 2021-12-24
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -2670,7 +2670,7 @@ namespace RogueCastle
                 }
                 var enemyObj = projectileObj.Source as EnemyObj;
                 if (enemyObj != null &&
-                    (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS || enemyObj is EnemyObj_LastBoss) &&
+                    (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss) &&
                     enemyObj.CurrentHealth <= 0)
                 {
                     flag = false;
@@ -2682,7 +2682,7 @@ namespace RogueCastle
                 flag = false;
             }
             if (enemyObj2 != null &&
-                (enemyObj2.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS || enemyObj2 is EnemyObj_LastBoss) &&
+                (enemyObj2.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj2 is EnemyObj_LastBoss) &&
                 enemyObj2.CurrentHealth <= 0)
             {
                 flag = false;

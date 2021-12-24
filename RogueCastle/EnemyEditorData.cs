@@ -1,14 +1,16 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+//
+// RogueLegacyArchipelago - EnemyEditorData.cs
+// Last Modified 2021-12-24
+//
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
 
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -23,10 +25,10 @@ namespace RogueCastle
 
         public EnemyEditorData(byte enemyType)
         {
-            var enemyObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.BASIC);
-            var enemyObj2 = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.ADVANCED);
-            var enemyObj3 = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.EXPERT);
-            var enemyObj4 = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.MINIBOSS);
+            var enemyObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.Basic);
+            var enemyObj2 = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.Advanced);
+            var enemyObj3 = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.Expert);
+            var enemyObj4 = EnemyBuilder.BuildEnemy(enemyType, null, null, null, GameTypes.EnemyDifficulty.MiniBoss);
             Type = enemyType;
             SpriteName = enemyObj.SpriteName;
             BasicScale = enemyObj.Scale;

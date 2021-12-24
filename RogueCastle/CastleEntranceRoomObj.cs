@@ -1,18 +1,20 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - CastleEntranceRoomObj.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -113,28 +115,28 @@ namespace RogueCastle
             int index;
             switch (levelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     index = 1;
                     if (Game.PlayerStats.ChallengeEyeballBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     index = 3;
                     if (Game.PlayerStats.ChallengeSkullBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     index = 4;
                     if (Game.PlayerStats.ChallengeBlobBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     index = 2;
                     if (Game.PlayerStats.ChallengeFireballBeaten)
                     {
@@ -199,19 +201,19 @@ namespace RogueCastle
             }
             if (Game.PlayerStats.EyeballBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.CASTLE, false);
+                RevealSymbol(GameTypes.LevelType.Castle, false);
             }
             if (Game.PlayerStats.FairyBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.GARDEN, false);
+                RevealSymbol(GameTypes.LevelType.Garden, false);
             }
             if (Game.PlayerStats.BlobBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.DUNGEON, false);
+                RevealSymbol(GameTypes.LevelType.Dungeon, false);
             }
             if (Game.PlayerStats.FireballBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.TOWER, false);
+                RevealSymbol(GameTypes.LevelType.Tower, false);
             }
             if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
                 Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
@@ -245,7 +247,7 @@ namespace RogueCastle
             m_bossDoorOpening = true;
             m_bossDoor.Locked = false;
             Player.AttachedLevel.UpdateCamera();
-            RevealSymbol(GameTypes.LevelType.NONE, true);
+            RevealSymbol(GameTypes.LevelType.None, true);
             Player.CurrentSpeed = 0f;
             Player.LockControls();
             Player.AttachedLevel.CameraLockedToPlayer = false;

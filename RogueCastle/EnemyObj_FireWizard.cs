@@ -1,16 +1,18 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - EnemyObj_FireWizard.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -70,9 +72,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.FireWizard_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.BASIC:
+                case GameTypes.EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.ADVANCED:
+                case GameTypes.EnemyDifficulty.Advanced:
                     SpellInterval = 0.15f;
                     Name = "Blazelock";
                     MaxHealth = 45;
@@ -100,7 +102,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.FireWizard_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.EXPERT:
+                case GameTypes.EnemyDifficulty.Expert:
                     m_spellOffset = new Vector2(40f, -130f);
                     SpellDelay = 1f;
                     SpellInterval = 1f;
@@ -130,7 +132,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.FireWizard_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MiniBoss:
                     Name = "Sol Mage";
                     MaxHealth = 240;
                     Damage = 40;
@@ -424,11 +426,11 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+            if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
             {
                 projectileData.AngleOffset = CDGMath.RandomInt(-25, 25);
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+            if (Difficulty == GameTypes.EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
                 projectileData.CollidesWithTerrain = false;
@@ -437,7 +439,7 @@ namespace RogueCastle
                 "FireWizard_Attack_03", "FireWizard_Attack_04");
             var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileObj.Rotation = 0f;
-            if (Difficulty != GameTypes.EnemyDifficulty.EXPERT)
+            if (Difficulty != GameTypes.EnemyDifficulty.Expert)
             {
                 Tween.RunFunction(0.15f, this, "ChangeFireballState", projectileObj);
             }
@@ -465,7 +467,7 @@ namespace RogueCastle
                 DestroysWithEnemy = false,
                 Scale = ProjectileScale
             };
-            if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+            if (Difficulty == GameTypes.EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
                 projectileData.CollidesWithTerrain = false;

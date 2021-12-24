@@ -1,17 +1,19 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - EnemyObj_HomingTurret.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -65,9 +67,9 @@ namespace RogueCastle
             InitialLogicDelay = 1f;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.BASIC:
+                case GameTypes.EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.ADVANCED:
+                case GameTypes.EnemyDifficulty.Advanced:
                     FireDelay = 1.5f;
                     Name = "GuardBox XL";
                     MaxHealth = 25;
@@ -95,7 +97,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.EXPERT:
+                case GameTypes.EnemyDifficulty.Expert:
                     FireDelay = 2.25f;
                     Name = "GuardBox 2000";
                     MaxHealth = 42;
@@ -123,7 +125,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MiniBoss:
                     Name = "GuardBox Gigasaur";
                     MaxHealth = 500;
                     Damage = 40;

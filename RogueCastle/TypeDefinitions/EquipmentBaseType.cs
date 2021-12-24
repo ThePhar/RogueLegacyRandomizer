@@ -1,16 +1,17 @@
-/*
-  Rogue Legacy Enhanced
+// 
+// RogueLegacyArchipelago - EquipmentBaseType.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
-
-namespace RogueCastle
+namespace RogueCastle.TypeDefinitions
 {
-    public class EquipmentBaseType
+    public static class EquipmentBaseType
     {
         public const int Bronze = 0;
         public const int Silver = 1;
@@ -27,42 +28,63 @@ namespace RogueCastle
         public const int Spike = 12;
         public const int Holy = 13;
         public const int Dark = 14;
+
         public const int Total = 15;
 
+        /// <summary>
+        /// Returns the string representation of a given equipment base's name.
+        /// </summary>
+        /// <param name="equipmentBaseType">Equipment Base Identifier</param>
+        /// <returns></returns>
         public static string ToString(int equipmentBaseType)
         {
             switch (equipmentBaseType)
             {
-                case 0:
+                case Bronze:
                     return "Squire";
-                case 1:
+
+                case Silver:
                     return "Silver";
-                case 2:
+
+                case Gold:
                     return "Guardian";
-                case 3:
+
+                case Imperial:
                     return "Imperial";
-                case 4:
+
+                case Royal:
                     return "Royal";
-                case 5:
+
+                case Knight:
                     return "Knight";
-                case 6:
+
+                case Earthen:
                     return "Ranger";
-                case 7:
+
+                case Sky:
                     return "Sky";
-                case 8:
+
+                case Dragon:
                     return "Dragon";
-                case 9:
+
+                case Eternal:
                     return "Slayer";
-                case 10:
+
+                case Blood:
                     return "Blood";
-                case 11:
+
+                case Amethyst:
                     return "Sage";
-                case 12:
+
+                case Spike:
                     return "Retribution";
-                case 13:
+
+                case Holy:
                     return "Holy";
-                case 14:
+
+                case Dark:
                     return "Dark";
+
                 default:
                     return "";
             }

@@ -1,17 +1,19 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - EnemyObj_EarthWizard.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -89,9 +91,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.EarthWizard_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.BASIC:
+                case GameTypes.EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.ADVANCED:
+                case GameTypes.EnemyDifficulty.Advanced:
                     SpellDelay = 0.5f;
                     SpellDuration = 1f;
                     Name = "Gravisor";
@@ -120,7 +122,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.EXPERT:
+                case GameTypes.EnemyDifficulty.Expert:
                     SpellDelay = 0.7f;
                     SpellDuration = 3.5f;
                     Name = "Terrasor";
@@ -149,7 +151,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MiniBoss:
                     SpellDelay = 0.85f;
                     SpellDuration = 2f;
                     m_spellOffset = new Vector2(40f, -140f);
@@ -634,7 +636,7 @@ namespace RogueCastle
                 m_earthParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_earthParticleEffectCounter <= 0f)
                 {
-                    if (Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
+                    if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
                     {
                         if (m_effectCycle == 0)
                         {
@@ -678,11 +680,11 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = MiniBossFireballSize
             };
-            if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+            if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
             {
                 projectileData.AngleOffset = CDGMath.RandomInt(-25, 25);
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+            if (Difficulty == GameTypes.EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
             }
@@ -714,7 +716,7 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = MiniBossFireballSize
             };
-            if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+            if (Difficulty == GameTypes.EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
             }
