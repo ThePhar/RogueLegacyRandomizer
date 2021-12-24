@@ -168,6 +168,7 @@ namespace RogueCastle
         public int EnableShop { get; set; }
         public int DisableCharon { get; set; }
         public int DeathLink { get; set; }
+        public bool DeathLinkDeath { get; set; }
         public string[] AdditionalChildrenNames { get; set; }
 
         public byte TotalBlueprintsPurchased

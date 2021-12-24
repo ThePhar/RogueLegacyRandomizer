@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - Game.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-24
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -16,6 +16,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Archipelago.MultiClient.Net;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -126,6 +127,7 @@ namespace RogueCastle
         }
 
         public ArchipelagoSession ArchSession;
+        public DeathLinkService DeathLinkService;
 
         public static RCScreenManager ScreenManager { get; internal set; }
         public static float PlaySessionLength { get; set; }
@@ -981,6 +983,8 @@ namespace RogueCastle
             public bool FullScreen;
             public float MusicVolume;
             public string ProfileSlot;
+            public string PlayerAlias;
+            public string PlayerName;
             public bool QuickDrop;
             public bool ReduceQuality;
             public int ScreenHeight;

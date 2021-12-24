@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GameOverScreen.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-24
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -59,6 +60,7 @@ namespace RogueCastle
                     m_playerSwordSpinSound = new FrameSoundObj(m_player, 2, "Player_Death_SwordTwirl");
                     m_playerSwordFallSound = new FrameSoundObj(m_player, 9, "Player_Death_SwordLand");
                 }
+
                 m_enemyList = (objList[1] as List<EnemyObj>);
                 m_coinsCollected = (int) objList[2];
                 m_bagsCollected = (int) objList[3];
@@ -67,8 +69,28 @@ namespace RogueCastle
                 {
                     m_objKilledPlayer = (objList[5] as GameObj);
                 }
+
                 SetObjectKilledPlayerText();
                 m_enemyStoredPositions.Clear();
+
+                // Handle Death Link!
+                if (!Game.PlayerStats.DeathLinkDeath)
+                {
+                    if (objList[5] == null)
+                    {
+                        Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
+                            string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
+                                Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
+                    }
+                    else
+                    {
+                        Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
+                            string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
+                                Game.GameConfig.PlayerAlias)));
+                    }
+                }
+
+                Game.PlayerStats.DeathLinkDeath = false;
                 base.PassInData(objList);
             }
         }
@@ -91,7 +113,7 @@ namespace RogueCastle
             textObj.Text = "Your valor shown in battle shall never be forgotten.";
             textObj.FontSize = 17f;
             textObj.DropShadow = dropShadow;
-            textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height/2 + 25);
+            textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height / 2 + 25);
             m_dialoguePlate.AddChild(textObj);
             var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 12f;
@@ -152,6 +174,7 @@ namespace RogueCastle
             {
                 Game.PlayerStats.CurrentBranches.Clear();
             }
+
             Game.PlayerStats.IsDead = true;
             Game.PlayerStats.Traits = Vector2.Zero;
             Game.PlayerStats.NewBossBeaten = false;
@@ -170,6 +193,7 @@ namespace RogueCastle
             {
                 Game.PlayerStats.SpecialItem = 0;
             }
+
             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.MapData);
             (ScreenManager.Game as Game).SaveManager.SaveAllFileTypes(true);
             Game.PlayerStats.Traits = traits;
@@ -177,6 +201,7 @@ namespace RogueCastle
             {
                 GameUtil.UnlockAchievement("FEAR_OF_LIFE");
             }
+
             SoundManager.StopMusic(0.5f);
             m_droppingStats = false;
             m_lockControls = false;
@@ -188,8 +213,8 @@ namespace RogueCastle
             m_dialoguePlate.Opacity = 0f;
             m_playerGhost.Opacity = 0f;
             m_spotlight.Opacity = 0f;
-            m_playerGhost.Position = new Vector2(m_player.X - m_playerGhost.Width/2, m_player.Bounds.Top - 20);
-            Tween.RunFunction(3f, typeof (SoundManager), "PlaySound", "Player_Ghost");
+            m_playerGhost.Position = new Vector2(m_player.X - m_playerGhost.Width / 2, m_player.Bounds.Top - 20);
+            Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
             Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
             Tween.By(m_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
             m_playerGhost.Opacity = 0.4f;
@@ -198,8 +223,8 @@ namespace RogueCastle
             m_playerGhost.PlayAnimation();
             Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
             Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
-            Tween.AddEndHandlerToLastTween(typeof (SoundManager), "PlaySound", "Player_Death_Spotlight");
-            Tween.RunFunction(1.2f, typeof (SoundManager), "PlayMusic", "GameOverStinger", false, 0.5f);
+            Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
+            Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", "GameOverStinger", false, 0.5f);
             Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_player.AbsX.ToString(), "Y",
                 (m_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
             Tween.RunFunction(2f, m_player, "RunDeathAnimation1");
@@ -213,6 +238,7 @@ namespace RogueCastle
                 (m_dialoguePlate.GetChildAt(2) as TextObj).Text =
                     GameEV.GAME_HINTS[CDGMath.RandomInt(0, GameEV.GAME_HINTS.Length - 1)];
             }
+
             (m_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + Game.PlayerStats.PlayerName + "'s Parting Words";
             Tween.To(m_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
             Tween.RunFunction(4f, this, "DropStats");
@@ -228,6 +254,7 @@ namespace RogueCastle
                 m_enemyList.Clear();
                 m_enemyList = null;
             }
+
             Game.PlayerStats.Traits = Vector2.Zero;
             BackBufferOpacity = 0f;
             base.OnExit();
@@ -252,6 +279,7 @@ namespace RogueCastle
                     {
                         current.ChangeSprite("EnemyZombieWalk_Character");
                     }
+
                     current.Visible = true;
                     current.Flip = SpriteEffects.FlipHorizontally;
                     Tween.StopAllContaining(current, false);
@@ -264,6 +292,7 @@ namespace RogueCastle
                     {
                         enemyObj_Eyeball.ChangeToBossPupil();
                     }
+
                     Tween.To(current, 0f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "1");
                     Tween.RunFunction(num, this, "PlayEnemySound");
                     topLeftCorner.X += 25f;
@@ -318,10 +347,18 @@ namespace RogueCastle
                         textObj.Text = Game.PlayerStats.PlayerName + " was done in by a projectile";
                     }
                 }
+
                 var hazardObj = m_objKilledPlayer as HazardObj;
                 if (hazardObj != null)
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " slipped and was impaled by spikes";
+                }
+
+                var playerObj = m_objKilledPlayer as PlayerObj;
+                if (playerObj != null)
+                {
+                    textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + playerObj.Name +
+                                   "'s carelessness";
                 }
             }
             else
@@ -333,7 +370,8 @@ namespace RogueCastle
         public override void HandleInput()
         {
             if (!m_lockControls && m_droppingStats &&
-                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) || Game.GlobalInput.JustPressed(2) ||
+                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) ||
+                 Game.GlobalInput.JustPressed(2) ||
                  Game.GlobalInput.JustPressed(3)))
             {
                 if (m_enemyList.Count > 0 && m_enemyList[m_enemyList.Count - 1].Opacity != 1f)
@@ -343,6 +381,7 @@ namespace RogueCastle
                         Tween.StopAllContaining(current, false);
                         current.Opacity = 1f;
                     }
+
                     Tween.StopAllContaining(this, false);
                     PlayEnemySound();
                 }
@@ -360,6 +399,7 @@ namespace RogueCastle
                     m_lockControls = true;
                 }
             }
+
             base.HandleInput();
         }
 
@@ -370,12 +410,14 @@ namespace RogueCastle
                 (m_dialoguePlate.GetChildAt(2) as TextObj).Text =
                     GameEV.GAME_HINTS[CDGMath.RandomInt(0, GameEV.GAME_HINTS.Length - 1)];
             }
+
             if (m_player.SpriteName == "PlayerDeath_Character")
             {
                 m_playerFallSound.Update();
                 m_playerSwordFallSound.Update();
                 m_playerSwordSpinSound.Update();
             }
+
             base.Update(gameTime);
         }
 
@@ -385,18 +427,20 @@ namespace RogueCastle
                 Camera.GetTransformation());
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X - 10, (int) Camera.TopLeftCorner.Y - 10, 1420, 820),
-                Color.Black*BackBufferOpacity);
+                Color.Black * BackBufferOpacity);
             foreach (var current in m_enemyList)
             {
                 current.Draw(Camera);
             }
+
             m_playerFrame.Draw(Camera);
             m_player.Draw(Camera);
             if (m_playerGhost.Opacity > 0f)
             {
-                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTime*5f)*60f*
+                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTime * 5f) * 60f *
                                    (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             m_playerGhost.Draw(Camera);
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
@@ -432,11 +476,13 @@ namespace RogueCastle
                 {
                     m_enemyList.Clear();
                 }
+
                 m_enemyList = null;
                 if (m_enemyStoredPositions != null)
                 {
                     m_enemyStoredPositions.Clear();
                 }
+
                 m_enemyStoredPositions = null;
                 m_playerFrame.Dispose();
                 m_playerFrame = null;

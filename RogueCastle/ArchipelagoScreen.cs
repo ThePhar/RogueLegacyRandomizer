@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ArchipelagoScreen.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-24
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Archipelago.MultiClient.Net;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using InputSystem;
@@ -133,6 +134,8 @@ namespace RogueCastle
                 // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
                 Program.Game.ArchSession =
                     ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
+
+                // Start Up
                 Program.Game.ArchSession.Socket.PacketReceived += packet =>
                 {
                     var roomInfo = packet as RoomInfoPacket;
@@ -148,8 +151,10 @@ namespace RogueCastle
                         Program.Game.SaveManager.CreateSaveDirectory();
                         m_titleScreen.LoadSaveData();
 
-                        var isFemale = connectedPacket.SlotData["initial_gender"].ToString() == "1";
+                            var isFemale = connectedPacket.SlotData["initial_gender"].ToString() == "1";
                         var playerName = connectedPacket.Players[connectedPacket.Slot - 1].Name;
+                        Game.GameConfig.PlayerAlias = connectedPacket.Players[connectedPacket.Slot - 1].Alias;
+                        Game.GameConfig.PlayerName = connectedPacket.Players[connectedPacket.Slot - 1].Name;
 
                         // Rename Sir Lee to player's name and initial gender if we're on our first character.
                         if (Game.PlayerStats.CurrentBranches == null)
@@ -187,9 +192,32 @@ namespace RogueCastle
                         Game.PlayerStats.AdditionalChildrenNames =
                             (connectedPacket.SlotData["additional_children_names"] as JArray).ToObject<string[]>();
 
+                        // Death Link
                         if (Game.PlayerStats.DeathLink == 1)
                         {
-                            Program.Game.ArchSession.UpdateTags(new List<string>{ "AP", "DeathLink" });
+                            Program.Game.ArchSession.UpdateTags(new List<string>{ "DeathLink" });
+                            Program.Game.DeathLinkService = Program.Game.ArchSession.CreateDeathLinkServiceAndEnable();
+
+                            // Death Links
+                            Program.Game.DeathLinkService.OnDeathLinkReceived += deathLinkObject =>
+                            {
+                                if (deathLinkObject.Source == Game.GameConfig.PlayerName)
+                                    return;
+
+                                Console.WriteLine("Death Link Received!");
+                                Game.PlayerStats.DeathLinkDeath = true;
+                                var levelScreen = Game.ScreenManager.GetLevelScreen();
+                                if (levelScreen != null && levelScreen.Player != null)
+                                {
+                                    levelScreen.Player.AttachedLevel.SetObjectKilledPlayer(
+                                        new PlayerObj("PlayerIdle_Character", PlayerIndex.One, Program.Game.PhysicsManager, null,
+                                            Program.Game)
+                                        {
+                                            Name = deathLinkObject.Source
+                                        });
+                                    levelScreen.Player.Kill();
+                                }
+                            };
                         }
 
                         // Start!
@@ -199,7 +227,6 @@ namespace RogueCastle
 
                 var result = Program.Game.ArchSession.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue,
                     LevelEV.AP_VERSION,
-                    new List<string>{ "AP" },
                     password: m_password.GetValue);
 
                 if (!result.Successful)
@@ -222,6 +249,7 @@ namespace RogueCastle
                 var rCScreenManager = Game.ScreenManager;
                 // Add our dialogue if it's not there.
                 DialogueManager.AddText("Exception Connection", new []{ "Exception Connecting!" }, new[] { ex.Message });
+                Console.WriteLine(ex);
 
                 rCScreenManager.DialogueScreen.SetDialogue("Exception Connection");
                 rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
