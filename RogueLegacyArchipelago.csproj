@@ -81,10 +81,8 @@
     <Compile Include="RogueCastle\BlobBossRoom.cs" />
     <Compile Include="RogueCastle\BlobChallengeRoom.cs" />
     <Compile Include="RogueCastle\BonusRoomObj.cs" />
-    <Compile Include="RogueCastle\BonusRoomTypes.cs" />
     <Compile Include="RogueCastle\BorderObj.cs" />
     <Compile Include="RogueCastle\BossRoomObj.cs" />
-    <Compile Include="RogueCastle\BossRoomType.cs" />
     <Compile Include="RogueCastle\BreakableObj.cs" />
     <Compile Include="RogueCastle\CarnivalShoot1BonusRoom.cs" />
     <Compile Include="RogueCastle\CarnivalShoot2BonusRoom.cs" />
@@ -96,10 +94,7 @@
     <Compile Include="RogueCastle\CheckWallLogicAction.cs" />
     <Compile Include="RogueCastle\ChestBonusRoomObj.cs" />
     <Compile Include="RogueCastle\ChestConditionChecker.cs" />
-    <Compile Include="RogueCastle\ChestConditionType.cs" />
     <Compile Include="RogueCastle\ChestObj.cs" />
-    <Compile Include="RogueCastle\ChestType.cs" />
-    <Compile Include="RogueCastle\ClassType.cs" />
     <Compile Include="RogueCastle\CompassRoomObj.cs" />
     <Compile Include="RogueCastle\ConnectArchipelagoOptionObj.cs" />
     <Compile Include="RogueCastle\CreditsScreen.cs" />
@@ -285,11 +280,23 @@
     <Compile Include="RogueCastle\TraitStatType.cs" />
     <Compile Include="RogueCastle\TraitType.cs" />
     <Compile Include="RogueCastle\TutorialRoomObj.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\BonusRoomType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\BossRoomType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\ChestConditionType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\ChestType.cs" />
+    <Compile Include="RogueCastle\TypeDefinitions\ClassType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
     <Compile Include="RogueCastle\WaypointObj.cs" />
     <Compile Include="RogueCastle\WordBuilder.cs" />
     <Compile Include="RogueCastle\XMLCompiler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RogueCastle\Characters" />
+    <Folder Include="RogueCastle\Systems" />
+    <Folder Include="RogueCastle\Options" />
+    <Folder Include="RogueCastle\Rooms" />
+    <Folder Include="RogueCastle\Screens" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
