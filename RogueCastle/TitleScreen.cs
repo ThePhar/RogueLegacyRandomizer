@@ -295,6 +295,8 @@ namespace RogueCastle
 
         public void LoadSaveData()
         {
+            Game.NameArray = Game.DefaultNameArray.Clone();
+            Game.FemaleNameArray = Game.DefaultFemaleNameArray.Clone();
             SkillSystem.ResetAllTraits();
             Game.PlayerStats.Dispose();
             Game.PlayerStats = new PlayerStats();

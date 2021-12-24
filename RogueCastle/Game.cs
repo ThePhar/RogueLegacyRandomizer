@@ -71,6 +71,9 @@ namespace RogueCastle
         private bool m_frameLimitSwap;
         private bool m_gameLoaded;
 
+        public static List<string> DefaultNameArray;
+        public static List<string> DefaultFemaleNameArray;
+
         public Game(string filePath = "")
         {
             if (filePath.Contains("-t"))
@@ -629,6 +632,9 @@ namespace RogueCastle
                 textObj.Dispose();
                 SpriteFontArray.SpriteFontList.Clear();
             }
+
+            // Default name array for future use.
+            DefaultNameArray = NameArray.Clone();
         }
 
         private void InitializeFemaleNameArray()
@@ -665,6 +671,9 @@ namespace RogueCastle
                 textObj.Dispose();
                 SpriteFontArray.SpriteFontList.Clear();
             }
+
+            // Default name array for future use.
+            DefaultFemaleNameArray = FemaleNameArray.Clone();
         }
 
         public void SaveOnExit()

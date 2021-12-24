@@ -25,22 +25,22 @@ namespace RogueCastle
 {
     public class ArchipelagoScreen : Screen
     {
-        private ObjContainer                m_bgSprite;
-        private KeyIconTextObj              m_cancelText;
-        private KeyIconTextObj              m_confirmText;
-        private KeyIconTextObj              m_navigationText;
+        private ObjContainer m_bgSprite;
+        private KeyIconTextObj m_cancelText;
+        private KeyIconTextObj m_confirmText;
+        private KeyIconTextObj m_navigationText;
         private List<ArchipelagoOptionsObj> m_archipelagoArray;
-        private SpriteObj                   m_archipelagoBar;
-        private SpriteObj                   m_archipelagoTitle;
-        private ArchipelagoOptionsObj       m_selectedOption;
-        private int                         m_selectedOptionIndex;
-        private bool                        m_transitioning;
-        private TitleScreen                 m_titleScreen;
+        private SpriteObj m_archipelagoBar;
+        private SpriteObj m_archipelagoTitle;
+        private ArchipelagoOptionsObj m_selectedOption;
+        private int m_selectedOptionIndex;
+        private bool m_transitioning;
+        private TitleScreen m_titleScreen;
 
-        private TextBoxOptionsObj           m_hostname;
-        private TextBoxOptionsObj           m_port;
-        private TextBoxOptionsObj           m_slot;
-        private TextBoxOptionsObj           m_password;
+        private TextBoxOptionsObj m_hostname;
+        private TextBoxOptionsObj m_port;
+        private TextBoxOptionsObj m_slot;
+        private TextBoxOptionsObj m_password;
 
         public ArchipelagoScreen()
         {
@@ -68,7 +68,7 @@ namespace RogueCastle
             // Archipelago Menu Title
             m_archipelagoTitle = new SpriteObj("OptionsScreenTitle_Sprite");
             m_bgSprite.AddChild(m_archipelagoTitle);
-            m_archipelagoTitle.Position = new Vector2(0f, -(float) m_bgSprite.Width/2f + 60f);
+            m_archipelagoTitle.Position = new Vector2(0f, -(float) m_bgSprite.Width / 2f + 60f);
 
             // Archipelago Options
             m_hostname = new TextBoxOptionsObj(this, "Hostname", "archipelago.gg");
@@ -129,40 +129,107 @@ namespace RogueCastle
 
         public void Connect()
         {
-            // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
-            Program.Game.ArchSession = ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
-            Program.Game.ArchSession.Socket.PacketReceived += packet =>
+            try {
+                // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
+                Program.Game.ArchSession =
+                    ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
+                Program.Game.ArchSession.Socket.PacketReceived += packet =>
+                {
+                    var roomInfo = packet as RoomInfoPacket;
+                    if (roomInfo != null)
+                    {
+                        Game.GameConfig.ProfileSlot = roomInfo.SeedName;
+                    }
+
+                    var connectedPacket = packet as ConnectedPacket;
+                    if (connectedPacket != null)
+                    {
+                        // Create save file.
+                        Program.Game.SaveManager.CreateSaveDirectory();
+                        m_titleScreen.LoadSaveData();
+
+                        var isFemale = connectedPacket.SlotData["initial_gender"].ToString() == "1";
+                        var playerName = connectedPacket.Players[connectedPacket.Slot - 1].Name;
+
+                        // Rename Sir Lee to player's name and initial gender if we're on our first character.
+                        if (Game.PlayerStats.CurrentBranches == null)
+                        {
+                            Game.PlayerStats.IsFemale = isFemale;
+                            Game.PlayerStats.PlayerName =
+                                string.Format("{1} {0}", playerName, Game.PlayerStats.IsFemale ? "Lady" : "Sir");
+                        }
+
+                        // Add our player name to the name pool, if we haven't already so our children can have our name.
+                        if (isFemale)
+                        {
+                            if (!Game.FemaleNameArray.Contains(playerName))
+                                Game.FemaleNameArray.Add(playerName);
+                        }
+                        else
+                        {
+                            if (!Game.NameArray.Contains(playerName))
+                                Game.NameArray.Add(playerName);
+                        }
+
+                        Game.PlayerStats.Difficulty = int.Parse(connectedPacket.SlotData["difficulty"].ToString());
+                        Game.PlayerStats.StatIncreasePool =
+                            int.Parse(connectedPacket.SlotData["stat_increase_pool"].ToString());
+                        Game.PlayerStats.StatIncreaseApplies =
+                            int.Parse(connectedPacket.SlotData["stat_increase_applies"].ToString());
+                        Game.PlayerStats.EarlyVendors = int.Parse(connectedPacket.SlotData["early_vendors"].ToString());
+                        Game.PlayerStats.BossShuffle = int.Parse(connectedPacket.SlotData["boss_shuffle"].ToString());
+                        Game.PlayerStats.Children = int.Parse(connectedPacket.SlotData["children"].ToString());
+                        Game.PlayerStats.HereditaryBlessings =
+                            int.Parse(connectedPacket.SlotData["hereditary_blessings"].ToString());
+                        Game.PlayerStats.EnableShop = int.Parse(connectedPacket.SlotData["enable_shop"].ToString());
+                        Game.PlayerStats.DisableCharon = int.Parse(connectedPacket.SlotData["disable_charon"].ToString());
+                        Game.PlayerStats.DeathLink = int.Parse(connectedPacket.SlotData["death_link"].ToString());
+                        Game.PlayerStats.AdditionalChildrenNames =
+                            (connectedPacket.SlotData["additional_children_names"] as JArray).ToObject<string[]>();
+
+                        if (Game.PlayerStats.DeathLink == 1)
+                        {
+                            Program.Game.ArchSession.UpdateTags(new List<string>{ "AP", "DeathLink" });
+                        }
+
+                        // Start!
+                        m_titleScreen.StartPressed();
+                    }
+                };
+
+                var result = Program.Game.ArchSession.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue,
+                    LevelEV.AP_VERSION,
+                    new List<string>{ "AP" },
+                    password: m_password.GetValue);
+
+                if (!result.Successful)
+                {
+                    var failure = result as LoginFailure;
+                    if (failure != null)
+                    {
+                        var rCScreenManager = Game.ScreenManager;
+                        // Add our dialogue if it's not there.
+                        DialogueManager.AddText("Failed to connect", failure.Errors, failure.Errors);
+
+                        rCScreenManager.DialogueScreen.SetDialogue("Failed to connect");
+                        rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                        rCScreenManager.DisplayScreen(13, false);
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                var roomInfo = packet as RoomInfoPacket;
-                if (roomInfo != null)
-                {
-                    Game.GameConfig.ProfileSlot = roomInfo.SeedName;
-                }
+                var rCScreenManager = Game.ScreenManager;
+                // Add our dialogue if it's not there.
+                DialogueManager.AddText("Exception Connection", new []{ "Exception Connecting!" }, new[] { ex.Message });
 
-                var connectedPacket = packet as ConnectedPacket;
-                if (connectedPacket != null)
-                {
-                    Game.PlayerStats.Difficulty              = int.Parse(connectedPacket.SlotData["difficulty"].ToString());
-                    Game.PlayerStats.StatIncreasePool        = int.Parse(connectedPacket.SlotData["stat_increase_pool"].ToString());
-                    Game.PlayerStats.StatIncreaseApplies     = int.Parse(connectedPacket.SlotData["stat_increase_applies"].ToString());
-                    Game.PlayerStats.EarlyVendors            = int.Parse(connectedPacket.SlotData["early_vendors"].ToString());
-                    Game.PlayerStats.BossShuffle             = int.Parse(connectedPacket.SlotData["boss_shuffle"].ToString());
-                    Game.PlayerStats.Children                = int.Parse(connectedPacket.SlotData["children"].ToString());
-                    Game.PlayerStats.HereditaryBlessings     = int.Parse(connectedPacket.SlotData["hereditary_blessings"].ToString());
-                    Game.PlayerStats.EnableShop              = int.Parse(connectedPacket.SlotData["enable_shop"].ToString());
-                    Game.PlayerStats.DisableCharon           = int.Parse(connectedPacket.SlotData["disable_charon"].ToString());
-                    Game.PlayerStats.DeathLink               = int.Parse(connectedPacket.SlotData["death_link"].ToString());
-                    Game.PlayerStats.AdditionalChildrenNames =
-                        (connectedPacket.SlotData["additional_children_names"] as JArray).ToObject<string[]>();
+                rCScreenManager.DialogueScreen.SetDialogue("Exception Connection");
+                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                rCScreenManager.DisplayScreen(13, false);
+            }
 
-                    // Connect!
-                    Program.Game.SaveManager.CreateSaveDirectory();
-                    m_titleScreen.LoadSaveData();
-                    m_titleScreen.StartPressed();
-                }
-            };
 
-            Program.Game.ArchSession.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue, LevelEV.AP_VERSION, password: m_password.GetValue);
+
         }
 
         public override void OnEnter()
@@ -189,7 +256,7 @@ namespace RogueCastle
             Tween.To(m_confirmText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "1");
-            Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "DialogueMenuOpen");
+            Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogueMenuOpen");
             m_transitioning = true;
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.8");
             m_selectedOptionIndex = 0;
@@ -203,13 +270,14 @@ namespace RogueCastle
             var num = 0;
             foreach (var current in m_archipelagoArray)
             {
-                current.Y = 160 + num*30 - 360f;
+                current.Y = 160 + num * 30 - 360f;
                 current.Opacity = 0f;
                 Tween.By(current, 0.5f, Quad.EaseOut, "Y", 360f.ToString(CultureInfo.InvariantCulture));
                 Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "1");
                 current.Initialize();
                 num++;
             }
+
             m_archipelagoBar.Opacity = 0f;
             Tween.To(m_archipelagoBar, 0.2f, Tween.EaseNone, "Opacity", "1");
             base.OnEnter();
@@ -236,12 +304,13 @@ namespace RogueCastle
             var num = 0;
             foreach (var current in m_archipelagoArray)
             {
-                current.Y = 160 + num*30;
+                current.Y = 160 + num * 30;
                 current.Opacity = 1f;
                 Tween.By(current, 0.5f, Quad.EaseOut, "Y", (-360f).ToString(CultureInfo.InvariantCulture));
                 Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "0");
                 num++;
             }
+
             Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
         }
 
@@ -274,6 +343,7 @@ namespace RogueCastle
                             {
                                 SoundManager.PlaySound("frame_swap");
                             }
+
                             m_selectedOptionIndex--;
                         }
                         else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
@@ -282,31 +352,38 @@ namespace RogueCastle
                             {
                                 SoundManager.PlaySound("frame_swap");
                             }
+
                             m_selectedOptionIndex++;
                         }
+
                         if (m_selectedOptionIndex < 0)
                         {
                             m_selectedOptionIndex = m_archipelagoArray.Count - 1;
                         }
+
                         if (m_selectedOptionIndex > m_archipelagoArray.Count - 1)
                         {
                             m_selectedOptionIndex = 0;
                         }
+
                         if (selectedOptionIndex != m_selectedOptionIndex)
                         {
                             if (m_selectedOption != null)
                             {
                                 m_selectedOption.IsSelected = false;
                             }
+
                             m_selectedOption = m_archipelagoArray[m_selectedOptionIndex];
                             m_selectedOption.IsSelected = true;
                         }
                     }
+
                     if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                     {
                         SoundManager.PlaySound("Option_Menu_Select");
                         m_selectedOption.IsActive = true;
                     }
+
                     if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3) ||
                         Game.GlobalInput.JustPressed(4))
                     {
@@ -324,6 +401,7 @@ namespace RogueCastle
             {
                 current.Update(gameTime);
             }
+
             m_archipelagoBar.Position = new Vector2(m_selectedOption.X - 15f, m_selectedOption.Y);
             base.Update(gameTime);
         }
@@ -331,12 +409,13 @@ namespace RogueCastle
         public override void Draw(GameTime gametime)
         {
             Camera.Begin();
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_bgSprite.Draw(Camera);
             foreach (var current in m_archipelagoArray)
             {
                 current.Draw(Camera);
             }
+
             m_confirmText.Draw(Camera);
             m_cancelText.Draw(Camera);
             m_navigationText.Draw(Camera);
@@ -354,6 +433,7 @@ namespace RogueCastle
                 {
                     current.Dispose();
                 }
+
                 m_archipelagoArray.Clear();
                 m_archipelagoArray = null;
                 m_bgSprite.Dispose();

@@ -10,7 +10,9 @@
 // 
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -100,6 +102,11 @@ namespace RogueCastle
                 Game = game3;
                 game3.Run();
             }
+        }
+
+        public static List<T> Clone<T>(this List<T> listToClone) where T : ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
         }
     }
 }

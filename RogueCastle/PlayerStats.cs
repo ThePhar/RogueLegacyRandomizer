@@ -28,7 +28,7 @@ namespace RogueCastle
             // Complete the tutorial so we don't have to watch it.
             TutorialComplete = true;
 
-            PlayerName = "Sir Phar";
+            PlayerName = "Sir Lee";
             SpecialItem = 0;
             Class = 0;
             Spell = 1;
