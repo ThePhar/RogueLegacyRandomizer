@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - ArchClient.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-25
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,8 +13,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
+using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
@@ -31,6 +33,10 @@ namespace RogueCastle.Archipelago
         private NetworkPlayer m_player;
         private SlotData m_data;
         private List<string> m_tags;
+        private List<int> m_missingLocations;
+        private List<int> m_checkedLocations;
+
+        public int TestNumber = 0;
 
         public bool IsConnected
         {
@@ -38,6 +44,13 @@ namespace RogueCastle.Archipelago
             {
                 return m_session != null && m_session.Socket.Connected;
             }
+        }
+
+        public Dictionary<int, bool> CheckedLocations { get; set; }
+        public Dictionary<int, NetworkItem> LocationCache { get; set; }
+        public ArchipelagoSession Session
+        {
+            get { return m_session; }
         }
 
         /// <summary>
@@ -62,6 +75,9 @@ namespace RogueCastle.Archipelago
 
                 // Attempt to connect to AP.
                 var result = m_session.TryConnectAndLogin("Rogue Legacy", slotName, LevelEV.AP_VERSION, m_tags, password: password);
+
+                // Testing something.
+                m_session.Socket.SendPacket(new GetDataPackagePacket());
 
                 // Error checking.
                 if (!result.Successful)
@@ -105,6 +121,9 @@ namespace RogueCastle.Archipelago
             m_player = new NetworkPlayer();
             m_data = null;
             m_tags = new List<string>{"AP"};
+            m_missingLocations = new List<int>();
+            m_checkedLocations = new List<int>();
+            LocationCache = new Dictionary<int, NetworkItem>();
 
             // Load Save Data
             LoadSaveData();
@@ -165,6 +184,9 @@ namespace RogueCastle.Archipelago
         private void ConnectedPacketHandler(ConnectedPacket packet)
         {
             m_slot = packet.Slot;
+            m_missingLocations = packet.MissingChecks;
+            m_checkedLocations = packet.LocationsChecked;
+            CreateLocationsDictionary();
 
             // Create save file if it doesn't exist.
             Game.ChangeSlot(m_seed, m_slot);
@@ -188,7 +210,7 @@ namespace RogueCastle.Archipelago
                 Game.NameArray.Add(m_player.Name);
 
             // Load Settings
-            LoadSettings();
+            SetSettings();
 
             // Load DeathLink
             if (m_data.DeathLink)
@@ -201,8 +223,27 @@ namespace RogueCastle.Archipelago
                 m_deathLinkService.OnDeathLinkReceived += DeathLinkHandler;
             }
 
+            // Fill our LocationCache then start.
+            var fairyChests = Enumerable
+                .Range(LocationsTable.FairyChestLocationStartIndex, LocationsTable.FairyChestTotalLocations);
+            // var regularChests = Enumerable
+            //     .Range(LocationsTable.ChestLocationStartIndex, LocationsTable.ChestLocationTotalLocations);
+            // var allChests = fairyChests.Concat(regularChests).ToArray();
+
+            m_session.Locations.ScoutLocationsAsync(PrepareLocationsAndStart, fairyChests.ToArray());
+
             // Load the game.
             StartGame();
+        }
+
+        private void PrepareLocationsAndStart(LocationInfoPacket locationInfo)
+        {
+            var locations = locationInfo.Locations;
+            foreach (var networkItem in locations)
+            {
+                Console.WriteLine("{0} - {1} - {2}", networkItem.Item, networkItem.Location, networkItem.Player);
+                LocationCache.Add(networkItem.Location, networkItem);
+            }
         }
 
         /// <summary>
@@ -234,12 +275,30 @@ namespace RogueCastle.Archipelago
         }
 
         /// <summary>
-        /// Load our settings into our game.
+        /// Set our settings into our game.
         /// </summary>
-        private void LoadSettings()
+        private void SetSettings()
         {
             // Difficulty
             Game.PlayerStats.TimesCastleBeaten = (int) m_data.Difficulty;
+        }
+
+        /// <summary>
+        /// Create a locations dictionary to keep track of what locations we opened and which we did not.
+        /// </summary>
+        private void CreateLocationsDictionary()
+        {
+            CheckedLocations = new Dictionary<int, bool>();
+
+            foreach (var location in m_missingLocations)
+            {
+                CheckedLocations.Add(location, false);
+            }
+
+            foreach (var location in m_checkedLocations)
+            {
+                CheckedLocations.Add(location, true);
+            }
         }
 
         /// <summary>

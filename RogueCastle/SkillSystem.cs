@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillSystem.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-25
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -95,6 +95,7 @@ namespace RogueCastle
             array[9, 6] = SkillType.ManaUp;
             m_skillTypeArray = array;
             var array2 = new Vector2[10, 10];
+
             array2[0, 0] = new Vector2(0f, 0f);
             array2[0, 1] = new Vector2(0f, 0f);
             array2[0, 2] = new Vector2(0f, 0f);
@@ -103,8 +104,9 @@ namespace RogueCastle
             array2[0, 5] = new Vector2(0f, 0f);
             array2[0, 6] = new Vector2(0f, 0f);
             array2[0, 7] = new Vector2(0f, 0f);
-            array2[0, 8] = new Vector2(860f, 125f);
+            array2[0, 8] = new Vector2(338f, 680f);
             array2[0, 9] = new Vector2(0f, 0f);
+
             array2[1, 0] = new Vector2(0f, 0f);
             array2[1, 1] = new Vector2(0f, 0f);
             array2[1, 2] = new Vector2(0f, 0f);
@@ -112,9 +114,10 @@ namespace RogueCastle
             array2[1, 4] = new Vector2(0f, 0f);
             array2[1, 5] = new Vector2(0f, 0f);
             array2[1, 6] = new Vector2(0f, 0f);
-            array2[1, 7] = new Vector2(655f, -100f);
-            array2[1, 8] = new Vector2(735f, 95f);
+            array2[1, 7] = new Vector2(558f, 590f);
+            array2[1, 8] = new Vector2(38f, 380f);
             array2[1, 9] = new Vector2(0f, 0f);
+
             array2[2, 0] = new Vector2(0f, 0f);
             array2[2, 1] = new Vector2(0f, 0f);
             array2[2, 2] = new Vector2(0f, 0f);
@@ -122,76 +125,83 @@ namespace RogueCastle
             array2[2, 4] = new Vector2(0f, 0f);
             array2[2, 5] = new Vector2(0f, 0f);
             array2[2, 6] = new Vector2(0f, 0f);
-            array2[2, 7] = new Vector2(655f, 50f);
-            array2[2, 8] = new Vector2(655f, 125f);
+            array2[2, 7] = new Vector2(38f, 310f);
+            array2[2, 8] = new Vector2(828f, 520f);
             array2[2, 9] = new Vector2(0f, 0f);
             array2[3, 0] = new Vector2(0f, 0f);
+
             array2[3, 1] = new Vector2(0f, 0f);
-            array2[3, 2] = new Vector2(365f, 150f);
+            array2[3, 2] = new Vector2(38f, 100f);
             array2[3, 3] = new Vector2(0f, 0f);
             array2[3, 4] = new Vector2(0f, 0f);
             array2[3, 5] = new Vector2(0f, 0f);
             array2[3, 6] = new Vector2(0f, 0f);
             array2[3, 7] = new Vector2(0f, 0f);
-            array2[3, 8] = new Vector2(655f, 200f);
+            array2[3, 8] = new Vector2(828f, 590f);
             array2[3, 9] = new Vector2(0f, 0f);
+
             array2[4, 0] = new Vector2(0f, 0f);
             array2[4, 1] = new Vector2(0f, 0f);
-            array2[4, 2] = new Vector2(185f, 250f);
-            array2[4, 3] = new Vector2(365f, 250f);
+            array2[4, 2] = new Vector2(648f, 520f);
+            array2[4, 3] = new Vector2(868f, 130f);
             array2[4, 4] = new Vector2(0f, 0f);
             array2[4, 5] = new Vector2(0f, 0f);
             array2[4, 6] = new Vector2(0f, 0f);
             array2[4, 7] = new Vector2(0f, 0f);
-            array2[4, 8] = new Vector2(735f, 200f);
+            array2[4, 8] = new Vector2(38f, 240f);
             array2[4, 9] = new Vector2(0f, 0f);
-            array2[5, 0] = new Vector2(110f, 360f);
-            array2[5, 1] = new Vector2(110f, 460f);
-            array2[5, 2] = new Vector2(185f, 360f);
+
+            array2[5, 0] = new Vector2(918f, 520f);
+            array2[5, 1] = new Vector2(918f, 590f);
+            array2[5, 2] = new Vector2(38f, 520f);
             array2[5, 3] = new Vector2(0f, 0f);
-            array2[5, 4] = new Vector2(275f, 555f);
+            array2[5, 4] = new Vector2(238f, 310f);
             array2[5, 5] = new Vector2(0f, 0f);
-            array2[5, 6] = new Vector2(735f, 555f);
+            array2[5, 6] = new Vector2(238f, 400f);
             array2[5, 7] = new Vector2(0f, 0f);
-            array2[5, 8] = new Vector2(735f, 280f);
+            array2[5, 8] = new Vector2(918f, 680f);
             array2[5, 9] = new Vector2(0f, 0f);
-            array2[6, 0] = new Vector2(40f, 410f);
+
+            array2[6, 0] = new Vector2(38f, 450f);
             array2[6, 1] = new Vector2(0f, 0f);
-            array2[6, 2] = new Vector2(185f, 555f);
-            array2[6, 3] = new Vector2(275f, 360f);
-            array2[6, 4] = new Vector2(275f, 460f);
-            array2[6, 5] = new Vector2(505f, 315f);
-            array2[6, 6] = new Vector2(735f, 460f);
-            array2[6, 7] = new Vector2(735f, 360f);
-            array2[6, 8] = new Vector2(860f, 460f);
-            array2[6, 9] = new Vector2(938f, 415f);
+            array2[6, 2] = new Vector2(648f, 590f);
+            array2[6, 3] = new Vector2(828f, 680f);
+            array2[6, 4] = new Vector2(178f, 680f);
+            array2[6, 5] = new Vector2(868f, 220f);
+            array2[6, 6] = new Vector2(108f, 680f);
+            array2[6, 7] = new Vector2(728f, 680f);
+            array2[6, 8] = new Vector2(728f, 590f);
+            array2[6, 9] = new Vector2(728f, 520f);
+
             array2[7, 0] = new Vector2(0f, 0f);
             array2[7, 1] = new Vector2(0f, 0f);
-            array2[7, 2] = new Vector2(185f, 680f);
+            array2[7, 2] = new Vector2(868f, 330f);
             array2[7, 3] = new Vector2(0f, 0f);
             array2[7, 4] = new Vector2(0f, 0f);
-            array2[7, 5] = new Vector2(505f, 410f);
+            array2[7, 5] = new Vector2(648f, 680f);
             array2[7, 6] = new Vector2(0f, 0f);
             array2[7, 7] = new Vector2(0f, 0f);
-            array2[7, 8] = new Vector2(860f, 680f);
+            array2[7, 8] = new Vector2(38f, 170f);
             array2[7, 9] = new Vector2(0f, 0f);
+
             array2[8, 0] = new Vector2(0f, 0f);
             array2[8, 1] = new Vector2(0f, 0f);
-            array2[8, 2] = new Vector2(275f, 680f);
+            array2[8, 2] = new Vector2(868f, 400f);
             array2[8, 3] = new Vector2(0f, 0f);
             array2[8, 4] = new Vector2(0f, 0f);
-            array2[8, 5] = new Vector2(505f, 490f);
+            array2[8, 5] = new Vector2(238f, 130f);
             array2[8, 6] = new Vector2(0f, 0f);
             array2[8, 7] = new Vector2(0f, 0f);
             array2[8, 8] = new Vector2(0f, 0f);
             array2[8, 9] = new Vector2(0f, 0f);
+
             array2[9, 0] = new Vector2(0f, 0f);
             array2[9, 1] = new Vector2(0f, 0f);
             array2[9, 2] = new Vector2(0f, 0f);
             array2[9, 3] = new Vector2(0f, 0f);
             array2[9, 4] = new Vector2(0f, 0f);
-            array2[9, 5] = new Vector2(505f, 590f);
-            array2[9, 6] = new Vector2(505f, 680f);
+            array2[9, 5] = new Vector2(38f, 680f);
+            array2[9, 6] = new Vector2(238f, 220f);
             array2[9, 7] = new Vector2(0f, 0f);
             array2[9, 8] = new Vector2(0f, 0f);
             array2[9, 9] = new Vector2(0f, 0f);

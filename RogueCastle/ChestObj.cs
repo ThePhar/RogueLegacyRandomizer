@@ -1,17 +1,20 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - ChestObj.cs
+// Last Modified 2021-12-25
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -52,31 +55,28 @@ namespace RogueCastle
             {
                 m_chestType = value;
                 var isOpen = IsOpen;
-                if (m_chestType == 5)
+                switch (m_chestType)
                 {
-                    ForcedItemType = 14;
-                    ChangeSprite("BossChest_Sprite");
+                    case TypeDefinitions.ChestType.Boss:
+                        ForcedItemType = 14;
+                        ChangeSprite("BossChest_Sprite");
+                        break;
+                    case TypeDefinitions.ChestType.Fairy:
+                        ChangeSprite("Chest4_Sprite");
+                        break;
+                    case TypeDefinitions.ChestType.Gold:
+                        ChangeSprite("Chest3_Sprite");
+                        break;
+                    case TypeDefinitions.ChestType.Silver:
+                        ChangeSprite("Chest2_Sprite");
+                        break;
+                    default:
+                        ChangeSprite("Chest1_Sprite");
+                        break;
                 }
-                else if (m_chestType == 4)
-                {
-                    ChangeSprite("Chest4_Sprite");
-                }
-                else if (m_chestType == 3)
-                {
-                    ChangeSprite("Chest3_Sprite");
-                }
-                else if (m_chestType == 2)
-                {
-                    ChangeSprite("Chest2_Sprite");
-                }
-                else
-                {
-                    ChangeSprite("Chest1_Sprite");
-                }
+
                 if (isOpen)
-                {
                     GoToFrame(2);
-                }
             }
         }
 
@@ -87,93 +87,97 @@ namespace RogueCastle
 
         public virtual void OpenChest(ItemDropManager itemDropManager, PlayerObj player)
         {
-            if (!IsOpen && !IsLocked)
-            {
-                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chest_Open_Large");
-                GoToFrame(2);
-                if (IsEmpty)
-                {
-                    return;
-                }
-                if (ChestType == 3)
-                {
-                    GameUtil.UnlockAchievement("LOVE_OF_GOLD");
-                }
-                if (ForcedItemType == 0)
-                {
-                    var num = CDGMath.RandomInt(1, 100);
-                    var num2 = 0;
-                    int[] array;
-                    if (ChestType == 1)
-                    {
-                        array = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
-                    }
-                    else if (ChestType == 2)
-                    {
-                        array = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
-                    }
-                    else
-                    {
-                        array = GameEV.GOLDCHEST_ITEMDROP_CHANCE;
-                    }
-                    var num3 = 0;
-                    for (var i = 0; i < array.Length; i++)
-                    {
-                        num3 += array[i];
-                        if (num <= num3)
-                        {
-                            num2 = i;
-                            break;
-                        }
-                    }
-                    if (num2 == 0)
-                    {
-                        GiveGold(itemDropManager);
-                    }
-                    else if (num2 == 1)
-                    {
-                        GiveStatDrop(itemDropManager, player, 1, 0);
-                    }
-                    else
-                    {
-                        GivePrint(itemDropManager, player);
-                    }
-                }
-                else
-                {
-                    switch (ForcedItemType)
-                    {
-                        case 1:
-                        case 10:
-                        case 11:
-                            GiveGold(itemDropManager, (int) ForcedAmount);
-                            break;
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                            GiveStatDrop(itemDropManager, player, 1, ForcedItemType);
-                            break;
-                        case 12:
-                        case 13:
-                            GivePrint(itemDropManager, player);
-                            break;
-                        case 14:
-                            GiveStatDrop(itemDropManager, player, 3, 0);
-                            break;
-                        case 15:
-                        case 16:
-                        case 17:
-                        case 18:
-                        case 19:
-                            GiveStatDrop(itemDropManager, player, 1, ForcedItemType);
-                            break;
-                    }
-                }
-                player.AttachedLevel.RefreshMapChestIcons();
-            }
+            // Do not open chests that have been opened or are locked.
+            if (IsOpen || IsLocked)
+                return;
+
+            SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chest_Open_Large");
+            GoToFrame(2);
+
+            // If chest is empty, that's sad.
+            if (IsEmpty)
+                return;
+
+            // Unlock achievement!
+            if (ChestType == TypeDefinitions.ChestType.Gold)
+                GameUtil.UnlockAchievement("LOVE_OF_GOLD");
+
+            GiveNetworkItem(itemDropManager, player);
+            // if (ForcedItemType == 0)
+            // {
+            //     var num = CDGMath.RandomInt(1, 100);
+            //     var num2 = 0;
+            //     int[] array;
+            //     if (ChestType == TypeDefinitions.ChestType.Brown)
+            //     {
+            //         array = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
+            //     }
+            //     else if (ChestType == TypeDefinitions.ChestType.Silver)
+            //     {
+            //         array = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
+            //     }
+            //     else
+            //     {
+            //         array = GameEV.GOLDCHEST_ITEMDROP_CHANCE;
+            //     }
+            //     var num3 = 0;
+            //     for (var i = 0; i < array.Length; i++)
+            //     {
+            //         num3 += array[i];
+            //         if (num <= num3)
+            //         {
+            //             num2 = i;
+            //             break;
+            //         }
+            //     }
+            //     if (num2 == 0)
+            //     {
+            //         GiveGold(itemDropManager);
+            //     }
+            //     else if (num2 == 1)
+            //     {
+            //         GiveStatDrop(itemDropManager, player, 1, 0);
+            //     }
+            //     else
+            //     {
+            //         GivePrint(itemDropManager, player);
+            //     }
+            // }
+            // else
+            // {
+            //     switch (ForcedItemType)
+            //     {
+            //         case 1:
+            //         case 10:
+            //         case 11:
+            //             GiveGold(itemDropManager, (int) ForcedAmount);
+            //             break;
+            //         case 4:
+            //         case 5:
+            //         case 6:
+            //         case 7:
+            //         case 8:
+            //         case 9:
+            //             GiveStatDrop(itemDropManager, player, 1, ForcedItemType);
+            //             break;
+            //         case 12:
+            //         case 13:
+            //             GivePrint(itemDropManager, player);
+            //             break;
+            //         case 14:
+            //             GiveStatDrop(itemDropManager, player, 3, 0);
+            //             break;
+            //         case 15:
+            //         case 16:
+            //         case 17:
+            //         case 18:
+            //         case 19:
+            //             GiveStatDrop(itemDropManager, player, 1, ForcedItemType);
+            //             break;
+            //     }
+            // }
+
+            player.AttachedLevel.RefreshMapChestIcons();
         }
 
         public void GiveGold(ItemDropManager itemDropManager, int amount = 0)
@@ -380,6 +384,29 @@ namespace RogueCastle
                 GiveGold(manager);
             }
         }
+
+        public void GiveNetworkItem(ItemDropManager manager, PlayerObj player)
+        {
+            var pName = Program.Game.ArchClient.Session.Players.GetPlayerAlias(
+                Program.Game.ArchClient.LocationCache[44200 + Program.Game.ArchClient.TestNumber].Player);
+            var pItem = Program.Game.ArchClient.Session.Items.GetItemName(
+                Program.Game.ArchClient.LocationCache[44200 + Program.Game.ArchClient.TestNumber].Item);
+            var networkItem = new List<object>
+            {
+                new Vector2(X, Y - Height / 2f),
+                GetItemType.NetworkItem,
+                new Vector2(0, 0),
+                pName,
+                pItem
+            };
+
+            Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(44200 + Program.Game.ArchClient.TestNumber);
+            Program.Game.ArchClient.TestNumber++;
+
+            Game.ScreenManager.DisplayScreen(12, true, networkItem);
+            player.RunGetItemAnimation();
+        }
+
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {

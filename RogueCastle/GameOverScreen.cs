@@ -74,6 +74,7 @@ namespace RogueCastle
                 SetObjectKilledPlayerText();
                 m_enemyStoredPositions.Clear();
 
+                // TODO: Fix
                 // Handle Death Link!
                 // if (!Game.PlayerStats.DeathLinkDeath)
                 // {
@@ -90,8 +91,8 @@ namespace RogueCastle
                 //                 Game.GameConfig.PlayerAlias)));
                 //     }
                 // }
+                // Game.PlayerStats.DeathLinkDeath = false;
 
-                Game.PlayerStats.DeathLinkDeath = false;
                 base.PassInData(objList);
             }
         }

@@ -33,6 +33,7 @@ namespace RogueCastle.TypeDefinitions
         public const int FountainPiece3 = 17;
         public const int FountainPiece4 = 18;
         public const int FountainPiece5 = 19;
+        public const int NetworkItem = 20;
 
         public const int CoinAmount = 10;
         public const int MoneyBagAmount = 100;

@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly.
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - GetItemScreen.cs
+// Last Modified 2021-12-25
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -23,25 +24,34 @@ namespace RogueCastle
     public class GetItemScreen : Screen
     {
         private readonly Vector2 m_itemEndPos;
+
+        private bool m_lockControls;
+        private bool m_itemSpinning;
+        private byte m_itemType;
+        private float m_storedMusicVolume;
+        private string m_item_sent;
+        private string m_player_sent;
+        private string m_songName;
         private Cue m_buildUpSound;
         private KeyIconTextObj m_continueText;
         private SpriteObj m_itemFoundSprite;
-        private TextObj m_itemFoundText;
-        private Vector2 m_itemInfo;
-        private bool m_itemSpinning;
         private SpriteObj m_itemSprite;
-        private Vector2 m_itemStartPos;
-        private byte m_itemType;
         private SpriteObj m_levelUpBGImage;
-        private SpriteObj[] m_levelUpParticles;
-        private bool m_lockControls;
-        private string m_songName;
-        private float m_storedMusicVolume;
         private SpriteObj m_tripStat1;
-        private TextObj m_tripStat1FoundText;
         private SpriteObj m_tripStat2;
+        private SpriteObj[] m_levelUpParticles;
+        private TextObj m_tripStat1FoundText;
         private TextObj m_tripStat2FoundText;
+        private TextObj m_itemFoundText;
+        private TextObj m_itemFoundPlayerText;
+        private Vector2 m_itemInfo;
+        private Vector2 m_itemStartPos;
         private Vector2 m_tripStatData;
+
+        // Goodbye Magic Numbers
+        private const float ItemFoundYOffset = 70f;
+        private const float NetworkItemFoundYOffset = 105f;
+        private const float ItemFoundPlayerYOffset = 75f;
 
         public GetItemScreen()
         {
@@ -54,10 +64,13 @@ namespace RogueCastle
 
         public override void LoadContent()
         {
-            m_levelUpBGImage = new SpriteObj("BlueprintFoundBG_Sprite");
-            m_levelUpBGImage.ForceDraw = true;
-            m_levelUpBGImage.Visible = false;
+            m_levelUpBGImage = new SpriteObj("BlueprintFoundBG_Sprite")
+            {
+                ForceDraw = true,
+                Visible = false
+            };
             m_levelUpParticles = new SpriteObj[10];
+
             for (var i = 0; i < m_levelUpParticles.Length; i++)
             {
                 m_levelUpParticles[i] = new SpriteObj("LevelUpParticleFX_Sprite");
@@ -65,30 +78,45 @@ namespace RogueCastle
                 m_levelUpParticles[i].ForceDraw = true;
                 m_levelUpParticles[i].Visible = false;
             }
-            m_itemSprite = new SpriteObj("BlueprintIcon_Sprite");
-            m_itemSprite.ForceDraw = true;
-            m_itemSprite.OutlineWidth = 2;
+
+            m_itemSprite = new SpriteObj("BlueprintIcon_Sprite")
+            {
+                ForceDraw = true,
+                OutlineWidth = 2
+            };
             m_tripStat1 = (m_itemSprite.Clone() as SpriteObj);
             m_tripStat2 = (m_itemSprite.Clone() as SpriteObj);
-            m_itemFoundText = new TextObj(Game.JunicodeFont);
-            m_itemFoundText.FontSize = 18f;
-            m_itemFoundText.Align = Types.TextAlign.Centre;
-            m_itemFoundText.Text = "";
-            m_itemFoundText.Position = m_itemEndPos;
-            m_itemFoundText.Y += 70f;
-            m_itemFoundText.ForceDraw = true;
-            m_itemFoundText.OutlineWidth = 2;
-            m_tripStat1FoundText = (m_itemFoundText.Clone() as TextObj);
-            m_tripStat2FoundText = (m_itemFoundText.Clone() as TextObj);
-            m_itemFoundSprite = new SpriteObj("BlueprintFoundText_Sprite");
-            m_itemFoundSprite.ForceDraw = true;
-            m_itemFoundSprite.Visible = false;
-            m_continueText = new KeyIconTextObj(Game.JunicodeFont);
-            m_continueText.FontSize = 14f;
-            m_continueText.Text = "to continue";
-            m_continueText.Align = Types.TextAlign.Centre;
+
+            // Item Found Texts
+            m_itemFoundText = new TextObj(Game.JunicodeFont)
+            {
+                FontSize = 18f,
+                Align = Types.TextAlign.Centre,
+                Text = "",
+                Position = m_itemEndPos,
+                ForceDraw = true,
+                OutlineWidth = 2
+            };
+            m_itemFoundText.Y += ItemFoundYOffset;
+            m_tripStat1FoundText = m_itemFoundText.Clone() as TextObj;
+            m_tripStat2FoundText = m_itemFoundText.Clone() as TextObj;
+            m_itemFoundPlayerText = m_itemFoundText.Clone() as TextObj;
+            m_itemFoundPlayerText.Y += ItemFoundPlayerYOffset;
+
+            m_itemFoundSprite = new SpriteObj("BlueprintFoundText_Sprite")
+            {
+                ForceDraw = true,
+                Visible = false
+            };
+            m_continueText = new KeyIconTextObj(Game.JunicodeFont)
+            {
+                FontSize = 14f,
+                Text = "to continue",
+                Align = Types.TextAlign.Centre,
+                ForceDraw = true
+            };
             m_continueText.Position = new Vector2(1320 - m_continueText.Width, 720 - m_continueText.Height - 10);
-            m_continueText.ForceDraw = true;
+
             base.LoadContent();
         }
 
@@ -97,10 +125,18 @@ namespace RogueCastle
             m_itemStartPos = (Vector2) objList[0];
             m_itemType = Convert.ToByte(objList[1]);
             m_itemInfo = (Vector2) objList[2];
-            if (m_itemType == 6)
+
+            switch (m_itemType)
             {
-                m_tripStatData = (Vector2) objList[3];
+                case GetItemType.TripStatDrop:
+                    m_tripStatData = (Vector2) objList[3];
+                    break;
+                case GetItemType.NetworkItem:
+                    m_player_sent = (string) objList[3];
+                    m_item_sent = (string) objList[4];
+                    break;
             }
+
             base.PassInData(objList);
         }
 
@@ -110,22 +146,34 @@ namespace RogueCastle
             m_tripStat2.Visible = false;
             m_tripStat1.Scale = Vector2.One;
             m_tripStat2.Scale = Vector2.One;
-            if (m_itemType != 7)
-            {
+
+            if (m_itemType != GetItemType.FountainPiece)
                 (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
-            }
+
             m_itemSprite.Rotation = 0f;
             m_itemSprite.Scale = Vector2.One;
-            m_itemStartPos.X = m_itemStartPos.X - Camera.TopLeftCorner.X;
-            m_itemStartPos.Y = m_itemStartPos.Y - Camera.TopLeftCorner.Y;
+            m_itemStartPos.X -= Camera.TopLeftCorner.X;
+            m_itemStartPos.Y -= Camera.TopLeftCorner.Y;
             m_storedMusicVolume = SoundManager.GlobalMusicVolume;
             m_songName = SoundManager.GetCurrentMusicName();
             m_lockControls = true;
             m_continueText.Opacity = 0f;
-            m_continueText.Text = "[Input:" + 0 + "]  to continue";
+            m_continueText.Text = string.Format("[Input:{0}]  to continue", InputMapType.MenuConfirm1);
+
+            // Item Found Text
             m_itemFoundText.Position = m_itemEndPos;
-            m_itemFoundText.Y += 70f;
+
+            if (m_itemType != GetItemType.NetworkItem)
+                m_itemFoundText.Y += ItemFoundYOffset;
+            else
+                m_itemFoundText.Y += NetworkItemFoundYOffset;
+
             m_itemFoundText.Scale = Vector2.Zero;
+            m_itemFoundPlayerText.Position = m_itemEndPos;
+            m_itemFoundPlayerText.Y += ItemFoundPlayerYOffset;
+            m_itemFoundPlayerText.Scale = Vector2.Zero;
+
+            // Trip Stats
             m_tripStat1FoundText.Position = m_itemFoundText.Position;
             m_tripStat2FoundText.Position = m_itemFoundText.Position;
             m_tripStat1FoundText.Scale = Vector2.Zero;
@@ -138,15 +186,13 @@ namespace RogueCastle
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("BlueprintFoundText_Sprite");
-                    m_itemFoundText.Text = EquipmentBaseType.ToString((int) m_itemInfo.Y) + " " +
-                                           EquipmentCategoryType.ToString2((int) m_itemInfo.X);
+                    m_itemFoundText.Text = string.Format("{0} {1}", EquipmentBaseType.ToString((int) m_itemInfo.Y), EquipmentCategoryType.ToString2((int) m_itemInfo.X));
                     break;
                 case 2:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("RuneIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
-                    m_itemFoundText.Text = EquipmentAbilityType.ToString((int) m_itemInfo.Y) + " Rune (" +
-                                           EquipmentCategoryType.ToString2((int) m_itemInfo.X) + ")";
+                    m_itemFoundText.Text = string.Format("{0} Rune ({1})", EquipmentAbilityType.ToString((int) m_itemInfo.Y), EquipmentCategoryType.ToString2((int) m_itemInfo.X));
                     m_itemSprite.AnimationDelay = 0.05f;
                     GameUtil.UnlockAchievement("LOVE_OF_MAGIC");
                     break;
@@ -187,14 +233,17 @@ namespace RogueCastle
                 case 7:
                     m_itemSprite.ChangeSprite(GetMedallionImage((int) m_itemInfo.X));
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    if (m_itemInfo.X == 19f)
-                    {
-                        m_itemFoundText.Text = "Medallion completed!";
-                    }
-                    else
-                    {
-                        m_itemFoundText.Text = "You've collected a medallion piece!";
-                    }
+                    m_itemFoundText.Text = m_itemInfo.X == 19f
+                        ? "Medallion completed!"
+                        : "You've collected a medallion piece!";
+                    break;
+                case GetItemType.NetworkItem:
+                    m_itemSpinning = true;
+                    m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
+                    m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                    m_itemFoundText.Text = m_item_sent;
+                    m_itemFoundPlayerText.Text = string.Format("You found {0}'s", m_player_sent);
+                    m_itemFoundText.TextureColor = Color.Yellow;
                     break;
             }
             m_itemSprite.PlayAnimation();
@@ -244,6 +293,7 @@ namespace RogueCastle
             Tween.To(m_itemSprite, 0.2f, Tween.EaseNone, "ScaleX", num.ToString(), "ScaleY", num.ToString());
             Tween.To(m_itemSprite, 0.2f, Tween.EaseNone, "X", 660.ToString(), "Y", 390.ToString());
             Tween.To(m_itemFoundText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
+            Tween.To(m_itemFoundPlayerText, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
             Tween.To(m_continueText, 0.3f, Linear.EaseNone, "Opacity", "1");
             scale = m_tripStat1.Scale;
             m_tripStat1.Scale = Vector2.One;
@@ -311,6 +361,7 @@ namespace RogueCastle
             Tween.To(typeof (SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", m_storedMusicVolume.ToString());
             Tween.To(m_itemSprite, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
             Tween.To(m_itemFoundText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
+            Tween.To(m_itemFoundPlayerText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
             Tween.To(this, 0.4f, Back.EaseIn, "BackBufferOpacity", "0");
             Tween.To(m_levelUpBGImage, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
             Tween.To(m_itemFoundSprite, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
@@ -355,6 +406,7 @@ namespace RogueCastle
             }
             m_itemFoundSprite.Draw(Camera);
             m_itemFoundText.Draw(Camera);
+            m_itemFoundPlayerText.Draw(Camera);
             m_tripStat1FoundText.Draw(Camera);
             m_tripStat2FoundText.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
@@ -452,6 +504,8 @@ namespace RogueCastle
                 m_itemFoundSprite = null;
                 m_itemFoundText.Dispose();
                 m_itemFoundText = null;
+                m_itemFoundPlayerText.Dispose();
+                m_itemFoundPlayerText = null;
                 m_tripStat1.Dispose();
                 m_tripStat2.Dispose();
                 m_tripStat1 = null;

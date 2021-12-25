@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillBuilder.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-25
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -750,236 +750,236 @@ namespace RogueCastle
         public static SkillLinker GetSkillLinker(int xIndex, int yIndex)
         {
             var result = default(SkillLinker);
-            if (xIndex == 5 && yIndex == 9)
+            if (xIndex == 5 && yIndex == 9) // Smithy
             {
-                result.TopLink = new Vector2(5f, 8f);
-                result.BottomLink = new Vector2(6f, 9f);
-                result.LeftLink = new Vector2(4f, 5f);
-                result.RightLink = new Vector2(6f, 5f);
-            }
-            else if (xIndex == 8 && yIndex == 8)
-            {
-                result.TopLink = new Vector2(5f, 9f);
+                result.TopLink    = new Vector2( 2f,  5f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(2f, 8f);
-                result.RightLink = new Vector2(8f, 7f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 6f,  6f);
             }
-            else if (xIndex == 3 && yIndex == 4)
+            else if (xIndex == 8 && yIndex == 8) // Unknown?
             {
-                result.TopLink = new Vector2(2f, 3f);
-                result.BottomLink = new Vector2(3f, 6f);
-                result.LeftLink = new Vector2(2f, 4f);
-                result.RightLink = new Vector2(5f, 6f);
-            }
-            else if (xIndex == 4 && yIndex == 6)
-            {
-                result.TopLink = new Vector2(3f, 6f);
-                result.BottomLink = new Vector2(4f, 5f);
-                result.LeftLink = new Vector2(1f, 5f);
-                result.RightLink = new Vector2(5f, 8f);
-            }
-            else if (xIndex == 2 && yIndex == 8)
-            {
-                result.TopLink = new Vector2(4f, 5f);
+                result.TopLink    = new Vector2(-1f, -1f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(2f, 7f);
-                result.RightLink = new Vector2(6f, 9f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2(-1f, -1f);
             }
-            else if (xIndex == 2 && yIndex == 5)
+            else if (xIndex == 3 && yIndex == 4) // Armor Up
             {
-                result.TopLink = new Vector2(2f, 4f);
-                result.BottomLink = new Vector2(2f, 6f);
-                result.LeftLink = new Vector2(0f, 5f);
-                result.RightLink = new Vector2(3f, 6f);
+                result.TopLink    = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2( 5f,  6f);
+                result.LeftLink   = new Vector2( 5f,  8f);
+                result.RightLink  = new Vector2(-1f, -1f);
             }
-            else if (xIndex == 1 && yIndex == 5)
+            else if (xIndex == 4 && yIndex == 6) // Architect
             {
-                result.TopLink = new Vector2(0f, 5f);
+                result.TopLink    = new Vector2( 6f,  5f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(0f, 6f);
-                result.RightLink = new Vector2(4f, 6f);
+                result.LeftLink   = new Vector2( 6f,  6f);
+                result.RightLink  = new Vector2( 8f,  0f);
             }
-            else if (xIndex == 8 && yIndex == 5)
+            else if (xIndex == 2 && yIndex == 8) // Crit Dmg Up
             {
-                result.TopLink = new Vector2(8f, 4f);
-                result.BottomLink = new Vector2(7f, 6f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.TopLink    = new Vector2( 2f,  7f);
+                result.BottomLink = new Vector2( 8f,  2f);
+                result.LeftLink   = new Vector2( 6f,  5f);
+                result.RightLink  = new Vector2(-1f, -1f);
             }
-            else if (xIndex == 2 && yIndex == 6)
+            else if (xIndex == 2 && yIndex == 5) // Haggle
             {
-                result.TopLink = new Vector2(2f, 5f);
-                result.BottomLink = new Vector2(2f, 7f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(4f, 5f);
+                result.TopLink    = new Vector2( 0f,  6f);
+                result.BottomLink = new Vector2( 5f,  9f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 2f,  4f);
             }
-            else if (xIndex == 5 && yIndex == 8)
+            else if (xIndex == 1 && yIndex == 5) // Lich Unlock
             {
-                result.TopLink = new Vector2(5f, 7f);
-                result.BottomLink = new Vector2(5f, 9f);
-                result.LeftLink = new Vector2(4f, 6f);
-                result.RightLink = new Vector2(6f, 6f);
+                result.TopLink    = new Vector2( 0f,  5f);
+                result.BottomLink = new Vector2( 8f,  5f);
+                result.LeftLink   = new Vector2( 8f,  3f);
+                result.RightLink  = new Vector2(-1f, -1f);
             }
-            else if (xIndex == 5 && yIndex == 6)
+            else if (xIndex == 8 && yIndex == 5) // Assassin
             {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(5f, 7f);
-                result.LeftLink = new Vector2(3f, 4f);
-                result.RightLink = new Vector2(8f, 3f);
-            }
-            else if (xIndex == 3 && yIndex == 6)
-            {
-                result.TopLink = new Vector2(3f, 4f);
-                result.BottomLink = new Vector2(4f, 6f);
-                result.LeftLink = new Vector2(2f, 5f);
-                result.RightLink = new Vector2(5f, 7f);
-            }
-            else if (xIndex == 7 && yIndex == 6)
-            {
-                result.TopLink = new Vector2(8f, 5f);
-                result.BottomLink = new Vector2(6f, 6f);
-                result.LeftLink = new Vector2(5f, 7f);
-                result.RightLink = new Vector2(-1f, -1f);
-            }
-            else if (xIndex == 6 && yIndex == 6)
-            {
-                result.TopLink = new Vector2(7f, 6f);
-                result.BottomLink = new Vector2(6f, 5f);
-                result.LeftLink = new Vector2(5f, 8f);
-                result.RightLink = new Vector2(8f, 6f);
-            }
-            else if (xIndex == 8 && yIndex == 6)
-            {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(8f, 7f);
-                result.LeftLink = new Vector2(6f, 6f);
-                result.RightLink = new Vector2(9f, 6f);
-            }
-            else if (xIndex == 8 && yIndex == 4)
-            {
-                result.TopLink = new Vector2(8f, 1f);
-                result.BottomLink = new Vector2(8f, 5f);
-                result.LeftLink = new Vector2(8f, 3f);
-                result.RightLink = new Vector2(-1f, -1f);
-            }
-            else if (xIndex == 8 && yIndex == 7)
-            {
-                result.TopLink = new Vector2(8f, 6f);
+                result.TopLink    = new Vector2( 1f,  5f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(6f, 9f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.LeftLink   = new Vector2( 3f,  6f);
+                result.RightLink  = new Vector2(-1f, -1f);
             }
-            else if (xIndex == 2 && yIndex == 7)
+            else if (xIndex == 2 && yIndex == 6) // Shinobi Unlock
             {
-                result.TopLink = new Vector2(2f, 6f);
-                result.BottomLink = new Vector2(2f, 7f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(2f, 8f);
+                result.TopLink    = new Vector2( 2f,  4f);
+                result.BottomLink = new Vector2( 5f,  7f);
+                result.LeftLink   = new Vector2( 7f,  1f);
+                result.RightLink  = new Vector2( 8f,  6f);
             }
-            else if (xIndex == 8 && yIndex == 3)
+            else if (xIndex == 5 && yIndex == 8) // Health Up
             {
-                result.TopLink = new Vector2(8f, 2f);
+                result.TopLink    = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2( 6f,  9f);
+                result.LeftLink   = new Vector2( 8f,  7f);
+                result.RightLink  = new Vector2( 3f,  4f);
+            }
+            else if (xIndex == 5 && yIndex == 6) // Equip Up
+            {
+                result.TopLink    = new Vector2( 3f,  4f);
+                result.BottomLink = new Vector2( 2f,  7f);
+                result.LeftLink   = new Vector2( 6f,  9f);
+                result.RightLink  = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 3 && yIndex == 6) // Barb King
+            {
+                result.TopLink    = new Vector2( 8f,  3f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(5f, 6f);
-                result.RightLink = new Vector2(8f, 4f);
+                result.LeftLink   = new Vector2( 7f,  6f);
+                result.RightLink  = new Vector2( 8f,  5f);
             }
-            else if (xIndex == 8 && yIndex == 2)
+            else if (xIndex == 7 && yIndex == 6) // Archmage
             {
-                result.TopLink = new Vector2(7f, 2f);
-                result.BottomLink = new Vector2(8f, 3f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(8f, 1f);
-            }
-            else if (xIndex == 9 && yIndex == 6)
-            {
-                result.TopLink = new Vector2(-1f, -1f);
+                result.TopLink    = new Vector2( 8f,  6f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(8f, 6f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.LeftLink   = new Vector2( 5f,  7f);
+                result.RightLink  = new Vector2( 3f,  6f);
             }
-            else if (xIndex == 2 && yIndex == 4)
+            else if (xIndex == 6 && yIndex == 6) // Enchantress
             {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(2f, 5f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(3f, 4f);
-            }
-            else if (xIndex == 5 && yIndex == 7)
-            {
-                result.TopLink = new Vector2(5f, 6f);
-                result.BottomLink = new Vector2(5f, 8f);
-                result.LeftLink = new Vector2(3f, 6f);
-                result.RightLink = new Vector2(7f, 6f);
-            }
-            else if (xIndex == 4 && yIndex == 5)
-            {
-                result.TopLink = new Vector2(4f, 6f);
-                result.BottomLink = new Vector2(2f, 8f);
-                result.LeftLink = new Vector2(2f, 6f);
-                result.RightLink = new Vector2(5f, 9f);
-            }
-            else if (xIndex == 6 && yIndex == 5)
-            {
-                result.TopLink = new Vector2(6f, 6f);
+                result.TopLink    = new Vector2( 2f,  5f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(5f, 9f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.LeftLink   = new Vector2( 5f,  9f);
+                result.RightLink  = new Vector2( 4f,  6f);
             }
-            else if (xIndex == 2 && yIndex == 3)
+            else if (xIndex == 8 && yIndex == 6) // Miner Unlock
             {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(3f, 4f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.TopLink    = new Vector2( 9f,  6f);
+                result.BottomLink = new Vector2( 7f,  6f);
+                result.LeftLink   = new Vector2( 2f,  6f);
+                result.RightLink  = new Vector2( 8f,  3f);
             }
-            else if (xIndex == 7 && yIndex == 2)
+            else if (xIndex == 8 && yIndex == 4) // Potion Up
             {
-                result.TopLink = new Vector2(7f, 1f);
-                result.BottomLink = new Vector2(8f, 2f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.TopLink    = new Vector2( 8f,  7f);
+                result.BottomLink = new Vector2( 7f,  2f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 6f,  9f);
             }
-            else if (xIndex == 7 && yIndex == 1)
+            else if (xIndex == 8 && yIndex == 7) // Gold Gain Up
             {
-                result.BottomLink = new Vector2(7f, 2f);
-                result.TopLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.TopLink    = new Vector2( 2f,  3f);
+                result.BottomLink = new Vector2( 8f,  4f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 5f,  8f);
             }
-            else if (xIndex == 0 && yIndex == 5)
+            else if (xIndex == 2 && yIndex == 7) // Crit Chance Up
             {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(1f, 5f);
-                result.LeftLink = new Vector2(0f, 6f);
-                result.RightLink = new Vector2(2f, 5f);
+                result.TopLink    = new Vector2( 5f,  6f);
+                result.BottomLink = new Vector2( 2f,  8f);
+                result.LeftLink   = new Vector2( 4f,  5f);
+                result.RightLink  = new Vector2(-1f, -1f);
             }
-            else if (xIndex == 0 && yIndex == 6)
+            else if (xIndex == 8 && yIndex == 3) // Spellthief Unlock
             {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(-11f, -1f);
-                result.LeftLink = new Vector2(-1f, -1f);
-                result.RightLink = new Vector2(0f, 5f);
+                result.TopLink    = new Vector2( 8f,  2f);
+                result.BottomLink = new Vector2( 3f,  6f);
+                result.LeftLink   = new Vector2( 8f,  6f);
+                result.RightLink  = new Vector2( 1f,  5f);
             }
-            else if (xIndex == 6 && yIndex == 9)
+            else if (xIndex == 8 && yIndex == 2) // Spellsword
             {
-                result.TopLink = new Vector2(5f, 9f);
+                result.TopLink    = new Vector2( 2f,  8f);
+                result.BottomLink = new Vector2( 8f,  3f);
+                result.LeftLink   = new Vector2( 9f,  6f);
+                result.RightLink  = new Vector2( 0f,  5f);
+            }
+            else if (xIndex == 9 && yIndex == 6) // Spelunker
+            {
+                result.TopLink    = new Vector2( 2f,  8f);
+                result.BottomLink = new Vector2( 8f,  6f);
+                result.LeftLink   = new Vector2( 2f,  4f);
+                result.RightLink  = new Vector2( 8f,  2f);
+            }
+            else if (xIndex == 2 && yIndex == 4) // Hokage
+            {
+                result.TopLink    = new Vector2( 2f,  8f);
+                result.BottomLink = new Vector2( 2f,  6f);
+                result.LeftLink   = new Vector2( 2f,  5f);
+                result.RightLink  = new Vector2( 9f,  6f);
+            }
+            else if (xIndex == 5 && yIndex == 7) // Paladin
+            {
+                result.TopLink    = new Vector2( 2f,  6f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(2f, 8f);
-                result.RightLink = new Vector2(8f, 7f);
+                result.LeftLink   = new Vector2( 8f,  0f);
+                result.RightLink  = new Vector2( 7f,  6f);
             }
-            else if (xIndex == 8 && yIndex == 1)
+            else if (xIndex == 4 && yIndex == 5) // Attack Up
             {
-                result.TopLink = new Vector2(-1f, -1f);
-                result.BottomLink = new Vector2(8f, 4f);
-                result.LeftLink = new Vector2(8f, 2f);
-                result.RightLink = new Vector2(8f, 0f);
+                result.TopLink    = new Vector2( 6f,  9f);
+                result.BottomLink = new Vector2( 6f,  5f);
+                result.LeftLink   = new Vector2( 7f,  2f);
+                result.RightLink  = new Vector2( 2f,  7f);
             }
-            else if (xIndex == 8 && yIndex == 0)
+            else if (xIndex == 6 && yIndex == 5) // Magic Damage Up
             {
-                result.TopLink = new Vector2(-1f, -1f);
+                result.TopLink    = new Vector2( 4f,  5f);
+                result.BottomLink = new Vector2( 4f,  6f);
+                result.LeftLink   = new Vector2( 8f,  1f);
+                result.RightLink  = new Vector2( 2f,  8f);
+            }
+            else if (xIndex == 2 && yIndex == 3) // Down Strike Up
+            {
+                result.TopLink    = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2( 8f,  7f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 5f,  8f);
+            }
+            else if (xIndex == 7 && yIndex == 2) // Invuln Time Up
+            {
+                result.TopLink    = new Vector2( 8f,  4f);
+                result.BottomLink = new Vector2( 8f,  1f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 4f,  5f);
+            }
+            else if (xIndex == 7 && yIndex == 1) // Dragon
+            {
+                result.TopLink    = new Vector2(-1f, -1f);
                 result.BottomLink = new Vector2(-1f, -1f);
-                result.LeftLink = new Vector2(8f, 1f);
-                result.RightLink = new Vector2(-1f, -1f);
+                result.LeftLink   = new Vector2( 8f,  1f);
+                result.RightLink  = new Vector2( 2f,  6f);
+            }
+            else if (xIndex == 0 && yIndex == 5) // Lich King
+            {
+                result.TopLink    = new Vector2( 2f,  8f);
+                result.BottomLink = new Vector2( 1f,  5f);
+                result.LeftLink   = new Vector2( 8f,  2f);
+                result.RightLink  = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 0 && yIndex == 6) // Death Defy
+            {
+                result.TopLink    = new Vector2( 8f,  1f);
+                result.BottomLink = new Vector2( 2f,  5f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 6f,  5f);
+            }
+            else if (xIndex == 6 && yIndex == 9) // Mana Up
+            {
+                result.TopLink    = new Vector2( 5f,  8f);
+                result.BottomLink = new Vector2( 4f,  5f);
+                result.LeftLink   = new Vector2( 8f,  4f);
+                result.RightLink  = new Vector2( 5f,  6f);
+            }
+            else if (xIndex == 8 && yIndex == 1) // Mana Cost Down
+            {
+                result.TopLink    = new Vector2( 7f,  2f);
+                result.BottomLink = new Vector2( 0f,  6f);
+                result.LeftLink   = new Vector2(-1f, -1f);
+                result.RightLink  = new Vector2( 6f,  5f);
+            }
+            else if (xIndex == 8 && yIndex == 0) // Randomize Children
+            {
+                result.TopLink    = new Vector2( 6f,  5f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink   = new Vector2( 4f,  6f);
+                result.RightLink  = new Vector2( 5f,  7f);
             }
             return result;
         }

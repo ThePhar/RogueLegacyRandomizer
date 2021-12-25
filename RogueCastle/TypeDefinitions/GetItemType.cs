@@ -21,5 +21,6 @@ namespace RogueCastle.TypeDefinitions
         public const byte SpecialItem = 5;
         public const byte TripStatDrop = 6;
         public const byte FountainPiece = 7;
+        public const byte NetworkItem = 8;
     }
 }
