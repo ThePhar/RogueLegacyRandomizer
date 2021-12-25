@@ -1,16 +1,17 @@
-/*
-  Rogue Legacy Enhanced
+// 
+// RogueLegacyArchipelago - SpecialItemType.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
-
-namespace RogueCastle
+namespace RogueCastle.TypeDefinitions
 {
-    internal class SpecialItemType
+    public static class SpecialItemType
     {
         public const byte None = 0;
         public const byte FreeEntrance = 1;
@@ -19,7 +20,6 @@ namespace RogueCastle
         public const byte SpikeImmunity = 4;
         public const byte GoldPerKill = 5;
         public const byte Compass = 6;
-        public const byte Total = 7;
         public const byte Glasses = 8;
         public const byte EyeballToken = 9;
         public const byte SkullToken = 10;
@@ -27,68 +27,106 @@ namespace RogueCastle
         public const byte BlobToken = 12;
         public const byte LastBossToken = 13;
 
+        public const byte Total = 7;
+
+        /// <summary>
+        /// Returns the string representation of a given special item type's name.
+        /// </summary>
+        /// <param name="itemType">Special Item Identifier</param>
+        /// <returns></returns>
         public static string ToString(byte itemType)
         {
             switch (itemType)
             {
-                case 1:
+                case FreeEntrance:
                     return "Charon's Obol";
-                case 2:
+
+                case LoseCoins:
                     return "Hedgehog's Curse";
-                case 3:
+
+                case Revive:
                     return "Hyperion's Ring";
-                case 4:
+
+                case SpikeImmunity:
                     return "Hermes' Boots";
-                case 5:
+
+                case GoldPerKill:
                     return "Helios' Blessing";
-                case 6:
+
+                case Compass:
                     return "Calypso's Compass";
-                case 8:
+
+                case Glasses:
                     return "Nerdy Glasses";
-                case 9:
+
+                case EyeballToken:
                     return "Khidr's Obol";
-                case 10:
+
+                case SkullToken:
                     return "Alexander's Obol";
-                case 11:
+
+                case FireballToken:
                     return "Ponce De Leon's Obol";
-                case 12:
+
+                case BlobToken:
                     return "Herodotus' Obol";
-                case 13:
+
+                case LastBossToken:
                     return "Traitor's Obol";
+
+                default:
+                    return "";
             }
-            return "";
         }
 
+        /// <summary>
+        /// Returns the resource name for this special item.
+        /// </summary>
+        /// <param name="itemType">Special Item Identifier</param>
+        /// <returns></returns>
         public static string SpriteName(byte itemType)
         {
             switch (itemType)
             {
-                case 1:
+                case FreeEntrance:
                     return "BonusRoomObolIcon_Sprite";
-                case 2:
+
+                case LoseCoins:
                     return "BonusRoomHedgehogIcon_Sprite";
-                case 3:
+
+                case Revive:
                     return "BonusRoomRingIcon_Sprite";
-                case 4:
+
+                case SpikeImmunity:
                     return "BonusRoomBootsIcon_Sprite";
-                case 5:
+
+                case GoldPerKill:
                     return "BonusRoomBlessingIcon_Sprite";
-                case 6:
+
+                case Compass:
                     return "BonusRoomCompassIcon_Sprite";
-                case 8:
+
+                case Glasses:
                     return "BonusRoomGlassesIcon_Sprite";
-                case 9:
+
+                case EyeballToken:
                     return "ChallengeIcon_Eyeball_Sprite";
-                case 10:
+
+                case SkullToken:
                     return "ChallengeIcon_Skull_Sprite";
-                case 11:
+
+                case FireballToken:
                     return "ChallengeIcon_Fireball_Sprite";
-                case 12:
+
+                case BlobToken:
                     return "ChallengeIcon_Blob_Sprite";
-                case 13:
+
+                case LastBossToken:
                     return "ChallengeIcon_LastBoss_Sprite";
+
+                default:
+                    return "";
             }
-            return "";
         }
     }
 }

@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - SkillScreen.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -511,68 +513,68 @@ namespace RogueCastle
                 case SkillType.Architect:
                     b = 3;
                     break;
-                case SkillType.Lich_Unlock:
+                case SkillType.LichUnlock:
                     b = 7;
                     break;
-                case SkillType.Banker_Unlock:
+                case SkillType.BankerUnlock:
                     b = 5;
                     break;
-                case SkillType.Spellsword_Unlock:
+                case SkillType.SpellswordUnlock:
                     b = 6;
                     break;
-                case SkillType.Ninja_Unlock:
+                case SkillType.NinjaUnlock:
                     b = 4;
                     break;
-                case SkillType.Knight_Up:
+                case SkillType.KnightUp:
                     b = 8;
                     if (Game.PlayerStats.Class == 0)
                     {
                         Game.PlayerStats.Class = 8;
                     }
                     break;
-                case SkillType.Mage_Up:
+                case SkillType.MageUp:
                     b = 9;
                     if (Game.PlayerStats.Class == 1)
                     {
                         Game.PlayerStats.Class = 9;
                     }
                     break;
-                case SkillType.Assassin_Up:
+                case SkillType.AssassinUp:
                     b = 12;
                     if (Game.PlayerStats.Class == 3)
                     {
                         Game.PlayerStats.Class = 11;
                     }
                     break;
-                case SkillType.Banker_Up:
+                case SkillType.BankerUp:
                     b = 13;
                     if (Game.PlayerStats.Class == 5)
                     {
                         Game.PlayerStats.Class = 13;
                     }
                     break;
-                case SkillType.Barbarian_Up:
+                case SkillType.BarbarianUp:
                     b = 10;
                     if (Game.PlayerStats.Class == 2)
                     {
                         Game.PlayerStats.Class = 10;
                     }
                     break;
-                case SkillType.Lich_Up:
+                case SkillType.LichUp:
                     b = 15;
                     if (Game.PlayerStats.Class == 7)
                     {
                         Game.PlayerStats.Class = 15;
                     }
                     break;
-                case SkillType.Ninja_Up:
+                case SkillType.NinjaUp:
                     b = 11;
                     if (Game.PlayerStats.Class == 4)
                     {
                         Game.PlayerStats.Class = 12;
                     }
                     break;
-                case SkillType.SpellSword_Up:
+                case SkillType.SpellSwordUp:
                     b = 14;
                     if (Game.PlayerStats.Class == 6)
                     {
@@ -857,7 +859,7 @@ namespace RogueCastle
                 if (num == 0f)
                 {
                     num = trait.ModifierAmount;
-                    if (trait.TraitType == SkillType.Crit_Chance_Up)
+                    if (trait.TraitType == SkillType.CritChanceUp)
                     {
                         num *= 100f;
                         num = (int) Math.Round(num, MidpointRounding.AwayFromZero);
@@ -867,10 +869,10 @@ namespace RogueCastle
                 if (trait.CurrentLevel < trait.MaxLevel)
                 {
                     var num2 = trait.PerLevelModifier;
-                    if (num2 < 1f && trait.TraitType != SkillType.Invuln_Time_Up)
+                    if (num2 < 1f && trait.TraitType != SkillType.InvulnerabilityTimeUp)
                     {
                         num2 *= 100f;
-                        if (trait.TraitType != SkillType.Death_Dodge)
+                        if (trait.TraitType != SkillType.DeathDodge)
                         {
                             num2 = (int) Math.Round(num2, MidpointRounding.AwayFromZero);
                         }

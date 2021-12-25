@@ -1,17 +1,19 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+//
+// RogueLegacyArchipelago - EnemyObj_BallAndChain.cs
+// Last Modified 2021-12-24
+//
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
 
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -95,7 +97,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.BallAndChain_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.ADVANCED:
+                case GameTypes.EnemyDifficulty.Advanced:
                     ChainRadius = 275f;
                     Name = "Chaintex";
                     MaxHealth = 58;
@@ -123,7 +125,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.BallAndChain_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.EXPERT:
+                case GameTypes.EnemyDifficulty.Expert:
                     ChainRadius = 350f;
                     ChainSpeed2Modifier = 1.5f;
                     Name = "Chaintus";
@@ -152,7 +154,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.BallAndChain_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MiniBoss:
                     Name = "Pantheon";
                     MaxHealth = 300;
                     Damage = 60;
@@ -291,24 +293,24 @@ namespace RogueCastle
                         num2 += m_chainLinkDistance;
                     }
                     num2 = 0f;
-                    if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+                    if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
                     {
                         BallAndChain2.Position = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier,
                             m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
                     }
-                    else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+                    else if (Difficulty == GameTypes.EnemyDifficulty.Expert)
                     {
                         BallAndChain2.Position = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier,
                             -m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
                     }
                     for (var j = 0; j < m_chainLinks2List.Count; j++)
                     {
-                        if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+                        if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
                         {
                             m_chainLinks2List[j] = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier, num2,
                                 new Vector2(X, Bounds.Top));
                         }
-                        else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+                        else if (Difficulty == GameTypes.EnemyDifficulty.Expert)
                         {
                             m_chainLinks2List[j] = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier, -num2,
                                 new Vector2(X, Bounds.Top));
@@ -340,7 +342,7 @@ namespace RogueCastle
                     m_chain.Draw(camera);
                 }
                 BallAndChain.Draw(camera);
-                if (Difficulty > GameTypes.EnemyDifficulty.BASIC)
+                if (Difficulty > GameTypes.EnemyDifficulty.Basic)
                 {
                     foreach (var current2 in m_chainLinks2List)
                     {
@@ -367,7 +369,7 @@ namespace RogueCastle
                 (float) Math.Cos(MathHelper.WrapAngle(MathHelper.ToRadians(m_ballAngle + 90f)));
             enemyObj_BouncySpike.HeadingY =
                 (float) Math.Sin(MathHelper.WrapAngle(MathHelper.ToRadians(m_ballAngle + 90f)));
-            if (Difficulty > GameTypes.EnemyDifficulty.BASIC)
+            if (Difficulty > GameTypes.EnemyDifficulty.Basic)
             {
                 m_levelScreen.PhysicsManager.RemoveObject(BallAndChain2);
                 var enemyObj_BouncySpike2 = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
@@ -377,7 +379,7 @@ namespace RogueCastle
                 m_levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike2);
                 enemyObj_BouncySpike2.Position = BallAndChain2.Position;
                 enemyObj_BouncySpike2.Speed = ChainSpeed*200f*ChainSpeed2Modifier/m_BallSpeedDivider;
-                if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+                if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
                 {
                     enemyObj_BouncySpike2.HeadingX =
                         (float)
@@ -386,7 +388,7 @@ namespace RogueCastle
                         (float)
                             Math.Sin(MathHelper.WrapAngle(MathHelper.ToRadians(m_ballAngle*ChainSpeed2Modifier + 90f)));
                 }
-                else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+                else if (Difficulty == GameTypes.EnemyDifficulty.Expert)
                 {
                     enemyObj_BouncySpike2.HeadingX =
                         (float)
@@ -425,24 +427,24 @@ namespace RogueCastle
                 num += m_chainLinkDistance;
             }
             num = 0f;
-            if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+            if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
             {
                 BallAndChain2.Position = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier,
                     m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
             }
-            else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+            else if (Difficulty == GameTypes.EnemyDifficulty.Expert)
             {
                 BallAndChain2.Position = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier,
                     -m_actualChainRadius/2f, new Vector2(X, Bounds.Top));
             }
             for (var j = 0; j < m_chainLinks2List.Count; j++)
             {
-                if (Difficulty == GameTypes.EnemyDifficulty.ADVANCED)
+                if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
                 {
                     m_chainLinks2List[j] = CDGMath.GetCirclePosition(m_ballAngle*ChainSpeed2Modifier, num,
                         new Vector2(X, Bounds.Top));
                 }
-                else if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+                else if (Difficulty == GameTypes.EnemyDifficulty.Expert)
                 {
                     m_chainLinks2List[j] = CDGMath.GetCirclePosition(-m_ballAngle*ChainSpeed2Modifier, -num,
                         new Vector2(X, Bounds.Top));

@@ -1,16 +1,17 @@
-/*
-  Rogue Legacy Enhanced
+// 
+// RogueLegacyArchipelago - EquipmentSecondaryDataType.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
-
-namespace RogueCastle
+namespace RogueCastle.TypeDefinitions
 {
-    public class EquipmentSecondaryDataType
+    public static class EquipmentSecondaryDataType
     {
         public const int None = 0;
         public const int CritChance = 1;
@@ -28,42 +29,63 @@ namespace RogueCastle
         public const int Float = 13;
         public const int AttackProjectiles = 14;
         public const int Flight = 15;
+
         public const int Total = 16;
 
+        /// <summary>
+        /// Returns the string representation of a given equipment characteristic.
+        /// </summary>
+        /// <param name="equipmentSecondaryDataType">Equipment Characteristic Identifier</param>
+        /// <returns></returns>
         public static string ToString(int equipmentSecondaryDataType)
         {
             switch (equipmentSecondaryDataType)
             {
-                case 1:
+                case CritChance:
                     return "Critical Chance";
-                case 2:
+
+                case CritDamage:
                     return "Critical Damage";
-                case 3:
+
+                case GoldBonus:
                     return "Gold Bonus";
-                case 4:
+
+                case DamageReturn:
                     return "Damage Return";
-                case 5:
+
+                case XpBonus:
                     return "XP Bonus";
-                case 6:
+
+                case AirAttack:
                     return "AirAttack";
-                case 7:
+
+                case Vampirism:
                     return "Vampirism";
-                case 8:
+
+                case ManaDrain:
                     return "Siphon";
-                case 9:
+
+                case DoubleJump:
                     return "Air Jump";
-                case 10:
+
+                case MoveSpeed:
                     return "Move Speed";
-                case 11:
+
+                case AirDash:
                     return "Air Dash";
-                case 12:
+
+                case Block:
                     return "Block";
-                case 13:
+
+                case Float:
                     return "Float";
-                case 14:
+
+                case AttackProjectiles:
                     return "Can attack projectiles";
-                case 15:
+
+                case Flight:
                     return "Flight";
+
                 default:
                     return "None";
             }

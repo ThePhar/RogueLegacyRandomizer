@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - LevelBuilder2.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Globalization;
 using System.Linq;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -192,16 +194,16 @@ namespace RogueCastle
                     List<RoomObj>[,] array = null;
                     switch (levelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             array = m_castleRoomArray;
                             break;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             array = m_gardenRoomArray;
                             break;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             array = m_dungeonRoomArray;
                             break;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             array = m_towerRoomArray;
                             break;
                     }
@@ -242,16 +244,16 @@ namespace RogueCastle
                     var roomObj = room.Clone() as RoomObj;
                     switch (levelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             m_linkerCastleRoom = roomObj;
                             break;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             m_linkerGardenRoom = roomObj;
                             break;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             m_linkerDungeonRoom = roomObj;
                             break;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             m_linkerTowerRoom = roomObj;
                             break;
                     }
@@ -284,16 +286,16 @@ namespace RogueCastle
                     roomObj2.GameObjList.Add(teleporterObj2);
                     switch (levelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             m_bossCastleEntranceRoom = roomObj2;
                             return;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             m_bossGardenEntranceRoom = roomObj2;
                             return;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             m_bossDungeonEntranceRoom = roomObj2;
                             return;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             m_bossTowerEntranceRoom = roomObj2;
                             return;
                         default:
@@ -306,7 +308,7 @@ namespace RogueCastle
                         m_castleEntranceRoom = new CastleEntranceRoomObj();
                         m_castleEntranceRoom.CopyRoomProperties(room);
                         m_castleEntranceRoom.CopyRoomObjects(room);
-                        m_castleEntranceRoom.LevelType = GameTypes.LevelType.CASTLE;
+                        m_castleEntranceRoom.LevelType = GameTypes.LevelType.Castle;
                     }
                     break;
                 case "Compass":
@@ -322,16 +324,16 @@ namespace RogueCastle
                     List<RoomObj> list = null;
                     switch (levelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             list = m_secretCastleRoomArray;
                             break;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             list = m_secretGardenRoomArray;
                             break;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             list = m_secretDungeonRoomArray;
                             break;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             list = m_secretTowerRoomArray;
                             break;
                     }
@@ -346,16 +348,16 @@ namespace RogueCastle
                     List<RoomObj> list2 = null;
                     switch (levelType)
                     {
-                        case GameTypes.LevelType.CASTLE:
+                        case GameTypes.LevelType.Castle:
                             list2 = m_bonusCastleRoomArray;
                             break;
-                        case GameTypes.LevelType.GARDEN:
+                        case GameTypes.LevelType.Garden:
                             list2 = m_bonusGardenRoomArray;
                             break;
-                        case GameTypes.LevelType.DUNGEON:
+                        case GameTypes.LevelType.Dungeon:
                             list2 = m_bonusDungeonRoomArray;
                             break;
-                        case GameTypes.LevelType.TOWER:
+                        case GameTypes.LevelType.Tower:
                             list2 = m_bonusTowerRoomArray;
                             break;
                     }
@@ -425,19 +427,19 @@ namespace RogueCastle
             List<RoomObj> list3 = null;
             switch (areaInfo.LevelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     list2 = m_secretCastleRoomArray;
                     list3 = m_bonusCastleRoomArray;
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     list2 = m_secretGardenRoomArray;
                     list3 = m_bonusGardenRoomArray;
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     list2 = m_secretDungeonRoomArray;
                     list3 = m_bonusDungeonRoomArray;
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     list2 = m_secretTowerRoomArray;
                     list3 = m_bonusTowerRoomArray;
                     break;
@@ -472,28 +474,28 @@ namespace RogueCastle
             var text = "NONE";
             switch (levelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     num11 = 90;
                     num12 = 90;
                     num13 = 90;
                     num14 = 90;
                     text = "Right";
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     num11 = 70;
                     num12 = 100;
                     num13 = 45;
                     num14 = 45;
                     text = "Right";
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     num11 = 55;
                     num12 = 55;
                     num13 = 45;
                     num14 = 100;
                     text = "Bottom";
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     num11 = 45;
                     num12 = 45;
                     num13 = 100;
@@ -506,7 +508,7 @@ namespace RogueCastle
             {
                 list7.Add(startingRoom);
                 list5.Add(startingRoom);
-                startingRoom.LevelType = GameTypes.LevelType.NONE;
+                startingRoom.LevelType = GameTypes.LevelType.None;
                 i--;
                 MoveRoom(startingRoom, Vector2.Zero);
                 var roomObj = m_castleEntranceRoom.Clone() as RoomObj;
@@ -590,16 +592,16 @@ namespace RogueCastle
                         RoomObj roomObj2 = null;
                         switch (areaInfo.LevelType)
                         {
-                            case GameTypes.LevelType.CASTLE:
+                            case GameTypes.LevelType.Castle:
                                 roomObj2 = m_bossCastleEntranceRoom;
                                 break;
-                            case GameTypes.LevelType.GARDEN:
+                            case GameTypes.LevelType.Garden:
                                 roomObj2 = m_bossGardenEntranceRoom;
                                 break;
-                            case GameTypes.LevelType.DUNGEON:
+                            case GameTypes.LevelType.Dungeon:
                                 roomObj2 = m_bossDungeonEntranceRoom;
                                 break;
-                            case GameTypes.LevelType.TOWER:
+                            case GameTypes.LevelType.Tower:
                                 roomObj2 = m_bossTowerEntranceRoom;
                                 break;
                         }
@@ -1030,7 +1032,7 @@ namespace RogueCastle
             foreach (var current in roomList)
             {
                 if (current != roomObj &&
-                    ((current.LevelType == GameTypes.LevelType.CASTLE && castleOnly) || !castleOnly))
+                    ((current.LevelType == GameTypes.LevelType.Castle && castleOnly) || !castleOnly))
                 {
                     var num2 = 0f;
                     if (furthestRoomDirection != null)
@@ -1133,16 +1135,16 @@ namespace RogueCastle
             RoomObj roomObj = null;
             switch (needsLinking.Room.LevelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     roomObj = (m_linkerCastleRoom.Clone() as RoomObj);
                     break;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     roomObj = (m_linkerGardenRoom.Clone() as RoomObj);
                     break;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     roomObj = (m_linkerDungeonRoom.Clone() as RoomObj);
                     break;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     roomObj = (m_linkerTowerRoom.Clone() as RoomObj);
                     break;
             }
@@ -1354,19 +1356,19 @@ namespace RogueCastle
                 byte[] array2;
                 switch (current.LevelType)
                 {
-                    case GameTypes.LevelType.CASTLE:
+                    case GameTypes.LevelType.Castle:
                         array = LevelEV.CASTLE_ENEMY_LIST;
                         array2 = LevelEV.CASTLE_ENEMY_DIFFICULTY_LIST;
                         break;
-                    case GameTypes.LevelType.GARDEN:
+                    case GameTypes.LevelType.Garden:
                         array = LevelEV.GARDEN_ENEMY_LIST;
                         array2 = LevelEV.GARDEN_ENEMY_DIFFICULTY_LIST;
                         break;
-                    case GameTypes.LevelType.DUNGEON:
+                    case GameTypes.LevelType.Dungeon:
                         array = LevelEV.DUNGEON_ENEMY_LIST;
                         array2 = LevelEV.DUNGEON_ENEMY_DIFFICULTY_LIST;
                         break;
-                    case GameTypes.LevelType.TOWER:
+                    case GameTypes.LevelType.Tower:
                         array = LevelEV.TOWER_ENEMY_LIST;
                         array2 = LevelEV.TOWER_ENEMY_DIFFICULTY_LIST;
                         break;
@@ -1450,7 +1452,7 @@ namespace RogueCastle
                         }
                         else
                         {
-                            enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.EXPERT);
+                            enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.Expert);
                         }
                         while (enemyOrbObj.ForceFlying && enemyObj.IsWeighted)
                         {
@@ -1502,7 +1504,7 @@ namespace RogueCastle
                             {
                                 num = CDGMath.RandomInt(0, array.Length - 1);
                                 b = array[num];
-                                enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.EXPERT);
+                                enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, GameTypes.EnemyDifficulty.Expert);
                             }
                         }
                         enemyObj.Position = enemyOrbObj.Position;
@@ -1519,7 +1521,7 @@ namespace RogueCastle
                         {
                             var num3 = CDGMath.RandomInt(0, array.Length - 1);
                             var enemyObj2 = EnemyBuilder.BuildEnemy(array[num3], null, null, null,
-                                GameTypes.EnemyDifficulty.BASIC);
+                                GameTypes.EnemyDifficulty.Basic);
                             enemyObj2.Position = enemyTagObj.Position;
                             enemyObj2.IsProcedural = true;
                             current.EnemyList.Add(enemyObj2);
@@ -1546,7 +1548,7 @@ namespace RogueCastle
                     if (enemyObj.IsProcedural)
                     {
                         var enemyObj2 = EnemyBuilder.BuildEnemy(enemyTypeData[num], level.Player, null, level,
-                            GameTypes.EnemyDifficulty.BASIC, true);
+                            GameTypes.EnemyDifficulty.Basic, true);
                         enemyObj2.IsProcedural = true;
                         enemyObj2.Position = enemyObj.Position;
                         enemyObj2.Level = enemyObj.Level;
@@ -1664,10 +1666,10 @@ namespace RogueCastle
         {
             Console.WriteLine("///////////// LOADING PRE-CONSTRUCTED LEVEL //////");
             var sequencedRoomList = SequencedRoomList;
-            var sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.CASTLE);
-            var sequencedDLCRoomList2 = GetSequencedDLCRoomList(GameTypes.LevelType.GARDEN);
-            var sequencedDLCRoomList3 = GetSequencedDLCRoomList(GameTypes.LevelType.TOWER);
-            var sequencedDLCRoomList4 = GetSequencedDLCRoomList(GameTypes.LevelType.DUNGEON);
+            var sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.Castle);
+            var sequencedDLCRoomList2 = GetSequencedDLCRoomList(GameTypes.LevelType.Garden);
+            var sequencedDLCRoomList3 = GetSequencedDLCRoomList(GameTypes.LevelType.Tower);
+            var sequencedDLCRoomList4 = GetSequencedDLCRoomList(GameTypes.LevelType.Dungeon);
             var proceduralLevelScreen = new ProceduralLevelScreen();
             var list = new List<RoomObj>();
             var num = 0;
@@ -1753,7 +1755,7 @@ namespace RogueCastle
             var list3 = new List<AreaStruct>();
             foreach (var item in areaStructs)
             {
-                if (item.LevelType == GameTypes.LevelType.CASTLE || item.LevelType == GameTypes.LevelType.GARDEN)
+                if (item.LevelType == GameTypes.LevelType.Castle || item.LevelType == GameTypes.LevelType.Garden)
                 {
                     list2.Add(item);
                 }
@@ -1865,13 +1867,13 @@ namespace RogueCastle
                         var text = "";
                         switch (areaInfo2.LevelType)
                         {
-                            case GameTypes.LevelType.GARDEN:
+                            case GameTypes.LevelType.Garden:
                                 text = "Right";
                                 goto IL_457;
-                            case GameTypes.LevelType.DUNGEON:
+                            case GameTypes.LevelType.Dungeon:
                                 text = "Bottom";
                                 goto IL_457;
-                            case GameTypes.LevelType.TOWER:
+                            case GameTypes.LevelType.Tower:
                                 text = "Top";
                                 goto IL_457;
                         }
@@ -1914,10 +1916,10 @@ namespace RogueCastle
                             }
                         }
                         list.Add(doorObj2.Room);
-                        if ((areaInfo2.LevelType != GameTypes.LevelType.TOWER ||
+                        if ((areaInfo2.LevelType != GameTypes.LevelType.Tower ||
                              (FindFurthestDoor(array2[k], "Right", "Right", false, false) != null &&
                               FindFurthestDoor(array2[k], "Top", "Top", false, false) != null)) &&
-                            (areaInfo2.LevelType != GameTypes.LevelType.DUNGEON ||
+                            (areaInfo2.LevelType != GameTypes.LevelType.Dungeon ||
                              (FindFurthestDoor(array2[k], "Right", "Right", false, false) != null &&
                               FindFurthestDoor(array2[k], "Bottom", "Bottom", false, false) != null)))
                         {
@@ -2257,16 +2259,16 @@ namespace RogueCastle
                 byte bossRoomType = 0;
                 switch (current.LevelType)
                 {
-                    case GameTypes.LevelType.CASTLE:
+                    case GameTypes.LevelType.Castle:
                         bossRoomType = 1;
                         break;
-                    case GameTypes.LevelType.GARDEN:
+                    case GameTypes.LevelType.Garden:
                         bossRoomType = 5;
                         break;
-                    case GameTypes.LevelType.DUNGEON:
+                    case GameTypes.LevelType.Dungeon:
                         bossRoomType = 7;
                         break;
-                    case GameTypes.LevelType.TOWER:
+                    case GameTypes.LevelType.Tower:
                         bossRoomType = 6;
                         break;
                 }
@@ -2323,7 +2325,7 @@ namespace RogueCastle
             if (roomObj2 != null)
             {
                 roomObj2 = (roomObj2.Clone() as RoomObj);
-                roomObj2.LevelType = GameTypes.LevelType.CASTLE;
+                roomObj2.LevelType = GameTypes.LevelType.Castle;
                 roomObj2.LinkedRoom = null;
                 list2.Add(roomObj2);
             }
@@ -2363,16 +2365,16 @@ namespace RogueCastle
         {
             switch (levelType)
             {
-                case GameTypes.LevelType.NONE:
+                case GameTypes.LevelType.None:
                     //IL_1C:
                     throw new Exception("Cannot create level of type NONE");
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     return m_castleRoomArray;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     return m_gardenRoomArray;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     return m_dungeonRoomArray;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     return m_towerRoomArray;
                 default:
                     throw new Exception("Cannot create level of type NONE");
@@ -2391,28 +2393,28 @@ namespace RogueCastle
                 num++;
             }
             num = 10000;
-            var sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.CASTLE);
+            var sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.Castle);
             foreach (var current2 in sequencedDLCRoomList)
             {
                 current2.PoolIndex = num;
                 num++;
             }
             num = 20000;
-            sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.GARDEN);
+            sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.Garden);
             foreach (var current3 in sequencedDLCRoomList)
             {
                 current3.PoolIndex = num;
                 num++;
             }
             num = 30000;
-            sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.TOWER);
+            sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.Tower);
             foreach (var current4 in sequencedDLCRoomList)
             {
                 current4.PoolIndex = num;
                 num++;
             }
             num = 40000;
-            sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.DUNGEON);
+            sequencedDLCRoomList = GetSequencedDLCRoomList(GameTypes.LevelType.Dungeon);
             foreach (var current5 in sequencedDLCRoomList)
             {
                 current5.PoolIndex = num;
@@ -2424,13 +2426,13 @@ namespace RogueCastle
         {
             switch (levelType)
             {
-                case GameTypes.LevelType.CASTLE:
+                case GameTypes.LevelType.Castle:
                     return m_dlcCastleRoomArray;
-                case GameTypes.LevelType.GARDEN:
+                case GameTypes.LevelType.Garden:
                     return m_dlcGardenRoomArray;
-                case GameTypes.LevelType.DUNGEON:
+                case GameTypes.LevelType.Dungeon:
                     return m_dlcDungeonRoomArray;
-                case GameTypes.LevelType.TOWER:
+                case GameTypes.LevelType.Tower:
                     return m_dlcTowerRoomArray;
                 default:
                     return null;

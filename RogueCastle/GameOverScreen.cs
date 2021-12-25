@@ -17,6 +17,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -74,21 +75,21 @@ namespace RogueCastle
                 m_enemyStoredPositions.Clear();
 
                 // Handle Death Link!
-                if (!Game.PlayerStats.DeathLinkDeath)
-                {
-                    if (objList[5] == null)
-                    {
-                        Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                            string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
-                                Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
-                    }
-                    else
-                    {
-                        Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                            string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
-                                Game.GameConfig.PlayerAlias)));
-                    }
-                }
+                // if (!Game.PlayerStats.DeathLinkDeath)
+                // {
+                //     if (objList[5] == null)
+                //     {
+                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
+                //             string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
+                //                 Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
+                //     }
+                //     else
+                //     {
+                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
+                //             string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
+                //                 Game.GameConfig.PlayerAlias)));
+                //     }
+                // }
 
                 Game.PlayerStats.DeathLinkDeath = false;
                 base.PassInData(objList);
@@ -288,7 +289,7 @@ namespace RogueCastle
                     current.Opacity = 0f;
                     num += 0.05f;
                     var enemyObj_Eyeball = current as EnemyObj_Eyeball;
-                    if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS)
+                    if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
                     {
                         enemyObj_Eyeball.ChangeToBossPupil();
                     }
@@ -319,7 +320,7 @@ namespace RogueCastle
                 var projectileObj = m_objKilledPlayer as ProjectileObj;
                 if (enemyObj != null)
                 {
-                    if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS || enemyObj is EnemyObj_LastBoss)
+                    if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
                     {
                         textObj.Text = Game.PlayerStats.PlayerName + " has been slain by " + enemyObj.Name;
                     }
@@ -333,7 +334,7 @@ namespace RogueCastle
                     enemyObj = (projectileObj.Source as EnemyObj);
                     if (enemyObj != null)
                     {
-                        if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MINIBOSS || enemyObj is EnemyObj_LastBoss)
+                        if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
                         {
                             textObj.Text = Game.PlayerStats.PlayerName + " has been slain by " + enemyObj.Name;
                         }

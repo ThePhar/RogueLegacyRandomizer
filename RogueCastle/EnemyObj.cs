@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - EnemyObj.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Globalization;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 
 namespace RogueCastle
@@ -406,16 +408,16 @@ namespace RogueCastle
                     {
                         switch (Difficulty)
                         {
-                            case GameTypes.EnemyDifficulty.BASIC:
+                            case GameTypes.EnemyDifficulty.Basic:
                                 RunBasicLogic();
                                 break;
-                            case GameTypes.EnemyDifficulty.ADVANCED:
+                            case GameTypes.EnemyDifficulty.Advanced:
                                 RunAdvancedLogic();
                                 break;
-                            case GameTypes.EnemyDifficulty.EXPERT:
+                            case GameTypes.EnemyDifficulty.Expert:
                                 RunExpertLogic();
                                 break;
-                            case GameTypes.EnemyDifficulty.MINIBOSS:
+                            case GameTypes.EnemyDifficulty.MiniBoss:
                                 RunMinibossLogic();
                                 break;
                         }
@@ -1027,8 +1029,8 @@ namespace RogueCastle
                     (int)
                         Math.Round(
                             (m_target.BaseHealth + m_target.GetEquipmentHealth() + Game.PlayerStats.BonusHealth*5 +
-                             SkillSystem.GetSkill(SkillType.Health_Up).ModifierAmount +
-                             SkillSystem.GetSkill(SkillType.Health_Up_Final).ModifierAmount)*1f,
+                             SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
+                             SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount)*1f,
                             MidpointRounding.AwayFromZero);
                 if (m_target.MaxHealth + num5 < num7)
                 {
@@ -1044,16 +1046,16 @@ namespace RogueCastle
                 var value = Game.PlayerStats.EnemiesKilledList[Type];
                 switch (Difficulty)
                 {
-                    case GameTypes.EnemyDifficulty.BASIC:
+                    case GameTypes.EnemyDifficulty.Basic:
                         value.X += 1f;
                         break;
-                    case GameTypes.EnemyDifficulty.ADVANCED:
+                    case GameTypes.EnemyDifficulty.Advanced:
                         value.Y += 1f;
                         break;
-                    case GameTypes.EnemyDifficulty.EXPERT:
+                    case GameTypes.EnemyDifficulty.Expert:
                         value.Z += 1f;
                         break;
-                    case GameTypes.EnemyDifficulty.MINIBOSS:
+                    case GameTypes.EnemyDifficulty.MiniBoss:
                         value.W += 1f;
                         break;
                 }

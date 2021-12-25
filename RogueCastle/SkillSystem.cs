@@ -1,16 +1,18 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - SkillSystem.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 
 namespace RogueCastle
 {
@@ -59,38 +61,38 @@ namespace RogueCastle
         {
             // Note: this type is marked as 'beforefieldinit'.
             var array = new SkillType[10, 10];
-            array[0, 8] = SkillType.Randomize_Children;
+            array[0, 8] = SkillType.RandomizeChildren;
             array[1, 7] = SkillType.SuperSecret;
-            array[1, 8] = SkillType.Mana_Cost_Down;
-            array[2, 7] = SkillType.Invuln_Time_Up;
-            array[2, 8] = SkillType.SpellSword_Up;
-            array[3, 2] = SkillType.Down_Strike_Up;
-            array[3, 8] = SkillType.Spellsword_Unlock;
-            array[4, 2] = SkillType.Ninja_Up;
-            array[4, 3] = SkillType.Armor_Up;
-            array[4, 8] = SkillType.Potion_Up;
-            array[5, 0] = SkillType.Lich_Up;
-            array[5, 1] = SkillType.Lich_Unlock;
-            array[5, 2] = SkillType.Prices_Down;
-            array[5, 4] = SkillType.Attack_Up;
-            array[5, 6] = SkillType.Magic_Damage_Up;
-            array[5, 8] = SkillType.Assassin_Up;
-            array[6, 0] = SkillType.Death_Dodge;
-            array[6, 2] = SkillType.Ninja_Unlock;
-            array[6, 3] = SkillType.Barbarian_Up;
+            array[1, 8] = SkillType.ManaCostDown;
+            array[2, 7] = SkillType.InvulnerabilityTimeUp;
+            array[2, 8] = SkillType.SpellSwordUp;
+            array[3, 2] = SkillType.DownStrikeUp;
+            array[3, 8] = SkillType.SpellswordUnlock;
+            array[4, 2] = SkillType.NinjaUp;
+            array[4, 3] = SkillType.ArmorUp;
+            array[4, 8] = SkillType.PotionUp;
+            array[5, 0] = SkillType.LichUp;
+            array[5, 1] = SkillType.LichUnlock;
+            array[5, 2] = SkillType.PricesDown;
+            array[5, 4] = SkillType.AttackUp;
+            array[5, 6] = SkillType.MagicDamageUp;
+            array[5, 8] = SkillType.AssassinUp;
+            array[6, 0] = SkillType.DeathDodge;
+            array[6, 2] = SkillType.NinjaUnlock;
+            array[6, 3] = SkillType.BarbarianUp;
             array[6, 4] = SkillType.Architect;
-            array[6, 5] = SkillType.Equip_Up;
+            array[6, 5] = SkillType.EquipUp;
             array[6, 6] = SkillType.Enchanter;
-            array[6, 7] = SkillType.Mage_Up;
-            array[6, 8] = SkillType.Banker_Unlock;
-            array[6, 9] = SkillType.Banker_Up;
-            array[7, 2] = SkillType.Crit_Chance_Up;
-            array[7, 5] = SkillType.Knight_Up;
-            array[7, 8] = SkillType.Gold_Gain_Up;
-            array[8, 2] = SkillType.Crit_Damage_Up;
-            array[8, 5] = SkillType.Health_Up;
+            array[6, 7] = SkillType.MageUp;
+            array[6, 8] = SkillType.BankerUnlock;
+            array[6, 9] = SkillType.BankerUp;
+            array[7, 2] = SkillType.CritChanceUp;
+            array[7, 5] = SkillType.KnightUp;
+            array[7, 8] = SkillType.GoldGainUp;
+            array[8, 2] = SkillType.CritDamageUp;
+            array[8, 5] = SkillType.HealthUp;
             array[9, 5] = SkillType.Smithy;
-            array[9, 6] = SkillType.Mana_Up;
+            array[9, 6] = SkillType.ManaUp;
             m_skillTypeArray = array;
             var array2 = new Vector2[10, 10];
             array2[0, 0] = new Vector2(0f, 0f);
@@ -363,7 +365,7 @@ namespace RogueCastle
             Game.PlayerStats.CurrentLevel++;
             trait.CurrentLevel++;
             UpdateTraitSprite(trait);
-            if (trait.TraitType == SkillType.Gold_Flat_Bonus && giveGoldBonus)
+            if (trait.TraitType == SkillType.GoldFlatBonus && giveGoldBonus)
             {
                 Game.PlayerStats.Gold += (int) trait.ModifierAmount;
             }

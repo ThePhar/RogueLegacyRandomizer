@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - LineageScreen.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -298,7 +300,7 @@ namespace RogueCastle
                 m_navigationText.Text = "Arrow keys to view family tree";
             }
             m_rerollText.Text = "[Input:" + 9 + "] to re-roll your children once";
-            if (SkillSystem.GetSkill(SkillType.Randomize_Children).ModifierAmount > 0f &&
+            if (SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                 !Game.PlayerStats.RerolledChildren)
             {
                 m_rerollText.Visible = true;
@@ -487,7 +489,7 @@ namespace RogueCastle
                 var selectedLineageObj = m_selectedLineageObj;
                 var selectedLineageIndex = m_selectedLineageIndex;
                 if (Game.GlobalInput.JustPressed(9) &&
-                    SkillSystem.GetSkill(SkillType.Randomize_Children).ModifierAmount > 0f &&
+                    SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                     !Game.PlayerStats.RerolledChildren)
                 {
                     m_lockControls = true;

@@ -15,8 +15,6 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using Archipelago.MultiClient.Net;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -24,6 +22,8 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.Archipelago;
+using RogueCastle.TypeDefinitions;
 using SpriteSystem;
 using Tweener;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
@@ -60,6 +60,8 @@ namespace RogueCastle
         public static SettingStruct GameConfig;
         public static List<string> NameArray;
         public static List<string> FemaleNameArray;
+        public static List<string> DefaultNameArray;
+        public static List<string> DefaultFemaleNameArray;
         public static float TotalGameTime;
         private static float TotalGameTimeHours;
         private readonly float m_frameLimit = 0.025f;
@@ -72,24 +74,24 @@ namespace RogueCastle
         private bool m_frameLimitSwap;
         private bool m_gameLoaded;
 
-        public static List<string> DefaultNameArray;
-        public static List<string> DefaultFemaleNameArray;
-
         public Game(string filePath = "")
         {
+            // AP Stuff
+            ArchClient = new ArchClient();
+
             if (filePath.Contains("-t"))
             {
-                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.TOWER;
+                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.Tower;
                 filePath = filePath.Replace("-t", "");
             }
             else if (filePath.Contains("-d"))
             {
-                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.DUNGEON;
+                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.Dungeon;
                 filePath = filePath.Replace("-d", "");
             }
             else if (filePath.Contains("-g"))
             {
-                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.GARDEN;
+                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.Garden;
                 filePath = filePath.Replace("-g", "");
             }
             if (Thread.CurrentThread.CurrentCulture.Name != "en-US")
@@ -126,12 +128,10 @@ namespace RogueCastle
             SleepUtil.DisableScreensaver();
         }
 
-        public ArchipelagoSession ArchSession;
-        public DeathLinkService DeathLinkService;
-
         public static RCScreenManager ScreenManager { get; internal set; }
         public static float PlaySessionLength { get; set; }
         public PhysicsManager PhysicsManager { get; private set; }
+        public ArchClient ArchClient { get; private set; }
 
         public ContentManager ContentManager
         {
@@ -316,10 +316,16 @@ namespace RogueCastle
             GameConfig.SFXVolume = 0.8f;
             GameConfig.EnableDirectInput = true;
             InputManager.Deadzone = 10f;
-            GameConfig.ProfileSlot = "_no-seed-2";
             GameConfig.EnableSteamCloud = false;
             GameConfig.ReduceQuality = false;
+            GameConfig.ProfileSlot = "_no-seed-1";
+
             InitializeGlobalInput();
+        }
+
+        public static void ChangeSlot(string seed, int slot)
+        {
+            GameConfig.ProfileSlot = string.Format("_{0}-{1}", seed, slot);
         }
 
         protected override void LoadContent()
@@ -366,7 +372,7 @@ namespace RogueCastle
                 var areaStruct = new AreaStruct
                 {
                     Name = "The Grand Entrance",
-                    LevelType = GameTypes.LevelType.CASTLE,
+                    LevelType = GameTypes.LevelType.Castle,
                     TotalRooms = new Vector2(24f, 28f),
                     BossInArea = true,
                     SecretRooms = new Vector2(1f, 3f),
@@ -375,7 +381,7 @@ namespace RogueCastle
                 };
                 var areaStruct2 = new AreaStruct
                 {
-                    LevelType = GameTypes.LevelType.GARDEN,
+                    LevelType = GameTypes.LevelType.Garden,
                     TotalRooms = new Vector2(23f, 27f),
                     BossInArea = true,
                     SecretRooms = new Vector2(1f, 3f),
@@ -384,7 +390,7 @@ namespace RogueCastle
                 };
                 var areaStruct3 = new AreaStruct
                 {
-                    LevelType = GameTypes.LevelType.TOWER,
+                    LevelType = GameTypes.LevelType.Tower,
                     TotalRooms = new Vector2(23f, 27f),
                     BossInArea = true,
                     SecretRooms = new Vector2(1f, 3f),
@@ -393,7 +399,7 @@ namespace RogueCastle
                 };
                 var areaStruct4 = new AreaStruct
                 {
-                    LevelType = GameTypes.LevelType.DUNGEON,
+                    LevelType = GameTypes.LevelType.Dungeon,
                     TotalRooms = new Vector2(23f, 27f),
                     BossInArea = true,
                     SecretRooms = new Vector2(1f, 3f),
@@ -403,7 +409,7 @@ namespace RogueCastle
                 var areaStruct5 = new AreaStruct
                 {
                     Name = "The Grand Entrance",
-                    LevelType = GameTypes.LevelType.CASTLE,
+                    LevelType = GameTypes.LevelType.Castle,
                     TotalRooms = new Vector2(24f, 27f),
                     BossInArea = true,
                     SecretRooms = new Vector2(2f, 3f),
@@ -412,7 +418,7 @@ namespace RogueCastle
                 };
                 var areaStruct6 = default(AreaStruct);
                 areaStruct6.Name = "The Grand Entrance";
-                areaStruct6.LevelType = GameTypes.LevelType.GARDEN;
+                areaStruct6.LevelType = GameTypes.LevelType.Garden;
                 areaStruct6.TotalRooms = new Vector2(12f, 14f);
                 areaStruct6.BossInArea = true;
                 areaStruct6.SecretRooms = new Vector2(2f, 3f);
@@ -420,7 +426,7 @@ namespace RogueCastle
                 areaStruct6.Color = Color.Green;
                 var areaStruct7 = default(AreaStruct);
                 areaStruct7.Name = "The Grand Entrance";
-                areaStruct7.LevelType = GameTypes.LevelType.DUNGEON;
+                areaStruct7.LevelType = GameTypes.LevelType.Dungeon;
                 areaStruct7.TotalRooms = new Vector2(12f, 14f);
                 areaStruct7.BossInArea = true;
                 areaStruct7.SecretRooms = new Vector2(2f, 3f);
@@ -428,7 +434,7 @@ namespace RogueCastle
                 areaStruct7.Color = Color.Red;
                 var areaStruct8 = default(AreaStruct);
                 areaStruct8.Name = "The Grand Entrance";
-                areaStruct8.LevelType = GameTypes.LevelType.TOWER;
+                areaStruct8.LevelType = GameTypes.LevelType.Tower;
                 areaStruct8.TotalRooms = new Vector2(12f, 14f);
                 areaStruct8.BossInArea = true;
                 areaStruct8.SecretRooms = new Vector2(2f, 3f);

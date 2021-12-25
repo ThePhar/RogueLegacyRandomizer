@@ -1,16 +1,18 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - EnemyObj_Ninja.cs
+// Last Modified 2021-12-24
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -77,9 +79,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Ninja_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.BASIC:
+                case GameTypes.EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.ADVANCED:
+                case GameTypes.EnemyDifficulty.Advanced:
                     ChanceToTeleport = 0.5f;
                     Name = "Ninpo";
                     MaxHealth = 44;
@@ -107,7 +109,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.EXPERT:
+                case GameTypes.EnemyDifficulty.Expert:
                     ChanceToTeleport = 0.65f;
                     Name = "Ninopojo";
                     MaxHealth = 62;
@@ -135,7 +137,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MINIBOSS:
+                case GameTypes.EnemyDifficulty.MiniBoss:
                     Name = "Master Ninja";
                     MaxHealth = 900;
                     Damage = 38;
@@ -454,7 +456,7 @@ namespace RogueCastle
                 if (m_closestCeiling != null && num > 150 && num < 700)
                 {
                     m_currentActiveLB.StopLogicBlock();
-                    if (Difficulty == GameTypes.EnemyDifficulty.EXPERT)
+                    if (Difficulty == GameTypes.EnemyDifficulty.Expert)
                     {
                         RunLogicBlock(false, m_expertTeleportAttackLB, 100);
                     }
