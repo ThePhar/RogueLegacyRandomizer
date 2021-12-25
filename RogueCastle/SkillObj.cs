@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-25
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -25,6 +25,7 @@ namespace RogueCastle
         {
             StatType = 0;
             DisplayStat = false;
+            CanPurchase = false;
             Visible = false;
             ForceDraw = true;
             LevelText = new TextObj(Game.JunicodeFont);
@@ -47,6 +48,7 @@ namespace RogueCastle
         public string UnitOfMeasurement { get; set; }
         public byte StatType { get; set; }
         public bool DisplayStat { get; set; }
+        public bool CanPurchase { get; set; }
 
         public int CurrentLevel
         {
@@ -101,7 +103,7 @@ namespace RogueCastle
                 LevelText.TextureColor = Color.White;
             }
             LevelText.Draw(camera);
-            if (Game.PlayerStats.Gold >= TotalCost && CurrentLevel < MaxLevel)
+            if (Game.PlayerStats.Gold >= TotalCost && CurrentLevel < MaxLevel && CanPurchase)
             {
                 m_coinIcon.Opacity = Opacity;
                 m_coinIcon.Position = new Vector2(X + 18f, Y - 40f);

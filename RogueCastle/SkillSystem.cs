@@ -169,9 +169,9 @@ namespace RogueCastle
             array2[6, 4] = new Vector2(178f, 680f);
             array2[6, 5] = new Vector2(868f, 220f);
             array2[6, 6] = new Vector2(108f, 680f);
-            array2[6, 7] = new Vector2(728f, 680f);
-            array2[6, 8] = new Vector2(728f, 590f);
-            array2[6, 9] = new Vector2(728f, 520f);
+            array2[6, 7] = new Vector2(738f, 680f);
+            array2[6, 8] = new Vector2(738f, 590f);
+            array2[6, 9] = new Vector2(738f, 520f);
 
             array2[7, 0] = new Vector2(0f, 0f);
             array2[7, 1] = new Vector2(0f, 0f);

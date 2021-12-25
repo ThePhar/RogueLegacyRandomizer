@@ -138,7 +138,7 @@ namespace RogueCastle
             m_skillCost.Y = 182f;
             m_skillCost.FontSize = 10f;
             m_skillCost.DropShadow = new Vector2(2f, 2f);
-            m_skillCost.TextureColor = Color.Yellow;
+            m_skillCost.TextureColor = Color.Red;
             m_dialoguePlate.AddChild(m_skillCost);
             m_skillCostBG = new SpriteObj("SkillTreeGoldIcon_Sprite");
             m_skillCostBG.Position = new Vector2(-180f, 180f);
@@ -765,28 +765,35 @@ namespace RogueCastle
                         Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
                         m_dialoguePlate.Visible = true;
                     }
+
+                    // Purchase Skill Feature
                     var skill4 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
-                    if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
-                        Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
-                    {
-                        SoundManager.PlaySound("TraitUpgrade");
-                        if (!m_fadingIn)
-                        {
-                            Game.PlayerStats.Gold -= skill4.TotalCost;
-                            SetVisible(skill4, true);
-                            SkillSystem.LevelUpTrait(skill4, true);
-                            if (skill4.CurrentLevel >= skill4.MaxLevel)
-                            {
-                                SoundManager.PlaySound("TraitMaxxed");
-                            }
-                            UpdateDescriptionPlate(skill4);
-                        }
-                    }
-                    else if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
-                             Game.PlayerStats.Gold < skill4.TotalCost)
+                    // if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
+                    //     Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
+                    // {
+                    //     SoundManager.PlaySound("TraitUpgrade");
+                    //     if (!m_fadingIn)
+                    //     {
+                    //         Game.PlayerStats.Gold -= skill4.TotalCost;
+                    //         SetVisible(skill4, true);
+                    //         SkillSystem.LevelUpTrait(skill4, true);
+                    //         if (skill4.CurrentLevel >= skill4.MaxLevel)
+                    //         {
+                    //             SoundManager.PlaySound("TraitMaxxed");
+                    //         }
+                    //         UpdateDescriptionPlate(skill4);
+                    //     }
+                    // }
+                    // else if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
+                    //          Game.PlayerStats.Gold < skill4.TotalCost)
+                    // {
+                    //     SoundManager.PlaySound("TraitPurchaseFail");
+                    // }
+                    if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)))
                     {
                         SoundManager.PlaySound("TraitPurchaseFail");
                     }
+
                     if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
                     {
                         m_lockControls = true;
@@ -881,7 +888,10 @@ namespace RogueCastle
                 {
                     arg = "upgrade";
                 }
-                m_skillCost.Text = trait.TotalCost + " gold to " + arg;
+
+                // Tell the player they cannot upgrade.
+                m_skillCost.Text = string.Format("Cannot purchase {0}.", arg);
+
                 if (m_inputDescription.Text != " " && m_inputDescription.Text != "")
                 {
                     m_skillCurrent.Y = m_inputDescription.Bounds.Bottom + 40;
@@ -905,7 +915,7 @@ namespace RogueCastle
                 {
                     arg2 = "upgrade";
                 }
-                m_skillCost.Text = trait.TotalCost + " gold to " + arg2;
+                m_skillCost.Text = string.Format("Cannot purchase {0}.", arg2);
             }
             m_descriptionDivider.Position = new Vector2(m_skillCurrent.AbsX, m_skillCurrent.AbsY - 20f);
             if (trait.CurrentLevel >= trait.MaxLevel)
