@@ -72,6 +72,8 @@
     <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
     <Compile Include="RogueCastle\ArchipelagoOptionsObj.cs" />
     <Compile Include="RogueCastle\ArchipelagoScreen.cs" />
+    <Compile Include="RogueCastle\Archipelago\ArchClient.cs" />
+    <Compile Include="RogueCastle\Archipelago\SlotData.cs" />
     <Compile Include="RogueCastle\AreaStruct.cs" />
     <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
     <Compile Include="RogueCastle\BackToMenuArchipelagoObj.cs" />

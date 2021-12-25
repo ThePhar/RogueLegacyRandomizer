@@ -15,8 +15,6 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using Archipelago.MultiClient.Net;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -24,6 +22,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.Archipelago;
 using RogueCastle.TypeDefinitions;
 using SpriteSystem;
 using Tweener;
@@ -61,6 +60,8 @@ namespace RogueCastle
         public static SettingStruct GameConfig;
         public static List<string> NameArray;
         public static List<string> FemaleNameArray;
+        public static List<string> DefaultNameArray;
+        public static List<string> DefaultFemaleNameArray;
         public static float TotalGameTime;
         private static float TotalGameTimeHours;
         private readonly float m_frameLimit = 0.025f;
@@ -73,11 +74,11 @@ namespace RogueCastle
         private bool m_frameLimitSwap;
         private bool m_gameLoaded;
 
-        public static List<string> DefaultNameArray;
-        public static List<string> DefaultFemaleNameArray;
-
         public Game(string filePath = "")
         {
+            // AP Stuff
+            ArchClient = new ArchClient();
+
             if (filePath.Contains("-t"))
             {
                 LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.Tower;
@@ -127,12 +128,10 @@ namespace RogueCastle
             SleepUtil.DisableScreensaver();
         }
 
-        public ArchipelagoSession ArchSession;
-        public DeathLinkService DeathLinkService;
-
         public static RCScreenManager ScreenManager { get; internal set; }
         public static float PlaySessionLength { get; set; }
         public PhysicsManager PhysicsManager { get; private set; }
+        public ArchClient ArchClient { get; private set; }
 
         public ContentManager ContentManager
         {
@@ -317,10 +316,16 @@ namespace RogueCastle
             GameConfig.SFXVolume = 0.8f;
             GameConfig.EnableDirectInput = true;
             InputManager.Deadzone = 10f;
-            GameConfig.ProfileSlot = "_no-seed-2";
             GameConfig.EnableSteamCloud = false;
             GameConfig.ReduceQuality = false;
+            GameConfig.ProfileSlot = "_no-seed-1";
+
             InitializeGlobalInput();
+        }
+
+        public static void ChangeSlot(string seed, int slot)
+        {
+            GameConfig.ProfileSlot = string.Format("_{0}-{1}", seed, slot);
         }
 
         protected override void LoadContent()

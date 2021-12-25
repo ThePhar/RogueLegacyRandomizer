@@ -15,7 +15,6 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Randomchaos2DGodRays;
 using RogueCastle.TypeDefinitions;
 using Tweener;
@@ -25,11 +24,7 @@ namespace RogueCastle
 {
     public class TitleScreen : Screen
     {
-        private bool m_heroIsDead;
-        private bool m_loadStartingRoom;
         private bool m_optionsEntered;
-        private bool m_startNewGamePlus;
-        private bool m_startNewLegacy;
         private bool m_startPressed;
         private float m_hardCoreModeOpacity;
         private float m_randomSeagullSfx;
@@ -245,19 +240,11 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            // Disconnect from Arch if we are connected.
-            if (Program.Game.ArchSession != null && Program.Game.ArchSession.Socket.Connected)
-                Program.Game.ArchSession.Socket.Disconnect();
-            Program.Game.ArchSession = null;
 
             Camera.Zoom = 1f;
             SoundManager.PlayMusic("TitleScreenSong", true, 1f);
             Game.ScreenManager.Player.ForceInvincible = false;
             m_optionsEntered = false;
-            m_startNewLegacy = false;
-            m_heroIsDead = false;
-            m_startNewGamePlus = false;
-            m_loadStartingRoom = false;
             m_bg.TextureColor = Color.Red;
             m_randomSeagullSfx = CDGMath.RandomInt(1, 5);
             m_startPressed = false;
@@ -273,13 +260,10 @@ namespace RogueCastle
             Tween.By(m_dlcIcon, 3f, Quad.EaseInOut, "Y", "50");
             Camera.Position = new Vector2(660f, 360f);
             m_pressStartText.Text = "[Input:" + InputMapType.MenuConfirm1 + "]";
-            LoadSaveData();
-            Game.PlayerStats.TutorialComplete = true;
-            m_startNewLegacy = !Game.PlayerStats.CharacterFound;
-            m_heroIsDead = Game.PlayerStats.IsDead;
-            m_startNewGamePlus = Game.PlayerStats.LastbossBeaten;
-            m_loadStartingRoom = Game.PlayerStats.LoadStartingRoom;
+
+            Program.Game.ArchClient.DisconnectAndReset();
             InitializeStartingText();
+
             base.OnEnter();
         }
 
@@ -294,77 +278,9 @@ namespace RogueCastle
             base.OnExit();
         }
 
-        public void LoadSaveData()
-        {
-            Game.NameArray = Game.DefaultNameArray.Clone();
-            Game.FemaleNameArray = Game.DefaultFemaleNameArray.Clone();
-            SkillSystem.ResetAllTraits();
-            Game.PlayerStats.Dispose();
-            Game.PlayerStats = new PlayerStats();
-            (ScreenManager as RCScreenManager).Player.Reset();
-            (ScreenManager.Game as Game).SaveManager.LoadFiles(null, SaveType.PlayerData, SaveType.Lineage,
-                SaveType.UpgradeData);
-            Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
-            Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
-        }
-
         public void InitializeStartingText()
         {
             m_pressStartText2.Text = "Start Your Randomized Legacy";
-        }
-
-        public void StartPressed()
-        {
-            SoundManager.PlaySound("Game_Start");
-
-            if (!m_startNewLegacy)
-            {
-                if (!m_heroIsDead)
-                {
-                    if (m_loadStartingRoom)
-                    {
-                        (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.StartingRoom, true);
-                    }
-                    else
-                    {
-                        (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Level, true);
-                    }
-                }
-                else
-                {
-                    (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Lineage, true);
-                }
-            }
-            else
-            {
-                Game.PlayerStats.CharacterFound = true;
-                if (m_startNewGamePlus)
-                {
-                    Game.PlayerStats.LastbossBeaten = false;
-                    Game.PlayerStats.BlobBossBeaten = false;
-                    Game.PlayerStats.EyeballBossBeaten = false;
-                    Game.PlayerStats.FairyBossBeaten = false;
-                    Game.PlayerStats.FireballBossBeaten = false;
-                    Game.PlayerStats.FinalDoorOpened = false;
-                    if ((ScreenManager.Game as Game).SaveManager.FileExists(SaveType.Map))
-                    {
-                        (ScreenManager.Game as Game).SaveManager.ClearFiles(SaveType.Map, SaveType.MapData);
-                        (ScreenManager.Game as Game).SaveManager.ClearBackupFiles(SaveType.Map, SaveType.MapData);
-                    }
-                }
-                else
-                {
-                    Game.PlayerStats.Gold = 0;
-                }
-
-                Game.PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
-                Game.PlayerStats.EnemiesKilledInRun.Clear();
-                (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage,
-                    SaveType.UpgradeData);
-                (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.StartingRoom, true);
-            }
-
-            SoundManager.StopMusic(0.2f);
         }
 
         public override void Update(GameTime gameTime)

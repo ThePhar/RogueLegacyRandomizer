@@ -12,13 +12,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Archipelago.MultiClient.Net;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
-using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+using RogueCastle.TypeDefinitions;
 using Tweener;
 using Tweener.Ease;
 
@@ -36,7 +33,6 @@ namespace RogueCastle
         private ArchipelagoOptionsObj m_selectedOption;
         private int m_selectedOptionIndex;
         private bool m_transitioning;
-        private TitleScreen m_titleScreen;
 
         private TextBoxOptionsObj m_hostname;
         private TextBoxOptionsObj m_port;
@@ -51,12 +47,6 @@ namespace RogueCastle
         }
 
         public float BackBufferOpacity { get; set; }
-
-        public override void PassInData(List<object> objList)
-        {
-            m_titleScreen = (TitleScreen) objList[0];
-            base.PassInData(objList);
-        }
 
         public override void LoadContent()
         {
@@ -73,7 +63,7 @@ namespace RogueCastle
 
             // Archipelago Options
             m_hostname = new TextBoxOptionsObj(this, "Hostname", "archipelago.gg");
-            m_port = new TextBoxOptionsObj(this, "Port", "12345");
+            m_port = new TextBoxOptionsObj(this, "Port", "38281");
             m_slot = new TextBoxOptionsObj(this, "Slot Name", "Player1");
             m_password = new TextBoxOptionsObj(this, "Password", "");
 
@@ -130,134 +120,35 @@ namespace RogueCastle
 
         public void Connect()
         {
-            try {
-                // TODO: Move this elsewhere. Putting this here for now to quickly debug WebSocket client.
-                Program.Game.ArchSession =
-                    ArchipelagoSessionFactory.CreateSession(m_hostname.GetValue, int.Parse(m_port.GetValue));
+            try
+            {
+                // Parse port and connect.
+                var port = int.Parse(m_port.GetValue);
+                Program.Game.ArchClient.Connect(m_hostname.GetValue, port, m_slot.GetValue, m_password.GetValue == "" ? null : m_password.GetValue);
+            }
+            catch (FormatException ex)
+            {
+                // TODO: Make this into a standardized message handler?
+                var screenManager = Game.ScreenManager;
+                var errorUuid = Guid.NewGuid().ToString();
 
-                // Start Up
-                Program.Game.ArchSession.Socket.PacketReceived += packet =>
-                {
-                    var roomInfo = packet as RoomInfoPacket;
-                    if (roomInfo != null)
-                    {
-                        Game.GameConfig.ProfileSlot = roomInfo.SeedName;
-                    }
-
-                    var connectedPacket = packet as ConnectedPacket;
-                    if (connectedPacket != null)
-                    {
-                        // Create save file.
-                        Program.Game.SaveManager.CreateSaveDirectory();
-                        m_titleScreen.LoadSaveData();
-
-                            var isFemale = connectedPacket.SlotData["initial_gender"].ToString() == "1";
-                        var playerName = connectedPacket.Players[connectedPacket.Slot - 1].Name;
-                        Game.GameConfig.PlayerAlias = connectedPacket.Players[connectedPacket.Slot - 1].Alias;
-                        Game.GameConfig.PlayerName = connectedPacket.Players[connectedPacket.Slot - 1].Name;
-
-                        // Rename Sir Lee to player's name and initial gender if we're on our first character.
-                        if (Game.PlayerStats.CurrentBranches == null)
-                        {
-                            Game.PlayerStats.IsFemale = isFemale;
-                            Game.PlayerStats.PlayerName =
-                                string.Format("{1} {0}", playerName, Game.PlayerStats.IsFemale ? "Lady" : "Sir");
-                        }
-
-                        // Add our player name to the name pool, if we haven't already so our children can have our name.
-                        if (isFemale)
-                        {
-                            if (!Game.FemaleNameArray.Contains(playerName))
-                                Game.FemaleNameArray.Add(playerName);
-                        }
-                        else
-                        {
-                            if (!Game.NameArray.Contains(playerName))
-                                Game.NameArray.Add(playerName);
-                        }
-
-                        Game.PlayerStats.Difficulty = int.Parse(connectedPacket.SlotData["difficulty"].ToString());
-                        Game.PlayerStats.StatIncreasePool =
-                            int.Parse(connectedPacket.SlotData["stat_increase_pool"].ToString());
-                        Game.PlayerStats.StatIncreaseApplies =
-                            int.Parse(connectedPacket.SlotData["stat_increase_applies"].ToString());
-                        Game.PlayerStats.EarlyVendors = int.Parse(connectedPacket.SlotData["early_vendors"].ToString());
-                        Game.PlayerStats.BossShuffle = int.Parse(connectedPacket.SlotData["boss_shuffle"].ToString());
-                        Game.PlayerStats.Children = int.Parse(connectedPacket.SlotData["children"].ToString());
-                        Game.PlayerStats.HereditaryBlessings =
-                            int.Parse(connectedPacket.SlotData["hereditary_blessings"].ToString());
-                        Game.PlayerStats.EnableShop = int.Parse(connectedPacket.SlotData["enable_shop"].ToString());
-                        Game.PlayerStats.DisableCharon = int.Parse(connectedPacket.SlotData["disable_charon"].ToString());
-                        Game.PlayerStats.DeathLink = int.Parse(connectedPacket.SlotData["death_link"].ToString());
-                        Game.PlayerStats.AdditionalChildrenNames =
-                            (connectedPacket.SlotData["additional_children_names"] as JArray).ToObject<string[]>();
-
-                        // Death Link
-                        if (Game.PlayerStats.DeathLink == 1)
-                        {
-                            Program.Game.ArchSession.UpdateTags(new List<string>{ "DeathLink" });
-                            Program.Game.DeathLinkService = Program.Game.ArchSession.CreateDeathLinkServiceAndEnable();
-
-                            // Death Links
-                            Program.Game.DeathLinkService.OnDeathLinkReceived += deathLinkObject =>
-                            {
-                                if (deathLinkObject.Source == Game.GameConfig.PlayerName)
-                                    return;
-
-                                Console.WriteLine("Death Link Received!");
-                                Game.PlayerStats.DeathLinkDeath = true;
-                                var levelScreen = Game.ScreenManager.GetLevelScreen();
-                                if (levelScreen != null && levelScreen.Player != null)
-                                {
-                                    levelScreen.Player.AttachedLevel.SetObjectKilledPlayer(
-                                        new PlayerObj("PlayerIdle_Character", PlayerIndex.One, Program.Game.PhysicsManager, null,
-                                            Program.Game)
-                                        {
-                                            Name = deathLinkObject.Source
-                                        });
-                                    levelScreen.Player.Kill();
-                                }
-                            };
-                        }
-
-                        // Start!
-                        m_titleScreen.StartPressed();
-                    }
-                };
-
-                var result = Program.Game.ArchSession.TryConnectAndLogin("Rogue Legacy", m_slot.GetValue,
-                    LevelEV.AP_VERSION,
-                    password: m_password.GetValue);
-
-                if (!result.Successful)
-                {
-                    var failure = result as LoginFailure;
-                    if (failure != null)
-                    {
-                        var rCScreenManager = Game.ScreenManager;
-                        // Add our dialogue if it's not there.
-                        DialogueManager.AddText("Failed to connect", failure.Errors, failure.Errors);
-
-                        rCScreenManager.DialogueScreen.SetDialogue("Failed to connect");
-                        rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-                        rCScreenManager.DisplayScreen(13, false);
-                    }
-                }
+                // Print exception message.
+                Console.WriteLine(ex);
+                DialogueManager.AddText(errorUuid, new[] {"Invalid Port"}, new[] {ex.Message});
+                screenManager.DialogueScreen.SetDialogue(errorUuid);
+                screenManager.DisplayScreen(ScreenType.Dialogue, true);
             }
             catch (Exception ex)
             {
-                var rCScreenManager = Game.ScreenManager;
-                // Add our dialogue if it's not there.
-                DialogueManager.AddText("Exception Connection", new []{ "Exception Connecting!" }, new[] { ex.Message });
+                var screenManager = Game.ScreenManager;
+                var errorUuid = Guid.NewGuid().ToString();
+
+                // Print exception message.
                 Console.WriteLine(ex);
-
-                rCScreenManager.DialogueScreen.SetDialogue("Exception Connection");
-                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-                rCScreenManager.DisplayScreen(13, false);
+                DialogueManager.AddText(errorUuid, new []{"An Exception Occurred"}, new []{ex.Message});
+                screenManager.DialogueScreen.SetDialogue(errorUuid);
+                screenManager.DisplayScreen(ScreenType.Dialogue, true);
             }
-
-
-
         }
 
         public override void OnEnter()

@@ -75,21 +75,21 @@ namespace RogueCastle
                 m_enemyStoredPositions.Clear();
 
                 // Handle Death Link!
-                if (!Game.PlayerStats.DeathLinkDeath)
-                {
-                    if (objList[5] == null)
-                    {
-                        Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                            string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
-                                Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
-                    }
-                    else
-                    {
-                        Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                            string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
-                                Game.GameConfig.PlayerAlias)));
-                    }
-                }
+                // if (!Game.PlayerStats.DeathLinkDeath)
+                // {
+                //     if (objList[5] == null)
+                //     {
+                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
+                //             string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
+                //                 Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
+                //     }
+                //     else
+                //     {
+                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
+                //             string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
+                //                 Game.GameConfig.PlayerAlias)));
+                //     }
+                // }
 
                 Game.PlayerStats.DeathLinkDeath = false;
                 base.PassInData(objList);
