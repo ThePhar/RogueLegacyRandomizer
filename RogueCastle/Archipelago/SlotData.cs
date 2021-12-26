@@ -29,11 +29,6 @@ namespace RogueCastle.Archipelago
             get { return Convert.ToInt32(m_slotData["new_game_plus"]); }
         }
 
-        public int TotalLocations
-        {
-            get { return Convert.ToInt32(m_slotData["total_locations"]); }
-        }
-
         public bool DeathLink
         {
             get { return Convert.ToInt32(m_slotData["death_link"]) == 1; }
