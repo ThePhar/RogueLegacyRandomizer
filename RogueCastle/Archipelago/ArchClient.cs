@@ -199,7 +199,7 @@ namespace RogueCastle.Archipelago
             // Rename Sir Lee to the player's name and initial gender if we're on our first character.
             if (Game.PlayerStats.CurrentBranches == null)
             {
-                Game.PlayerStats.IsFemale = m_data.InitialGender == SlotData.InitialGenderOption.Female;
+                Game.PlayerStats.IsFemale = m_data.StartingGender == StartingGender.Lady;
                 Game.PlayerStats.PlayerName = string.Format("{1} {0}", m_player.Name, Game.PlayerStats.IsFemale ? "Lady" : "Sir");
             }
 
@@ -272,8 +272,7 @@ namespace RogueCastle.Archipelago
         /// </summary>
         private void SetSettings()
         {
-            // Difficulty
-            Game.PlayerStats.TimesCastleBeaten = (int) m_data.Difficulty;
+            Game.PlayerStats.TimesCastleBeaten = m_data.Difficulty;
         }
 
         /// <summary>

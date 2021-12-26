@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillScreen.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -138,7 +138,7 @@ namespace RogueCastle
             m_skillCost.Y = 182f;
             m_skillCost.FontSize = 10f;
             m_skillCost.DropShadow = new Vector2(2f, 2f);
-            m_skillCost.TextureColor = Color.Red;
+            m_skillCost.TextureColor = Color.Yellow;
             m_dialoguePlate.AddChild(m_skillCost);
             m_skillCostBG = new SpriteObj("SkillTreeGoldIcon_Sprite");
             m_skillCostBG.Position = new Vector2(-180f, 180f);
@@ -716,36 +716,35 @@ namespace RogueCastle
                 {
                     var selectedTraitIndex = m_selectedTraitIndex;
                     var vector = new Vector2(-1f, -1f);
-                    if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
+
+                    // Move Up and Down
+                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) || Game.GlobalInput.JustPressed(InputMapType.PlayerUp2))
                     {
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y).TopLink;
-                        // var skill = SkillSystem.GetSkill(SkillType.SuperSecret);
-                        // if (!m_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
-                        // {
-                        //     m_cameraTweening = true;
-                        //     Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 60f.ToString());
-                        //     Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
-                        // }
                     }
-                    else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
+                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerDown1) || Game.GlobalInput.JustPressed(InputMapType.PlayerDown2))
                     {
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
                                 .BottomLink;
                     }
-                    if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
+
+                    // Move Left and Right
+                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerLeft1) || Game.GlobalInput.JustPressed(InputMapType.PlayerLeft2))
                     {
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
                                 .LeftLink;
                     }
-                    else if (Game.GlobalInput.JustPressed(22) || Game.GlobalInput.JustPressed(23))
+                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerRight1) || Game.GlobalInput.JustPressed(InputMapType.PlayerRight2))
                     {
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
                                 .RightLink;
                     }
+
+                    // Move selection.
                     if (vector.X != -1f && vector.Y != -1f)
                     {
                         var skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
@@ -754,46 +753,47 @@ namespace RogueCastle
                             m_selectedTraitIndex = vector;
                         }
                     }
+
+                    // Update current selected trait.
                     if (selectedTraitIndex != m_selectedTraitIndex)
                     {
-                        var skill3 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X,
+                        var selectedSkill = SkillSystem.GetSkill((int) m_selectedTraitIndex.X,
                             (int) m_selectedTraitIndex.Y);
-                        m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill3);
-                        UpdateDescriptionPlate(skill3);
+                        m_selectionIcon.Position = SkillSystem.GetSkillPosition(selectedSkill);
+                        UpdateDescriptionPlate(selectedSkill);
                         SoundManager.PlaySound("ShopMenuMove");
-                        skill3.Scale = new Vector2(1.1f, 1.1f);
-                        Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
+                        selectedSkill.Scale = new Vector2(1.1f, 1.1f);
+                        Tween.To(selectedSkill, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
                         m_dialoguePlate.Visible = true;
                     }
 
                     // Purchase Skill Feature
-                    var skill4 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
-                    // if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
-                    //     Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
-                    // {
-                    //     SoundManager.PlaySound("TraitUpgrade");
-                    //     if (!m_fadingIn)
-                    //     {
-                    //         Game.PlayerStats.Gold -= skill4.TotalCost;
-                    //         SetVisible(skill4, true);
-                    //         SkillSystem.LevelUpTrait(skill4, true);
-                    //         if (skill4.CurrentLevel >= skill4.MaxLevel)
-                    //         {
-                    //             SoundManager.PlaySound("TraitMaxxed");
-                    //         }
-                    //         UpdateDescriptionPlate(skill4);
-                    //     }
-                    // }
-                    // else if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
-                    //          Game.PlayerStats.Gold < skill4.TotalCost)
-                    // {
-                    //     SoundManager.PlaySound("TraitPurchaseFail");
-                    // }
-                    if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)))
+                    var skill = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
+                    if (
+                        (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) || Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
+                        && Game.PlayerStats.Gold >= skill.TotalCost
+                        && skill.CurrentLevel < skill.MaxLevel
+                        && skill.CanPurchase)
+                    {
+                        SoundManager.PlaySound("TraitUpgrade");
+                        if (!m_fadingIn)
+                        {
+                            Game.PlayerStats.Gold -= skill.TotalCost;
+                            SetVisible(skill, true);
+                            SkillSystem.LevelUpTrait(skill, true);
+                            if (skill.CurrentLevel >= skill.MaxLevel)
+                            {
+                                SoundManager.PlaySound("TraitMaxxed");
+                            }
+                            UpdateDescriptionPlate(skill);
+                        }
+                    }
+                    else if ((Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) || Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2)))
                     {
                         SoundManager.PlaySound("TraitPurchaseFail");
                     }
 
+                    // Toggle Hiding Skill Screen
                     if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
                     {
                         m_lockControls = true;
@@ -811,20 +811,8 @@ namespace RogueCastle
                             (ScreenManager as RCScreenManager).DisplayScreen(15, true);
                         }
                     }
-                    if (!LevelEV.RUN_DEMO_VERSION && !LevelEV.CREATE_RETAIL_VERSION &&
-                        InputManager.JustPressed(Keys.Q, PlayerIndex.One))
-                    {
-                        foreach (var current in SkillSystem.SkillArray)
-                        {
-                            if (current.CurrentLevel < current.MaxLevel)
-                            {
-                                SetVisible(current, false);
-                                SkillSystem.LevelUpTrait(current, false);
-                                CheckForSkillUnlock(current, false);
-                            }
-                        }
-                    }
                 }
+
                 base.HandleInput();
             }
         }
@@ -834,63 +822,73 @@ namespace RogueCastle
             m_cameraTweening = false;
         }
 
-        public void UpdateDescriptionPlate(SkillObj trait)
+        public void UpdateDescriptionPlate(SkillObj skill)
         {
-            var text = trait.IconName;
+            // Set initial parameters.
+            var text = skill.IconName;
             Console.WriteLine(text);
             text = text.Replace("Locked", "");
             text = text.Replace("Max", "");
             m_skillIcon.ChangeSprite(text);
-            m_skillTitle.Text = trait.Name;
-            m_skillDescription.Text = trait.Description;
+            m_skillTitle.Text = skill.Name;
+            m_skillDescription.Text = skill.Description;
             m_skillDescription.WordWrap(280);
-            m_inputDescription.Text = trait.InputDescription;
+            m_inputDescription.Text = skill.InputDescription;
             m_inputDescription.WordWrap(280);
             m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
-            var num = TraitStatType.GetTraitStat(trait.TraitType);
-            if (num > -1f)
+
+            // Update stats and modifier texts.
+            var stat = TraitStatType.GetTraitStat(skill.TraitType);
+            if (stat > -1f)
             {
-                if (num < 1f)
+                if (stat < 1f)
                 {
-                    num *= 100f;
-                    num = (int) Math.Round(num, MidpointRounding.AwayFromZero);
+                    stat *= 100f;
+                    stat = (int) Math.Round(stat, MidpointRounding.AwayFromZero);
                 }
-                if (num == 0f)
+                if (stat == 0f)
                 {
-                    num = trait.ModifierAmount;
-                    if (trait.TraitType == SkillType.CritChanceUp)
+                    stat = skill.ModifierAmount;
+                    if (skill.TraitType == SkillType.CritChanceUp)
                     {
-                        num *= 100f;
-                        num = (int) Math.Round(num, MidpointRounding.AwayFromZero);
+                        stat *= 100f;
+                        stat = (int) Math.Round(stat, MidpointRounding.AwayFromZero);
                     }
                 }
-                m_skillCurrent.Text = "Current: " + num + trait.UnitOfMeasurement;
-                if (trait.CurrentLevel < trait.MaxLevel)
+                m_skillCurrent.Text = "Current: " + stat + skill.UnitOfMeasurement;
+                if (skill.CurrentLevel < skill.MaxLevel)
                 {
-                    var num2 = trait.PerLevelModifier;
-                    if (num2 < 1f && trait.TraitType != SkillType.InvulnerabilityTimeUp)
+                    var mod = skill.PerLevelModifier;
+                    if (mod < 1f && skill.TraitType != SkillType.InvulnerabilityTimeUp)
                     {
-                        num2 *= 100f;
-                        if (trait.TraitType != SkillType.DeathDodge)
+                        mod *= 100f;
+                        if (skill.TraitType != SkillType.DeathDodge)
                         {
-                            num2 = (int) Math.Round(num2, MidpointRounding.AwayFromZero);
+                            mod = (int) Math.Round(mod, MidpointRounding.AwayFromZero);
                         }
                     }
-                    m_skillUpgrade.Text = "Upgrade: +" + num2 + trait.UnitOfMeasurement;
+                    m_skillUpgrade.Text = "Upgrade: +" + mod + skill.UnitOfMeasurement;
                 }
                 else
                 {
                     m_skillUpgrade.Text = "Upgrade: --";
                 }
-                m_skillLevel.Text = string.Concat("Level: ", trait.CurrentLevel, "/", trait.MaxLevel);
-                var arg = "unlock";
-                if (trait.CurrentLevel > 0)
-                {
-                    arg = "upgrade";
-                }
+                m_skillLevel.Text = string.Concat("Level: ", skill.CurrentLevel, "/", skill.MaxLevel);
 
-                // Tell the player they cannot upgrade.
-                m_skillCost.Text = string.Format("Cannot purchase {0}.", arg);
+                var upText = "unlock";
+                if (skill.CurrentLevel > 0)
+                    upText = "upgrade";
+
+                if (skill.CanPurchase)
+                {
+                    m_skillCost.TextureColor = Color.Yellow;
+                    m_skillCost.Text = string.Format("{0} gold to {1}.", skill.TotalCost, upText);
+                }
+                else
+                {
+                    m_skillCost.TextureColor = Color.Red;
+                    m_skillCost.Text = string.Format("Cannot purchase {0}.", upText);
+                }
 
                 if (m_inputDescription.Text != " " && m_inputDescription.Text != "")
                 {
@@ -910,15 +908,27 @@ namespace RogueCastle
                 m_skillUpgrade.Text = "";
                 m_skillLevel.Text = "";
                 m_descriptionDivider.Visible = false;
-                var arg2 = "unlock";
-                if (trait.CurrentLevel > 0)
+                var upText = "unlock";
+                if (skill.CurrentLevel > 0)
                 {
-                    arg2 = "upgrade";
+                    upText = "upgrade";
                 }
-                m_skillCost.Text = string.Format("Cannot purchase {0}.", arg2);
+
+                if (skill.CanPurchase)
+                {
+                    m_skillCost.TextureColor = Color.Yellow;
+                    m_skillCost.Text = string.Format("{0} gold to {1}.", skill.TotalCost, upText);
+                }
+                else
+                {
+                    m_skillCost.TextureColor = Color.Red;
+                    m_skillCost.Text = string.Format("Cannot purchase {0}.", upText);
+                }
             }
+
+            // Update visibility.
             m_descriptionDivider.Position = new Vector2(m_skillCurrent.AbsX, m_skillCurrent.AbsY - 20f);
-            if (trait.CurrentLevel >= trait.MaxLevel)
+            if (skill.CurrentLevel >= skill.MaxLevel)
             {
                 m_skillCost.Visible = false;
                 m_skillCostBG.Visible = false;
@@ -928,6 +938,8 @@ namespace RogueCastle
                 m_skillCost.Visible = true;
                 m_skillCostBG.Visible = true;
             }
+
+            // Money money money.
             m_playerMoney.Text = Game.PlayerStats.Gold.ToString();
         }
 

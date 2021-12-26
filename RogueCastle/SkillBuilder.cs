@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillBuilder.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -255,7 +255,7 @@ namespace RogueCastle
                     break;
                 case SkillType.PotionUp:
                     skillObj.Name = "Potion Up";
-                    skillObj.Description = "Gut cleansing leads to noticable improvements from both potions and meat.";
+                    skillObj.Description = "Gut cleansing leads to noticeable improvements from both potions and meat.";
                     skillObj.PerLevelModifier = 0.01f;
                     skillObj.BaseCost = 750;
                     skillObj.Appreciation = 1750;
