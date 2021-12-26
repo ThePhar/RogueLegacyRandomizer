@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - ArchClient.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -76,9 +76,6 @@ namespace RogueCastle.Archipelago
                 // Attempt to connect to AP.
                 var result = m_session.TryConnectAndLogin("Rogue Legacy", slotName, LevelEV.AP_VERSION, m_tags, password: password);
 
-                // Testing something.
-                m_session.Socket.SendPacket(new GetDataPackagePacket());
-
                 // Error checking.
                 if (!result.Successful)
                 {
@@ -143,9 +140,14 @@ namespace RogueCastle.Archipelago
             if (newGame)
             {
                 Game.PlayerStats.CharacterFound = true;
-                Game.PlayerStats.Gold = 0;
+                Game.PlayerStats.Gold = 999999; // TODO: Remove this, it's only for debugging!
                 Game.PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
                 Game.PlayerStats.EnemiesKilledInRun.Clear();
+
+                // Rename Sir Lee to the player's name and initial gender.
+                Game.PlayerStats.IsFemale = m_data.StartingGender == StartingGender.Lady;
+                Game.PlayerStats.PlayerName = string.Format("{1} {0}", m_player.Name, Game.PlayerStats.IsFemale ? "Lady" : "Sir");
+
                 Program.Game.SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
                 Game.ScreenManager.DisplayScreen(ScreenType.StartingRoom, true);
             }
@@ -196,13 +198,6 @@ namespace RogueCastle.Archipelago
             m_player = packet.Players[m_slot - 1];
             m_data = new SlotData(packet.SlotData);
 
-            // Rename Sir Lee to the player's name and initial gender if we're on our first character.
-            if (Game.PlayerStats.CurrentBranches == null)
-            {
-                Game.PlayerStats.IsFemale = m_data.InitialGender == SlotData.InitialGenderOption.Female;
-                Game.PlayerStats.PlayerName = string.Format("{1} {0}", m_player.Name, Game.PlayerStats.IsFemale ? "Lady" : "Sir");
-            }
-
             // Our our player's name to the name pool, so their potential children can be named after them.
             if (Game.PlayerStats.IsFemale && !Game.FemaleNameArray.Contains(m_player.Name))
                 Game.FemaleNameArray.Add(m_player.Name);
@@ -223,20 +218,13 @@ namespace RogueCastle.Archipelago
                 m_deathLinkService.OnDeathLinkReceived += DeathLinkHandler;
             }
 
-            // Fill our LocationCache then start.
-            var fairyChests = Enumerable
-                .Range(LocationsTable.FairyChestLocationStartIndex, LocationsTable.FairyChestTotalLocations);
-            // var regularChests = Enumerable
-            //     .Range(LocationsTable.ChestLocationStartIndex, LocationsTable.ChestLocationTotalLocations);
-            // var allChests = fairyChests.Concat(regularChests).ToArray();
-
-            m_session.Locations.ScoutLocationsAsync(PrepareLocationsAndStart, fairyChests.ToArray());
+            m_session.Locations.ScoutLocationsAsync(PrepareLocationCache, Locations.IdTable.Values.ToArray());
 
             // Load the game.
             StartGame();
         }
 
-        private void PrepareLocationsAndStart(LocationInfoPacket locationInfo)
+        private void PrepareLocationCache(LocationInfoPacket locationInfo)
         {
             var locations = locationInfo.Locations;
             foreach (var networkItem in locations)
@@ -253,6 +241,9 @@ namespace RogueCastle.Archipelago
         private void RoomInfoPacketHandler(RoomInfoPacket packet)
         {
             m_seed = packet.SeedName;
+
+            // Send a GetDataPackage packet to update our local cache of item names.
+            m_session.Socket.SendPacket(new GetDataPackagePacket());
         }
 
         /// <summary>
@@ -279,8 +270,7 @@ namespace RogueCastle.Archipelago
         /// </summary>
         private void SetSettings()
         {
-            // Difficulty
-            Game.PlayerStats.TimesCastleBeaten = (int) m_data.Difficulty;
+            Game.PlayerStats.TimesCastleBeaten = m_data.Difficulty;
         }
 
         /// <summary>
