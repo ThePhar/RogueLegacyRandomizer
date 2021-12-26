@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - TextBoxOptionsObj.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -40,7 +40,12 @@ namespace RogueCastle
 
         public string GetValue
         {
-            get { return m_currentValue; }
+            get
+            {
+                return m_currentValue != string.Empty
+                    ? m_currentValue
+                    : m_placeholder;
+            }
         }
 
         public override bool IsActive
