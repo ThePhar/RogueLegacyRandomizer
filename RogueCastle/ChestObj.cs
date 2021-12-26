@@ -98,11 +98,14 @@ namespace RogueCastle
             if (IsEmpty)
                 return;
 
-            // Unlock achievement!
-            if (ChestType == TypeDefinitions.ChestType.Gold)
-                GameUtil.UnlockAchievement("LOVE_OF_GOLD");
+            // GiveNetworkItem(itemDropManager, player);
+            GiveTraitIncrease(itemDropManager, player, new []
+            {
+                ItemDropType.StatDefense,
+                ItemDropType.StatStrength,
+                ItemDropType.StatMaxHealth
+            });
 
-            GiveNetworkItem(itemDropManager, player);
             // if (ForcedItemType == 0)
             // {
             //     var num = CDGMath.RandomInt(1, 100);
@@ -330,6 +333,62 @@ namespace RogueCastle
             }
             player.AttachedLevel.UpdatePlayerHUD();
             (player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list);
+            player.RunGetItemAnimation();
+        }
+
+        public void GiveTraitIncrease(ItemDropManager manager, PlayerObj player, int[] statDropTypes)
+        {
+            var stats = new List<int>();
+            foreach (var stat in statDropTypes)
+            {
+                switch (stat)
+                {
+                    case ItemDropType.StatStrength:
+                        SkillSystem.LevelUpTrait(SkillSystem.GetSkill(SkillType.AttackUp), false);
+                        break;
+                    case ItemDropType.StatMagic:
+                        SkillSystem.LevelUpTrait(SkillSystem.GetSkill(SkillType.MagicDamageUp), false);
+                        break;
+                    case ItemDropType.StatDefense:
+                        SkillSystem.LevelUpTrait(SkillSystem.GetSkill(SkillType.ArmorUp), false);
+                        break;
+                    case ItemDropType.StatMaxHealth:
+                        var maxHp = Game.ScreenManager.Player.MaxHealth;
+                        SkillSystem.LevelUpTrait(SkillSystem.GetSkill(SkillType.HealthUp), false);
+                        Game.ScreenManager.Player.CurrentHealth += Game.ScreenManager.Player.MaxHealth - maxHp;
+                        break;
+                    case ItemDropType.StatMaxMana:
+                        var maxMp = Game.ScreenManager.Player.MaxMana;
+                        SkillSystem.LevelUpTrait(SkillSystem.GetSkill(SkillType.ManaUp), false);
+                        Game.ScreenManager.Player.CurrentMana += Game.ScreenManager.Player.MaxMana - maxMp;
+                        break;
+                    case ItemDropType.StatWeight:
+                        SkillSystem.LevelUpTrait(SkillSystem.GetSkill(SkillType.EquipUp), false);
+                        break;
+                }
+
+                stats.Add(stat);
+            }
+
+            var skillIncreaseData = new List<object>
+            {
+                new Vector2(X, Y - Height / 2f)
+            };
+
+            if (statDropTypes.Length > 1)
+            {
+                skillIncreaseData.Add(GetItemType.TripSkillDrop);
+                skillIncreaseData.Add(new Vector2(stats[0], 0f));
+                skillIncreaseData.Add(new Vector2(stats[1], stats[2]));
+            }
+            else
+            {
+                skillIncreaseData.Add(GetItemType.SkillDrop);
+                skillIncreaseData.Add(new Vector2(stats[0], 0f));
+            }
+
+            player.AttachedLevel.UpdatePlayerHUD();
+            (player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, skillIncreaseData);
             player.RunGetItemAnimation();
         }
 

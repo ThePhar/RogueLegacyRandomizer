@@ -128,6 +128,7 @@ namespace RogueCastle
 
             switch (m_itemType)
             {
+                case GetItemType.TripSkillDrop:
                 case GetItemType.TripStatDrop:
                     m_tripStatData = (Vector2) objList[3];
                     break;
@@ -244,6 +245,30 @@ namespace RogueCastle
                     m_itemFoundText.Text = m_item_sent;
                     m_itemFoundPlayerText.Text = string.Format("You found {0}'s", m_player_sent);
                     m_itemFoundText.TextureColor = Color.Yellow;
+                    break;
+                case GetItemType.SkillDrop:
+                case GetItemType.TripSkillDrop:
+                    m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
+                    m_itemFoundText.Text = GetSkillText((int) m_itemInfo.X);
+                    m_itemSprite.AnimationDelay = 0.05f;
+                    m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                    if (m_itemType == GetItemType.TripSkillDrop)
+                    {
+                        m_tripStat1FoundText.Visible = true;
+                        m_tripStat2FoundText.Visible = true;
+                        m_tripStat1.ChangeSprite(GetStatSpriteName((int) m_tripStatData.X));
+                        m_tripStat2.ChangeSprite(GetStatSpriteName((int) m_tripStatData.Y));
+                        m_tripStat1.Visible = true;
+                        m_tripStat2.Visible = true;
+                        m_tripStat1.AnimationDelay = 0.05f;
+                        m_tripStat2.AnimationDelay = 0.05f;
+                        Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", true);
+                        Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", true);
+                        m_tripStat1FoundText.Text = GetSkillText((int) m_tripStatData.X);
+                        m_tripStat2FoundText.Text = GetSkillText((int) m_tripStatData.Y);
+                        m_itemFoundText.Y += 50f;
+                        m_tripStat1FoundText.Y = m_itemFoundText.Y + 50f;
+                    }
                     break;
             }
             m_itemSprite.PlayAnimation();
@@ -444,18 +469,39 @@ namespace RogueCastle
         {
             switch (type)
             {
-                case 4:
+                case ItemDropType.StatStrength:
                     return "Strength Increased: +" + 1;
-                case 5:
+                case ItemDropType.StatMagic:
                     return "Magic Damage Increased: +" + 1;
-                case 6:
+                case ItemDropType.StatDefense:
                     return "Armor Increased: +" + 2;
-                case 7:
+                case ItemDropType.StatMaxHealth:
                     return "HP Increased: +" + 5;
-                case 8:
+                case ItemDropType.StatMaxMana:
                     return "MP Increased: +" + 5;
-                case 9:
+                case ItemDropType.StatWeight:
                     return "Max Weight Load Increased: +" + 5;
+                default:
+                    return "";
+            }
+        }
+
+        private string GetSkillText(int type)
+        {
+            switch (type)
+            {
+                case ItemDropType.StatStrength:
+                    return "Attack Up +1 Level";
+                case ItemDropType.StatMagic:
+                    return "Magic Damage Up +1 Level";
+                case ItemDropType.StatDefense:
+                    return "Armor Up +1 Level";
+                case ItemDropType.StatMaxHealth:
+                    return "Health Up +1 Level";
+                case ItemDropType.StatMaxMana:
+                    return "Mana Up +1 Level";
+                case ItemDropType.StatWeight:
+                    return "Equip Up +1 Level";
                 default:
                     return "";
             }

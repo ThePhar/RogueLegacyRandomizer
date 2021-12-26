@@ -379,23 +379,6 @@ namespace RogueCastle
             {
                 Game.PlayerStats.Gold += (int) trait.ModifierAmount;
             }
-            var flag = true;
-            foreach (var current in SkillArray)
-            {
-                if (current.CurrentLevel < 1)
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag)
-            {
-                GameUtil.UnlockAchievement("FEAR_OF_DECISIONS");
-            }
-            if (Game.PlayerStats.CurrentLevel >= 50)
-            {
-                GameUtil.UnlockAchievement("FEAR_OF_WEALTH");
-            }
         }
 
         public static void ResetAllTraits()
