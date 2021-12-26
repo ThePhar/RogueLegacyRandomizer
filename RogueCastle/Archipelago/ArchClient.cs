@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - ArchClient.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -223,14 +223,7 @@ namespace RogueCastle.Archipelago
                 m_deathLinkService.OnDeathLinkReceived += DeathLinkHandler;
             }
 
-            // Fill our LocationCache then start.
-            var fairyChests = Enumerable
-                .Range(LocationsTable.FairyChestLocationStartIndex, LocationsTable.FairyChestTotalLocations);
-            // var regularChests = Enumerable
-            //     .Range(LocationsTable.ChestLocationStartIndex, LocationsTable.ChestLocationTotalLocations);
-            // var allChests = fairyChests.Concat(regularChests).ToArray();
-
-            m_session.Locations.ScoutLocationsAsync(PrepareLocationsAndStart, fairyChests.ToArray());
+            // m_session.Locations.ScoutLocationsAsync(PrepareLocationsAndStart, fairyChests.ToArray());
 
             // Load the game.
             StartGame();
