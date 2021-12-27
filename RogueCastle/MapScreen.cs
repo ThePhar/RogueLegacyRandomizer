@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - MapScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -62,7 +62,7 @@ namespace RogueCastle
             }
         }
 
-        private void FindRoomTitlePos(List<RoomObj> roomList, GameTypes.LevelType levelType, out Vector2 pos)
+        private void FindRoomTitlePos(List<RoomObj> roomList, LevelType levelType, out Vector2 pos)
         {
             var num = 3.40282347E+38f;
             var num2 = -3.40282347E+38f;
@@ -72,7 +72,7 @@ namespace RogueCastle
             {
                 if (current.Name != "Boss" &&
                     (current.LevelType == levelType ||
-                     (current.LevelType == GameTypes.LevelType.Castle &&
+                     (current.LevelType == LevelType.Castle &&
                       (current.Name == "Start" || current.Name == "CastleEntrance"))))
                 {
                     if (current.X < num)

@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - CastleEntranceRoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -109,34 +109,34 @@ namespace RogueCastle
             base.Initialize();
         }
 
-        public void RevealSymbol(GameTypes.LevelType levelType, bool tween)
+        public void RevealSymbol(LevelType levelType, bool tween)
         {
             var flag = false;
             int index;
             switch (levelType)
             {
-                case GameTypes.LevelType.Castle:
+                case LevelType.Castle:
                     index = 1;
                     if (Game.PlayerStats.ChallengeEyeballBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.Garden:
+                case LevelType.Garden:
                     index = 3;
                     if (Game.PlayerStats.ChallengeSkullBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.Dungeon:
+                case LevelType.Dungeon:
                     index = 4;
                     if (Game.PlayerStats.ChallengeBlobBeaten)
                     {
                         flag = true;
                     }
                     break;
-                case GameTypes.LevelType.Tower:
+                case LevelType.Tower:
                     index = 2;
                     if (Game.PlayerStats.ChallengeFireballBeaten)
                     {
@@ -201,19 +201,19 @@ namespace RogueCastle
             }
             if (Game.PlayerStats.EyeballBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.Castle, false);
+                RevealSymbol(LevelType.Castle, false);
             }
             if (Game.PlayerStats.FairyBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.Garden, false);
+                RevealSymbol(LevelType.Garden, false);
             }
             if (Game.PlayerStats.BlobBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.Dungeon, false);
+                RevealSymbol(LevelType.Dungeon, false);
             }
             if (Game.PlayerStats.FireballBossBeaten)
             {
-                RevealSymbol(GameTypes.LevelType.Tower, false);
+                RevealSymbol(LevelType.Tower, false);
             }
             if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
                 Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
@@ -247,7 +247,7 @@ namespace RogueCastle
             m_bossDoorOpening = true;
             m_bossDoor.Locked = false;
             Player.AttachedLevel.UpdateCamera();
-            RevealSymbol(GameTypes.LevelType.None, true);
+            RevealSymbol(LevelType.None, true);
             Player.CurrentSpeed = 0f;
             Player.LockControls();
             Player.AttachedLevel.CameraLockedToPlayer = false;

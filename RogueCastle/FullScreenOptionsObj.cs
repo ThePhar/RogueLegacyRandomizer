@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - FullScreenOptionsObj.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -42,7 +43,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            if ((m_parentScreen.ScreenManager.Game as Game).graphics.IsFullScreen)
+            if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
             {
                 m_toggleText.Text = "Yes";
             }
@@ -71,7 +72,7 @@ namespace RogueCastle
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 SoundManager.PlaySound("Option_Menu_Select");
-                var graphics = (m_parentScreen.ScreenManager.Game as Game).graphics;
+                var graphics = (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager;
                 if ((m_toggleText.Text == "No" && graphics.IsFullScreen) ||
                     (m_toggleText.Text == "Yes" && !graphics.IsFullScreen))
                 {
@@ -81,7 +82,7 @@ namespace RogueCastle
             }
             if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
             {
-                if ((m_parentScreen.ScreenManager.Game as Game).graphics.IsFullScreen)
+                if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
                 {
                     m_toggleText.Text = "Yes";
                 }

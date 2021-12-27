@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -76,7 +76,7 @@ namespace RogueCastle
         protected int XPBonusPerLevel;
 
         public EnemyObj(string spriteName, PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            ProceduralLevelScreen levelToAttachTo, EnemyDifficulty difficulty)
             : base(spriteName, physicsManager, levelToAttachTo)
         {
             DisableCollisionBoxRotations = true;
@@ -121,7 +121,7 @@ namespace RogueCastle
             get { return m_invincibilityTime; }
         }
 
-        public GameTypes.EnemyDifficulty Difficulty { get; internal set; }
+        public EnemyDifficulty Difficulty { get; internal set; }
         public bool IsProcedural { get; set; }
         public bool PlayAnimationOnRestart { get; set; }
         public bool DropsItem { get; set; }
@@ -238,7 +238,7 @@ namespace RogueCastle
             m_walkingLB.AddLogicSet(logicSet, logicSet2, logicSet3);
         }
 
-        public void SetDifficulty(GameTypes.EnemyDifficulty difficulty, bool reinitialize)
+        public void SetDifficulty(EnemyDifficulty difficulty, bool reinitialize)
         {
             Difficulty = difficulty;
             if (reinitialize)
@@ -408,16 +408,16 @@ namespace RogueCastle
                     {
                         switch (Difficulty)
                         {
-                            case GameTypes.EnemyDifficulty.Basic:
+                            case EnemyDifficulty.Basic:
                                 RunBasicLogic();
                                 break;
-                            case GameTypes.EnemyDifficulty.Advanced:
+                            case EnemyDifficulty.Advanced:
                                 RunAdvancedLogic();
                                 break;
-                            case GameTypes.EnemyDifficulty.Expert:
+                            case EnemyDifficulty.Expert:
                                 RunExpertLogic();
                                 break;
-                            case GameTypes.EnemyDifficulty.MiniBoss:
+                            case EnemyDifficulty.MiniBoss:
                                 RunMinibossLogic();
                                 break;
                         }
@@ -1046,16 +1046,16 @@ namespace RogueCastle
                 var value = Game.PlayerStats.EnemiesKilledList[Type];
                 switch (Difficulty)
                 {
-                    case GameTypes.EnemyDifficulty.Basic:
+                    case EnemyDifficulty.Basic:
                         value.X += 1f;
                         break;
-                    case GameTypes.EnemyDifficulty.Advanced:
+                    case EnemyDifficulty.Advanced:
                         value.Y += 1f;
                         break;
-                    case GameTypes.EnemyDifficulty.Expert:
+                    case EnemyDifficulty.Expert:
                         value.Z += 1f;
                         break;
-                    case GameTypes.EnemyDifficulty.MiniBoss:
+                    case EnemyDifficulty.MiniBoss:
                         value.W += 1f;
                         break;
                 }

@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Skeleton.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -27,7 +27,7 @@ namespace RogueCastle
         private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
 
         public EnemyObj_Skeleton(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemySkeletonIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 15;
@@ -62,9 +62,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Skeleton_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Mr Bones";
                     MaxHealth = 36;
                     Damage = 26;
@@ -91,7 +91,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Skeleton_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "McRib";
                     MaxHealth = 68;
                     Damage = 28;
@@ -118,7 +118,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Skeleton_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Berith & Halphas";
                     MaxHealth = 255;
                     Damage = 32;
@@ -444,7 +444,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && m_levelScreen.CurrentRoom.ActiveEnemies == 1)
+            if (Difficulty == EnemyDifficulty.MiniBoss && m_levelScreen.CurrentRoom.ActiveEnemies == 1)
             {
                 TintablePart.TextureColor = new Color(185, 0, 15);
             }

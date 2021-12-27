@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Platform.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -24,7 +24,7 @@ namespace RogueCastle
         private float RetractDelay;
 
         public EnemyObj_Platform(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyPlatform_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             CollisionTypeTag = 1;
@@ -61,10 +61,10 @@ namespace RogueCastle
             Name = "Platform";
             /*switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.BASIC:
-                case GameTypes.EnemyDifficulty.ADVANCED:
-                case GameTypes.EnemyDifficulty.EXPERT:
-                case GameTypes.EnemyDifficulty.MINIBOSS:*/
+                case EnemyDifficulty.BASIC:
+                case EnemyDifficulty.ADVANCED:
+                case EnemyDifficulty.EXPERT:
+                case EnemyDifficulty.MINIBOSS:*/
             //IL_DE:
             if (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f)
             {

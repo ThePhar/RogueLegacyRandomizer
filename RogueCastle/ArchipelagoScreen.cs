@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ArchipelagoScreen.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Archipelago;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -124,7 +125,13 @@ namespace RogueCastle
             {
                 // Parse port and connect.
                 var port = int.Parse(m_port.GetValue);
-                Program.Game.ArchClient.Connect(m_hostname.GetValue, port, m_slot.GetValue, m_password.GetValue == "" ? null : m_password.GetValue);
+                Program.Game.ArchipelagoManager.Connect(new ConnectionInfo
+                {
+                    Hostname = m_hostname.GetValue,
+                    Port = port,
+                    Name = m_slot.GetValue,
+                    Password = m_password.GetValue,
+                });
             }
             catch (FormatException ex)
             {

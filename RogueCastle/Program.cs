@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - Program.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -31,43 +31,43 @@ namespace RogueCastle
             // Start our console window.
             AllocConsole();
 
-            if (LevelEV.CREATE_RETAIL_VERSION)
+            if (LevelENV.CreateRetailVersion)
             {
-                LevelEV.SHOW_ENEMY_RADII = false;
-                LevelEV.ENABLE_PLAYER_DEBUG = false;
-                LevelEV.UNLOCK_ALL_ABILITIES = false;
-                LevelEV.TESTROOM_LEVELTYPE = GameTypes.LevelType.Castle;
-                LevelEV.TESTROOM_REVERSE = false;
-                LevelEV.RUN_TESTROOM = false;
-                LevelEV.SHOW_DEBUG_TEXT = false;
-                LevelEV.LOAD_TITLE_SCREEN = false;
-                LevelEV.LOAD_SPLASH_SCREEN = true;
-                LevelEV.SHOW_SAVELOAD_DEBUG_TEXT = true;
-                LevelEV.DELETE_SAVEFILE = false;
-                LevelEV.CLOSE_TESTROOM_DOORS = false;
-                LevelEV.RUN_TUTORIAL = false;
-                LevelEV.RUN_DEMO_VERSION = false;
-                LevelEV.DISABLE_SAVING = false;
-                LevelEV.RUN_CRASH_LOGS = true;
-                LevelEV.WEAKEN_BOSSES = false;
-                LevelEV.ENABLE_BACKUP_SAVING = true;
-                LevelEV.ENABLE_OFFSCREEN_CONTROL = false;
-                LevelEV.SHOW_FPS = false;
-                LevelEV.SAVE_FRAMES = false;
+                LevelENV.ShowEnemyRadii = false;
+                LevelENV.EnablePlayerDebug = false;
+                LevelENV.UnlockAllAbilities = false;
+                LevelENV.TestRoomLevelType = LevelType.Castle;
+                LevelENV.TestRoomReverse = false;
+                LevelENV.RunTestRoom = false;
+                LevelENV.ShowDebugText = false;
+                LevelENV.LoadTitleScreen = false;
+                LevelENV.LoadSplashScreen = true;
+                LevelENV.ShowSaveLoadDebugText = true;
+                LevelENV.DeleteSaveFile = false;
+                LevelENV.CloseTestRoomDoors = false;
+                LevelENV.RunTutorial = false;
+                LevelENV.RunDemoVersion = false;
+                LevelENV.DisableSaving = false;
+                LevelENV.RunCrashLogs = true;
+                LevelENV.WeakenBosses = false;
+                LevelENV.EnableBackupSaving = true;
+                LevelENV.EnableOffscreenControl = false;
+                LevelENV.ShowFps = false;
+                LevelENV.SaveFrames = false;
             }
 
-            if (args.Length == 1 && !LevelEV.CREATE_RETAIL_VERSION)
+            if (args.Length == 1 && !LevelENV.CreateRetailVersion)
             {
                 using (var game = new Game(args[0]))
                 {
                     Game = game;
-                    LevelEV.RUN_TESTROOM = true;
-                    LevelEV.DISABLE_SAVING = true;
+                    LevelENV.RunTestRoom = true;
+                    LevelENV.DisableSaving = true;
                     game.Run();
                     return;
                 }
             }
-            if (LevelEV.RUN_CRASH_LOGS)
+            if (LevelENV.RunCrashLogs)
             {
                 try
                 {

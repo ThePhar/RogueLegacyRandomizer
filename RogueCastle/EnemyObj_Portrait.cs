@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Portrait.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -25,7 +25,7 @@ namespace RogueCastle
         private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
 
         public EnemyObj_Portrait(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyPortrait_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 32;
@@ -68,9 +68,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Portrait_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Doomtrait";
                     MaxHealth = 43;
                     Damage = 25;
@@ -97,7 +97,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Portrait_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Doomscape";
                     MaxHealth = 61;
                     Damage = 27;
@@ -124,7 +124,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Portrait_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Sallos";
                     MaxHealth = 215;
                     Damage = 28;
@@ -190,7 +190,7 @@ namespace RogueCastle
                 (int) (48f*ScaleY), 2, this));
             CollisionBoxes.Add(new CollisionBox((int) (-15f*ScaleX), (int) (-21f*ScaleY), (int) (31f*ScaleX),
                 (int) (44f*ScaleY), 1, this));
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 (GetChildAt(0) as SpriteObj).ChangeSprite("GiantPortrait_Sprite");
                 Scale = new Vector2(2f, 2f);
@@ -413,7 +413,7 @@ namespace RogueCastle
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (!Chasing)
             {
-                if (Difficulty != GameTypes.EnemyDifficulty.MiniBoss)
+                if (Difficulty != EnemyDifficulty.MiniBoss)
                 {
                     if (Shake)
                     {
@@ -427,7 +427,7 @@ namespace RogueCastle
             }
             else
             {
-                if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                if (Difficulty == EnemyDifficulty.MiniBoss)
                 {
                     Rotation += 420f*num;
                 }
@@ -488,7 +488,7 @@ namespace RogueCastle
             SoundManager.PlaySound("FinalBoss_St2_BlockLaugh");
             var spriteObj = GetChildAt(0) as SpriteObj;
             spriteObj.ChangeSprite("EnemyPortrait" + (int) Difficulty + "_Sprite");
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 GetChildAt(1).Visible = false;
             }

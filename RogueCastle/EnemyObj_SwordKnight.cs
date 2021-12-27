@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_SwordKnight.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -28,7 +28,7 @@ namespace RogueCastle
         private float TripleAttackSpeed = 500f;
 
         public EnemyObj_SwordKnight(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            ProceduralLevelScreen levelToAttachTo, EnemyDifficulty difficulty)
             : base("EnemySwordKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 16;
@@ -66,9 +66,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.SwordKnight_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     SlashDelay = 0.25f;
                     Name = "Gray Baron";
                     MaxHealth = 58;
@@ -96,7 +96,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.SwordKnight_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     SlashDelay = 0.25f;
                     TripleAttackSpeed = 500f;
                     Name = "Graydiator";
@@ -125,7 +125,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.SwordKnight_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     ForceDraw = true;
                     SlashDelay = 1.05f;
                     Name = "Graypion";
@@ -276,14 +276,14 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalCooldownLB);
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     SetCooldownLogicBlock(m_generalCooldownLB, 14, 11, 75);
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Expert:
                     SetCooldownLogicBlock(m_generalCooldownLB, 40, 30, 30);
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                 {
                     var arg_9C4_1 = m_generalCooldownLB;
                     var array = new int[3];

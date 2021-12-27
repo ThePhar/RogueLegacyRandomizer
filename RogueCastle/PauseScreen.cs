@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - PauseScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -119,7 +119,7 @@ namespace RogueCastle
                 {
                     var pauseInfoObj2 = m_infoObjList[j];
                     pauseInfoObj2.Visible = true;
-                    if (!LevelEV.CREATE_RETAIL_VERSION)
+                    if (!LevelENV.CreateRetailVersion)
                     {
                         pauseInfoObj2.AddItem("Level: ", enemyObj.Level.ToString());
                     }
@@ -145,7 +145,7 @@ namespace RogueCastle
                 {
                     var pauseInfoObj3 = m_infoObjList[k + 1 + count];
                     pauseInfoObj3.Visible = true;
-                    if (!LevelEV.CREATE_RETAIL_VERSION)
+                    if (!LevelENV.CreateRetailVersion)
                     {
                         pauseInfoObj3.AddItem("Level: ", enemyObj2.Level.ToString());
                     }

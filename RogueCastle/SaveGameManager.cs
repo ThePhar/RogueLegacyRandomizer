@@ -1,13 +1,13 @@
-//
+// 
 // RogueLegacyArchipelago - SaveGameManager.cs
-// Last Modified 2021-12-24
-//
+// Last Modified 2021-12-27
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace RogueCastle
 
         public void Initialize()
         {
-            if (LevelEV.RUN_DEMO_VERSION)
+            if (LevelENV.RunDemoVersion)
             {
                 m_fileNamePlayer = "RogueLegacyArchipelagoDemoPlayer.rcdat";
                 m_fileNameUpgrades = "RogueLegacyArchipelagoDemoBP.rcdat";
@@ -125,7 +125,7 @@ namespace RogueCastle
 
         public void SaveFiles(params SaveType[] saveList)
         {
-            if (!LevelEV.DISABLE_SAVING)
+            if (!LevelENV.DisableSaving)
             {
                 GetStorageContainer();
                 try
@@ -164,7 +164,7 @@ namespace RogueCastle
 
         public void SaveBackupFiles(params SaveType[] saveList)
         {
-            if (!LevelEV.DISABLE_SAVING)
+            if (!LevelENV.DisableSaving)
             {
                 GetStorageContainer();
                 for (var i = 0; i < saveList.Length; i++)
@@ -189,7 +189,7 @@ namespace RogueCastle
 
         public void LoadFiles(ProceduralLevelScreen level, params SaveType[] loadList)
         {
-            if (LevelEV.ENABLE_BACKUP_SAVING)
+            if (LevelENV.EnableBackupSaving)
             {
                 GetStorageContainer();
                 var saveType = SaveType.None;
@@ -197,7 +197,7 @@ namespace RogueCastle
                 {
                     try
                     {
-                        if (!LevelEV.DISABLE_SAVING)
+                        if (!LevelENV.DisableSaving)
                         {
                             for (var i = 0; i < loadList.Length; i++)
                             {
@@ -242,7 +242,7 @@ namespace RogueCastle
                 }
             }
 
-            if (!LevelEV.DISABLE_SAVING)
+            if (!LevelENV.DisableSaving)
             {
                 GetStorageContainer();
                 for (var j = 0; j < loadList.Length; j++)
@@ -624,7 +624,7 @@ namespace RogueCastle
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.X);
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.Y);
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.Z);
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nSaving Player Stats");
                         Console.WriteLine("Gold: " + Game.PlayerStats.Gold);
@@ -698,7 +698,7 @@ namespace RogueCastle
                         binaryWriter.Write((byte) current.Z);
                         binaryWriter.Write((byte) current.W);
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving Enemy List Data");
                         var num = 0;
@@ -723,7 +723,7 @@ namespace RogueCastle
                         binaryWriter.Write((int) current3.X);
                         binaryWriter.Write((int) current3.Y);
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving num enemies killed");
                         Console.WriteLine("Number of enemies killed in run: " + count);
@@ -745,7 +745,7 @@ namespace RogueCastle
                     binaryWriter.Write(Game.PlayerStats.ChallengeFireballBeaten);
                     binaryWriter.Write(Game.PlayerStats.ChallengeBlobBeaten);
                     binaryWriter.Write(Game.PlayerStats.ChallengeLastBossBeaten);
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Eyeball Challenge Unlocked: " + Game.PlayerStats.ChallengeEyeballUnlocked);
                         Console.WriteLine("Skull Challenge Unlocked: " + Game.PlayerStats.ChallengeSkullUnlocked);
@@ -785,12 +785,12 @@ namespace RogueCastle
             {
                 using (var binaryWriter = new BinaryWriter(stream))
                 {
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nSaving Equipment States");
                     }
                     var getBlueprintArray = Game.PlayerStats.GetBlueprintArray;
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Standard Blueprints");
                     }
@@ -801,18 +801,18 @@ namespace RogueCastle
                         {
                             var b = array[i];
                             binaryWriter.Write(b);
-                            if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                            if (LevelENV.ShowSaveLoadDebugText)
                             {
                                 Console.Write(" " + b);
                             }
                         }
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
                     var getRuneArray = Game.PlayerStats.GetRuneArray;
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nRune Blueprints");
                     }
@@ -823,18 +823,18 @@ namespace RogueCastle
                         {
                             var b2 = array2[j];
                             binaryWriter.Write(b2);
-                            if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                            if (LevelENV.ShowSaveLoadDebugText)
                             {
                                 Console.Write(" " + b2);
                             }
                         }
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
                     var getEquippedArray = Game.PlayerStats.GetEquippedArray;
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nEquipped Standard Item");
                     }
@@ -843,13 +843,13 @@ namespace RogueCastle
                     {
                         var b3 = array3[k];
                         binaryWriter.Write(b3);
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + b3);
                         }
                     }
                     var getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nEquipped Abilities");
                     }
@@ -858,13 +858,13 @@ namespace RogueCastle
                     {
                         var b4 = array4[l];
                         binaryWriter.Write(b4);
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + b4);
                         }
                     }
                     var skillArray = SkillSystem.GetSkillArray();
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nskills");
                     }
@@ -873,7 +873,7 @@ namespace RogueCastle
                     {
                         var skillObj = array5[m];
                         binaryWriter.Write(skillObj.CurrentLevel);
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + skillObj.CurrentLevel);
                         }
@@ -904,7 +904,7 @@ namespace RogueCastle
             {
                 using (var binaryWriter = new BinaryWriter(stream))
                 {
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nSaving Map");
                     }
@@ -912,7 +912,7 @@ namespace RogueCastle
                     var levelScreen = Game.ScreenManager.GetLevelScreen();
                     if (levelScreen != null)
                     {
-                        if (LevelEV.RUN_DEMO_VERSION)
+                        if (LevelENV.RunDemoVersion)
                         {
                             binaryWriter.Write(levelScreen.RoomList.Count - 4);
                         }
@@ -920,7 +920,7 @@ namespace RogueCastle
                         {
                             binaryWriter.Write(levelScreen.RoomList.Count - 12);
                         }
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.WriteLine("Map size: " + (levelScreen.RoomList.Count - 12));
                         }
@@ -938,7 +938,7 @@ namespace RogueCastle
                                 binaryWriter.Write(current.TextureColor.R);
                                 binaryWriter.Write(current.TextureColor.G);
                                 binaryWriter.Write(current.TextureColor.B);
-                                if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                                if (LevelENV.ShowSaveLoadDebugText)
                                 {
                                     Console.Write(string.Concat("I:", current.PoolIndex, " T:", (int) current.LevelType,
                                         ", "));
@@ -947,7 +947,7 @@ namespace RogueCastle
                                 if (num > 5)
                                 {
                                     num = 0;
-                                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                                    if (LevelENV.ShowSaveLoadDebugText)
                                     {
                                         Console.Write("\n");
                                     }
@@ -1201,7 +1201,7 @@ namespace RogueCastle
                     {
                         binaryWriter.Write(num);
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving Current Branch Lineage Data");
                         for (var j = 0; j < num; j++)
@@ -1244,7 +1244,7 @@ namespace RogueCastle
                     {
                         binaryWriter.Write(num2);
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving Family Tree Data");
                         Console.WriteLine("Number of Branches: " + num2);
@@ -1383,7 +1383,7 @@ namespace RogueCastle
                     var b2 = binaryReader.ReadByte();
                     var b3 = binaryReader.ReadByte();
                     Game.PlayerStats.WizardSpellList = new Vector3(b, b2, b3);
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Player Stats");
                         Console.WriteLine("Gold: " + Game.PlayerStats.Gold);
@@ -1456,7 +1456,7 @@ namespace RogueCastle
                             binaryReader.ReadByte(), binaryReader.ReadByte());
                         Game.PlayerStats.EnemiesKilledList[i] = value;
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Loading Enemy List Data");
                         var num = 0;
@@ -1479,7 +1479,7 @@ namespace RogueCastle
                         var item = new Vector2(binaryReader.ReadInt32(), binaryReader.ReadInt32());
                         Game.PlayerStats.EnemiesKilledInRun.Add(item);
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Loading num enemies killed");
                         Console.WriteLine("Number of enemies killed in run: " + num2);
@@ -1503,7 +1503,7 @@ namespace RogueCastle
                         Game.PlayerStats.ChallengeFireballBeaten = binaryReader.ReadBoolean();
                         Game.PlayerStats.ChallengeBlobBeaten = binaryReader.ReadBoolean();
                         Game.PlayerStats.ChallengeLastBossBeaten = binaryReader.ReadBoolean();
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.WriteLine("Eyeball Challenge Unlocked: " + Game.PlayerStats.ChallengeEyeballUnlocked);
                             Console.WriteLine("Skull Challenge Unlocked: " + Game.PlayerStats.ChallengeSkullUnlocked);
@@ -1540,7 +1540,7 @@ namespace RogueCastle
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Equipment States");
                         Console.WriteLine("\nLoading Standard Blueprints");
@@ -1551,17 +1551,17 @@ namespace RogueCastle
                         for (var j = 0; j < 15; j++)
                         {
                             getBlueprintArray[i][j] = binaryReader.ReadByte();
-                            if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                            if (LevelENV.ShowSaveLoadDebugText)
                             {
                                 Console.Write(" " + getBlueprintArray[i][j]);
                             }
                         }
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Ability Blueprints");
                     }
@@ -1571,17 +1571,17 @@ namespace RogueCastle
                         for (var l = 0; l < 11; l++)
                         {
                             getRuneArray[k][l] = binaryReader.ReadByte();
-                            if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                            if (LevelENV.ShowSaveLoadDebugText)
                             {
                                 Console.Write(" " + getRuneArray[k][l]);
                             }
                         }
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Equipped Standard Items");
                     }
@@ -1589,12 +1589,12 @@ namespace RogueCastle
                     for (var m = 0; m < 5; m++)
                     {
                         getEquippedArray[m] = binaryReader.ReadSByte();
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + getEquippedArray[m]);
                         }
                     }
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Equipped Abilities");
                     }
@@ -1602,13 +1602,13 @@ namespace RogueCastle
                     for (var n = 0; n < 5; n++)
                     {
                         getEquippedRuneArray[n] = binaryReader.ReadSByte();
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + getEquippedRuneArray[n]);
                         }
                     }
                     var skillArray = SkillSystem.GetSkillArray();
-                    if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                    if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Traits");
                     }
@@ -1621,7 +1621,7 @@ namespace RogueCastle
                         {
                             SkillSystem.LevelUpTrait(skillArray[num], false);
                         }
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + skillArray[num].CurrentLevel);
                         }
@@ -1631,7 +1631,7 @@ namespace RogueCastle
                 }
                 stream.Close();
                 if (Game.PlayerStats.GetNumberOfEquippedRunes(0) > 0 &&
-                    SkillSystem.GetSkill(SkillType.Enchanter).CurrentLevel < 1 && LevelEV.CREATE_RETAIL_VERSION)
+                    SkillSystem.GetSkill(SkillType.Enchanter).CurrentLevel < 1 && LevelENV.CreateRetailVersion)
                 {
                     throw new Exception("Corrupted Save file");
                 }
@@ -1645,7 +1645,7 @@ namespace RogueCastle
                         break;
                     }
                 }
-                if (flag && SkillSystem.GetSkill(SkillType.Smithy).CurrentLevel < 1 && LevelEV.CREATE_RETAIL_VERSION)
+                if (flag && SkillSystem.GetSkill(SkillType.Smithy).CurrentLevel < 1 && LevelENV.CreateRetailVersion)
                 {
                     throw new Exception("Corrupted Save file");
                 }
@@ -1890,7 +1890,7 @@ namespace RogueCastle
                     if (list.Count > 0)
                     {
                         Game.PlayerStats.CurrentBranches = list;
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.WriteLine("Loading Current Branch Lineage Data");
                             var currentBranches = Game.PlayerStats.CurrentBranches;
@@ -1931,7 +1931,7 @@ namespace RogueCastle
                     if (list2.Count > 0)
                     {
                         Game.PlayerStats.FamilyTreeArray = list2;
-                        if (LevelEV.SHOW_SAVELOAD_DEBUG_TEXT)
+                        if (LevelENV.ShowSaveLoadDebugText)
                         {
                             var familyTreeArray = Game.PlayerStats.FamilyTreeArray;
                             Console.WriteLine("Loading Family Tree Data");

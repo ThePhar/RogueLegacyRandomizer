@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - JukeboxBonusRoom.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -149,8 +149,9 @@ namespace RogueCastle
                     AnimateJukebox();
                     CheckForSongRepeat();
 
-                    Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445041);
-                    Program.Game.ArchClient.CheckedLocations[4445041] = true;
+                    // TODO: FIX
+                    // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445041);
+                    // Program.Game.ArchClient.CheckedLocations[4445041] = true;
                 }
             }
             else

@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Dummy.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -18,7 +18,7 @@ namespace RogueCastle
     public class EnemyObj_Dummy : EnemyObj
     {
         public EnemyObj_Dummy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("Dummy_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 30;
@@ -46,10 +46,10 @@ namespace RogueCastle
             LockFlip = true;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
-                case GameTypes.EnemyDifficulty.Advanced:
-                case GameTypes.EnemyDifficulty.Expert:
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.Basic:
+                case EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Expert:
+                case EnemyDifficulty.MiniBoss:
                     return;
             }
         }

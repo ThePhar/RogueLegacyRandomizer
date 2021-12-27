@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_EarthWizard.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -47,7 +47,7 @@ namespace RogueCastle
         private float SpellDuration = 0.75f;
 
         public EnemyObj_EarthWizard(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            ProceduralLevelScreen levelToAttachTo, EnemyDifficulty difficulty)
             : base("EnemyWizardIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             PlayAnimation();
@@ -91,9 +91,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.EarthWizard_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     SpellDelay = 0.5f;
                     SpellDuration = 1f;
                     Name = "Gravisor";
@@ -122,7 +122,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     SpellDelay = 0.7f;
                     SpellDuration = 3.5f;
                     Name = "Terrasor";
@@ -151,7 +151,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     SpellDelay = 0.85f;
                     SpellDuration = 2f;
                     m_spellOffset = new Vector2(40f, -140f);
@@ -636,7 +636,7 @@ namespace RogueCastle
                 m_earthParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_earthParticleEffectCounter <= 0f)
                 {
-                    if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                    if (Difficulty == EnemyDifficulty.MiniBoss)
                     {
                         if (m_effectCycle == 0)
                         {
@@ -680,11 +680,11 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = MiniBossFireballSize
             };
-            if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
+            if (Difficulty == EnemyDifficulty.Advanced)
             {
                 projectileData.AngleOffset = CDGMath.RandomInt(-25, 25);
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.Expert)
+            if (Difficulty == EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
             }
@@ -716,7 +716,7 @@ namespace RogueCastle
                 CollidesWithTerrain = false,
                 Scale = MiniBossFireballSize
             };
-            if (Difficulty == GameTypes.EnemyDifficulty.Expert)
+            if (Difficulty == EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
             }

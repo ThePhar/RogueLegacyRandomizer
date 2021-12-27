@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - DiaryRoomObj.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,7 +13,6 @@ using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Archipelago;
 
 namespace RogueCastle
 {
@@ -99,11 +98,12 @@ namespace RogueCastle
                         rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
                         rCScreenManager.DisplayScreen(13, true);
 
-                        var location = string.Format("Diary {0}", m_diaryIndex + 1);
-                        var code = Locations.IdTable[location];
-
-                        Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(code);
-                        Program.Game.ArchClient.CheckedLocations[code] = true;
+                        // TODO: FIX
+                        // var location = string.Format("Diary {0}", m_diaryIndex + 1);
+                        // var code = Locations.IdTable[location];
+                        //
+                        // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(code);
+                        // Program.Game.ArchClient.CheckedLocations[code] = true;
 
                         var expr_1DB = Game.PlayerStats;
                         expr_1DB.DiaryEntry += 1;

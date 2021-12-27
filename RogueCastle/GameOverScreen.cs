@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GameOverScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -290,7 +290,7 @@ namespace RogueCastle
                     current.Opacity = 0f;
                     num += 0.05f;
                     var enemyObj_Eyeball = current as EnemyObj_Eyeball;
-                    if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                    if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == EnemyDifficulty.MiniBoss)
                     {
                         enemyObj_Eyeball.ChangeToBossPupil();
                     }
@@ -321,7 +321,7 @@ namespace RogueCastle
                 var projectileObj = m_objKilledPlayer as ProjectileObj;
                 if (enemyObj != null)
                 {
-                    if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
+                    if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
                     {
                         textObj.Text = Game.PlayerStats.PlayerName + " has been slain by " + enemyObj.Name;
                     }
@@ -335,7 +335,7 @@ namespace RogueCastle
                     enemyObj = (projectileObj.Source as EnemyObj);
                     if (enemyObj != null)
                     {
-                        if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
+                        if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
                         {
                             textObj.Text = Game.PlayerStats.PlayerName + " has been slain by " + enemyObj.Name;
                         }

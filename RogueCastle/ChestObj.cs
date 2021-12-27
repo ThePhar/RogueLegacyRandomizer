@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ChestObj.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,10 +11,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Archipelago;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
@@ -127,7 +125,7 @@ namespace RogueCastle
                 }
             }
 
-            GiveNetworkItem(itemDropManager, player);
+            // GiveNetworkItem(itemDropManager, player);
             // switch (dropType)
             // {
             //     case 0:
@@ -311,90 +309,90 @@ namespace RogueCastle
             player.RunGetItemAnimation();
         }
 
-        protected void GiveNetworkItem(ItemDropManager manager, PlayerObj player, bool isFairy = false)
-        {
-            var arch = Program.Game.ArchClient;
-            var room = Game.ScreenManager.GetLevelScreen().CurrentRoom;
-            var location = "";
-
-            if (ForcedItemType == 1)
-            {
-                location = "Cheapskate Elf";
-            }
-            else if (isFairy)
-            {
-                switch (room.LevelType)
-                {
-                    case GameTypes.LevelType.None:
-                    case GameTypes.LevelType.Castle:
-                        location = string.Format("Fairy Castle Chest {0}", ++Game.PlayerStats.OpenedChests.CastleChests);
-                        break;
-                    case GameTypes.LevelType.Garden:
-                        location = string.Format("Fairy Garden Chest {0}", ++Game.PlayerStats.OpenedChests.GardenFairyChests);
-                        break;
-                    case GameTypes.LevelType.Dungeon:
-                        location = string.Format("Fairy Dungeon Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonFairyChests);
-                        break;
-                    case GameTypes.LevelType.Tower:
-                        location = string.Format("Fairy Tower Chest {0}", ++Game.PlayerStats.OpenedChests.TowerFairyChests);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            else
-            {
-                switch (room.LevelType)
-                {
-                    case GameTypes.LevelType.None:
-                    case GameTypes.LevelType.Castle:
-                        location = string.Format("Castle Chest {0}", ++Game.PlayerStats.OpenedChests.CastleChests);
-                        break;
-                    case GameTypes.LevelType.Garden:
-                        location = string.Format("Garden Chest {0}", ++Game.PlayerStats.OpenedChests.GardenChests);
-                        break;
-                    case GameTypes.LevelType.Dungeon:
-                        location = string.Format("Dungeon Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonChests);
-                        break;
-                    case GameTypes.LevelType.Tower:
-                        location = string.Format("Tower Chest {0}", ++Game.PlayerStats.OpenedChests.TowerChests);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            Console.WriteLine("LOCATION: " + location);
-
-            int code;
-            if (Locations.IdTable.TryGetValue(location, out code))
-            {
-                Console.WriteLine("LOCATION - " + location + " :: " + "CODE - " + code);
-                var name = arch.Session.Players.GetPlayerAlias(arch.LocationCache[code].Player);
-                var item = arch.Session.Items.GetItemName(arch.LocationCache[code].Item);
-
-                var networkItem = new List<object>
-                {
-                    new Vector2(X, Y - Height / 2f),
-                    GetItemType.NetworkItem,
-                    new Vector2(0, 0),
-                    name,
-                    item
-                };
-
-                Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(code);
-                Program.Game.ArchClient.CheckedLocations[code] = true;
-
-                Game.ScreenManager.DisplayScreen(12, true, networkItem);
-                player.RunGetItemAnimation();
-                return;
-            }
-
-            // We opened every location!
-            GiveGold(manager);
-        }
+        // protected void GiveNetworkItem(ItemDropManager manager, PlayerObj player, bool isFairy = false)
+        // {
+        //     var arch = Program.Game.ArchClient;
+        //     var room = Game.ScreenManager.GetLevelScreen().CurrentRoom;
+        //     var location = "";
+        //
+        //     if (ForcedItemType == 1)
+        //     {
+        //         location = "Cheapskate Elf";
+        //     }
+        //     else if (isFairy)
+        //     {
+        //         switch (room.LevelType)
+        //         {
+        //             case GameTypes.LevelType.None:
+        //             case GameTypes.LevelType.Castle:
+        //                 location = string.Format("Fairy Castle Chest {0}", ++Game.PlayerStats.OpenedChests.CastleChests);
+        //                 break;
+        //             case GameTypes.LevelType.Garden:
+        //                 location = string.Format("Fairy Garden Chest {0}", ++Game.PlayerStats.OpenedChests.GardenFairyChests);
+        //                 break;
+        //             case GameTypes.LevelType.Dungeon:
+        //                 location = string.Format("Fairy Dungeon Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonFairyChests);
+        //                 break;
+        //             case GameTypes.LevelType.Tower:
+        //                 location = string.Format("Fairy Tower Chest {0}", ++Game.PlayerStats.OpenedChests.TowerFairyChests);
+        //                 break;
+        //
+        //             default:
+        //                 throw new ArgumentOutOfRangeException();
+        //         }
+        //     }
+        //     else
+        //     {
+        //         switch (room.LevelType)
+        //         {
+        //             case GameTypes.LevelType.None:
+        //             case GameTypes.LevelType.Castle:
+        //                 location = string.Format("Castle Chest {0}", ++Game.PlayerStats.OpenedChests.CastleChests);
+        //                 break;
+        //             case GameTypes.LevelType.Garden:
+        //                 location = string.Format("Garden Chest {0}", ++Game.PlayerStats.OpenedChests.GardenChests);
+        //                 break;
+        //             case GameTypes.LevelType.Dungeon:
+        //                 location = string.Format("Dungeon Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonChests);
+        //                 break;
+        //             case GameTypes.LevelType.Tower:
+        //                 location = string.Format("Tower Chest {0}", ++Game.PlayerStats.OpenedChests.TowerChests);
+        //                 break;
+        //
+        //             default:
+        //                 throw new ArgumentOutOfRangeException();
+        //         }
+        //     }
+        //
+        //     Console.WriteLine("LOCATION: " + location);
+        //
+        //     int code;
+        //     if (Locations.IdTable.TryGetValue(location, out code))
+        //     {
+        //         Console.WriteLine("LOCATION - " + location + " :: " + "CODE - " + code);
+        //         var name = arch.Session.Players.GetPlayerAlias(arch.LocationCache[code].Player);
+        //         var item = arch.Session.Items.GetItemName(arch.LocationCache[code].Item);
+        //
+        //         var networkItem = new List<object>
+        //         {
+        //             new Vector2(X, Y - Height / 2f),
+        //             GetItemType.NetworkItem,
+        //             new Vector2(0, 0),
+        //             name,
+        //             item
+        //         };
+        //
+        //         Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(code);
+        //         Program.Game.ArchClient.CheckedLocations[code] = true;
+        //
+        //         Game.ScreenManager.DisplayScreen(12, true, networkItem);
+        //         player.RunGetItemAnimation();
+        //         return;
+        //     }
+        //
+        //     // We opened every location!
+        //     GiveGold(manager);
+        // }
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {

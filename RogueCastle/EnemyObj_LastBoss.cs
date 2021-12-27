@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_LastBoss.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -71,7 +71,7 @@ namespace RogueCastle
         private float m_teleportDuration;
 
         public EnemyObj_LastBoss(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("PlayerIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             foreach (var current in _objectList)
@@ -147,7 +147,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.LastBoss_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "The Fountain";
                     MaxHealth = 530;
                     Damage = 22;
@@ -174,7 +174,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.LastBoss_Advanced_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Johannes";
                     MaxHealth = 100;
                     Damage = 30;
@@ -201,7 +201,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.LastBoss_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Fountain of Youth";
                     MaxHealth = 100;
                     Damage = 38;
@@ -230,7 +230,7 @@ namespace RogueCastle
                     return;
             }
             AnimationDelay = 0.1f;
-            if (LevelEV.WEAKEN_BOSSES)
+            if (LevelENV.WeakenBosses)
             {
                 MaxHealth = 1;
             }
@@ -1357,7 +1357,7 @@ namespace RogueCastle
             Damage = 22;
             CurrentHealth = MaxHealth;
             Name = "The Fountain";
-            if (LevelEV.WEAKEN_BOSSES)
+            if (LevelENV.WeakenBosses)
             {
                 CurrentHealth = 1;
             }
@@ -1430,7 +1430,8 @@ namespace RogueCastle
             {
                 if (IsSecondForm && !m_bossVersionKilled)
                 {
-                    Program.Game.ArchClient.Session.Socket.SendPacket(new StatusUpdatePacket() {Status = ArchipelagoClientState.ClientGoal});
+                    // TODO: FIX!
+                    // Program.Game.ArchClient.Session.Socket.SendPacket(new StatusUpdatePacket() {Status = ArchipelagoClientState.ClientGoal});
 
                     m_bossVersionKilled = true;
                     SetPlayerData();

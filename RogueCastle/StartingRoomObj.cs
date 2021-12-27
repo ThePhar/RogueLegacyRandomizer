@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - StartingRoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -148,7 +148,7 @@ namespace RogueCastle
             m_tollCollectorIcon.OutlineWidth = 2;
             m_rainFG = new List<RaindropObj>();
             var num = 400;
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 num /= 2;
             }

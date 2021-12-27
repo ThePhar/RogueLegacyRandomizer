@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Knight.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -38,7 +38,7 @@ namespace RogueCastle
         private FrameSoundObj m_walkSound2;
 
         public EnemyObj_Knight(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemySpearKnightIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             TintablePart = _objectList[1];
@@ -76,9 +76,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Knight_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Corrupt Vanguard";
                     MaxHealth = 58;
                     Damage = 32;
@@ -105,7 +105,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Knight_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Corrupt Lord";
                     MaxHealth = 79;
                     Damage = 36;
@@ -132,7 +132,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Knight_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Botis";
                     MaxHealth = 265;
                     Damage = 40;

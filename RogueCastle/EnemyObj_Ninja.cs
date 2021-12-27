@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Ninja.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -37,7 +37,7 @@ namespace RogueCastle
         private RoomObj m_storedRoom;
 
         public EnemyObj_Ninja(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyNinjaIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 13;
@@ -79,9 +79,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Ninja_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     ChanceToTeleport = 0.5f;
                     Name = "Ninpo";
                     MaxHealth = 44;
@@ -109,7 +109,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     ChanceToTeleport = 0.65f;
                     Name = "Ninopojo";
                     MaxHealth = 62;
@@ -137,7 +137,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Master Ninja";
                     MaxHealth = 900;
                     Damage = 38;
@@ -456,7 +456,7 @@ namespace RogueCastle
                 if (m_closestCeiling != null && num > 150 && num < 700)
                 {
                     m_currentActiveLB.StopLogicBlock();
-                    if (Difficulty == GameTypes.EnemyDifficulty.Expert)
+                    if (Difficulty == EnemyDifficulty.Expert)
                     {
                         RunLogicBlock(false, m_expertTeleportAttackLB, 100);
                     }

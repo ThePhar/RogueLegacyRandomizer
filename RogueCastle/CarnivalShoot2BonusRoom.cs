@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - CarnivalShoot2BonusRoom.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -356,8 +356,9 @@ namespace RogueCastle
                 RevealChest();
                 GameUtil.UnlockAchievement("LOVE_OF_CLOWNS");
 
-                Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445039);
-                Program.Game.ArchClient.CheckedLocations[4445039] = true;
+                // TODO FIX
+                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445039);
+                // Program.Game.ArchClient.CheckedLocations[4445039] = true;
                 return;
             }
             var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;

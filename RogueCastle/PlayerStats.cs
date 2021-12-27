@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - PlayerStats.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -9,11 +9,9 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Archipelago;
 
 namespace RogueCastle
 {
@@ -76,9 +74,6 @@ namespace RogueCastle
             GetBlueprintArray[0][0] = 1;
             GetRuneArray[1][0] = 1;
             GetRuneArray[0][1] = 1;
-
-            // Other AP Stuff
-            OpenedChests = new ChestTracker();
         }
 
         public int CurrentLevel { get; set; }
@@ -157,9 +152,6 @@ namespace RogueCastle
         public bool ChallengeLastBossBeaten { get; set; }
         public List<byte[]> GetBlueprintArray { get; private set; }
         public sbyte[] GetEquippedArray { get; private set; }
-
-        // Additional Properties for AP Logic
-        public ChestTracker OpenedChests;
 
         public byte TotalBlueprintsPurchased
         {
@@ -283,7 +275,7 @@ namespace RogueCastle
         public byte GetNumberOfEquippedRunes(int equipmentAbilityType)
         {
             byte b = 0;
-            if (LevelEV.UNLOCK_ALL_ABILITIES)
+            if (LevelENV.UnlockAllAbilities)
             {
                 return 5;
             }

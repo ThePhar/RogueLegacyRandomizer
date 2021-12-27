@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ChestBonusRoomObj.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -179,8 +179,9 @@ namespace RogueCastle
                     if (!flag)
                     {
                         rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Won");
-                        Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445040);
-                        Program.Game.ArchClient.CheckedLocations[4445040] = true;
+                        // TODO: FIX
+                        // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445040);
+                        // Program.Game.ArchClient.CheckedLocations[4445040] = true;
                     }
                     else
                     {

@@ -203,7 +203,7 @@
     <Compile Include="RogueCastle\LastBossChallengeRoom.cs" />
     <Compile Include="RogueCastle\LastBossRoom.cs" />
     <Compile Include="RogueCastle\LevelBuilder2.cs" />
-    <Compile Include="RogueCastle\LevelEV.cs" />
+    <Compile Include="RogueCastle\LevelENV.cs" />
     <Compile Include="RogueCastle\LevelParser.cs" />
     <Compile Include="RogueCastle\LightArea.cs" />
     <Compile Include="RogueCastle\LightSourceObj.cs" />
@@ -260,6 +260,12 @@
     <Compile Include="RogueCastle\SpellSwapRoomObj.cs" />
     <Compile Include="RogueCastle\StartingRoomObj.cs" />
     <Compile Include="RogueCastle\SteamCloudOptionsObj.cs" />
+    <Compile Include="RogueCastle\Structs\ArmorType.cs" />
+    <Compile Include="RogueCastle\Structs\CollisionType.cs" />
+    <Compile Include="RogueCastle\Structs\DoorType.cs" />
+    <Compile Include="RogueCastle\Structs\EnemyDifficulty.cs" />
+    <Compile Include="RogueCastle\Structs\EquipmentType.cs" />
+    <Compile Include="RogueCastle\Structs\LevelType.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
     <Compile Include="RogueCastle\TextBoxOptionsObj.cs" />
@@ -280,7 +286,7 @@
     <Compile Include="RogueCastle\Structs\EquipmentBaseType.cs" />
     <Compile Include="RogueCastle\Structs\EquipmentCategoryType.cs" />
     <Compile Include="RogueCastle\Structs\EquipmentSecondaryDataType.cs" />
-    <Compile Include="RogueCastle\Structs\GameTypes.cs" />
+    <Compile Include="RogueCastle\Structs\LogicSetType.cs" />
     <Compile Include="RogueCastle\Structs\GetItemType.cs" />
     <Compile Include="RogueCastle\Structs\InputMapType.cs" />
     <Compile Include="RogueCastle\Structs\ItemDropType.cs" />

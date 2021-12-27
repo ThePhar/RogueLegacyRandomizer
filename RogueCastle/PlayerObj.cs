@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - PlayerObj.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -872,7 +872,7 @@ namespace RogueCastle
             BlockInvincibleTime = 1f;
             FlightTime = 0.6f;
             FlightSpeedMod = 0.15f;
-            if (LevelEV.ENABLE_PLAYER_DEBUG)
+            if (LevelENV.EnablePlayerDebug)
             {
                 Speed = 1500f;
             }
@@ -1098,7 +1098,7 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            if (!LevelEV.RUN_DEMO_VERSION && !LevelEV.CREATE_RETAIL_VERSION)
+            if (!LevelENV.RunDemoVersion && !LevelENV.CreateRetailVersion)
             {
                 DebugInputControls();
             }
@@ -1169,7 +1169,7 @@ namespace RogueCastle
 
         private void InputControls()
         {
-            if (!LevelEV.CREATE_RETAIL_VERSION && InputManager.JustPressed(Keys.T, null))
+            if (!LevelENV.CreateRetailVersion && InputManager.JustPressed(Keys.T, null))
             {
                 SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
                 m_levelScreen.ImpactEffectPool.DisplayFartEffect(this);
@@ -1256,7 +1256,7 @@ namespace RogueCastle
                     {
                         CurrentSpeed = 0f;
                     }
-                    if (!LevelEV.RUN_DEMO_VERSION && !LevelEV.CREATE_RETAIL_VERSION &&
+                    if (!LevelENV.RunDemoVersion && !LevelENV.CreateRetailVersion &&
                         (InputManager.Pressed(Keys.LeftShift, PlayerIndex.One) ||
                          InputManager.Pressed(Buttons.LeftShoulder, PlayerIndex.One)) && CanRun && m_isTouchingGround)
                     {
@@ -2447,7 +2447,7 @@ namespace RogueCastle
                 {
                     return;
                 }
-                if (!LevelEV.ENABLE_PLAYER_DEBUG)
+                if (!LevelENV.EnablePlayerDebug)
                 {
                     if (State == 6 && (CurrentMana > 0f || m_blockInvincibleCounter > 0f) &&
                         (projectileObj == null ||
@@ -2670,7 +2670,7 @@ namespace RogueCastle
                 }
                 var enemyObj = projectileObj.Source as EnemyObj;
                 if (enemyObj != null &&
-                    (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss) &&
+                    (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss) &&
                     enemyObj.CurrentHealth <= 0)
                 {
                     flag = false;
@@ -2682,7 +2682,7 @@ namespace RogueCastle
                 flag = false;
             }
             if (enemyObj2 != null &&
-                (enemyObj2.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj2 is EnemyObj_LastBoss) &&
+                (enemyObj2.Difficulty == EnemyDifficulty.MiniBoss || enemyObj2 is EnemyObj_LastBoss) &&
                 enemyObj2.CurrentHealth <= 0)
             {
                 flag = false;

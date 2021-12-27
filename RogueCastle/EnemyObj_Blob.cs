@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Blob.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -40,7 +40,7 @@ namespace RogueCastle
         public RoomObj SpawnRoom;
 
         public EnemyObj_Blob(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyBlobIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             MainBlob = true;
@@ -101,7 +101,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.Blob_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     SetNumberOfHits(3);
                     BlobSizeChange = new Vector2(0.6f, 0.6f);
                     BlobSpeedChange = 2.25f;
@@ -130,7 +130,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Blob_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     SetNumberOfHits(4);
                     BlobSizeChange = new Vector2(0.65f, 0.65f);
                     BlobSpeedChange = 2.25f;
@@ -159,7 +159,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Blob_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     SetNumberOfHits(5);
                     BlobSizeChange = new Vector2(0.6f, 0.6f);
                     BlobSpeedChange = 2f;
@@ -188,14 +188,14 @@ namespace RogueCastle
                     EngageRadius = 750;
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Blob_Miniboss_KnockBack;
-                    if (LevelEV.WEAKEN_BOSSES)
+                    if (LevelENV.WeakenBosses)
                     {
                         MaxHealth = 1;
                         SetNumberOfHits(1);
                     }
                     break;
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.Basic)
+            if (Difficulty == EnemyDifficulty.Basic)
             {
                 _objectList[0].TextureColor = Color.Green;
                 _objectList[2].TextureColor = Color.LightGreen;
@@ -203,7 +203,7 @@ namespace RogueCastle
                 (_objectList[1] as SpriteObj).OutlineColour = Color.Red;
                 _objectList[1].TextureColor = Color.Red;
             }
-            else if (Difficulty == GameTypes.EnemyDifficulty.Advanced)
+            else if (Difficulty == EnemyDifficulty.Advanced)
             {
                 _objectList[0].TextureColor = Color.Yellow;
                 _objectList[2].TextureColor = Color.LightYellow;
@@ -211,7 +211,7 @@ namespace RogueCastle
                 (_objectList[1] as SpriteObj).OutlineColour = Color.Pink;
                 _objectList[1].TextureColor = Color.Pink;
             }
-            else if (Difficulty == GameTypes.EnemyDifficulty.Expert)
+            else if (Difficulty == EnemyDifficulty.Expert)
             {
                 _objectList[0].TextureColor = Color.Red;
                 _objectList[2].TextureColor = Color.Pink;
@@ -219,7 +219,7 @@ namespace RogueCastle
                 (_objectList[1] as SpriteObj).OutlineColour = Color.Yellow;
                 _objectList[1].TextureColor = Color.Yellow;
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyBlobBossIdle_Character";
             }
@@ -381,7 +381,7 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalNeoLB);
             logicBlocksToDispose.Add(m_generalMiniBossLB);
             logicBlocksToDispose.Add(m_generalBossCooldownLB);
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 SetCooldownLogicBlock(m_generalBossCooldownLB, 40, 40, 20);
                 ChangeSprite("EnemyBlobBossIdle_Character");
@@ -484,7 +484,7 @@ namespace RogueCastle
             NumHits = hits;
         }
 
-        private void CreateBlob(GameTypes.EnemyDifficulty difficulty, int numHits, bool isNeo = false)
+        private void CreateBlob(EnemyDifficulty difficulty, int numHits, bool isNeo = false)
         {
             var enemyObj_Blob = new EnemyObj_Blob(null, null, null, difficulty);
             enemyObj_Blob.InitializeEV();
@@ -528,7 +528,7 @@ namespace RogueCastle
                 enemyObj_Blob.AccelerationX += m_target.EnemyKnockBack.X + num;
             }
             enemyObj_Blob.AccelerationY += -(m_target.EnemyKnockBack.Y + num2);
-            if (enemyObj_Blob.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (enemyObj_Blob.Difficulty == EnemyDifficulty.MiniBoss)
             {
                 for (var i = 0; i < NumChildren; i++)
                 {
@@ -542,7 +542,7 @@ namespace RogueCastle
                 enemyObj_Blob.ChangeSprite("EnemyBlobAir_Character");
             }
             enemyObj_Blob.PlayAnimation();
-            if (LevelEV.SHOW_ENEMY_RADII)
+            if (LevelENV.ShowEnemyRadii)
             {
                 enemyObj_Blob.InitializeDebugRadii();
             }
@@ -554,7 +554,7 @@ namespace RogueCastle
         public void CreateWizard()
         {
             var enemyObj_EarthWizard = new EnemyObj_EarthWizard(null, null, null,
-                GameTypes.EnemyDifficulty.Advanced);
+                EnemyDifficulty.Advanced);
             enemyObj_EarthWizard.PublicInitializeEV();
             enemyObj_EarthWizard.Position = Position;
             if (m_target.X < enemyObj_EarthWizard.X)
@@ -581,7 +581,7 @@ namespace RogueCastle
             }
             enemyObj_EarthWizard.AccelerationY += -(m_target.EnemyKnockBack.Y + num2);
             enemyObj_EarthWizard.PlayAnimation();
-            if (LevelEV.SHOW_ENEMY_RADII)
+            if (LevelENV.ShowEnemyRadii)
             {
                 enemyObj_EarthWizard.InitializeDebugRadii();
             }
@@ -592,7 +592,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 if (!m_isTouchingGround && IsWeighted && CurrentSpeed == 0f &&
                     SpriteName == "EnemyBlobBossAir_Character")
@@ -668,7 +668,7 @@ namespace RogueCastle
                             CreateBlob(Difficulty, NumHits);
                             Scale = new Vector2(ScaleX*BlobSizeChange.X, ScaleY*BlobSizeChange.Y);
                             Speed *= BlobSpeedChange;
-                            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                            if (Difficulty == EnemyDifficulty.MiniBoss)
                             {
                                 CreateWizard();
                             }
@@ -695,7 +695,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
+            if (Difficulty == EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
             {
                 var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
@@ -708,7 +708,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            if (Difficulty != GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty != EnemyDifficulty.MiniBoss)
             {
                 base.Kill(giveXP);
                 return;
@@ -732,10 +732,11 @@ namespace RogueCastle
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Eyeball_Freeze");
                     GameUtil.UnlockAchievement("FEAR_OF_SLIME");
 
-                    Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445006);
-                    Program.Game.ArchClient.CheckedLocations[4445006] = true;
-                    Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445007);
-                    Program.Game.ArchClient.CheckedLocations[4445007] = true;
+                    // TODO: Fix this.
+                    // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445006);
+                    // Program.Game.ArchClient.CheckedLocations[4445006] = true;
+                    // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445007);
+                    // Program.Game.ArchClient.CheckedLocations[4445007] = true;
 
                     if (IsNeo)
                     {
@@ -821,22 +822,22 @@ namespace RogueCastle
             }
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     Speed = 50f;
                     Scale = EnemyEV.Blob_Basic_Scale;
                     NumHits = 2;
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Speed = 80f;
                     Scale = EnemyEV.Blob_Advanced_Scale;
                     NumHits = 3;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Speed = 90f;
                     Scale = EnemyEV.Blob_Expert_Scale;
                     NumHits = 4;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Speed = 110f;
                     NumHits = 6;
                     break;

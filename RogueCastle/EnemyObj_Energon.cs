@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Energon.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -31,7 +31,7 @@ namespace RogueCastle
         private SpriteObj m_shield;
 
         public EnemyObj_Energon(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyEnergonIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 23;
@@ -82,9 +82,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Energon_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Mastertron";
                     MaxHealth = 38;
                     Damage = 29;
@@ -111,7 +111,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Energon_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Voltron";
                     MaxHealth = 61;
                     Damage = 33;
@@ -138,7 +138,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Energon_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Prime";
                     MaxHealth = 300;
                     Damage = 39;

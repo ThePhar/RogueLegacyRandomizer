@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_HomingTurret.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -26,7 +26,7 @@ namespace RogueCastle
         private float FireDelay = 5f;
 
         public EnemyObj_HomingTurret(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            ProceduralLevelScreen levelToAttachTo, EnemyDifficulty difficulty)
             : base("EnemyHomingTurret_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             StopAnimation();
@@ -67,9 +67,9 @@ namespace RogueCastle
             InitialLogicDelay = 1f;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     FireDelay = 1.5f;
                     Name = "GuardBox XL";
                     MaxHealth = 25;
@@ -97,7 +97,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     FireDelay = 2.25f;
                     Name = "GuardBox 2000";
                     MaxHealth = 42;
@@ -125,7 +125,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "GuardBox Gigasaur";
                     MaxHealth = 500;
                     Damage = 40;

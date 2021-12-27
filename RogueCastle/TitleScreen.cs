@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - TitleScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -149,8 +149,7 @@ namespace RogueCastle
             m_versionNumber.Align = Types.TextAlign.Left;
             m_versionNumber.FontSize = 8f;
             m_versionNumber.Position = new Vector2(14f, 5f);
-            m_versionNumber.Text = string.Format("RL {0}\nAP v{1}\nAC v{2}", LevelEV.GAME_VERSION, LevelEV.AP_VERSION,
-                LevelEV.APC_VERSION);
+            m_versionNumber.Text = LevelENV.GameVersion.ToString();
 
             // Press Start Text
             m_pressStartText = new KeyIconTextObj(Game.JunicodeFont)
@@ -261,7 +260,7 @@ namespace RogueCastle
             Camera.Position = new Vector2(660f, 360f);
             m_pressStartText.Text = "[Input:" + InputMapType.MenuConfirm1 + "]";
 
-            Program.Game.ArchClient.DisconnectAndReset();
+            // Program.Game.ArchClient.DisconnectAndReset();
             InitializeStartingText();
 
             base.OnEnter();

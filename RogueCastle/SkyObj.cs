@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - SkyObj.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -39,7 +40,7 @@ namespace RogueCastle
             var one = new Vector2(2f, 2f);
             m_moon = new SpriteObj("ParallaxMoon_Sprite");
             m_moon.Position = new Vector2(900f, 200f);
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 m_moon.Position /= 2f;
                 one = Vector2.One;
@@ -75,7 +76,7 @@ namespace RogueCastle
         public void ReinitializeRT(Camera2D camera)
         {
             var one = new Vector2(2f, 2f);
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 m_moon.Position /= 2f;
                 one = Vector2.One;
