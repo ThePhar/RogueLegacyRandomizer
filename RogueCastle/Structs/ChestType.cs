@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ChestType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,11 +13,11 @@ namespace RogueCastle.Structs
 {
     public static class ChestType
     {
-        public const byte None = 0;
-        public const byte Brown = 1;
+        public const byte None   = 0;
+        public const byte Brown  = 1;
         public const byte Silver = 2;
-        public const byte Gold = 3;
-        public const byte Fairy = 4;
-        public const byte Boss = 5;
+        public const byte Gold   = 3;
+        public const byte Fairy  = 4;
+        public const byte Boss   = 5;
     }
 }

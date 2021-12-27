@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SpecialItemType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,21 +13,20 @@ namespace RogueCastle.Structs
 {
     public static class SpecialItemType
     {
-        public const byte None = 0;
-        public const byte FreeEntrance = 1;
-        public const byte LoseCoins = 2;
-        public const byte Revive = 3;
+        public const byte None          = 0;
+        public const byte FreeEntrance  = 1;
+        public const byte LoseCoins     = 2;
+        public const byte Revive        = 3;
         public const byte SpikeImmunity = 4;
-        public const byte GoldPerKill = 5;
-        public const byte Compass = 6;
-        public const byte Glasses = 8;
-        public const byte EyeballToken = 9;
-        public const byte SkullToken = 10;
+        public const byte GoldPerKill   = 5;
+        public const byte Compass       = 6;
+        public const byte Glasses       = 8;
+        public const byte EyeballToken  = 9;
+        public const byte SkullToken    = 10;
         public const byte FireballToken = 11;
-        public const byte BlobToken = 12;
+        public const byte BlobToken     = 12;
         public const byte LastBossToken = 13;
-
-        public const byte Total = 7;
+        public const byte Total         = 7;
 
         /// <summary>
         /// Returns the string representation of a given special item type's name.

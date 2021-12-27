@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillScreen.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -840,7 +840,7 @@ namespace RogueCastle
             m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
 
             // Update stats and modifier texts.
-            var stat = TraitStatType.GetTraitStat(skill.TraitType);
+            var stat = SkillStatType.GetSkillStat(skill.TraitType);
             if (stat > -1f)
             {
                 if (stat < 1f)

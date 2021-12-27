@@ -1,6 +1,6 @@
 // 
-// RogueLegacyArchipelago - TraitStatType.cs
-// Last Modified 2021-12-24
+// RogueLegacyArchipelago - SkillStatType.cs
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,18 +11,16 @@
 
 namespace RogueCastle.Structs
 {
-    public static class TraitStatType
+    public static class SkillStatType
     {
-        public const int PlayerMaxHealth = 0;
-
         /// <summary>
-        /// Returns a given trait's stat.
+        /// Returns a given skill's stat.
         /// </summary>
-        /// <param name="traitType">Skill Type Identifier</param>
+        /// <param name="skillType">Skill Type Identifier</param>
         /// <returns></returns>
-        public static float GetTraitStat(SkillType traitType)
+        public static float GetSkillStat(SkillType skillType)
         {
-            switch (traitType)
+            switch (skillType)
             {
                 case SkillType.HealthUp:
                 case SkillType.HealthUpFinal:

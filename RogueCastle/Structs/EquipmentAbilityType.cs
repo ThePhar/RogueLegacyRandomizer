@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EquipmentAbilityType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,21 +13,20 @@ namespace RogueCastle.Structs
 {
     public static class EquipmentAbilityType
     {
-        public const int DoubleJump = 0;
-        public const int Dash = 1;
-        public const int Vampirism = 2;
-        public const int Flight = 3;
-        public const int ManaGain = 4;
-        public const int DamageReturn = 5;
-        public const int GoldGain = 6;
-        public const int MovementSpeed = 7;
-        public const int RoomLevelUp = 8;
-        public const int RoomLevelDown = 9;
-        public const int ManaHpGain = 10;
-        public const int ArchitectFee = 20;
+        public const int Vault           = 0;
+        public const int Sprint                 = 1;
+        public const int Vampire            = 2;
+        public const int Sky               = 3;
+        public const int Siphon             = 4;
+        public const int Retaliation         = 5;
+        public const int Bounty             = 6;
+        public const int Haste        = 7;
+        public const int Curse          = 8;
+        public const int Grace        = 9;
+        public const int Balance           = 10;
+        public const int ArchitectFee         = 20;
         public const int NewGamePlusGoldBonus = 21;
-
-        public const int Total = 11;
+        public const int Total                = 11;
 
         /// <summary>
         /// Returns the string representation of a given ability's name.
@@ -38,37 +37,37 @@ namespace RogueCastle.Structs
         {
             switch (type)
             {
-                case DoubleJump:
+                case Vault:
                     return "Vault";
 
-                case Dash:
+                case Sprint:
                     return "Sprint";
 
-                case Vampirism:
+                case Vampire:
                     return "Vampire";
 
-                case Flight:
+                case Sky:
                     return "Sky";
 
-                case ManaGain:
+                case Siphon:
                     return "Siphon";
 
-                case DamageReturn:
+                case Retaliation:
                     return "Retaliation";
 
-                case GoldGain:
+                case Bounty:
                     return "Bounty";
 
-                case MovementSpeed:
+                case Haste:
                     return "Haste";
 
-                case RoomLevelUp:
+                case Curse:
                     return "Curse";
 
-                case RoomLevelDown:
+                case Grace:
                     return "Grace";
 
-                case ManaHpGain:
+                case Balance:
                     return "Balance";
 
                 case ArchitectFee:
@@ -91,37 +90,41 @@ namespace RogueCastle.Structs
         {
             switch (type)
             {
-                case DoubleJump:
-                    return "Grants you the power to jump in the air. Multiple runes stack, allowing for multiple jumps.";
+                case Vault:
+                    return
+                        "Grants you the power to jump in the air. Multiple runes stack, allowing for multiple jumps.";
 
-                case Dash:
+                case Sprint:
                     return "Gain the power to dash short distances. Multiple runes stack allowing for multiple dashes.";
 
-                case Vampirism:
-                    return "Killing enemies will drain them of their health. Multiple runes stack for increased life drain.";
+                case Vampire:
+                    return
+                        "Killing enemies will drain them of their health. Multiple runes stack for increased life drain.";
 
-                case Flight:
+                case Sky:
                     return "Gain the power of flight. Multiple runes stack for longer flight duration.";
 
-                case ManaGain:
+                case Siphon:
                     return "Steals mana from slain enemies. Multiple runes stack for increased mana drain.";
 
-                case DamageReturn:
+                case Retaliation:
                     return "Returns damage taken from enemies. Multiple runes stack increasing the damage return.";
 
-                case GoldGain:
-                    return "Increase the amount of gold you get from coins. Multiple runes stack for increased gold gain.";
+                case Bounty:
+                    return
+                        "Increase the amount of gold you get from coins. Multiple runes stack for increased gold gain.";
 
-                case MovementSpeed:
+                case Haste:
                     return "Increase your base move speed. Multiple runes stack making you even faster.";
 
-                case RoomLevelUp:
+                case Curse:
                     return "Harder enemies, but greater rewards. Multiple runes stack making enemies even harder.";
 
-                case RoomLevelDown:
-                    return "Enemies scale slower, easier but lesser rewards. Multiple runes stack slowing enemy scaling more.";
+                case Grace:
+                    return
+                        "Enemies scale slower, easier but lesser rewards. Multiple runes stack slowing enemy scaling more.";
 
-                case ManaHpGain:
+                case Balance:
                     return "Slaying enemies grants both HP and MP. Multiple runes stack for increased hp/mp drain.";
 
                 default:
@@ -139,46 +142,46 @@ namespace RogueCastle.Structs
         {
             switch (type)
             {
-                case DoubleJump:
+                case Vault:
                     return amount > 1f
                         ? string.Format("Air jump {0} times", amount)
                         : string.Format("Air jump {0} time", amount);
 
-                case Dash:
+                case Sprint:
                     return amount > 1f
                         ? string.Format("Dash up to {0} times", amount)
                         : string.Format("Dash up to {0} time", amount);
 
-                case Vampirism:
+                case Vampire:
                     return string.Format("Gain back {0} HP for every kill", amount);
 
-                case Flight:
+                case Sky:
                     return amount > 1f
                         ? string.Format("Fly for {0} seconds", amount)
                         : string.Format("Fly for {0} second", amount);
 
-                case ManaGain:
+                case Siphon:
                     return string.Format("Gain back {0} MP for every kill", amount);
 
-                case DamageReturn:
+                case Retaliation:
                     return string.Format("Return {0}% damage after getting hit", amount);
 
-                case GoldGain:
+                case Bounty:
                     return string.Format("Each gold drop is {0}% more valuable", amount);
 
-                case MovementSpeed:
+                case Haste:
                     return string.Format("Move {0}% faster", amount);
 
-                case RoomLevelUp:
+                case Curse:
                     var scale = (int) (amount / 4f * 2.75f);
                     return string.Format("Enemies start {0} levels higher", scale);
 
-                case RoomLevelDown:
+                case Grace:
                     return amount > 1f
                         ? string.Format("Enemies scale {0} units slower", amount)
                         : string.Format("Enemies scale {0} unit slower", amount);
 
-                case ManaHpGain:
+                case Balance:
                     return "Mana HP";
 
                 case ArchitectFee:
@@ -201,37 +204,38 @@ namespace RogueCastle.Structs
         {
             switch (type)
             {
-                case DoubleJump:
+                case Vault:
                     return string.Format("Press [Input:{0}] while in air.", InputMapType.PlayerJump1);
 
-                case Dash:
-                    return string.Format("[Input:{0}] or [Input:{1}] to dash.", InputMapType.PlayerDashLeft, InputMapType.PlayerDashRight);
+                case Sprint:
+                    return string.Format("[Input:{0}] or [Input:{1}] to dash.", InputMapType.PlayerDashLeft,
+                        InputMapType.PlayerDashRight);
 
-                case Vampirism:
+                case Vampire:
                     return "Kill enemies to regain health.";
 
-                case Flight:
+                case Sky:
                     return string.Format("Hold [Input:{0}] while in air.", InputMapType.PlayerJump1);
 
-                case ManaGain:
+                case Siphon:
                     return "Kill enemies to regain mana.";
 
-                case DamageReturn:
+                case Retaliation:
                     return "Damage returned to enemies.";
 
-                case GoldGain:
+                case Bounty:
                     return "Coins give more gold.";
 
-                case MovementSpeed:
+                case Haste:
                     return "Move faster.";
 
-                case RoomLevelUp:
+                case Curse:
                     return "Enemies are harder.";
 
-                case RoomLevelDown:
+                case Grace:
                     return "Enemies scale slower.";
 
-                case ManaHpGain:
+                case Balance:
                     return "Kill enemies to regain health and mana.";
 
                 default:
@@ -248,37 +252,37 @@ namespace RogueCastle.Structs
         {
             switch (type)
             {
-                case DoubleJump:
+                case Vault:
                     return "EnchantressUI_DoubleJumpIcon_Sprite";
 
-                case Dash:
+                case Sprint:
                     return "EnchantressUI_DashIcon_Sprite";
 
-                case Vampirism:
+                case Vampire:
                     return "EnchantressUI_VampirismIcon_Sprite";
 
-                case Flight:
+                case Sky:
                     return "EnchantressUI_FlightIcon_Sprite";
 
-                case ManaGain:
+                case Siphon:
                     return "EnchantressUI_ManaGainIcon_Sprite";
 
-                case DamageReturn:
+                case Retaliation:
                     return "EnchantressUI_DamageReturnIcon_Sprite";
 
-                case GoldGain:
+                case Bounty:
                     return "Icon_Gold_Gain_Up_Sprite";
 
-                case MovementSpeed:
+                case Haste:
                     return "EnchantressUI_SpeedUpIcon_Sprite";
 
-                case RoomLevelUp:
+                case Curse:
                     return "EnchantressUI_CurseIcon_Sprite";
 
-                case RoomLevelDown:
+                case Grace:
                     return "EnchantressUI_BlessingIcon_Sprite";
 
-                case ManaHpGain:
+                case Balance:
                     return "EnchantressUI_BalanceIcon_Sprite";
 
                 default:

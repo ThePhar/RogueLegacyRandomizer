@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ClassType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -16,27 +16,26 @@ namespace RogueCastle.Structs
 {
     public static class ClassType
     {
-        public const byte Knight = 0;
-        public const byte Mage = 1;
-        public const byte Barbarian = 2;
-        public const byte Knave = 3;
-        public const byte Shinobi = 4;
-        public const byte Miner = 5;
-        public const byte Spellthief = 6;
-        public const byte Lich = 7;
-        public const byte Paladin = 8;
-        public const byte Archmage = 9;
+        public const byte Knight        = 0;
+        public const byte Mage          = 1;
+        public const byte Barbarian     = 2;
+        public const byte Knave         = 3;
+        public const byte Shinobi       = 4;
+        public const byte Miner         = 5;
+        public const byte Spellthief    = 6;
+        public const byte Lich          = 7;
+        public const byte Paladin       = 8;
+        public const byte Archmage      = 9;
         public const byte BarbarianKing = 10;
-        public const byte Assassin = 11;
-        public const byte Hokage = 12;
-        public const byte Spelunker = 13;
-        public const byte Spellsword = 14;
-        public const byte LichKing = 15;
-        public const byte Dragon = 16;
-        public const byte Traitor = 17;
-
-        public const byte TotalUniques = 10;
-        public const byte Total = 18;
+        public const byte Assassin      = 11;
+        public const byte Hokage        = 12;
+        public const byte Spelunker     = 13;
+        public const byte Spellsword    = 14;
+        public const byte LichKing      = 15;
+        public const byte Dragon        = 16;
+        public const byte Traitor       = 17;
+        public const byte TotalUniques  = 10;
+        public const byte Total         = 18;
 
         /// <summary>
         /// Returns the string representation of a given class's name. Takes into account character gender if specified.
@@ -194,16 +193,20 @@ namespace RogueCastle.Structs
                     return "Huge HP. Low Str and MP.";
 
                 case Knave:
-                    return string.Format("+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.", 15.000001f, 125f);
+                    return string.Format("+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.", 15.000001f,
+                        125f);
 
                 case Shinobi:
-                    return string.Format("Huge Str, but you cannot land critical strikes.\n +{0}% Move Speed. Low HP and MP.", 30.0000019f);
+                    return string.Format(
+                        "Huge Str, but you cannot land critical strikes.\n +{0}% Move Speed. Low HP and MP.",
+                        30.0000019f);
 
                 case Miner:
                     return string.Format("+{0}% Gold gain.\nVery weak in all other stats.", 30.0000019f);
 
                 case Spellthief:
-                    return string.Format("{0}% of damage dealt is converted into mana.\nLow Str, HP, and MP.", 30.0000019f);
+                    return string.Format("{0}% of damage dealt is converted into mana.\nLow Str, HP, and MP.",
+                        30.0000019f);
 
                 case Lich:
                     return "Kills are converted into max HP.\nVery low Str, HP and MP. High Int.";
@@ -212,25 +215,34 @@ namespace RogueCastle.Structs
                     return "SPECIAL: Guardian's Shield.\n100% Base stats.";
 
                 case Archmage:
-                    return string.Format("SPECIAL: Spell Cycle.\nEvery kill gives you {0} mana.\nLow Str and HP. High Int and MP.", 6);
+                    return string.Format(
+                        "SPECIAL: Spell Cycle.\nEvery kill gives you {0} mana.\nLow Str and HP. High Int and MP.", 6);
 
                 case BarbarianKing:
                     return "SPECIAL: Barbarian Shout.\nHuge HP. Low Str and MP.";
 
                 case Assassin:
-                    return string.Format("SPECIAL: Mist Form.\n+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.", 15.000001f, 125f);
+                    return string.Format(
+                        "SPECIAL: Mist Form.\n+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.",
+                        15.000001f, 125f);
 
                 case Hokage:
-                    return string.Format("SPECIAL: Replacement Technique.\nHuge Str, but you cannot land critical strikes.\n +{0}% Move Speed. Low HP and MP.", 30.0000019f);
+                    return string.Format(
+                        "SPECIAL: Replacement Technique.\nHuge Str, but you cannot land critical strikes.\n +{0}% Move Speed. Low HP and MP.",
+                        30.0000019f);
 
                 case Spelunker:
-                    return string.Format("SPECIAL: Ordinary Headlamp.\n+{0}% Gold gain.\nVery weak in all other stats.", 30.0000019f);
+                    return string.Format("SPECIAL: Ordinary Headlamp.\n+{0}% Gold gain.\nVery weak in all other stats.",
+                        30.0000019f);
 
                 case Spellsword:
-                    return string.Format("SPECIAL: Empowered Spell.\n{0}% of damage dealt is converted into mana.\nLow Str, HP, and MP.", 30.0000019f);
+                    return string.Format(
+                        "SPECIAL: Empowered Spell.\n{0}% of damage dealt is converted into mana.\nLow Str, HP, and MP.",
+                        30.0000019f);
 
                 case LichKing:
-                    return "SPECIAL: HP Conversion.\nKills are converted into max HP.\nVery low Str, HP and MP. High Int.";
+                    return
+                        "SPECIAL: HP Conversion.\nKills are converted into max HP.\nVery low Str, HP and MP. High Int.";
 
                 case Dragon:
                     return "You are a man-dragon";
@@ -336,10 +348,10 @@ namespace RogueCastle.Structs
                     {
                         SpellType.Axe,
                         SpellType.Dagger,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.Close,
-                        SpellType.Bounce
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.BladeWall,
+                        SpellType.Conflux
                     };
 
                 case Mage:
@@ -349,11 +361,11 @@ namespace RogueCastle.Structs
                         SpellType.Axe,
                         SpellType.Dagger,
                         SpellType.TimeStop,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.Close,
-                        SpellType.DamageShield,
-                        SpellType.Bounce
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.BladeWall,
+                        SpellType.FlameBarrier,
+                        SpellType.Conflux
                     };
 
                 case Barbarian:
@@ -362,9 +374,9 @@ namespace RogueCastle.Structs
                     {
                         SpellType.Axe,
                         SpellType.Dagger,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.Close
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.BladeWall
                     };
 
                 case Knave:
@@ -373,10 +385,10 @@ namespace RogueCastle.Structs
                     {
                         SpellType.Axe,
                         SpellType.Dagger,
-                        SpellType.Translocator,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.Bounce
+                        SpellType.QuantumTranslocator,
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.Conflux
                     };
 
                 case Shinobi:
@@ -385,11 +397,11 @@ namespace RogueCastle.Structs
                     {
                         SpellType.Axe,
                         SpellType.Dagger,
-                        SpellType.Translocator,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.Close,
-                        SpellType.Bounce
+                        SpellType.QuantumTranslocator,
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.BladeWall,
+                        SpellType.Conflux
                     };
 
                 case Miner:
@@ -398,10 +410,10 @@ namespace RogueCastle.Structs
                     {
                         SpellType.Axe,
                         SpellType.Dagger,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.DamageShield,
-                        SpellType.Bounce
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.FlameBarrier,
+                        SpellType.Conflux
                     };
 
                 case Spellthief:
@@ -410,19 +422,19 @@ namespace RogueCastle.Structs
                     {
                         SpellType.Axe,
                         SpellType.Dagger,
-                        SpellType.Boomerang,
-                        SpellType.DualBlades,
-                        SpellType.Close,
-                        SpellType.DamageShield
+                        SpellType.Chakram,
+                        SpellType.Scythe,
+                        SpellType.BladeWall,
+                        SpellType.FlameBarrier
                     };
 
                 case Lich:
                 case LichKing:
                     return new[]
                     {
-                        SpellType.Nuke,
-                        SpellType.DamageShield,
-                        SpellType.Bounce
+                        SpellType.CrowStorm,
+                        SpellType.FlameBarrier,
+                        SpellType.Conflux
                     };
 
                 case Dragon:

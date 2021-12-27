@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EquipmentSecondaryDataType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,24 +13,23 @@ namespace RogueCastle.Structs
 {
     public static class EquipmentSecondaryDataType
     {
-        public const int None = 0;
-        public const int CritChance = 1;
-        public const int CritDamage = 2;
-        public const int GoldBonus = 3;
-        public const int DamageReturn = 4;
-        public const int XpBonus = 5;
-        public const int AirAttack = 6;
-        public const int Vampirism = 7;
-        public const int ManaDrain = 8;
-        public const int DoubleJump = 9;
-        public const int MoveSpeed = 10;
-        public const int AirDash = 11;
-        public const int Block = 12;
-        public const int Float = 13;
+        public const int None              = 0;
+        public const int CritChance        = 1;
+        public const int CritDamage        = 2;
+        public const int GoldBonus         = 3;
+        public const int DamageReturn      = 4;
+        public const int XPBonus           = 5;
+        public const int AirAttack         = 6;
+        public const int Vampirism         = 7;
+        public const int Siphon            = 8;
+        public const int AirJump           = 9;
+        public const int MoveSpeed         = 10;
+        public const int AirDash           = 11;
+        public const int Block             = 12;
+        public const int Float             = 13;
         public const int AttackProjectiles = 14;
-        public const int Flight = 15;
-
-        public const int Total = 16;
+        public const int Flight            = 15;
+        public const int Total             = 16;
 
         /// <summary>
         /// Returns the string representation of a given equipment characteristic.
@@ -53,19 +52,19 @@ namespace RogueCastle.Structs
                 case DamageReturn:
                     return "Damage Return";
 
-                case XpBonus:
+                case XPBonus:
                     return "XP Bonus";
 
                 case AirAttack:
-                    return "AirAttack";
+                    return "Air Attack";
 
                 case Vampirism:
                     return "Vampirism";
 
-                case ManaDrain:
+                case Siphon:
                     return "Siphon";
 
-                case DoubleJump:
+                case AirJump:
                     return "Air Jump";
 
                 case MoveSpeed:
@@ -81,7 +80,7 @@ namespace RogueCastle.Structs
                     return "Float";
 
                 case AttackProjectiles:
-                    return "Can attack projectiles";
+                    return "Can Attack Projectiles";
 
                 case Flight:
                     return "Flight";

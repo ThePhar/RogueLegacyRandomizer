@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EquipmentCategoryType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -14,11 +14,10 @@ namespace RogueCastle.Structs
     public static class EquipmentCategoryType
     {
         public const int Sword = 0;
-        public const int Helm = 1;
+        public const int Helm  = 1;
         public const int Chest = 2;
         public const int Limbs = 3;
-        public const int Cape = 4;
-
+        public const int Cape  = 4;
         public const int Total = 5;
 
         /// <summary>

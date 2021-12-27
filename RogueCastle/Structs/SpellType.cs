@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SpellType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -16,26 +16,25 @@ namespace RogueCastle.Structs
 {
     public static class SpellType
     {
-        public const byte None = 0;
-        public const byte Dagger = 1;
-        public const byte Axe = 2;
-        public const byte TimeBomb = 3;
-        public const byte TimeStop = 4;
-        public const byte Nuke = 5;
-        public const byte Translocator = 6;
-        public const byte Displacer = 7;
-        public const byte Boomerang = 8;
-        public const byte DualBlades = 9;
-        public const byte Close = 10;
-        public const byte DamageShield = 11;
-        public const byte Bounce = 12;
-        public const byte DragonFire = 13;
-        public const byte RapidDagger = 14;
+        public const byte None          = 0;
+        public const byte Dagger        = 1;
+        public const byte Axe           = 2;
+        public const byte Bomb      = 3;
+        public const byte TimeStop      = 4;
+        public const byte CrowStorm          = 5;
+        public const byte QuantumTranslocator  = 6;
+        public const byte Displacer     = 7;
+        public const byte Chakram     = 8;
+        public const byte Scythe    = 9;
+        public const byte BladeWall         = 10;
+        public const byte FlameBarrier  = 11;
+        public const byte Conflux        = 12;
+        public const byte DragonFire    = 13;
+        public const byte RapidDagger   = 14;
         public const byte DragonFireNeo = 15;
-        public const byte Shout = 20;
-        public const byte Laser = 100;
-
-        public const byte Total = 16;
+        public const byte Shout         = 20;
+        public const byte Laser         = 100;
+        public const byte Total         = 16;
 
         /// <summary>
         /// Returns the string representation of a given spell's name.
@@ -52,34 +51,34 @@ namespace RogueCastle.Structs
                 case Axe:
                     return "Axe";
 
-                case TimeBomb:
+                case Bomb:
                     return "Bomb";
 
                 case TimeStop:
                     return "Time Stop";
 
-                case Nuke:
+                case CrowStorm:
                     return "Crow Storm";
 
-                case Translocator:
+                case QuantumTranslocator:
                     return "Quantum Translocator";
 
                 case Displacer:
                     return "Displacer";
 
-                case Boomerang:
+                case Chakram:
                     return "Chakram";
 
-                case DualBlades:
+                case Scythe:
                     return "Scythe";
 
-                case Close:
+                case BladeWall:
                     return "Blade Wall";
 
-                case DamageShield:
+                case FlameBarrier:
                     return "Flame Barrier";
 
-                case Bounce:
+                case Conflux:
                     return "Conflux";
 
                 case DragonFire:
@@ -107,40 +106,47 @@ namespace RogueCastle.Structs
             switch (spellType)
             {
                 case Dagger:
-                    return string.Format("[Input:{0}]  Fires a dagger directly in front of you.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Fires a dagger directly in front of you.",
+                        InputMapType.PlayerSpell1);
 
                 case Axe:
                     return string.Format("[Input:{0}]  Throws a giant axe in an arc.", InputMapType.PlayerSpell1);
 
-                case TimeBomb:
-                    return string.Format("[Input:{0}]  Summons a bomb that explodes after a while.", InputMapType.PlayerSpell1);
+                case Bomb:
+                    return string.Format("[Input:{0}]  Summons a bomb that explodes after a while.",
+                        InputMapType.PlayerSpell1);
 
                 case TimeStop:
-                    return string.Format("[Input:{0}]  Toggles freezing all enemies on-screen. ", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Toggles freezing all enemies on-screen. ",
+                        InputMapType.PlayerSpell1);
 
-                case Nuke:
+                case CrowStorm:
                     return string.Format("[Input:{0}]  Hits all enemies on screen. Costly.", InputMapType.PlayerSpell1);
 
-                case Translocator:
+                case QuantumTranslocator:
                     return string.Format("[Input:{0}]  Drops and teleports to your shadow.", InputMapType.PlayerSpell1);
 
                 case Displacer:
-                    return string.Format("[Input:{0}]  Sends out a marker which teleports you.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Sends out a marker which teleports you.",
+                        InputMapType.PlayerSpell1);
 
-                case Boomerang:
-                    return string.Format("[Input:{0}]  Throws a chakram which comes back to you.", InputMapType.PlayerSpell1);
+                case Chakram:
+                    return string.Format("[Input:{0}]  Throws a chakram which comes back to you.",
+                        InputMapType.PlayerSpell1);
 
-                case DualBlades:
-                    return string.Format("[Input:{0}]  Send Scythes flying out from above you.", InputMapType.PlayerSpell1);
+                case Scythe:
+                    return string.Format("[Input:{0}]  Send Scythes flying out from above you.",
+                        InputMapType.PlayerSpell1);
 
-                case Close:
+                case BladeWall:
                     return string.Format("[Input:{0}]  Summon a Grand Blade to defend you.", InputMapType.PlayerSpell1);
 
-                case DamageShield:
+                case FlameBarrier:
                     return string.Format("[Input:{0}]  Encircles you with protective fire.", InputMapType.PlayerSpell1);
 
-                case Bounce:
-                    return string.Format("[Input:{0}]  Launches orbs that bounce everywhere.", InputMapType.PlayerSpell1);
+                case Conflux:
+                    return string.Format("[Input:{0}]  Launches orbs that bounce everywhere.",
+                        InputMapType.PlayerSpell1);
 
                 case DragonFire:
                 case DragonFireNeo:
@@ -150,7 +156,8 @@ namespace RogueCastle.Structs
                     return string.Format("[Input:{0}]  Fire a barrage of daggers.", InputMapType.PlayerSpell1);
 
                 case Laser:
-                    return string.Format("[Input:{0}]  Fire a laser that blasts everyone it touches.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Fire a laser that blasts everyone it touches.",
+                        InputMapType.PlayerSpell1);
 
                 default:
                     return "";
@@ -172,34 +179,34 @@ namespace RogueCastle.Structs
                 case Axe:
                     return "AxeIcon_Sprite";
 
-                case TimeBomb:
+                case Bomb:
                     return "TimeBombIcon_Sprite";
 
                 case TimeStop:
                     return "TimeStopIcon_Sprite";
 
-                case Nuke:
+                case CrowStorm:
                     return "NukeIcon_Sprite";
 
-                case Translocator:
+                case QuantumTranslocator:
                     return "TranslocatorIcon_Sprite";
 
                 case Displacer:
                     return "DisplacerIcon_Sprite";
 
-                case Boomerang:
+                case Chakram:
                     return "BoomerangIcon_Sprite";
 
-                case DualBlades:
+                case Scythe:
                     return "DualBladesIcon_Sprite";
 
-                case Close:
+                case BladeWall:
                     return "CloseIcon_Sprite";
 
-                case DamageShield:
+                case FlameBarrier:
                     return "DamageShieldIcon_Sprite";
 
-                case Bounce:
+                case Conflux:
                     return "BounceIcon_Sprite";
 
                 case DragonFire:

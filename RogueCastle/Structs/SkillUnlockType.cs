@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillUnlockType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,24 +13,24 @@ namespace RogueCastle.Structs
 {
     public static class SkillUnlockType
     {
-        public const byte None = 0;
-        public const byte Blacksmith = 1;
-        public const byte Enchantress = 2;
-        public const byte Architect = 3;
-        public const byte Ninja = 4;
-        public const byte Banker = 5;
-        public const byte SpellSword = 6;
-        public const byte Lich = 7;
-        public const byte KnightUp = 8;
-        public const byte WizardUp = 9;
-        public const byte BarbarianUp = 10;
-        public const byte NinjaUp = 11;
-        public const byte AssassinUp = 12;
-        public const byte BankerUp = 13;
+        public const byte None         = 0;
+        public const byte Blacksmith   = 1;
+        public const byte Enchantress  = 2;
+        public const byte Architect    = 3;
+        public const byte Ninja        = 4;
+        public const byte Banker       = 5;
+        public const byte SpellSword   = 6;
+        public const byte Lich         = 7;
+        public const byte KnightUp     = 8;
+        public const byte WizardUp     = 9;
+        public const byte BarbarianUp  = 10;
+        public const byte NinjaUp      = 11;
+        public const byte AssassinUp   = 12;
+        public const byte BankerUp     = 13;
         public const byte SpellSwordUp = 14;
-        public const byte LichUp = 15;
-        public const byte Dragon = 16;
-        public const byte Traitor = 17;
+        public const byte LichUp       = 15;
+        public const byte Dragon       = 16;
+        public const byte Traitor      = 17;
 
         /// <summary>
         /// Returns the full unlock description for this skill unlock.

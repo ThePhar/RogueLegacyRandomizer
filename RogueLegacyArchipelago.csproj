@@ -292,7 +292,7 @@
     <Compile Include="RogueCastle\Structs\SkillUnlockType.cs" />
     <Compile Include="RogueCastle\Structs\SpecialItemType.cs" />
     <Compile Include="RogueCastle\Structs\SpellType.cs" />
-    <Compile Include="RogueCastle\Structs\TraitStatType.cs" />
+    <Compile Include="RogueCastle\Structs\SkillStatType.cs" />
     <Compile Include="RogueCastle\Structs\TraitType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
