@@ -84,6 +84,7 @@ namespace RogueCastle
         {
             // AP Stuff
             ArchipelagoManager = new ArchipelagoClient();
+            PlayerStats = new PlayerStats();
 
             if (filePath.Contains("-t"))
             {
