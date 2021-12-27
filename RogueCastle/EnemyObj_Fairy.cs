@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Fairy.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -703,6 +703,11 @@ namespace RogueCastle
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Freeze");
                 GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
+
+                Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445002);
+                Program.Game.ArchClient.CheckedLocations[4445002] = true;
+                Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445003);
+                Program.Game.ArchClient.CheckedLocations[4445003] = true;
             }
         }
 

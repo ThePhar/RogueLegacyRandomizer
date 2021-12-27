@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Eyeball.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -730,6 +730,11 @@ namespace RogueCastle
                 SoundManager.PlaySound("Boss_Eyeball_Freeze");
                 Tween.RunFunction(1f, this, "Part2");
                 GameUtil.UnlockAchievement("FEAR_OF_EYES");
+
+                Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445000);
+                Program.Game.ArchClient.CheckedLocations[4445000] = true;
+                Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445001);
+                Program.Game.ArchClient.CheckedLocations[4445001] = true;
             }
         }
 

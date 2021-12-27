@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_LastBoss.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,6 +11,9 @@
 
 using System;
 using System.Collections.Generic;
+using Archipelago.MultiClient.Net;
+using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -1427,6 +1430,8 @@ namespace RogueCastle
             {
                 if (IsSecondForm && !m_bossVersionKilled)
                 {
+                    Program.Game.ArchClient.Session.Socket.SendPacket(new StatusUpdatePacket() {Status = ArchipelagoClientState.ClientGoal});
+
                     m_bossVersionKilled = true;
                     SetPlayerData();
                     m_levelScreen.PauseScreen();

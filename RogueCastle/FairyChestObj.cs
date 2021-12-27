@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - FairyChestObj.cs
+// Last Modified 2021-12-26
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -99,51 +100,15 @@ namespace RogueCastle
 
         public override void OpenChest(ItemDropManager itemDropManager, PlayerObj player)
         {
-            if (State == 1 && !IsOpen && !IsLocked)
-            {
-                GoToFrame(2);
-                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chest_Open_Large");
-                if (Game.PlayerStats.TotalRunesFound >= 55)
-                {
-                    GiveStatDrop(itemDropManager, m_player, 1, 0);
-                    player.AttachedLevel.RefreshMapChestIcons();
-                    return;
-                }
-                var getRuneArray = Game.PlayerStats.GetRuneArray;
-                var list = new List<Vector2>();
-                var num = 0;
-                foreach (var current in getRuneArray)
-                {
-                    var num2 = 0;
-                    var array = current;
-                    for (var i = 0; i < array.Length; i++)
-                    {
-                        if (array[i] == 0)
-                        {
-                            list.Add(new Vector2(num, num2));
-                        }
-                        num2++;
-                    }
-                    num++;
-                }
-                if (list.Count > 0)
-                {
-                    var vector = list[CDGMath.RandomInt(0, list.Count - 1)];
-                    Game.PlayerStats.GetRuneArray[(int) vector.X][(int) vector.Y] = 1;
-                    var list2 = new List<object>();
-                    list2.Add(new Vector2(X, Y - Height/2f));
-                    list2.Add(2);
-                    list2.Add(new Vector2(vector.X, vector.Y));
-                    (player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list2);
-                    player.RunGetItemAnimation();
-                    Console.WriteLine(string.Concat("Unlocked item index ", vector.X, " of type ", vector.Y));
-                }
-                else
-                {
-                    GiveGold(itemDropManager);
-                }
-                player.AttachedLevel.RefreshMapChestIcons();
-            }
+            // Do not open chests that are locked or already open.
+            if (State != 1 || IsOpen || IsLocked)
+                return;
+
+            SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chest_Open_Large");
+            GoToFrame(2);
+
+            GiveNetworkItem(itemDropManager, player, true);
+            player.AttachedLevel.RefreshMapChestIcons();
         }
 
         public override void Draw(Camera2D camera)

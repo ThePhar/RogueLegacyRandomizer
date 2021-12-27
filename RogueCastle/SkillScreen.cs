@@ -11,6 +11,8 @@
 
 using System;
 using System.Collections.Generic;
+using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;

@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EquipmentBaseType.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,19 +13,19 @@ namespace RogueCastle.TypeDefinitions
 {
     public static class EquipmentBaseType
     {
-        public const int Bronze = 0;
+        public const int Squire = 0;
         public const int Silver = 1;
-        public const int Gold = 2;
+        public const int Guardian = 2;
         public const int Imperial = 3;
         public const int Royal = 4;
         public const int Knight = 5;
-        public const int Earthen = 6;
+        public const int Ranger = 6;
         public const int Sky = 7;
         public const int Dragon = 8;
-        public const int Eternal = 9;
+        public const int Slayer = 9;
         public const int Blood = 10;
-        public const int Amethyst = 11;
-        public const int Spike = 12;
+        public const int Sage = 11;
+        public const int Retribution = 12;
         public const int Holy = 13;
         public const int Dark = 14;
 
@@ -40,13 +40,13 @@ namespace RogueCastle.TypeDefinitions
         {
             switch (equipmentBaseType)
             {
-                case Bronze:
+                case Squire:
                     return "Squire";
 
                 case Silver:
                     return "Silver";
 
-                case Gold:
+                case Guardian:
                     return "Guardian";
 
                 case Imperial:
@@ -58,7 +58,7 @@ namespace RogueCastle.TypeDefinitions
                 case Knight:
                     return "Knight";
 
-                case Earthen:
+                case Ranger:
                     return "Ranger";
 
                 case Sky:
@@ -67,16 +67,16 @@ namespace RogueCastle.TypeDefinitions
                 case Dragon:
                     return "Dragon";
 
-                case Eternal:
+                case Slayer:
                     return "Slayer";
 
                 case Blood:
                     return "Blood";
 
-                case Amethyst:
+                case Sage:
                     return "Sage";
 
-                case Spike:
+                case Retribution:
                     return "Retribution";
 
                 case Holy:

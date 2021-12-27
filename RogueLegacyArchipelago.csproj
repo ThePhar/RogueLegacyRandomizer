@@ -73,6 +73,7 @@
     <Compile Include="RogueCastle\ArchipelagoOptionsObj.cs" />
     <Compile Include="RogueCastle\ArchipelagoScreen.cs" />
     <Compile Include="RogueCastle\Archipelago\ArchClient.cs" />
+    <Compile Include="RogueCastle\Archipelago\ChestTracker.cs" />
     <Compile Include="RogueCastle\Archipelago\Items.cs" />
     <Compile Include="RogueCastle\Archipelago\Locations.cs" />
     <Compile Include="RogueCastle\Archipelago\SlotData.cs" />

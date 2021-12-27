@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GetItemType.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -22,6 +22,7 @@ namespace RogueCastle.TypeDefinitions
         public const byte TripStatDrop = 6;
         public const byte FountainPiece = 7;
         public const byte NetworkItem = 8;
+        public const byte GetNetworkItem = 9;
         public const byte SkillDrop = 9;
         public const byte TripSkillDrop = 10;
     }

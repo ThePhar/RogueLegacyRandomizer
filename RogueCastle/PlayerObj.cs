@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - PlayerObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-26
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.

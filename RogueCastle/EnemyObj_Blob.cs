@@ -1,13 +1,13 @@
-//
+// 
 // RogueLegacyArchipelago - EnemyObj_Blob.cs
-// Last Modified 2021-12-24
-//
+// Last Modified 2021-12-26
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -731,6 +731,12 @@ namespace RogueCastle
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Eyeball_Freeze");
                     GameUtil.UnlockAchievement("FEAR_OF_SLIME");
+
+                    Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445006);
+                    Program.Game.ArchClient.CheckedLocations[4445006] = true;
+                    Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445007);
+                    Program.Game.ArchClient.CheckedLocations[4445007] = true;
+
                     if (IsNeo)
                     {
                         Tween.To(m_target.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "Zoom", "1", "X",
