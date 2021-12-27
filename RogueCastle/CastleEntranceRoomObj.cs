@@ -10,6 +10,8 @@
 // 
 
 using System;
+using Archipelago;
+using Archipelago.Legacy;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -302,11 +304,14 @@ namespace RogueCastle
                 Player.X = m_castleGate.Bounds.Right + 20;
                 Player.AttachedLevel.UpdateCamera();
             }
+
+            // Diary Logic
             var bounds = m_diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
                                (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
             {
                 if (m_speechBubble.SpriteName == "ExclamationSquare_Sprite")
@@ -326,23 +331,27 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = false;
             }
+
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround &&
-                (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
+                (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) || Game.GlobalInput.JustPressed(InputMapType.PlayerUp2)))
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {
                     var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
-                    rCScreenManager.DisplayScreen(13, true);
-                    var expr_24E = Game.PlayerStats;
-                    expr_24E.DiaryEntry += 1;
+                    rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+                    Game.PlayerStats.DiaryEntry += 1;
+
+                    // Check location.
+                    Program.Game.ArchipelagoManager.CheckLocations(ArchipelagoClient.LegacyLocations["Diary 1"]);
                 }
                 else
                 {
                     var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    rCScreenManager2.DisplayScreen(20, true);
+                    rCScreenManager2.DisplayScreen(ScreenType.DiaryEntry, true);
                 }
             }
+
             base.Update(gameTime);
         }
 

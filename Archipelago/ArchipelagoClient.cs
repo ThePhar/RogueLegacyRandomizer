@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Archipelago.Legacy;
 using Archipelago.MultiClient.Net;
@@ -33,6 +34,11 @@ namespace Archipelago
         public LegacySlotData               Data                 { get; private set; }
         public Queue<NetworkItem>           ItemQueue            { get; private set; }
         public ConnectionInfo               CachedConnectionInfo { get; private set; }
+
+        public static readonly ReadOnlyDictionary<string, int> LegacyLocations =
+            new ReadOnlyDictionary<string, int>(new LegacyLocations());
+        public static readonly ReadOnlyDictionary<string, int> LegacyItems =
+            new ReadOnlyDictionary<string, int>(new LegacyItems());
 
         private ArchipelagoSession m_session;
         private DeathLinkService   m_deathLink;
@@ -145,6 +151,15 @@ namespace Archipelago
         public void StartPlaying()
         {
             Status = ArchipelagoStatus.Playing;
+        }
+
+        /// <summary>
+        /// Tell the AP server that we just completed a location.
+        /// </summary>
+        /// <param name="locations"></param>
+        public void CheckLocations(params int[] locations)
+        {
+            m_session.Locations.CompleteLocationChecks(locations);
         }
 
         /// <summary>

@@ -10,6 +10,7 @@
 // 
 
 using System;
+using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -98,15 +99,11 @@ namespace RogueCastle
                         rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
                         rCScreenManager.DisplayScreen(13, true);
 
-                        // TODO: FIX
-                        // var location = string.Format("Diary {0}", m_diaryIndex + 1);
-                        // var code = Locations.IdTable[location];
-                        //
-                        // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(code);
-                        // Program.Game.ArchClient.CheckedLocations[code] = true;
+                        // Check location.
+                        var location = string.Format("Diary {0}", m_diaryIndex + 1);
+                        Program.Game.ArchipelagoManager.CheckLocations(ArchipelagoClient.LegacyLocations[location]);
 
-                        var expr_1DB = Game.PlayerStats;
-                        expr_1DB.DiaryEntry += 1;
+                        Game.PlayerStats.DiaryEntry += 1;
                         RoomCompleted = true;
                     }
                     else
