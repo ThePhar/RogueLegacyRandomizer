@@ -94,6 +94,7 @@ namespace RogueCastle
         public static bool      CreateRetailVersion        { get; set; }
         public static bool      ShowFps                    { get; set; }
         public static bool      SaveFrames                 { get; set; }
+        public static bool      ShowArchipelagoStatus      { get; set; }
 
         static LevelENV()
         {
@@ -196,7 +197,7 @@ namespace RogueCastle
 
             // Enemy Difficulty Lists
             CastleEnemyDifficultyList  = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            GardenEnemyDifficultyList  = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+            GardenEnemyDifficultyList  = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             TowerEnemyDifficultyList   = new byte[] { 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 };
             DungeonEnemyDifficultyList = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
@@ -327,7 +328,7 @@ namespace RogueCastle
             RunTestRoom            = false;
             ShowDebugText          = false;
             LoadSplashScreen       = false;
-            ShowSaveLoadDebugText  = true;
+            ShowSaveLoadDebugText  = false;
             DeleteSaveFile         = false;
             CloseTestRoomDoors     = false;
             RunTutorial            = false;
@@ -340,6 +341,7 @@ namespace RogueCastle
             CreateRetailVersion    = true;
             ShowFps                = false;
             SaveFrames             = false;
+            ShowArchipelagoStatus  = true;
         }
     }
 }

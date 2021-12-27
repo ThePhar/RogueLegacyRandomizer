@@ -19,6 +19,7 @@ namespace Archipelago
         Initialized,
         FetchingLocations,
         Connected,
+        Playing,
         Reconnecting,
     }
 }

@@ -260,7 +260,11 @@ namespace RogueCastle
             Camera.Position = new Vector2(660f, 360f);
             m_pressStartText.Text = "[Input:" + InputMapType.MenuConfirm1 + "]";
 
-            // Program.Game.ArchClient.DisconnectAndReset();
+            // Reload the defaults.
+            Game.ProfileName = "DEFAULT";
+            Program.Game.ArchipelagoManager.Disconnect();
+            Program.Game.SaveManager.LoadAllFileTypes(null);
+
             InitializeStartingText();
 
             base.OnEnter();

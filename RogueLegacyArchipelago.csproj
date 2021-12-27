@@ -79,11 +79,9 @@
     <Compile Include="Randomchaos2DGodRays\LightSourceMask.cs" />
     <Compile Include="Randomchaos2DGodRays\PostProcessingManager.cs" />
     <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
-    <Compile Include="RogueCastle\ArchipelagoOptionsObj.cs" />
-    <Compile Include="RogueCastle\ArchipelagoScreen.cs" />
+    <Compile Include="RogueCastle\ArchipelagoStatusIndicator.cs" />
     <Compile Include="RogueCastle\AreaStruct.cs" />
     <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
-    <Compile Include="RogueCastle\BackToMenuArchipelagoObj.cs" />
     <Compile Include="RogueCastle\BackToMenuOptionsObj.cs" />
     <Compile Include="RogueCastle\BlacksmithObj.cs" />
     <Compile Include="RogueCastle\BlacksmithScreen.cs" />
@@ -105,7 +103,6 @@
     <Compile Include="RogueCastle\ChestConditionChecker.cs" />
     <Compile Include="RogueCastle\ChestObj.cs" />
     <Compile Include="RogueCastle\CompassRoomObj.cs" />
-    <Compile Include="RogueCastle\ConnectArchipelagoOptionObj.cs" />
     <Compile Include="RogueCastle\CreditsScreen.cs" />
     <Compile Include="RogueCastle\DeadZoneOptionsObj.cs" />
     <Compile Include="RogueCastle\DeathDefiedScreen.cs" />
@@ -217,6 +214,10 @@
     <Compile Include="RogueCastle\NpcObj.cs" />
     <Compile Include="RogueCastle\OptionsObj.cs" />
     <Compile Include="RogueCastle\OptionsScreen.cs" />
+    <Compile Include="RogueCastle\Options\ArchipelagoOptionsObj.cs" />
+    <Compile Include="RogueCastle\Options\BackToMenuArchipelagoObj.cs" />
+    <Compile Include="RogueCastle\Options\ConnectArchipelagoOptionObj.cs" />
+    <Compile Include="RogueCastle\Options\TextBoxOptionsObj.cs" />
     <Compile Include="RogueCastle\PauseScreen.cs" />
     <Compile Include="RogueCastle\PlayerEV.cs" />
     <Compile Include="RogueCastle\PlayerHUDObj.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="RogueCastle\RoomObj.cs" />
     <Compile Include="RogueCastle\SaveGameManager.cs" />
     <Compile Include="RogueCastle\SavingState.cs" />
+    <Compile Include="RogueCastle\Screens\ArchipelagoScreen.cs" />
     <Compile Include="RogueCastle\SFXVolOptionsObj.cs" />
     <Compile Include="RogueCastle\ShadowmapResolver.cs" />
     <Compile Include="RogueCastle\ShadowmapSize.cs" />
@@ -268,7 +270,6 @@
     <Compile Include="RogueCastle\Structs\LevelType.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
-    <Compile Include="RogueCastle\TextBoxOptionsObj.cs" />
     <Compile Include="RogueCastle\TextManager.cs" />
     <Compile Include="RogueCastle\TextScreen.cs" />
     <Compile Include="RogueCastle\ThroneRoomObj.cs" />
@@ -309,9 +310,7 @@
   <ItemGroup>
     <Folder Include="RogueCastle\Constants" />
     <Folder Include="RogueCastle\GameObjects\Enemies" />
-    <Folder Include="RogueCastle\Options" />
     <Folder Include="RogueCastle\Rooms" />
-    <Folder Include="RogueCastle\Screens" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,29 +16,31 @@ using Archipelago;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
+using RogueCastle.Options;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
     public class ArchipelagoScreen : Screen
     {
-        private ObjContainer m_bgSprite;
-        private KeyIconTextObj m_cancelText;
-        private KeyIconTextObj m_confirmText;
-        private KeyIconTextObj m_navigationText;
+        private ObjContainer                m_bgSprite;
+        private KeyIconTextObj              m_cancelText;
+        private KeyIconTextObj              m_confirmText;
+        private KeyIconTextObj              m_navigationText;
         private List<ArchipelagoOptionsObj> m_archipelagoArray;
-        private SpriteObj m_archipelagoBar;
-        private SpriteObj m_archipelagoTitle;
-        private ArchipelagoOptionsObj m_selectedOption;
-        private int m_selectedOptionIndex;
-        private bool m_transitioning;
+        private SpriteObj                   m_archipelagoBar;
+        private SpriteObj                   m_archipelagoTitle;
+        private ArchipelagoOptionsObj       m_selectedOption;
+        private int                         m_selectedOptionIndex;
+        private bool                        m_transitioning;
+        private TextBoxOptionsObj           m_hostname;
+        private TextBoxOptionsObj           m_port;
+        private TextBoxOptionsObj           m_slot;
+        private TextBoxOptionsObj           m_password;
 
-        private TextBoxOptionsObj m_hostname;
-        private TextBoxOptionsObj m_port;
-        private TextBoxOptionsObj m_slot;
-        private TextBoxOptionsObj m_password;
+        public bool LockControls { get; set; }
 
         public ArchipelagoScreen()
         {
@@ -121,6 +123,8 @@ namespace RogueCastle
 
         public void Connect()
         {
+            LockControls = true;
+
             try
             {
                 // Parse port and connect.
@@ -141,7 +145,7 @@ namespace RogueCastle
 
                 // Print exception message.
                 Console.WriteLine(ex);
-                DialogueManager.AddText(errorUuid, new[] {"Invalid Port"}, new[] {ex.Message});
+                DialogueManager.AddText(errorUuid, new[] { "Invalid Port" }, new[] { ex.Message });
                 screenManager.DialogueScreen.SetDialogue(errorUuid);
                 screenManager.DisplayScreen(ScreenType.Dialogue, true);
             }
@@ -152,9 +156,13 @@ namespace RogueCastle
 
                 // Print exception message.
                 Console.WriteLine(ex);
-                DialogueManager.AddText(errorUuid, new []{"An Exception Occurred"}, new []{ex.Message});
+                DialogueManager.AddText(errorUuid, new[] { "An Exception Occurred" }, new[] { ex.Message });
                 screenManager.DialogueScreen.SetDialogue(errorUuid);
                 screenManager.DisplayScreen(ScreenType.Dialogue, true);
+            }
+            finally
+            {
+                LockControls = false;
             }
         }
 

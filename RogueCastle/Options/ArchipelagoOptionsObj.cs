@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ArchipelagoOptionsObj.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,16 +11,17 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.Screens;
 
-namespace RogueCastle
+namespace RogueCastle.Options
 {
     public abstract class ArchipelagoOptionsObj : ObjContainer
     {
-        protected bool m_isActive;
-        protected bool m_isSelected;
-        protected TextObj m_nameText;
-        protected int m_optionsTextOffset = 250;
         protected ArchipelagoScreen m_parentScreen;
+        protected TextObj           m_nameText;
+        protected bool              m_isActive;
+        protected bool              m_isSelected;
+        protected int               m_optionsTextOffset = 250;
 
         public ArchipelagoOptionsObj(ArchipelagoScreen parentScreen, string name)
         {
@@ -69,9 +70,7 @@ namespace RogueCastle
             }
         }
 
-        public virtual void Initialize()
-        {
-        }
+        public virtual void Initialize() { }
 
         public virtual void HandleInput()
         {
@@ -81,9 +80,7 @@ namespace RogueCastle
             }
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-        }
+        public virtual void Update(GameTime gameTime) { }
 
         public override void Dispose()
         {

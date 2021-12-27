@@ -77,7 +77,7 @@ namespace Archipelago
 
                 if (result.Successful)
                 {
-                    Status = ArchipelagoStatus.Initialized;
+                    Status = ArchipelagoStatus.Connected;
                     return;
                 }
 
@@ -140,6 +140,14 @@ namespace Archipelago
         }
 
         /// <summary>
+        /// Sets the current status as playing.
+        /// </summary>
+        public void StartPlaying()
+        {
+            Status = ArchipelagoStatus.Playing;
+        }
+
+        /// <summary>
         /// Handle disconnect events from AP server.
         /// </summary>
         /// <param name="closeEventArgs"></param>
@@ -152,6 +160,7 @@ namespace Archipelago
                     break;
 
                 // Attempt to re-establish a connection.
+                case ArchipelagoStatus.Playing:
                 case ArchipelagoStatus.Connecting:
                 case ArchipelagoStatus.Initialized:
                 case ArchipelagoStatus.FetchingLocations:
@@ -191,6 +200,12 @@ namespace Archipelago
         private void OnPacketReceived(ArchipelagoPacketBase packet)
         {
             Console.WriteLine("Received a {0} packet", packet.GetType().Name);
+            Console.WriteLine("==============================");
+            foreach (var property in packet.GetType().GetProperties())
+            {
+                Console.WriteLine("{0}: {1}", property.Name, property.GetValue(packet));
+            }
+            Console.WriteLine();
 
             if (packet is RoomInfoPacket)
                 OnRoomInfo((RoomInfoPacket) packet);
@@ -215,7 +230,7 @@ namespace Archipelago
         /// <param name="packet">Connected Packet</param>
         private void OnConnected(ConnectedPacket packet)
         {
-            Data = new LegacySlotData(packet.SlotData, m_seed, packet.Slot);
+            Data = new LegacySlotData(packet.SlotData, m_seed, packet.Slot, CachedConnectionInfo.Name);
 
             // Check if DeathLink is enabled and establish the appropriate helper.
             if (Data.DeathLink)
@@ -232,7 +247,6 @@ namespace Archipelago
             }
 
             // Build our location cache.
-            Status = ArchipelagoStatus.FetchingLocations;
             m_session.Locations.ScoutLocationsAsync(OnReceiveLocationCache, new LegacyLocations().Values.ToArray());
         }
 
@@ -245,9 +259,6 @@ namespace Archipelago
             {
                 LocationCache.Add(item.Location, item);
             }
-
-            if (Status == ArchipelagoStatus.FetchingLocations)
-                Status = ArchipelagoStatus.Connected;
         }
 
         /// <summary>

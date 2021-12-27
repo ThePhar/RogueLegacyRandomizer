@@ -16,12 +16,14 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Archipelago;
+using Archipelago.Legacy;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.Screens;
 using RogueCastle.Structs;
 using SpriteSystem;
 using Tweener;
@@ -169,6 +171,13 @@ namespace RogueCastle
                 var frameRateCounter = new FrameRateCounter(this);
                 Components.Add(frameRateCounter);
                 frameRateCounter.Initialize();
+            }
+
+            if (LevelENV.ShowArchipelagoStatus)
+            {
+                var statusIndicator = new ArchipelagoStatusIndicator(this);
+                Components.Add(statusIndicator);
+                statusIndicator.Initialize();
             }
 
             m_forcedGameTime1 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
@@ -467,6 +476,63 @@ namespace RogueCastle
             Tween.Update(gameTime);
             ScreenManager.Update(gameTime);
             SoundManager.Update3DSounds();
+
+            switch (ArchipelagoManager.Status)
+            {
+                // We're ready!
+                case ArchipelagoStatus.Connected:
+                {
+                    if (!(ScreenManager.CurrentScreen is ArchipelagoScreen))
+                        break;
+
+                    // Initialize Save Data
+                    ProfileName = string.Format("{0}-{1}", ArchipelagoManager.Data.Seed, ArchipelagoManager.Data.Slot);
+                    SaveManager.CreateSaveDirectory();
+
+                    // Load save file.
+                    SaveManager.LoadAllFileTypes(null);
+
+                    SoundManager.PlaySound("Game_Start");
+                    var newGame = !PlayerStats.CharacterFound;
+                    var heroIsDead = PlayerStats.IsDead;
+                    var startingRoom = PlayerStats.LoadStartingRoom;
+
+                    if (PlayerStats.IsFemale && !FemaleNameArray.Contains(ArchipelagoManager.Data.Name))
+                        FemaleNameArray.Add(ArchipelagoManager.Data.Name);
+                    else if (!PlayerStats.IsFemale && !NameArray.Contains(ArchipelagoManager.Data.Name))
+                        NameArray.Add(ArchipelagoManager.Data.Name);
+
+                    if (newGame)
+                    {
+                        PlayerStats.CharacterFound = true;
+                        PlayerStats.Gold = 0;
+                        PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
+                        PlayerStats.EnemiesKilledInRun.Clear();
+
+                        // Set AP Settings
+                        PlayerStats.TimesCastleBeaten = ArchipelagoManager.Data.Difficulty;
+
+                        // Rename Sir Lee to the player's name and initial gender.
+                        PlayerStats.IsFemale = ArchipelagoManager.Data.StartingGender == StartingGender.Lady;
+                        PlayerStats.PlayerName = string.Format("{1} {0}", ArchipelagoManager.Data.Name, PlayerStats.IsFemale ? "Lady" : "Sir");
+
+                        Program.Game.SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
+                        ScreenManager.DisplayScreen(ScreenType.StartingRoom, true);
+                    }
+                    else
+                    {
+                        if (heroIsDead)
+                            ScreenManager.DisplayScreen(ScreenType.Lineage, true);
+                        else
+                            ScreenManager.DisplayScreen(startingRoom ? ScreenType.StartingRoom : ScreenType.Level, true);
+                    }
+
+                    ArchipelagoManager.StartPlaying();
+                    SoundManager.StopMusic(0.2f);
+                    break;
+                }
+            }
+
             base.Update(gameTime);
         }
 

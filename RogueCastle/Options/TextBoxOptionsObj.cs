@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - TextBoxOptionsObj.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -14,16 +14,17 @@ using System.Linq;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.Screens;
 using Tweener.Ease;
 
-namespace RogueCastle
+namespace RogueCastle.Options
 {
     public class TextBoxOptionsObj : ArchipelagoOptionsObj
     {
-        private string m_currentValue = string.Empty;
-        private string m_placeholder;
-        private KeyboardState m_keyboardState;
-        private TextObj m_toggleText;
+        private readonly string        m_placeholder;
+        private          string        m_currentValue = "";
+        private          KeyboardState m_keyboardState;
+        private          TextObj       m_toggleText;
 
         public TextBoxOptionsObj(ArchipelagoScreen parentScreen, string name, string placeholder) : base(parentScreen, name)
         {
@@ -130,6 +131,7 @@ namespace RogueCastle
                             m_currentValue += HandleShift(pressedKeys, key.ToString(), key.ToString().ToLower());
                             break;
 
+                        case Keys.Decimal:
                         case Keys.OemPeriod:
                             m_currentValue += HandleShift(pressedKeys, ">", ".");
                             break;
@@ -162,10 +164,12 @@ namespace RogueCastle
                             m_currentValue += HandleShift(pressedKeys, "?", "/");
                             break;
 
+                        case Keys.Subtract:
                         case Keys.OemMinus:
                             m_currentValue += HandleShift(pressedKeys, "_", "-");
                             break;
 
+                        case Keys.Add:
                         case Keys.OemPlus:
                             m_currentValue += HandleShift(pressedKeys, "+", "=");
                             break;

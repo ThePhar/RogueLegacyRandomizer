@@ -17,10 +17,11 @@ namespace Archipelago.Legacy
 {
     public class LegacySlotData : ReadOnlyDictionary<string, object>
     {
-        public LegacySlotData(IDictionary<string, object> dictionary, string seed, int slot) : base(dictionary)
+        public LegacySlotData(IDictionary<string, object> dictionary, string seed, int slot, string name) : base(dictionary)
         {
             dictionary.Add("seed", seed);
             dictionary.Add("slot", slot);
+            dictionary.Add("name", name);
         }
 
         /// <summary>
@@ -37,6 +38,14 @@ namespace Archipelago.Legacy
         public int Slot
         {
             get { return (int) this["slot"]; }
+        }
+
+        /// <summary>
+        /// Returns the player name used to connect to AP.
+        /// </summary>
+        public string Name
+        {
+            get { return (string) this["name"];  }
         }
 
         /// <summary>
