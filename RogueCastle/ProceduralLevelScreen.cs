@@ -1951,7 +1951,7 @@ namespace RogueCastle
 
         private static Vector2 MoveInCircle(GameTime gameTime, float speed)
         {
-            double num = Game.TotalGameTime*speed;
+            double num = Game.TotalGameTimeSeconds*speed;
             var x = (float) Math.Cos(num);
             var y = (float) Math.Sin(num);
             return new Vector2(x, y);

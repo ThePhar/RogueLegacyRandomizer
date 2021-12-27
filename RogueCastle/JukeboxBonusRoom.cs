@@ -121,7 +121,7 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = true;
                 m_speechBubble.Y = m_jukeBox.Y - m_speechBubble.Height - 110f +
-                                   (float) Math.Sin(Game.TotalGameTime*20f)*2f;
+                                   (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
                 if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                 {
                     Tween.StopAllContaining(m_jukeBox, false);

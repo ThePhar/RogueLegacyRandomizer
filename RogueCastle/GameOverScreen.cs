@@ -439,7 +439,7 @@ namespace RogueCastle
             m_player.Draw(Camera);
             if (m_playerGhost.Opacity > 0f)
             {
-                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTime * 5f) * 60f *
+                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTimeSeconds * 5f) * 60f *
                                    (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
 

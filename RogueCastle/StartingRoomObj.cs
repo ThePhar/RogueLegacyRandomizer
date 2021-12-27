@@ -418,7 +418,7 @@ namespace RogueCastle
             m_enchantressBlock.Visible = EnchantressAvailable;
             m_blacksmithBlock.Visible = SmithyAvailable;
             m_architectBlock.Visible = ArchitectAvailable;
-            var totalGameTime = Game.TotalGameTime;
+            var totalGameTime = Game.TotalGameTimeSeconds;
             if (!m_playerWalkedOut)
             {
                 if (!Player.ControlsLocked && Player.X < Bounds.Left)

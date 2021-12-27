@@ -457,7 +457,7 @@ namespace RogueCastle
             {
                 m_elf.CanTalk = true;
             }
-            var totalGameTime = Game.TotalGameTime;
+            var totalGameTime = Game.TotalGameTimeSeconds;
             var num2 = 2f;
             foreach (var current in m_balloonList)
             {

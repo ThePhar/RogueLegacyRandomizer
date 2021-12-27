@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - RCScreenManager.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -456,15 +456,15 @@ namespace RogueCastle
         public ProceduralLevelScreen GetLevelScreen()
         {
             var screens = GetScreens();
-            for (var i = 0; i < screens.Length; i++)
+            foreach (var screen in screens)
             {
-                var screen = screens[i];
                 var proceduralLevelScreen = screen as ProceduralLevelScreen;
                 if (proceduralLevelScreen != null)
                 {
                     return proceduralLevelScreen;
                 }
             }
+
             return null;
         }
     }

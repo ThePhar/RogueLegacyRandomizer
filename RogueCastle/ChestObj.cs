@@ -410,7 +410,7 @@ namespace RogueCastle
             if (m_arrowIcon.Visible)
             {
                 m_arrowIcon.Position = new Vector2(Bounds.Center.X,
-                    Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTime * 20f) * 3f);
+                    Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 3f);
                 m_arrowIcon.Draw(camera);
                 m_arrowIcon.Visible = false;
             }

@@ -35,105 +35,85 @@ namespace RogueCastle
         public static AreaStruct[]  Area1List;
         public static SettingStruct GameConfig;
 
-        public static Cue             LineageSongCue    { get; set; }
-        public static RCScreenManager ScreenManager     { get; set; }
-        public static Effect          BWMaskEffect      { get; set; }
-        public static Effect          ColourSwapShader  { get; set; }
-        public static Effect          HSVEffect         { get; set; }
-        public static Effect          InvertShader      { get; set; }
-        public static Effect          MaskEffect        { get; set; }
-        public static Effect          ParallaxEffect    { get; set; }
-        public static Effect          RippleEffect      { get; set; }
-        public static Effect          ShadowEffect      { get; set; }
-        public static EquipmentSystem EquipmentSystem   { get; set; }
-        public static GaussianBlur    GaussianBlur      { get; set; }
-        public static PlayerStats     PlayerStats       { get; set; }
-        public static InputMap        GlobalInput       { get; set; }
-        public static List<string>    NameArray         { get; set; }
-        public static List<string>    FemaleNameArray   { get; set; }
-        public static SpriteFont      PixelArtFont      { get; set; }
-        public static SpriteFont      PixelArtFontBold  { get; set; }
-        public static SpriteFont      JunicodeFont      { get; set; }
-        public static SpriteFont      EnemyLevelFont    { get; set; }
-        public static SpriteFont      PlayerLevelFont   { get; set; }
-        public static SpriteFont      GoldFont          { get; set; }
-        public static SpriteFont      HerzogFont        { get; set; }
-        public static SpriteFont      JunicodeLargeFont { get; set; }
-        public static SpriteFont      CinzelFont        { get; set; }
-        public static SpriteFont      BitFont           { get; set; }
-        public static Texture2D       GenericTexture    { get; set; }
-        public static float           PlaySessionLength { get; set; }
-        public static float           TotalGameTime     { get; set; }
+        public static Cue             LineageSongCue       { get; set; }
+        public static RCScreenManager ScreenManager        { get; set; }
+        public static Effect          BWMaskEffect         { get; set; }
+        public static Effect          ColourSwapShader     { get; set; }
+        public static Effect          HSVEffect            { get; set; }
+        public static Effect          InvertShader         { get; set; }
+        public static Effect          MaskEffect           { get; set; }
+        public static Effect          ParallaxEffect       { get; set; }
+        public static Effect          RippleEffect         { get; set; }
+        public static Effect          ShadowEffect         { get; set; }
+        public static EquipmentSystem EquipmentSystem      { get; set; }
+        public static GaussianBlur    GaussianBlur         { get; set; }
+        public static PlayerStats     PlayerStats          { get; set; }
+        public static InputMap        GlobalInput          { get; set; }
+        public static List<string>    NameArray            { get; set; }
+        public static List<string>    FemaleNameArray      { get; set; }
+        public static SpriteFont      PixelArtFont         { get; set; }
+        public static SpriteFont      PixelArtFontBold     { get; set; }
+        public static SpriteFont      JunicodeFont         { get; set; }
+        public static SpriteFont      EnemyLevelFont       { get; set; }
+        public static SpriteFont      PlayerLevelFont      { get; set; }
+        public static SpriteFont      GoldFont             { get; set; }
+        public static SpriteFont      HerzogFont           { get; set; }
+        public static SpriteFont      JunicodeLargeFont    { get; set; }
+        public static SpriteFont      CinzelFont           { get; set; }
+        public static SpriteFont      BitFont              { get; set; }
+        public static Texture2D       GenericTexture       { get; set; }
+        public static float           PlaySessionLength    { get; set; }
+        public static float           TotalGameTimeSeconds { get; set; }
+        public static float           TotalGameTimeHours   { get; set; }
+        public static string          ProfileName          { get; set; }
 
         public ArchipelagoClient     ArchipelagoManager    { get; private set; }
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
         public PhysicsManager        PhysicsManager        { get; private set; }
         public SaveGameManager       SaveManager           { get; private set; }
 
-        private const  float         FrameLimit          = 0.025f;
-        private static float         _totalGameTimeHours = 0f;
-        private        WeakReference m_gcTracker         = new WeakReference(new object());
-        private        GameTime      m_forcedGameTime2;
-        private        GameTime      m_forcedGameTime1;
-        private        bool          m_contentLoaded;
-        private        bool          m_frameLimitSwap;
-        private        bool          m_gameLoaded;
-        private        string        m_commandLineFilePath;
+        private       GameTime m_forcedGameTime2;
+        private       GameTime m_forcedGameTime1;
+        private       bool     m_contentLoaded;
+        private       bool     m_frameLimitSwap;
+        private       bool     m_gameLoaded;
 
-        public Game(string filePath = "")
+        public Game()
         {
-            // AP Stuff
-            ArchipelagoManager = new ArchipelagoClient();
-            PlayerStats = new PlayerStats();
-
-            if (filePath.Contains("-t"))
-            {
-                LevelENV.TestRoomLevelType = LevelType.Tower;
-                filePath = filePath.Replace("-t", "");
-            }
-            else if (filePath.Contains("-d"))
-            {
-                LevelENV.TestRoomLevelType = LevelType.Dungeon;
-                filePath = filePath.Replace("-d", "");
-            }
-            else if (filePath.Contains("-g"))
-            {
-                LevelENV.TestRoomLevelType = LevelType.Garden;
-                filePath = filePath.Replace("-g", "");
-            }
-
             if (Thread.CurrentThread.CurrentCulture.Name != "en-US")
             {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US", false);
             }
 
-            m_commandLineFilePath = filePath;
+            ArchipelagoManager = new ArchipelagoClient();
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
+            ScreenManager = new RCScreenManager(this);
+            SaveManager = new SaveGameManager();
+            PhysicsManager = new PhysicsManager();
+            EquipmentSystem = new EquipmentSystem();
+
+            PlayerStats = new PlayerStats();
             Content.RootDirectory = "Content";
             EngineEV.ScreenWidth = 1320;
             EngineEV.ScreenHeight = 720;
             Window.Title = "Rogue Legacy Archipelago";
-            ScreenManager = new RCScreenManager(this);
-            SaveManager = new SaveGameManager(this);
             IsFixedTimeStep = false;
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = !LevelENV.ShowFps;
             Window.AllowUserResizing = false;
+
             if (!LevelENV.EnableOffscreenControl)
             {
                 InactiveSleepTime = default(TimeSpan);
             }
 
-            PhysicsManager = new PhysicsManager();
-            EquipmentSystem = new EquipmentSystem();
             EquipmentSystem.InitializeEquipmentData();
             EquipmentSystem.InitializeAbilityCosts();
             GameConfig = default(SettingStruct);
+
             var form = Control.FromHandle(Window.Handle) as Form;
             if (form != null)
-            {
                 form.FormClosing += FormClosing;
-            }
 
             GraphicsDeviceManager.PreparingDeviceSettings += ChangeGraphicsSettings;
             SleepUtil.DisableScreensaver();
@@ -164,29 +144,25 @@ namespace RogueCastle
                 Buttons.LeftStick,
                 Buttons.RightStick
             };
+
             InputManager.RemapDXPad(buttonList);
             SpriteLibrary.Init();
-            DialogueManager.Initialize();
-            if (!LevelENV.CreateRetailVersion)
-            {
-                DialogueManager.LoadLanguageDocument(Content, "Languages\\Text_En");
-                DialogueManager.LoadLanguageDocument(Content, "Languages\\Diary_En");
-            }
-            else
-            {
-                DialogueManager.LoadLanguageBinFile("Content\\Languages\\Text_En.bin");
-                DialogueManager.LoadLanguageBinFile("Content\\Languages\\Diary_En.bin");
-            }
 
+            DialogueManager.Initialize();
+            DialogueManager.LoadLanguageBinFile("Content\\Languages\\Text_En.bin");
+            DialogueManager.LoadLanguageBinFile("Content\\Languages\\Diary_En.bin");
             DialogueManager.SetLanguage("English");
+
+            ProfileName = "DEFAULT";
             SaveManager.Initialize();
             PhysicsManager.Initialize(ScreenManager.Camera);
             PhysicsManager.TerminalVelocity = 2000;
+            ScreenManager.Initialize();
             InitializeNameArray();
             InitializeFemaleNameArray();
-            ScreenManager.Initialize();
             InitializeGlobalInput();
             LoadConfig();
+
             InitializeScreenConfig();
             if (LevelENV.ShowFps)
             {
@@ -195,116 +171,12 @@ namespace RogueCastle
                 frameRateCounter.Initialize();
             }
 
-            m_forcedGameTime1 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (FrameLimit * 1000f)));
-            m_forcedGameTime2 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (FrameLimit * 1050f)));
+            m_forcedGameTime1 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
+            m_forcedGameTime2 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1050f)));
             base.Initialize();
-            if (!LevelENV.CreateRetailVersion)
-            {
-                XMLCompiler.CompileEnemies(new List<EnemyEditorData>
-                {
-                    new EnemyEditorData(15),
-                    new EnemyEditorData(12),
-                    new EnemyEditorData(8),
-                    new EnemyEditorData(7),
-                    new EnemyEditorData(17),
-                    new EnemyEditorData(13),
-                    new EnemyEditorData(10),
-                    new EnemyEditorData(20),
-                    new EnemyEditorData(19),
-                    new EnemyEditorData(1),
-                    new EnemyEditorData(6),
-                    new EnemyEditorData(2),
-                    new EnemyEditorData(16),
-                    new EnemyEditorData(4),
-                    new EnemyEditorData(14),
-                    new EnemyEditorData(9),
-                    new EnemyEditorData(11),
-                    new EnemyEditorData(5),
-                    new EnemyEditorData(3),
-                    new EnemyEditorData(21),
-                    new EnemyEditorData(22),
-                    new EnemyEditorData(23),
-                    new EnemyEditorData(24),
-                    new EnemyEditorData(25),
-                    new EnemyEditorData(26),
-                    new EnemyEditorData(27),
-                    new EnemyEditorData(28),
-                    new EnemyEditorData(29),
-                    new EnemyEditorData(30),
-                    new EnemyEditorData(31),
-                    new EnemyEditorData(32),
-                    new EnemyEditorData(33)
-                }, Directory.GetCurrentDirectory());
-            }
         }
 
-        public static void InitializeGlobalInput()
-        {
-            if (GlobalInput != null)
-            {
-                GlobalInput.ClearAll();
-            }
-            else
-            {
-                GlobalInput = new InputMap(PlayerIndex.One, true);
-            }
-
-            GlobalInput.AddInput(0, Keys.Enter);
-            GlobalInput.AddInput(2, Keys.Escape);
-            GlobalInput.AddInput(6, Keys.LeftControl);
-            GlobalInput.AddInput(4, Keys.Tab);
-            GlobalInput.AddInput(7, Keys.LeftShift);
-            GlobalInput.AddInput(5, Keys.Back);
-            GlobalInput.AddInput(8, Keys.Escape);
-            GlobalInput.AddInput(9, Keys.Tab);
-            GlobalInput.AddInput(10, Keys.S);
-            GlobalInput.AddInput(11, Keys.Space);
-            GlobalInput.AddInput(24, Keys.W);
-            GlobalInput.AddInput(12, Keys.D);
-            GlobalInput.AddInput(13, Keys.A);
-            GlobalInput.AddInput(14, Keys.Q);
-            GlobalInput.AddInput(15, Keys.E);
-            GlobalInput.AddInput(16, Keys.I);
-            GlobalInput.AddInput(17, Keys.Up);
-            GlobalInput.AddInput(18, Keys.K);
-            GlobalInput.AddInput(19, Keys.Down);
-            GlobalInput.AddInput(20, Keys.J);
-            GlobalInput.AddInput(21, Keys.Left);
-            GlobalInput.AddInput(22, Keys.L);
-            GlobalInput.AddInput(23, Keys.Right);
-            GlobalInput.AddInput(0, Buttons.A);
-            GlobalInput.AddInput(1, Buttons.Start);
-            GlobalInput.AddInput(2, Buttons.B);
-            GlobalInput.AddInput(3, Buttons.Back);
-            GlobalInput.AddInput(6, Buttons.RightTrigger);
-            GlobalInput.AddInput(4, Buttons.Y);
-            GlobalInput.AddInput(7, Buttons.X);
-            GlobalInput.AddInput(5, Buttons.Back);
-            GlobalInput.AddInput(8, Buttons.Start);
-            GlobalInput.AddInput(9, Buttons.Back);
-            GlobalInput.AddInput(10, Buttons.A);
-            GlobalInput.AddInput(12, Buttons.X);
-            GlobalInput.AddInput(13, Buttons.Y);
-            GlobalInput.AddInput(14, Buttons.LeftTrigger);
-            GlobalInput.AddInput(15, Buttons.RightTrigger);
-            GlobalInput.AddInput(16, Buttons.DPadUp);
-            GlobalInput.AddInput(17, ThumbStick.LeftStick, -90f, 30f);
-            GlobalInput.AddInput(18, Buttons.DPadDown);
-            GlobalInput.AddInput(19, ThumbStick.LeftStick, 90f, 37f);
-            GlobalInput.AddInput(20, Buttons.DPadLeft);
-            GlobalInput.AddInput(21, Buttons.LeftThumbstickLeft);
-            GlobalInput.AddInput(22, Buttons.DPadRight);
-            GlobalInput.AddInput(23, Buttons.LeftThumbstickRight);
-            GlobalInput.AddInput(24, Buttons.B);
-            GlobalInput.AddInput(25, Keys.Escape);
-            GlobalInput.AddInput(25, Buttons.Back);
-            GlobalInput.AddInput(26, Keys.Back);
-            GlobalInput.AddInput(26, Buttons.Y);
-            GlobalInput.KeyList[1] = GlobalInput.KeyList[12];
-            GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
-        }
-
-        private void InitializeDefaultConfig()
+        private static void InitializeDefaultConfig()
         {
             GameConfig.FullScreen = false;
             GameConfig.ScreenWidth = 1360;
@@ -315,145 +187,170 @@ namespace RogueCastle
             InputManager.Deadzone = 10f;
             GameConfig.EnableSteamCloud = false;
             GameConfig.ReduceQuality = false;
-            GameConfig.ProfileSlot = "_no-seed-1";
 
             InitializeGlobalInput();
         }
 
-        public static void ChangeSlot(string seed, int slot)
+        public static void InitializeGlobalInput()
         {
-            GameConfig.ProfileSlot = string.Format("_{0}-{1}", seed, slot);
+            if (GlobalInput != null)
+                GlobalInput.ClearAll();
+            else
+                GlobalInput = new InputMap(PlayerIndex.One, true);
+
+            GlobalInput.AddInput(InputMapType.MenuConfirm1, Keys.Enter);
+            GlobalInput.AddInput(InputMapType.MenuCancel1, Keys.Escape);
+            GlobalInput.AddInput(InputMapType.MenuCredits, Keys.LeftControl);
+            GlobalInput.AddInput(InputMapType.MenuOptions, Keys.Tab);
+            GlobalInput.AddInput(InputMapType.MenuProfileCard, Keys.LeftShift);
+            GlobalInput.AddInput(InputMapType.MenuRogueMode, Keys.Back);
+            GlobalInput.AddInput(InputMapType.MenuPause, Keys.Escape);
+            GlobalInput.AddInput(InputMapType.MenuMap, Keys.Tab);
+            GlobalInput.AddInput(InputMapType.PlayerJump1, Keys.S);
+            GlobalInput.AddInput(InputMapType.PlayerJump2, Keys.Space);
+            GlobalInput.AddInput(InputMapType.PlayerSpell1, Keys.W);
+            GlobalInput.AddInput(InputMapType.PlayerAttack, Keys.D);
+            GlobalInput.AddInput(InputMapType.PlayerBlock, Keys.A);
+            GlobalInput.AddInput(InputMapType.PlayerDashLeft, Keys.Q);
+            GlobalInput.AddInput(InputMapType.PlayerDashRight, Keys.E);
+            GlobalInput.AddInput(InputMapType.PlayerUp1, Keys.I);
+            GlobalInput.AddInput(InputMapType.PlayerUp2, Keys.Up);
+            GlobalInput.AddInput(InputMapType.PlayerDown1, Keys.K);
+            GlobalInput.AddInput(InputMapType.PlayerDown2, Keys.Down);
+            GlobalInput.AddInput(InputMapType.PlayerLeft1, Keys.J);
+            GlobalInput.AddInput(InputMapType.PlayerLeft2, Keys.Left);
+            GlobalInput.AddInput(InputMapType.PlayerRight1, Keys.L);
+            GlobalInput.AddInput(InputMapType.PlayerRight2, Keys.Right);
+            GlobalInput.AddInput(InputMapType.MenuConfirm1, Buttons.A);
+            GlobalInput.AddInput(InputMapType.MenuConfirm2, Buttons.Start);
+            GlobalInput.AddInput(InputMapType.MenuCancel1, Buttons.B);
+            GlobalInput.AddInput(InputMapType.MenuCancel2, Buttons.Back);
+            GlobalInput.AddInput(InputMapType.MenuCredits, Buttons.RightTrigger);
+            GlobalInput.AddInput(InputMapType.MenuOptions, Buttons.Y);
+            GlobalInput.AddInput(InputMapType.MenuProfileCard, Buttons.X);
+            GlobalInput.AddInput(InputMapType.MenuRogueMode, Buttons.Back);
+            GlobalInput.AddInput(InputMapType.MenuPause, Buttons.Start);
+            GlobalInput.AddInput(InputMapType.MenuMap, Buttons.Back);
+            GlobalInput.AddInput(InputMapType.PlayerJump1, Buttons.A);
+            GlobalInput.AddInput(InputMapType.PlayerAttack, Buttons.X);
+            GlobalInput.AddInput(InputMapType.PlayerBlock, Buttons.Y);
+            GlobalInput.AddInput(InputMapType.PlayerDashLeft, Buttons.LeftTrigger);
+            GlobalInput.AddInput(InputMapType.PlayerDashRight, Buttons.RightTrigger);
+            GlobalInput.AddInput(InputMapType.PlayerUp1, Buttons.DPadUp);
+            GlobalInput.AddInput(InputMapType.PlayerUp2, ThumbStick.LeftStick, -90f, 30f);
+            GlobalInput.AddInput(InputMapType.PlayerDown1, Buttons.DPadDown);
+            GlobalInput.AddInput(InputMapType.PlayerDown2, ThumbStick.LeftStick, 90f, 37f);
+            GlobalInput.AddInput(InputMapType.PlayerLeft1, Buttons.DPadLeft);
+            GlobalInput.AddInput(InputMapType.PlayerLeft2, Buttons.LeftThumbstickLeft);
+            GlobalInput.AddInput(InputMapType.PlayerRight1, Buttons.DPadRight);
+            GlobalInput.AddInput(InputMapType.PlayerRight2, Buttons.LeftThumbstickRight);
+            GlobalInput.AddInput(InputMapType.PlayerSpell1, Buttons.B);
+            GlobalInput.AddInput(InputMapType.MenuProfileSelect, Keys.Escape);
+            GlobalInput.AddInput(InputMapType.MenuProfileSelect, Buttons.Back);
+            GlobalInput.AddInput(InputMapType.MenuDeleteProfile, Keys.Back);
+            GlobalInput.AddInput(InputMapType.MenuDeleteProfile, Buttons.Y);
+
+            GlobalInput.KeyList[1] = GlobalInput.KeyList[12];
+            GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
+        }
+
+        public static void ChangeProfile(string seed, int slot)
+        {
+            ProfileName = string.Format("AP_{0}-{1}", seed, slot);
         }
 
         protected override void LoadContent()
         {
-            if (!m_contentLoaded)
+            if (m_contentLoaded)
+                return;
+
+            m_contentLoaded = true;
+            LoadAllSpriteFonts();
+            LoadAllEffects();
+            LoadAllSpritesheets();
+            SoundManager.Initialize("Content\\Audio\\RogueCastleXACTProj.xgs");
+            SoundManager.LoadWaveBank("Content\\Audio\\SFXWaveBank.xwb");
+            SoundManager.LoadWaveBank("Content\\Audio\\MusicWaveBank.xwb", true);
+            SoundManager.LoadSoundBank("Content\\Audio\\SFXSoundBank.xsb");
+            SoundManager.LoadSoundBank("Content\\Audio\\MusicSoundBank.xsb", true);
+            SoundManager.GlobalMusicVolume = GameConfig.MusicVolume;
+            SoundManager.GlobalSFXVolume = GameConfig.SFXVolume;
+
+            if (InputManager.GamePadIsConnected(PlayerIndex.One))
             {
-                m_contentLoaded = true;
-                LoadAllSpriteFonts();
-                LoadAllEffects();
-                LoadAllSpritesheets();
-                SoundManager.Initialize("Content\\Audio\\RogueCastleXACTProj.xgs");
-                SoundManager.LoadWaveBank("Content\\Audio\\SFXWaveBank.xwb");
-                SoundManager.LoadWaveBank("Content\\Audio\\MusicWaveBank.xwb", true);
-                SoundManager.LoadSoundBank("Content\\Audio\\SFXSoundBank.xsb");
-                SoundManager.LoadSoundBank("Content\\Audio\\MusicSoundBank.xsb", true);
-                SoundManager.GlobalMusicVolume = GameConfig.MusicVolume;
-                SoundManager.GlobalSFXVolume = GameConfig.SFXVolume;
-                if (InputManager.GamePadIsConnected(PlayerIndex.One))
-                {
-                    InputManager.SetPadType(PlayerIndex.One, PadTypes.GamePad);
-                }
-
-                InputManager.UseDirectInput = GameConfig.EnableDirectInput;
-                GenericTexture = new Texture2D(GraphicsDevice, 1, 1);
-                GenericTexture.SetData(new[]
-                {
-                    Color.White
-                });
-                if (!LevelENV.LoadSplashScreen)
-                {
-                    LevelBuilder2.Initialize();
-                    LevelParser.ParseRooms("Map_1x1", Content);
-                    LevelParser.ParseRooms("Map_1x2", Content);
-                    LevelParser.ParseRooms("Map_1x3", Content);
-                    LevelParser.ParseRooms("Map_2x1", Content);
-                    LevelParser.ParseRooms("Map_2x2", Content);
-                    LevelParser.ParseRooms("Map_2x3", Content);
-                    LevelParser.ParseRooms("Map_3x1", Content);
-                    LevelParser.ParseRooms("Map_3x2", Content);
-                    LevelParser.ParseRooms("Map_Special", Content);
-                    LevelParser.ParseRooms("Map_DLC1", Content, true);
-                    LevelBuilder2.IndexRoomList();
-                }
-
-                SkillSystem.Initialize();
-                var areaStruct = new AreaStruct
-                {
-                    Name = "The Grand Entrance",
-                    LevelType = LevelType.Castle,
-                    TotalRooms = new Vector2(24f, 28f),
-                    BossInArea = true,
-                    SecretRooms = new Vector2(1f, 3f),
-                    BonusRooms = new Vector2(2f, 3f),
-                    Color = Color.White
-                };
-                var areaStruct2 = new AreaStruct
-                {
-                    LevelType = LevelType.Garden,
-                    TotalRooms = new Vector2(23f, 27f),
-                    BossInArea = true,
-                    SecretRooms = new Vector2(1f, 3f),
-                    BonusRooms = new Vector2(2f, 3f),
-                    Color = Color.Green
-                };
-                var areaStruct3 = new AreaStruct
-                {
-                    LevelType = LevelType.Tower,
-                    TotalRooms = new Vector2(23f, 27f),
-                    BossInArea = true,
-                    SecretRooms = new Vector2(1f, 3f),
-                    BonusRooms = new Vector2(2f, 3f),
-                    Color = Color.DarkBlue
-                };
-                var areaStruct4 = new AreaStruct
-                {
-                    LevelType = LevelType.Dungeon,
-                    TotalRooms = new Vector2(23f, 27f),
-                    BossInArea = true,
-                    SecretRooms = new Vector2(1f, 3f),
-                    BonusRooms = new Vector2(2f, 3f),
-                    Color = Color.Red
-                };
-                var areaStruct5 = new AreaStruct
-                {
-                    Name = "The Grand Entrance",
-                    LevelType = LevelType.Castle,
-                    TotalRooms = new Vector2(24f, 27f),
-                    BossInArea = true,
-                    SecretRooms = new Vector2(2f, 3f),
-                    BonusRooms = new Vector2(2f, 3f),
-                    Color = Color.White
-                };
-                var areaStruct6 = default(AreaStruct);
-                areaStruct6.Name = "The Grand Entrance";
-                areaStruct6.LevelType = LevelType.Garden;
-                areaStruct6.TotalRooms = new Vector2(12f, 14f);
-                areaStruct6.BossInArea = true;
-                areaStruct6.SecretRooms = new Vector2(2f, 3f);
-                areaStruct6.BonusRooms = new Vector2(1f, 2f);
-                areaStruct6.Color = Color.Green;
-                var areaStruct7 = default(AreaStruct);
-                areaStruct7.Name = "The Grand Entrance";
-                areaStruct7.LevelType = LevelType.Dungeon;
-                areaStruct7.TotalRooms = new Vector2(12f, 14f);
-                areaStruct7.BossInArea = true;
-                areaStruct7.SecretRooms = new Vector2(2f, 3f);
-                areaStruct7.BonusRooms = new Vector2(1f, 2f);
-                areaStruct7.Color = Color.Red;
-                var areaStruct8 = default(AreaStruct);
-                areaStruct8.Name = "The Grand Entrance";
-                areaStruct8.LevelType = LevelType.Tower;
-                areaStruct8.TotalRooms = new Vector2(12f, 14f);
-                areaStruct8.BossInArea = true;
-                areaStruct8.SecretRooms = new Vector2(2f, 3f);
-                areaStruct8.BonusRooms = new Vector2(1f, 2f);
-                areaStruct8.Color = Color.DarkBlue;
-                Area1List = new[]
-                {
-                    areaStruct,
-                    areaStruct2,
-                    areaStruct3,
-                    areaStruct4
-                };
-                if (LevelENV.RunDemoVersion)
-                {
-                    Area1List = new[]
-                    {
-                        areaStruct5
-                    };
-                }
+                InputManager.SetPadType(PlayerIndex.One, PadTypes.GamePad);
             }
+
+            InputManager.UseDirectInput = GameConfig.EnableDirectInput;
+            GenericTexture = new Texture2D(GraphicsDevice, 1, 1);
+            GenericTexture.SetData(new[]
+            {
+                Color.White
+            });
+
+            if (!LevelENV.LoadSplashScreen)
+            {
+                LevelBuilder2.Initialize();
+                LevelParser.ParseRooms("Map_1x1", Content);
+                LevelParser.ParseRooms("Map_1x2", Content);
+                LevelParser.ParseRooms("Map_1x3", Content);
+                LevelParser.ParseRooms("Map_2x1", Content);
+                LevelParser.ParseRooms("Map_2x2", Content);
+                LevelParser.ParseRooms("Map_2x3", Content);
+                LevelParser.ParseRooms("Map_3x1", Content);
+                LevelParser.ParseRooms("Map_3x2", Content);
+                LevelParser.ParseRooms("Map_Special", Content);
+                LevelParser.ParseRooms("Map_DLC1", Content, true);
+                LevelBuilder2.IndexRoomList();
+            }
+
+            SkillSystem.Initialize();
+
+            var castleArea = new AreaStruct
+            {
+                Name = "The Grand Entrance",
+                LevelType = LevelType.Castle,
+                TotalRooms = new Vector2(24f, 28f),
+                BossInArea = true,
+                SecretRooms = new Vector2(1f, 3f),
+                BonusRooms = new Vector2(2f, 3f),
+                Color = Color.White,
+            };
+            var gardenArea = new AreaStruct
+            {
+                LevelType = LevelType.Garden,
+                TotalRooms = new Vector2(23f, 27f),
+                BossInArea = true,
+                SecretRooms = new Vector2(1f, 3f),
+                BonusRooms = new Vector2(2f, 3f),
+                Color = Color.Green,
+            };
+            var towerArea = new AreaStruct
+            {
+                LevelType = LevelType.Tower,
+                TotalRooms = new Vector2(23f, 27f),
+                BossInArea = true,
+                SecretRooms = new Vector2(1f, 3f),
+                BonusRooms = new Vector2(2f, 3f),
+                Color = Color.DarkBlue,
+            };
+            var dungeonArea = new AreaStruct
+            {
+                LevelType = LevelType.Dungeon,
+                TotalRooms = new Vector2(23f, 27f),
+                BossInArea = true,
+                SecretRooms = new Vector2(1f, 3f),
+                BonusRooms = new Vector2(2f, 3f),
+                Color = Color.Red,
+            };
+
+            Area1List = new[]
+            {
+                castleArea,
+                gardenArea,
+                towerArea,
+                dungeonArea,
+            };
         }
 
         public void LoadAllSpriteFonts()
@@ -517,16 +414,16 @@ namespace RogueCastle
             ColourSwapShader = Content.Load<Effect>("Shaders\\ColourSwapShader");
             RippleEffect = Content.Load<Effect>("Shaders\\Shockwave");
             RippleEffect.Parameters["mag"].SetValue(2);
-            GaussianBlur = new GaussianBlur(this, 1320, 720);
-            GaussianBlur.Amount = 2f;
-            GaussianBlur.Radius = 7;
+            GaussianBlur = new GaussianBlur(this, 1320, 720)
+            {
+                Amount = 2f,
+                Radius = 7,
+            };
             GaussianBlur.ComputeKernel();
             GaussianBlur.ComputeOffsets();
             GaussianBlur.InvertMask = true;
             BWMaskEffect = Content.Load<Effect>("Shaders\\BWMaskShader");
         }
-
-        protected override void UnloadContent() { }
 
         protected override void Update(GameTime gameTime)
         {
@@ -539,63 +436,36 @@ namespace RogueCastle
                     SaveManager.ClearAllFileTypes(false);
                 }
 
-                if (LevelENV.LoadSplashScreen)
-                {
-                    if (LevelENV.RunDemoVersion)
-                    {
-                        ScreenManager.DisplayScreen(28, true);
-                    }
-                    else
-                    {
-                        ScreenManager.DisplayScreen(1, true);
-                    }
-                }
-                else if (!LevelENV.LoadTitleScreen)
-                {
-                    if (LevelENV.RunTestRoom)
-                    {
-                        ScreenManager.DisplayScreen(5, true);
-                    }
-                    else if (LevelENV.RunTutorial)
-                    {
-                        ScreenManager.DisplayScreen(23, true);
-                    }
-                    else
-                    {
-                        ScreenManager.DisplayScreen(15, true);
-                    }
-                }
-                else
-                {
-                    ScreenManager.DisplayScreen(3, true);
-                }
+                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen
+                    ? ScreenType.CDGSplash
+                    : ScreenType.Title, true);
             }
 
-            TotalGameTime = (float) gameTime.TotalGameTime.TotalSeconds;
-            _totalGameTimeHours = (float) gameTime.TotalGameTime.TotalHours;
-            var gameTime2 = gameTime;
-            if (gameTime.ElapsedGameTime.TotalSeconds > FrameLimit)
+            TotalGameTimeSeconds = (float) gameTime.TotalGameTime.TotalSeconds;
+            TotalGameTimeHours = (float) gameTime.TotalGameTime.TotalHours;
+
+            if (gameTime.ElapsedGameTime.TotalSeconds > LevelENV.FrameLimit)
             {
                 if (!m_frameLimitSwap)
                 {
                     m_frameLimitSwap = true;
-                    gameTime2 = m_forcedGameTime1;
+                    gameTime = m_forcedGameTime1;
                 }
                 else
                 {
                     m_frameLimitSwap = false;
-                    gameTime2 = m_forcedGameTime2;
+                    gameTime = m_forcedGameTime2;
                 }
             }
 
-            SoundManager.Update(gameTime2);
+            SoundManager.Update(gameTime);
             if (IsActive || (!IsActive && LevelENV.EnableOffscreenControl))
             {
-                InputManager.Update(gameTime2);
+                InputManager.Update(gameTime);
             }
 
-            Tween.Update(gameTime2);
-            ScreenManager.Update(gameTime2);
+            Tween.Update(gameTime);
+            ScreenManager.Update(gameTime);
             SoundManager.Update3DSounds();
             base.Update(gameTime);
         }
@@ -618,17 +488,17 @@ namespace RogueCastle
                 while (!streamReader.EndOfStream)
                 {
                     var text = streamReader.ReadLine();
-                    var flag = false;
+                    var error = false;
                     try
                     {
                         textObj.Text = text;
                     }
                     catch
                     {
-                        flag = true;
+                        error = true;
                     }
 
-                    if (!text.Contains("//") && !flag)
+                    if (!text.Contains("//") && !error)
                     {
                         NameArray.Add(text);
                     }
@@ -657,17 +527,17 @@ namespace RogueCastle
                 while (!streamReader.EndOfStream)
                 {
                     var text = streamReader.ReadLine();
-                    var flag = false;
+                    var error = false;
                     try
                     {
                         textObj.Text = text;
                     }
                     catch
                     {
-                        flag = true;
+                        error = true;
                     }
 
-                    if (!text.Contains("//") && !flag)
+                    if (!text.Contains("//") && !error)
                     {
                         FemaleNameArray.Add(text);
                     }
@@ -687,51 +557,48 @@ namespace RogueCastle
 
         public void SaveOnExit()
         {
-            if (!(ScreenManager.CurrentScreen is CDGSplashScreen) && !(ScreenManager.CurrentScreen is DemoStartScreen))
+            // No point in saving if we're on the Splash or Demo screens.
+            if (ScreenManager.CurrentScreen is CDGSplashScreen || ScreenManager.CurrentScreen is DemoStartScreen)
+                return;
+
+            UpdatePlaySessionLength();
+            var screen = ScreenManager.GetLevelScreen();
+            if (screen != null)
             {
-                UpdatePlaySessionLength();
-                var levelScreen = ScreenManager.GetLevelScreen();
-                if (levelScreen != null &&
-                    (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom ||
-                        levelScreen.CurrentRoom is CarnivalShoot2BonusRoom))
+                var currentRoom = screen.CurrentRoom;
+                if (currentRoom != null && (currentRoom is CarnivalShoot1BonusRoom || currentRoom is CarnivalShoot2BonusRoom))
                 {
-                    if (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom)
-                    {
-                        (levelScreen.CurrentRoom as CarnivalShoot1BonusRoom).UnequipPlayer();
-                    }
+                    var bonusRoom1 = currentRoom as CarnivalShoot1BonusRoom;
+                    if (bonusRoom1 != null)
+                        bonusRoom1.UnequipPlayer();
 
-                    if (levelScreen.CurrentRoom is CarnivalShoot2BonusRoom)
-                    {
-                        (levelScreen.CurrentRoom as CarnivalShoot2BonusRoom).UnequipPlayer();
-                    }
+                    var bonusRoom2 = currentRoom as CarnivalShoot2BonusRoom;
+                    if (bonusRoom2 != null)
+                        bonusRoom2.UnequipPlayer();
                 }
 
-                if (levelScreen != null)
+                var challengeBossRoom = currentRoom as ChallengeBossRoomObj;
+                if (challengeBossRoom != null)
                 {
-                    var challengeBossRoomObj = levelScreen.CurrentRoom as ChallengeBossRoomObj;
-                    if (challengeBossRoomObj != null)
-                    {
-                        challengeBossRoomObj.LoadPlayerData();
-                        SaveManager.LoadFiles(levelScreen, SaveType.UpgradeData);
-                        levelScreen.Player.CurrentHealth = challengeBossRoomObj.StoredHP;
-                        levelScreen.Player.CurrentMana = challengeBossRoomObj.StoredMP;
-                    }
+                    challengeBossRoom.LoadPlayerData();
+                    SaveManager.LoadFiles(ScreenManager.GetLevelScreen(), SaveType.UpgradeData);
+                    currentRoom.Player.CurrentHealth = challengeBossRoom.StoredHP;
+                    currentRoom.Player.CurrentMana = challengeBossRoom.StoredMP;
                 }
+            }
 
-                if (ScreenManager.CurrentScreen is GameOverScreen)
-                {
-                    PlayerStats.Traits = Vector2.Zero;
-                }
+            if (ScreenManager.CurrentScreen is GameOverScreen)
+                PlayerStats.Traits = Vector2.Zero;
 
-                if (SaveManager.FileExists(SaveType.PlayerData))
+            if (SaveManager.FileExists(SaveType.PlayerData))
+            {
+                SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
+                if (screen.CurrentRoom == null)
+                    return;
+
+                if (screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending" && screen.CurrentRoom.Name != "Tutorial")
                 {
-                    SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
-                    if (PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start"
-                      &&
-                        levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
-                    {
-                        SaveManager.SaveFiles(SaveType.MapData);
-                    }
+                    SaveManager.SaveFiles(SaveType.MapData);
                 }
             }
         }
@@ -746,7 +613,7 @@ namespace RogueCastle
 
         public void UpdatePlaySessionLength()
         {
-            PlaySessionLength = _totalGameTimeHours;
+            PlaySessionLength = TotalGameTimeHours;
         }
 
         public List<Vector2> GetSupportedResolutions()
@@ -771,14 +638,14 @@ namespace RogueCastle
         {
             Console.WriteLine("Saving Config file");
             var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var path = Path.Combine(folderPath, "Rogue Legacy Archipelago");
-            if (!Directory.Exists(path))
+            var dirPath = Path.Combine(folderPath, LevelENV.GameName);
+            if (!Directory.Exists(dirPath))
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(dirPath);
             }
 
-            var path2 = Path.Combine(folderPath, "Rogue Legacy Archipelago", "GameConfig.ini");
-            using (var streamWriter = new StreamWriter(path2, false))
+            var iniPath = Path.Combine(folderPath, LevelENV.GameName, "GameConfig.ini");
+            using (var streamWriter = new StreamWriter(iniPath, false))
             {
                 streamWriter.WriteLine("[Screen Resolution]");
                 streamWriter.WriteLine("ScreenWidth=" + GameConfig.ScreenWidth);
@@ -804,7 +671,7 @@ namespace RogueCastle
                 streamWriter.WriteLine("ReduceQuality=" + GameConfig.ReduceQuality);
                 streamWriter.WriteLine();
                 streamWriter.WriteLine("[Profile]");
-                streamWriter.WriteLine("Slot=" + GameConfig.ProfileSlot);
+                streamWriter.WriteLine("Profile=DEFAULT");
                 streamWriter.WriteLine();
                 streamWriter.WriteLine("[Keyboard Config]");
                 streamWriter.WriteLine("KeyUP=" + GlobalInput.KeyList[16]);
@@ -840,7 +707,7 @@ namespace RogueCastle
             try
             {
                 var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var path = Path.Combine(folderPath, "Rogue Legacy Archipelago", "GameConfig.ini");
+                var path = Path.Combine(folderPath, LevelENV.GameName, "GameConfig.ini");
                 using (var streamReader = new StreamReader(path))
                 {
                     var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
@@ -848,137 +715,132 @@ namespace RogueCastle
                     string text;
                     while ((text = streamReader.ReadLine()) != null)
                     {
-                        var num = text.IndexOf("=");
-                        if (num != -1)
+                        var separatorIndex = text.IndexOf("=", StringComparison.Ordinal);
+                        if (separatorIndex != -1)
                         {
-                            var text2 = text.Substring(0, num);
-                            var text3 = text.Substring(num + 1);
-                            string key;
-                            switch (key = text2)
+                            var option = text.Substring(0, separatorIndex);
+                            var setting = text.Substring(separatorIndex + 1);
+                            switch (option)
                             {
                                 case "ScreenWidth":
-                                    GameConfig.ScreenWidth = int.Parse(text3, NumberStyles.Any, cultureInfo);
+                                    GameConfig.ScreenWidth = int.Parse(setting, NumberStyles.Any, cultureInfo);
                                     break;
 
                                 case "ScreenHeight":
-                                    GameConfig.ScreenHeight = int.Parse(text3, NumberStyles.Any, cultureInfo);
+                                    GameConfig.ScreenHeight = int.Parse(setting, NumberStyles.Any, cultureInfo);
                                     break;
 
                                 case "Fullscreen":
-                                    GameConfig.FullScreen = bool.Parse(text3);
+                                    GameConfig.FullScreen = bool.Parse(setting);
                                     break;
 
                                 case "QuickDrop":
-                                    GameConfig.QuickDrop = bool.Parse(text3);
+                                    GameConfig.QuickDrop = bool.Parse(setting);
                                     break;
 
                                 case "MusicVol":
-                                    GameConfig.MusicVolume = float.Parse(text3);
+                                    GameConfig.MusicVolume = float.Parse(setting);
                                     break;
 
                                 case "SFXVol":
-                                    GameConfig.SFXVolume = float.Parse(text3);
+                                    GameConfig.SFXVolume = float.Parse(setting);
                                     break;
 
                                 case "DeadZone":
-                                    InputManager.Deadzone = int.Parse(text3, NumberStyles.Any, cultureInfo);
+                                    InputManager.Deadzone = int.Parse(setting, NumberStyles.Any, cultureInfo);
                                     break;
 
                                 case "EnableDirectInput":
-                                    GameConfig.EnableDirectInput = bool.Parse(text3);
+                                    GameConfig.EnableDirectInput = bool.Parse(setting);
                                     break;
 
                                 case "ReduceQuality":
-                                    GameConfig.ReduceQuality = bool.Parse(text3);
+                                    GameConfig.ReduceQuality = bool.Parse(setting);
                                     LevelENV.SaveFrames = GameConfig.ReduceQuality;
                                     break;
 
                                 case "EnableSteamCloud":
-                                    GameConfig.EnableSteamCloud = bool.Parse(text3);
-                                    break;
-
-                                case "Slot":
-                                    GameConfig.ProfileSlot = text3;
+                                    GameConfig.EnableSteamCloud = bool.Parse(setting);
                                     break;
 
                                 case "KeyUP":
-                                    GlobalInput.KeyList[16] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[16] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyDOWN":
-                                    GlobalInput.KeyList[18] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[18] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyLEFT":
-                                    GlobalInput.KeyList[20] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[20] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyRIGHT":
-                                    GlobalInput.KeyList[22] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[22] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyATTACK":
-                                    GlobalInput.KeyList[12] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[12] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyJUMP":
-                                    GlobalInput.KeyList[10] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[10] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeySPECIAL":
-                                    GlobalInput.KeyList[13] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[13] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyDASHLEFT":
-                                    GlobalInput.KeyList[14] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[14] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeyDASHRIGHT":
-                                    GlobalInput.KeyList[15] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[15] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "KeySPELL1":
-                                    GlobalInput.KeyList[24] = (Keys) Enum.Parse(typeof(Keys), text3);
+                                    GlobalInput.KeyList[24] = (Keys) Enum.Parse(typeof(Keys), setting);
                                     break;
 
                                 case "ButtonUP":
-                                    GlobalInput.ButtonList[16] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[16] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonDOWN":
-                                    GlobalInput.ButtonList[18] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[18] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonLEFT":
-                                    GlobalInput.ButtonList[20] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[20] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonRIGHT":
-                                    GlobalInput.ButtonList[22] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[22] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonATTACK":
-                                    GlobalInput.ButtonList[12] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[12] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonJUMP":
-                                    GlobalInput.ButtonList[10] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[10] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonSPECIAL":
-                                    GlobalInput.ButtonList[13] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[13] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonDASHLEFT":
-                                    GlobalInput.ButtonList[14] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[14] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonDASHRIGHT":
-                                    GlobalInput.ButtonList[15] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[15] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
 
                                 case "ButtonSPELL1":
-                                    GlobalInput.ButtonList[24] = (Buttons) Enum.Parse(typeof(Buttons), text3);
+                                    GlobalInput.ButtonList[24] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                                     break;
                             }
                         }
@@ -1020,7 +882,7 @@ namespace RogueCastle
 
         public static float GetTotalGameTimeHours()
         {
-            return _totalGameTimeHours;
+            return TotalGameTimeHours;
         }
 
         public struct SettingStruct
@@ -1029,7 +891,6 @@ namespace RogueCastle
             public bool   EnableSteamCloud;
             public bool   FullScreen;
             public float  MusicVolume;
-            public string ProfileSlot;
             public bool   QuickDrop;
             public bool   ReduceQuality;
             public int    ScreenHeight;

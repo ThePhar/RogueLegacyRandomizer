@@ -458,7 +458,7 @@ namespace RogueCastle
             {
                 Player.X = Bounds.Right - 10;
             }
-            var totalGameTime = Game.TotalGameTime;
+            var totalGameTime = Game.TotalGameTimeSeconds;
             var num = 2f;
             foreach (var current in m_balloonList)
             {

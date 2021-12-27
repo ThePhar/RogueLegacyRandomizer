@@ -1,13 +1,13 @@
-//
+// 
 // RogueLegacyArchipelago - LevelENV.cs
 // Last Modified 2021-12-27
-//
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using RogueCastle.Structs;
@@ -16,46 +16,48 @@ namespace RogueCastle
 {
     public static class LevelENV
     {
-        public static readonly Version GameVersion = Version.Parse("1.2.0");
+        public static readonly Version GameVersion = Version.Parse("0.3.0");
 
-        public const int   EnemyLevelDifficultyMod              = 32;
-        public const float EnemyLevelFakeMultiplier             = 2.75f;
-        public const int   RoomLevelMod                         = 4;
-        public const byte  TotalJournalEntries                  = 25;
-        public const int   EnemyExpertLevelMod                  = 4;
-        public const int   EnemyMiniBossLevelMod                = 7;
-        public const int   LastBossMode1LevelMod                = 8;
-        public const int   LastBossMode2LevelMod                = 10;
-        public const int   CastleRoomLevelBoost                 = 0;
-        public const int   GardenRoomLevelBoost                 = 2;
-        public const int   TowerRoomLevelBoost                  = 4;
-        public const int   DungeonRoomLevelBoost                = 6;
-        public const int   NewGamePlusLevelBase                 = 128;
-        public const int   NewGamePlusLevelAppreciation         = 128;
-        public const int   NewGamePlusMiniBossLevelBase         = 0;
-        public const int   NewGamePlusMiniBossLevelAppreciation = 0;
-        public const bool  LinkToCastleOnly                     = true;
-        public const byte  CastleBossRoom                       = 1;
-        public const byte  TowerBossRoom                        = 6;
-        public const byte  DungeonBossRoom                      = 7;
-        public const byte  GardenBossRoom                       = 5;
-        public const byte  LastBossRoom                         = 2;
-        public const int   LevelCastleLeftDoor                  = 90;
-        public const int   LevelCastleRightDoor                 = 90;
-        public const int   LevelCastleTopDoor                   = 90;
-        public const int   LevelCastleBottomDoor                = 90;
-        public const int   LevelGardenLeftDoor                  = 70;
-        public const int   LevelGardenRightDoor                 = 100;
-        public const int   LevelGardenTopDoor                   = 45;
-        public const int   LevelGardenBottomDoor                = 45;
-        public const int   LevelTowerLeftDoor                   = 45;
-        public const int   LevelTowerRightDoor                  = 45;
-        public const int   LevelTowerTopDoor                    = 100;
-        public const int   LevelTowerBottomDoor                 = 60;
-        public const int   LevelDungeonLeftDoor                 = 55;
-        public const int   LevelDungeonRightDoor                = 55;
-        public const int   LevelDungeonTopDoor                  = 45;
-        public const int   LevelDungeonBottomDoor               = 100;
+        public const bool   LinkToCastleOnly                     = true;
+        public const byte   TotalJournalEntries                  = 25;
+        public const byte   CastleBossRoom                       = 1;
+        public const byte   TowerBossRoom                        = 6;
+        public const byte   DungeonBossRoom                      = 7;
+        public const byte   GardenBossRoom                       = 5;
+        public const byte   LastBossRoom                         = 2;
+        public const float  FrameLimit                           = 0.025f;
+        public const float  EnemyLevelFakeMultiplier             = 2.75f;
+        public const int    EnemyLevelDifficultyMod              = 32;
+        public const int    RoomLevelMod                         = 4;
+        public const int    EnemyExpertLevelMod                  = 4;
+        public const int    EnemyMiniBossLevelMod                = 7;
+        public const int    LastBossMode1LevelMod                = 8;
+        public const int    LastBossMode2LevelMod                = 10;
+        public const int    CastleRoomLevelBoost                 = 0;
+        public const int    GardenRoomLevelBoost                 = 2;
+        public const int    TowerRoomLevelBoost                  = 4;
+        public const int    DungeonRoomLevelBoost                = 6;
+        public const int    NewGamePlusLevelBase                 = 128;
+        public const int    NewGamePlusLevelAppreciation         = 128;
+        public const int    NewGamePlusMiniBossLevelBase         = 0;
+        public const int    NewGamePlusMiniBossLevelAppreciation = 0;
+        public const int    LevelCastleLeftDoor                  = 90;
+        public const int    LevelCastleRightDoor                 = 90;
+        public const int    LevelCastleTopDoor                   = 90;
+        public const int    LevelCastleBottomDoor                = 90;
+        public const int    LevelGardenLeftDoor                  = 70;
+        public const int    LevelGardenRightDoor                 = 100;
+        public const int    LevelGardenTopDoor                   = 45;
+        public const int    LevelGardenBottomDoor                = 45;
+        public const int    LevelTowerLeftDoor                   = 45;
+        public const int    LevelTowerRightDoor                  = 45;
+        public const int    LevelTowerTopDoor                    = 100;
+        public const int    LevelTowerBottomDoor                 = 60;
+        public const int    LevelDungeonLeftDoor                 = 55;
+        public const int    LevelDungeonRightDoor                = 55;
+        public const int    LevelDungeonTopDoor                  = 45;
+        public const int    LevelDungeonBottomDoor               = 100;
+        public const string GameName                             = "Rogue Legacy Archipelago";
 
         public static LevelType TestRoomLevelType          { get; set; }
         public static byte[]    DementiaFlightList         { get; set; }
@@ -78,7 +80,6 @@ namespace RogueCastle
         public static bool      TestRoomReverse            { get; set; }
         public static bool      RunTestRoom                { get; set; }
         public static bool      ShowDebugText              { get; set; }
-        public static bool      LoadTitleScreen            { get; set; }
         public static bool      LoadSplashScreen           { get; set; }
         public static bool      ShowSaveLoadDebugText      { get; set; }
         public static bool      DeleteSaveFile             { get; set; }
@@ -325,15 +326,14 @@ namespace RogueCastle
             TestRoomReverse        = false;
             RunTestRoom            = false;
             ShowDebugText          = false;
-            LoadTitleScreen        = false;
-            LoadSplashScreen       = true;
+            LoadSplashScreen       = false;
             ShowSaveLoadDebugText  = true;
             DeleteSaveFile         = false;
             CloseTestRoomDoors     = false;
             RunTutorial            = false;
             RunDemoVersion         = false;
             DisableSaving          = false;
-            RunCrashLogs           = false;
+            RunCrashLogs           = true;
             WeakenBosses           = false;
             EnableOffscreenControl = false;
             EnableBackupSaving     = true;

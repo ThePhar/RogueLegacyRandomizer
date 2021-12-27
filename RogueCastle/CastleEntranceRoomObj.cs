@@ -306,7 +306,7 @@ namespace RogueCastle
             bounds.X -= 50;
             bounds.Width += 100;
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
-                               (float) Math.Sin(Game.TotalGameTime*20f)*2f;
+                               (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
             {
                 if (m_speechBubble.SpriteName == "ExclamationSquare_Sprite")

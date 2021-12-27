@@ -21,33 +21,24 @@ namespace RogueCastle
 {
     public class SaveGameManager
     {
-        private bool m_autosaveLoaded;
-        private string m_fileNameLineage = "RogueLegacyArchipelagoLineage.rcdat";
-        private string m_fileNameMap = "RogueLegacyArchipelagoMap.rcdat";
-        private string m_fileNameMapData = "RogueLegacyArchipelagoMapDat.rcdat";
-        private string m_fileNamePlayer = "RogueLegacyArchipelagoPlayer.rcdat";
-        private string m_fileNameUpgrades = "RogueLegacyArchipelagoBP.rcdat";
-        private Game m_game;
-        private int m_saveFailCounter;
         private StorageContainer m_storageContainer;
+        private bool             m_autosaveLoaded;
+        private int              m_saveFailCounter;
 
-        public SaveGameManager(Game game)
+        private readonly string m_fileNameLineage  = string.Format("{0}_Lineage.rcdat", LevelENV.GameName.Replace(" ", ""));
+        private readonly string m_fileNameMap      = string.Format("{0}_Map.rcdat",     LevelENV.GameName.Replace(" ", ""));
+        private readonly string m_fileNameMapData  = string.Format("{0}_MapDat.rcdat",  LevelENV.GameName.Replace(" ", ""));
+        private readonly string m_fileNamePlayer   = string.Format("{0}_Player.rcdat",  LevelENV.GameName.Replace(" ", ""));
+        private readonly string m_fileNameUpgrades = string.Format("{0}_BP.rcdat",      LevelENV.GameName.Replace(" ", ""));
+
+        public SaveGameManager()
         {
             m_saveFailCounter = 0;
             m_autosaveLoaded = false;
-            m_game = game;
         }
 
         public void Initialize()
         {
-            if (LevelENV.RunDemoVersion)
-            {
-                m_fileNamePlayer = "RogueLegacyArchipelagoDemoPlayer.rcdat";
-                m_fileNameUpgrades = "RogueLegacyArchipelagoDemoBP.rcdat";
-                m_fileNameMap = "RogueLegacyArchipelagoDemoMap.rcdat";
-                m_fileNameMapData = "RogueLegacyArchipelagoDemoMapDat.rcdat";
-                m_fileNameLineage = "RogueLegacyArchipelagoDemoLineage.rcdat";
-            }
             if (m_storageContainer != null)
             {
                 m_storageContainer.Dispose();
@@ -58,44 +49,28 @@ namespace RogueCastle
 
         private void GetStorageContainer()
         {
-            if (m_storageContainer == null || m_storageContainer.IsDisposed)
-            {
-                var asyncResult = StorageDevice.BeginShowSelector(null, null);
-                asyncResult.AsyncWaitHandle.WaitOne();
-                var storageDevice = StorageDevice.EndShowSelector(asyncResult);
-                asyncResult.AsyncWaitHandle.Close();
-                asyncResult = storageDevice.BeginOpenContainer("RogueLegacyArchipelagoStorageContainer", null, null);
-                asyncResult.AsyncWaitHandle.WaitOne();
-                m_storageContainer = storageDevice.EndOpenContainer(asyncResult);
-                asyncResult.AsyncWaitHandle.Close();
-            }
+            if (m_storageContainer != null && !m_storageContainer.IsDisposed)
+                return;
+
+            var asyncResult = StorageDevice.BeginShowSelector(null, null);
+            asyncResult.AsyncWaitHandle.WaitOne();
+            var storageDevice = StorageDevice.EndShowSelector(asyncResult);
+            asyncResult.AsyncWaitHandle.Close();
+            asyncResult = storageDevice.BeginOpenContainer("RogueLegacyArchipelagoStorageContainer", null, null);
+            asyncResult.AsyncWaitHandle.WaitOne();
+            m_storageContainer = storageDevice.EndOpenContainer(asyncResult);
+            asyncResult.AsyncWaitHandle.Close();
         }
 
         private void PerformDirectoryCheck()
         {
             GetStorageContainer();
-            if (!m_storageContainer.DirectoryExists("Profile1"))
+
+            if (!m_storageContainer.DirectoryExists("Profile_DEFAULT"))
             {
-                m_storageContainer.CreateDirectory("Profile1");
-                CopyFile(m_storageContainer, m_fileNamePlayer, "Profile1");
-                CopyFile(m_storageContainer, "AutoSave_" + m_fileNamePlayer, "Profile1");
-                CopyFile(m_storageContainer, m_fileNameUpgrades, "Profile1");
-                CopyFile(m_storageContainer, "AutoSave_" + m_fileNameUpgrades, "Profile1");
-                CopyFile(m_storageContainer, m_fileNameMap, "Profile1");
-                CopyFile(m_storageContainer, "AutoSave_" + m_fileNameMap, "Profile1");
-                CopyFile(m_storageContainer, m_fileNameMapData, "Profile1");
-                CopyFile(m_storageContainer, "AutoSave_" + m_fileNameMapData, "Profile1");
-                CopyFile(m_storageContainer, m_fileNameLineage, "Profile1");
-                CopyFile(m_storageContainer, "AutoSave_" + m_fileNameLineage, "Profile1");
+                m_storageContainer.CreateDirectory("Profile_DEFAULT");
             }
-            if (!m_storageContainer.DirectoryExists("Profile2"))
-            {
-                m_storageContainer.CreateDirectory("Profile2");
-            }
-            if (!m_storageContainer.DirectoryExists("Profile3"))
-            {
-                m_storageContainer.CreateDirectory("Profile3");
-            }
+
             m_storageContainer.Dispose();
             m_storageContainer = null;
         }
@@ -103,9 +78,9 @@ namespace RogueCastle
         public void CreateSaveDirectory()
         {
             GetStorageContainer();
-            if (!m_storageContainer.DirectoryExists(string.Format("Profile{0}", Game.GameConfig.ProfileSlot)))
+            if (!m_storageContainer.DirectoryExists(string.Format("Profile_{0}", Game.ProfileName)))
             {
-                m_storageContainer.CreateDirectory(string.Format("Profile{0}", Game.GameConfig.ProfileSlot));
+                m_storageContainer.CreateDirectory(string.Format("Profile_{0}", Game.ProfileName));
             }
             m_storageContainer.Dispose();
             m_storageContainer = null;
@@ -302,9 +277,8 @@ namespace RogueCastle
         public void ClearFiles(params SaveType[] deleteList)
         {
             GetStorageContainer();
-            for (var i = 0; i < deleteList.Length; i++)
+            foreach (var deleteType in deleteList)
             {
-                var deleteType = deleteList[i];
                 DeleteData(deleteType);
             }
             m_storageContainer.Dispose();
@@ -314,11 +288,11 @@ namespace RogueCastle
         public void ClearBackupFiles(params SaveType[] deleteList)
         {
             GetStorageContainer();
-            for (var i = 0; i < deleteList.Length; i++)
+            foreach (var deleteType in deleteList)
             {
-                var deleteType = deleteList[i];
                 DeleteBackupData(deleteType);
             }
+
             m_storageContainer.Dispose();
             m_storageContainer = null;
         }
@@ -339,50 +313,51 @@ namespace RogueCastle
             {
                 case SaveType.PlayerData:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNamePlayer)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNamePlayer));
                     }
                     break;
                 case SaveType.UpgradeData:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameUpgrades)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameUpgrades));
                     }
                     break;
                 case SaveType.Map:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMap)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMap));
                     }
                     break;
                 case SaveType.MapData:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMapData)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMapData));
                     }
                     break;
                 case SaveType.Lineage:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameLineage)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameLineage));
                     }
                     break;
             }
+
             Console.WriteLine("Save file type " + deleteType + " deleted.");
         }
 
@@ -392,50 +367,51 @@ namespace RogueCastle
             {
                 case SaveType.PlayerData:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNamePlayer)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNamePlayer));
                     }
                     break;
                 case SaveType.UpgradeData:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameUpgrades)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameUpgrades));
                     }
                     break;
                 case SaveType.Map:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameMap)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameMap));
                     }
                     break;
                 case SaveType.MapData:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameMapData)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameMapData));
                     }
                     break;
                 case SaveType.Lineage:
                     if (
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameLineage)))
                     {
-                        m_storageContainer.DeleteFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                        m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameLineage));
                     }
                     break;
             }
+
             Console.WriteLine("Backup save file type " + deleteType + " deleted.");
         }
 
@@ -444,89 +420,90 @@ namespace RogueCastle
             Console.WriteLine("Replacing save file with back up saves");
             GetStorageContainer();
             if (
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNamePlayer)) &&
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                     m_fileNamePlayer)))
             {
                 var stream =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_", m_fileNamePlayer),
+                        string.Concat("Profile_", Game.ProfileName, "/AutoSave_", m_fileNamePlayer),
                         FileMode.Open);
                 var stream2 =
-                    m_storageContainer.CreateFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                    m_storageContainer.CreateFile(string.Concat("Profile_", Game.ProfileName, "/",
                         m_fileNamePlayer));
                 stream.CopyTo(stream2);
                 stream.Close();
                 stream2.Close();
             }
             if (
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameUpgrades)) &&
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                     m_fileNameUpgrades)))
             {
                 var stream3 =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_", m_fileNameUpgrades),
+                        string.Concat("Profile_", Game.ProfileName, "/AutoSave_", m_fileNameUpgrades),
                         FileMode.Open);
                 var stream4 =
-                    m_storageContainer.CreateFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                    m_storageContainer.CreateFile(string.Concat("Profile_", Game.ProfileName, "/",
                         m_fileNameUpgrades));
                 stream3.CopyTo(stream4);
                 stream3.Close();
                 stream4.Close();
             }
             if (
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameMap)) &&
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/", m_fileNameMap)))
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMap)))
             {
                 var stream5 =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_", m_fileNameMap),
+                        string.Concat("Profile_", Game.ProfileName, "/AutoSave_", m_fileNameMap),
                         FileMode.Open);
                 var stream6 =
-                    m_storageContainer.CreateFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                    m_storageContainer.CreateFile(string.Concat("Profile_", Game.ProfileName, "/",
                         m_fileNameMap));
                 stream5.CopyTo(stream6);
                 stream5.Close();
                 stream6.Close();
             }
             if (
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameMapData)) &&
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                     m_fileNameMapData)))
             {
                 var stream7 =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_", m_fileNameMapData),
+                        string.Concat("Profile_", Game.ProfileName, "/AutoSave_", m_fileNameMapData),
                         FileMode.Open);
                 var stream8 =
-                    m_storageContainer.CreateFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                    m_storageContainer.CreateFile(string.Concat("Profile_", Game.ProfileName, "/",
                         m_fileNameMapData));
                 stream7.CopyTo(stream8);
                 stream7.Close();
                 stream8.Close();
             }
             if (
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameLineage)) &&
-                m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                     m_fileNameLineage)))
             {
                 var stream9 =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/AutoSave_", m_fileNameLineage),
+                        string.Concat("Profile_", Game.ProfileName, "/AutoSave_", m_fileNameLineage),
                         FileMode.Open);
                 var stream10 =
-                    m_storageContainer.CreateFile(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                    m_storageContainer.CreateFile(string.Concat("Profile_", Game.ProfileName, "/",
                         m_fileNameLineage));
                 stream9.CopyTo(stream10);
                 stream9.Close();
                 stream10.Close();
             }
+
             m_autosaveLoaded = true;
             m_storageContainer.Dispose();
             m_storageContainer = null;
@@ -552,6 +529,7 @@ namespace RogueCastle
                     SaveLineageData(saveBackup);
                     break;
             }
+
             Console.WriteLine("\nData type " + saveType + " saved!");
         }
 
@@ -562,7 +540,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
-            text = text.Insert(0, "Profile" + Game.GameConfig.ProfileSlot + "/");
+            text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
                 using (var binaryWriter = new BinaryWriter(stream))
@@ -618,7 +596,7 @@ namespace RogueCastle
                     binaryWriter.Write(Game.PlayerStats.ReadLastDiary);
                     binaryWriter.Write(Game.PlayerStats.SpokenToLastBoss);
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
-                    binaryWriter.Write(Game.GameConfig.ProfileSlot);
+                    binaryWriter.Write(Game.ProfileName);
                     var value = Game.PlayerStats.TotalHoursPlayed + Game.PlaySessionLength;
                     binaryWriter.Write(value);
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.X);
@@ -683,7 +661,7 @@ namespace RogueCastle
                         Console.WriteLine("Player read last diary: " + Game.PlayerStats.ReadLastDiary);
                         Console.WriteLine("Player has spoken to last boss: " + Game.PlayerStats.SpokenToLastBoss);
                         Console.WriteLine("Is Hardcore mode: " + Game.PlayerStats.HardcoreMode);
-                        Console.WriteLine("Seed Name: " + Game.GameConfig.ProfileSlot);
+                        Console.WriteLine("Profile Name: " + Game.ProfileName);
                         Console.WriteLine("Total Hours Played " + Game.PlayerStats.TotalHoursPlayed);
                         Console.WriteLine("Wizard Spell 1: " + Game.PlayerStats.WizardSpellList.X);
                         Console.WriteLine("Wizard Spell 2: " + Game.PlayerStats.WizardSpellList.Y);
@@ -710,7 +688,7 @@ namespace RogueCastle
                                 current2.Y));
                             Console.WriteLine(string.Concat("Enemy Type: ", num, ", Difficulty: Expert, Killed: ",
                                 current2.Z));
-                            Console.WriteLine(string.Concat("Enemy Type: ", num, ", Difficulty: Miniboss, Killed: ",
+                            Console.WriteLine(string.Concat("Enemy Type: ", num, ", Difficulty: Mini-Boss, Killed: ",
                                 current2.W));
                             num++;
                         }
@@ -780,7 +758,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
-            text = text.Insert(0, "Profile" + Game.GameConfig.ProfileSlot + "/");
+            text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
                 using (var binaryWriter = new BinaryWriter(stream))
@@ -899,7 +877,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
-            text = text.Insert(0, "Profile" + Game.GameConfig.ProfileSlot + "/");
+            text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
                 using (var binaryWriter = new BinaryWriter(stream))
@@ -1002,7 +980,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
-            text = text.Insert(0, "Profile" + Game.GameConfig.ProfileSlot + "/");
+            text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
                 using (var binaryWriter = new BinaryWriter(stream))
@@ -1170,7 +1148,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
-            text = text.Insert(0, "Profile" + Game.GameConfig.ProfileSlot + "/");
+            text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
                 using (var binaryWriter = new BinaryWriter(stream))
@@ -1319,7 +1297,7 @@ namespace RogueCastle
             using (
                 var stream =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/", m_fileNamePlayer), FileMode.Open,
+                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNamePlayer), FileMode.Open,
                         FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
@@ -1377,7 +1355,7 @@ namespace RogueCastle
                     Game.PlayerStats.ReadLastDiary = binaryReader.ReadBoolean();
                     Game.PlayerStats.SpokenToLastBoss = binaryReader.ReadBoolean();
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
-                    Game.GameConfig.ProfileSlot = binaryReader.ReadString();
+                    Game.ProfileName = binaryReader.ReadString();
                     Game.PlayerStats.TotalHoursPlayed = binaryReader.ReadSingle();
                     var b = binaryReader.ReadByte();
                     var b2 = binaryReader.ReadByte();
@@ -1443,7 +1421,7 @@ namespace RogueCastle
                         Console.WriteLine("Player read last diary: " + Game.PlayerStats.ReadLastDiary);
                         Console.WriteLine("Player has spoken to last boss: " + Game.PlayerStats.SpokenToLastBoss);
                         Console.WriteLine("Is Hardcore mode: " + Game.PlayerStats.HardcoreMode);
-                        Console.WriteLine("Seed Name: " + Game.GameConfig.ProfileSlot);
+                        Console.WriteLine("Profile Name: " + Game.ProfileName);
                         Console.WriteLine("Total Hours Played " + Game.PlayerStats.TotalHoursPlayed);
                         Console.WriteLine("Wizard Spell 1: " + Game.PlayerStats.WizardSpellList.X);
                         Console.WriteLine("Wizard Spell 2: " + Game.PlayerStats.WizardSpellList.Y);
@@ -1468,7 +1446,7 @@ namespace RogueCastle
                                 current.Y));
                             Console.WriteLine(string.Concat("Enemy Type: ", num, ", Difficulty: Expert, Killed: ",
                                 current.Z));
-                            Console.WriteLine(string.Concat("Enemy Type: ", num, ", Difficulty: Miniboss, Killed: ",
+                            Console.WriteLine(string.Concat("Enemy Type: ", num, ", Difficulty: Mini-Boss, Killed: ",
                                 current.W));
                             num++;
                         }
@@ -1535,7 +1513,7 @@ namespace RogueCastle
             using (
                 var stream =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/", m_fileNameUpgrades), FileMode.Open,
+                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameUpgrades), FileMode.Open,
                         FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
@@ -1659,7 +1637,7 @@ namespace RogueCastle
             using (
                 var stream =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/", m_fileNameMap), FileMode.Open,
+                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMap), FileMode.Open,
                         FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
@@ -1703,7 +1681,7 @@ namespace RogueCastle
             using (
                 var stream =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/", m_fileNameMapData), FileMode.Open,
+                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMapData), FileMode.Open,
                         FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
@@ -1863,7 +1841,7 @@ namespace RogueCastle
             using (
                 var stream =
                     m_storageContainer.OpenFile(
-                        string.Concat("Profile", Game.GameConfig.ProfileSlot, "/", m_fileNameLineage), FileMode.Open,
+                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameLineage), FileMode.Open,
                         FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
@@ -1962,38 +1940,35 @@ namespace RogueCastle
 
         public bool FileExists(SaveType saveType)
         {
-            var flag = true;
-            if (m_storageContainer != null && !m_storageContainer.IsDisposed)
-            {
-                flag = false;
-            }
+            bool flag = !(m_storageContainer != null && !m_storageContainer.IsDisposed);
+
             GetStorageContainer();
             var result = false;
             switch (saveType)
             {
                 case SaveType.PlayerData:
                     result =
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNamePlayer));
                     break;
                 case SaveType.UpgradeData:
                     result =
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameUpgrades));
                     break;
                 case SaveType.Map:
                     result =
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMap));
                     break;
                 case SaveType.MapData:
                     result =
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMapData));
                     break;
                 case SaveType.Lineage:
                     result =
-                        m_storageContainer.FileExists(string.Concat("Profile", Game.GameConfig.ProfileSlot, "/",
+                        m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameLineage));
                     break;
             }
@@ -2019,11 +1994,11 @@ namespace RogueCastle
             playerIsDead = false;
             castlesBeaten = 0;
             GetStorageContainer();
-            if (m_storageContainer.FileExists(string.Concat("Profile", profile, "/", m_fileNamePlayer)))
+            if (m_storageContainer.FileExists(string.Concat("Profile_", profile, "/", m_fileNamePlayer)))
             {
                 using (
                     var stream = m_storageContainer.OpenFile(
-                        string.Concat("Profile", profile, "/", m_fileNamePlayer), FileMode.Open, FileAccess.Read,
+                        string.Concat("Profile_", profile, "/", m_fileNamePlayer), FileMode.Open, FileAccess.Read,
                         FileShare.Read))
                 {
                     using (var binaryReader = new BinaryReader(stream))
@@ -2077,11 +2052,11 @@ namespace RogueCastle
                     stream.Close();
                 }
             }
-            if (m_storageContainer.FileExists(string.Concat("Profile", profile, "/", m_fileNameUpgrades)))
+            if (m_storageContainer.FileExists(string.Concat("Profile_", profile, "/", m_fileNameUpgrades)))
             {
                 using (
                     var stream2 =
-                        m_storageContainer.OpenFile(string.Concat("Profile", profile, "/", m_fileNameUpgrades),
+                        m_storageContainer.OpenFile(string.Concat("Profile_", profile, "/", m_fileNameUpgrades),
                             FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     using (var binaryReader2 = new BinaryReader(stream2))

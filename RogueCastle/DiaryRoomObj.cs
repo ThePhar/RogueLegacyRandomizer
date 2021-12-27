@@ -64,7 +64,7 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
-                               (float) Math.Sin(Game.TotalGameTime*20f)*2f;
+                               (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
             var bounds = m_diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;

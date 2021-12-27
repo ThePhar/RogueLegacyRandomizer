@@ -149,7 +149,7 @@ namespace RogueCastle
             m_versionNumber.Align = Types.TextAlign.Left;
             m_versionNumber.FontSize = 8f;
             m_versionNumber.Position = new Vector2(14f, 5f);
-            m_versionNumber.Text = LevelENV.GameVersion.ToString();
+            m_versionNumber.Text = string.Format("Randomizer v{0}", LevelENV.GameVersion);
 
             // Press Start Text
             m_pressStartText = new KeyIconTextObj(Game.JunicodeFont)
@@ -320,10 +320,10 @@ namespace RogueCastle
 
             if (!m_startPressed)
             {
-                m_pressStartText.Opacity = (float) Math.Abs(Math.Sin(Game.TotalGameTime * 1f));
+                m_pressStartText.Opacity = (float) Math.Abs(Math.Sin(Game.TotalGameTimeSeconds * 1f));
             }
 
-            m_godRay.LightSourceSize = 1f + (float) Math.Abs(Math.Sin(Game.TotalGameTime * 0.5f)) * 0.5f;
+            m_godRay.LightSourceSize = 1f + (float) Math.Abs(Math.Sin(Game.TotalGameTimeSeconds * 0.5f)) * 0.5f;
             if (m_optionsEntered && Game.ScreenManager.CurrentScreen == this)
             {
                 m_optionsEntered = false;

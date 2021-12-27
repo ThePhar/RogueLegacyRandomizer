@@ -417,7 +417,7 @@ namespace RogueCastle
                 {
                     if (Shake)
                     {
-                        Rotation = (float) Math.Sin(Game.TotalGameTime*15f)*2f;
+                        Rotation = (float) Math.Sin(Game.TotalGameTimeSeconds*15f)*2f;
                     }
                     else
                     {
