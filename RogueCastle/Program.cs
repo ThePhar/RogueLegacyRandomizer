@@ -15,7 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {

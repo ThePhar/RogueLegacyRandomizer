@@ -23,7 +23,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueCastle.Archipelago;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using SpriteSystem;
 using Tweener;
 using Keys = Microsoft.Xna.Framework.Input.Keys;

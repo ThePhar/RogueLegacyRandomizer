@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AssemblyName>RogueLegacyArchipelago</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <WarningLevel>4</WarningLevel>
@@ -60,8 +60,17 @@
     <Reference Include="SpriteSystem">
       <HintPath>lib\SpriteSystem.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e">
+      <HintPath>lib\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Archipelago\ArchipelagoClient.cs" />
+    <Compile Include="Archipelago\ArchipelagoStatus.cs" />
+    <Compile Include="Archipelago\ConnectionInfo.cs" />
+    <Compile Include="Archipelago\Legacy\LegacyItems.cs" />
+    <Compile Include="Archipelago\Legacy\LegacyLocations.cs" />
+    <Compile Include="Archipelago\Legacy\LegacySlotData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcess.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcessingEffect.cs" />
@@ -72,11 +81,6 @@
     <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
     <Compile Include="RogueCastle\ArchipelagoOptionsObj.cs" />
     <Compile Include="RogueCastle\ArchipelagoScreen.cs" />
-    <Compile Include="RogueCastle\Archipelago\ArchClient.cs" />
-    <Compile Include="RogueCastle\Archipelago\ChestTracker.cs" />
-    <Compile Include="RogueCastle\Archipelago\Items.cs" />
-    <Compile Include="RogueCastle\Archipelago\Locations.cs" />
-    <Compile Include="RogueCastle\Archipelago\SlotData.cs" />
     <Compile Include="RogueCastle\AreaStruct.cs" />
     <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
     <Compile Include="RogueCastle\BackToMenuArchipelagoObj.cs" />
@@ -266,30 +270,30 @@
     <Compile Include="RogueCastle\ToggleDirectInputOptionsObj.cs" />
     <Compile Include="RogueCastle\TraitState.cs" />
     <Compile Include="RogueCastle\TutorialRoomObj.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\BonusRoomType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\BossRoomType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\ChestConditionType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\ChestType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\ClassType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\EnemyType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\EquipmentAbilityType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\EquipmentBaseType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\EquipmentCategoryType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\EquipmentSecondaryDataType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\GameTypes.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\GetItemType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\InputMapType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\ItemDropType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\OrbType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\RoomType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\SaveType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\ScreenType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\SkillType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\SkillUnlockType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\SpecialItemType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\SpellType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\TraitStatType.cs" />
-    <Compile Include="RogueCastle\TypeDefinitions\TraitType.cs" />
+    <Compile Include="RogueCastle\Structs\BonusRoomType.cs" />
+    <Compile Include="RogueCastle\Structs\BossRoomType.cs" />
+    <Compile Include="RogueCastle\Structs\ChestConditionType.cs" />
+    <Compile Include="RogueCastle\Structs\ChestType.cs" />
+    <Compile Include="RogueCastle\Structs\ClassType.cs" />
+    <Compile Include="RogueCastle\Structs\EnemyType.cs" />
+    <Compile Include="RogueCastle\Structs\EquipmentAbilityType.cs" />
+    <Compile Include="RogueCastle\Structs\EquipmentBaseType.cs" />
+    <Compile Include="RogueCastle\Structs\EquipmentCategoryType.cs" />
+    <Compile Include="RogueCastle\Structs\EquipmentSecondaryDataType.cs" />
+    <Compile Include="RogueCastle\Structs\GameTypes.cs" />
+    <Compile Include="RogueCastle\Structs\GetItemType.cs" />
+    <Compile Include="RogueCastle\Structs\InputMapType.cs" />
+    <Compile Include="RogueCastle\Structs\ItemDropType.cs" />
+    <Compile Include="RogueCastle\Structs\OrbType.cs" />
+    <Compile Include="RogueCastle\Structs\RoomType.cs" />
+    <Compile Include="RogueCastle\Structs\SaveType.cs" />
+    <Compile Include="RogueCastle\Structs\ScreenType.cs" />
+    <Compile Include="RogueCastle\Structs\SkillType.cs" />
+    <Compile Include="RogueCastle\Structs\SkillUnlockType.cs" />
+    <Compile Include="RogueCastle\Structs\SpecialItemType.cs" />
+    <Compile Include="RogueCastle\Structs\SpellType.cs" />
+    <Compile Include="RogueCastle\Structs\TraitStatType.cs" />
+    <Compile Include="RogueCastle\Structs\TraitType.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
     <Compile Include="RogueCastle\WaypointObj.cs" />
@@ -297,8 +301,8 @@
     <Compile Include="RogueCastle\XMLCompiler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="RogueCastle\Characters" />
-    <Folder Include="RogueCastle\Systems" />
+    <Folder Include="RogueCastle\Constants" />
+    <Folder Include="RogueCastle\GameObjects\Enemies" />
     <Folder Include="RogueCastle\Options" />
     <Folder Include="RogueCastle\Rooms" />
     <Folder Include="RogueCastle\Screens" />

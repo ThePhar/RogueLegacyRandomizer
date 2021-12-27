@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {

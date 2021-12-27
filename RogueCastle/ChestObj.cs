@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using RogueCastle.Archipelago;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -58,17 +58,17 @@ namespace RogueCastle
                 var isOpen = IsOpen;
                 switch (m_chestType)
                 {
-                    case TypeDefinitions.ChestType.Boss:
+                    case Structs.ChestType.Boss:
                         ForcedItemType = 14;
                         ChangeSprite("BossChest_Sprite");
                         break;
-                    case TypeDefinitions.ChestType.Fairy:
+                    case Structs.ChestType.Fairy:
                         ChangeSprite("Chest4_Sprite");
                         break;
-                    case TypeDefinitions.ChestType.Gold:
+                    case Structs.ChestType.Gold:
                         ChangeSprite("Chest3_Sprite");
                         break;
-                    case TypeDefinitions.ChestType.Silver:
+                    case Structs.ChestType.Silver:
                         ChangeSprite("Chest2_Sprite");
                         break;
                     default:
@@ -105,10 +105,10 @@ namespace RogueCastle
 
             switch (ChestType)
             {
-                case TypeDefinitions.ChestType.Brown:
+                case Structs.ChestType.Brown:
                     chances = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
                     break;
-                case TypeDefinitions.ChestType.Silver:
+                case Structs.ChestType.Silver:
                     chances = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
                     break;
                 default:
