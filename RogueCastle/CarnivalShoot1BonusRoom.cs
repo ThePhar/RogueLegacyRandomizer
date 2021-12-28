@@ -285,9 +285,7 @@ namespace RogueCastle
                 RevealChest();
                 GameUtil.UnlockAchievement("LOVE_OF_CLOWNS");
 
-                // TODO: FIX
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445039);
-                // Program.Game.ArchClient.CheckedLocations[4445039] = true;
+                Program.Game.ArchipelagoManager.CheckLocations(4445039);
                 return;
             }
             var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;

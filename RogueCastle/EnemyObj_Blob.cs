@@ -732,11 +732,8 @@ namespace RogueCastle
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Eyeball_Freeze");
                     GameUtil.UnlockAchievement("FEAR_OF_SLIME");
 
-                    // TODO: Fix this.
-                    // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445006);
-                    // Program.Game.ArchClient.CheckedLocations[4445006] = true;
-                    // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445007);
-                    // Program.Game.ArchClient.CheckedLocations[4445007] = true;
+                    // TODO: Make inside the chests instead.
+                    Program.Game.ArchipelagoManager.CheckLocations(4445006, 4445007);
 
                     if (IsNeo)
                     {

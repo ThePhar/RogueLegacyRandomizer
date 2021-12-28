@@ -17,6 +17,7 @@ using System.Linq;
 using Archipelago.Legacy;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
+using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Exceptions;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
@@ -137,6 +138,17 @@ namespace Archipelago
             m_deathLink = null;
             m_tags = new List<string> { "AP" };
             m_seed = "0";
+        }
+
+        /// <summary>
+        /// Tell the server we reached our win condition.
+        /// </summary>
+        public void AnnounceVictory()
+        {
+            m_session.Socket.SendPacket(new StatusUpdatePacket
+            {
+                Status = ArchipelagoClientState.ClientGoal,
+            });
         }
 
         /// <summary>

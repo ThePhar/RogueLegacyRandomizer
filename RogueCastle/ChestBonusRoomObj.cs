@@ -179,9 +179,7 @@ namespace RogueCastle
                     if (!flag)
                     {
                         rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Won");
-                        // TODO: FIX
-                        // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445040);
-                        // Program.Game.ArchClient.CheckedLocations[4445040] = true;
+                        Program.Game.ArchipelagoManager.CheckLocations(4445040);
                     }
                     else
                     {

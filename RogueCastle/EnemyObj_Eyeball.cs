@@ -731,11 +731,8 @@ namespace RogueCastle
                 Tween.RunFunction(1f, this, "Part2");
                 GameUtil.UnlockAchievement("FEAR_OF_EYES");
 
-                // TODO: FIX
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445000);
-                // Program.Game.ArchClient.CheckedLocations[4445000] = true;
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445001);
-                // Program.Game.ArchClient.CheckedLocations[4445001] = true;
+                // TODO: Make inside the chests instead.
+                Program.Game.ArchipelagoManager.CheckLocations(4445000, 4445001);
             }
         }
 

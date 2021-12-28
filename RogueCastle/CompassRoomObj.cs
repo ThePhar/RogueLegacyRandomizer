@@ -34,10 +34,8 @@ namespace RogueCastle
                 }
             }
 
-            // TODO: FIX
-            // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445042);
-            // Program.Game.ArchClient.CheckedLocations[4445042] = true;
-
+            // Make tweaks to chests.
+            Program.Game.ArchipelagoManager.CheckLocations(4445042);
             base.OnEnter();
         }
 

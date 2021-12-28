@@ -149,9 +149,7 @@ namespace RogueCastle
                     AnimateJukebox();
                     CheckForSongRepeat();
 
-                    // TODO: FIX
-                    // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445041);
-                    // Program.Game.ArchClient.CheckedLocations[4445041] = true;
+                    Program.Game.ArchipelagoManager.CheckLocations(4445041);
                 }
             }
             else

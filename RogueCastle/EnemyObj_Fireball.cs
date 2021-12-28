@@ -601,11 +601,8 @@ namespace RogueCastle
                 SoundManager.PlaySound("Boss_Fireball_Freeze");
                 GameUtil.UnlockAchievement("FEAR_OF_FIRE");
 
-                // TODO: FIX ME!
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445004);
-                // Program.Game.ArchClient.CheckedLocations[4445004] = true;
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445005);
-                // Program.Game.ArchClient.CheckedLocations[4445005] = true;
+                // TODO: Make inside the chests instead.
+                Program.Game.ArchipelagoManager.CheckLocations(4445004, 4445005);
             }
         }
 

@@ -704,10 +704,8 @@ namespace RogueCastle
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Freeze");
                 GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
 
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445002);
-                // Program.Game.ArchClient.CheckedLocations[4445002] = true;
-                // Program.Game.ArchClient.Session.Locations.CompleteLocationChecks(4445003);
-                // Program.Game.ArchClient.CheckedLocations[4445003] = true;
+                // TODO: Make inside the chests instead.
+                Program.Game.ArchipelagoManager.CheckLocations(4445002, 4445003);
             }
         }
 
