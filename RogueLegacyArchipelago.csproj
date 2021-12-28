@@ -102,6 +102,7 @@
     <Compile Include="RogueCastle\ChestBonusRoomObj.cs" />
     <Compile Include="RogueCastle\ChestConditionChecker.cs" />
     <Compile Include="RogueCastle\ChestObj.cs" />
+    <Compile Include="RogueCastle\ChestTracker.cs" />
     <Compile Include="RogueCastle\CompassRoomObj.cs" />
     <Compile Include="RogueCastle\CreditsScreen.cs" />
     <Compile Include="RogueCastle\DeadZoneOptionsObj.cs" />

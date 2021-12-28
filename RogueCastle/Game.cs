@@ -555,6 +555,7 @@ namespace RogueCastle
 
                     // TODO: Give item here
                     ScreenManager.DisplayScreen(ScreenType.GetItem, true, data);
+                    ScreenManager.Player.RunGetItemAnimation();
                 }
             }
 
