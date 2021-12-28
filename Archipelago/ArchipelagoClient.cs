@@ -287,6 +287,9 @@ namespace Archipelago
         private void OnRoomInfo(RoomInfoPacket packet)
         {
             m_seed = packet.SeedName;
+
+            // Send this so we have a cache of item/location names.
+            m_session.Socket.SendPacket(new GetDataPackagePacket());
         }
 
         /// <summary>

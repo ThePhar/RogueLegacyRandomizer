@@ -269,6 +269,7 @@
     <Compile Include="RogueCastle\Structs\EnemyDifficulty.cs" />
     <Compile Include="RogueCastle\Structs\EquipmentType.cs" />
     <Compile Include="RogueCastle\Structs\LevelType.cs" />
+    <Compile Include="RogueCastle\Structs\ManorPieces.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
     <Compile Include="RogueCastle\TextManager.cs" />

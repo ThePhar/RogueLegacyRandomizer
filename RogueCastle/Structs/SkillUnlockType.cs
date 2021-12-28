@@ -31,6 +31,7 @@ namespace RogueCastle.Structs
         public const byte LichUp       = 15;
         public const byte Dragon       = 16;
         public const byte Traitor      = 17;
+        public const byte NetworkItem  = 18;
 
         /// <summary>
         /// Returns the full unlock description for this skill unlock.

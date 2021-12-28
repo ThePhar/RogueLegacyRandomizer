@@ -92,5 +92,7 @@ namespace RogueCastle.Structs
         ExplosiveExpert,
         Icicle,
         Ender,
+        ManorUpgrade,
+        Traitorous,
     }
 }

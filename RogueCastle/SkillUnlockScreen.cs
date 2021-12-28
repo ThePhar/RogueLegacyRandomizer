@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillUnlockScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,6 +11,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,14 +24,15 @@ namespace RogueCastle
 {
     public class SkillUnlockScreen : Screen
     {
-        private SpriteObj m_picture;
+        private SpriteObj    m_picture;
         private ObjContainer m_picturePlate;
         private ObjContainer m_plate;
-        private byte m_skillUnlockType;
-        private TextObj m_text;
-        private SpriteObj m_title;
-        private SpriteObj m_titlePlate;
-        public float BackBufferOpacity { get; set; }
+        private byte         m_skillUnlockType;
+        private int          m_locationId;
+        private TextObj      m_text;
+        private SpriteObj    m_title;
+        private SpriteObj    m_titlePlate;
+        public  float        BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
@@ -56,7 +59,7 @@ namespace RogueCastle
             m_titlePlate = new SpriteObj("SkillUnlockTitlePlate_Sprite");
             m_titlePlate.Position = new Vector2(660f, 160f);
             m_titlePlate.ForceDraw = true;
-            m_title = new SpriteObj("ClassUnlockedText_Sprite");
+            m_title = new SpriteObj("ItemFoundText_Sprite");
             m_title.Position = m_titlePlate.Position;
             m_title.Y -= 40f;
             m_title.ForceDraw = true;
@@ -66,6 +69,9 @@ namespace RogueCastle
         public override void PassInData(List<object> objList)
         {
             m_skillUnlockType = (byte) objList[0];
+
+            if (m_skillUnlockType == SkillUnlockType.NetworkItem)
+                m_locationId = (int) objList[1];
         }
 
         public override void OnEnter()
@@ -96,6 +102,8 @@ namespace RogueCastle
 
         private void SetData()
         {
+            m_text.Text = SkillUnlockType.Description(m_skillUnlockType);
+
             switch (m_skillUnlockType)
             {
                 case 1:
@@ -166,8 +174,15 @@ namespace RogueCastle
                     m_picture.ChangeSprite("TraitorUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
+
+                case SkillUnlockType.NetworkItem:
+                    var item = Program.Game.ArchipelagoManager.LocationCache[m_locationId];
+                    Console.WriteLine("{0}, {1}, {2}", item.Item, item.Location, item.Player);
+                    var location = ArchipelagoClient.LegacyLocations.First(kp => kp.Value == m_locationId).Key;
+                    m_text.Text = string.Format("\"I just finished building your {0} and found this {1} for {2} while building. You may as well take it.\"", location, Program.Game.ArchipelagoManager.GetItemName(item.Item), Program.Game.ArchipelagoManager.GetPlayerName(item.Player));
+                    break;
             }
-            m_text.Text = SkillUnlockType.Description(m_skillUnlockType);
+
             m_text.WordWrap(340);
         }
 
@@ -196,16 +211,25 @@ namespace RogueCastle
 
         public override void Draw(GameTime gametime)
         {
-            Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
-            Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
-            m_plate.Draw(Camera);
-            m_titlePlate.Draw(Camera);
-            m_title.Draw(Camera);
-            m_picturePlate.Draw(Camera);
-            Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            m_picture.Draw(Camera);
-            Camera.End();
+            try
+            {
+                Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null,
+                    null);
+                Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
+                Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+                m_plate.Draw(Camera);
+                m_titlePlate.Draw(Camera);
+                m_title.Draw(Camera);
+                m_picturePlate.Draw(Camera);
+                Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+                m_picture.Draw(Camera);
+                Camera.End();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            } // I won't tell if you won't.
+
             base.Draw(gametime);
         }
 

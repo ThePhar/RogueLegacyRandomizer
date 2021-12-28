@@ -508,7 +508,7 @@ namespace RogueCastle
                     if (newGame)
                     {
                         PlayerStats.CharacterFound = true;
-                        PlayerStats.Gold = 0;
+                        PlayerStats.Gold = 9999999; // TODO REMOVE
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
                         PlayerStats.EnemiesKilledInRun.Clear();
 
