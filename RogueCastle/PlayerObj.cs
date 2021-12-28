@@ -2873,6 +2873,7 @@ namespace RogueCastle
                 Game.SaveManager.LoadFiles(AttachedLevel, SaveType.UpgradeData);
                 CurrentHealth = 0;
             }
+
             m_translocatorSprite.Visible = false;
             m_swearBubble.Visible = false;
             m_swearBubbleCounter = 0f;

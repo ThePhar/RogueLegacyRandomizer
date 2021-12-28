@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Archipelago.Legacy;
 using Archipelago.MultiClient.Net;
@@ -29,6 +30,7 @@ namespace Archipelago
         public readonly Version APVersion = Version.Parse("0.2.2");
 
         public ArchipelagoStatus            Status               { get; private set; }
+        public DateTime                     LastDeath            { get; private set; }
         public DeathLink                    DeathLink            { get; private set; }
         public Dictionary<int, NetworkItem> LocationCache        { get; private set; }
         public LegacySlotData               Data                 { get; private set; }
@@ -129,6 +131,7 @@ namespace Archipelago
             LocationCache = new Dictionary<int, NetworkItem>();
             Data = null;
             ItemQueue = new Queue<NetworkItem>();
+            LastDeath = DateTime.MinValue;
 
             m_session = null;
             m_deathLink = null;
@@ -143,6 +146,24 @@ namespace Archipelago
         {
             if (m_deathLink != null)
                 DeathLink = null;
+        }
+
+        /// <summary>
+        /// Send a DeathLink.
+        /// </summary>
+        public void SendDeathLink(string cause)
+        {
+            // Log our current time so we can make sure we ignore our own DeathLink.
+            LastDeath = DateTime.Now;
+
+            if (Data.DeathLink && m_deathLink != null)
+            {
+                var causeWithPlayerName = string.Format("{0}'s {1}.", m_session.Players.GetPlayerAlias(Data.Slot) , cause);
+                m_deathLink.SendDeathLink(new DeathLink(m_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName)
+                {
+                    Timestamp = LastDeath,
+                });
+            }
         }
 
         /// <summary>
@@ -226,7 +247,15 @@ namespace Archipelago
         /// <param name="deathLink"></param>
         private void OnDeathLink(DeathLink deathLink)
         {
-            DeathLink = deathLink;
+            Console.WriteLine("REC: {0}", deathLink.Timestamp);
+            Console.WriteLine("LST: {0}", LastDeath);
+            Console.WriteLine(deathLink.Timestamp.ToString(CultureInfo.InvariantCulture) != LastDeath.ToString(CultureInfo.InvariantCulture));
+
+            // Ignore deaths that died at the same time as us. Should also prevent the player from dying to themselves.
+            if (deathLink.Timestamp.ToString(CultureInfo.InvariantCulture) != LastDeath.ToString(CultureInfo.InvariantCulture))
+            {
+                DeathLink = deathLink;
+            }
         }
 
         /// <summary>

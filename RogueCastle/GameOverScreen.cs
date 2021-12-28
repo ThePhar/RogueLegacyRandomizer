@@ -11,12 +11,12 @@
 
 using System;
 using System.Collections.Generic;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.GameObjects;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
@@ -71,27 +71,14 @@ namespace RogueCastle
                     m_objKilledPlayer = (objList[5] as GameObj);
                 }
 
-                SetObjectKilledPlayerText();
+                var cause = SetObjectKilledPlayerText();
                 m_enemyStoredPositions.Clear();
 
-                // TODO: Fix
-                // Handle Death Link!
-                // if (!Game.PlayerStats.DeathLinkDeath)
-                // {
-                //     if (objList[5] == null)
-                //     {
-                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                //             string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
-                //                 Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
-                //     }
-                //     else
-                //     {
-                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                //             string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
-                //                 Game.GameConfig.PlayerAlias)));
-                //     }
-                // }
-                // Game.PlayerStats.DeathLinkDeath = false;
+                // Do not send a death link if what is killing us is a DeathLink.
+                if (!(m_objKilledPlayer is DeathLinkObj))
+                {
+                    Program.Game.ArchipelagoManager.SendDeathLink(cause);
+                }
 
                 base.PassInData(objList);
             }
@@ -312,13 +299,14 @@ namespace RogueCastle
             SoundManager.PlaySound("Enemy_Kill_Plant");
         }
 
-        private void SetObjectKilledPlayerText()
+        private string SetObjectKilledPlayerText()
         {
             var textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
             if (m_objKilledPlayer != null)
             {
                 var enemyObj = m_objKilledPlayer as EnemyObj;
                 var projectileObj = m_objKilledPlayer as ProjectileObj;
+                var deathLinkObj = m_objKilledPlayer as DeathLinkObj;
                 if (enemyObj != null)
                 {
                     if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
@@ -349,24 +337,24 @@ namespace RogueCastle
                         textObj.Text = Game.PlayerStats.PlayerName + " was done in by a projectile";
                     }
                 }
+                else if (deathLinkObj != null)
+                {
+                    textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + deathLinkObj.Name +
+                        "'s carelessness";
+                }
 
                 var hazardObj = m_objKilledPlayer as HazardObj;
                 if (hazardObj != null)
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " slipped and was impaled by spikes";
                 }
-
-                var playerObj = m_objKilledPlayer as PlayerObj;
-                if (playerObj != null)
-                {
-                    textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + playerObj.Name +
-                                   "'s carelessness";
-                }
             }
             else
             {
                 textObj.Text = Game.PlayerStats.PlayerName + " has been slain";
             }
+
+            return textObj.Text;
         }
 
         public override void HandleInput()

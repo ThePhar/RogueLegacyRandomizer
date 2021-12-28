@@ -178,6 +178,7 @@
     <Compile Include="RogueCastle\FullScreenOptionsObj.cs" />
     <Compile Include="RogueCastle\Game.cs" />
     <Compile Include="RogueCastle\GameEV.cs" />
+    <Compile Include="RogueCastle\GameObjects\DeathLinkObj.cs" />
     <Compile Include="RogueCastle\GameOverBossScreen.cs" />
     <Compile Include="RogueCastle\GameOverScreen.cs" />
     <Compile Include="RogueCastle\GameUtil.cs" />

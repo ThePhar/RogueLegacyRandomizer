@@ -17,12 +17,14 @@ using System.Threading;
 using System.Windows.Forms;
 using Archipelago;
 using Archipelago.Legacy;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.GameObjects;
 using RogueCastle.Screens;
 using RogueCastle.Structs;
 using SpriteSystem;
@@ -553,6 +555,18 @@ namespace RogueCastle
 
                     // TODO: Give item here
                     ScreenManager.DisplayScreen(ScreenType.GetItem, true, data);
+                }
+            }
+
+            // Death Link handling logic.
+            if (ArchipelagoManager.ItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
+            {
+                if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked
+                 && ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead)
+                {
+                    ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
+                    ScreenManager.Player.Kill();
+                    ArchipelagoManager.ClearDeathLink();
                 }
             }
 
