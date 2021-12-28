@@ -284,7 +284,7 @@ namespace RogueCastle.Structs
             if (SkillSystem.GetSkill(SkillType.SuperSecret).ModifierAmount > 0f)
                 list.Add(Dragon);
 
-            if (Game.PlayerStats.ChallengeLastBossBeaten)
+            if (SkillSystem.GetSkill(SkillType.Traitorous).ModifierAmount > 0f)
                 list.Add(Traitor);
 
             // Upgraded versions are 8 positions away in the table.
