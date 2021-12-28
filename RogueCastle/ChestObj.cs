@@ -376,7 +376,7 @@ namespace RogueCastle
             if (ArchipelagoClient.LegacyLocations.TryGetValue(location, out code))
             {
                 var name = arch.GetPlayerName(arch.LocationCache[code].Player);
-                var item = arch.GetItemName(arch.LocationCache[code].Item);
+                var item = arch.LocationCache[code].Item;
 
                 var networkItem = new List<object>
                 {

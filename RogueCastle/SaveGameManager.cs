@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SaveGameManager.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -1315,11 +1315,6 @@ namespace RogueCastle
                     Game.PlayerStats.HeadPiece = binaryReader.ReadByte();
                     Game.PlayerStats.ShoulderPiece = binaryReader.ReadByte();
                     Game.PlayerStats.ChestPiece = binaryReader.ReadByte();
-                    if (Game.PlayerStats.HeadPiece == 0 || Game.PlayerStats.ShoulderPiece == 0 ||
-                        Game.PlayerStats.ChestPiece == 0)
-                    {
-                        throw new Exception("Corrupted Save File");
-                    }
                     Game.PlayerStats.DiaryEntry = binaryReader.ReadByte();
                     Game.PlayerStats.BonusHealth = binaryReader.ReadInt32();
                     Game.PlayerStats.BonusStrength = binaryReader.ReadInt32();
@@ -1608,11 +1603,6 @@ namespace RogueCastle
                     Game.ScreenManager.Player.UpdateEquipmentColours();
                 }
                 stream.Close();
-                if (Game.PlayerStats.GetNumberOfEquippedRunes(0) > 0 &&
-                    SkillSystem.GetSkill(SkillType.Enchanter).CurrentLevel < 1 && LevelENV.CreateRetailVersion)
-                {
-                    throw new Exception("Corrupted Save file");
-                }
                 var flag = false;
                 var familyTreeArray = Game.PlayerStats.FamilyTreeArray;
                 foreach (var current in familyTreeArray)
@@ -1622,10 +1612,6 @@ namespace RogueCastle
                         flag = true;
                         break;
                     }
-                }
-                if (flag && SkillSystem.GetSkill(SkillType.Smithy).CurrentLevel < 1 && LevelENV.CreateRetailVersion)
-                {
-                    throw new Exception("Corrupted Save file");
                 }
             }
         }
