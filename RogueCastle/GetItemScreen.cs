@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GetItemScreen.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,6 +11,8 @@
 
 using System;
 using System.Collections.Generic;
+using Archipelago;
+using Archipelago.Legacy;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -25,28 +27,28 @@ namespace RogueCastle
     {
         private readonly Vector2 m_itemEndPos;
 
-        private bool m_lockControls;
-        private bool m_itemSpinning;
-        private byte m_itemType;
-        private float m_storedMusicVolume;
-        private string m_item_sent;
-        private string m_player_sent;
-        private string m_songName;
-        private Cue m_buildUpSound;
+        private bool           m_lockControls;
+        private bool           m_itemSpinning;
+        private byte           m_itemType;
+        private float          m_storedMusicVolume;
+        private int            m_network_item;
+        private string         m_network_player;
+        private string         m_songName;
+        private Cue            m_buildUpSound;
         private KeyIconTextObj m_continueText;
-        private SpriteObj m_itemFoundSprite;
-        private SpriteObj m_itemSprite;
-        private SpriteObj m_levelUpBGImage;
-        private SpriteObj m_tripStat1;
-        private SpriteObj m_tripStat2;
-        private SpriteObj[] m_levelUpParticles;
-        private TextObj m_tripStat1FoundText;
-        private TextObj m_tripStat2FoundText;
-        private TextObj m_itemFoundText;
-        private TextObj m_itemFoundPlayerText;
-        private Vector2 m_itemInfo;
-        private Vector2 m_itemStartPos;
-        private Vector2 m_tripStatData;
+        private SpriteObj      m_itemFoundSprite;
+        private SpriteObj      m_itemSprite;
+        private SpriteObj      m_levelUpBGImage;
+        private SpriteObj      m_tripStat1;
+        private SpriteObj      m_tripStat2;
+        private SpriteObj[]    m_levelUpParticles;
+        private TextObj        m_tripStat1FoundText;
+        private TextObj        m_tripStat2FoundText;
+        private TextObj        m_itemFoundText;
+        private TextObj        m_itemFoundPlayerText;
+        private Vector2        m_itemInfo;
+        private Vector2        m_itemStartPos;
+        private Vector2        m_tripStatData;
 
         // Goodbye Magic Numbers
         private const float ItemFoundYOffset = 70f;
@@ -102,6 +104,7 @@ namespace RogueCastle
             m_tripStat2FoundText = m_itemFoundText.Clone() as TextObj;
             m_itemFoundPlayerText = m_itemFoundText.Clone() as TextObj;
             m_itemFoundPlayerText.Y += ItemFoundPlayerYOffset;
+            m_itemFoundPlayerText.FontSize = 12f;
 
             m_itemFoundSprite = new SpriteObj("BlueprintFoundText_Sprite")
             {
@@ -128,13 +131,14 @@ namespace RogueCastle
 
             switch (m_itemType)
             {
-                case GetItemType.TripSkillDrop:
                 case GetItemType.TripStatDrop:
                     m_tripStatData = (Vector2) objList[3];
                     break;
-                case GetItemType.NetworkItem:
-                    m_player_sent = (string) objList[3];
-                    m_item_sent = (string) objList[4];
+                case GetItemType.ReceiveNetworkItem:
+                case GetItemType.GiveNetworkItem:
+                    m_tripStatData = (Vector2) objList[3];
+                    m_network_player = (string) objList[4];
+                    m_network_item = (int) objList[5];
                     break;
             }
 
@@ -164,7 +168,7 @@ namespace RogueCastle
             // Item Found Text
             m_itemFoundText.Position = m_itemEndPos;
 
-            if (m_itemType != GetItemType.NetworkItem)
+            if (m_itemType != GetItemType.GiveNetworkItem)
                 m_itemFoundText.Y += ItemFoundYOffset;
             else
                 m_itemFoundText.Y += NetworkItemFoundYOffset;
@@ -183,22 +187,21 @@ namespace RogueCastle
             m_tripStat2FoundText.Visible = false;
             switch (m_itemType)
             {
-                case 1:
+                case GetItemType.Blueprint:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
-                    m_itemFoundSprite.ChangeSprite("BlueprintFoundText_Sprite");
+                    m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                     m_itemFoundText.Text = string.Format("{0} {1}", EquipmentBaseType.ToString((int) m_itemInfo.Y), EquipmentCategoryType.ToString2((int) m_itemInfo.X));
                     break;
-                case 2:
+                case GetItemType.Rune:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("RuneIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
                     m_itemFoundText.Text = string.Format("{0} Rune ({1})", EquipmentAbilityType.ToString((int) m_itemInfo.Y), EquipmentCategoryType.ToString2((int) m_itemInfo.X));
                     m_itemSprite.AnimationDelay = 0.05f;
-                    GameUtil.UnlockAchievement("LOVE_OF_MAGIC");
                     break;
-                case 3:
-                case 6:
+                case GetItemType.StatDrop:
+                case GetItemType.TripStatDrop:
                     m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
                     m_itemFoundText.Text = GetStatText((int) m_itemInfo.X);
                     m_itemSprite.AnimationDelay = 0.05f;
@@ -221,12 +224,12 @@ namespace RogueCastle
                         m_tripStat1FoundText.Y = m_itemFoundText.Y + 50f;
                     }
                     break;
-                case 4:
+                case GetItemType.Spell:
                     m_itemSprite.ChangeSprite(SpellType.Icon((byte) m_itemInfo.X));
                     m_itemFoundSprite.ChangeSprite("SpellFoundText_Sprite");
                     m_itemFoundText.Text = SpellType.ToString((byte) m_itemInfo.X);
                     break;
-                case 5:
+                case GetItemType.SpecialItem:
                     m_itemSprite.ChangeSprite(SpecialItemType.SpriteName((byte) m_itemInfo.X));
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                     m_itemFoundText.Text = SpecialItemType.ToString((byte) m_itemInfo.X);
@@ -238,42 +241,167 @@ namespace RogueCastle
                         ? "Medallion completed!"
                         : "You've collected a medallion piece!";
                     break;
-                case GetItemType.NetworkItem:
+                case GetItemType.GiveNetworkItem:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    m_itemFoundText.Text = m_item_sent;
-                    m_itemFoundPlayerText.Text = string.Format("You found {0}'s", m_player_sent);
+                    m_itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(m_network_item);
+                    m_itemFoundPlayerText.Text = string.Format("You found {0}'s", m_network_player);
                     m_itemFoundText.TextureColor = Color.Yellow;
                     break;
-                case GetItemType.SkillDrop:
-                case GetItemType.TripSkillDrop:
-                    m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
-                    m_itemFoundText.Text = GetSkillText((int) m_itemInfo.X);
-                    m_itemSprite.AnimationDelay = 0.05f;
-                    m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    if (m_itemType == GetItemType.TripSkillDrop)
+                case GetItemType.ReceiveNetworkItem:
+                    switch (LegacyItems.GetItemType(m_network_item))
                     {
-                        m_tripStat1FoundText.Visible = true;
-                        m_tripStat2FoundText.Visible = true;
-                        m_tripStat1.ChangeSprite(GetStatSpriteName((int) m_tripStatData.X));
-                        m_tripStat2.ChangeSprite(GetStatSpriteName((int) m_tripStatData.Y));
-                        m_tripStat1.Visible = true;
-                        m_tripStat2.Visible = true;
-                        m_tripStat1.AnimationDelay = 0.05f;
-                        m_tripStat2.AnimationDelay = 0.05f;
-                        Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", true);
-                        Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", true);
-                        m_tripStat1FoundText.Text = GetSkillText((int) m_tripStatData.X);
-                        m_tripStat2FoundText.Text = GetSkillText((int) m_tripStatData.Y);
-                        m_itemFoundText.Y += 50f;
-                        m_tripStat1FoundText.Y = m_itemFoundText.Y + 50f;
+                        case LegacyItems.LegacyItemType.Blueprint:
+                            m_itemFoundText.Y += 40f;
+                            m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
+                            m_itemSpinning = true;
+                            m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                            m_itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(m_network_item);
+                            m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
+                            m_itemFoundText.TextureColor = Color.Yellow;
+                            break;
+
+                        case LegacyItems.LegacyItemType.Rune:
+                            m_itemFoundText.Y += 40f;
+                            m_itemSpinning = true;
+                            m_itemSprite.ChangeSprite("RuneIcon_Sprite");
+                            m_itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
+                            m_itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(m_network_item);
+                            m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
+                            m_itemSprite.AnimationDelay = 0.05f;
+                            break;
+
+                        case LegacyItems.LegacyItemType.Skill:
+                        case LegacyItems.LegacyItemType.SpecialSkill:
+                            m_itemFoundText.Y += 40f;
+                            m_itemSprite.ChangeSprite(GetSkillPlateIcon(m_network_item));
+                            m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                            m_itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(m_network_item);
+                            m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
+                            m_itemFoundText.TextureColor = Color.Yellow;
+                            break;
+
+                        case LegacyItems.LegacyItemType.Stats:
+                            m_itemFoundText.Y += 50f;
+                            m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
+                            m_itemFoundText.Text = GetStatText((int) m_itemInfo.X);
+                            m_itemSprite.AnimationDelay = 0.05f;
+                            m_itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
+                            m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
+                            if (m_network_item == ArchipelagoClient.LegacyItems["Random Triple Stat Increase"])
+                            {
+                                m_tripStat1FoundText.Visible = true;
+                                m_tripStat2FoundText.Visible = true;
+                                m_tripStat1.ChangeSprite(GetStatSpriteName((int) m_tripStatData.X));
+                                m_tripStat2.ChangeSprite(GetStatSpriteName((int) m_tripStatData.Y));
+                                m_tripStat1.Visible = true;
+                                m_tripStat2.Visible = true;
+                                m_tripStat1.AnimationDelay = 0.05f;
+                                m_tripStat2.AnimationDelay = 0.05f;
+                                Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", true);
+                                Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", true);
+                                m_tripStat1FoundText.Text = GetStatText((int) m_tripStatData.X);
+                                m_tripStat2FoundText.Text = GetStatText((int) m_tripStatData.Y);
+                                m_tripStat1FoundText.Y = m_itemFoundText.Y + 50f;
+                                m_tripStat2FoundText.Y = m_itemFoundText.Y + 100f;
+                                m_tripStat1FoundText.TextureColor = Color.Yellow;
+                                m_tripStat2FoundText.TextureColor = Color.Yellow;
+                            }
+                            break;
+
+                        case LegacyItems.LegacyItemType.Gold:
+                            m_itemFoundText.Y += 40f;
+                            m_itemSprite.ChangeSprite("MoneyBag_Sprite");
+                            m_itemSprite.AnimationSpeed = 0;
+                            m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                            m_itemFoundText.Text = string.Format("{0} Gold", (int) m_itemInfo.Y);
+                            m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
+                            m_itemFoundText.TextureColor = Color.Yellow;
+                            break;
                     }
+
                     break;
             }
             m_itemSprite.PlayAnimation();
             ItemSpinAnimation();
             base.OnEnter();
+        }
+
+        private string GetSkillPlateIcon(int item)
+        {
+            switch (item)
+            {
+                case 4444000:
+                    return SkillSystem.GetSkill(SkillType.Smithy).IconName.Replace("Locked", "");
+                case 4444001:
+                    return SkillSystem.GetSkill(SkillType.Architect).IconName.Replace("Locked", "");
+                case 4444002:
+                    return SkillSystem.GetSkill(SkillType.Enchanter).IconName.Replace("Locked", "");
+                case 4444003:
+                    return SkillSystem.GetSkill(SkillType.KnightUp).IconName.Replace("Locked", "");
+                case 4444004:
+                    return SkillSystem.GetSkill(SkillType.MageUp).IconName.Replace("Locked", "");
+                case 4444005:
+                    return SkillSystem.GetSkill(SkillType.BarbarianUp).IconName.Replace("Locked", "");
+                case 4444006:
+                    return SkillSystem.GetSkill(SkillType.AssassinUp).IconName.Replace("Locked", "");
+                case 4444007:
+                    return SkillSystem.GetSkill(SkillType.NinjaUp).CurrentLevel > 0
+                        ? SkillSystem.GetSkill(SkillType.NinjaUp).IconName.Replace("Locked", "")
+                        : SkillSystem.GetSkill(SkillType.NinjaUnlock).IconName.Replace("Locked", "");
+                case 4444008:
+                    return SkillSystem.GetSkill(SkillType.BankerUp).CurrentLevel > 0
+                        ? SkillSystem.GetSkill(SkillType.BankerUp).IconName.Replace("Locked", "")
+                        : SkillSystem.GetSkill(SkillType.BankerUnlock).IconName.Replace("Locked", "");
+                case 4444009:
+                    return SkillSystem.GetSkill(SkillType.LichUp).CurrentLevel > 0
+                        ? SkillSystem.GetSkill(SkillType.LichUp).IconName.Replace("Locked", "")
+                        : SkillSystem.GetSkill(SkillType.LichUnlock).IconName.Replace("Locked", "");
+                case 4444010:
+                    return SkillSystem.GetSkill(SkillType.SpellSwordUp).CurrentLevel > 0
+                        ? SkillSystem.GetSkill(SkillType.SpellSwordUp).IconName.Replace("Locked", "")
+                        : SkillSystem.GetSkill(SkillType.SpellswordUnlock).IconName.Replace("Locked", "");
+                case 4444011:
+                    return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
+                case 4444012:
+                    // TODO: Make Traitor icon
+                    return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
+                case 4444013:
+                    return SkillSystem.GetSkill(SkillType.HealthUp).IconName.Replace("Locked", "");
+                case 4444014:
+                    return SkillSystem.GetSkill(SkillType.ManaUp).IconName.Replace("Locked", "");
+                case 4444015:
+                    return SkillSystem.GetSkill(SkillType.AttackUp).IconName.Replace("Locked", "");
+                case 4444016:
+                    return SkillSystem.GetSkill(SkillType.MagicDamageUp).IconName.Replace("Locked", "");
+                case 4444017:
+                    return SkillSystem.GetSkill(SkillType.ArmorUp).IconName.Replace("Locked", "");
+                case 4444018:
+                    return SkillSystem.GetSkill(SkillType.EquipUp).IconName.Replace("Locked", "");
+                case 4444019:
+                    return SkillSystem.GetSkill(SkillType.CritChanceUp).IconName.Replace("Locked", "");
+                case 4444020:
+                    return SkillSystem.GetSkill(SkillType.CritDamageUp).IconName.Replace("Locked", "");
+                case 4444021:
+                    return SkillSystem.GetSkill(SkillType.DownStrikeUp).IconName.Replace("Locked", "");
+                case 4444022:
+                    return SkillSystem.GetSkill(SkillType.GoldGainUp).IconName.Replace("Locked", "");
+                case 4444023:
+                    return SkillSystem.GetSkill(SkillType.PotionUp).IconName.Replace("Locked", "");
+                case 4444024:
+                    return SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).IconName.Replace("Locked", "");
+                case 4444025:
+                    return SkillSystem.GetSkill(SkillType.ManaCostDown).IconName.Replace("Locked", "");
+                case 4444026:
+                    return SkillSystem.GetSkill(SkillType.DeathDodge).IconName.Replace("Locked", "");
+                case 4444027:
+                    return SkillSystem.GetSkill(SkillType.PricesDown).IconName.Replace("Locked", "");
+                case 4444028:
+                    return SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName.Replace("Locked", "");
+                default:
+                    return "BlueprintIcon_Sprite";
+            }
         }
 
         private void ItemSpinAnimation()

@@ -163,6 +163,27 @@ namespace Archipelago
         }
 
         /// <summary>
+        /// Return the string representation for a particular player.
+        /// </summary>
+        /// <param name="slot">Player Slot ID</param>
+        /// <returns></returns>
+        public string GetPlayerName(int slot)
+        {
+            var name = m_session.Players.GetPlayerAliasAndName(slot);
+            return string.IsNullOrEmpty(name) ? "Archipelago" : name;
+        }
+
+        /// <summary>
+        /// Returns the string representation for a particular item.
+        /// </summary>
+        /// <param name="item">Item ID</param>
+        /// <returns></returns>
+        public string GetItemName(int item)
+        {
+            return m_session.Items.GetItemName(item);
+        }
+
+        /// <summary>
         /// Handle disconnect events from AP server.
         /// </summary>
         /// <param name="closeEventArgs"></param>

@@ -477,6 +477,7 @@ namespace RogueCastle
             ScreenManager.Update(gameTime);
             SoundManager.Update3DSounds();
 
+            // Wait for Arch to say its ready.
             switch (ArchipelagoManager.Status)
             {
                 // We're ready!
@@ -530,6 +531,28 @@ namespace RogueCastle
                     ArchipelagoManager.StartPlaying();
                     SoundManager.StopMusic(0.2f);
                     break;
+                }
+            }
+
+            // Check for received items and send to player.
+            if (ArchipelagoManager.ItemQueue.Count > 0)
+            {
+                // Check to ensure we're in a safe place to receive.
+                if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked && ScreenManager.CurrentScreen is ProceduralLevelScreen)
+                {
+                    var item = ArchipelagoManager.ItemQueue.Dequeue();
+                    var data = new List<object>
+                    {
+                        new Vector2(ScreenManager.Player.X, ScreenManager.Player.Y),
+                        GetItemType.ReceiveNetworkItem,
+                        new Vector2(CDGMath.RandomInt(4, 9), CDGMath.RandomInt(5, 10) * 1000),
+                        new Vector2(CDGMath.RandomInt(4, 9), CDGMath.RandomInt(4, 9)),
+                        ArchipelagoManager.GetPlayerName(item.Player),
+                        item.Item,
+                    };
+
+                    // TODO: Give item here
+                    ScreenManager.DisplayScreen(ScreenType.GetItem, true, data);
                 }
             }
 

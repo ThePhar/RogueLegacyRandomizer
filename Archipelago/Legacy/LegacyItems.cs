@@ -9,6 +9,7 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
+using System;
 using System.Collections.Generic;
 
 namespace Archipelago.Legacy
@@ -47,6 +48,8 @@ namespace Archipelago.Legacy
             Add("Death Defy",                  4444026);
             Add("Haggle",                      4444027);
             Add("Randomize Children",          4444028);
+
+            // Random Stuff
             Add("Random Stat Increase",        4444029);
             Add("Random Triple Stat Increase", 4444030);
             Add("Gold Bonus",                  4444031);
@@ -184,6 +187,35 @@ namespace Archipelago.Legacy
             Add("Royal Cape",                  4444159);
             Add("Slayer Cape",                 4444160);
             Add("Dark Cape",                   4444161);
+        }
+
+        public static LegacyItemType GetItemType(int item)
+        {
+            if (item >= 4444000 && item <= 4444012)
+                return LegacyItemType.SpecialSkill;
+            if (item >= 4444013 && item <= 4444028)
+                return LegacyItemType.Skill;
+            if (item >= 4444029 && item <= 4444030)
+                return LegacyItemType.Stats;
+            if (item == 4444031)
+                return LegacyItemType.Gold;
+            if (item >= 4444032 && item <= 4444086)
+                return LegacyItemType.Rune;
+            if (item >= 4444087 && item <= 4444161)
+                return LegacyItemType.Blueprint;
+
+            throw new NotImplementedException(string.Format("ITEM: {0} is not implemented.", item));
+        }
+
+        public enum LegacyItemType
+        {
+            Blueprint,
+            Rune,
+            Skill,
+            SpecialSkill,
+            Stats,
+            Gold,
+            Other,
         }
     }
 }
