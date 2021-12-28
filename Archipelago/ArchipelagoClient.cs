@@ -1,6 +1,6 @@
 ﻿// 
 // RogueLegacyArchipelago - ArchipelagoClient.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -38,15 +38,24 @@ namespace Archipelago
         public Queue<NetworkItem>           ItemQueue            { get; private set; }
         public ConnectionInfo               CachedConnectionInfo { get; private set; }
 
+        public bool CanForfeit
+        {
+            get
+            {
+                return m_permissions["forfeit"] == Permissions.Goal || m_permissions["forfeit"] == Permissions.Enabled;
+            }
+        }
+
         public static readonly ReadOnlyDictionary<string, int> LegacyLocations =
             new ReadOnlyDictionary<string, int>(new LegacyLocations());
         public static readonly ReadOnlyDictionary<string, int> LegacyItems =
             new ReadOnlyDictionary<string, int>(new LegacyItems());
 
-        private ArchipelagoSession m_session;
-        private DeathLinkService   m_deathLink;
-        private List<string>       m_tags;
-        private string             m_seed;
+        private ArchipelagoSession              m_session;
+        private DeathLinkService                m_deathLink;
+        private List<string>                    m_tags;
+        private string                          m_seed;
+        private Dictionary<string, Permissions> m_permissions;
 
         public ArchipelagoClient()
         {
@@ -138,6 +147,14 @@ namespace Archipelago
             m_deathLink = null;
             m_tags = new List<string> { "AP" };
             m_seed = "0";
+        }
+
+        public void Forfeit()
+        {
+            m_session.Socket.SendPacket(new SayPacket
+            {
+                Text = "!forfeit",
+            });
         }
 
         /// <summary>
@@ -309,6 +326,7 @@ namespace Archipelago
         private void OnRoomInfo(RoomInfoPacket packet)
         {
             m_seed = packet.SeedName;
+            m_permissions = packet.Permissions;
 
             // Send this so we have a cache of item/location names.
             m_session.Socket.SendPacket(new GetDataPackagePacket());

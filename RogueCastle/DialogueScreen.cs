@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - DialogueScreen.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -372,9 +372,9 @@ namespace RogueCastle
             m_dialogText = dialogue;
             m_dialogContainer.Scale = Vector2.One;
             m_dialogContainer.Opacity = 0f;
-            (m_dialogContainer.GetChildAt(2) as TextObj).Text = dialogue[m_dialogCounter];
+            (m_dialogContainer.GetChildAt(2) as TextObj).Text = dialogue[m_dialogCounter] ?? "";
             (m_dialogContainer.GetChildAt(2) as TextObj).WordWrap(850);
-            (m_dialogContainer.GetChildAt(1) as TextObj).Text = speakers[m_dialogCounter];
+            (m_dialogContainer.GetChildAt(1) as TextObj).Text = speakers[m_dialogCounter] ?? "";
             if (Game.PlayerStats.Traits.X == 5f || Game.PlayerStats.Traits.Y == 5f)
             {
                 (m_dialogContainer.GetChildAt(2) as TextObj).RandomizeSentence(false);

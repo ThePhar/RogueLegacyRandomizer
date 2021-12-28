@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GetItemScreen.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -155,6 +155,8 @@ namespace RogueCastle
             if (m_itemType != GetItemType.FountainPiece)
                 (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
 
+            m_itemFoundPlayerText.Visible = false;
+
             m_itemSprite.Rotation = 0f;
             m_itemSprite.Scale = Vector2.One;
             m_itemStartPos.X -= Camera.TopLeftCorner.X;
@@ -246,10 +248,12 @@ namespace RogueCastle
                     m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                     m_itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(m_network_item);
+                    m_itemFoundPlayerText.Visible = true;
                     m_itemFoundPlayerText.Text = string.Format("You found {0}'s", m_network_player);
                     m_itemFoundText.TextureColor = Color.Yellow;
                     break;
                 case GetItemType.ReceiveNetworkItem:
+                    m_itemFoundPlayerText.Visible = true;
                     switch (LegacyItems.GetItemType(m_network_item))
                     {
                         case LegacyItems.LegacyItemType.Blueprint:

@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ChestObj.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -126,7 +126,12 @@ namespace RogueCastle
                 }
             }
 
-            GiveNetworkItem(itemDropManager, player);
+            if (ChestType == Structs.ChestType.Boss)
+            {
+                GiveStatDrop(itemDropManager, player, 3, 0);
+                return;
+            }
+
             switch (dropType)
             {
                 case 0:
@@ -326,16 +331,16 @@ namespace RogueCastle
                 {
                     case LevelType.None:
                     case LevelType.Castle:
-                        location = string.Format("Fairy Castle Chest {0}", ++Game.PlayerStats.OpenedChests.CastleFairyChests);
+                        location = string.Format("Castle Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.CastleFairyChests);
                         break;
                     case LevelType.Garden:
-                        location = string.Format("Fairy Garden Chest {0}", ++Game.PlayerStats.OpenedChests.GardenFairyChests);
+                        location = string.Format("Garden Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.GardenFairyChests);
                         break;
                     case LevelType.Dungeon:
-                        location = string.Format("Fairy Dungeon Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonFairyChests);
+                        location = string.Format("Dungeon Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonFairyChests);
                         break;
                     case LevelType.Tower:
-                        location = string.Format("Fairy Tower Chest {0}", ++Game.PlayerStats.OpenedChests.TowerFairyChests);
+                        location = string.Format("Tower Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.TowerFairyChests);
                         break;
 
                     default:

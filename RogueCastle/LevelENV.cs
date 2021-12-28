@@ -335,7 +335,7 @@ namespace RogueCastle
             RunDemoVersion         = false;
             DisableSaving          = false;
             RunCrashLogs           = true;
-            WeakenBosses           = false;
+            WeakenBosses           = true;
             EnableOffscreenControl = false;
             EnableBackupSaving     = true;
             CreateRetailVersion    = true;

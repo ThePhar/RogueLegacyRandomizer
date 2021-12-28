@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GameOverScreen.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -378,6 +378,7 @@ namespace RogueCastle
                 else
                 {
                     SkillSystem.ResetAllTraits();
+                    var chests = Game.PlayerStats.OpenedChests;
                     Game.PlayerStats.Dispose();
                     Game.PlayerStats = new PlayerStats();
                     (ScreenManager as RCScreenManager).Player.Reset();
@@ -385,6 +386,7 @@ namespace RogueCastle
                         SaveType.UpgradeData);
                     Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
+                    Game.PlayerStats.OpenedChests = chests;
                     (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Lineage, true);
                     m_lockControls = true;
                 }

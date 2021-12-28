@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ClassType.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -193,7 +193,7 @@ namespace RogueCastle.Structs
                     return "Huge HP. Low Str and MP.";
 
                 case Knave:
-                    return string.Format("+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.", 15.000001f,
+                    return string.Format("+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.", 15,
                         125f);
 
                 case Shinobi:
@@ -202,7 +202,7 @@ namespace RogueCastle.Structs
                         30.0000019f);
 
                 case Miner:
-                    return string.Format("+{0}% Gold gain.\nVery weak in all other stats.", 30.0000019f);
+                    return string.Format("+{0}% Gold gain.\nVery weak in all other stats.", 30);
 
                 case Spellthief:
                     return string.Format("{0}% of damage dealt is converted into mana.\nLow Str, HP, and MP.",
@@ -224,21 +224,21 @@ namespace RogueCastle.Structs
                 case Assassin:
                     return string.Format(
                         "SPECIAL: Mist Form.\n+{0}% Crit. Chance, +{1}% Crit. Damage.\nLow HP, MP, and Str.",
-                        15.000001f, 125f);
+                        15, 125f);
 
                 case Hokage:
                     return string.Format(
                         "SPECIAL: Replacement Technique.\nHuge Str, but you cannot land critical strikes.\n +{0}% Move Speed. Low HP and MP.",
-                        30.0000019f);
+                        30);
 
                 case Spelunker:
                     return string.Format("SPECIAL: Ordinary Headlamp.\n+{0}% Gold gain.\nVery weak in all other stats.",
-                        30.0000019f);
+                        30);
 
                 case Spellsword:
                     return string.Format(
                         "SPECIAL: Empowered Spell.\n{0}% of damage dealt is converted into mana.\nLow Str, HP, and MP.",
-                        30.0000019f);
+                        30);
 
                 case LichKing:
                     return

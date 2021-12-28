@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - StartingRoomObj.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -217,7 +217,9 @@ namespace RogueCastle
 
         private bool TollCollectorAvailable
         {
-            get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
+            // TODO: Remove after testing.
+            // get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
+            get { return false; }
         }
 
         public override void Initialize()
