@@ -1592,16 +1592,16 @@ namespace RogueCastle
                     }
                     SkillSystem.ResetAllTraits();
                     Game.PlayerStats.CurrentLevel = 0;
-                    for (var num = 0; num < 32; num++)
+                    foreach (var skill in skillArray)
                     {
-                        var num2 = binaryReader.ReadInt32();
-                        for (var num3 = 0; num3 < num2; num3++)
+                        var level = binaryReader.ReadInt32();
+                        for (var j = 0; j < level; j++)
                         {
-                            SkillSystem.LevelUpTrait(skillArray[num], false);
+                            SkillSystem.LevelUpTrait(skill, false);
                         }
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
-                            Console.Write(" " + skillArray[num].CurrentLevel);
+                            Console.Write(" " + skill.CurrentLevel);
                         }
                     }
                     binaryReader.Close();

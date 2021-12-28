@@ -205,6 +205,16 @@ namespace Archipelago
         }
 
         /// <summary>
+        /// Returns true if we checked this location.
+        /// </summary>
+        /// <param name="location">Location ID</param>
+        /// <returns></returns>
+        public bool HasCheckedLocation(int location)
+        {
+            return m_session.Locations.AllLocationsChecked.Contains(location);
+        }
+
+        /// <summary>
         /// Handle disconnect events from AP server.
         /// </summary>
         /// <param name="closeEventArgs"></param>

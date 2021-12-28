@@ -302,6 +302,40 @@ namespace RogueCastle
             IconsVisible = true;
         }
 
+        public static readonly Tuple<int, int>[] ManorPiecesOrder = new []{
+            new Tuple<int, int>(ManorPieces.MainBase,             4445032),
+            new Tuple<int, int>(ManorPieces.GroundRoad,           4445035),
+            new Tuple<int, int>(ManorPieces.MainRoof,             4445031),
+            new Tuple<int, int>(ManorPieces.LeftWingBase,         4445029),
+            new Tuple<int, int>(ManorPieces.RightWingBase,        4445018),
+            new Tuple<int, int>(ManorPieces.LeftWingRoof,         4445027),
+            new Tuple<int, int>(ManorPieces.RightWingRoof,        4445016),
+            new Tuple<int, int>(ManorPieces.LeftWingWindow,       4445028),
+            new Tuple<int, int>(ManorPieces.RightWingWindow,      4445017),
+            new Tuple<int, int>(ManorPieces.LeftTree1,            4445036),
+            new Tuple<int, int>(ManorPieces.RightBigBase,         4445015),
+            new Tuple<int, int>(ManorPieces.RightBigUpper,        4445014),
+            new Tuple<int, int>(ManorPieces.RightBigRoof,         4445013),
+            new Tuple<int, int>(ManorPieces.FrontWindowTop,       4445033),
+            new Tuple<int, int>(ManorPieces.FrontWindowBottom,    4445034),
+            new Tuple<int, int>(ManorPieces.LeftBigBase,          4445026),
+            new Tuple<int, int>(ManorPieces.LeftBigUpper1,        4445024),
+            new Tuple<int, int>(ManorPieces.LeftBigUpper2,        4445023),
+            new Tuple<int, int>(ManorPieces.LeftBigWindows,       4445025),
+            new Tuple<int, int>(ManorPieces.LeftBigRoof,          4445022),
+            new Tuple<int, int>(ManorPieces.LeftTree2,            4445037),
+            new Tuple<int, int>(ManorPieces.RightHighBase,        4445012),
+            new Tuple<int, int>(ManorPieces.RightHighUpper,       4445011),
+            new Tuple<int, int>(ManorPieces.RightHighTower,       4445010),
+            new Tuple<int, int>(ManorPieces.LeftFarBase,          4445021),
+            new Tuple<int, int>(ManorPieces.LeftFarRoof,          4445020),
+            new Tuple<int, int>(ManorPieces.RightTree,            4445038),
+            new Tuple<int, int>(ManorPieces.LeftExtension,        4445030),
+            new Tuple<int, int>(ManorPieces.RightExtension,       4445019),
+            new Tuple<int, int>(ManorPieces.ObservatoryBase,      4445009),
+            new Tuple<int, int>(ManorPieces.ObservatoryTelescope, 4445008),
+        };
+
         public static List<SkillObj> SkillArray { get; private set; }
         public static bool IconsVisible { get; private set; }
 
@@ -481,7 +515,14 @@ namespace RogueCastle
         public static int GetManorPiece(SkillObj trait)
         {
             var traitTypeIndex = GetTraitTypeIndex(trait);
-            return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            try
+            {
+                return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         public static SkillLinker GetSkillLink(int x, int y)

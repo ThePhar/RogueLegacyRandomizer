@@ -282,55 +282,24 @@ namespace RogueCastle
             base.OnExit();
         }
 
-        private readonly Tuple<int, int>[] m_manorPieceOrder = new []{
-            new Tuple<int, int>(ManorPieces.MainBase,             4445032),
-            new Tuple<int, int>(ManorPieces.GroundRoad,           4445035),
-            new Tuple<int, int>(ManorPieces.MainRoof,             4445031),
-            new Tuple<int, int>(ManorPieces.LeftWingBase,         4445029),
-            new Tuple<int, int>(ManorPieces.RightWingBase,        4445018),
-            new Tuple<int, int>(ManorPieces.LeftWingRoof,         4445027),
-            new Tuple<int, int>(ManorPieces.RightWingRoof,        4445016),
-            new Tuple<int, int>(ManorPieces.LeftWingWindow,       4445028),
-            new Tuple<int, int>(ManorPieces.RightWingWindow,      4445017),
-            new Tuple<int, int>(ManorPieces.LeftTree1,            4445036),
-            new Tuple<int, int>(ManorPieces.RightBigBase,         4445015),
-            new Tuple<int, int>(ManorPieces.RightBigUpper,        4445014),
-            new Tuple<int, int>(ManorPieces.RightBigRoof,         4445013),
-            new Tuple<int, int>(ManorPieces.FrontWindowTop,       4445033),
-            new Tuple<int, int>(ManorPieces.FrontWindowBottom,    4445034),
-            new Tuple<int, int>(ManorPieces.LeftBigBase,          4445026),
-            new Tuple<int, int>(ManorPieces.LeftBigUpper1,        4445024),
-            new Tuple<int, int>(ManorPieces.LeftBigUpper2,        4445023),
-            new Tuple<int, int>(ManorPieces.LeftBigWindows,       4445025),
-            new Tuple<int, int>(ManorPieces.LeftBigRoof,          4445022),
-            new Tuple<int, int>(ManorPieces.LeftTree2,            4445037),
-            new Tuple<int, int>(ManorPieces.RightHighBase,        4445012),
-            new Tuple<int, int>(ManorPieces.RightHighUpper,       4445011),
-            new Tuple<int, int>(ManorPieces.RightHighTower,       4445010),
-            new Tuple<int, int>(ManorPieces.LeftFarBase,          4445021),
-            new Tuple<int, int>(ManorPieces.LeftFarRoof,          4445020),
-            new Tuple<int, int>(ManorPieces.RightTree,            4445038),
-            new Tuple<int, int>(ManorPieces.LeftExtension,        4445030),
-            new Tuple<int, int>(ManorPieces.RightExtension,       4445019),
-            new Tuple<int, int>(ManorPieces.ObservatoryBase,      4445009),
-            new Tuple<int, int>(ManorPieces.ObservatoryTelescope, 4445008),
-        };
-
         public void SetVisible(SkillObj skill, bool fadeIn)
         {
             if (skill.TraitType == SkillType.ManorUpgrade && fadeIn)
             {
                 var level = skill.CurrentLevel;
-                Console.WriteLine("USING PIECE {0}", m_manorPieceOrder[level]);
-                SetManorPieceVisible(m_manorPieceOrder[level], skill);
-                Program.Game.ArchipelagoManager.CheckLocations(m_manorPieceOrder[level].Item2);
+                Console.WriteLine("USING PIECE {0}", SkillSystem.ManorPiecesOrder[level]);
+                SetManorPieceVisible(SkillSystem.ManorPiecesOrder[level], skill);
+                Program.Game.ArchipelagoManager.CheckLocations(SkillSystem.ManorPiecesOrder[level].Item2);
 
                 return;
             }
 
-            // var childAt = m_manor.GetChildAt(manorPiece);
-            // childAt.Opacity = 1f;
-            // childAt.Visible = true;
+            for (var i = 0; i < SkillSystem.GetSkill(SkillType.ManorUpgrade).CurrentLevel; i++)
+            {
+                var childAt = m_manor.GetChildAt(SkillSystem.ManorPiecesOrder[i].Item1);
+                childAt.Opacity = 1f;
+                childAt.Visible = true;
+            }
 
             foreach (var current in SkillSystem.GetAllConnectingTraits(skill))
             {
@@ -340,14 +309,17 @@ namespace RogueCastle
                     current.Opacity = 1f;
                 }
             }
+
             if (m_manor.GetChildAt(7).Visible && m_manor.GetChildAt(16).Visible)
             {
                 (m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
             }
+
             if (m_manor.GetChildAt(6).Visible && m_manor.GetChildAt(16).Visible)
             {
                 (m_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
             }
+
             if (m_manor.GetChildAt(2).Visible)
             {
                 var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
