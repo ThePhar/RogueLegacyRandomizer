@@ -217,9 +217,7 @@ namespace RogueCastle
 
         private bool TollCollectorAvailable
         {
-            // TODO: Remove after testing.
-            // get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
-            get { return false; }
+            get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
         }
 
         public override void Initialize()

@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - LevelENV.cs
-// Last Modified 2021-12-27
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -327,7 +327,7 @@ namespace RogueCastle
             TestRoomReverse        = false;
             RunTestRoom            = false;
             ShowDebugText          = false;
-            LoadSplashScreen       = false;
+            LoadSplashScreen       = true;
             ShowSaveLoadDebugText  = false;
             DeleteSaveFile         = false;
             CloseTestRoomDoors     = false;
@@ -337,11 +337,11 @@ namespace RogueCastle
             RunCrashLogs           = true;
             WeakenBosses           = true;
             EnableOffscreenControl = false;
-            EnableBackupSaving     = true;
+            EnableBackupSaving     = false;
             CreateRetailVersion    = true;
             ShowFps                = false;
             SaveFrames             = false;
-            ShowArchipelagoStatus  = true;
+            ShowArchipelagoStatus  = false;
         }
     }
 }
