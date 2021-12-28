@@ -1,33 +1,33 @@
-//
+// 
 // RogueLegacyArchipelago - DoorObj.cs
-// Last Modified 2021-12-24
-//
+// Last Modified 2021-12-27
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Globalization;
 using System.Xml;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
     public class DoorObj : TerrainObj
     {
-        private readonly GameTypes.DoorType m_doorType = GameTypes.DoorType.Open;
+        private readonly DoorType m_doorType = DoorType.Open;
         public bool Attached;
         public string DoorPosition = "NONE";
         public bool IsBossDoor;
         public bool Locked;
         private SpriteObj m_arrowIcon;
 
-        public DoorObj(RoomObj roomRef, int width, int height, GameTypes.DoorType doorType) : base(width, height)
+        public DoorObj(RoomObj roomRef, int width, int height, DoorType doorType) : base(width, height)
         {
             m_doorType = doorType;
             Room = roomRef;
@@ -40,7 +40,7 @@ namespace RogueCastle
 
         public RoomObj Room { get; set; }
 
-        public GameTypes.DoorType DoorType
+        public DoorType DoorType
         {
             get { return m_doorType; }
         }
@@ -50,7 +50,7 @@ namespace RogueCastle
             if (m_arrowIcon.Visible)
             {
                 m_arrowIcon.Position = new Vector2(Bounds.Center.X,
-                    Bounds.Top - 10 + (float) Math.Sin(Game.TotalGameTime*20f)*3f);
+                    Bounds.Top - 10 + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*3f);
                 m_arrowIcon.Draw(camera);
                 m_arrowIcon.Visible = false;
             }

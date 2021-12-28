@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - StartingRoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -15,7 +15,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -148,7 +148,7 @@ namespace RogueCastle
             m_tollCollectorIcon.OutlineWidth = 2;
             m_rainFG = new List<RaindropObj>();
             var num = 400;
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 num /= 2;
             }
@@ -418,7 +418,7 @@ namespace RogueCastle
             m_enchantressBlock.Visible = EnchantressAvailable;
             m_blacksmithBlock.Visible = SmithyAvailable;
             m_architectBlock.Visible = ArchitectAvailable;
-            var totalGameTime = Game.TotalGameTime;
+            var totalGameTime = Game.TotalGameTimeSeconds;
             if (!m_playerWalkedOut)
             {
                 if (!Player.ControlsLocked && Player.X < Bounds.Left)

@@ -1,18 +1,20 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - CreditsScreen.cs
+// Last Modified 2021-12-28
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.Structs;
 using Tweener;
 
 namespace RogueCastle
@@ -177,13 +179,7 @@ namespace RogueCastle
             {
                 m_manor.GetChildAt(i).Visible = false;
             }
-            foreach (var current in SkillSystem.SkillArray)
-            {
-                if (current.CurrentLevel > 0)
-                {
-                    m_manor.GetChildAt(SkillSystem.GetManorPiece(current)).Visible = true;
-                }
-            }
+
             m_thanksForPlayingText = new TextObj(Game.JunicodeLargeFont);
             m_thanksForPlayingText.FontSize = 32f;
             m_thanksForPlayingText.Align = Types.TextAlign.Centre;
@@ -1039,10 +1035,39 @@ namespace RogueCastle
             m_childSprite2.GetChildAt(9).ChangeSprite("PlayerLevelUpShoulderA" + m_child2Shoulders + "_Sprite");
             m_childSprite2.GetChildAt(3).ChangeSprite("PlayerLevelUpShoulderB" + m_child2Shoulders + "_Sprite");
             m_childSprite2.PlayAnimation(false);
-            m_allowExit = true;
             m_displayingContinueText = true;
             Tween.StopAllContaining(m_continueText, false);
             Tween.To(m_continueText, 0.5f, Tween.EaseNone, "Opacity", "1");
+            Tween.AddEndHandlerToLastTween(this, "OpenForfeitDialogue");
+        }
+
+        public void OpenForfeitDialogue()
+        {
+            if (Program.Game.ArchipelagoManager.CanForfeit)
+            {
+                var rCScreenManager = Game.ScreenManager;
+                DialogueManager.AddText("Forfeit", new []{"Congrats!"}, new []{"Would you like to forfeit your remaining items?"});
+                rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
+                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
+                rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "NoForfeit");
+                rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+            }
+            else
+            {
+                m_allowExit = true;
+            }
+        }
+
+        public void Forfeit()
+        {
+            Program.Game.ArchipelagoManager.Forfeit();
+            m_allowExit = true;
+        }
+
+        public void NoForfeit()
+        {
+            m_allowExit = true;
         }
 
         public override void Draw(GameTime gametime)

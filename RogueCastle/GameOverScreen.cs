@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - GameOverScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-28
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,13 +11,13 @@
 
 using System;
 using System.Collections.Generic;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.GameObjects;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -71,27 +71,14 @@ namespace RogueCastle
                     m_objKilledPlayer = (objList[5] as GameObj);
                 }
 
-                SetObjectKilledPlayerText();
+                var cause = SetObjectKilledPlayerText();
                 m_enemyStoredPositions.Clear();
 
-                // TODO: Fix
-                // Handle Death Link!
-                // if (!Game.PlayerStats.DeathLinkDeath)
-                // {
-                //     if (objList[5] == null)
-                //     {
-                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                //             string.Format("{0} ({1}) has been slain by a {2}.", Game.PlayerStats.PlayerName,
-                //                 Game.GameConfig.PlayerAlias, (objList[5] as GameObj).Name)));
-                //     }
-                //     else
-                //     {
-                //         Program.Game.DeathLinkService.SendDeathLink(new DeathLink(Game.GameConfig.PlayerAlias,
-                //             string.Format("{0} ({1}) has been slain.", Game.PlayerStats.PlayerName,
-                //                 Game.GameConfig.PlayerAlias)));
-                //     }
-                // }
-                // Game.PlayerStats.DeathLinkDeath = false;
+                // Do not send a death link if what is killing us is a DeathLink.
+                if (!(m_objKilledPlayer is DeathLinkObj))
+                {
+                    Program.Game.ArchipelagoManager.SendDeathLink(cause);
+                }
 
                 base.PassInData(objList);
             }
@@ -290,7 +277,7 @@ namespace RogueCastle
                     current.Opacity = 0f;
                     num += 0.05f;
                     var enemyObj_Eyeball = current as EnemyObj_Eyeball;
-                    if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                    if (enemyObj_Eyeball != null && enemyObj_Eyeball.Difficulty == EnemyDifficulty.MiniBoss)
                     {
                         enemyObj_Eyeball.ChangeToBossPupil();
                     }
@@ -312,16 +299,17 @@ namespace RogueCastle
             SoundManager.PlaySound("Enemy_Kill_Plant");
         }
 
-        private void SetObjectKilledPlayerText()
+        private string SetObjectKilledPlayerText()
         {
             var textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
             if (m_objKilledPlayer != null)
             {
                 var enemyObj = m_objKilledPlayer as EnemyObj;
                 var projectileObj = m_objKilledPlayer as ProjectileObj;
+                var deathLinkObj = m_objKilledPlayer as DeathLinkObj;
                 if (enemyObj != null)
                 {
-                    if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
+                    if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
                     {
                         textObj.Text = Game.PlayerStats.PlayerName + " has been slain by " + enemyObj.Name;
                     }
@@ -335,7 +323,7 @@ namespace RogueCastle
                     enemyObj = (projectileObj.Source as EnemyObj);
                     if (enemyObj != null)
                     {
-                        if (enemyObj.Difficulty == GameTypes.EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
+                        if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
                         {
                             textObj.Text = Game.PlayerStats.PlayerName + " has been slain by " + enemyObj.Name;
                         }
@@ -349,24 +337,24 @@ namespace RogueCastle
                         textObj.Text = Game.PlayerStats.PlayerName + " was done in by a projectile";
                     }
                 }
+                else if (deathLinkObj != null)
+                {
+                    textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + deathLinkObj.Name +
+                        "'s carelessness";
+                }
 
                 var hazardObj = m_objKilledPlayer as HazardObj;
                 if (hazardObj != null)
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " slipped and was impaled by spikes";
                 }
-
-                var playerObj = m_objKilledPlayer as PlayerObj;
-                if (playerObj != null)
-                {
-                    textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + playerObj.Name +
-                                   "'s carelessness";
-                }
             }
             else
             {
                 textObj.Text = Game.PlayerStats.PlayerName + " has been slain";
             }
+
+            return textObj.Text;
         }
 
         public override void HandleInput()
@@ -390,6 +378,7 @@ namespace RogueCastle
                 else
                 {
                     SkillSystem.ResetAllTraits();
+                    var chests = Game.PlayerStats.OpenedChests;
                     Game.PlayerStats.Dispose();
                     Game.PlayerStats = new PlayerStats();
                     (ScreenManager as RCScreenManager).Player.Reset();
@@ -397,6 +386,7 @@ namespace RogueCastle
                         SaveType.UpgradeData);
                     Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
+                    Game.PlayerStats.OpenedChests = chests;
                     (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Lineage, true);
                     m_lockControls = true;
                 }
@@ -439,7 +429,7 @@ namespace RogueCastle
             m_player.Draw(Camera);
             if (m_playerGhost.Opacity > 0f)
             {
-                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTime * 5f) * 60f *
+                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTimeSeconds * 5f) * 60f *
                                    (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
 

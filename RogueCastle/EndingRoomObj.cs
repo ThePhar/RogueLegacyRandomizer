@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EndingRoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -14,7 +14,7 @@ using System.Globalization;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -100,7 +100,7 @@ namespace RogueCastle
                 current3.UpdateCollisionBoxes();
                 var spriteObj = new SpriteObj("LineageScreenFrame_Sprite");
                 spriteObj.DropShadow = new Vector2(4f, 6f);
-                if (current3.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                if (current3.Difficulty == EnemyDifficulty.MiniBoss)
                 {
                     spriteObj.ChangeSprite("GiantPortrait_Sprite");
                     FixMiniboss(current3);
@@ -144,7 +144,7 @@ namespace RogueCastle
                         {
                             if (type == 15)
                             {
-                                if (current3.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                                if (current3.Difficulty == EnemyDifficulty.MiniBoss)
                                 {
                                     if (current3.Flip == SpriteEffects.None)
                                     {
@@ -157,7 +157,7 @@ namespace RogueCastle
                                 }
                             }
                         }
-                        else if (current3.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                        else if (current3.Difficulty == EnemyDifficulty.MiniBoss)
                         {
                             current3.X += 30f;
                             current3.Y -= 20f;
@@ -175,7 +175,7 @@ namespace RogueCastle
                     {
                         if (type == 32)
                         {
-                            if (current3.Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+                            if (current3.Difficulty == EnemyDifficulty.MiniBoss)
                             {
                                 spriteObj.Visible = false;
                             }
@@ -183,7 +183,7 @@ namespace RogueCastle
                     }
                     else
                     {
-                        if (current3.Difficulty == GameTypes.EnemyDifficulty.Advanced)
+                        if (current3.Difficulty == EnemyDifficulty.Advanced)
                         {
                             (current3 as EnemyObj_LastBoss).ForceSecondForm(true);
                             current3.ChangeSprite("EnemyLastBossIdle_Character");
@@ -379,7 +379,7 @@ namespace RogueCastle
 
         public void ChangeLevelType()
         {
-            LevelType = GameTypes.LevelType.Dungeon;
+            LevelType = LevelType.Dungeon;
             Player.AttachedLevel.UpdateLevel(LevelType);
         }
 
@@ -434,7 +434,7 @@ namespace RogueCastle
             }
             base.Draw(camera);
             camera.End();
-            if (!LevelEV.SHOW_ENEMY_RADII)
+            if (!LevelENV.ShowEnemyRadii)
             {
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null,
                     camera.GetTransformation());
@@ -454,7 +454,7 @@ namespace RogueCastle
             }
             m_continueText.Draw(camera);
             camera.End();
-            if (!LevelEV.SHOW_ENEMY_RADII)
+            if (!LevelENV.ShowEnemyRadii)
             {
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                     camera.GetTransformation());

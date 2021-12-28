@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Wolf.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,7 +11,7 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -28,7 +28,7 @@ namespace RogueCastle
         private float m_startDelayCounter;
 
         public EnemyObj_Wolf(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyWargIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 19;
@@ -68,9 +68,9 @@ namespace RogueCastle
             InitialLogicDelay = 1f;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Wargen";
                     MaxHealth = 25;
                     Damage = 28;
@@ -97,7 +97,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Wolf_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Wargenflorgen";
                     MaxHealth = 52;
                     Damage = 32;
@@ -124,7 +124,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Wolf_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Zorg Warg";
                     MaxHealth = 500;
                     Damage = 35;

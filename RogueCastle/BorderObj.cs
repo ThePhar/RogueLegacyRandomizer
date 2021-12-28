@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - BorderObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -15,7 +15,7 @@ using System.Xml;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -25,7 +25,7 @@ namespace RogueCastle
         public bool BorderLeft;
         public bool BorderRight;
         public bool BorderTop;
-        public GameTypes.LevelType LevelType = GameTypes.LevelType.Castle;
+        public LevelType LevelType = LevelType.Castle;
 
         public BorderObj()
         {

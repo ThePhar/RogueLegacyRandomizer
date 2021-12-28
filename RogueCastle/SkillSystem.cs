@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillSystem.cs
-// Last Modified 2021-12-25
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -12,44 +12,12 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
     public class SkillSystem
     {
-        private const int Trait_ObservatoryTelescope = 0;
-        private const int Trait_ObservatoryBase = 1;
-        private const int Trait_RightHighTower = 2;
-        private const int Trait_RightHighUpper = 3;
-        private const int Trait_RightHighBase = 4;
-        private const int Trait_RightExtension = 5;
-        private const int Trait_RightBigRoof = 6;
-        private const int Trait_RightBigUpper = 7;
-        private const int Trait_RightWingRoof = 8;
-        private const int Trait_RightBigBase = 9;
-        private const int Trait_RightWingBase = 10;
-        private const int Trait_RightWingWindow = 11;
-        private const int Trait_LeftExtensionBase = 12;
-        private const int Trait_LeftFarRoof = 13;
-        private const int Trait_LeftFarBase = 14;
-        private const int Trait_LeftBigRoof = 15;
-        private const int Trait_LeftBigUpper2 = 16;
-        private const int Trait_LeftBigWindows = 17;
-        private const int Trait_LeftBigUpper = 18;
-        private const int Trait_LeftBigBase = 19;
-        private const int Trait_LeftWingRoof = 20;
-        private const int Trait_LeftWingBase = 21;
-        private const int Trait_LeftWingWindow = 22;
-        private const int Trait_GroundRoad = 23;
-        private const int Trait_MainRoof = 24;
-        private const int Trait_MainBase = 25;
-        private const int Trait_FrontWindowTop = 26;
-        private const int Trait_FrontWindowBottom = 27;
-        private const int Trait_LeftTree1 = 28;
-        private const int Trait_LeftTree2 = 29;
-        private const int Trait_RightTree1 = 30;
-        private const int TOTAL = 31;
         private static readonly SkillType StartingTrait = SkillType.Smithy;
         private static SkillObj m_blankTrait;
         private static readonly SkillType[,] m_skillTypeArray;
@@ -93,9 +61,11 @@ namespace RogueCastle
             array[8, 5] = SkillType.HealthUp;
             array[9, 5] = SkillType.Smithy;
             array[9, 6] = SkillType.ManaUp;
+            array[9, 7] = SkillType.ManorUpgrade;
+            array[9, 8] = SkillType.Traitorous;
             m_skillTypeArray = array;
-            var array2 = new Vector2[10, 10];
 
+            var array2 = new Vector2[10, 10];
             array2[0, 0] = new Vector2(0f, 0f);
             array2[0, 1] = new Vector2(0f, 0f);
             array2[0, 2] = new Vector2(0f, 0f);
@@ -104,9 +74,8 @@ namespace RogueCastle
             array2[0, 5] = new Vector2(0f, 0f);
             array2[0, 6] = new Vector2(0f, 0f);
             array2[0, 7] = new Vector2(0f, 0f);
-            array2[0, 8] = new Vector2(338f, 680f);
+            array2[0, 8] = new Vector2(860f, 125f);
             array2[0, 9] = new Vector2(0f, 0f);
-
             array2[1, 0] = new Vector2(0f, 0f);
             array2[1, 1] = new Vector2(0f, 0f);
             array2[1, 2] = new Vector2(0f, 0f);
@@ -114,10 +83,9 @@ namespace RogueCastle
             array2[1, 4] = new Vector2(0f, 0f);
             array2[1, 5] = new Vector2(0f, 0f);
             array2[1, 6] = new Vector2(0f, 0f);
-            array2[1, 7] = new Vector2(558f, 590f);
-            array2[1, 8] = new Vector2(38f, 380f);
+            array2[1, 7] = new Vector2(655f, -100f);
+            array2[1, 8] = new Vector2(735f, 95f);
             array2[1, 9] = new Vector2(0f, 0f);
-
             array2[2, 0] = new Vector2(0f, 0f);
             array2[2, 1] = new Vector2(0f, 0f);
             array2[2, 2] = new Vector2(0f, 0f);
@@ -125,85 +93,78 @@ namespace RogueCastle
             array2[2, 4] = new Vector2(0f, 0f);
             array2[2, 5] = new Vector2(0f, 0f);
             array2[2, 6] = new Vector2(0f, 0f);
-            array2[2, 7] = new Vector2(38f, 310f);
-            array2[2, 8] = new Vector2(828f, 520f);
+            array2[2, 7] = new Vector2(655f, 50f);
+            array2[2, 8] = new Vector2(655f, 125f);
             array2[2, 9] = new Vector2(0f, 0f);
             array2[3, 0] = new Vector2(0f, 0f);
-
             array2[3, 1] = new Vector2(0f, 0f);
-            array2[3, 2] = new Vector2(38f, 100f);
+            array2[3, 2] = new Vector2(365f, 150f);
             array2[3, 3] = new Vector2(0f, 0f);
             array2[3, 4] = new Vector2(0f, 0f);
             array2[3, 5] = new Vector2(0f, 0f);
             array2[3, 6] = new Vector2(0f, 0f);
             array2[3, 7] = new Vector2(0f, 0f);
-            array2[3, 8] = new Vector2(828f, 590f);
+            array2[3, 8] = new Vector2(655f, 200f);
             array2[3, 9] = new Vector2(0f, 0f);
-
             array2[4, 0] = new Vector2(0f, 0f);
             array2[4, 1] = new Vector2(0f, 0f);
-            array2[4, 2] = new Vector2(648f, 520f);
-            array2[4, 3] = new Vector2(868f, 130f);
+            array2[4, 2] = new Vector2(185f, 250f);
+            array2[4, 3] = new Vector2(365f, 250f);
             array2[4, 4] = new Vector2(0f, 0f);
             array2[4, 5] = new Vector2(0f, 0f);
             array2[4, 6] = new Vector2(0f, 0f);
             array2[4, 7] = new Vector2(0f, 0f);
-            array2[4, 8] = new Vector2(38f, 240f);
+            array2[4, 8] = new Vector2(735f, 200f);
             array2[4, 9] = new Vector2(0f, 0f);
-
-            array2[5, 0] = new Vector2(918f, 520f);
-            array2[5, 1] = new Vector2(918f, 590f);
-            array2[5, 2] = new Vector2(38f, 520f);
+            array2[5, 0] = new Vector2(110f, 360f);
+            array2[5, 1] = new Vector2(110f, 460f);
+            array2[5, 2] = new Vector2(185f, 360f);
             array2[5, 3] = new Vector2(0f, 0f);
-            array2[5, 4] = new Vector2(238f, 310f);
+            array2[5, 4] = new Vector2(275f, 555f);
             array2[5, 5] = new Vector2(0f, 0f);
-            array2[5, 6] = new Vector2(238f, 400f);
+            array2[5, 6] = new Vector2(735f, 555f);
             array2[5, 7] = new Vector2(0f, 0f);
-            array2[5, 8] = new Vector2(918f, 680f);
+            array2[5, 8] = new Vector2(735f, 280f);
             array2[5, 9] = new Vector2(0f, 0f);
-
-            array2[6, 0] = new Vector2(38f, 450f);
+            array2[6, 0] = new Vector2(40f, 410f);
             array2[6, 1] = new Vector2(0f, 0f);
-            array2[6, 2] = new Vector2(648f, 590f);
-            array2[6, 3] = new Vector2(828f, 680f);
-            array2[6, 4] = new Vector2(178f, 680f);
-            array2[6, 5] = new Vector2(868f, 220f);
-            array2[6, 6] = new Vector2(108f, 680f);
-            array2[6, 7] = new Vector2(738f, 680f);
-            array2[6, 8] = new Vector2(738f, 590f);
-            array2[6, 9] = new Vector2(738f, 520f);
-
+            array2[6, 2] = new Vector2(185f, 555f);
+            array2[6, 3] = new Vector2(275f, 360f);
+            array2[6, 4] = new Vector2(275f, 460f);
+            array2[6, 5] = new Vector2(505f, 315f);
+            array2[6, 6] = new Vector2(735f, 460f);
+            array2[6, 7] = new Vector2(735f, 360f);
+            array2[6, 8] = new Vector2(860f, 460f);
+            array2[6, 9] = new Vector2(938f, 415f);
             array2[7, 0] = new Vector2(0f, 0f);
             array2[7, 1] = new Vector2(0f, 0f);
-            array2[7, 2] = new Vector2(868f, 330f);
+            array2[7, 2] = new Vector2(185f, 680f);
             array2[7, 3] = new Vector2(0f, 0f);
             array2[7, 4] = new Vector2(0f, 0f);
-            array2[7, 5] = new Vector2(648f, 680f);
+            array2[7, 5] = new Vector2(505f, 410f);
             array2[7, 6] = new Vector2(0f, 0f);
             array2[7, 7] = new Vector2(0f, 0f);
-            array2[7, 8] = new Vector2(38f, 170f);
+            array2[7, 8] = new Vector2(860f, 680f);
             array2[7, 9] = new Vector2(0f, 0f);
-
             array2[8, 0] = new Vector2(0f, 0f);
             array2[8, 1] = new Vector2(0f, 0f);
-            array2[8, 2] = new Vector2(868f, 400f);
+            array2[8, 2] = new Vector2(275f, 680f);
             array2[8, 3] = new Vector2(0f, 0f);
             array2[8, 4] = new Vector2(0f, 0f);
-            array2[8, 5] = new Vector2(238f, 130f);
+            array2[8, 5] = new Vector2(505f, 490f);
             array2[8, 6] = new Vector2(0f, 0f);
             array2[8, 7] = new Vector2(0f, 0f);
             array2[8, 8] = new Vector2(0f, 0f);
             array2[8, 9] = new Vector2(0f, 0f);
-
             array2[9, 0] = new Vector2(0f, 0f);
             array2[9, 1] = new Vector2(0f, 0f);
             array2[9, 2] = new Vector2(0f, 0f);
             array2[9, 3] = new Vector2(0f, 0f);
             array2[9, 4] = new Vector2(0f, 0f);
-            array2[9, 5] = new Vector2(38f, 680f);
-            array2[9, 6] = new Vector2(238f, 220f);
-            array2[9, 7] = new Vector2(0f, 0f);
-            array2[9, 8] = new Vector2(0f, 0f);
+            array2[9, 5] = new Vector2(505f, 590f);
+            array2[9, 6] = new Vector2(505f, 680f);
+            array2[9, 7] = new Vector2(605f, 680f);
+            array2[9, 8] = new Vector2(655f, -180f);
             array2[9, 9] = new Vector2(0f, 0f);
             m_skillPositionArray = array2;
             m_manorPieceArray = new[,]
@@ -341,6 +302,40 @@ namespace RogueCastle
             IconsVisible = true;
         }
 
+        public static readonly Tuple<int, int>[] ManorPiecesOrder = new []{
+            new Tuple<int, int>(ManorPieces.MainBase,             4445032),
+            new Tuple<int, int>(ManorPieces.GroundRoad,           4445035),
+            new Tuple<int, int>(ManorPieces.MainRoof,             4445031),
+            new Tuple<int, int>(ManorPieces.LeftWingBase,         4445029),
+            new Tuple<int, int>(ManorPieces.RightWingBase,        4445018),
+            new Tuple<int, int>(ManorPieces.LeftWingRoof,         4445027),
+            new Tuple<int, int>(ManorPieces.RightWingRoof,        4445016),
+            new Tuple<int, int>(ManorPieces.LeftWingWindow,       4445028),
+            new Tuple<int, int>(ManorPieces.RightWingWindow,      4445017),
+            new Tuple<int, int>(ManorPieces.LeftTree1,            4445036),
+            new Tuple<int, int>(ManorPieces.RightBigBase,         4445015),
+            new Tuple<int, int>(ManorPieces.RightBigUpper,        4445014),
+            new Tuple<int, int>(ManorPieces.RightBigRoof,         4445013),
+            new Tuple<int, int>(ManorPieces.FrontWindowTop,       4445033),
+            new Tuple<int, int>(ManorPieces.FrontWindowBottom,    4445034),
+            new Tuple<int, int>(ManorPieces.LeftBigBase,          4445026),
+            new Tuple<int, int>(ManorPieces.LeftBigUpper1,        4445024),
+            new Tuple<int, int>(ManorPieces.LeftBigUpper2,        4445023),
+            new Tuple<int, int>(ManorPieces.LeftBigWindows,       4445025),
+            new Tuple<int, int>(ManorPieces.LeftBigRoof,          4445022),
+            new Tuple<int, int>(ManorPieces.LeftTree2,            4445037),
+            new Tuple<int, int>(ManorPieces.RightHighBase,        4445012),
+            new Tuple<int, int>(ManorPieces.RightHighUpper,       4445011),
+            new Tuple<int, int>(ManorPieces.RightHighTower,       4445010),
+            new Tuple<int, int>(ManorPieces.LeftFarBase,          4445021),
+            new Tuple<int, int>(ManorPieces.LeftFarRoof,          4445020),
+            new Tuple<int, int>(ManorPieces.RightTree,            4445038),
+            new Tuple<int, int>(ManorPieces.LeftExtension,        4445030),
+            new Tuple<int, int>(ManorPieces.RightExtension,       4445019),
+            new Tuple<int, int>(ManorPieces.ObservatoryBase,      4445009),
+            new Tuple<int, int>(ManorPieces.ObservatoryTelescope, 4445008),
+        };
+
         public static List<SkillObj> SkillArray { get; private set; }
         public static bool IconsVisible { get; private set; }
 
@@ -359,6 +354,19 @@ namespace RogueCastle
                 skillObj.Position = GetSkillPosition(skillObj);
                 SkillArray.Add(skillObj);
             }
+
+            // Add Manor Upgrades
+            var manorSkill = SkillBuilder.BuildSkill(SkillType.ManorUpgrade);
+            manorSkill.Position = GetSkillPosition(manorSkill);
+            manorSkill.Description =
+                manorSkill.Description.Replace("GENDER", Game.PlayerStats.IsFemale ? "Motherless" : "Fatherless");
+            SkillArray.Add(manorSkill);
+
+            // Add Traitor Skill
+            var traitorSkill = SkillBuilder.BuildSkill(SkillType.Traitorous);
+            traitorSkill.Position = GetSkillPosition(traitorSkill);
+            SkillArray.Add(traitorSkill);
+
             GetSkill(StartingTrait).Visible = true;
             m_skillLinkerArray = new SkillLinker[10, 10];
             for (var j = 0; j < 10; j++)
@@ -507,7 +515,14 @@ namespace RogueCastle
         public static int GetManorPiece(SkillObj trait)
         {
             var traitTypeIndex = GetTraitTypeIndex(trait);
-            return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            try
+            {
+                return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         public static SkillLinker GetSkillLink(int x, int y)

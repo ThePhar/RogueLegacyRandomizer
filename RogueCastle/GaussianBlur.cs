@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - GaussianBlur.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using DS2DEngine;
@@ -39,7 +40,7 @@ namespace RogueCastle
             {
                 m_renderHolder2.Dispose();
             }
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 m_renderHolder = new RenderTarget2D(game.GraphicsDevice, screenWidth/2, screenHeight/2);
                 m_renderHolder2 = new RenderTarget2D(game.GraphicsDevice, screenWidth/2, screenHeight/2);
@@ -140,7 +141,7 @@ namespace RogueCastle
                 Camera.GraphicsDevice.SamplerStates[1] = SamplerState.LinearClamp;
             }
             Camera.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearClamp, null, null, effect);
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 Camera.Draw(srcTexture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2(0.5f, 0.5f),
                     SpriteEffects.None, 1f);
@@ -150,7 +151,7 @@ namespace RogueCastle
                 Camera.Draw(srcTexture, Vector2.Zero, Color.White);
             }
             Camera.End();
-            if (LevelEV.SAVE_FRAMES)
+            if (LevelENV.SaveFrames)
             {
                 Camera.GraphicsDevice.SetRenderTarget(m_renderHolder2);
                 m_offsetParameters.SetValue(TextureOffsetsY);

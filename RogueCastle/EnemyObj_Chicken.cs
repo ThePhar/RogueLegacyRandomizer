@@ -1,18 +1,18 @@
-//
+// 
 // RogueLegacyArchipelago - EnemyObj_Chicken.cs
-// Last Modified 2021-12-24
-//
+// Last Modified 2021-12-27
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -21,7 +21,7 @@ namespace RogueCastle
         private readonly LogicBlock m_generalBasicLB = new LogicBlock();
 
         public EnemyObj_Chicken(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyChickenRun_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 26;
@@ -57,7 +57,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.Chicken_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Fried";
                     MaxHealth = 1;
                     Damage = 11;
@@ -84,7 +84,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Chicken";
                     MaxHealth = 1;
                     Damage = 14;
@@ -111,7 +111,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Delicious";
                     MaxHealth = 1;
                     Damage = 35;

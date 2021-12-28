@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - VirtualScreen.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using Microsoft.Xna.Framework;
@@ -85,7 +86,7 @@ namespace RogueCastle
         public void RecreateGraphics()
         {
             Console.WriteLine("GraphicsDevice Virtualization failed");
-            var graphicsDevice = (Game.ScreenManager.Game as Game).graphics.GraphicsDevice;
+            var graphicsDevice = (Game.ScreenManager.Game as Game).GraphicsDeviceManager.GraphicsDevice;
             Game.ScreenManager.ReinitializeCamera(graphicsDevice);
             SpriteLibrary.ClearLibrary();
             (Game.ScreenManager.Game as Game).LoadAllSpriteFonts();

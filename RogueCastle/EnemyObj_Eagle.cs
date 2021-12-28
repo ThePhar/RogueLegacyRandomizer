@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Eagle.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,7 +11,7 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -22,7 +22,7 @@ namespace RogueCastle
         private bool m_flyingLeft;
 
         public EnemyObj_Eagle(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("Dummy_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 4;
@@ -48,10 +48,10 @@ namespace RogueCastle
             TurnSpeed = 0.0175f;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
-                case GameTypes.EnemyDifficulty.Advanced:
-                case GameTypes.EnemyDifficulty.Expert:
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.Basic:
+                case EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Expert:
+                case EnemyDifficulty.MiniBoss:
                     return;
             }
         }

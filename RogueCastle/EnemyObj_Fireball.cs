@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Fireball.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -12,7 +12,7 @@
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -43,7 +43,7 @@ namespace RogueCastle
         private bool m_shookLeft;
 
         public EnemyObj_Fireball(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 8;
@@ -104,7 +104,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.Fireball_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Pyrite";
                     MaxHealth = 45;
                     Damage = 25;
@@ -131,7 +131,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fireball_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Infernite";
                     MaxHealth = 63;
                     Damage = 27;
@@ -158,7 +158,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fireball_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Ponce de Leon";
                     MaxHealth = 505;
                     Damage = 29;
@@ -183,13 +183,13 @@ namespace RogueCastle
                     EngageRadius = 1350;
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fireball_Miniboss_KnockBack;
-                    if (LevelEV.WEAKEN_BOSSES)
+                    if (LevelENV.WeakenBosses)
                     {
                         MaxHealth = 1;
                     }
                     break;
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyGhostBossIdle_Character";
             }
@@ -516,7 +516,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !IsPaused && m_minibossFireTimeCounter > 0f &&
+            if (Difficulty == EnemyDifficulty.MiniBoss && !IsPaused && m_minibossFireTimeCounter > 0f &&
                 !m_bossVersionKilled)
             {
                 m_minibossFireTimeCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -549,7 +549,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
+            if (Difficulty == EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
             {
                 var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
@@ -581,7 +581,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            if (Difficulty != GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty != EnemyDifficulty.MiniBoss)
             {
                 base.Kill(giveXP);
                 return;
@@ -600,6 +600,9 @@ namespace RogueCastle
                 SoundManager.PlaySound("Boss_Flash");
                 SoundManager.PlaySound("Boss_Fireball_Freeze");
                 GameUtil.UnlockAchievement("FEAR_OF_FIRE");
+
+                // TODO: Make inside the chests instead.
+                Program.Game.ArchipelagoManager.CheckLocations(4445004, 4445005);
             }
         }
 

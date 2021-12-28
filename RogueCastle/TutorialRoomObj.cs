@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - TutorialRoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -15,7 +15,7 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 
 namespace RogueCastle
@@ -259,7 +259,7 @@ namespace RogueCastle
                 bounds.X -= 50;
                 bounds.Width += 100;
                 m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
-                                   (float) Math.Sin(Game.TotalGameTime*20f)*2f;
+                                   (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
                 if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
                 {
                     if (m_speechBubble.SpriteName == "ExclamationSquare_Sprite")

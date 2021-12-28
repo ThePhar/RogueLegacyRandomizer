@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_IceWizard.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -12,7 +12,7 @@
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 
 namespace RogueCastle
@@ -34,7 +34,7 @@ namespace RogueCastle
         private int SpellProjectileCount = 7;
 
         public EnemyObj_IceWizard(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyWizardIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             PlayAnimation();
@@ -72,9 +72,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.IceWizard_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     SpellProjectileCount = 14;
                     Name = "Icen";
                     MaxHealth = 45;
@@ -104,7 +104,7 @@ namespace RogueCastle
                     m_spellOffset = new Vector2(40f, -100f);
                     IceScale = new Vector2(1.5f, 1.5f);
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     SpellProjectileCount = 8;
                     SpellDelay = 1f;
                     m_spellOffset = new Vector2(40f, -130f);
@@ -135,7 +135,7 @@ namespace RogueCastle
                     KnockBack = EnemyEV.IceWizard_Expert_KnockBack;
                     IceScale = new Vector2(2f, 2f);
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Luna Mage";
                     MaxHealth = 240;
                     Damage = 40;

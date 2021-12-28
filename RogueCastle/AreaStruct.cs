@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - AreaStruct.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -10,25 +10,25 @@
 // 
 
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
     public struct AreaStruct
     {
-        public Vector2 BonusRooms;
-        public bool BossInArea;
-        public int BossLevel;
-        public byte BossType;
-        public Color Color;
-        public Vector2 EnemyLevel;
-        public int EnemyLevelScale;
-        public bool IsFinalArea;
-        public GameTypes.LevelType LevelType;
-        public bool LinkToCastleOnly;
-        public Color MapColor;
-        public string Name;
-        public Vector2 SecretRooms;
-        public Vector2 TotalRooms;
+        public Color     Color;
+        public Color     MapColor;
+        public LevelType LevelType;
+        public Vector2   BonusRooms;
+        public Vector2   EnemyLevel;
+        public Vector2   SecretRooms;
+        public Vector2   TotalRooms;
+        public bool      BossInArea;
+        public bool      IsFinalArea;
+        public bool      LinkToCastleOnly;
+        public byte      BossType;
+        public int       BossLevel;
+        public int       EnemyLevelScale;
+        public string    Name;
     }
 }

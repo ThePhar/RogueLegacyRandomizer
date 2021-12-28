@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - ResolutionOptionsObj.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -100,11 +101,11 @@ namespace RogueCastle
                 var vector = m_displayModeList[m_selectedResIndex];
                 if (m_selectedResolution != vector)
                 {
-                    (m_parentScreen.ScreenManager.Game as Game).graphics.PreferredBackBufferWidth = (int) vector.X;
-                    (m_parentScreen.ScreenManager.Game as Game).graphics.PreferredBackBufferHeight = (int) vector.Y;
-                    (m_parentScreen.ScreenManager.Game as Game).graphics.ApplyChanges();
+                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth = (int) vector.X;
+                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight = (int) vector.Y;
+                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
                     (m_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
-                    if ((m_parentScreen.ScreenManager.Game as Game).graphics.IsFullScreen)
+                    if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
                     {
                         var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                         rCScreenManager.DialogueScreen.SetDialogue("Resolution Changed");
@@ -155,10 +156,10 @@ namespace RogueCastle
         public void CancelResolution()
         {
             m_resetCounter = 0f;
-            (m_parentScreen.ScreenManager.Game as Game).graphics.PreferredBackBufferWidth = (int) m_selectedResolution.X;
-            (m_parentScreen.ScreenManager.Game as Game).graphics.PreferredBackBufferHeight =
+            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth = (int) m_selectedResolution.X;
+            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
                 (int) m_selectedResolution.Y;
-            (m_parentScreen.ScreenManager.Game as Game).graphics.ApplyChanges();
+            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
             (m_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
             m_toggleText.Text = m_selectedResolution.X + "x" + m_selectedResolution.Y;
         }

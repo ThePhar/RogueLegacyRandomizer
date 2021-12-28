@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - ChallengeBossRoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -115,7 +115,7 @@ namespace RogueCastle
             m_bossTitle2.Opacity = 0f;
             m_bossDivider.ScaleX = 0f;
             m_bossDivider.Opacity = 0f;
-            if (LevelEV.WEAKEN_BOSSES)
+            if (LevelENV.WeakenBosses)
             {
                 foreach (var current in EnemyList)
                 {
@@ -237,7 +237,7 @@ namespace RogueCastle
             else if (m_bossChest.Visible && m_bossChest.IsOpen && BossKilled && !m_teleportingOut)
             {
                 m_teleportingOut = true;
-                if (LevelEV.RUN_DEMO_VERSION)
+                if (LevelENV.RunDemoVersion)
                 {
                     (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true);
                     return;

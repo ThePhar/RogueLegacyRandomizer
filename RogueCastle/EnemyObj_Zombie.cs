@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Zombie.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,7 +11,7 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -21,7 +21,7 @@ namespace RogueCastle
         private readonly LogicBlock m_basicWalkLS = new LogicBlock();
 
         public EnemyObj_Zombie(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyZombieLower_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             GoToFrame(TotalFrames);
@@ -64,9 +64,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Zombie_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Zomboner";
                     MaxHealth = 39;
                     Damage = 29;
@@ -93,7 +93,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Zombie_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Zombishnu";
                     MaxHealth = 70;
                     Damage = 33;
@@ -120,7 +120,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Zombie_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Zomg";
                     MaxHealth = 800;
                     Damage = 40;

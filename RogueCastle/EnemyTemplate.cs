@@ -1,23 +1,23 @@
-// 
+//
 // RogueLegacyArchipelago - EnemyTemplate.cs
 // Last Modified 2021-12-24
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using DS2DEngine;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
     public class EnemyTemplate : EnemyObj
     {
         public EnemyTemplate(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemySpriteNameGoesHere", target, physicsManager, levelToAttachTo, difficulty)
         {
         }
@@ -26,10 +26,10 @@ namespace RogueCastle
         {
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
-                case GameTypes.EnemyDifficulty.Advanced:
-                case GameTypes.EnemyDifficulty.Expert:
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.Basic:
+                case EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Expert:
+                case EnemyDifficulty.MiniBoss:
                     return;
             }
         }

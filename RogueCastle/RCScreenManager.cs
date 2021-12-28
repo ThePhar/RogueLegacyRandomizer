@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - RCScreenManager.cs
-// Last Modified 2021-12-23
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,55 +11,55 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.Screens;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+
 using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
     public class RCScreenManager : ScreenManager
     {
-        private SpriteObj m_blackScreen;
-        private BlacksmithScreen m_blacksmithScreen;
-        private SpriteObj m_blackTransitionIn;
-        private SpriteObj m_blackTransitionOut;
-        private CreditsScreen m_creditsScreen;
-        private DeathDefiedScreen m_deathDefyScreen;
-        private DiaryEntryScreen m_diaryEntryScreen;
-        private EnchantressScreen m_enchantressScreen;
+        private SpriteObj            m_blackScreen;
+        private BlacksmithScreen     m_blacksmithScreen;
+        private SpriteObj            m_blackTransitionIn;
+        private SpriteObj            m_blackTransitionOut;
+        private CreditsScreen        m_creditsScreen;
+        private DeathDefiedScreen    m_deathDefyScreen;
+        private DiaryEntryScreen     m_diaryEntryScreen;
+        private EnchantressScreen    m_enchantressScreen;
         private DiaryFlashbackScreen m_flashbackScreen;
-        private GameOverBossScreen m_gameOverBossScreen;
-        private GameOverScreen m_gameOverScreen;
-        private GetItemScreen m_getItemScreen;
-        private bool m_isWipeTransitioning;
-        private MapScreen m_mapScreen;
-        private OptionsScreen m_optionsScreen;
-        private ArchipelagoScreen m_archipelagoScreen;
-        private PauseScreen m_pauseScreen;
-        private ProfileCardScreen m_profileCardScreen;
-        private SkillUnlockScreen m_skillUnlockScreen;
-        private TextScreen m_textScreen;
-        private VirtualScreen m_virtualScreen;
+        private GameOverBossScreen   m_gameOverBossScreen;
+        private GameOverScreen       m_gameOverScreen;
+        private GetItemScreen        m_getItemScreen;
+        private bool                 m_isWipeTransitioning;
+        private MapScreen            m_mapScreen;
+        private OptionsScreen        m_optionsScreen;
+        private ArchipelagoScreen    m_archipelagoScreen;
+        private PauseScreen          m_pauseScreen;
+        private ProfileCardScreen    m_profileCardScreen;
+        private SkillUnlockScreen    m_skillUnlockScreen;
+        private TextScreen           m_textScreen;
+        private VirtualScreen        m_virtualScreen;
 
-        public RCScreenManager(Game Game) : base(Game)
-        {
-        }
-
-        public bool InventoryVisible { get; private set; }
+        public DialogueScreen DialogueScreen   { get; private set; }
+        public SkillScreen    SkillScreen      { get; private set; }
+        public PlayerObj      Player           { get; private set; }
+        public bool           IsTransitioning  { get; private set; }
 
         public RenderTarget2D RenderTarget
         {
             get { return m_virtualScreen.RenderTarget; }
         }
 
-        public DialogueScreen DialogueScreen { get; private set; }
-        public SkillScreen SkillScreen { get; private set; }
-        public PlayerObj Player { get; private set; }
-        public bool IsTransitioning { get; private set; }
+        public RCScreenManager(Game game) : base(game) { }
 
         public override void Initialize()
         {
@@ -81,7 +81,7 @@ namespace RogueCastle
             var proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
             if (proceduralLevelScreen != null && !(proceduralLevelScreen.CurrentRoom is EndingRoomObj))
             {
-                DisplayScreen(16, true);
+                DisplayScreen(ScreenType.Pause, true);
             }
         }
 
@@ -178,13 +178,15 @@ namespace RogueCastle
 
         private void LoadPlayer()
         {
-            if (Player == null)
+            if (Player != null)
+                return;
+
+            Player = new PlayerObj("PlayerIdle_Character", PlayerIndex.One, Program.Game.PhysicsManager, null, Program.Game)
             {
-                Player = new PlayerObj("PlayerIdle_Character", PlayerIndex.One, (Game as Game).PhysicsManager, null,
-                    Game as Game);
-                Player.Position = new Vector2(200f, 200f);
-                Player.Initialize();
-            }
+                Position = new Vector2(200f, 200f),
+            };
+
+            Player.Initialize();
         }
 
         public void DisplayScreen(int screenType, bool pauseOtherScreens, List<object> objList = null)
@@ -193,32 +195,34 @@ namespace RogueCastle
             if (pauseOtherScreens)
             {
                 var screens = GetScreens();
-                for (var i = 0; i < screens.Length; i++)
+                foreach (var screen in screens)
                 {
-                    var screen = screens[i];
-                    if (screen == CurrentScreen)
-                    {
-                        screen.PauseScreen();
-                        break;
-                    }
+                    if (screen != CurrentScreen)
+                        continue;
+
+                    screen.PauseScreen();
+                    break;
                 }
             }
+
             switch (screenType)
             {
-                case 1:
-                case 3:
-                case 9:
-                case 15:
-                case 27:
-                case 28:
-                case 29:
+                case ScreenType.CDGSplash:
+                case ScreenType.Title:
+                case ScreenType.Lineage:
+                case ScreenType.StartingRoom:
+                case ScreenType.TitleWhite:
+                case ScreenType.DemoStart:
+                case ScreenType.DemoEnd:
                     LoadScreen((byte) screenType, true);
                     break;
-                case 4:
+
+                case ScreenType.Options:
                     m_optionsScreen.PassInData(objList);
                     AddScreen(m_optionsScreen, null);
                     break;
-                case 5:
+
+                case ScreenType.Level:
                     if (RogueCastle.Game.PlayerStats.LockCastle || !(CurrentScreen is ProceduralLevelScreen))
                     {
                         LoadScreen((byte) screenType, true);
@@ -227,78 +231,99 @@ namespace RogueCastle
                     {
                         LoadScreen((byte) screenType, false);
                     }
+
                     break;
-                case 6:
+
+                case ScreenType.Skill:
                     AddScreen(SkillScreen, null);
                     break;
-                case 7:
+
+                case ScreenType.GameOver:
                     m_gameOverScreen.PassInData(objList);
                     AddScreen(m_gameOverScreen, null);
                     break;
-                case 10:
+
+                case ScreenType.Blacksmith:
                     AddScreen(m_blacksmithScreen, null);
                     m_blacksmithScreen.Player = Player;
                     break;
-                case 11:
+
+                case ScreenType.Enchantress:
                     AddScreen(m_enchantressScreen, null);
                     m_enchantressScreen.Player = Player;
                     break;
-                case 12:
+
+                case ScreenType.GetItem:
                     m_getItemScreen.PassInData(objList);
                     AddScreen(m_getItemScreen, null);
                     break;
-                case 13:
+
+                case ScreenType.Dialogue:
                     AddScreen(DialogueScreen, null);
                     break;
-                case 14:
+
+                case ScreenType.Map:
                     m_mapScreen.SetPlayer(Player);
                     AddScreen(m_mapScreen, null);
                     break;
-                case 16:
+
+                case ScreenType.Pause:
                     GetLevelScreen().CurrentRoom.DarkenRoom();
                     AddScreen(m_pauseScreen, null);
                     break;
-                case 17:
+
+                case ScreenType.ProfileCard:
                     AddScreen(m_profileCardScreen, null);
                     break;
-                case 18:
-                    LoadScreen(18, true);
+
+                case ScreenType.Credits:
+                    LoadScreen(ScreenType.Credits, true);
                     break;
-                case 19:
+
+                case ScreenType.SkillUnlock:
                     m_skillUnlockScreen.PassInData(objList);
                     AddScreen(m_skillUnlockScreen, null);
                     break;
-                case 20:
+
+                case ScreenType.DiaryEntry:
                     AddScreen(m_diaryEntryScreen, null);
                     break;
-                case 21:
+
+                case ScreenType.DeathDefy:
                     AddScreen(m_deathDefyScreen, null);
                     break;
-                case 22:
+
+                case ScreenType.Text:
                     m_textScreen.PassInData(objList);
                     AddScreen(m_textScreen, null);
                     break;
-                case 23:
-                    LoadScreen(23, true);
+
+                case ScreenType.TutorialRoom:
+                    LoadScreen(ScreenType.TutorialRoom, true);
                     break;
-                case 24:
+
+                case ScreenType.Ending:
                     GetLevelScreen().CameraLockedToPlayer = false;
                     GetLevelScreen().DisableRoomTransitioning = true;
                     Player.Position = new Vector2(100f, 100f);
-                    LoadScreen(24, true);
+                    LoadScreen(ScreenType.Ending, true);
                     break;
-                case 25:
+
+                case ScreenType.DiaryFlashback:
                     AddScreen(m_flashbackScreen, null);
                     break;
-                case 26:
+
+                case ScreenType.GameOverBoss:
                     m_gameOverBossScreen.PassInData(objList);
                     AddScreen(m_gameOverBossScreen, null);
                     break;
-                case 80:
+
+                case ScreenType.Archipelago:
                     m_archipelagoScreen.PassInData(objList);
                     AddScreen(m_archipelagoScreen, null);
                     break;
             }
+
             if (m_isWipeTransitioning)
             {
                 EndWipeTransition();
@@ -333,6 +358,7 @@ namespace RogueCastle
             {
                 proceduralLevelScreen.UnpauseScreen();
             }
+
             if (m_isWipeTransitioning)
             {
                 EndWipeTransition();
@@ -358,11 +384,13 @@ namespace RogueCastle
                     AttachMap(proceduralLevelScreen);
                 }
             }
+
             if (m_gameOverScreen != null)
             {
                 InitializeScreens();
                 LoadContent();
             }
+
             var screen = new LoadingScreen(screenType, wipeTransition);
             IsTransitioning = true;
             AddScreen(screen, PlayerIndex.One);
@@ -375,6 +403,7 @@ namespace RogueCastle
             {
                 IsTransitioning = false;
             }
+
             base.RemoveScreen(screen, disposeScreen);
         }
 
@@ -384,6 +413,7 @@ namespace RogueCastle
             {
                 m_mapScreen.Dispose();
             }
+
             m_mapScreen = new MapScreen(level);
         }
 
@@ -395,6 +425,7 @@ namespace RogueCastle
                 base.Update(gameTime);
                 return;
             }
+
             Camera.GameTime = gameTime;
             if (CurrentScreen != null)
             {
@@ -456,16 +487,7 @@ namespace RogueCastle
         public ProceduralLevelScreen GetLevelScreen()
         {
             var screens = GetScreens();
-            for (var i = 0; i < screens.Length; i++)
-            {
-                var screen = screens[i];
-                var proceduralLevelScreen = screen as ProceduralLevelScreen;
-                if (proceduralLevelScreen != null)
-                {
-                    return proceduralLevelScreen;
-                }
-            }
-            return null;
+            return screens.OfType<ProceduralLevelScreen>().FirstOrDefault();
         }
     }
 }

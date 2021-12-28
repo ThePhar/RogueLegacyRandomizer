@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - WordBuilder.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -10,7 +10,7 @@
 // 
 
 using DS2DEngine;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -31,17 +31,17 @@ namespace RogueCastle
             "Dextrocardia - HP/MP pools are swapped\n"
         };
 
-        public static string BuildDungeonName(GameTypes.LevelType levelType)
+        public static string BuildDungeonName(LevelType levelType)
         {
             switch (levelType)
             {
-                case GameTypes.LevelType.Castle:
+                case LevelType.Castle:
                     return "Castle Hamson";
-                case GameTypes.LevelType.Garden:
+                case LevelType.Garden:
                     return "Forest Abkhazia";
-                case GameTypes.LevelType.Dungeon:
+                case LevelType.Dungeon:
                     return "The Land of Darkness";
-                case GameTypes.LevelType.Tower:
+                case LevelType.Tower:
                     return "The Maya";
                 default:
                     return "";

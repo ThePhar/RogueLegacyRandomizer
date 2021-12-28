@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - SkillScreen.cs
-// Last Modified 2021-12-26
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,12 +11,14 @@
 
 using System;
 using System.Collections.Generic;
+using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -228,6 +230,12 @@ namespace RogueCastle
         {
             var flag = true;
 
+            // Update manor text.
+            var manorSkill = SkillSystem.GetSkill(SkillType.ManorUpgrade);
+            manorSkill.Description = "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+            manorSkill.Description =
+                manorSkill.Description.Replace("GENDER", Game.PlayerStats.IsFemale ? "motherless" : "fatherless");
+
             m_lockControls = false;
             m_manor.GetChildAt(23).Visible = true;
             m_manor.GetChildAt(23).Opacity = 1f;
@@ -274,20 +282,26 @@ namespace RogueCastle
             base.OnExit();
         }
 
-        public void SetVisible(SkillObj trait, bool fadeIn)
+        public void SetVisible(SkillObj skill, bool fadeIn)
         {
-            var manorPiece = SkillSystem.GetManorPiece(trait);
-
-            if (fadeIn)
+            if (skill.TraitType == SkillType.ManorUpgrade && fadeIn)
             {
-                SetManorPieceVisible(manorPiece, trait);
+                var level = skill.CurrentLevel;
+                Console.WriteLine("USING PIECE {0}", SkillSystem.ManorPiecesOrder[level]);
+                SetManorPieceVisible(SkillSystem.ManorPiecesOrder[level], skill);
+                Program.Game.ArchipelagoManager.CheckLocations(SkillSystem.ManorPiecesOrder[level].Item2);
+
                 return;
             }
 
-            var childAt = m_manor.GetChildAt(manorPiece);
-            childAt.Opacity = 1f;
-            childAt.Visible = true;
-            foreach (var current in SkillSystem.GetAllConnectingTraits(trait))
+            for (var i = 0; i < SkillSystem.GetSkill(SkillType.ManorUpgrade).CurrentLevel; i++)
+            {
+                var childAt = m_manor.GetChildAt(SkillSystem.ManorPiecesOrder[i].Item1);
+                childAt.Opacity = 1f;
+                childAt.Visible = true;
+            }
+
+            foreach (var current in SkillSystem.GetAllConnectingTraits(skill))
             {
                 if (!current.Visible)
                 {
@@ -295,14 +309,17 @@ namespace RogueCastle
                     current.Opacity = 1f;
                 }
             }
+
             if (m_manor.GetChildAt(7).Visible && m_manor.GetChildAt(16).Visible)
             {
                 (m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
             }
+
             if (m_manor.GetChildAt(6).Visible && m_manor.GetChildAt(16).Visible)
             {
                 (m_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
             }
+
             if (m_manor.GetChildAt(2).Visible)
             {
                 var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
@@ -315,8 +332,10 @@ namespace RogueCastle
             }
         }
 
-        public void SetManorPieceVisible(int manorIndex, SkillObj skillObj)
+        public void SetManorPieceVisible(Tuple<int, int> manorPiece, SkillObj skillObj)
         {
+
+            var manorIndex = manorPiece.Item1;
             var childAt = m_manor.GetChildAt(manorIndex);
             var num = 0f;
             if (!childAt.Visible)
@@ -461,8 +480,9 @@ namespace RogueCastle
                 Tween.RunFunction(num, this, "ShakeScreen", 5, true, true);
                 Tween.RunFunction(num + 0.2f, this, "StopScreenShake");
             }
+
             IL_A26:
-            Tween.RunFunction(num, this, "SetSkillIconVisible", skillObj);
+            Tween.RunFunction(num, this, "SetSkillIconVisible", skillObj, manorPiece);
             if (m_manor.GetChildAt(7).Visible && m_manor.GetChildAt(16).Visible)
             {
                 (m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
@@ -473,7 +493,7 @@ namespace RogueCastle
             }
         }
 
-        public void SetSkillIconVisible(SkillObj skill)
+        public void SetSkillIconVisible(SkillObj skill, Tuple<int, int> manorPiece)
         {
             var num = 0f;
             foreach (var current in SkillSystem.GetAllConnectingTraits(skill))
@@ -487,10 +507,10 @@ namespace RogueCastle
                 }
             }
             Tween.RunFunction(num, this, "UnlockControls");
-            Tween.RunFunction(num, this, "CheckForSkillUnlock", skill, true);
+            Tween.RunFunction(num, this, "CheckForSkillUnlock", skill, true, manorPiece);
         }
 
-        public void CheckForSkillUnlock(SkillObj skill, bool displayScreen)
+        public void CheckForSkillUnlock(SkillObj skill, bool displayScreen, Tuple<int, int> manorPiece = null)
         {
             byte b = 0;
             switch (skill.TraitType)
@@ -575,12 +595,25 @@ namespace RogueCastle
                 case SkillType.SuperSecret:
                     b = 16;
                     break;
+                case SkillType.ManorUpgrade:
+                    b = SkillUnlockType.NetworkItem;
+                    break;
             }
-            if (b != 0 && displayScreen)
+
+            if (b == SkillUnlockType.NetworkItem && displayScreen)
             {
-                var list = new List<object>();
-                list.Add(b);
-                (ScreenManager as RCScreenManager).DisplayScreen(19, true, list);
+                var list = new List<object>
+                {
+                    SkillUnlockType.NetworkItem,
+                    manorPiece.Item2,
+                };
+
+                (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.SkillUnlock, true, list);
+            }
+            else if (b != 0 && displayScreen)
+            {
+                var list = new List<object> { b };
+                (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.SkillUnlock, true, list);
             }
         }
 
@@ -614,7 +647,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (!m_cameraTweening && m_selectedTraitIndex != new Vector2(7f, 1f) && Camera.Y != 360f)
+            if (!m_cameraTweening && (m_selectedTraitIndex != new Vector2(7f, 1f) && m_selectedTraitIndex != new Vector2(8f, 9f)) && Camera.Y != 360f)
             {
                 m_cameraTweening = true;
                 Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
@@ -716,12 +749,19 @@ namespace RogueCastle
                 {
                     var selectedTraitIndex = m_selectedTraitIndex;
                     var vector = new Vector2(-1f, -1f);
-
                     // Move Up and Down
                     if (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) || Game.GlobalInput.JustPressed(InputMapType.PlayerUp2))
                     {
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y).TopLink;
+
+                        var dragonSkill = SkillSystem.GetSkill(SkillType.SuperSecret);
+                        if (!m_cameraTweening && dragonSkill.Visible && (vector == new Vector2(7f, 1f) || vector == new Vector2(8f, 9f)))
+                        {
+                            m_cameraTweening = true;
+                            Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 60f.ToString());
+                            Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
+                        }
                     }
                     else if (Game.GlobalInput.JustPressed(InputMapType.PlayerDown1) || Game.GlobalInput.JustPressed(InputMapType.PlayerDown2))
                     {
@@ -780,7 +820,9 @@ namespace RogueCastle
                         {
                             Game.PlayerStats.Gold -= skill.TotalCost;
                             SetVisible(skill, true);
+
                             SkillSystem.LevelUpTrait(skill, true);
+
                             if (skill.CurrentLevel >= skill.MaxLevel)
                             {
                                 SoundManager.PlaySound("TraitMaxxed");
@@ -838,7 +880,7 @@ namespace RogueCastle
             m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
 
             // Update stats and modifier texts.
-            var stat = TraitStatType.GetTraitStat(skill.TraitType);
+            var stat = SkillStatType.GetSkillStat(skill.TraitType);
             if (stat > -1f)
             {
                 if (stat < 1f)

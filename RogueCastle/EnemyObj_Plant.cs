@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Plant.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,7 +11,7 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -25,7 +25,7 @@ namespace RogueCastle
         private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
 
         public EnemyObj_Plant(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyPlantIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 22;
@@ -60,7 +60,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.Plant_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Plantite";
                     MaxHealth = 28;
                     Damage = 23;
@@ -87,7 +87,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Plant_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Flowermon";
                     MaxHealth = 53;
                     Damage = 26;
@@ -114,7 +114,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Plant_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Stolas & Focalor";
                     MaxHealth = 165;
                     Damage = 28;
@@ -271,7 +271,7 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalCooldownLB);
             logicBlocksToDispose.Add(m_generalCooldownExpertLB);
             SetCooldownLogicBlock(m_generalCooldownLB, 100);
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 var arg_AA5_1 = m_generalCooldownExpertLB;
                 var array = new int[3];

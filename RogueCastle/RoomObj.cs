@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - RoomObj.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -15,7 +15,7 @@ using System.Xml;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 
 namespace RogueCastle
@@ -45,7 +45,7 @@ namespace RogueCastle
             EnemyList = new List<EnemyObj>();
             BorderList = new List<BorderObj>();
             TempEnemyList = new List<EnemyObj>();
-            LevelType = GameTypes.LevelType.None;
+            LevelType = LevelType.None;
             m_indexText = new TextObj(Game.PixelArtFontBold);
             m_indexText.FontSize = 150f;
             m_indexText.Align = Types.TextAlign.Centre;
@@ -68,7 +68,7 @@ namespace RogueCastle
         public bool AddToTowerPool { get; set; }
         public bool AddToDungeonPool { get; set; }
         public bool IsDLCMap { get; set; }
-        public GameTypes.LevelType LevelType { get; set; }
+        public LevelType LevelType { get; set; }
         public int Level { get; set; }
         public List<DoorObj> DoorList { get; internal set; }
         public List<EnemyObj> EnemyList { get; internal set; }
@@ -340,7 +340,7 @@ namespace RogueCastle
             {
                 current8.Draw(camera);
             }
-            if (LevelEV.SHOW_DEBUG_TEXT)
+            if (LevelENV.ShowDebugText)
             {
                 m_indexText.Position = new Vector2(Position.X + Width/2, Position.Y + Height/2 - m_indexText.Height/2);
                 m_indexText.Draw(camera);

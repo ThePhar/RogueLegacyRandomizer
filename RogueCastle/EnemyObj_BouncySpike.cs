@@ -1,18 +1,18 @@
-//
+// 
 // RogueLegacyArchipelago - EnemyObj_BouncySpike.cs
-// Last Modified 2021-12-24
-//
+// Last Modified 2021-12-27
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -26,7 +26,7 @@ namespace RogueCastle
         public RoomObj SpawnRoom;
 
         public EnemyObj_BouncySpike(PlayerObj target, PhysicsManager physicsManager,
-            ProceduralLevelScreen levelToAttachTo, GameTypes.EnemyDifficulty difficulty)
+            ProceduralLevelScreen levelToAttachTo, EnemyDifficulty difficulty)
             : base("EnemyBouncySpike_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 3;
@@ -89,9 +89,9 @@ namespace RogueCastle
             LockFlip = true;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Spiketex";
                     MaxHealth = 5;
                     Damage = 32;
@@ -118,7 +118,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = new Vector2(1f, 2f);
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Spiketus";
                     MaxHealth = 5;
                     Damage = 38;
@@ -145,7 +145,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = new Vector2(1f, 2f);
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Spiker";
                     MaxHealth = 5;
                     Damage = 40;

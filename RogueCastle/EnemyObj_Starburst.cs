@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Starburst.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -11,7 +11,7 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -24,7 +24,7 @@ namespace RogueCastle
         private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
 
         public EnemyObj_Starburst(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyStarburstIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             Type = 31;
@@ -59,9 +59,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Starburst_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Planky";
                     MaxHealth = 25;
                     Damage = 18;
@@ -88,7 +88,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Starburst_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Plonky";
                     MaxHealth = 42;
                     Damage = 21;
@@ -115,7 +115,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Starburst_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Ploo";
                     MaxHealth = 750;
                     Damage = 30;

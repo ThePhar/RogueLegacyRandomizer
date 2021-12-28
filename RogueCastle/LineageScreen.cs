@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - LineageScreen.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -16,7 +16,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -470,7 +470,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            m_bgShadow.Opacity = 0.8f + 0.05f*(float) Math.Sin(Game.TotalGameTime*4f);
+            m_bgShadow.Opacity = 0.8f + 0.05f*(float) Math.Sin(Game.TotalGameTimeSeconds*4f);
             if (Game.LineageSongCue != null && !Game.LineageSongCue.IsPlaying)
             {
                 Game.LineageSongCue.Dispose();

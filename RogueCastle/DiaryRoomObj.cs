@@ -1,14 +1,16 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - DiaryRoomObj.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
+using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -63,7 +65,7 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
-                               (float) Math.Sin(Game.TotalGameTime*20f)*2f;
+                               (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
             var bounds = m_diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;
@@ -96,8 +98,12 @@ namespace RogueCastle
                         var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                         rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
                         rCScreenManager.DisplayScreen(13, true);
-                        var expr_1DB = Game.PlayerStats;
-                        expr_1DB.DiaryEntry += 1;
+
+                        // Check location.
+                        var location = string.Format("Diary {0}", m_diaryIndex + 1);
+                        Program.Game.ArchipelagoManager.CheckLocations(ArchipelagoClient.LegacyLocations[location]);
+
+                        Game.PlayerStats.DiaryEntry += 1;
                         RoomCompleted = true;
                     }
                     else

@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+// RogueLegacyArchipelago - TeleporterObj.cs
+// Last Modified 2021-12-27
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+// 
+// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using DS2DEngine;
@@ -45,7 +46,7 @@ namespace RogueCastle
             if (m_arrowIcon.Visible)
             {
                 m_arrowIcon.Position = new Vector2(Bounds.Center.X,
-                    Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTime*20f)*2f);
+                    Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f);
                 m_arrowIcon.Draw(camera);
                 m_arrowIcon.Visible = false;
             }

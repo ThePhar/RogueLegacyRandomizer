@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Eyeball.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -43,7 +43,7 @@ namespace RogueCastle
         private FrameSoundObj m_squishSound;
 
         public EnemyObj_Eyeball(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyEyeballIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             m_pupil = new SpriteObj("EnemyEyeballPupil_Sprite");
@@ -107,7 +107,7 @@ namespace RogueCastle
             PupilOffset = 4;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Pupil";
                     MaxHealth = 25;
                     Damage = 18;
@@ -134,7 +134,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Eyeball_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Visionary";
                     MaxHealth = 57;
                     Damage = 21;
@@ -161,7 +161,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Eyeball_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Khidr";
                     MaxHealth = 580;
                     Damage = 23;
@@ -188,13 +188,13 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Eyeball_Miniboss_KnockBack;
                     PupilOffset = 0;
-                    if (LevelEV.WEAKEN_BOSSES)
+                    if (LevelENV.WeakenBosses)
                     {
                         MaxHealth = 1;
                     }
                     break;
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyEyeballBossEye_Character";
             }
@@ -685,7 +685,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
+            if (Difficulty == EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
             {
                 var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
@@ -707,7 +707,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            if (Difficulty != GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty != EnemyDifficulty.MiniBoss)
             {
                 base.Kill(giveXP);
                 return;
@@ -730,6 +730,9 @@ namespace RogueCastle
                 SoundManager.PlaySound("Boss_Eyeball_Freeze");
                 Tween.RunFunction(1f, this, "Part2");
                 GameUtil.UnlockAchievement("FEAR_OF_EYES");
+
+                // TODO: Make inside the chests instead.
+                Program.Game.ArchipelagoManager.CheckLocations(4445000, 4445001);
             }
         }
 

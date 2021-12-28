@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Spark.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -12,7 +12,7 @@
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 
 namespace RogueCastle
 {
@@ -22,7 +22,7 @@ namespace RogueCastle
         private bool m_hookedToGround;
 
         public EnemyObj_Spark(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemySpark_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             IsWeighted = false;
@@ -130,9 +130,9 @@ namespace RogueCastle
             KnockBack = EnemyEV.Spark_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Basic:
+                case EnemyDifficulty.Basic:
                     break;
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Mr. Spark";
                     MaxHealth = 20;
                     Damage = 28;
@@ -159,7 +159,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Spark_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Grandpa Spark";
                     MaxHealth = 20;
                     Damage = 32;
@@ -186,7 +186,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Spark_Expert_KnockBack;
                     return;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Lord Spark, King of Sparkatonia";
                     MaxHealth = 500;
                     Damage = 45;

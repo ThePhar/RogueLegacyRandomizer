@@ -1,6 +1,6 @@
 // 
 // RogueLegacyArchipelago - EnemyObj_Fairy.cs
-// Last Modified 2021-12-24
+// Last Modified 2021-12-27
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using RogueCastle.TypeDefinitions;
+using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
 
@@ -46,7 +46,7 @@ namespace RogueCastle
         public RoomObj SpawnRoom;
 
         public EnemyObj_Fairy(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
-            GameTypes.EnemyDifficulty difficulty)
+            EnemyDifficulty difficulty)
             : base("EnemyFairyGhostIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
             PlayAnimation();
@@ -104,7 +104,7 @@ namespace RogueCastle
             KnockBack = EnemyEV.Fairy_Basic_KnockBack;
             switch (Difficulty)
             {
-                case GameTypes.EnemyDifficulty.Advanced:
+                case EnemyDifficulty.Advanced:
                     Name = "Rage";
                     MaxHealth = 37;
                     Damage = 22;
@@ -131,7 +131,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Advanced_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.Expert:
+                case EnemyDifficulty.Expert:
                     Name = "Wrath";
                     MaxHealth = 72;
                     Damage = 24;
@@ -158,7 +158,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Expert_KnockBack;
                     break;
-                case GameTypes.EnemyDifficulty.MiniBoss:
+                case EnemyDifficulty.MiniBoss:
                     Name = "Alexander";
                     MaxHealth = 635;
                     Damage = 30;
@@ -184,13 +184,13 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Miniboss_KnockBack;
                     NumHits = 1;
-                    if (LevelEV.WEAKEN_BOSSES)
+                    if (LevelENV.WeakenBosses)
                     {
                         MaxHealth = 1;
                     }
                     break;
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyFairyGhostBossIdle_Character";
             }
@@ -300,7 +300,7 @@ namespace RogueCastle
             m_generalExpertLB.AddLogicSet(logicSet, logicSet2, logicSet3, logicSet6);
             m_generalMiniBossLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
             m_generalNeoLB.AddLogicSet(logicSet7, logicSet8, logicSet9, logicSet10);
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_generalCooldownLB.AddLogicSet(logicSet7, logicSet8, logicSet9);
             }
@@ -342,7 +342,7 @@ namespace RogueCastle
             {
                 projectileData.SpriteName = "GhostProjectileBoss_Sprite";
             }
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Roar_01",
                     "Boss_Flameskull_Roar_02", "Boss_Flameskull_Roar_03");
@@ -557,7 +557,7 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !IsPaused)
+            if (Difficulty == EnemyDifficulty.MiniBoss && !IsPaused)
             {
                 if (m_summonCounter > 0f)
                 {
@@ -574,13 +574,13 @@ namespace RogueCastle
                         {
                             if (Game.PlayerStats.TimesCastleBeaten <= 0 || IsNeo)
                             {
-                                CreateFairy(GameTypes.EnemyDifficulty.Basic);
-                                CreateFairy(GameTypes.EnemyDifficulty.Basic);
+                                CreateFairy(EnemyDifficulty.Basic);
+                                CreateFairy(EnemyDifficulty.Basic);
                             }
                             else
                             {
-                                CreateFairy(GameTypes.EnemyDifficulty.Advanced);
-                                CreateFairy(GameTypes.EnemyDifficulty.Advanced);
+                                CreateFairy(EnemyDifficulty.Advanced);
+                                CreateFairy(EnemyDifficulty.Advanced);
                             }
                             NumHits = 1;
                         }
@@ -632,7 +632,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            if (Difficulty == GameTypes.EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
+            if (Difficulty == EnemyDifficulty.MiniBoss && !m_bossVersionKilled)
             {
                 var playerObj = otherBox.AbsParent as PlayerObj;
                 if (playerObj != null && otherBox.Type == 1 && !playerObj.IsInvincible && playerObj.State == 8)
@@ -646,7 +646,7 @@ namespace RogueCastle
             }
         }
 
-        private void CreateFairy(GameTypes.EnemyDifficulty difficulty)
+        private void CreateFairy(EnemyDifficulty difficulty)
         {
             var enemyObj_Fairy = new EnemyObj_Fairy(null, null, null, difficulty);
             enemyObj_Fairy.Position = Position;
@@ -665,7 +665,7 @@ namespace RogueCastle
             enemyObj_Fairy.MainFairy = false;
             enemyObj_Fairy.SavedStartingPos = enemyObj_Fairy.Position;
             enemyObj_Fairy.SaveToFile = false;
-            if (LevelEV.SHOW_ENEMY_RADII)
+            if (LevelENV.ShowEnemyRadii)
             {
                 enemyObj_Fairy.InitializeDebugRadii();
             }
@@ -684,7 +684,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            if (Difficulty != GameTypes.EnemyDifficulty.MiniBoss)
+            if (Difficulty != EnemyDifficulty.MiniBoss)
             {
                 base.Kill(giveXP);
                 return;
@@ -703,6 +703,9 @@ namespace RogueCastle
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Freeze");
                 GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
+
+                // TODO: Make inside the chests instead.
+                Program.Game.ArchipelagoManager.CheckLocations(4445002, 4445003);
             }
         }
 
