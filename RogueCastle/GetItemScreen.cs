@@ -1,18 +1,17 @@
 // 
-// RogueLegacyArchipelago - GetItemScreen.cs
-// Last Modified 2021-12-28
+//  RogueLegacyArchipelago - GetItemScreen.cs
+//  Last Modified 2021-12-29
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
 using System.Collections.Generic;
 using Archipelago;
-using Archipelago.Legacy;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -254,9 +253,9 @@ namespace RogueCastle
                     break;
                 case GetItemType.ReceiveNetworkItem:
                     m_itemFoundPlayerText.Visible = true;
-                    switch (LegacyItems.GetItemType(m_network_item))
+                    switch (m_network_item.GetItemType())
                     {
-                        case LegacyItems.LegacyItemType.Blueprint:
+                        case LegacyItemType.Blueprint:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                             m_itemSpinning = true;
@@ -266,7 +265,7 @@ namespace RogueCastle
                             m_itemFoundText.TextureColor = Color.Yellow;
                             break;
 
-                        case LegacyItems.LegacyItemType.Rune:
+                        case LegacyItemType.Rune:
                             m_itemFoundText.Y += 40f;
                             m_itemSpinning = true;
                             m_itemSprite.ChangeSprite("RuneIcon_Sprite");
@@ -276,8 +275,8 @@ namespace RogueCastle
                             m_itemSprite.AnimationDelay = 0.05f;
                             break;
 
-                        case LegacyItems.LegacyItemType.Skill:
-                        case LegacyItems.LegacyItemType.SpecialSkill:
+                        case LegacyItemType.Skill:
+                        case LegacyItemType.SpecialSkill:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite(GetSkillPlateIcon(m_network_item));
                             m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
@@ -286,14 +285,14 @@ namespace RogueCastle
                             m_itemFoundText.TextureColor = Color.Yellow;
                             break;
 
-                        case LegacyItems.LegacyItemType.Stats:
+                        case LegacyItemType.Stats:
                             m_itemFoundText.Y += 50f;
                             m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
                             m_itemFoundText.Text = GetStatText((int) m_itemInfo.X);
                             m_itemSprite.AnimationDelay = 0.05f;
                             m_itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
                             m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
-                            if (m_network_item == ArchipelagoClient.LegacyItems["Random Triple Stat Increase"])
+                            if (m_network_item == (int) ItemCode.TripleStatIncreases)
                             {
                                 m_tripStat1FoundText.Visible = true;
                                 m_tripStat2FoundText.Visible = true;
@@ -314,7 +313,7 @@ namespace RogueCastle
                             }
                             break;
 
-                        case LegacyItems.LegacyItemType.Gold:
+                        case LegacyItemType.Gold:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite("MoneyBag_Sprite");
                             m_itemSprite.AnimationSpeed = 0;
