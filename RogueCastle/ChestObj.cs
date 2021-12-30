@@ -1,6 +1,6 @@
 // 
 //  RogueLegacyArchipelago - ChestObj.cs
-//  Last Modified 2021-12-29
+//  Last Modified 2021-12-30
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -362,17 +362,17 @@ namespace RogueCastle
                         break;
 
                     case LevelType.Garden:
-                        potential = (++Game.PlayerStats.OpenedChests.GardenChests + 1) % arch.Data.ItemsEveryNthChests;
+                        potential = (++Game.PlayerStats.OpenedChests.GardenChests) % arch.Data.ItemsEveryNthChests;
                         total = (Game.PlayerStats.OpenedChests.GardenChests) / arch.Data.ItemsEveryNthChests;
                         break;
 
                     case LevelType.Dungeon:
-                        potential = (++Game.PlayerStats.OpenedChests.DungeonChests + 1) % arch.Data.ItemsEveryNthChests;
+                        potential = (++Game.PlayerStats.OpenedChests.DungeonChests) % arch.Data.ItemsEveryNthChests;
                         total = (Game.PlayerStats.OpenedChests.DungeonChests) / arch.Data.ItemsEveryNthChests;
                         break;
 
                     case LevelType.Tower:
-                        potential = (++Game.PlayerStats.OpenedChests.TowerChests + 1) % arch.Data.ItemsEveryNthChests;
+                        potential = (++Game.PlayerStats.OpenedChests.TowerChests) % arch.Data.ItemsEveryNthChests;
                         total = (Game.PlayerStats.OpenedChests.TowerChests) / arch.Data.ItemsEveryNthChests;
                         break;
                 }

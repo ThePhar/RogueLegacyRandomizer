@@ -4,10 +4,8 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68e26717-71f9-4b5e-9d30-22a28e84a23c" name="Changes" comment="">
+    <list default="true" id="68e26717-71f9-4b5e-9d30-22a28e84a23c" name="Changes" comment="fixed a bug regarding not adding health/mana when getting hp/mp up">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyArchipelago.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RogueLegacyArchipelago.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/LevelENV.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/LevelENV.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +22,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3860182fd7e4441fb1a685b733c66bb3bc00/6c/a2fbdf3d/LocationCheckHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/56/0a98546f/GenericEqualityComparer`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Phar/Development/RogueLegacyArchipelago/RogueCastle/Game.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d80be1839d2e47c08cfe44cc2aca15593a00/ea/61e2afd6/SpriteLibrary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9342921aec9e44ea83d9e4be3804f53f1dc00/92/5ca43128/SpriteObj.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/bd/ee62a0cc/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
@@ -63,7 +62,7 @@
       <workItem from="1640729704862" duration="586000" />
       <workItem from="1640730839551" duration="25150000" />
       <workItem from="1640806058884" duration="18118000" />
-      <workItem from="1640898521847" duration="361000" />
+      <workItem from="1640898521847" duration="1704000" />
     </task>
     <task id="LOCAL-00001" summary="tweaked gitignore so project includes required dlls for building/running">
       <created>1640895556219</created>
@@ -72,7 +71,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640895556219</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fixed a bug regarding not adding health/mana when getting hp/mp up">
+      <created>1640899572438</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640899572438</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,7 +101,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="tweaked gitignore so project includes required dlls for building/running" />
-    <option name="LAST_COMMIT_MESSAGE" value="tweaked gitignore so project includes required dlls for building/running" />
+    <MESSAGE value="fixed a bug regarding not adding health/mana when getting hp/mp up" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug regarding not adding health/mana when getting hp/mp up" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
