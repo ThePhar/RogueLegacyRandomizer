@@ -1,6 +1,6 @@
 // 
 //  RogueLegacyArchipelago - Game.cs
-//  Last Modified 2021-12-29
+//  Last Modified 2021-12-30
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -611,58 +611,6 @@ namespace RogueCastle
         private void DisgustingGetItemLogic(NetworkItem item, int randomGold, params int[] stats)
         {
             SkillObj skill;
-            // switch (item.Item)
-            // {
-            //     // Extra
-            //     // {"Random Stat Increase", 4444029},
-            //     // {"Random Triple Stat Increase", 4444030},
-            //     // {"Gold Bonus", 4444031},
-            //
-            //     case 4444029: // Single Stat
-            //     case 4444030: // Trip Stats
-            //         var iterations = item.Item == 4444029 ? 1 : 3;
-            //         for (var i = 0; i < iterations; i++)
-            //         {
-            //             if (stats[i] == 4)
-            //             {
-            //                 PlayerStats.BonusStrength++;
-            //                 continue;
-            //             }
-            //
-            //             if (stats[i] == 5)
-            //             {
-            //                 PlayerStats.BonusMagic++;
-            //                 continue;
-            //             }
-            //
-            //             if (stats[i] == 6)
-            //             {
-            //                 PlayerStats.BonusDefense++;
-            //                 continue;
-            //             }
-            //
-            //             if (stats[i] == 7)
-            //             {
-            //                 PlayerStats.BonusHealth++;
-            //                 continue;
-            //             }
-            //
-            //             if (stats[i] == 8)
-            //             {
-            //                 PlayerStats.BonusMana++;
-            //                 continue;
-            //             }
-            //
-            //             // stats[i] == 9
-            //             PlayerStats.BonusWeight++;
-            //         }
-            //
-            //         break;
-            //
-            //     case 4444031: // Gold
-            //         PlayerStats.Gold += randomGold;
-            //         break;
-            // }
             switch ((ItemCode) item.Item)
             {
                 case ItemCode.Blacksmith:
@@ -775,21 +723,25 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.HealthUp:
+                    var maxHp = ScreenManager.Player.MaxHealth;
                     skill = SkillSystem.GetSkill(SkillType.HealthUp);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
+                    ScreenManager.Player.CurrentHealth += ScreenManager.Player.MaxHealth - maxHp;
                     break;
 
                 case ItemCode.ManaUp:
+                    var maxMp = ScreenManager.Player.MaxHealth;
                     skill = SkillSystem.GetSkill(SkillType.ManaUp);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
+                    ScreenManager.Player.CurrentMana += ScreenManager.Player.MaxMana - maxMp;
                     break;
 
                 case ItemCode.AttackUp:

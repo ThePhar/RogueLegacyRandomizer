@@ -5,63 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68e26717-71f9-4b5e-9d30-22a28e84a23c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Archipelago/ItemCode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Archipelago/LocationCode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Archipelago/LocationManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RogueCastle/SkillLink.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RogueCastle/Systems/ManorContainer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RogueCastle/Systems/SkillMeta.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyArchipelago.dir/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyArchipelago.dir/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyEnhanced.dir/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyEnhanced.dir/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyEnhanced.dir/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyEnhanced.dir/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Archipelago/ArchipelagoClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Archipelago/ArchipelagoClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Archipelago/Legacy/LegacyItems.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Archipelago/Legacy/LegacyLocations.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Archipelago/Legacy/LegacySlotData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Archipelago/SlotData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Folder.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Folder.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Folder.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Folder.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/CarnivalShoot1BonusRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/CarnivalShoot1BonusRoom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/CarnivalShoot2BonusRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/CarnivalShoot2BonusRoom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/CastleEntranceRoomObj.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/CastleEntranceRoomObj.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/ChestBonusRoomObj.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/ChestBonusRoomObj.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/ChestObj.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/ChestObj.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/CompassRoomObj.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/CompassRoomObj.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/DiaryFlashbackScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/DiaryFlashbackScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/DiaryRoomObj.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/DiaryRoomObj.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/EnemyObj_Blob.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/EnemyObj_Blob.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/EnemyObj_Eyeball.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/EnemyObj_Eyeball.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/EnemyObj_Fairy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/EnemyObj_Fairy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/EnemyObj_Fireball.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/EnemyObj_Fireball.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RogueLegacyArchipelago.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RogueLegacyArchipelago.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RogueCastle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/GetItemScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/GetItemScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/JukeboxBonusRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/JukeboxBonusRoom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/SkillBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/SkillBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/SkillLinker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/SkillObj.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/SkillObj.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/SkillScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/SkillScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/SkillSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/SkillSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/SkillUnlockScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/SkillUnlockScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueCastle/Structs/SkillType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/Structs/SkillType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RogueLegacyArchipelago.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/RogueLegacyArchipelago.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RogueCastle/LevelENV.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RogueCastle/LevelENV.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="manor-overhaul" />
+      </map>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3860182fd7e4441fb1a685b733c66bb3bc00/6c/a2fbdf3d/LocationCheckHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/56/0a98546f/GenericEqualityComparer`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Phar/Development/RogueLegacyArchipelago/RogueCastle/SkillScreen.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Phar/Development/RogueLegacyArchipelago/RogueCastle/SkillScreen.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d80be1839d2e47c08cfe44cc2aca15593a00/ea/61e2afd6/SpriteLibrary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9342921aec9e44ea83d9e4be3804f53f1dc00/92/5ca43128/SpriteObj.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Phar/Development/RogueLegacyArchipelago/RogueCastle/SkillScreen.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Phar/Development/RogueLegacyArchipelago/RogueCastle/SkillScreen.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Phar/Development/RogueLegacyArchipelago/Archipelago/ArchipelagoClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/bd/ee62a0cc/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -78,6 +42,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -98,7 +63,16 @@
       <workItem from="1640729704862" duration="586000" />
       <workItem from="1640730839551" duration="25150000" />
       <workItem from="1640806058884" duration="18118000" />
+      <workItem from="1640898521847" duration="361000" />
     </task>
+    <task id="LOCAL-00001" summary="tweaked gitignore so project includes required dlls for building/running">
+      <created>1640895556219</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640895556219</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,6 +94,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="tweaked gitignore so project includes required dlls for building/running" />
+    <option name="LAST_COMMIT_MESSAGE" value="tweaked gitignore so project includes required dlls for building/running" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
