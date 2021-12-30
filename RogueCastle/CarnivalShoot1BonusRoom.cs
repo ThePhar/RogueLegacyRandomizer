@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - CarnivalShoot1BonusRoom.cs
-// Last Modified 2021-12-27
+//  RogueLegacyArchipelago - CarnivalShoot1BonusRoom.cs
+//  Last Modified 2021-12-29
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -284,8 +284,6 @@ namespace RogueCastle
                 (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
                 RevealChest();
                 GameUtil.UnlockAchievement("LOVE_OF_CLOWNS");
-
-                Program.Game.ArchipelagoManager.CheckLocations(4445039);
                 return;
             }
             var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
@@ -501,9 +499,10 @@ namespace RogueCastle
                     new Vector2(Player.AttachedLevel.Camera.TopLeftCorner.X + 50f,
                         Player.AttachedLevel.Camera.TopLeftCorner.Y + 135f), num);
             }
-            Player.AttachedLevel.TextManager.DisplayNumberStringText(num*10, " gold", Color.Yellow,
+            Player.AttachedLevel.TextManager.DisplayNumberStringText(
+                (int)(num * 10 * Program.Game.ArchipelagoManager.Data.GoldGainMultiplier), " gold", Color.Yellow,
                 m_currentTarget.Position);
-            Game.PlayerStats.Gold += num*10;
+            Game.PlayerStats.Gold += (int)(num*10*Program.Game.ArchipelagoManager.Data.GoldGainMultiplier);
         }
 
         public override void Dispose()
