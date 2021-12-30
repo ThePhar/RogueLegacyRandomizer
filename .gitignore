@@ -5,7 +5,13 @@ copyrighter*
 changelog.txt
 *.bak
 *.old
-*.dll
 *.sln
 *.suo
 *.sln.DotSettings.user
+
+# Better dll hiding.
+lib/DS2DEngine.dll
+lib/InputSystem.dll
+lib/Nuclex.Input.dll
+lib/SpriteSystem.dll
+lib/Tweener.dll
