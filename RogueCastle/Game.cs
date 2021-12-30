@@ -509,11 +509,11 @@ namespace RogueCastle
                     var heroIsDead = PlayerStats.IsDead;
                     var startingRoom = PlayerStats.LoadStartingRoom;
 
-                    if (PlayerStats.IsFemale && !FemaleNameArray.Contains(ArchipelagoManager.Data.Name))
+                    if (ArchipelagoManager.Data.IsFemale && !FemaleNameArray.Contains(ArchipelagoManager.Data.Name))
                     {
                         FemaleNameArray.Add(ArchipelagoManager.Data.Name);
                     }
-                    else if (!PlayerStats.IsFemale && !NameArray.Contains(ArchipelagoManager.Data.Name))
+                    else if (!ArchipelagoManager.Data.IsFemale && !NameArray.Contains(ArchipelagoManager.Data.Name))
                     {
                         NameArray.Add(ArchipelagoManager.Data.Name);
                     }
