@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - ItemDropObj.cs
-// Last Modified 2021-12-24
+//  RogueLegacyArchipelago - ItemDropObj.cs
+//  Last Modified 2021-12-29
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -103,7 +103,7 @@ namespace RogueCastle
                         num = 0.6f;
                     }
                     var num2 =
-                        (int) Math.Round(m_amount*(1f + player.TotalGoldBonus)*num, MidpointRounding.AwayFromZero);
+                        (int) Math.Round(m_amount*(1f + player.TotalGoldBonus) * num * Program.Game.ArchipelagoManager.Data.GoldGainMultiplier, MidpointRounding.AwayFromZero);
                     Game.PlayerStats.Gold += num2;
                     textManager.DisplayNumberStringText(num2, "gold", Color.Yellow, new Vector2(X, Bounds.Top));
                     if (DropType == 10)

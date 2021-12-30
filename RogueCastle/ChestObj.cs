@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - ChestObj.cs
-// Last Modified 2021-12-28
+//  RogueLegacyArchipelago - ChestObj.cs
+//  Last Modified 2021-12-29
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -132,19 +132,7 @@ namespace RogueCastle
                 return;
             }
 
-            switch (dropType)
-            {
-                case 0:
-                    GiveGold(itemDropManager);
-                    break;
-                case 1:
-                    GiveStatDrop(itemDropManager, player, 1, 0);
-                    break;
-                default:
-                    GiveNetworkItem(itemDropManager, player);
-                    break;
-            }
-
+            GiveNetworkItem(itemDropManager, player);
             player.AttachedLevel.RefreshMapChestIcons();
         }
 
@@ -323,88 +311,123 @@ namespace RogueCastle
 
             if (ForcedItemType == 1)
             {
-                location = "Cheapskate Elf";
-            }
-            else if (isFairy)
-            {
-                switch (room.LevelType)
-                {
-                    case LevelType.None:
-                    case LevelType.Castle:
-                        location = string.Format("Castle Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.CastleFairyChests);
-                        break;
-                    case LevelType.Garden:
-                        location = string.Format("Garden Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.GardenFairyChests);
-                        break;
-                    case LevelType.Dungeon:
-                        location = string.Format("Dungeon Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonFairyChests);
-                        break;
-                    case LevelType.Tower:
-                        location = string.Format("Tower Fairy Chest {0}", ++Game.PlayerStats.OpenedChests.TowerFairyChests);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            else
-            {
-                switch (room.LevelType)
-                {
-                    case LevelType.None:
-                    case LevelType.Castle:
-                        location = string.Format("Castle Chest {0}", ++Game.PlayerStats.OpenedChests.CastleChests);
-                        break;
-                    case LevelType.Garden:
-                        location = string.Format("Garden Chest {0}", ++Game.PlayerStats.OpenedChests.GardenChests);
-                        break;
-                    case LevelType.Dungeon:
-                        location = string.Format("Dungeon Chest {0}", ++Game.PlayerStats.OpenedChests.DungeonChests);
-                        break;
-                    case LevelType.Tower:
-                        location = string.Format("Tower Chest {0}", ++Game.PlayerStats.OpenedChests.TowerChests);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            Console.WriteLine("LOCATION: " + location);
-
-            int code;
-            if (ArchipelagoClient.LegacyLocations.TryGetValue(location, out code))
-            {
-                var name = arch.GetPlayerName(arch.LocationCache[code].Player);
-                var item = arch.LocationCache[code].Item;
-
-                var networkItem = new List<object>
-                {
-                    new Vector2(X, Y - Height / 2f),
-                    GetItemType.GiveNetworkItem,
-                    new Vector2(-1f, -1f),
-                    new Vector2(-1f, -1f),
-                    name,
-                    item
-                };
-
-                Program.Game.ArchipelagoManager.CheckLocations(code);
-
-                // If we're sending someone else something, let's show what we're sending.
-                if (arch.LocationCache[code].Player != arch.Data.Slot)
-                {
-                    Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, networkItem);
-                    player.RunGetItemAnimation();
-                }
-
                 return;
             }
 
-            // We opened every location!
             if (isFairy)
-                GiveStatDrop(manager, player, 1, 0);
+            {
+                var total = 0;
+
+                switch (room.LevelType)
+                {
+                    case LevelType.None:
+                    case LevelType.Castle:
+                        total = ++Game.PlayerStats.OpenedChests.CastleFairyChests;
+                        location = string.Format("Castle Hamson Fairy Chest {0}", total);
+                        break;
+                    case LevelType.Garden:
+                        total = ++Game.PlayerStats.OpenedChests.GardenFairyChests;
+                        location = string.Format("Forest Abkhazia Fairy Chest {0}", total);
+                        break;
+                    case LevelType.Dungeon:
+                        total = ++Game.PlayerStats.OpenedChests.DungeonFairyChests;
+                        location = string.Format("The Land of Darkness Fairy Chest {0}", total);
+                        break;
+                    case LevelType.Tower:
+                        total = ++Game.PlayerStats.OpenedChests.TowerFairyChests;
+                        location = string.Format("The Maya Fairy Chest {0}", total);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                if (total > arch.Data.FairyChestsPerZone)
+                {
+                    GiveStatDrop(manager, player, 1, 0);
+                    return;
+                }
+            }
             else
+            {
+                // Check to make sure we can send this item.
+                var potential = 0;
+                var total = 0;
+                switch (room.LevelType)
+                {
+                    case LevelType.None:
+                    case LevelType.Castle:
+                        potential = (++Game.PlayerStats.OpenedChests.CastleChests) % arch.Data.ItemsEveryNthChests;
+                        total = (Game.PlayerStats.OpenedChests.CastleChests) / arch.Data.ItemsEveryNthChests;
+                        break;
+
+                    case LevelType.Garden:
+                        potential = (++Game.PlayerStats.OpenedChests.GardenChests + 1) % arch.Data.ItemsEveryNthChests;
+                        total = (Game.PlayerStats.OpenedChests.GardenChests) / arch.Data.ItemsEveryNthChests;
+                        break;
+
+                    case LevelType.Dungeon:
+                        potential = (++Game.PlayerStats.OpenedChests.DungeonChests + 1) % arch.Data.ItemsEveryNthChests;
+                        total = (Game.PlayerStats.OpenedChests.DungeonChests) / arch.Data.ItemsEveryNthChests;
+                        break;
+
+                    case LevelType.Tower:
+                        potential = (++Game.PlayerStats.OpenedChests.TowerChests + 1) % arch.Data.ItemsEveryNthChests;
+                        total = (Game.PlayerStats.OpenedChests.TowerChests) / arch.Data.ItemsEveryNthChests;
+                        break;
+                }
+
+                if (potential != 0 || total > arch.Data.ChestsPerZone)
+                {
+                    GiveGold(manager);
+                    return;
+                }
+
+                switch (room.LevelType)
+                {
+                    case LevelType.None:
+                    case LevelType.Castle:
+                        location = string.Format("Castle Hamson Chest {0}", total);
+                        break;
+                    case LevelType.Garden:
+                        location = string.Format("Forest Abkhazia Chest {0}", total);
+                        break;
+                    case LevelType.Dungeon:
+                        location = string.Format("The Land of Darkness Chest {0}", total);
+                        break;
+                    case LevelType.Tower:
+                        location = string.Format("The Maya Chest {0}", total);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
                 GiveGold(manager);
+            }
+
+            var code = LocationManager.GetCodeByName(location);
+            var name = arch.GetPlayerName(arch.LocationCache[code].Player);
+            var item = arch.LocationCache[code].Item;
+
+            var networkItem = new List<object>
+            {
+                new Vector2(X, Y - Height / 2f),
+                GetItemType.GiveNetworkItem,
+                new Vector2(-1f, -1f),
+                new Vector2(-1f, -1f),
+                name,
+                item
+            };
+
+            Program.Game.ArchipelagoManager.CheckLocations(code);
+
+            // If we're sending someone else something, let's show what we're sending.
+            if (arch.LocationCache[code].Player != arch.Data.Slot)
+            {
+                Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, networkItem);
+                player.RunGetItemAnimation();
+            }
         }
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)

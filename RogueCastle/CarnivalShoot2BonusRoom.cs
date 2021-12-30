@@ -1,12 +1,12 @@
 //
-// RogueLegacyArchipelago - CarnivalShoot2BonusRoom.cs
-// Last Modified 2021-12-27
+//  RogueLegacyArchipelago - CarnivalShoot2BonusRoom.cs
+//  Last Modified 2021-12-29
 //
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 //
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 //
 
 using System;
@@ -339,7 +339,7 @@ namespace RogueCastle
                 ResetCamera();
             }
             Player.AttachedLevel.TextManager.DisplayNumberStringText(gold, " gold", Color.Yellow, Player.Position);
-            Game.PlayerStats.Gold += gold;
+            Game.PlayerStats.Gold += (int) (gold * Program.Game.ArchipelagoManager.Data.GoldGainMultiplier);
             Tween.By(m_gate, 0.5f, Quad.EaseInOut, "Y", (-m_gate.Height).ToString());
             m_gateClosed = false;
             RoomCompleted = true;
@@ -355,8 +355,6 @@ namespace RogueCastle
                 (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(13, true);
                 RevealChest();
                 GameUtil.UnlockAchievement("LOVE_OF_CLOWNS");
-
-                Program.Game.ArchipelagoManager.CheckLocations(4445039);
                 return;
             }
             var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;

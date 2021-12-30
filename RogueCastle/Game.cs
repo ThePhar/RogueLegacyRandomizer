@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - Game.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  RogueLegacyArchipelago - Game.cs
+//  Last Modified 2021-12-29
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -16,8 +16,6 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Archipelago;
-using Archipelago.Legacy;
-using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Models;
 using DS2DEngine;
 using InputSystem;
@@ -30,58 +28,19 @@ using RogueCastle.Screens;
 using RogueCastle.Structs;
 using SpriteSystem;
 using Tweener;
-
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace RogueCastle
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        public static AreaStruct[]  Area1List;
+        public static AreaStruct[] Area1List;
         public static SettingStruct GameConfig;
-
-        public static Cue             LineageSongCue       { get; set; }
-        public static RCScreenManager ScreenManager        { get; set; }
-        public static Effect          BWMaskEffect         { get; set; }
-        public static Effect          ColourSwapShader     { get; set; }
-        public static Effect          HSVEffect            { get; set; }
-        public static Effect          InvertShader         { get; set; }
-        public static Effect          MaskEffect           { get; set; }
-        public static Effect          ParallaxEffect       { get; set; }
-        public static Effect          RippleEffect         { get; set; }
-        public static Effect          ShadowEffect         { get; set; }
-        public static EquipmentSystem EquipmentSystem      { get; set; }
-        public static GaussianBlur    GaussianBlur         { get; set; }
-        public static PlayerStats     PlayerStats          { get; set; }
-        public static InputMap        GlobalInput          { get; set; }
-        public static List<string>    NameArray            { get; set; }
-        public static List<string>    FemaleNameArray      { get; set; }
-        public static SpriteFont      PixelArtFont         { get; set; }
-        public static SpriteFont      PixelArtFontBold     { get; set; }
-        public static SpriteFont      JunicodeFont         { get; set; }
-        public static SpriteFont      EnemyLevelFont       { get; set; }
-        public static SpriteFont      PlayerLevelFont      { get; set; }
-        public static SpriteFont      GoldFont             { get; set; }
-        public static SpriteFont      HerzogFont           { get; set; }
-        public static SpriteFont      JunicodeLargeFont    { get; set; }
-        public static SpriteFont      CinzelFont           { get; set; }
-        public static SpriteFont      BitFont              { get; set; }
-        public static Texture2D       GenericTexture       { get; set; }
-        public static float           PlaySessionLength    { get; set; }
-        public static float           TotalGameTimeSeconds { get; set; }
-        public static float           TotalGameTimeHours   { get; set; }
-        public static string          ProfileName          { get; set; }
-
-        public ArchipelagoClient     ArchipelagoManager    { get; private set; }
-        public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
-        public PhysicsManager        PhysicsManager        { get; private set; }
-        public SaveGameManager       SaveManager           { get; private set; }
-
-        private       GameTime m_forcedGameTime2;
-        private       GameTime m_forcedGameTime1;
-        private       bool     m_contentLoaded;
-        private       bool     m_frameLimitSwap;
-        private       bool     m_gameLoaded;
+        private bool m_contentLoaded;
+        private GameTime m_forcedGameTime1;
+        private GameTime m_forcedGameTime2;
+        private bool m_frameLimitSwap;
+        private bool m_gameLoaded;
 
         public Game()
         {
@@ -118,11 +77,50 @@ namespace RogueCastle
 
             var form = Control.FromHandle(Window.Handle) as Form;
             if (form != null)
+            {
                 form.FormClosing += FormClosing;
+            }
 
             GraphicsDeviceManager.PreparingDeviceSettings += ChangeGraphicsSettings;
             SleepUtil.DisableScreensaver();
         }
+
+        public static Cue LineageSongCue { get; set; }
+        public static RCScreenManager ScreenManager { get; set; }
+        public static Effect BWMaskEffect { get; set; }
+        public static Effect ColourSwapShader { get; set; }
+        public static Effect HSVEffect { get; set; }
+        public static Effect InvertShader { get; set; }
+        public static Effect MaskEffect { get; set; }
+        public static Effect ParallaxEffect { get; set; }
+        public static Effect RippleEffect { get; set; }
+        public static Effect ShadowEffect { get; set; }
+        public static EquipmentSystem EquipmentSystem { get; set; }
+        public static GaussianBlur GaussianBlur { get; set; }
+        public static PlayerStats PlayerStats { get; set; }
+        public static InputMap GlobalInput { get; set; }
+        public static List<string> NameArray { get; set; }
+        public static List<string> FemaleNameArray { get; set; }
+        public static SpriteFont PixelArtFont { get; set; }
+        public static SpriteFont PixelArtFontBold { get; set; }
+        public static SpriteFont JunicodeFont { get; set; }
+        public static SpriteFont EnemyLevelFont { get; set; }
+        public static SpriteFont PlayerLevelFont { get; set; }
+        public static SpriteFont GoldFont { get; set; }
+        public static SpriteFont HerzogFont { get; set; }
+        public static SpriteFont JunicodeLargeFont { get; set; }
+        public static SpriteFont CinzelFont { get; set; }
+        public static SpriteFont BitFont { get; set; }
+        public static Texture2D GenericTexture { get; set; }
+        public static float PlaySessionLength { get; set; }
+        public static float TotalGameTimeSeconds { get; set; }
+        public static float TotalGameTimeHours { get; set; }
+        public static string ProfileName { get; set; }
+
+        public ArchipelagoClient ArchipelagoManager { get; private set; }
+        public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
+        public PhysicsManager PhysicsManager { get; private set; }
+        public SaveGameManager SaveManager { get; private set; }
 
         protected void ChangeGraphicsSettings(object sender, PreparingDeviceSettingsEventArgs e)
         {
@@ -183,8 +181,10 @@ namespace RogueCastle
                 statusIndicator.Initialize();
             }
 
-            m_forcedGameTime1 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
-            m_forcedGameTime2 = new GameTime(default(TimeSpan), new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1050f)));
+            m_forcedGameTime1 = new GameTime(default(TimeSpan),
+                new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
+            m_forcedGameTime2 = new GameTime(default(TimeSpan),
+                new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1050f)));
             base.Initialize();
         }
 
@@ -206,9 +206,13 @@ namespace RogueCastle
         public static void InitializeGlobalInput()
         {
             if (GlobalInput != null)
+            {
                 GlobalInput.ClearAll();
+            }
             else
+            {
                 GlobalInput = new InputMap(PlayerIndex.One, true);
+            }
 
             GlobalInput.AddInput(InputMapType.MenuConfirm1, Keys.Enter);
             GlobalInput.AddInput(InputMapType.MenuCancel1, Keys.Escape);
@@ -274,7 +278,9 @@ namespace RogueCastle
         protected override void LoadContent()
         {
             if (m_contentLoaded)
+            {
                 return;
+            }
 
             m_contentLoaded = true;
             LoadAllSpriteFonts();
@@ -326,7 +332,7 @@ namespace RogueCastle
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
                 BonusRooms = new Vector2(2f, 3f),
-                Color = Color.White,
+                Color = Color.White
             };
             var gardenArea = new AreaStruct
             {
@@ -335,7 +341,7 @@ namespace RogueCastle
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
                 BonusRooms = new Vector2(2f, 3f),
-                Color = Color.Green,
+                Color = Color.Green
             };
             var towerArea = new AreaStruct
             {
@@ -344,7 +350,7 @@ namespace RogueCastle
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
                 BonusRooms = new Vector2(2f, 3f),
-                Color = Color.DarkBlue,
+                Color = Color.DarkBlue
             };
             var dungeonArea = new AreaStruct
             {
@@ -353,7 +359,7 @@ namespace RogueCastle
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
                 BonusRooms = new Vector2(2f, 3f),
-                Color = Color.Red,
+                Color = Color.Red
             };
 
             Area1List = new[]
@@ -361,7 +367,7 @@ namespace RogueCastle
                 castleArea,
                 gardenArea,
                 towerArea,
-                dungeonArea,
+                dungeonArea
             };
         }
 
@@ -429,7 +435,7 @@ namespace RogueCastle
             GaussianBlur = new GaussianBlur(this, 1320, 720)
             {
                 Amount = 2f,
-                Radius = 7,
+                Radius = 7
             };
             GaussianBlur.ComputeKernel();
             GaussianBlur.ComputeOffsets();
@@ -471,7 +477,7 @@ namespace RogueCastle
             }
 
             SoundManager.Update(gameTime);
-            if (IsActive || (!IsActive && LevelENV.EnableOffscreenControl))
+            if (IsActive || !IsActive && LevelENV.EnableOffscreenControl)
             {
                 InputManager.Update(gameTime);
             }
@@ -487,7 +493,9 @@ namespace RogueCastle
                 case ArchipelagoStatus.Connected:
                 {
                     if (!(ScreenManager.CurrentScreen is ArchipelagoScreen))
+                    {
                         break;
+                    }
 
                     // Initialize Save Data
                     ProfileName = string.Format("{0}-{1}", ArchipelagoManager.Data.Seed, ArchipelagoManager.Data.Slot);
@@ -501,10 +509,14 @@ namespace RogueCastle
                     var heroIsDead = PlayerStats.IsDead;
                     var startingRoom = PlayerStats.LoadStartingRoom;
 
-                    if (PlayerStats.IsFemale && !FemaleNameArray.Contains(ArchipelagoManager.Data.Name))
+                    if (ArchipelagoManager.Data.IsFemale && !FemaleNameArray.Contains(ArchipelagoManager.Data.Name))
+                    {
                         FemaleNameArray.Add(ArchipelagoManager.Data.Name);
-                    else if (!PlayerStats.IsFemale && !NameArray.Contains(ArchipelagoManager.Data.Name))
+                    }
+                    else if (!ArchipelagoManager.Data.IsFemale && !NameArray.Contains(ArchipelagoManager.Data.Name))
+                    {
                         NameArray.Add(ArchipelagoManager.Data.Name);
+                    }
 
                     if (newGame)
                     {
@@ -517,8 +529,9 @@ namespace RogueCastle
                         PlayerStats.TimesCastleBeaten = ArchipelagoManager.Data.Difficulty;
 
                         // Rename Sir Lee to the player's name and initial gender.
-                        PlayerStats.IsFemale = ArchipelagoManager.Data.StartingGender == StartingGender.Lady;
-                        PlayerStats.PlayerName = string.Format("{1} {0}", ArchipelagoManager.Data.Name, PlayerStats.IsFemale ? "Lady" : "Sir");
+                        PlayerStats.IsFemale = ArchipelagoManager.Data.IsFemale;
+                        PlayerStats.PlayerName = string.Format("{1} {0}", ArchipelagoManager.Data.Name,
+                            PlayerStats.IsFemale ? "Lady" : "Sir");
 
                         Program.Game.SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
                         ScreenManager.DisplayScreen(ScreenType.StartingRoom, true);
@@ -526,9 +539,14 @@ namespace RogueCastle
                     else
                     {
                         if (heroIsDead)
+                        {
                             ScreenManager.DisplayScreen(ScreenType.Lineage, true);
+                        }
                         else
-                            ScreenManager.DisplayScreen(startingRoom ? ScreenType.StartingRoom : ScreenType.Level, true);
+                        {
+                            ScreenManager.DisplayScreen(startingRoom ? ScreenType.StartingRoom : ScreenType.Level,
+                                true);
+                        }
                     }
 
                     ArchipelagoManager.StartPlaying();
@@ -540,12 +558,19 @@ namespace RogueCastle
             // Check for received items and send to player.
             if (ArchipelagoManager.ItemQueue.Count > 0)
             {
-                // Check to ensure we're in a safe place to receive.
-                if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked && ScreenManager.CurrentScreen is ProceduralLevelScreen)
+                if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked
+                                                 && ScreenManager.CurrentScreen is ProceduralLevelScreen)
                 {
                     var item = ArchipelagoManager.ItemQueue.Dequeue();
 
-                    var randomGold = CDGMath.RandomInt(5, 10) * 1000;
+                    var randomGold = 0;
+                    if (item.Item == (int) ItemCode.Gold1000)
+                        randomGold = 1000;
+                    else if (item.Item == (int) ItemCode.Gold3000)
+                        randomGold = 3000;
+                    else if (item.Item == (int) ItemCode.Gold5000)
+                        randomGold = 5000;
+
                     var stat1 = CDGMath.RandomInt(4, 9);
                     var stat2 = CDGMath.RandomInt(4, 9);
                     var stat3 = CDGMath.RandomInt(4, 9);
@@ -557,7 +582,7 @@ namespace RogueCastle
                         new Vector2(stat1, randomGold),
                         new Vector2(stat2, stat3),
                         ArchipelagoManager.GetPlayerName(item.Player),
-                        item.Item,
+                        item.Item
                     };
 
                     DisgustingGetItemLogic(item, randomGold, stat1, stat2, stat3);
@@ -570,9 +595,11 @@ namespace RogueCastle
             if (ArchipelagoManager.ItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
             {
                 if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked
-                 && ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead)
+                                                 && ScreenManager.CurrentScreen is ProceduralLevelScreen &&
+                                                 !PlayerStats.IsDead)
                 {
-                    ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
+                    ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(
+                        new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
                     ScreenManager.Player.Kill();
                     ArchipelagoManager.ClearDeathLink();
                 }
@@ -581,732 +608,824 @@ namespace RogueCastle
             base.Update(gameTime);
         }
 
-
-
         private void DisgustingGetItemLogic(NetworkItem item, int randomGold, params int[] stats)
         {
             SkillObj skill;
-            switch (item.Item)
+            // switch (item.Item)
+            // {
+            //     // Extra
+            //     // {"Random Stat Increase", 4444029},
+            //     // {"Random Triple Stat Increase", 4444030},
+            //     // {"Gold Bonus", 4444031},
+            //
+            //     case 4444029: // Single Stat
+            //     case 4444030: // Trip Stats
+            //         var iterations = item.Item == 4444029 ? 1 : 3;
+            //         for (var i = 0; i < iterations; i++)
+            //         {
+            //             if (stats[i] == 4)
+            //             {
+            //                 PlayerStats.BonusStrength++;
+            //                 continue;
+            //             }
+            //
+            //             if (stats[i] == 5)
+            //             {
+            //                 PlayerStats.BonusMagic++;
+            //                 continue;
+            //             }
+            //
+            //             if (stats[i] == 6)
+            //             {
+            //                 PlayerStats.BonusDefense++;
+            //                 continue;
+            //             }
+            //
+            //             if (stats[i] == 7)
+            //             {
+            //                 PlayerStats.BonusHealth++;
+            //                 continue;
+            //             }
+            //
+            //             if (stats[i] == 8)
+            //             {
+            //                 PlayerStats.BonusMana++;
+            //                 continue;
+            //             }
+            //
+            //             // stats[i] == 9
+            //             PlayerStats.BonusWeight++;
+            //         }
+            //
+            //         break;
+            //
+            //     case 4444031: // Gold
+            //         PlayerStats.Gold += randomGold;
+            //         break;
+            // }
+            switch ((ItemCode) item.Item)
             {
-                // SKILLS
-                case 4444000: // Smithy
+                case ItemCode.Blacksmith:
                     skill = SkillSystem.GetSkill(SkillType.Smithy);
                     skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444001: // Architect
-                    skill = SkillSystem.GetSkill(SkillType.Architect);
-                    skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
-                    break;
-                case 4444002: // Enchantress
+
+                case ItemCode.Enchantress:
                     skill = SkillSystem.GetSkill(SkillType.Enchanter);
                     skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444003: // Progressive Knight
+
+                case ItemCode.Architect:
+                    skill = SkillSystem.GetSkill(SkillType.Architect);
+                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                    break;
+
+                case ItemCode.Paladins:
                     skill = SkillSystem.GetSkill(SkillType.KnightUp);
                     skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444004: // Progressive Mage
+
+                case ItemCode.Archmages:
                     skill = SkillSystem.GetSkill(SkillType.MageUp);
                     skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444005: // Progressive Barbarian
+
+                case ItemCode.BarbarianKings:
                     skill = SkillSystem.GetSkill(SkillType.BarbarianUp);
                     skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444006: // Progressive Knave
+
+                case ItemCode.Assassins:
                     skill = SkillSystem.GetSkill(SkillType.AssassinUp);
                     skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444007: // Progressive Shinobi
+
+                case ItemCode.ProgressiveShinobi:
                     skill = SkillSystem.GetSkill(SkillType.NinjaUnlock);
                     if (skill.CurrentLevel > 0)
                     {
                         skill = SkillSystem.GetSkill(SkillType.NinjaUp);
                         skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
                     else
                     {
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
 
                     break;
-                case 4444008: // Progressive Miner
+
+                case ItemCode.ProgressiveMiner:
                     skill = SkillSystem.GetSkill(SkillType.BankerUnlock);
                     if (skill.CurrentLevel > 0)
                     {
                         skill = SkillSystem.GetSkill(SkillType.BankerUp);
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
                     else
                     {
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
 
                     break;
-                case 4444009: // Progressive Lich
+
+                case ItemCode.ProgressiveLich:
                     skill = SkillSystem.GetSkill(SkillType.LichUnlock);
                     if (skill.CurrentLevel > 0)
                     {
                         skill = SkillSystem.GetSkill(SkillType.LichUp);
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
                     else
                     {
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
 
                     break;
-                case 4444010: // Progressive Spell Thief
+
+                case ItemCode.ProgressiveSpellthief:
                     skill = SkillSystem.GetSkill(SkillType.SpellswordUnlock);
                     if (skill.CurrentLevel > 0)
                     {
                         skill = SkillSystem.GetSkill(SkillType.SpellSwordUp);
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
                     else
                     {
-                        skill.CanPurchase = true;
-                        SkillSystem.LevelUpTrait(skill, false);
+                        SkillSystem.LevelUpTrait(skill, false, false);
                     }
 
                     break;
-                case 4444011: // Dragon
+
+                case ItemCode.Dragons:
                     skill = SkillSystem.GetSkill(SkillType.SuperSecret);
-                    skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
-                case 4444012: // Traitor
+
+                case ItemCode.Traitors:
                     skill = SkillSystem.GetSkill(SkillType.Traitorous);
-                    skill.CanPurchase = true;
-                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false, false);
                     break;
 
-                case 4444013: // Health Up
+                case ItemCode.HealthUp:
                     skill = SkillSystem.GetSkill(SkillType.HealthUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444014: // Mana Up
+
+                case ItemCode.ManaUp:
                     skill = SkillSystem.GetSkill(SkillType.ManaUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444015: // Attack Up
+
+                case ItemCode.AttackUp:
                     skill = SkillSystem.GetSkill(SkillType.AttackUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444016: // Magic Damage Up
+
+                case ItemCode.MagicDamageUp:
                     skill = SkillSystem.GetSkill(SkillType.MagicDamageUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444017: // Armor Up
+
+                case ItemCode.ArmorUp:
                     skill = SkillSystem.GetSkill(SkillType.ArmorUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444018: // Equip Up
+
+                case ItemCode.EquipUp:
                     skill = SkillSystem.GetSkill(SkillType.EquipUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444019: // Crit Chance Up
+
+                case ItemCode.CritChanceUp:
                     skill = SkillSystem.GetSkill(SkillType.CritChanceUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444020: // Crit Damage Up
+
+                case ItemCode.CritDamageUp:
                     skill = SkillSystem.GetSkill(SkillType.CritDamageUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444021: // Down Strike Up
+
+                case ItemCode.DownStrikeUp:
                     skill = SkillSystem.GetSkill(SkillType.DownStrikeUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444022: // Gold Gain Up
+
+                case ItemCode.GoldGainUp:
                     skill = SkillSystem.GetSkill(SkillType.GoldGainUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444023: // Potion Up
+
+                case ItemCode.PotionEfficiencyUp:
                     skill = SkillSystem.GetSkill(SkillType.PotionUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444024: // Invuln Time  Up
+
+                case ItemCode.InvulnerabilityTimeUp:
                     skill = SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444025: // Mana Cost Down
+
+                case ItemCode.ManaCostDown:
                     skill = SkillSystem.GetSkill(SkillType.ManaCostDown);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444026: // Death Defy
+
+                case ItemCode.DeathDefiance:
                     skill = SkillSystem.GetSkill(SkillType.DeathDodge);
-                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
-                    break;
-                case 4444027: // Haggle
-                    skill = SkillSystem.GetSkill(SkillType.PricesDown);
-                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
-                    break;
-                case 4444028: // Randomize Children
-                    skill = SkillSystem.GetSkill(SkillType.RandomizeChildren);
-                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false);
+                    SkillSystem.LevelUpTrait(skill, false);
                     SkillSystem.LevelUpTrait(skill, false);
                     break;
 
-                // RUNES
-                case 4444032: // Sprint (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] = 1;
+                case ItemCode.RandomizeChildren:
+                    skill = SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp);
+                    SkillSystem.LevelUpTrait(skill, false);
                     break;
-                case 4444033: // Sprint (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sprint] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sprint] = 1;
-                    break;
-                case 4444034: // Sprint (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sprint] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sprint] = 1;
-                    break;
-                case 4444035: // Sprint (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sprint] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sprint] = 1;
-                    break;
-                case 4444036: // Sprint (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sprint] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sprint] = 1;
-                    break;
-                case 4444037: // Vault (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vault] < 1)
+
+                case ItemCode.VaultRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vault] = 1;
-                    break;
-                case 4444038: // Vault (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vault] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vault] = 1;
-                    break;
-                case 4444039: // Vault (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vault] < 1)
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vault] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vault] = 1;
-                    break;
-                case 4444040: // Vault (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vault] < 1)
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vault] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vault] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vault] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vault] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vault] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vault] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vault] = 3;
+                    }
+
                     break;
-                case 4444041: // Vault (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vault] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vault] = 1;
+
+                case ItemCode.SprintRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sprint] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sprint] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sprint] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sprint] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sprint] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sprint] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sprint] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sprint] = 3;
+                    }
+
                     break;
-                case 4444042: // Bounty (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] = 1;
-                    break;
-                case 4444043: // Bounty (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Bounty] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Bounty] = 1;
-                    break;
-                case 4444044: // Bounty (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Bounty] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Bounty] = 1;
-                    break;
-                case 4444045: // Bounty (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Bounty] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Bounty] = 1;
-                    break;
-                case 4444046: // Bounty (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Bounty] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Bounty] = 1;
-                    break;
-                case 4444047: // Siphon (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] = 1;
-                    break;
-                case 4444048: // Siphon (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Siphon] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Siphon] = 1;
-                    break;
-                case 4444049: // Siphon (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Siphon] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Siphon] = 1;
-                    break;
-                case 4444050: // Siphon (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Siphon] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Siphon] = 1;
-                    break;
-                case 4444051: // Siphon (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Siphon] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Siphon] = 1;
-                    break;
-                case 4444052: // Retaliation (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] = 1;
-                    break;
-                case 4444053: // Retaliation (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Retaliation] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Retaliation] = 1;
-                    break;
-                case 4444054: // Retaliation (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Retaliation] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Retaliation] = 1;
-                    break;
-                case 4444055: // Retaliation (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Retaliation] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Retaliation] = 1;
-                    break;
-                case 4444056: // Retaliation (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Retaliation] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Retaliation] = 1;
-                    break;
-                case 4444057: // Grace (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] = 1;
-                    break;
-                case 4444058: // Grace (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Grace] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Grace] = 1;
-                    break;
-                case 4444059: // Grace (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Grace] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Grace] = 1;
-                    break;
-                case 4444060: // Grace (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Grace] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Grace] = 1;
-                    break;
-                case 4444061: // Grace (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Grace] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Grace] = 1;
-                    break;
-                case 4444062: // Balance (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] = 1;
-                    break;
-                case 4444063: // Balance (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Balance] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Balance] = 1;
-                    break;
-                case 4444064: // Balance (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Balance] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Balance] = 1;
-                    break;
-                case 4444065: // Balance (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Balance] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Balance] = 1;
-                    break;
-                case 4444066: // Balance (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Balance] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Balance] = 1;
-                    break;
-                case 4444067: // Curse (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] = 1;
-                    break;
-                case 4444068: // Curse (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Curse] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Curse] = 1;
-                    break;
-                case 4444069: // Curse (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Curse] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Curse] = 1;
-                    break;
-                case 4444070: // Curse (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Curse] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Curse] = 1;
-                    break;
-                case 4444071: // Curse (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Curse] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Curse] = 1;
-                    break;
-                case 4444072: // Vampire (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vampire] < 1)
+
+                case ItemCode.VampireRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vampire] = 1;
-                    break;
-                case 4444073: // Vampire (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vampire] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vampire] = 1;
-                    break;
-                case 4444074: // Vampire (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vampire] < 1)
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vampire] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vampire] = 1;
-                    break;
-                case 4444075: // Vampire (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vampire] < 1)
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vampire] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vampire] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vampire] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vampire] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vampire] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vampire] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vampire] = 3;
+                    }
+
                     break;
-                case 4444076: // Vampire (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vampire] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vampire] = 1;
-                    break;
-                case 4444077: // Sky (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sky] < 1)
+
+                case ItemCode.SkyRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sky] = 1;
-                    break;
-                case 4444078: // Sky (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sky] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sky] = 1;
-                    break;
-                case 4444079: // Sky (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sky] < 1)
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sky] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sky] = 1;
-                    break;
-                case 4444080: // Sky (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sky] < 1)
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sky] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sky] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sky] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sky] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sky] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sky] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sky] = 3;
+                    }
+
                     break;
-                case 4444081: // Sky (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sky] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sky] = 1;
+
+                case ItemCode.SiphonRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Siphon] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Siphon] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Siphon] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Siphon] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Siphon] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Siphon] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Siphon] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Siphon] = 3;
+                    }
+
                     break;
-                case 4444082: // Haste (Sword)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Haste] < 1)
+
+                case ItemCode.RetaliationRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Retaliation] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Retaliation] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Retaliation] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Retaliation] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Retaliation] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Retaliation] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Retaliation] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Retaliation] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.BountyRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Bounty] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Bounty] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Bounty] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Bounty] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Bounty] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Bounty] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Bounty] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Bounty] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.HasteRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Haste] = 1;
-                    break;
-                case 4444083: // Haste (Helm)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Haste] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Haste] = 1;
-                    break;
-                case 4444084: // Haste (Chest)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Haste] < 1)
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Haste] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Haste] = 1;
-                    break;
-                case 4444085: // Haste (Limbs)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Haste] < 1)
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Haste] = 1;
-                    break;
-                case 4444086: // Haste (Cape)
-                    if (PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Haste] < 1)
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Haste] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Haste] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Haste] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Haste] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Haste] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Haste] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Haste] = 3;
+                    }
+
                     break;
 
-                // Blueprints
-                case 4444087: // Squire Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Squire] < 1)
+                case ItemCode.CurseRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Curse] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Curse] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Curse] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Curse] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Curse] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Curse] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Curse] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Curse] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.GraceRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Grace] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Grace] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Grace] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Grace] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Grace] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Grace] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Grace] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Grace] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.BalanceRunes:
+                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Balance] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Balance] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Balance] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Balance] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Balance] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Balance] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Balance] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Balance] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.SquireArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Squire] = 1;
-                    break;
-                case 4444088: // Knight Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] = 1;
-                    break;
-                case 4444089: // Blood Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] = 1;
-                    break;
-                case 4444090: // Silver Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] = 1;
-                    break;
-                case 4444091: // Ranger Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] = 1;
-                    break;
-                case 4444092: // Sage Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] = 1;
-                    break;
-                case 4444093: // Guardian Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] = 1;
-                    break;
-                case 4444094: // Sky Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] = 1;
-                    break;
-                case 4444095: // Retribution Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] = 1;
-                    break;
-                case 4444096: // Imperial Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] = 1;
-                    break;
-                case 4444097: // Dragon Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] = 1;
-                    break;
-                case 4444098: // Holy Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] = 1;
-                    break;
-                case 4444099: // Royal Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] = 1;
-                    break;
-                case 4444100: // Slayer Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] = 1;
-                    break;
-                case 4444101: // Dark Sword
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] = 1;
-                    break;
-                case 4444102: // Squire Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Squire] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Squire] = 1;
-                    break;
-                case 4444103: // Knight Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Knight] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Knight] = 1;
-                    break;
-                case 4444104: // Blood Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Blood] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Blood] = 1;
-                    break;
-                case 4444105: // Silver Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Silver] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Silver] = 1;
-                    break;
-                case 4444106: // Ranger Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Ranger] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Ranger] = 1;
-                    break;
-                case 4444107: // Sage Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sage] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sage] = 1;
-                    break;
-                case 4444108: // Guardian Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Guardian] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Guardian] = 1;
-                    break;
-                case 4444109: // Sky Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sky] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sky] = 1;
-                    break;
-                case 4444110: // Retribution Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Retribution] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Retribution] = 1;
-                    break;
-                case 4444111: // Imperial Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Imperial] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Imperial] = 1;
-                    break;
-                case 4444112: // Dragon Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dragon] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dragon] = 1;
-                    break;
-                case 4444113: // Holy Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Holy] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Holy] = 1;
-                    break;
-                case 4444114: // Royal Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Royal] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Royal] = 1;
-                    break;
-                case 4444115: // Slayer Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Slayer] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Slayer] = 1;
-                    break;
-                case 4444116: // Dark Helm
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dark] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dark] = 1;
-                    break;
-                case 4444117: // Squire Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Squire] < 1)
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Squire] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Squire] = 1;
-                    break;
-                case 4444118: // Knight Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Knight] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Knight] = 1;
-                    break;
-                case 4444119: // Blood Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Blood] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Blood] = 1;
-                    break;
-                case 4444120: // Silver Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Silver] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Silver] = 1;
-                    break;
-                case 4444121: // Ranger Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Ranger] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Ranger] = 1;
-                    break;
-                case 4444122: // Sage Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sage] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sage] = 1;
-                    break;
-                case 4444123: // Guardian Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Guardian] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Guardian] = 1;
-                    break;
-                case 4444124: // Sky Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sky] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sky] = 1;
-                    break;
-                case 4444125: // Retribution Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Retribution] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Retribution] = 1;
-                    break;
-                case 4444126: // Imperial Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Imperial] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Imperial] = 1;
-                    break;
-                case 4444127: // Dragon Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dragon] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dragon] = 1;
-                    break;
-                case 4444128: // Holy Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Holy] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Holy] = 1;
-                    break;
-                case 4444129: // Royal Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Royal] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Royal] = 1;
-                    break;
-                case 4444130: // Slayer Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Slayer] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Slayer] = 1;
-                    break;
-                case 4444131: // Dark Chest
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dark] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dark] = 1;
-                    break;
-                case 4444132: // Squire Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Squire] < 1)
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Squire] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Squire] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Squire] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Squire] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Squire] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Squire] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Squire] = 3;
+                    }
+
                     break;
-                case 4444133: // Knight Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Knight] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Knight] = 1;
-                    break;
-                case 4444134: // Blood Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Blood] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Blood] = 1;
-                    break;
-                case 4444135: // Silver Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Silver] < 1)
+
+                case ItemCode.SilverArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Silver] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Silver] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Silver] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Silver] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Silver] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Silver] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Silver] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Silver] = 3;
+                    }
+
                     break;
-                case 4444136: // Ranger Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Ranger] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Ranger] = 1;
-                    break;
-                case 4444137: // Sage Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sage] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sage] = 1;
-                    break;
-                case 4444138: // Guardian Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Guardian] < 1)
+
+                case ItemCode.GuardianArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Guardian] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Guardian] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Guardian] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Guardian] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Guardian] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Guardian] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Guardian] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Guardian] = 3;
+                    }
+
                     break;
-                case 4444139: // Sky Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sky] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sky] = 1;
-                    break;
-                case 4444140: // Retribution Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Retribution] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Retribution] = 1;
-                    break;
-                case 4444141: // Imperial Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Imperial] < 1)
+
+                case ItemCode.ImperialArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Imperial] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Imperial] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Imperial] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Imperial] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Imperial] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Imperial] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Imperial] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Imperial] = 3;
+                    }
+
                     break;
-                case 4444142: // Dragon Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dragon] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dragon] = 1;
-                    break;
-                case 4444143: // Holy Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Holy] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Holy] = 1;
-                    break;
-                case 4444144: // Royal Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Royal] < 1)
+
+                case ItemCode.RoyalArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Royal] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Royal] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Royal] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Royal] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Royal] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Royal] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Royal] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Royal] = 3;
+                    }
+
                     break;
-                case 4444145: // Slayer Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Slayer] < 1)
+
+                case ItemCode.KnightArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Knight] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Knight] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Knight] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Knight] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Knight] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Knight] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Knight] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Knight] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.RangerArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Ranger] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Ranger] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Ranger] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Ranger] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Ranger] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Ranger] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Ranger] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Ranger] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.SkyArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sky] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sky] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sky] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sky] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sky] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sky] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sky] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sky] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.DragonArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dragon] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dragon] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dragon] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dragon] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dragon] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dragon] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dragon] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dragon] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.SlayerArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Slayer] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Slayer] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Slayer] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Slayer] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Slayer] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Slayer] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Slayer] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Slayer] = 3;
+                    }
+
                     break;
-                case 4444146: // Dark Limbs
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dark] < 1)
+
+                case ItemCode.BloodArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Blood] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Blood] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Blood] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Blood] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Blood] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Blood] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Blood] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Blood] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.SageArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sage] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sage] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sage] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sage] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sage] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sage] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sage] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sage] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.RetributionArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Retribution] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Retribution] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Retribution] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Retribution] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Retribution] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Retribution] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Retribution] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Retribution] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.HolyArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Holy] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Holy] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Holy] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Holy] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Holy] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Holy] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Holy] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Holy] = 3;
+                    }
+
+                    break;
+
+                case ItemCode.DarkArmorBlueprints:
+                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dark] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dark] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dark] = 1;
-                    break;
-                case 4444147: // Squire Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Squire] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Squire] = 1;
-                    break;
-                case 4444148: // Knight Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Knight] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Knight] = 1;
-                    break;
-                case 4444149: // Blood Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Blood] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Blood] = 1;
-                    break;
-                case 4444150: // Silver Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Silver] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Silver] = 1;
-                    break;
-                case 4444151: // Ranger Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Ranger] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Ranger] = 1;
-                    break;
-                case 4444152: // Sage Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sage] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sage] = 1;
-                    break;
-                case 4444153: // Guardian Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Guardian] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Guardian] = 1;
-                    break;
-                case 4444154: // Sky Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sky] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sky] = 1;
-                    break;
-                case 4444155: // Retribution Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Retribution] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Retribution] = 1;
-                    break;
-                case 4444156: // Imperial Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Imperial] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Imperial] = 1;
-                    break;
-                case 4444157: // Dragon Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dragon] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dragon] = 1;
-                    break;
-                case 4444158: // Holy Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Holy] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Holy] = 1;
-                    break;
-                case 4444159: // Royal Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Royal] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Royal] = 1;
-                    break;
-                case 4444160: // Slayer Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Slayer] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Slayer] = 1;
-                    break;
-                case 4444161: // Dark Cape
-                    if (PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dark] < 1)
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dark] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dark] = 1;
+                    }
+                    else
+                    {
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dark] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dark] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dark] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dark] = 3;
+                    }
+
                     break;
 
-                // Extra
-                // {"Random Stat Increase", 4444029},
-                // {"Random Triple Stat Increase", 4444030},
-                // {"Gold Bonus", 4444031},
-
-                case 4444029: // Single Stat
-                case 4444030: // Trip Stats
+                case ItemCode.TripleStatIncreases: // Trip Stats
                     var iterations = item.Item == 4444029 ? 1 : 3;
                     for (var i = 0; i < iterations; i++)
                     {
@@ -1346,7 +1465,9 @@ namespace RogueCastle
 
                     break;
 
-                case 4444031: // Gold
+                case ItemCode.Gold1000:
+                case ItemCode.Gold3000:
+                case ItemCode.Gold5000:
                     PlayerStats.Gold += randomGold;
                     break;
             }
@@ -1441,22 +1562,29 @@ namespace RogueCastle
         {
             // No point in saving if we're on the Splash or Demo screens.
             if (ScreenManager.CurrentScreen is CDGSplashScreen || ScreenManager.CurrentScreen is DemoStartScreen)
+            {
                 return;
+            }
 
             UpdatePlaySessionLength();
             var screen = ScreenManager.GetLevelScreen();
             if (screen != null)
             {
                 var currentRoom = screen.CurrentRoom;
-                if (currentRoom != null && (currentRoom is CarnivalShoot1BonusRoom || currentRoom is CarnivalShoot2BonusRoom))
+                if (currentRoom != null
+                    && (currentRoom is CarnivalShoot1BonusRoom || currentRoom is CarnivalShoot2BonusRoom))
                 {
                     var bonusRoom1 = currentRoom as CarnivalShoot1BonusRoom;
                     if (bonusRoom1 != null)
+                    {
                         bonusRoom1.UnequipPlayer();
+                    }
 
                     var bonusRoom2 = currentRoom as CarnivalShoot2BonusRoom;
                     if (bonusRoom2 != null)
+                    {
                         bonusRoom2.UnequipPlayer();
+                    }
                 }
 
                 var challengeBossRoom = currentRoom as ChallengeBossRoomObj;
@@ -1470,15 +1598,20 @@ namespace RogueCastle
             }
 
             if (ScreenManager.CurrentScreen is GameOverScreen)
+            {
                 PlayerStats.Traits = Vector2.Zero;
+            }
 
             if (SaveManager.FileExists(SaveType.PlayerData))
             {
                 SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
                 if (screen.CurrentRoom == null)
+                {
                     return;
+                }
 
-                if (screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending" && screen.CurrentRoom.Name != "Tutorial")
+                if (screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending"
+                                                       && screen.CurrentRoom.Name != "Tutorial")
                 {
                     SaveManager.SaveFiles(SaveType.MapData);
                 }
@@ -1502,7 +1635,6 @@ namespace RogueCastle
         {
             var list = new List<Vector2>();
             foreach (var current in GraphicsDevice.Adapter.SupportedDisplayModes)
-            {
                 if (current.Width < 2000 && current.Height < 2000)
                 {
                     var item = new Vector2(current.Width, current.Height);
@@ -1511,7 +1643,6 @@ namespace RogueCastle
                         list.Add(new Vector2(current.Width, current.Height));
                     }
                 }
-            }
 
             return list;
         }
@@ -1749,8 +1880,8 @@ namespace RogueCastle
         {
             GraphicsDeviceManager.PreferredBackBufferWidth = GameConfig.ScreenWidth;
             GraphicsDeviceManager.PreferredBackBufferHeight = GameConfig.ScreenHeight;
-            if ((GraphicsDeviceManager.IsFullScreen && !GameConfig.FullScreen)
-             || (!GraphicsDeviceManager.IsFullScreen && GameConfig.FullScreen))
+            if (GraphicsDeviceManager.IsFullScreen && !GameConfig.FullScreen
+                || !GraphicsDeviceManager.IsFullScreen && GameConfig.FullScreen)
             {
                 GraphicsDeviceManager.ToggleFullScreen();
             }
@@ -1769,15 +1900,15 @@ namespace RogueCastle
 
         public struct SettingStruct
         {
-            public bool   EnableDirectInput;
-            public bool   EnableSteamCloud;
-            public bool   FullScreen;
-            public float  MusicVolume;
-            public bool   QuickDrop;
-            public bool   ReduceQuality;
-            public int    ScreenHeight;
-            public int    ScreenWidth;
-            public float  SFXVolume;
+            public bool EnableDirectInput;
+            public bool EnableSteamCloud;
+            public bool FullScreen;
+            public float MusicVolume;
+            public bool QuickDrop;
+            public bool ReduceQuality;
+            public int ScreenHeight;
+            public int ScreenWidth;
+            public float SFXVolume;
         }
     }
 }
