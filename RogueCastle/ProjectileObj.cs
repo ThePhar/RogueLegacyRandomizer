@@ -24,7 +24,7 @@ namespace RogueCastle
         private float m_blinkTimer;
         private float m_elapsedLifeSpan;
 
-        public ProjectileObj(string spriteName) : base(spriteName, null)
+        public ProjectileObj(string spriteName) : base(spriteName)
         {
             CollisionTypeTag = 3;
             CollidesWithTerrain = true;
@@ -126,8 +126,9 @@ namespace RogueCastle
                         if (BlinkTime >= AltX && AltX != 0f)
                         {
                             Blink(Color.Red, 0.1f);
-                            BlinkTime = AltX/1.5f;
+                            BlinkTime = AltX / 1.5f;
                         }
+
                         if (AltX > 0f)
                         {
                             AltX -= num;
@@ -136,9 +137,12 @@ namespace RogueCastle
                                 ActivateEffect();
                             }
                         }
+
                         break;
+
                     case 4:
                         break;
+
                     case 5:
                         if (AltY > 0f)
                         {
@@ -154,6 +158,7 @@ namespace RogueCastle
                                 }
                             }
                         }
+
                         if (AltX <= 0f)
                         {
                             var position = Target.Position;
@@ -164,11 +169,12 @@ namespace RogueCastle
                             AltX -= num;
                             Orientation = MathHelper.WrapAngle(Orientation);
                         }
+
                         HeadingX = (float) Math.Cos(Orientation);
                         HeadingY = (float) Math.Sin(Orientation);
                         AccelerationX = 0f;
                         AccelerationY = 0f;
-                        Position += Heading*(CurrentSpeed*(float) gameTime.ElapsedGameTime.TotalSeconds);
+                        Position += Heading * (CurrentSpeed * (float) gameTime.ElapsedGameTime.TotalSeconds);
                         if (HeadingX > 0f)
                         {
                             Flip = SpriteEffects.None;
@@ -180,13 +186,14 @@ namespace RogueCastle
                             var num2 = MathHelper.ToDegrees(Orientation);
                             if (num2 < 0f)
                             {
-                                Rotation = (180f + num2)*60f*num;
+                                Rotation = (180f + num2) * 60f * num;
                             }
                             else
                             {
-                                Rotation = (-180f + num2)*60f*num;
+                                Rotation = (-180f + num2) * 60f * num;
                             }
                         }
+
                         Rotation = MathHelper.Clamp(Rotation, -90f, 90f);
                         if (Target != null)
                         {
@@ -200,12 +207,14 @@ namespace RogueCastle
                         {
                             RunDestroyAnimation(false);
                         }
+
                         break;
+
                     default:
                         switch (spell)
                         {
                             case 8:
-                                AccelerationX -= AltX*60f*num;
+                                AccelerationX -= AltX * 60f * num;
                                 if (AltY > 0f)
                                 {
                                     AltY -= num;
@@ -214,30 +223,35 @@ namespace RogueCastle
                                         ActivateEffect();
                                     }
                                 }
+
                                 break;
+
                             case 9:
                             case 10:
                                 break;
+
                             case 11:
                             {
                                 var player = Game.ScreenManager.Player;
                                 if (player.CastingDamageShield || Source is EnemyObj)
                                 {
-                                    AltX += CurrentSpeed*60f*num;
+                                    AltX += CurrentSpeed * 60f * num;
                                     Position = CDGMath.GetCirclePosition(AltX, AltY, Target.Position);
                                 }
                                 else
                                 {
                                     KillProjectile();
                                 }
+
                                 break;
                             }
+
                             case 12:
                                 AccelerationX = 0f;
                                 AccelerationY = 0f;
                                 HeadingX = (float) Math.Cos(Orientation);
                                 HeadingY = (float) Math.Sin(Orientation);
-                                Position += Heading*(CurrentSpeed*num);
+                                Position += Heading * (CurrentSpeed * num);
                                 if (AltY > 0f)
                                 {
                                     AltY -= num;
@@ -246,7 +260,9 @@ namespace RogueCastle
                                         ActivateEffect();
                                     }
                                 }
+
                                 break;
+
                             default:
                                 if (spell == 100)
                                 {
@@ -261,10 +277,13 @@ namespace RogueCastle
                                         }
                                     }
                                 }
+
                                 break;
                         }
+
                         break;
                 }
+
                 if (ChaseTarget && Target != null)
                 {
                     var position2 = Target.Position;
@@ -273,9 +292,10 @@ namespace RogueCastle
                     HeadingY = (float) Math.Sin(Orientation);
                     AccelerationX = 0f;
                     AccelerationY = 0f;
-                    Position += Heading*(CurrentSpeed*num);
+                    Position += Heading * (CurrentSpeed * num);
                     Rotation = MathHelper.ToDegrees(Orientation);
                 }
+
                 if (FollowArc && !ChaseTarget && !IsDying)
                 {
                     var radians = (float) Math.Atan2(AccelerationY, AccelerationX);
@@ -283,19 +303,22 @@ namespace RogueCastle
                 }
                 else if (!ChaseTarget)
                 {
-                    Rotation += RotationSpeed*60f*num;
+                    Rotation += RotationSpeed * 60f * num;
                 }
+
                 m_elapsedLifeSpan += num;
                 if (m_elapsedLifeSpan >= LifeSpan)
                 {
                     IsAlive = false;
                 }
+
                 if (m_blinkTimer > 0f)
                 {
                     m_blinkTimer -= num;
                     TextureColor = m_blinkColour;
                     return;
                 }
+
                 if (TextureColor == m_blinkColour)
                 {
                     TextureColor = Color.White;
@@ -315,7 +338,7 @@ namespace RogueCastle
             var num2 = facePosition.Y - Position.Y;
             var num3 = (float) Math.Atan2(num2, num);
             var num4 = MathHelper.WrapAngle(num3 - Orientation);
-            var num5 = turnSpeed*60f*elapsedSeconds;
+            var num5 = turnSpeed * 60f * elapsedSeconds;
             num4 = MathHelper.Clamp(num4, -num5, num5);
             Orientation = MathHelper.WrapAngle(Orientation + num4);
         }
@@ -330,10 +353,11 @@ namespace RogueCastle
                     projectileObj.RunDestroyAnimation(false);
                 }
             }
+
             var terrainObj = otherBox.Parent as TerrainObj;
             if (CollidesWithTerrain && !(otherBox.Parent is DoorObj) && terrainObj != null &&
-                ((terrainObj.CollidesTop && terrainObj.CollidesBottom && terrainObj.CollidesLeft &&
-                  terrainObj.CollidesRight) || CollidesWith1Ways))
+                (terrainObj.CollidesTop && terrainObj.CollidesBottom && terrainObj.CollidesLeft &&
+                    terrainObj.CollidesRight || CollidesWith1Ways))
             {
                 var spell = Spell;
                 if (spell != 3)
@@ -345,6 +369,7 @@ namespace RogueCastle
                         ActivateEffect();
                         return;
                     }
+
                     if (spell != 12)
                     {
                         if (DestroysWithTerrain)
@@ -352,6 +377,7 @@ namespace RogueCastle
                             RunDestroyAnimation(false);
                             return;
                         }
+
                         AccelerationY = 0f;
                         AccelerationX = 0f;
                         IsWeighted = false;
@@ -365,9 +391,9 @@ namespace RogueCastle
                             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Spike_Bounce_01",
                                 "Spike_Bounce_02", "Spike_Bounce_03");
                             var heading = Heading;
-                            var vector = new Vector2(value.Y, value.X*-1f);
-                            var pt = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
-                                     vector - heading;
+                            var vector = new Vector2(value.Y, value.X * -1f);
+                            var pt = 2f * (CDGMath.DotProduct(heading, vector) / CDGMath.DotProduct(vector, vector)) *
+                                vector - heading;
                             X += value.X;
                             Y += value.Y;
                             Orientation = MathHelper.ToRadians(CDGMath.VectorToAngle(pt));
@@ -380,7 +406,7 @@ namespace RogueCastle
                     var vector2 = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, thisBox.AbsRotation,
                         Vector2.Zero, otherBox.AbsRect, otherBox.AbsRotation, Vector2.Zero);
                     base.CollisionResponse(thisBox, otherBox, collisionResponseType);
-                    if ((vector2.Y <= 0f && vector2.X == 0f) || otherBox.AbsRotation != 0f)
+                    if (vector2.Y <= 0f && vector2.X == 0f || otherBox.AbsRotation != 0f)
                     {
                         AccelerationY = 0f;
                         AccelerationX = 0f;
@@ -395,7 +421,7 @@ namespace RogueCastle
                     if (vector3.Y <= 0f && AccelerationY > 0f)
                     {
                         base.CollisionResponse(thisBox, otherBox, collisionResponseType);
-                        if ((vector3.Y <= 0f && vector3.X == 0f) || otherBox.AbsRotation != 0f)
+                        if (vector3.Y <= 0f && vector3.X == 0f || otherBox.AbsRotation != 0f)
                         {
                             AccelerationY = 0f;
                             AccelerationX = 0f;
@@ -438,14 +464,17 @@ namespace RogueCastle
                         {
                             value = CollisionMath.LineToLineIntersect(Position, new Vector2(X + 6600f, Y),
                                 CollisionMath.UpperLeftCorner(current.NonRotatedBounds, current.Rotation, Vector2.Zero),
-                                CollisionMath.UpperRightCorner(current.NonRotatedBounds, current.Rotation, Vector2.Zero));
+                                CollisionMath.UpperRightCorner(current.NonRotatedBounds, current.Rotation,
+                                    Vector2.Zero));
                         }
                         else if (current.Rotation > 0f)
                         {
                             value = CollisionMath.LineToLineIntersect(Position, new Vector2(X + 6600f, Y),
                                 CollisionMath.LowerLeftCorner(current.NonRotatedBounds, current.Rotation, Vector2.Zero),
-                                CollisionMath.UpperLeftCorner(current.NonRotatedBounds, current.Rotation, Vector2.Zero));
+                                CollisionMath.UpperLeftCorner(current.NonRotatedBounds, current.Rotation,
+                                    Vector2.Zero));
                         }
+
                         if (value != Vector2.Zero)
                         {
                             num2 = value.X - X;
@@ -470,6 +499,7 @@ namespace RogueCastle
                             CollisionMath.UpperLeftCorner(current.NonRotatedBounds, current.Rotation, Vector2.Zero),
                             CollisionMath.UpperRightCorner(current.NonRotatedBounds, current.Rotation, Vector2.Zero));
                     }
+
                     if (value != Vector2.Zero)
                     {
                         num2 = X - value.X;
@@ -479,31 +509,35 @@ namespace RogueCastle
                         num2 = Bounds.Left - current.Bounds.Right;
                     }
                 }
+
                 if (num2 < num)
                 {
                     num = (int) num2;
                     terrainObj = current;
                 }
             }
+
             if (terrainObj != null)
             {
                 if (player.Flip == SpriteEffects.None)
                 {
                     if (terrainObj.Rotation == 0f)
                     {
-                        player.X += num - player.TerrainBounds.Width/2f;
+                        player.X += num - player.TerrainBounds.Width / 2f;
                         return;
                     }
-                    player.X += num - player.Width/2f;
+
+                    player.X += num - player.Width / 2f;
                 }
                 else
                 {
                     if (terrainObj.Rotation == 0f)
                     {
-                        player.X -= num - player.TerrainBounds.Width/2f;
+                        player.X -= num - player.TerrainBounds.Width / 2f;
                         return;
                     }
-                    player.X -= num - player.Width/2f;
+
+                    player.X -= num - player.Width / 2f;
                 }
             }
         }
@@ -532,11 +566,13 @@ namespace RogueCastle
                             Tween.AddEndHandlerToLastTween(this, "KillProjectile");
                             return;
                         }
+
                         IsWeighted = false;
                         IsCollidable = false;
                         Tween.To(this, 0.3f, Linear.EaseNone, "delay", "0.3", "Opacity", "0");
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
                         return;
+
                     case "ShurikenProjectile1_Sprite":
                     case "BoneProjectile_Sprite":
                     case "SpellBounce_Sprite":
@@ -551,6 +587,7 @@ namespace RogueCastle
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
                         return;
                     }
+
                     case "HomingProjectile_Sprite":
                     {
                         var proceduralLevelScreen =
@@ -559,11 +596,13 @@ namespace RogueCastle
                         {
                             proceduralLevelScreen.ImpactEffectPool.DisplayExplosionEffect(Position);
                         }
+
                         SoundManager.Play3DSound(this, Game.ScreenManager.Player, "MissileExplosion_01",
                             "MissileExplosion_02");
                         KillProjectile();
                         return;
                     }
+
                     case "SpellAxe_Sprite":
                     case "SpellDualBlades_Sprite":
                         IsCollidable = false;
@@ -572,11 +611,13 @@ namespace RogueCastle
                         Tween.To(this, 0.3f, Tween.EaseNone, "Opacity", "0");
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
                         return;
+
                     case "SpellDamageShield_Sprite":
                     case "SpellDisplacer_Sprite":
                         Tween.To(this, 0.2f, Tween.EaseNone, "Opacity", "0");
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
                         return;
+
                     case "LastBossSwordProjectile_Sprite":
                     {
                         IsCollidable = false;
@@ -588,6 +629,7 @@ namespace RogueCastle
                         Tween.AddEndHandlerToLastTween(this, "KillProjectile");
                         return;
                     }
+
                     case "SpellNuke_Sprite":
                     {
                         var proceduralLevelScreen2 =
@@ -596,9 +638,11 @@ namespace RogueCastle
                         {
                             proceduralLevelScreen2.ImpactEffectPool.CrowDestructionEffect(Position);
                         }
+
                         KillProjectile();
                         return;
                     }
+
                     case "EnemyFlailKnightBall_Sprite":
                     case "WizardIceSpell_Sprite":
                     case "WizardEarthSpell_Sprite":
@@ -608,11 +652,13 @@ namespace RogueCastle
                         KillProjectile();
                         return;
                 }
+
                 if (SpriteName == "WizardIceProjectile_Sprite")
                 {
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Ice_Wizard_Break_01",
                         "Ice_Wizard_Break_02", "Ice_Wizard_Break_03");
                 }
+
                 var text = SpriteName.Replace("_", "Explosion_");
                 ChangeSprite(text);
                 AnimationDelay = 0.0333333351f;
@@ -623,6 +669,7 @@ namespace RogueCastle
                 {
                     Rotation = 0f;
                 }
+
                 Tween.RunFunction(0.5f, this, "KillProjectile");
             }
         }
@@ -644,15 +691,18 @@ namespace RogueCastle
                     (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).ImpactEffectPool.DisplayExplosionEffect(
                         Position);
                     return;
+
                 case 4:
                 case 6:
                     return;
+
                 case 5:
                     RunDestroyAnimation(false);
                     (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).DamageAllEnemies(Damage);
                     (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).ImpactEffectPool.DisplayDeathEffect(
                         Position);
                     return;
+
                 case 7:
                 {
                     RunDestroyAnimation(false);
@@ -660,8 +710,10 @@ namespace RogueCastle
                     player.Translocate(Position);
                     return;
                 }
+
                 case 8:
                     break;
+
                 default:
                     if (spell != 12)
                     {
@@ -669,6 +721,7 @@ namespace RogueCastle
                         {
                             return;
                         }
+
                         CollisionTypeTag = 10;
                         LifeSpan = AltY;
                         m_elapsedLifeSpan = 0f;
@@ -676,8 +729,10 @@ namespace RogueCastle
                         Opacity = 1f;
                         return;
                     }
+
                     break;
             }
+
             CollisionTypeTag = 10;
         }
 

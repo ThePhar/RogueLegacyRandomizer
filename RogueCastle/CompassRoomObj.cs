@@ -22,6 +22,7 @@ namespace RogueCastle
                 Game.PlayerStats.SpecialItem = 0;
                 Player.AttachedLevel.UpdatePlayerHUDSpecialItem();
             }
+
             SoundManager.StopMusic(2f);
             Player.UnlockControls();
             foreach (var current in GameObjList)
@@ -33,6 +34,7 @@ namespace RogueCastle
                     chestObj.ChestType = 3;
                 }
             }
+
             base.OnEnter();
         }
 

@@ -66,6 +66,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     ShieldKnockback = new Vector2(1050f, 1150f);
                     Name = "Hulk Guard";
@@ -94,6 +95,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.ShieldKnight_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     ShieldKnockback = new Vector2(1550f, 1650f);
                     Name = "Tower Guard";
@@ -122,6 +124,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.ShieldKnight_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     ShieldKnockback = new Vector2(1200f, 1350f);
                     Name = "Sentinel";
@@ -150,6 +153,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.ShieldKnight_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -207,11 +211,12 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_107_1 = true;
                     var arg_107_2 = m_generalBasicLB;
                     var array = new int[3];
@@ -219,15 +224,17 @@ namespace RogueCastle
                     RunLogicBlock(arg_107_1, arg_107_2, array);
                     return;
                 }
+
                 case 1:
                 case 2:
                 case 3:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_8E_1 = true;
                     var arg_8E_2 = m_generalBasicLB;
                     var array2 = new int[3];
@@ -235,6 +242,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_8E_1, arg_8E_2, array2);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -246,11 +254,12 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_107_1 = true;
                     var arg_107_2 = m_generalBasicLB;
                     var array = new int[3];
@@ -258,15 +267,17 @@ namespace RogueCastle
                     RunLogicBlock(arg_107_1, arg_107_2, array);
                     return;
                 }
+
                 case 1:
                 case 2:
                 case 3:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         RunLogicBlock(true, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_8E_1 = true;
                     var arg_8E_2 = m_generalBasicLB;
                     var array2 = new int[3];
@@ -274,6 +285,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_8E_1, arg_8E_2, array2);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -285,11 +297,12 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         RunLogicBlock(true, m_generalExpertLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_107_1 = true;
                     var arg_107_2 = m_generalExpertLB;
                     var array = new int[3];
@@ -297,15 +310,17 @@ namespace RogueCastle
                     RunLogicBlock(arg_107_1, arg_107_2, array);
                     return;
                 }
+
                 case 1:
                 case 2:
                 case 3:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         RunLogicBlock(true, m_generalExpertLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_8E_1 = true;
                     var arg_8E_2 = m_generalExpertLB;
                     var array2 = new int[3];
@@ -313,6 +328,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_8E_1, arg_8E_2, array2);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -324,7 +340,7 @@ namespace RogueCastle
             {
                 case 0:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         var arg_E9_1 = true;
                         var arg_E9_2 = m_generalBasicLB;
@@ -333,6 +349,7 @@ namespace RogueCastle
                         RunLogicBlock(arg_E9_1, arg_E9_2, array);
                         return;
                     }
+
                     var arg_107_1 = true;
                     var arg_107_2 = m_generalBasicLB;
                     var array2 = new int[3];
@@ -340,11 +357,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_107_1, arg_107_2, array2);
                     return;
                 }
+
                 case 1:
                 case 2:
                 case 3:
                 {
-                    if ((m_target.X > X && HeadingX < 0f) || (m_target.X < X && HeadingX >= 0f))
+                    if (m_target.X > X && HeadingX < 0f || m_target.X < X && HeadingX >= 0f)
                     {
                         var arg_73_1 = true;
                         var arg_73_2 = m_generalBasicLB;
@@ -353,6 +371,7 @@ namespace RogueCastle
                         RunLogicBlock(arg_73_1, arg_73_2, array3);
                         return;
                     }
+
                     var arg_8E_1 = true;
                     var arg_8E_2 = m_generalBasicLB;
                     var array4 = new int[3];
@@ -360,6 +379,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_8E_1, arg_8E_2, array4);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -370,10 +390,10 @@ namespace RogueCastle
             var playerObj = otherBox.AbsParent as PlayerObj;
             var projectileObj = otherBox.AbsParent as ProjectileObj;
             if (collisionResponseType == 2 &&
-                ((playerObj != null && m_invincibleCounter <= 0f) ||
-                 (projectileObj != null && m_invincibleCounterProjectile <= 0f)) &&
-                ((Flip == SpriteEffects.None && otherBox.AbsParent.AbsPosition.X > X) ||
-                 (Flip == SpriteEffects.FlipHorizontally && otherBox.AbsParent.AbsPosition.X < X)) && playerObj != null &&
+                (playerObj != null && m_invincibleCounter <= 0f ||
+                 projectileObj != null && m_invincibleCounterProjectile <= 0f) &&
+                (Flip == SpriteEffects.None && otherBox.AbsParent.AbsPosition.X > X ||
+                 Flip == SpriteEffects.FlipHorizontally && otherBox.AbsParent.AbsPosition.X < X) && playerObj != null &&
                 playerObj.SpriteName != "PlayerAirAttack_Character")
             {
                 if (CanBeKnockedBack)
@@ -386,6 +406,7 @@ namespace RogueCastle
                     array[0] = 100;
                     RunLogicBlock(arg_DD_1, arg_DD_2, array);
                 }
+
                 if (m_target.IsAirAttacking)
                 {
                     m_target.IsAirAttacking = false;
@@ -394,7 +415,7 @@ namespace RogueCastle
                 }
                 else
                 {
-                    if (m_target.Bounds.Left + m_target.Bounds.Width/2 < X)
+                    if (m_target.Bounds.Left + m_target.Bounds.Width / 2 < X)
                     {
                         m_target.AccelerationX = -ShieldKnockback.X;
                     }
@@ -402,13 +423,16 @@ namespace RogueCastle
                     {
                         m_target.AccelerationX = ShieldKnockback.X;
                     }
+
                     m_target.AccelerationY = -ShieldKnockback.Y;
                 }
+
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                 var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
                 var position = new Vector2(center.X, center.Y);
                 m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, new Vector2(2f, 2f));
-                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "ShieldKnight_Block01", "ShieldKnight_Block02",
+                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "ShieldKnight_Block01",
+                    "ShieldKnight_Block02",
                     "ShieldKnight_Block03");
                 m_invincibleCounter = InvincibilityTime;
                 m_levelScreen.SetLastEnemyHit(this);
@@ -430,14 +454,16 @@ namespace RogueCastle
         {
             if (m_target != null && m_target.CurrentHealth > 0)
             {
-                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Knight_Hit01", "Knight_Hit02", "Knight_Hit03");
-                if (((Flip == SpriteEffects.None && m_target.X > X) ||
-                     (Flip == SpriteEffects.FlipHorizontally && m_target.X < X)) &&
+                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Knight_Hit01", "Knight_Hit02",
+                    "Knight_Hit03");
+                if ((Flip == SpriteEffects.None && m_target.X > X ||
+                     Flip == SpriteEffects.FlipHorizontally && m_target.X < X) &&
                     m_target.SpriteName != "PlayerAirAttack_Character")
                 {
-                    damage = (int) (damage*(1f - m_blockDmgReduction));
+                    damage = (int) (damage * (1f - m_blockDmgReduction));
                 }
             }
+
             base.HitEnemy(damage, position, isPlayer);
         }
 
@@ -448,6 +474,7 @@ namespace RogueCastle
                 m_walkSound.Update();
                 m_walkSound2.Update();
             }
+
             base.Update(gameTime);
         }
 

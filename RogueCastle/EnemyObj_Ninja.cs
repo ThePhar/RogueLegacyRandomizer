@@ -81,6 +81,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     ChanceToTeleport = 0.5f;
                     Name = "Ninpo";
@@ -109,6 +110,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     ChanceToTeleport = 0.65f;
                     Name = "Ninopojo";
@@ -137,6 +139,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Master Ninja";
                     MaxHealth = 900;
@@ -164,6 +167,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Ninja_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -318,6 +322,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_7D_1, arg_7D_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_5D_1 = true;
@@ -328,10 +333,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_5D_1, arg_5D_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 40, 30, 0, 30);
                     return;
+
                 default:
                     return;
             }
@@ -351,6 +358,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_7D_1, arg_7D_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_5D_1 = true;
@@ -361,10 +369,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_5D_1, arg_5D_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalAdvancedLB, 40, 30, 0, 30);
                     return;
+
                 default:
                     return;
             }
@@ -384,6 +394,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_7D_1, arg_7D_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_5D_1 = true;
@@ -394,10 +405,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_5D_1, arg_5D_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalExpertLB, 40, 30, 0, 30);
                     return;
+
                 default:
                     return;
             }
@@ -417,6 +430,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_7D_1, arg_7D_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_5D_1 = true;
@@ -427,10 +441,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_5D_1, arg_5D_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 40, 30, 0, 30);
                     return;
+
                 default:
                     return;
             }
@@ -442,6 +458,7 @@ namespace RogueCastle
             {
                 Y = m_levelScreen.CurrentRoom.Y;
             }
+
             base.Update(gameTime);
         }
 
@@ -464,9 +481,11 @@ namespace RogueCastle
                     {
                         RunLogicBlock(false, m_basicTeleportAttackLB, 100);
                     }
-                    damage = (int) Math.Round(damage*(1f - m_teleportDamageReduc), MidpointRounding.AwayFromZero);
+
+                    damage = (int) Math.Round(damage * (1f - m_teleportDamageReduc), MidpointRounding.AwayFromZero);
                 }
             }
+
             base.HitEnemy(damage, position, isPlayer);
         }
 
@@ -485,6 +504,7 @@ namespace RogueCastle
                     {
                         num2 = TerrainBounds.Top - current.Bounds.Bottom;
                     }
+
                     if (num2 < num)
                     {
                         num = (int) num2;
@@ -492,6 +512,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             return result;
         }
 

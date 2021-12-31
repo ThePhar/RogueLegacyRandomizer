@@ -9,9 +9,6 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
-using System.Threading.Tasks;
-using Archipelago;
 using RogueCastle.Screens;
 using RogueCastle.Structs;
 
@@ -19,6 +16,11 @@ namespace RogueCastle.Options
 {
     public class ConnectArchipelagoOptionObj : ArchipelagoOptionsObj
     {
+        public ConnectArchipelagoOptionObj(ArchipelagoScreen parentScreen) : base(parentScreen, "Connect")
+        {
+            m_parentScreen = parentScreen;
+        }
+
         public override bool IsActive
         {
             get { return base.IsActive; }
@@ -29,7 +31,7 @@ namespace RogueCastle.Options
                 {
                     var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
                     // Add our dialogue if it's not there.
-                    DialogueManager.AddText("Ready to Start", new []{""}, new []{"Are you ready to start?"});
+                    DialogueManager.AddText("Ready to Start", new[] { "" }, new[] { "Are you ready to start?" });
 
                     m_parentScreen.LockControls = true;
 
@@ -42,11 +44,6 @@ namespace RogueCastle.Options
             }
         }
 
-        public ConnectArchipelagoOptionObj(ArchipelagoScreen parentScreen) : base(parentScreen, "Connect")
-        {
-            m_parentScreen = parentScreen;
-        }
-
         public override void Initialize()
         {
             m_nameText.Text = "Connect";
@@ -55,8 +52,6 @@ namespace RogueCastle.Options
 
         public void StartGame()
         {
-
-
             IsActive = false;
             m_parentScreen.Connect();
         }

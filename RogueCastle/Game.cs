@@ -565,11 +565,17 @@ namespace RogueCastle
 
                     var randomGold = 0;
                     if (item.Item == (int) ItemCode.Gold1000)
+                    {
                         randomGold = 1000;
+                    }
                     else if (item.Item == (int) ItemCode.Gold3000)
+                    {
                         randomGold = 3000;
+                    }
                     else if (item.Item == (int) ItemCode.Gold5000)
+                    {
                         randomGold = 5000;
+                    }
 
                     var stat1 = CDGMath.RandomInt(4, 9);
                     var stat2 = CDGMath.RandomInt(4, 9);
@@ -861,18 +867,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vault] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vault] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vault] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vault] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vault] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vault] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vault] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vault] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vault] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vault] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vault] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vault] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vault] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vault] = 3;
                     }
 
                     break;
@@ -881,18 +887,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sprint] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sprint] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sprint] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sprint] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sprint] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sprint] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sprint] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sprint] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sprint] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sprint] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sprint] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sprint] = 3;
                     }
 
                     break;
@@ -901,18 +907,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vampire] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vampire] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vampire] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vampire] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vampire] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vampire] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vampire] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vampire] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vampire] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Vampire] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Vampire] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Vampire] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Vampire] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Vampire] = 3;
                     }
 
                     break;
@@ -921,18 +927,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sky] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sky] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sky] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sky] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sky] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sky] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sky] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sky] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sky] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Sky] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Sky] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Sky] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Sky] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Sky] = 3;
                     }
 
                     break;
@@ -941,18 +947,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Siphon] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Siphon] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Siphon] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Siphon] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Siphon] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Siphon] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Siphon] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Siphon] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Siphon] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Siphon] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Siphon] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Siphon] = 3;
                     }
 
                     break;
@@ -961,18 +967,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Retaliation] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Retaliation] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Retaliation] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Retaliation] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Retaliation] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Retaliation] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Retaliation] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Retaliation] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Retaliation] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Retaliation] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Retaliation] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Retaliation] = 3;
                     }
 
                     break;
@@ -981,18 +987,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Bounty] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Bounty] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Bounty] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Bounty] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Bounty] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Bounty] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Bounty] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Bounty] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Bounty] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Bounty] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Bounty] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Bounty] = 3;
                     }
 
                     break;
@@ -1001,18 +1007,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Haste] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Haste] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Haste] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Haste] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Haste] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Haste] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Haste] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Haste] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Haste] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Haste] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Haste] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Haste] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Haste] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Haste] = 3;
                     }
 
                     break;
@@ -1021,18 +1027,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Curse] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Curse] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Curse] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Curse] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Curse] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Curse] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Curse] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Curse] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Curse] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Curse] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Curse] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Curse] = 3;
                     }
 
                     break;
@@ -1041,18 +1047,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Grace] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Grace] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Grace] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Grace] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Grace] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Grace] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Grace] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Grace] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Grace] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Grace] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Grace] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Grace] = 3;
                     }
 
                     break;
@@ -1061,18 +1067,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Balance] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Balance] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Balance] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Balance] = 1;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Balance] = 1;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Balance] = 1;
                     }
                     else
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Balance] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][EquipmentAbilityType.Balance] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Chest][EquipmentAbilityType.Balance] = 3;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Limbs][EquipmentAbilityType.Balance] = 3;
-                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][ EquipmentAbilityType.Balance] = 3;
+                        PlayerStats.GetRuneArray[EquipmentCategoryType.Cape][EquipmentAbilityType.Balance] = 3;
                     }
 
                     break;
@@ -1081,18 +1087,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Squire] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Squire] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Squire] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Squire] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Squire] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Squire] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Squire] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Squire] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Squire] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Squire] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Squire] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Squire] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Squire] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Squire] = 3;
                     }
 
                     break;
@@ -1101,18 +1107,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Silver] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Silver] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Silver] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Silver] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Silver] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Silver] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Silver] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Silver] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Silver] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Silver] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Silver] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Silver] = 3;
                     }
 
                     break;
@@ -1121,18 +1127,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Guardian] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Guardian] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Guardian] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Guardian] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Guardian] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Guardian] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Guardian] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Guardian] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Guardian] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Guardian] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Guardian] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Guardian] = 3;
                     }
 
                     break;
@@ -1141,18 +1147,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Imperial] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Imperial] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Imperial] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Imperial] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Imperial] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Imperial] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Imperial] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Imperial] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Imperial] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Imperial] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Imperial] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Imperial] = 3;
                     }
 
                     break;
@@ -1161,18 +1167,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Royal] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Royal] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Royal] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Royal] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Royal] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Royal] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Royal] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Royal] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Royal] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Royal] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Royal] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Royal] = 3;
                     }
 
                     break;
@@ -1181,18 +1187,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Knight] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Knight] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Knight] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Knight] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Knight] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Knight] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Knight] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Knight] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Knight] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Knight] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Knight] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Knight] = 3;
                     }
 
                     break;
@@ -1201,18 +1207,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Ranger] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Ranger] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Ranger] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Ranger] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Ranger] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Ranger] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Ranger] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Ranger] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Ranger] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Ranger] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Ranger] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Ranger] = 3;
                     }
 
                     break;
@@ -1221,18 +1227,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sky] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sky] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sky] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sky] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sky] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sky] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sky] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sky] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sky] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sky] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sky] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sky] = 3;
                     }
 
                     break;
@@ -1241,18 +1247,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dragon] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dragon] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dragon] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dragon] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dragon] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dragon] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dragon] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dragon] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dragon] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dragon] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dragon] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dragon] = 3;
                     }
 
                     break;
@@ -1261,18 +1267,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Slayer] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Slayer] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Slayer] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Slayer] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Slayer] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Slayer] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Slayer] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Slayer] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Slayer] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Slayer] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Slayer] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Slayer] = 3;
                     }
 
                     break;
@@ -1281,18 +1287,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Blood] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Blood] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Blood] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Blood] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Blood] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Blood] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Blood] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Blood] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Blood] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Blood] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Blood] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Blood] = 3;
                     }
 
                     break;
@@ -1301,18 +1307,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sage] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sage] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sage] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sage] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sage] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sage] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sage] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Sage] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Sage] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Sage] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Sage] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Sage] = 3;
                     }
 
                     break;
@@ -1321,18 +1327,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Retribution] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Retribution] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Retribution] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Retribution] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Retribution] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Retribution] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Retribution] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Retribution] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Retribution] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Retribution] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Retribution] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Retribution] = 3;
                     }
 
                     break;
@@ -1341,18 +1347,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Holy] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Holy] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Holy] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Holy] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Holy] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Holy] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Holy] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Holy] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Holy] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Holy] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Holy] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Holy] = 3;
                     }
 
                     break;
@@ -1361,18 +1367,18 @@ namespace RogueCastle
                     if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dark] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dark] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dark] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dark] = 1;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dark] = 1;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dark] = 1;
                     }
                     else
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dark] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][EquipmentBaseType.Dark] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Chest][EquipmentBaseType.Dark] = 3;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Limbs][EquipmentBaseType.Dark] = 3;
-                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][ EquipmentBaseType.Dark] = 3;
+                        PlayerStats.GetBlueprintArray[EquipmentCategoryType.Cape][EquipmentBaseType.Dark] = 3;
                     }
 
                     break;

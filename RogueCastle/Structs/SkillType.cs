@@ -126,6 +126,6 @@ namespace RogueCastle.Structs
         ManorRightExtension,
         ManorRightTree,
         ManorObservatoryBase,
-        ManorObservatoryTelescope,
+        ManorObservatoryTelescope
     }
 }

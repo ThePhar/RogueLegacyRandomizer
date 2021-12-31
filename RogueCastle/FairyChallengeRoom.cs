@@ -34,7 +34,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_Fairy);
+            m_boss = EnemyList[0] as EnemyObj_Fairy;
             m_boss.SaveToFile = false;
             m_boss.Flip = SpriteEffects.FlipHorizontally;
             base.Initialize();
@@ -88,8 +88,10 @@ namespace RogueCastle
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X", m_boss.X.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X",
+                m_boss.X.ToString());
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+                "Intro2");
             base.OnEnter();
             Player.GetChildAt(10).TextureColor = Color.White;
             m_bossChest.ForcedItemType = 16;
@@ -97,7 +99,8 @@ namespace RogueCastle
 
         public void Intro2()
         {
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y", m_startingCamPos.Y.ToString(),
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y",
+                m_startingCamPos.Y.ToString(),
                 "X", m_startingCamPos.X.ToString());
             Tween.AddEndHandlerToLastTween(this, "EndCutscene");
         }
@@ -117,6 +120,7 @@ namespace RogueCastle
             {
                 Player.CurrentMana = Player.MaxMana;
             }
+
             base.Update(gameTime);
         }
 
@@ -136,6 +140,7 @@ namespace RogueCastle
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                     camera.GetTransformation());
             }
+
             base.Draw(camera);
         }
 
@@ -146,6 +151,7 @@ namespace RogueCastle
                 current.KillSilently();
                 current.Dispose();
             }
+
             TempEnemyList.Clear();
             Player.InvincibleToSpikes = false;
             m_teleportingOut = true;

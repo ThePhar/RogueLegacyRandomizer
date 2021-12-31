@@ -132,6 +132,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Wrath";
                     MaxHealth = 72;
@@ -159,6 +160,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Fairy_Expert_KnockBack;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Alexander";
                     MaxHealth = 635;
@@ -189,8 +191,10 @@ namespace RogueCastle
                     {
                         MaxHealth = 1;
                     }
+
                     break;
             }
+
             if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyFairyGhostBossIdle_Character";
@@ -309,6 +313,7 @@ namespace RogueCastle
             {
                 m_generalCooldownLB.AddLogicSet(logicSet, logicSet2, logicSet3);
             }
+
             logicBlocksToDispose.Add(m_generalBasicLB);
             logicBlocksToDispose.Add(m_generalAdvancedLB);
             logicBlocksToDispose.Add(m_generalExpertLB);
@@ -343,6 +348,7 @@ namespace RogueCastle
             {
                 projectileData.SpriteName = "GhostProjectileBoss_Sprite";
             }
+
             if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Roar_01",
@@ -352,6 +358,7 @@ namespace RogueCastle
             {
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "FairyAttack1");
             }
+
             m_levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.Angle = new Vector2(90f, 90f);
             m_levelScreen.ProjectileManager.FireProjectile(projectileData);
@@ -412,6 +419,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_58_1 = true;
@@ -421,10 +429,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_58_1, arg_58_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 50, 10, 0, 40);
                     return;
+
                 default:
                     return;
             }
@@ -443,6 +453,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_58_1 = true;
@@ -452,10 +463,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_58_1, arg_58_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalAdvancedLB, 50, 10, 0, 40);
                     return;
+
                 default:
                     return;
             }
@@ -474,6 +487,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_73_1, arg_73_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_58_1 = true;
@@ -483,10 +497,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_58_1, arg_58_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalExpertLB, 50, 10, 0, 40);
                     return;
+
                 default:
                     return;
             }
@@ -508,6 +524,7 @@ namespace RogueCastle
                         RunLogicBlock(arg_80_1, arg_80_2, array);
                         return;
                     }
+
                     case 1:
                     {
                         var arg_60_1 = true;
@@ -517,14 +534,17 @@ namespace RogueCastle
                         RunLogicBlock(arg_60_1, arg_60_2, array2);
                         return;
                     }
+
                     case 2:
                     case 3:
                         RunLogicBlock(true, m_generalMiniBossLB, 50, 10, 0, 40);
                         return;
+
                     default:
                         return;
                 }
             }
+
             switch (State)
             {
                 case 0:
@@ -537,6 +557,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_10C_1, arg_10C_2, array3);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_E8_1 = true;
@@ -546,10 +567,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_E8_1, arg_E8_2, array4);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalNeoLB, 50, 10, 0, 40);
                     return;
+
                 default:
                     return;
             }
@@ -569,6 +592,7 @@ namespace RogueCastle
                         {
                             m_summonTimer = m_summonTimerNeo;
                         }
+
                         m_summonCounter = m_summonTimer;
                         NumHits--;
                         if (!IsKilled && NumHits <= 0 && m_levelScreen.CurrentRoom.ActiveEnemies <= m_numSummons + 1)
@@ -583,10 +607,12 @@ namespace RogueCastle
                                 CreateFairy(EnemyDifficulty.Advanced);
                                 CreateFairy(EnemyDifficulty.Advanced);
                             }
+
                             NumHits = 1;
                         }
                     }
                 }
+
                 var currentRoom = m_levelScreen.CurrentRoom;
                 var bounds = Bounds;
                 var bounds2 = currentRoom.Bounds;
@@ -597,15 +623,18 @@ namespace RogueCastle
                 {
                     X -= num2;
                 }
+
                 if (num3 < 0)
                 {
                     X -= num3;
                 }
+
                 if (num4 > 0)
                 {
                     Y -= num4;
                 }
             }
+
             if (m_shake && m_shakeTimer > 0f)
             {
                 m_shakeTimer -= num;
@@ -624,10 +653,12 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (m_playDeathLoop && m_deathLoop != null && !m_deathLoop.IsPlaying)
             {
                 m_deathLoop = SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Death_Loop");
             }
+
             base.Update(gameTime);
         }
 
@@ -641,6 +672,7 @@ namespace RogueCastle
                     playerObj.HitPlayer(this);
                 }
             }
+
             if (collisionResponseType != 1)
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
@@ -660,6 +692,7 @@ namespace RogueCastle
             {
                 enemyObj_Fairy.Orientation = MathHelper.ToRadians(180f);
             }
+
             enemyObj_Fairy.Level = Level - 7 - 1;
             m_levelScreen.AddEnemyToCurrentRoom(enemyObj_Fairy);
             enemyObj_Fairy.PlayAnimation();
@@ -670,6 +703,7 @@ namespace RogueCastle
             {
                 enemyObj_Fairy.InitializeDebugRadii();
             }
+
             enemyObj_Fairy.SpawnRoom = m_levelScreen.CurrentRoom;
             enemyObj_Fairy.GivesLichHealth = false;
         }
@@ -690,6 +724,7 @@ namespace RogueCastle
                 base.Kill(giveXP);
                 return;
             }
+
             if (m_target.CurrentHealth > 0)
             {
                 Game.PlayerStats.FairyBossBeaten = true;
@@ -714,18 +749,18 @@ namespace RogueCastle
         {
             m_playDeathLoop = true;
             foreach (var current in m_levelScreen.CurrentRoom.TempEnemyList)
-            {
                 if (!current.IsKilled)
                 {
                     current.Kill();
                 }
-            }
+
             m_levelScreen.UnpauseScreen();
             m_target.UnlockControls();
             if (m_currentActiveLB != null)
             {
                 m_currentActiveLB.StopLogicBlock();
             }
+
             PauseEnemy(true);
             ChangeSprite("EnemyFairyGhostBossShoot_Character");
             PlayAnimation();
@@ -735,6 +770,7 @@ namespace RogueCastle
             {
                 m_target.InvincibleToSpikes = true;
             }
+
             Tween.To(m_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
             m_shake = true;
             m_shakeTimer = m_shakeDuration;
@@ -742,46 +778,38 @@ namespace RogueCastle
             {
                 var vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right),
                     CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
-                Tween.RunFunction(i*0.1f, typeof (SoundManager), "Play3DSound", this, m_target, new[]
+                Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", this, m_target, new[]
                 {
                     "Boss_Explo_01",
                     "Boss_Explo_02",
                     "Boss_Explo_03"
                 });
-                Tween.RunFunction(i*0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
+                Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
             }
+
             Tween.AddEndHandlerToLastTween(this, "Part3");
             if (!IsNeo)
             {
                 var list = new List<int>();
-                for (var j = 0; j < m_bossCoins; j++)
-                {
-                    list.Add(0);
-                }
-                for (var k = 0; k < m_bossMoneyBags; k++)
-                {
-                    list.Add(1);
-                }
-                for (var l = 0; l < m_bossDiamonds; l++)
-                {
-                    list.Add(2);
-                }
+                for (var j = 0; j < m_bossCoins; j++) list.Add(0);
+                for (var k = 0; k < m_bossMoneyBags; k++) list.Add(1);
+                for (var l = 0; l < m_bossDiamonds; l++) list.Add(2);
                 CDGMath.Shuffle(list);
-                var num = 2.5f/list.Count;
+                var num = 2.5f / list.Count;
                 for (var m = 0; m < list.Count; m++)
                 {
                     var position = Position;
                     if (list[m] == 0)
                     {
-                        Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);
+                        Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);
                     }
                     else if (list[m] == 1)
                     {
-                        Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", position, 10, 100);
+                        Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 10, 100);
                     }
                     else
                     {
-                        Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", position, 11, 500);
+                        Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 11, 500);
                     }
                 }
             }
@@ -795,6 +823,7 @@ namespace RogueCastle
             {
                 m_deathLoop.Stop(AudioStopOptions.Immediate);
             }
+
             m_levelScreen.RunWhiteSlash2();
             base.Kill();
         }
@@ -807,6 +836,7 @@ namespace RogueCastle
                 Dispose();
                 return;
             }
+
             NumHits = 1;
             base.Reset();
         }
@@ -820,6 +850,7 @@ namespace RogueCastle
                 {
                     m_deathLoop.Dispose();
                 }
+
                 m_deathLoop = null;
                 base.Dispose();
             }

@@ -58,6 +58,7 @@ namespace RogueCastle
             {
                 Orientation = 45f;
             }
+
             m_internalOrientation = Orientation;
             HeadingX = (float) Math.Cos(MathHelper.ToRadians(Orientation));
             HeadingY = (float) Math.Sin(MathHelper.ToRadians(Orientation));
@@ -91,6 +92,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Spiketex";
                     MaxHealth = 5;
@@ -118,6 +120,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = new Vector2(1f, 2f);
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Spiketus";
                     MaxHealth = 5;
@@ -145,6 +148,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = new Vector2(1f, 2f);
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Spiker";
                     MaxHealth = 5;
@@ -172,6 +176,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = new Vector2(1f, 2f);
                     return;
+
                 default:
                     return;
             }
@@ -234,13 +239,15 @@ namespace RogueCastle
                 var bounds = m_levelScreen.CurrentRoom.Bounds;
                 if (Y < bounds.Top + 10)
                 {
-                    value = CollisionMath.CalculateMTD(Bounds, new Rectangle(bounds.Left, bounds.Top, bounds.Width, 10));
+                    value = CollisionMath.CalculateMTD(Bounds,
+                        new Rectangle(bounds.Left, bounds.Top, bounds.Width, 10));
                 }
                 else if (Y > bounds.Bottom - 10)
                 {
                     value = CollisionMath.CalculateMTD(Bounds,
                         new Rectangle(bounds.Left, bounds.Bottom - 10, bounds.Width, 10));
                 }
+
                 if (X > bounds.Right - 10)
                 {
                     value = CollisionMath.CalculateMTD(Bounds,
@@ -248,20 +255,23 @@ namespace RogueCastle
                 }
                 else if (X < bounds.Left + 10)
                 {
-                    value = CollisionMath.CalculateMTD(Bounds, new Rectangle(bounds.Left, bounds.Top, 10, bounds.Height));
+                    value = CollisionMath.CalculateMTD(Bounds,
+                        new Rectangle(bounds.Left, bounds.Top, 10, bounds.Height));
                 }
+
                 if (value != Vector2.Zero)
                 {
                     var heading = Heading;
-                    var vector = new Vector2(value.Y, value.X*-1f);
-                    var heading2 = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
-                                   vector - heading;
+                    var vector = new Vector2(value.Y, value.X * -1f);
+                    var heading2 = 2f * (CDGMath.DotProduct(heading, vector) / CDGMath.DotProduct(vector, vector)) *
+                        vector - heading;
                     Heading = heading2;
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "GiantSpike_Bounce_01",
                         "GiantSpike_Bounce_02", "GiantSpike_Bounce_03");
                     m_selfDestructCounter++;
                     m_selfDestructTimer = 1f;
                 }
+
                 if (m_selfDestructTimer > 0f)
                 {
                     m_selfDestructTimer -= num;
@@ -270,30 +280,35 @@ namespace RogueCastle
                         m_selfDestructCounter = 0;
                     }
                 }
+
                 if (m_selfDestructCounter >= m_selfDestructTotalBounces)
                 {
                     Kill(false);
                 }
+
                 if (CurrentSpeed == 0f)
                 {
                     CurrentSpeed = Speed;
                 }
+
                 if (HeadingX > 0f)
                 {
-                    Rotation += RotationSpeed*num;
+                    Rotation += RotationSpeed * num;
                 }
                 else
                 {
-                    Rotation -= RotationSpeed*num;
+                    Rotation -= RotationSpeed * num;
                 }
             }
+
             base.Update(gameTime);
         }
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
             var terrainObj = otherBox.Parent as TerrainObj;
-            if (terrainObj != null && !(terrainObj is DoorObj) && terrainObj.CollidesBottom && terrainObj.CollidesLeft &&
+            if (terrainObj != null && !(terrainObj is DoorObj) && terrainObj.CollidesBottom &&
+                terrainObj.CollidesLeft &&
                 terrainObj.CollidesRight && terrainObj.CollidesTop)
             {
                 var value = CollisionMath.RotatedRectIntersectsMTD(thisBox.AbsRect, (int) thisBox.AbsRotation,
@@ -301,9 +316,9 @@ namespace RogueCastle
                 if (value != Vector2.Zero)
                 {
                     var heading = Heading;
-                    var vector = new Vector2(value.Y, value.X*-1f);
-                    var heading2 = 2f*(CDGMath.DotProduct(heading, vector)/CDGMath.DotProduct(vector, vector))*
-                                   vector - heading;
+                    var vector = new Vector2(value.Y, value.X * -1f);
+                    var heading2 = 2f * (CDGMath.DotProduct(heading, vector) / CDGMath.DotProduct(vector, vector)) *
+                        vector - heading;
                     X += value.X;
                     Y += value.Y;
                     Heading = heading2;
@@ -323,6 +338,7 @@ namespace RogueCastle
                 Dispose();
                 return;
             }
+
             Orientation = m_internalOrientation;
             base.Reset();
         }

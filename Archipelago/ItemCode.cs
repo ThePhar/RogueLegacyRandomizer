@@ -18,15 +18,29 @@ namespace Archipelago
         public static LegacyItemType GetItemType(this int item)
         {
             if (item >= 90000 && item <= 90028)
+            {
                 return LegacyItemType.Skill;
+            }
+
             if (item >= 90030 && item <= 90030)
+            {
                 return LegacyItemType.Stats;
+            }
+
             if (item >= 90031 && item <= 90033)
+            {
                 return LegacyItemType.Gold;
+            }
+
             if (item >= 90060 && item <= 90070)
+            {
                 return LegacyItemType.Rune;
+            }
+
             if (item >= 90040 && item <= 90054)
+            {
                 return LegacyItemType.Blueprint;
+            }
 
             throw new NotImplementedException(string.Format("ITEM: {0} is not implemented.", item));
         }
@@ -40,7 +54,7 @@ namespace Archipelago
         SpecialSkill,
         Stats,
         Gold,
-        Other,
+        Other
     }
 
     public enum ItemCode

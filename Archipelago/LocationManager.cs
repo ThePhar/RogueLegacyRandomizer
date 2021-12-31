@@ -57,10 +57,7 @@ namespace Archipelago
             AddLocation(91106, "Herodotus's Reward Chest");
             AddLocation(91200, "Jukebox");
 
-            for (var i = 0; i < 25; i++)
-            {
-                AddLocation(91300 + i, string.Format("Diary {0}", i + 1));
-            }
+            for (var i = 0; i < 25; i++) AddLocation(91300 + i, string.Format("Diary {0}", i + 1));
 
             for (var i = 0; i < 50; i++)
             {

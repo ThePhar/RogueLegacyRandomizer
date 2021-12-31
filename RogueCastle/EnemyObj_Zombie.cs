@@ -66,6 +66,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Zomboner";
                     MaxHealth = 39;
@@ -93,6 +94,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Zombie_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Zombishnu";
                     MaxHealth = 70;
@@ -120,6 +122,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Zombie_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Zomg";
                     MaxHealth = 800;
@@ -147,6 +150,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Zombie_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -194,7 +198,9 @@ namespace RogueCastle
                     {
                         RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
                     }
+
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -207,8 +213,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
                     }
+
                     RunLogicBlock(false, m_basicWalkLS, 100);
                     return;
+
                 default:
                     return;
             }
@@ -223,7 +231,9 @@ namespace RogueCastle
                     {
                         RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
                     }
+
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -236,8 +246,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
                     }
+
                     RunLogicBlock(false, m_basicWalkLS, 100);
                     return;
+
                 default:
                     return;
             }
@@ -252,7 +264,9 @@ namespace RogueCastle
                     {
                         RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
                     }
+
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -265,8 +279,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
                     }
+
                     RunLogicBlock(false, m_basicWalkLS, 100);
                     return;
+
                 default:
                     return;
             }
@@ -281,7 +297,9 @@ namespace RogueCastle
                     {
                         RunLogicBlock(false, m_basicRiseLowerLS, 0, 100);
                     }
+
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -294,8 +312,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3B_1, arg_3B_2, array);
                         return;
                     }
+
                     RunLogicBlock(false, m_basicWalkLS, 100);
                     return;
+
                 default:
                     return;
             }
@@ -314,6 +334,7 @@ namespace RogueCastle
                 ChangeSprite("EnemyZombieRise_Character");
                 StopAnimation();
             }
+
             base.Update(gameTime);
         }
 

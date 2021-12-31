@@ -45,6 +45,7 @@ namespace RogueCastle
                 m_moon.Position /= 2f;
                 one = Vector2.One;
             }
+
             m_moon.Scale = one;
             m_moon.ForceDraw = true;
             m_moonPos = m_moon.Position;
@@ -81,10 +82,12 @@ namespace RogueCastle
                 m_moon.Position /= 2f;
                 one = Vector2.One;
             }
+
             if (m_differenceCloud != null)
             {
                 m_differenceCloud.Dispose();
             }
+
             m_differenceCloud = new BackgroundObj("ParallaxDifferenceClouds_Sprite");
             m_differenceCloud.SetRepeated(true, true, camera, SamplerState.LinearWrap);
             m_differenceCloud.Scale = one;
@@ -94,6 +97,7 @@ namespace RogueCastle
             {
                 m_differenceCloud2.Dispose();
             }
+
             m_differenceCloud2 = new BackgroundObj("ParallaxDifferenceClouds_Sprite");
             m_differenceCloud2.SetRepeated(true, true, camera, SamplerState.LinearWrap);
             m_differenceCloud2.Scale = one;
@@ -105,6 +109,7 @@ namespace RogueCastle
             {
                 m_differenceCloud3.Dispose();
             }
+
             m_differenceCloud3 = new BackgroundObj("ParallaxDifferenceClouds_Sprite");
             m_differenceCloud3.SetRepeated(true, true, camera, SamplerState.LinearWrap);
             m_differenceCloud3.Scale = one;
@@ -137,13 +142,15 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (!m_silhouetteFlying && m_silhouetteTimer <= 0f)
             {
                 m_silhouetteTimer = 5f;
             }
+
             if (m_silhouette.SpriteName == "GardenPerson_Sprite")
             {
-                m_silhouette.Rotation += 120f*num;
+                m_silhouette.Rotation += 120f * num;
             }
         }
 
@@ -159,6 +166,7 @@ namespace RogueCastle
                 {
                     flag = true;
                 }
+
                 string[] array =
                 {
                     "GardenBat_Sprite",
@@ -175,6 +183,7 @@ namespace RogueCastle
                 {
                     m_silhouette.ChangeSprite("GardenSanta_Sprite");
                 }
+
                 m_silhouette.PlayAnimation();
                 var arg_A7_0 = Vector2.Zero;
                 if (flag)
@@ -186,12 +195,14 @@ namespace RogueCastle
                     m_silhouette.Flip = SpriteEffects.FlipHorizontally;
                     m_silhouette.X = m_levelScreen.CurrentRoom.Width + m_silhouette.Width;
                 }
+
                 m_silhouette.Y = CDGMath.RandomFloat(100f, 500f);
-                var num = m_levelScreen.CurrentRoom.Bounds.Width + m_silhouette.Width*2;
+                var num = m_levelScreen.CurrentRoom.Bounds.Width + m_silhouette.Width * 2;
                 if (!flag)
                 {
                     num = -num;
                 }
+
                 Tween.By(m_silhouette, CDGMath.RandomFloat(10f, 15f), Tween.EaseNone, "X", num.ToString(), "Y",
                     CDGMath.RandomInt(-200, 200).ToString());
                 Tween.AddEndHandlerToLastTween(this, "SilhouetteComplete");
@@ -205,10 +216,10 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            m_moon.X = m_moonPos.X - camera.TopLeftCorner.X*0.01f;
-            m_moon.Y = m_moonPos.Y - camera.TopLeftCorner.Y*0.01f;
+            m_moon.X = m_moonPos.X - camera.TopLeftCorner.X * 0.01f;
+            m_moon.Y = m_moonPos.Y - camera.TopLeftCorner.Y * 0.01f;
             camera.GraphicsDevice.Clear(new Color(4, 29, 86));
-            camera.Draw(Game.GenericTexture, new Rectangle(-10, -10, 1400, 800), Color.SkyBlue*MorningOpacity);
+            camera.Draw(Game.GenericTexture, new Rectangle(-10, -10, 1400, 800), Color.SkyBlue * MorningOpacity);
             m_moon.Opacity = 1f - MorningOpacity;
             m_silhouette.Opacity = 1f - MorningOpacity;
             m_differenceCloud.Opacity = 1f - MorningOpacity;

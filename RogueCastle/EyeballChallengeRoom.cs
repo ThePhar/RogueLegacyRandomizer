@@ -31,7 +31,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_Eyeball);
+            m_boss = EnemyList[0] as EnemyObj_Eyeball;
             m_boss.SaveToFile = false;
             base.Initialize();
         }
@@ -79,7 +79,7 @@ namespace RogueCastle
             m_boss.ChangeSprite("EnemyEyeballBossEye_Character");
             m_boss.ChangeToBossPupil();
             m_boss.PlayAnimation();
-            Player.AttachedLevel.Camera.X = (int) (Bounds.Left + Player.AttachedLevel.Camera.Width*0.5f);
+            Player.AttachedLevel.Camera.X = (int) (Bounds.Left + Player.AttachedLevel.Camera.Width * 0.5f);
             Player.AttachedLevel.Camera.Y = Player.Y;
             var arg_BC_0 = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
@@ -87,7 +87,8 @@ namespace RogueCastle
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+                "Intro2");
             base.OnEnter();
             m_bossChest.ForcedItemType = 15;
         }
@@ -95,7 +96,7 @@ namespace RogueCastle
         public void Intro2()
         {
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y",
-                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height*0.5f)).ToString());
+                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString());
             Tween.AddEndHandlerToLastTween(this, "EndCutscene");
         }
 
@@ -115,6 +116,7 @@ namespace RogueCastle
             {
                 SoundManager.PlayMusic("CastleBossSong", true);
             }
+
             base.Update(gameTime);
         }
 

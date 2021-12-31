@@ -35,6 +35,7 @@ namespace Randomchaos2DGodRays
                 effect = Game.Content.Load<Effect>("Shaders/LightSourceMask");
                 lishsourceTexture = Game.Content.Load<Texture2D>(lightSourceasset);
             }
+
             effect.Parameters["screenRes"].SetValue(new Vector2(16f, 9f));
             effect.Parameters["halfPixel"].SetValue(HalfPixel);
             effect.CurrentTechnique = effect.Techniques["LightSourceMask"];

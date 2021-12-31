@@ -22,7 +22,7 @@ namespace RogueCastle
         private float m_speedX;
         private float m_speedY;
         private bool m_splashing;
-        private Vector2 m_startingPos;
+        private readonly Vector2 m_startingPos;
 
         public RaindropObj(Vector2 startingPos) : base("Raindrop_Sprite")
         {
@@ -82,8 +82,8 @@ namespace RogueCastle
             if (!m_splashing)
             {
                 var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-                Y += m_speedY*num;
-                X += m_speedX*num;
+                Y += m_speedY * num;
+                X += m_speedX * num;
                 if (IsCollidable)
                 {
                     var bounds = Bounds;
@@ -100,9 +100,11 @@ namespace RogueCastle
                                 {
                                     Y = bounds2.Top - 10;
                                 }
+
                                 RunSplashAnimation();
                                 break;
                             }
+
                             if (terrainObj.Rotation != 0f &&
                                 CollisionMath.RotatedRectIntersects(bounds, 0f, Vector2.Zero,
                                     new Rectangle((int) terrainObj.X, (int) terrainObj.Y, terrainObj.Width,
@@ -112,17 +114,21 @@ namespace RogueCastle
                                 {
                                     Y -= 12f;
                                 }
+
                                 RunSplashAnimation();
                             }
+
                             break;
                         }
                     }
                 }
+
                 if (Y > 720f)
                 {
                     RunSplashAnimation();
                 }
             }
+
             if (!IsAnimating && m_splashing && !m_isSnowflake)
             {
                 KillDrop();
@@ -132,12 +138,13 @@ namespace RogueCastle
         public void UpdateNoCollision(GameTime gameTime)
         {
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            Y += m_speedY*num;
-            X += m_speedX*num;
+            Y += m_speedY * num;
+            X += m_speedX * num;
             if (X > m_startingPos.X + 4000f || X < m_startingPos.X - 4000f)
             {
                 KillDrop();
             }
+
             if (Y > m_startingPos.Y + 4000f || Y < m_startingPos.Y - 4000f)
             {
                 KillDrop();
@@ -153,6 +160,7 @@ namespace RogueCastle
                 PlayAnimation(2, TotalFrames);
                 return;
             }
+
             Tween.To(this, 0.25f, Tween.EaseNone, "Opacity", "0");
             Tween.AddEndHandlerToLastTween(this, "KillDrop");
         }
@@ -169,6 +177,7 @@ namespace RogueCastle
                 Y = m_startingPos.Y;
                 Rotation = -90f;
             }
+
             m_speedY = CDGMath.RandomFloat(MaxYSpeed.X, MaxYSpeed.Y);
             m_speedX = CDGMath.RandomFloat(MaxXSpeed.X, MaxXSpeed.Y);
             Opacity = 1f;

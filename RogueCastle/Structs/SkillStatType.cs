@@ -14,7 +14,7 @@ namespace RogueCastle.Structs
     public static class SkillStatType
     {
         /// <summary>
-        /// Returns a given skill's stat.
+        ///     Returns a given skill's stat.
         /// </summary>
         /// <param name="skillType">Skill Type Identifier</param>
         /// <returns></returns>

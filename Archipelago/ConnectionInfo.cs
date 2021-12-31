@@ -9,15 +9,13 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
-
 namespace Archipelago
 {
     public class ConnectionInfo
     {
         public string Hostname { get; set; }
-        public int    Port     { get; set; }
-        public string Name     { get; set; }
+        public int Port { get; set; }
+        public string Name { get; set; }
         public string Password { get; set; }
     }
 }

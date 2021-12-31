@@ -25,7 +25,7 @@ namespace RogueCastle
 
         public ResolutionOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Resolution")
         {
-            m_toggleText = (m_nameText.Clone() as TextObj);
+            m_toggleText = m_nameText.Clone() as TextObj;
             m_toggleText.X = m_optionsTextOffset;
             m_toggleText.Text = "null";
             AddChild(m_toggleText);
@@ -42,6 +42,7 @@ namespace RogueCastle
                     m_toggleText.TextureColor = Color.Yellow;
                     return;
                 }
+
                 m_toggleText.TextureColor = Color.White;
                 m_toggleText.Text = m_selectedResolution.X + "x" + m_selectedResolution.Y;
             }
@@ -56,17 +57,16 @@ namespace RogueCastle
             {
                 m_displayModeList.Clear();
             }
+
             m_displayModeList = (m_parentScreen.ScreenManager.Game as Game).GetSupportedResolutions();
             m_toggleText.Text = m_selectedResolution.X + "x" + m_selectedResolution.Y;
             m_selectedResIndex = 0;
             for (var i = 0; i < m_displayModeList.Count; i++)
-            {
                 if (m_selectedResolution == m_displayModeList[i])
                 {
                     m_selectedResIndex = i;
                     return;
                 }
-            }
         }
 
         public override void HandleInput()
@@ -82,27 +82,33 @@ namespace RogueCastle
                 m_selectedResIndex++;
                 SoundManager.PlaySound("frame_swap");
             }
+
             if (m_selectedResIndex < 0)
             {
                 m_selectedResIndex = 0;
             }
+
             if (m_selectedResIndex > m_displayModeList.Count - 1)
             {
                 m_selectedResIndex = m_displayModeList.Count - 1;
             }
+
             if (m_selectedResIndex != selectedResIndex)
             {
                 m_toggleText.Text = m_displayModeList[m_selectedResIndex].X + "x" +
                                     m_displayModeList[m_selectedResIndex].Y;
             }
+
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 SoundManager.PlaySound("Option_Menu_Select");
                 var vector = m_displayModeList[m_selectedResIndex];
                 if (m_selectedResolution != vector)
                 {
-                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth = (int) vector.X;
-                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight = (int) vector.Y;
+                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth =
+                        (int) vector.X;
+                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
+                        (int) vector.Y;
                     (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
                     (m_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
                     if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
@@ -122,10 +128,12 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
             {
                 IsActive = false;
             }
+
             base.HandleInput();
         }
 
@@ -141,6 +149,7 @@ namespace RogueCastle
                     CancelResolution();
                 }
             }
+
             base.Update(gameTime);
         }
 
@@ -156,7 +165,8 @@ namespace RogueCastle
         public void CancelResolution()
         {
             m_resetCounter = 0f;
-            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth = (int) m_selectedResolution.X;
+            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth =
+                (int) m_selectedResolution.X;
             (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
                 (int) m_selectedResolution.Y;
             (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();

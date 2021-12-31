@@ -54,12 +54,9 @@ namespace RogueCastle
             m_bossTitle2.FontSize = 40f;
             m_bossDivider = new SpriteObj("Blank_Sprite");
             m_bossDivider.OutlineWidth = 2;
-            foreach (var current in DoorList)
-            {
-                m_roomFloor = current.Bounds.Bottom;
-            }
+            foreach (var current in DoorList) m_roomFloor = current.Bounds.Bottom;
             m_bossChest = new ChestObj(null);
-            m_bossChest.Position = new Vector2(Bounds.Center.X - m_bossChest.Width/2f, Bounds.Center.Y);
+            m_bossChest.Position = new Vector2(Bounds.Center.X - m_bossChest.Width / 2f, Bounds.Center.Y);
             GameObjList.Add(m_bossChest);
             m_rainFG = new List<RaindropObj>();
             for (var i = 0; i < 50; i++)
@@ -69,6 +66,7 @@ namespace RogueCastle
                 m_rainFG.Add(raindropObj);
                 raindropObj.ChangeToParticle();
             }
+
             base.Initialize();
         }
 
@@ -110,6 +108,7 @@ namespace RogueCastle
             {
                 Player.PhysicsMngr.AddObject(m_bossChest);
             }
+
             m_teleportingOut = false;
             m_bossTitle1.Opacity = 0f;
             m_bossTitle2.Opacity = 0f;
@@ -117,11 +116,9 @@ namespace RogueCastle
             m_bossDivider.Opacity = 0f;
             if (LevelENV.WeakenBosses)
             {
-                foreach (var current in EnemyList)
-                {
-                    current.CurrentHealth = 1;
-                }
+                foreach (var current in EnemyList) current.CurrentHealth = 1;
             }
+
             base.OnEnter();
         }
 
@@ -141,11 +138,13 @@ namespace RogueCastle
             {
                 SaveCompletionData();
             }
+
             Game.PlayerStats.NewBossBeaten = true;
             if (LinkedRoom != null)
             {
                 Player.AttachedLevel.CloseBossDoor(LinkedRoom, LevelType);
             }
+
             (Game.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
             base.OnExit();
         }
@@ -164,6 +163,7 @@ namespace RogueCastle
             {
                 m_bossTitle1.Position = new Vector2(camera.X - 550f, camera.Y + 50f);
             }
+
             m_bossTitle2.X = m_bossTitle1.X - 0f;
             m_bossTitle2.Y = m_bossTitle1.Y + 50f;
             m_bossDivider.Position = m_bossTitle1.Position;
@@ -172,7 +172,7 @@ namespace RogueCastle
             m_bossTitle2.X += 1500f;
             Tween.To(m_bossDivider, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
             Tween.To(m_bossDivider, 1f, Quad.EaseInOut, "delay", "0", "ScaleX",
-                ((float) (m_bossTitle2.Width/5)).ToString());
+                ((float) (m_bossTitle2.Width / 5)).ToString());
             Tween.To(m_bossTitle1, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
             Tween.To(m_bossTitle2, 0.5f, Tween.EaseNone, "delay", "0.3", "Opacity", "1");
             Tween.By(m_bossTitle1, 1f, Quad.EaseOut, "X", "1000");
@@ -184,7 +184,7 @@ namespace RogueCastle
             m_bossTitle1.X -= 1000f;
             m_bossTitle2.X += 1500f;
             Tween.AddEndHandlerToLastTween(this, endHandler);
-            Tween.RunFunction(3f, typeof (SoundManager), "PlaySound", "Boss_Title_Exit");
+            Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Boss_Title_Exit");
             m_bossTitle1.X += 1020f;
             m_bossTitle2.X -= 1520f;
             m_bossTitle1.Opacity = 1f;
@@ -202,14 +202,12 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var current in m_rainFG)
-            {
-                current.UpdateNoCollision(gameTime);
-            }
+            foreach (var current in m_rainFG) current.UpdateNoCollision(gameTime);
             if (!m_cutsceneRunning)
             {
                 base.Update(gameTime);
             }
+
             if (BossKilled && !m_bossChest.Visible)
             {
                 BossCleanup();
@@ -221,6 +219,7 @@ namespace RogueCastle
                 Tween.AddEndHandlerToLastTween(this, "UnlockChest");
                 m_sparkleTimer = 0.5f;
             }
+
             if (m_bossChest.Visible && !m_bossChest.IsOpen && BossKilled)
             {
                 if (m_sparkleTimer > 0f)
@@ -230,7 +229,7 @@ namespace RogueCastle
                     {
                         m_sparkleTimer = 0.5f;
                         Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect",
-                            new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height/2));
+                            new Vector2(m_bossChest.X, m_bossChest.Y - m_bossChest.Height / 2));
                     }
                 }
             }
@@ -242,6 +241,7 @@ namespace RogueCastle
                     (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true);
                     return;
                 }
+
                 TeleportPlayer();
             }
         }
@@ -289,6 +289,7 @@ namespace RogueCastle
                     "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), m_storedScale));
                 logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
             }
+
             logicSet.AddAction(new DelayLogicAction(0.2f));
             logicSet.AddAction(new ChangePropertyLogicAction(Player, "ForceInvincible", false));
             logicSet.AddAction(new RunFunctionLogicAction(Player, "UnlockControls"));
@@ -326,6 +327,7 @@ namespace RogueCastle
                     Player.Y.ToString());
                 Tween.AddEndHandlerToLastTween(this, "LockCamera");
             }
+
             Tween.RunFunction(1f, this, "KickPlayerOut2");
         }
 
@@ -365,6 +367,7 @@ namespace RogueCastle
                     "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), m_storedScale));
                 logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
             }
+
             logicSet.AddAction(new DelayLogicAction(0.2f));
             logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsWeighted", true));
             logicSet.AddAction(new ChangePropertyLogicAction(Player, "IsCollidable", true));
@@ -388,10 +391,7 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            foreach (var current in m_rainFG)
-            {
-                current.Draw(camera);
-            }
+            foreach (var current in m_rainFG) current.Draw(camera);
             base.Draw(camera);
             m_bossDivider.Draw(camera);
             camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
@@ -411,10 +411,7 @@ namespace RogueCastle
                 m_bossTitle1 = null;
                 m_bossTitle2.Dispose();
                 m_bossTitle2 = null;
-                foreach (var current in m_rainFG)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_rainFG) current.Dispose();
                 m_rainFG.Clear();
                 m_rainFG = null;
                 base.Dispose();

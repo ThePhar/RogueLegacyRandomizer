@@ -195,6 +195,7 @@ namespace RogueCastle
             {
                 spriteObj.Flip = SpriteEffects.FlipHorizontally;
             }
+
             spriteObj.Position = position;
             spriteObj.Visible = true;
             spriteObj.PlayAnimation(false);
@@ -221,6 +222,7 @@ namespace RogueCastle
                 spriteObj.Opacity = 0f;
                 num += CDGMath.RandomFloat(0.1f, 0.3f);
             }
+
             var spriteObj2 = m_resourcePool.CheckOut();
             spriteObj2.AnimationDelay = 0.05f;
             spriteObj2.Opacity = 0.8f;
@@ -236,7 +238,7 @@ namespace RogueCastle
 
         public void DisplayThrustDustEffect(GameObj obj, int numClouds, float duration)
         {
-            var num = duration/numClouds;
+            var num = duration / numClouds;
             var num2 = 0f;
             for (var i = 0; i < numClouds; i++)
             {
@@ -320,6 +322,7 @@ namespace RogueCastle
             {
                 num = -20;
             }
+
             var num2 = CDGMath.RandomInt(-10, 10);
             num2 = 0;
             var spriteObj = m_resourcePool.CheckOut();
@@ -336,6 +339,7 @@ namespace RogueCastle
             {
                 spriteObj.X -= 30f;
             }
+
             spriteObj.Scale = new Vector2(0.8f, 0.8f);
             spriteObj.PlayAnimation();
             Tween.To(spriteObj, 0.2f, Linear.EaseNone, "Opacity", "1");
@@ -362,7 +366,7 @@ namespace RogueCastle
         {
             var num = 0.4f;
             var num2 = 30;
-            var num3 = num/num2;
+            var num3 = num / num2;
             var num4 = 0f;
             for (var i = 0; i < num2; i++)
             {
@@ -418,18 +422,21 @@ namespace RogueCastle
                 {
                     spriteObj.Flip = SpriteEffects.FlipHorizontally;
                 }
+
                 if (CDGMath.RandomPlusMinus() < 0)
                 {
                     spriteObj.Flip = SpriteEffects.FlipVertically;
                 }
+
                 var num = -1;
                 if (obj.Flip == SpriteEffects.FlipHorizontally)
                 {
                     num = 1;
                     spriteObj.X = obj.Bounds.Right;
                 }
+
                 Tween.To(spriteObj, 0.4f, Tween.EaseNone, "Opacity", "1");
-                Tween.By(spriteObj, 1.5f, Quad.EaseInOut, "X", (CDGMath.RandomInt(50, 100)*num).ToString(), "Y",
+                Tween.By(spriteObj, 1.5f, Quad.EaseInOut, "X", (CDGMath.RandomInt(50, 100) * num).ToString(), "Y",
                     CDGMath.RandomInt(-100, 100).ToString(), "Rotation", CDGMath.RandomInt(-45, 45).ToString());
                 spriteObj.Opacity = 1f;
                 Tween.To(spriteObj, 1f, Tween.EaseNone, "delay", "0.5", "Opacity", "0");
@@ -479,6 +486,7 @@ namespace RogueCastle
                 Tween.To(spriteObj, 1f, Tween.EaseNone, "delay", "0.5", "Opacity", "0");
                 spriteObj.Opacity = 0f;
             }
+
             for (var j = 0; j < 4; j++)
             {
                 var spriteObj2 = m_resourcePool.CheckOut();
@@ -551,6 +559,7 @@ namespace RogueCastle
             {
                 spriteObj.TextureColor = Color.Red;
             }
+
             spriteObj.Visible = true;
             spriteObj.Position = pos;
             spriteObj.PlayAnimation(false);
@@ -567,6 +576,7 @@ namespace RogueCastle
             {
                 spriteObj.TextureColor = Color.Red;
             }
+
             spriteObj.Visible = true;
             spriteObj.Position = obj.Position;
             spriteObj.PlayAnimation(false);
@@ -579,12 +589,13 @@ namespace RogueCastle
             {
                 spriteObj.Rotation = angle;
             }
+
             spriteObj.OutlineWidth = 2;
         }
 
         public void LoadingGateSmokeEffect(int numEntities)
         {
-            var num = 1320f/numEntities;
+            var num = 1320f / numEntities;
             for (var i = 0; i < numEntities; i++)
             {
                 var num2 = CDGMath.RandomInt(-50, 50);
@@ -593,7 +604,7 @@ namespace RogueCastle
                 spriteObj.ChangeSprite("ExplosionBrown_Sprite");
                 spriteObj.Visible = true;
                 spriteObj.ForceDraw = true;
-                spriteObj.Position = new Vector2(num*i, 720f);
+                spriteObj.Position = new Vector2(num * i, 720f);
                 spriteObj.PlayAnimation();
                 spriteObj.Opacity = 0f;
                 spriteObj.Scale = new Vector2(1.5f, 1.5f);
@@ -651,7 +662,8 @@ namespace RogueCastle
                 spriteObj.Position = pos;
                 spriteObj.PlayAnimation();
                 var vector = CDGMath.AngleToVector(num);
-                Tween.By(spriteObj, 1.5f, Quad.EaseOut, "X", (vector.X*num4).ToString(), "Y", (vector.Y*num4).ToString());
+                Tween.By(spriteObj, 1.5f, Quad.EaseOut, "X", (vector.X * num4).ToString(), "Y",
+                    (vector.Y * num4).ToString());
                 Tween.To(spriteObj, 0.5f, Tween.EaseNone, "delay", num3.ToString(), "Opacity", "0");
                 Tween.AddEndHandlerToLastTween(spriteObj, "StopAnimation");
                 num += num2;
@@ -660,8 +672,8 @@ namespace RogueCastle
 
         public void SkillTreeDustEffect(Vector2 pos, bool horizontal, float length)
         {
-            var num = (int) (length/20f);
-            var scaleFactor = length/num;
+            var num = (int) (length / 20f);
+            var scaleFactor = length / num;
             var zero = Vector2.Zero;
             if (horizontal)
             {
@@ -671,6 +683,7 @@ namespace RogueCastle
             {
                 zero = new Vector2(0f, -1f);
             }
+
             for (var i = 0; i < num; i++)
             {
                 var num2 = CDGMath.RandomInt(-10, 10);
@@ -681,7 +694,7 @@ namespace RogueCastle
                 spriteObj.Visible = true;
                 spriteObj.Scale = new Vector2(0.5f, 0.5f);
                 spriteObj.Rotation = CDGMath.RandomInt(0, 270);
-                spriteObj.Position = pos + zero*scaleFactor*(i + 1);
+                spriteObj.Position = pos + zero * scaleFactor * (i + 1);
                 spriteObj.PlayAnimation();
                 Tween.To(spriteObj, 0.5f, Linear.EaseNone, "Opacity", "1");
                 Tween.By(spriteObj, 1.5f, Linear.EaseNone, "Rotation", CDGMath.RandomFloat(-30f, 30f).ToString());
@@ -698,11 +711,9 @@ namespace RogueCastle
         public void SkillTreeDustDuration(Vector2 pos, bool horizontal, float length, float duration)
         {
             var num = 0.25f;
-            var num2 = (int) (duration/num);
+            var num2 = (int) (duration / num);
             for (var i = 0; i < num2; i++)
-            {
-                Tween.RunFunction(num*i, this, "SkillTreeDustEffect", pos, horizontal, length);
-            }
+                Tween.RunFunction(num * i, this, "SkillTreeDustEffect", pos, horizontal, length);
         }
 
         public void CarnivalGoldEffect(Vector2 startPos, Vector2 endPos, int numCoins)
@@ -733,7 +744,7 @@ namespace RogueCastle
         {
             var num = 10;
             var num2 = 0f;
-            float num3 = 360/num;
+            float num3 = 360 / num;
             for (var i = 0; i < num; i++)
             {
                 var vector = CDGMath.AngleToVector(num2);
@@ -750,8 +761,9 @@ namespace RogueCastle
                 vector.X += CDGMath.RandomInt(-5, 5);
                 vector.Y += CDGMath.RandomInt(-5, 5);
                 Tween.To(spriteObj, 0.1f, Tween.EaseNone, "Opacity", "0.5");
-                Tween.By(spriteObj, 1f, Quad.EaseOut, "X", (vector.X*CDGMath.RandomInt(20, 25)).ToString(), "Y",
-                    (vector.Y*CDGMath.RandomInt(20, 25)).ToString(), "Rotation", CDGMath.RandomInt(-180, 180).ToString());
+                Tween.By(spriteObj, 1f, Quad.EaseOut, "X", (vector.X * CDGMath.RandomInt(20, 25)).ToString(), "Y",
+                    (vector.Y * CDGMath.RandomInt(20, 25)).ToString(), "Rotation",
+                    CDGMath.RandomInt(-180, 180).ToString());
                 Tween.AddEndHandlerToLastTween(spriteObj, "StopAnimation");
                 spriteObj.Opacity = 0.5f;
                 Tween.To(spriteObj, 0.5f, Tween.EaseNone, "delay", "0.5", "Opacity", "0");
@@ -767,7 +779,7 @@ namespace RogueCastle
             spriteObj.AnimationDelay = 0.05f;
             spriteObj.Position = obj.Position;
             spriteObj.Visible = true;
-            spriteObj.Scale = obj.Scale/2f;
+            spriteObj.Scale = obj.Scale / 2f;
             spriteObj.PlayAnimation();
             Tween.By(spriteObj, 0.3f, Quad.EaseIn, "delay", "0.2", "Y", "50");
             Tween.To(spriteObj, 0.2f, Linear.EaseNone, "delay", "0.3", "Opacity", "0");
@@ -777,7 +789,7 @@ namespace RogueCastle
             spriteObj2.AnimationDelay = 0.05f;
             spriteObj2.Position = obj.Position;
             spriteObj2.Visible = true;
-            spriteObj2.Scale = obj.Scale*2f;
+            spriteObj2.Scale = obj.Scale * 2f;
             spriteObj2.PlayAnimation(false);
         }
 
@@ -788,7 +800,7 @@ namespace RogueCastle
             spriteObj.AnimationDelay = 0.05f;
             spriteObj.Position = obj.Position;
             spriteObj.Visible = true;
-            spriteObj.Scale = obj.Scale*2f;
+            spriteObj.Scale = obj.Scale * 2f;
             spriteObj.PlayAnimation(false);
         }
 
@@ -859,6 +871,7 @@ namespace RogueCastle
             {
                 spriteObj.Flip = SpriteEffects.FlipHorizontally;
             }
+
             Tween.By(spriteObj, 1f, Quad.EaseOut, "Y", "-50");
             Tween.To(spriteObj, 0.5f, Tween.EaseNone, "Opacity", "1");
             spriteObj.Opacity = 1f;
@@ -931,7 +944,7 @@ namespace RogueCastle
             Tween.To(spriteObj, 0.1f, Tween.EaseNone, "Opacity", "1");
             Tween.To(spriteObj, 0.9f, Tween.EaseNone, "ScaleX", "2.5", "ScaleY", "2.5");
             Tween.By(spriteObj, 0.9f, Tween.EaseNone, "Rotation",
-                (CDGMath.RandomInt(90, 270)*CDGMath.RandomPlusMinus()).ToString());
+                (CDGMath.RandomInt(90, 270) * CDGMath.RandomPlusMinus()).ToString());
             spriteObj.Opacity = 1f;
             var num = CDGMath.RandomFloat(0.4f, 0.7f);
             Tween.To(spriteObj, 0.2f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "0");
@@ -975,7 +988,7 @@ namespace RogueCastle
             Tween.To(spriteObj, 0.1f, Tween.EaseNone, "Opacity", "1");
             Tween.To(spriteObj, 0.9f, Tween.EaseNone, "ScaleX", "0.7", "ScaleY", "0.7");
             Tween.By(spriteObj, 0.9f, Tween.EaseNone, "Rotation",
-                (CDGMath.RandomInt(10, 45)*CDGMath.RandomPlusMinus()).ToString());
+                (CDGMath.RandomInt(10, 45) * CDGMath.RandomPlusMinus()).ToString());
             spriteObj.Opacity = 1f;
             var num2 = CDGMath.RandomFloat(0.4f, 0.7f);
             Tween.To(spriteObj, 0.2f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "0");
@@ -988,7 +1001,7 @@ namespace RogueCastle
         public void DisplayFountainShatterSmoke(GameObj sprite)
         {
             var num = 15;
-            var num2 = sprite.Width/(float) num;
+            var num2 = sprite.Width / (float) num;
             float num3 = sprite.Bounds.Left;
             for (var i = 0; i < num; i++)
             {
@@ -1006,14 +1019,16 @@ namespace RogueCastle
                     CDGMath.RandomInt(-50, -30).ToString());
                 Tween.To(spriteObj, 3f, Tween.EaseNone, "ScaleX", num4.ToString(), "ScaleY", num4.ToString());
                 spriteObj.Opacity = 1f;
-                Tween.To(spriteObj, 2f, Tween.EaseNone, "delay", CDGMath.RandomFloat(1f, 2f).ToString(), "Opacity", "0");
+                Tween.To(spriteObj, 2f, Tween.EaseNone, "delay", CDGMath.RandomFloat(1f, 2f).ToString(), "Opacity",
+                    "0");
                 spriteObj.Opacity = 0f;
                 Tween.RunFunction(4.5f, spriteObj, "StopAnimation");
                 num3 += num2;
             }
+
             num /= 2;
             num3 = sprite.Bounds.Left + 50;
-            num2 = (sprite.Width - 50)/(float) num;
+            num2 = (sprite.Width - 50) / (float) num;
             for (var j = 0; j < num; j++)
             {
                 var spriteObj2 = m_resourcePool.CheckOut();
@@ -1030,14 +1045,16 @@ namespace RogueCastle
                     CDGMath.RandomInt(-50, -30).ToString());
                 Tween.To(spriteObj2, 3f, Tween.EaseNone, "ScaleX", num5.ToString(), "ScaleY", num5.ToString());
                 spriteObj2.Opacity = 1f;
-                Tween.To(spriteObj2, 2f, Tween.EaseNone, "delay", CDGMath.RandomFloat(1f, 2f).ToString(), "Opacity", "0");
+                Tween.To(spriteObj2, 2f, Tween.EaseNone, "delay", CDGMath.RandomFloat(1f, 2f).ToString(), "Opacity",
+                    "0");
                 spriteObj2.Opacity = 0f;
                 Tween.RunFunction(4.5f, spriteObj2, "StopAnimation");
                 num3 += num2;
             }
+
             num /= 2;
             num3 = sprite.Bounds.Left + 100;
-            num2 = (sprite.Width - 100)/(float) num;
+            num2 = (sprite.Width - 100) / (float) num;
             for (var k = 0; k < num; k++)
             {
                 var spriteObj3 = m_resourcePool.CheckOut();
@@ -1054,7 +1071,8 @@ namespace RogueCastle
                     CDGMath.RandomInt(-50, -30).ToString());
                 Tween.To(spriteObj3, 3f, Tween.EaseNone, "ScaleX", num6.ToString(), "ScaleY", num6.ToString());
                 spriteObj3.Opacity = 1f;
-                Tween.To(spriteObj3, 2f, Tween.EaseNone, "delay", CDGMath.RandomFloat(1f, 2f).ToString(), "Opacity", "0");
+                Tween.To(spriteObj3, 2f, Tween.EaseNone, "delay", CDGMath.RandomFloat(1f, 2f).ToString(), "Opacity",
+                    "0");
                 spriteObj3.Opacity = 0f;
                 Tween.RunFunction(4.5f, spriteObj3, "StopAnimation");
                 num3 += num2;
@@ -1095,33 +1113,23 @@ namespace RogueCastle
         public void PauseAllAnimations()
         {
             m_isPaused = true;
-            foreach (var current in m_resourcePool.ActiveObjsList)
-            {
-                current.PauseAnimation();
-            }
+            foreach (var current in m_resourcePool.ActiveObjsList) current.PauseAnimation();
         }
 
         public void ResumeAllAnimations()
         {
             m_isPaused = false;
-            foreach (var current in m_resourcePool.ActiveObjsList)
-            {
-                current.ResumeAnimation();
-            }
+            foreach (var current in m_resourcePool.ActiveObjsList) current.ResumeAnimation();
         }
 
         public void DestroyAllEffects()
         {
-            foreach (var current in m_resourcePool.ActiveObjsList)
-            {
-                current.StopAnimation();
-            }
+            foreach (var current in m_resourcePool.ActiveObjsList) current.StopAnimation();
         }
 
         public void Draw(Camera2D camera)
         {
             for (var i = 0; i < m_resourcePool.ActiveObjsList.Count; i++)
-            {
                 if (!m_resourcePool.ActiveObjsList[i].IsAnimating && !m_isPaused)
                 {
                     DestroyEffect(m_resourcePool.ActiveObjsList[i]);
@@ -1131,7 +1139,6 @@ namespace RogueCastle
                 {
                     m_resourcePool.ActiveObjsList[i].Draw(camera);
                 }
-            }
         }
     }
 }

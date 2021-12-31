@@ -67,8 +67,9 @@ namespace RogueCastle
             {
                 if (current.Name == "diary")
                 {
-                    m_diary = (current as SpriteObj);
+                    m_diary = current as SpriteObj;
                 }
+
                 if (current.Name == "map")
                 {
                     (current as SpriteObj).OutlineWidth = 2;
@@ -76,37 +77,36 @@ namespace RogueCastle
                     m_mapIcon.Position = new Vector2(m_mapText.X, m_mapText.Y - 20f);
                 }
             }
+
             m_diary.OutlineWidth = 2;
             m_speechBubble.Position = new Vector2(m_diary.X, m_diary.Y - m_speechBubble.Height - 20f);
             DoorObj doorObj = null;
             foreach (var current2 in GameObjList)
-            {
                 if (current2.Name == "LastDoor")
                 {
-                    m_bossDoorSprite = (current2 as ObjContainer);
+                    m_bossDoorSprite = current2 as ObjContainer;
                     break;
                 }
-            }
+
             foreach (var current3 in DoorList)
             {
                 if (current3.DoorPosition == "Left")
                 {
                     doorObj = current3;
                 }
+
                 if (current3.IsBossDoor)
                 {
                     m_bossDoor = current3;
                     m_bossDoor.Locked = true;
                 }
             }
-            for (var i = 1; i < m_bossDoorSprite.NumChildren; i++)
-            {
-                m_bossDoorSprite.GetChildAt(i).Opacity = 0f;
-            }
+
+            for (var i = 1; i < m_bossDoorSprite.NumChildren; i++) m_bossDoorSprite.GetChildAt(i).Opacity = 0f;
             m_bossDoorSprite.AnimationDelay = 0.1f;
             m_castleGate.Position = new Vector2(doorObj.Bounds.Right - m_castleGate.Width,
                 doorObj.Y - m_castleGate.Height);
-            m_teleporter.Position = new Vector2(X + Width/2f - 600f, Y + 720f - 120f);
+            m_teleporter.Position = new Vector2(X + Width / 2f - 600f, Y + 720f - 120f);
             base.Initialize();
         }
 
@@ -122,36 +122,46 @@ namespace RogueCastle
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Garden:
                     index = 3;
                     if (Game.PlayerStats.ChallengeSkullBeaten)
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Dungeon:
                     index = 4;
                     if (Game.PlayerStats.ChallengeBlobBeaten)
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Tower:
                     index = 2;
                     if (Game.PlayerStats.ChallengeFireballBeaten)
                     {
                         flag = true;
                     }
+
                     break;
+
                 default:
                     index = 5;
                     if (Game.PlayerStats.ChallengeLastBossBeaten)
                     {
                         flag = true;
                     }
+
                     break;
             }
+
             if (flag)
             {
                 m_bossDoorSprite.GetChildAt(index).TextureColor = Color.Yellow;
@@ -160,12 +170,14 @@ namespace RogueCastle
             {
                 m_bossDoorSprite.GetChildAt(index).TextureColor = Color.White;
             }
+
             if (tween)
             {
                 m_bossDoorSprite.GetChildAt(index).Opacity = 0f;
                 Tween.To(m_bossDoorSprite.GetChildAt(index), 0.5f, Quad.EaseInOut, "delay", "1.5", "Opacity", "1");
                 return;
             }
+
             m_bossDoorSprite.GetChildAt(index).Opacity = 1f;
         }
 
@@ -176,6 +188,7 @@ namespace RogueCastle
             {
                 LinkedRoom = LinkedRoom.LinkedRoom;
             }
+
             Game.PlayerStats.LoadStartingRoom = false;
             if (Game.PlayerStats.DiaryEntry < 1)
             {
@@ -185,6 +198,7 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = false;
             }
+
             if (InputManager.GamePadIsConnected(PlayerIndex.One))
             {
                 m_mapIcon.SetButton(Game.GlobalInput.ButtonList[9]);
@@ -195,27 +209,33 @@ namespace RogueCastle
                 m_mapIcon.SetKey(Game.GlobalInput.KeyList[9]);
                 m_mapIcon.Scale = new Vector2(0.5f, 0.5f);
             }
+
             if (!m_allFilesSaved)
             {
                 Player.Game.SaveManager.SaveAllFileTypes(false);
                 m_allFilesSaved = true;
             }
+
             if (Game.PlayerStats.EyeballBossBeaten)
             {
                 RevealSymbol(LevelType.Castle, false);
             }
+
             if (Game.PlayerStats.FairyBossBeaten)
             {
                 RevealSymbol(LevelType.Garden, false);
             }
+
             if (Game.PlayerStats.BlobBossBeaten)
             {
                 RevealSymbol(LevelType.Dungeon, false);
             }
+
             if (Game.PlayerStats.FireballBossBeaten)
             {
                 RevealSymbol(LevelType.Tower, false);
             }
+
             if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
                 Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
                 !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
@@ -228,10 +248,12 @@ namespace RogueCastle
                 m_bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
                 m_bossDoorSprite.GoToFrame(m_bossDoorSprite.TotalFrames);
             }
+
             if (!m_gateClosed)
             {
                 CloseGate(true);
             }
+
             if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
                 Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
                 !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
@@ -239,6 +261,7 @@ namespace RogueCastle
                 Game.PlayerStats.FinalDoorOpened = true;
                 Player.AttachedLevel.RunCinematicBorders(6f);
             }
+
             base.OnEnter();
         }
 
@@ -294,10 +317,12 @@ namespace RogueCastle
             {
                 Player.LockControls();
             }
+
             if (!SoundManager.IsMusicPlaying)
             {
                 SoundManager.PlayMusic("CastleSong", true);
             }
+
             if (Player.X < m_castleGate.Bounds.Right)
             {
                 Player.X = m_castleGate.Bounds.Right + 20;
@@ -309,7 +334,7 @@ namespace RogueCastle
             bounds.X -= 50;
             bounds.Width += 100;
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
-                               (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+                               (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
 
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
             {
@@ -322,6 +347,7 @@ namespace RogueCastle
             {
                 m_speechBubble.ChangeSprite("ExclamationSquare_Sprite");
             }
+
             if (Game.PlayerStats.DiaryEntry < 1 || CollisionMath.Intersects(Player.Bounds, bounds))
             {
                 m_speechBubble.Visible = true;
@@ -332,7 +358,8 @@ namespace RogueCastle
             }
 
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround &&
-                (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) || Game.GlobalInput.JustPressed(InputMapType.PlayerUp2)))
+                (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) ||
+                 Game.GlobalInput.JustPressed(InputMapType.PlayerUp2)))
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {
@@ -378,6 +405,7 @@ namespace RogueCastle
             {
                 m_castleGate.Y += m_castleGate.Height;
             }
+
             m_gateClosed = true;
         }
 
@@ -388,6 +416,7 @@ namespace RogueCastle
                 m_castleGate.Y -= m_castleGate.Height;
                 m_gateClosed = false;
             }
+
             base.Reset();
         }
 

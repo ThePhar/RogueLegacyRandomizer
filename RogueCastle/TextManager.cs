@@ -81,7 +81,7 @@ namespace RogueCastle
             textObj2.Align = Types.TextAlign.Left;
             textObj2.FontSize = 18f;
             textObj2.TextureColor = color;
-            textObj2.Position = new Vector2(position.X - width/2f, position.Y - textObj2.Height/2f);
+            textObj2.Position = new Vector2(position.X - width / 2f, position.Y - textObj2.Height / 2f);
             textObj2.Visible = true;
             var textObj3 = m_resourcePool.CheckOut();
             textObj3.Font = Game.JunicodeFont;
@@ -114,7 +114,7 @@ namespace RogueCastle
             textObj2.Text = text + " ";
             textObj2.FontSize = 14f;
             textObj2.TextureColor = color;
-            textObj2.Position = new Vector2(position.X - width/2f, position.Y - textObj2.Height/2f);
+            textObj2.Position = new Vector2(position.X - width / 2f, position.Y - textObj2.Height / 2f);
             textObj2.Visible = true;
             var textObj3 = m_resourcePool.CheckOut();
             textObj3.Font = Game.HerzogFont;
@@ -141,7 +141,7 @@ namespace RogueCastle
             textObj.Align = Types.TextAlign.Centre;
             textObj.Visible = true;
             textObj.Position = position;
-            textObj.Y -= textObj.Height/2f;
+            textObj.Y -= textObj.Height / 2f;
             Tween.By(textObj, 0.3f, Quad.EaseOut, "Y", "-60");
             Tween.To(textObj, 0.2f, Linear.EaseNone, "delay", "0.5", "Opacity", "0");
             Tween.AddEndHandlerToLastTween(this, "DestroyText", textObj);
@@ -172,10 +172,7 @@ namespace RogueCastle
 
         public void Draw(Camera2D camera)
         {
-            foreach (var current in m_resourcePool.ActiveObjsList)
-            {
-                current.Draw(camera);
-            }
+            foreach (var current in m_resourcePool.ActiveObjsList) current.Draw(camera);
         }
     }
 }

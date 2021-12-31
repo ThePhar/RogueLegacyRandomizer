@@ -49,7 +49,7 @@ namespace RogueCastle
             m_optionsIcon = new SpriteObj("TitleOptionsIcon_Sprite");
             m_optionsIcon.Scale = new Vector2(2f, 2f);
             m_optionsIcon.OutlineWidth = m_profileCard.OutlineWidth;
-            m_optionsIcon.Position = new Vector2(1320 - m_optionsIcon.Width*2 + 120, m_profileCard.Y);
+            m_optionsIcon.Position = new Vector2(1320 - m_optionsIcon.Width * 2 + 120, m_profileCard.Y);
             m_optionsIcon.ForceDraw = true;
             m_profileCardKey = new KeyIconTextObj(Game.JunicodeFont);
             m_profileCardKey.Align = Types.TextAlign.Centre;
@@ -75,6 +75,7 @@ namespace RogueCastle
             {
                 SoundManager.PauseMusic();
             }
+
             SoundManager.PlaySound("Pause_Toggle");
             var levelScreen = (ScreenManager as RCScreenManager).GetLevelScreen();
             foreach (var current in m_infoObjList)
@@ -82,6 +83,7 @@ namespace RogueCastle
                 current.Reset();
                 current.Visible = false;
             }
+
             var player = (ScreenManager as RCScreenManager).Player;
             var pauseInfoObj = m_infoObjList[0];
             pauseInfoObj.Visible = true;
@@ -91,7 +93,7 @@ namespace RogueCastle
             pauseInfoObj.AddItem("Armor: ", player.TotalArmor.ToString());
             pauseInfoObj.ResizePlate();
             pauseInfoObj.X = player.X - Camera.TopLeftCorner.X;
-            pauseInfoObj.Y = player.Bounds.Bottom - Camera.TopLeftCorner.Y + pauseInfoObj.Height/2f - 20f;
+            pauseInfoObj.Y = player.Bounds.Bottom - Camera.TopLeftCorner.Y + pauseInfoObj.Height / 2f - 20f;
             if (!Game.PlayerStats.TutorialComplete)
             {
                 pauseInfoObj.SetName("?????");
@@ -100,18 +102,17 @@ namespace RogueCastle
             {
                 pauseInfoObj.SetName(Game.PlayerStats.PlayerName);
             }
+
             pauseInfoObj.SetNamePosition(new Vector2(pauseInfoObj.X, player.Bounds.Top - Camera.TopLeftCorner.Y - 40f));
             pauseInfoObj.Visible = player.Visible;
             var num = m_infoObjList.Count - 1;
             for (var i = num;
-                i < levelScreen.CurrentRoom.EnemyList.Count + levelScreen.CurrentRoom.TempEnemyList.Count;
-                i++)
-            {
+                 i < levelScreen.CurrentRoom.EnemyList.Count + levelScreen.CurrentRoom.TempEnemyList.Count;
+                 i++)
                 m_infoObjList.Add(new PauseInfoObj
                 {
                     Visible = false
                 });
-            }
             for (var j = 1; j < levelScreen.CurrentRoom.EnemyList.Count + 1; j++)
             {
                 var enemyObj = levelScreen.CurrentRoom.EnemyList[j - 1];
@@ -125,18 +126,20 @@ namespace RogueCastle
                     }
                     else
                     {
-                        pauseInfoObj2.AddItem("Level: ", ((int) (enemyObj.Level*2.75f)).ToString());
+                        pauseInfoObj2.AddItem("Level: ", ((int) (enemyObj.Level * 2.75f)).ToString());
                     }
+
                     pauseInfoObj2.AddItem("Strength: ", enemyObj.Damage.ToString());
                     pauseInfoObj2.AddItem("Health: ", enemyObj.CurrentHealth + "/" + enemyObj.MaxHealth);
                     pauseInfoObj2.ResizePlate();
                     pauseInfoObj2.X = enemyObj.X - Camera.TopLeftCorner.X;
-                    pauseInfoObj2.Y = enemyObj.Bounds.Bottom - Camera.TopLeftCorner.Y + pauseInfoObj2.Height/2f - 20f;
+                    pauseInfoObj2.Y = enemyObj.Bounds.Bottom - Camera.TopLeftCorner.Y + pauseInfoObj2.Height / 2f - 20f;
                     pauseInfoObj2.SetName(enemyObj.Name);
                     pauseInfoObj2.SetNamePosition(new Vector2(pauseInfoObj2.X,
                         enemyObj.Bounds.Top - Camera.TopLeftCorner.Y - 40f));
                 }
             }
+
             var count = levelScreen.CurrentRoom.EnemyList.Count;
             for (var k = 0; k < levelScreen.CurrentRoom.TempEnemyList.Count; k++)
             {
@@ -151,18 +154,21 @@ namespace RogueCastle
                     }
                     else
                     {
-                        pauseInfoObj3.AddItem("Level: ", ((int) (enemyObj2.Level*2.75f)).ToString());
+                        pauseInfoObj3.AddItem("Level: ", ((int) (enemyObj2.Level * 2.75f)).ToString());
                     }
+
                     pauseInfoObj3.AddItem("Strength: ", enemyObj2.Damage.ToString());
                     pauseInfoObj3.AddItem("Health: ", enemyObj2.CurrentHealth + "/" + enemyObj2.MaxHealth);
                     pauseInfoObj3.ResizePlate();
                     pauseInfoObj3.X = enemyObj2.X - Camera.TopLeftCorner.X;
-                    pauseInfoObj3.Y = enemyObj2.Bounds.Bottom - Camera.TopLeftCorner.Y + pauseInfoObj3.Height/2f - 20f;
+                    pauseInfoObj3.Y = enemyObj2.Bounds.Bottom - Camera.TopLeftCorner.Y + pauseInfoObj3.Height / 2f -
+                                      20f;
                     pauseInfoObj3.SetName(enemyObj2.Name);
                     pauseInfoObj3.SetNamePosition(new Vector2(pauseInfoObj3.X,
                         enemyObj2.Bounds.Top - Camera.TopLeftCorner.Y - 40f));
                 }
             }
+
             base.OnEnter();
         }
 
@@ -178,11 +184,9 @@ namespace RogueCastle
             {
                 SoundManager.ResumeMusic();
             }
+
             SoundManager.PlaySound("Resume_Toggle");
-            foreach (var current in m_infoObjList)
-            {
-                current.Visible = false;
-            }
+            foreach (var current in m_infoObjList) current.Visible = false;
             base.OnExit();
         }
 
@@ -194,17 +198,20 @@ namespace RogueCastle
                 {
                     (ScreenManager as RCScreenManager).DisplayScreen(17, true);
                 }
+
                 if (Game.GlobalInput.JustPressed(4))
                 {
                     var list = new List<object>();
                     list.Add(false);
                     (ScreenManager as RCScreenManager).DisplayScreen(4, false, list);
                 }
+
                 if (Game.GlobalInput.JustPressed(8))
                 {
                     (ScreenManager as RCScreenManager).GetLevelScreen().UnpauseScreen();
                     (ScreenManager as RCScreenManager).HideCurrentScreen();
                 }
+
                 base.HandleInput();
             }
         }
@@ -215,6 +222,7 @@ namespace RogueCastle
             {
                 m_inputDelay -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             base.Update(gameTime);
         }
 
@@ -222,14 +230,12 @@ namespace RogueCastle
         {
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null);
             m_titleText.Draw(Camera);
-            foreach (var current in m_infoObjList)
-            {
-                current.Draw(Camera);
-            }
+            foreach (var current in m_infoObjList) current.Draw(Camera);
             if (Game.PlayerStats.TutorialComplete)
             {
                 m_profileCardKey.Draw(Camera);
             }
+
             m_optionsKey.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             m_optionsIcon.Draw(Camera);
@@ -237,6 +243,7 @@ namespace RogueCastle
             {
                 m_profileCard.Draw(Camera);
             }
+
             Camera.End();
             base.Draw(gameTime);
         }
@@ -246,10 +253,7 @@ namespace RogueCastle
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Pause Screen");
-                foreach (var current in m_infoObjList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_infoObjList) current.Dispose();
                 m_infoObjList.Clear();
                 m_infoObjList = null;
                 m_titleText.Dispose();
@@ -295,8 +299,8 @@ namespace RogueCastle
             {
                 m_name.Text = name;
                 m_namePlate.Scale = Vector2.One;
-                m_namePlate.Scale = new Vector2((m_name.Width + 70f)/m_namePlate.Width,
-                    (m_name.Height + 20f)/m_namePlate.Height);
+                m_namePlate.Scale = new Vector2((m_name.Width + 70f) / m_namePlate.Width,
+                    (m_name.Height + 20f) / m_namePlate.Height);
             }
 
             public void SetNamePosition(Vector2 pos)
@@ -315,16 +319,18 @@ namespace RogueCastle
                 {
                     textObj = m_textList[m_arrayIndex];
                 }
+
                 textObj.FontSize = 8f;
                 textObj.Text = title;
                 textObj.Align = Types.TextAlign.Right;
-                textObj.Y = _objectList[0].Bounds.Top + textObj.Height + m_arrayIndex*20;
+                textObj.Y = _objectList[0].Bounds.Top + textObj.Height + m_arrayIndex * 20;
                 textObj.DropShadow = new Vector2(2f, 2f);
                 if (m_textList.Count <= m_arrayIndex)
                 {
                     AddChild(textObj);
                     m_textList.Add(textObj);
                 }
+
                 TextObj textObj2;
                 if (m_textDataList.Count <= m_arrayIndex)
                 {
@@ -334,6 +340,7 @@ namespace RogueCastle
                 {
                     textObj2 = m_textDataList[m_arrayIndex];
                 }
+
                 textObj2.FontSize = 8f;
                 textObj2.Text = data;
                 textObj2.Y = textObj.Y;
@@ -343,37 +350,37 @@ namespace RogueCastle
                     AddChild(textObj2);
                     m_textDataList.Add(textObj2);
                 }
+
                 m_arrayIndex++;
             }
 
             public void ResizePlate()
             {
                 _objectList[0].ScaleY = 1f;
-                _objectList[0].ScaleY = _objectList[1].Height*(_objectList.Count + 1)/2/(float) _objectList[0].Height;
+                _objectList[0].ScaleY =
+                    _objectList[1].Height * (_objectList.Count + 1) / 2 / (float) _objectList[0].Height;
                 var num = 0;
                 foreach (var current in m_textList)
-                {
                     if (current.Width > num)
                     {
                         num = current.Width;
                     }
-                }
+
                 var num2 = 0;
                 foreach (var current2 in m_textDataList)
-                {
                     if (current2.Width > num2)
                     {
                         num2 = current2.Width;
                     }
-                }
+
                 _objectList[0].ScaleX = 1f;
-                _objectList[0].ScaleX = (num + num2 + 50)/(float) _objectList[0].Width;
-                var num3 = (int) (-(_objectList[0].Width/2f) + num) + 25;
-                var num4 = _objectList[0].Height/(m_textList.Count + 2);
+                _objectList[0].ScaleX = (num + num2 + 50) / (float) _objectList[0].Width;
+                var num3 = (int) (-(_objectList[0].Width / 2f) + num) + 25;
+                var num4 = _objectList[0].Height / (m_textList.Count + 2);
                 for (var i = 0; i < m_textList.Count; i++)
                 {
                     m_textList[i].X = num3;
-                    m_textList[i].Y = _objectList[0].Bounds.Top + num4 + num4*i;
+                    m_textList[i].Y = _objectList[0].Bounds.Top + num4 + num4 * i;
                     m_textDataList[i].X = num3;
                     m_textDataList[i].Y = m_textList[i].Y;
                 }
@@ -386,19 +393,14 @@ namespace RogueCastle
                     m_namePlate.Draw(camera);
                     m_name.Draw(camera);
                 }
+
                 base.Draw(camera);
             }
 
             public void Reset()
             {
-                foreach (var current in m_textList)
-                {
-                    current.Text = "";
-                }
-                foreach (var current2 in m_textDataList)
-                {
-                    current2.Text = "";
-                }
+                foreach (var current in m_textList) current.Text = "";
+                foreach (var current2 in m_textDataList) current2.Text = "";
                 m_arrayIndex = 0;
             }
 

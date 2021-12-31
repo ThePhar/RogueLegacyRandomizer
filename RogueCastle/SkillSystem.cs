@@ -177,7 +177,7 @@ namespace RogueCastle
                         {
                             TopLink = SkillType.ManorRightWingWindow,
                             RightLink = SkillType.ManorMainWindowTop,
-                            BottomLink = SkillType.ManorMainBase,
+                            BottomLink = SkillType.ManorMainBase
                         }
                     }
                 },

@@ -92,9 +92,7 @@ namespace RogueCastle
             base.InitializeLogic();
         }
 
-        public void FireRandomProjectile()
-        {
-        }
+        public void FireRandomProjectile() { }
 
         public void ResizeProjectile(bool resize)
         {
@@ -103,6 +101,7 @@ namespace RogueCastle
                 ProjectileScale = new Vector2(2.5f, 2.5f);
                 return;
             }
+
             ProjectileScale = new Vector2(2.5f, 2.5f);
         }
 
@@ -116,6 +115,7 @@ namespace RogueCastle
                 case 3:
                     RunLogicBlock(false, m_generalBasicLB, 0, 0, 0, 20, 80);
                     return;
+
                 default:
                     return;
             }
@@ -168,6 +168,7 @@ namespace RogueCastle
             {
                 HeadingX = -1f;
             }
+
             base.Update(gameTime);
             Y -= HeadingY;
         }

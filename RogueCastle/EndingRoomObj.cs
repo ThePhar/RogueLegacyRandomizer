@@ -46,6 +46,7 @@ namespace RogueCastle
             {
                 m_background.Dispose();
             }
+
             m_background = new BackgroundObj("LineageScreenBG_Sprite");
             m_background.SetRepeated(true, true, Game.ScreenManager.Camera);
             m_background.X -= 6600f;
@@ -68,28 +69,26 @@ namespace RogueCastle
             m_endingMask = new SpriteObj("Blank_Sprite");
             m_endingMask.ForceDraw = true;
             m_endingMask.TextureColor = Color.Black;
-            m_endingMask.Scale = new Vector2(1330f/m_endingMask.Width, 730f/m_endingMask.Height);
+            m_endingMask.Scale = new Vector2(1330f / m_endingMask.Width, 730f / m_endingMask.Height);
             m_cameraPosList = new List<Vector2>();
             m_frameList = new List<SpriteObj>();
             m_nameList = new List<TextObj>();
             m_slainCountText = new List<TextObj>();
             foreach (var current in GameObjList)
-            {
                 if (current is WaypointObj)
                 {
                     m_cameraPosList.Add(default(Vector2));
                 }
-            }
+
             var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
             cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
             foreach (var current2 in GameObjList)
-            {
                 if (current2 is WaypointObj)
                 {
                     var index = int.Parse(current2.Name, NumberStyles.Any, cultureInfo);
                     m_cameraPosList[index] = current2.Position;
                 }
-            }
+
             var num = 150f;
             foreach (var current3 in EnemyList)
             {
@@ -105,17 +104,20 @@ namespace RogueCastle
                     spriteObj.ChangeSprite("GiantPortrait_Sprite");
                     FixMiniboss(current3);
                 }
-                spriteObj.Scale = new Vector2((current3.Width + num)/spriteObj.Width,
-                    (current3.Height + num)/spriteObj.Height);
+
+                spriteObj.Scale = new Vector2((current3.Width + num) / spriteObj.Width,
+                    (current3.Height + num) / spriteObj.Height);
                 if (spriteObj.ScaleX < 1f)
                 {
                     spriteObj.ScaleX = 1f;
                 }
+
                 if (spriteObj.ScaleY < 1f)
                 {
                     spriteObj.ScaleY = 1f;
                 }
-                spriteObj.Position = new Vector2(current3.X, current3.Bounds.Top + current3.Height/2f);
+
+                spriteObj.Position = new Vector2(current3.X, current3.Bounds.Top + current3.Height / 2f);
                 m_frameList.Add(spriteObj);
                 var textObj = new TextObj(Game.JunicodeFont);
                 textObj.FontSize = 12f;
@@ -189,10 +191,11 @@ namespace RogueCastle
                             current3.ChangeSprite("EnemyLastBossIdle_Character");
                             current3.PlayAnimation();
                         }
+
                         spriteObj.ChangeSprite("GiantPortrait_Sprite");
                         spriteObj.Scale = Vector2.One;
-                        spriteObj.Scale = new Vector2((current3.Width + num)/spriteObj.Width,
-                            (current3.Height + num)/spriteObj.Height);
+                        spriteObj.Scale = new Vector2((current3.Width + num) / spriteObj.Width,
+                            (current3.Height + num) / spriteObj.Height);
                         textObj.Position = new Vector2(spriteObj.X, spriteObj.Bounds.Bottom + 40);
                         textObj2.Position = new Vector2(spriteObj.X, spriteObj.Bounds.Bottom + 80);
                     }
@@ -202,11 +205,13 @@ namespace RogueCastle
                     current3.ChangeSprite("EnemyZombieWalk_Character");
                     current3.PlayAnimation();
                 }
+
                 var spriteObj2 = new SpriteObj("LineageScreenPlaque1Long_Sprite");
                 spriteObj2.Scale = new Vector2(1.8f, 1.8f);
                 spriteObj2.Position = new Vector2(spriteObj.X, spriteObj.Bounds.Bottom + 80);
                 m_plaqueList.Add(spriteObj2);
             }
+
             base.LoadContent(graphics);
         }
 
@@ -216,7 +221,7 @@ namespace RogueCastle
             switch (type)
             {
                 case 2:
-                    m_blobBoss = (enemy as EnemyObj_Blob);
+                    m_blobBoss = enemy as EnemyObj_Blob;
                     enemy.ChangeSprite("EnemyBlobBossIdle_Character");
                     enemy.GetChildAt(0).TextureColor = Color.White;
                     enemy.GetChildAt(2).TextureColor = Color.LightSkyBlue;
@@ -224,9 +229,11 @@ namespace RogueCastle
                     (enemy.GetChildAt(1) as SpriteObj).OutlineColour = Color.Black;
                     enemy.GetChildAt(1).TextureColor = Color.Black;
                     break;
+
                 case 3:
                 case 4:
                     break;
+
                 case 5:
                     if (enemy.Flip == SpriteEffects.None)
                     {
@@ -236,17 +243,22 @@ namespace RogueCastle
                     {
                         enemy.Name = "Barbatos";
                     }
+
                     break;
+
                 case 6:
                     enemy.ChangeSprite("EnemyEyeballBossEye_Character");
                     (enemy as EnemyObj_Eyeball).ChangeToBossPupil();
                     break;
+
                 case 7:
                     enemy.ChangeSprite("EnemyFairyGhostBossIdle_Character");
                     break;
+
                 case 8:
                     enemy.ChangeSprite("EnemyGhostBossIdle_Character");
                     break;
+
                 default:
                     if (type != 15)
                     {
@@ -270,8 +282,10 @@ namespace RogueCastle
                     {
                         enemy.Name = "Halphas";
                     }
+
                     break;
             }
+
             enemy.PlayAnimation();
         }
 
@@ -279,12 +293,11 @@ namespace RogueCastle
         {
             m_blobBoss.PlayAnimation();
             foreach (var current in EnemyList)
-            {
                 if (current.Type == 5)
                 {
                     (current as EnemyObj_EarthWizard).EarthProjectile.Visible = false;
                 }
-            }
+
             m_displayingContinueText = false;
             UpdateEnemiesSlainText();
             m_continueText.Text = "Press [Input:" + 0 + "] to exit";
@@ -317,16 +330,20 @@ namespace RogueCastle
                     case 0:
                         num2 = (int) Game.PlayerStats.EnemiesKilledList[index].X;
                         break;
+
                     case 1:
                         num2 = (int) Game.PlayerStats.EnemiesKilledList[index].Y;
                         break;
+
                     case 2:
                         num2 = (int) Game.PlayerStats.EnemiesKilledList[index].Z;
                         break;
+
                     case 3:
                         num2 = (int) Game.PlayerStats.EnemiesKilledList[index].W;
                         break;
                 }
+
                 current.Text = "Slain: " + num2;
             }
         }
@@ -370,9 +387,10 @@ namespace RogueCastle
                 {
                     m_waypointIndex = 0;
                     Tween.RunFunction(0f, Player.AttachedLevel.ScreenManager, "DisplayScreen", 18, true,
-                        typeof (List<object>));
+                        typeof(List<object>));
                     return;
                 }
+
                 Tween.RunFunction(m_waypointSpeed, this, "ChangeWaypoints");
             }
         }
@@ -401,6 +419,7 @@ namespace RogueCastle
                     Tween.RunFunction(4f, this, "HideContinueText");
                 }
             }
+
             base.Update(gameTime);
         }
 
@@ -419,19 +438,15 @@ namespace RogueCastle
             {
                 m_background.X = camera.X;
             }
+
             if (camera.X < m_background.X)
             {
                 m_background.X = camera.X - 1320f;
             }
+
             m_background.Draw(camera);
-            foreach (var current in m_frameList)
-            {
-                current.Draw(camera);
-            }
-            foreach (var current2 in m_plaqueList)
-            {
-                current2.Draw(camera);
-            }
+            foreach (var current in m_frameList) current.Draw(camera);
+            foreach (var current2 in m_plaqueList) current2.Draw(camera);
             base.Draw(camera);
             camera.End();
             if (!LevelENV.ShowEnemyRadii)
@@ -444,14 +459,9 @@ namespace RogueCastle
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null,
                     camera.GetTransformation());
             }
-            foreach (var current3 in m_nameList)
-            {
-                current3.Draw(camera);
-            }
-            foreach (var current4 in m_slainCountText)
-            {
-                current4.Draw(camera);
-            }
+
+            foreach (var current3 in m_nameList) current3.Draw(camera);
+            foreach (var current4 in m_slainCountText) current4.Draw(camera);
             m_continueText.Draw(camera);
             camera.End();
             if (!LevelENV.ShowEnemyRadii)
@@ -460,6 +470,7 @@ namespace RogueCastle
                     camera.GetTransformation());
                 return;
             }
+
             camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                 camera.GetTransformation());
         }
@@ -473,30 +484,18 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                foreach (var current in m_frameList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_frameList) current.Dispose();
                 m_frameList.Clear();
                 m_frameList = null;
-                foreach (var current2 in m_plaqueList)
-                {
-                    current2.Dispose();
-                }
+                foreach (var current2 in m_plaqueList) current2.Dispose();
                 m_plaqueList.Clear();
                 m_plaqueList = null;
                 m_cameraPosList.Clear();
                 m_cameraPosList = null;
-                foreach (var current3 in m_nameList)
-                {
-                    current3.Dispose();
-                }
+                foreach (var current3 in m_nameList) current3.Dispose();
                 m_nameList.Clear();
                 m_nameList = null;
-                foreach (var current4 in m_slainCountText)
-                {
-                    current4.Dispose();
-                }
+                foreach (var current4 in m_slainCountText) current4.Dispose();
                 m_slainCountText.Clear();
                 m_slainCountText = null;
                 m_endingMask.Dispose();

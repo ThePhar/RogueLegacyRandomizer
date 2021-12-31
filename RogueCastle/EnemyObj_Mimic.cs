@@ -86,6 +86,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Mimic_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Mimicrunch";
                     MaxHealth = 70;
@@ -113,6 +114,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Mimic_Expert_KnockBack;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Chesticles";
                     MaxHealth = 100;
@@ -141,6 +143,7 @@ namespace RogueCastle
                     KnockBack = EnemyEV.Mimic_Miniboss_KnockBack;
                     break;
             }
+
             LockFlip = true;
         }
 
@@ -171,33 +174,49 @@ namespace RogueCastle
         protected override void RunBasicLogic()
         {
             if (!m_isAttacking)
+            {
                 RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            }
             else
+            {
                 RunLogicBlock(false, m_generalBasicLB, 0, 100);
+            }
         }
 
         protected override void RunAdvancedLogic()
         {
             if (!m_isAttacking)
+            {
                 RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            }
             else
+            {
                 RunLogicBlock(false, m_generalBasicLB, 0, 100);
+            }
         }
 
         protected override void RunExpertLogic()
         {
             if (!m_isAttacking)
+            {
                 RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            }
             else
+            {
                 RunLogicBlock(false, m_generalBasicLB, 0, 100);
+            }
         }
 
         protected override void RunMinibossLogic()
         {
             if (!m_isAttacking)
+            {
                 RunLogicBlock(false, m_generalBasicLB, 100, 0);
+            }
             else
+            {
                 RunLogicBlock(false, m_generalBasicLB, 0, 100);
+            }
         }
 
         public override void HitEnemy(int damage, Vector2 collisionPt, bool isPlayer)
@@ -208,6 +227,7 @@ namespace RogueCastle
                 m_isAttacking = true;
                 LockFlip = false;
             }
+
             base.HitEnemy(damage, collisionPt, isPlayer);
         }
 
@@ -219,6 +239,7 @@ namespace RogueCastle
                 m_isAttacking = true;
                 LockFlip = false;
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 
@@ -228,6 +249,7 @@ namespace RogueCastle
             {
                 m_closeSound.Update();
             }
+
             base.Update(gameTime);
         }
 

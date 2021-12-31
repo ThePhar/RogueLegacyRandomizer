@@ -64,6 +64,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Mr Bones";
                     MaxHealth = 36;
@@ -91,6 +92,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Skeleton_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "McRib";
                     MaxHealth = 68;
@@ -118,6 +120,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Skeleton_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Berith & Halphas";
                     MaxHealth = 255;
@@ -145,6 +148,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Skeleton_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -361,12 +365,15 @@ namespace RogueCastle
                     RunLogicBlock(arg_91_1, arg_91_2, array);
                     return;
                 }
+
                 case 2:
                     RunLogicBlock(true, m_generalBasicLB, 10, 10, 0, 40, 40);
                     return;
+
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 10, 10, 0, 30, 50);
                     return;
+
                 default:
                     return;
             }
@@ -388,10 +395,12 @@ namespace RogueCastle
                     RunLogicBlock(arg_72_1, arg_72_2, array);
                     return;
                 }
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalAdvancedLB, 10, 10, 0, 15, 15, 25, 25);
                     return;
+
                 default:
                     RunBasicLogic();
                     return;
@@ -406,10 +415,12 @@ namespace RogueCastle
                 case 1:
                     RunLogicBlock(true, m_generalExpertLB, 35, 35, 0, 0, 15);
                     return;
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalExpertLB, 15, 15, 0, 35, 35);
                     return;
+
                 default:
                     RunBasicLogic();
                     return;
@@ -435,6 +446,7 @@ namespace RogueCastle
                 RunLogicBlock(arg_4A_1, arg_4A_2, array);
                 return;
             }
+
             Console.WriteLine("RAGING");
             RunLogicBlock(true, m_generalMiniBossLB, 0, 0, 10, 0, 90);
             //return;
@@ -448,6 +460,7 @@ namespace RogueCastle
             {
                 TintablePart.TextureColor = new Color(185, 0, 15);
             }
+
             base.Update(gameTime);
         }
 

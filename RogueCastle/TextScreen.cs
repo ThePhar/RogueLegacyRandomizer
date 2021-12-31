@@ -38,10 +38,10 @@ namespace RogueCastle
             m_smoke1.Scale = new Vector2(2f, 2f);
             m_smoke1.Opacity = 0.3f;
             m_smoke1.TextureColor = textureColor;
-            m_smoke2 = (m_smoke1.Clone() as SpriteObj);
+            m_smoke2 = m_smoke1.Clone() as SpriteObj;
             m_smoke2.Flip = SpriteEffects.FlipHorizontally;
             m_smoke2.Opacity = 0.2f;
-            m_smoke3 = (m_smoke1.Clone() as SpriteObj);
+            m_smoke3 = m_smoke1.Clone() as SpriteObj;
             m_smoke3.Scale = new Vector2(2.5f, 3f);
             m_smoke3.Opacity = 0.15f;
             base.LoadContent();
@@ -59,19 +59,20 @@ namespace RogueCastle
                 m_text.Dispose();
                 m_text = null;
             }
-            m_text = (textObj.Clone() as TextObj);
+
+            m_text = textObj.Clone() as TextObj;
             m_loadEndingAfterward = (bool) objList[5];
         }
 
         public override void OnEnter()
         {
             m_smoke1.Position = new Vector2(CDGMath.RandomInt(300, 1000),
-                m_text.Y + m_text.Height/2f - 30f + CDGMath.RandomInt(-100, 100));
+                m_text.Y + m_text.Height / 2f - 30f + CDGMath.RandomInt(-100, 100));
             m_smoke2.Position = new Vector2(CDGMath.RandomInt(200, 700),
-                m_text.Y + m_text.Height/2f - 30f + CDGMath.RandomInt(-50, 50));
+                m_text.Y + m_text.Height / 2f - 30f + CDGMath.RandomInt(-50, 50));
             m_smoke3.Position = new Vector2(CDGMath.RandomInt(300, 800),
-                m_text.Y + m_text.Height/2f - 30f + CDGMath.RandomInt(-100, 100));
-            m_smoke1.Opacity = (m_smoke2.Opacity = (m_smoke3.Opacity = 0f));
+                m_text.Y + m_text.Height / 2f - 30f + CDGMath.RandomInt(-100, 100));
+            m_smoke1.Opacity = m_smoke2.Opacity = m_smoke3.Opacity = 0f;
             Tween.To(m_smoke1, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0.3");
             Tween.To(m_smoke2, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0.2");
             Tween.To(m_smoke3, m_fadeInSpeed, Tween.EaseNone, "Opacity", "0.15");
@@ -82,12 +83,13 @@ namespace RogueCastle
             if (m_typewriteText)
             {
                 m_text.Visible = false;
-                Tween.RunFunction(m_fadeInSpeed, m_text, "BeginTypeWriting", m_text.Text.Length*0.05f, "");
+                Tween.RunFunction(m_fadeInSpeed, m_text, "BeginTypeWriting", m_text.Text.Length * 0.05f, "");
             }
             else
             {
                 m_text.Visible = true;
             }
+
             base.OnEnter();
         }
 
@@ -103,19 +105,21 @@ namespace RogueCastle
                 Tween.AddEndHandlerToLastTween(Game.ScreenManager, "HideCurrentScreen");
                 return;
             }
+
             Game.ScreenManager.DisplayScreen(24, true);
         }
 
         public override void Update(GameTime gameTime)
         {
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            m_smoke1.X += 5f*num;
-            m_smoke2.X += 15f*num;
-            m_smoke3.X += 10f*num;
+            m_smoke1.X += 5f * num;
+            m_smoke2.X += 15f * num;
+            m_smoke3.X += 10f * num;
             if (!m_text.Visible && m_text.IsTypewriting)
             {
                 m_text.Visible = true;
             }
+
             if (m_textDuration > 0f)
             {
                 m_textDuration -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -124,13 +128,14 @@ namespace RogueCastle
                     ExitTransition();
                 }
             }
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gametime)
         {
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_smoke1.Draw(Camera);
             m_smoke2.Draw(Camera);
             m_smoke3.Draw(Camera);

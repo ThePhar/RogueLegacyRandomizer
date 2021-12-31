@@ -26,9 +26,7 @@ namespace RogueCastle
         private bool m_invertMask;
         private int radius;
 
-        public GaussianBlur()
-        {
-        }
+        public GaussianBlur() { }
 
         public GaussianBlur(Game game, int screenWidth, int screenHeight)
         {
@@ -36,20 +34,23 @@ namespace RogueCastle
             {
                 m_renderHolder.Dispose();
             }
+
             if (m_renderHolder2 != null && !m_renderHolder2.IsDisposed)
             {
                 m_renderHolder2.Dispose();
             }
+
             if (LevelENV.SaveFrames)
             {
-                m_renderHolder = new RenderTarget2D(game.GraphicsDevice, screenWidth/2, screenHeight/2);
-                m_renderHolder2 = new RenderTarget2D(game.GraphicsDevice, screenWidth/2, screenHeight/2);
+                m_renderHolder = new RenderTarget2D(game.GraphicsDevice, screenWidth / 2, screenHeight / 2);
+                m_renderHolder2 = new RenderTarget2D(game.GraphicsDevice, screenWidth / 2, screenHeight / 2);
             }
             else
             {
                 m_renderHolder = new RenderTarget2D(game.GraphicsDevice, screenWidth, screenHeight);
                 m_renderHolder2 = new RenderTarget2D(game.GraphicsDevice, screenWidth, screenHeight);
             }
+
             effect = game.Content.Load<Effect>("Shaders\\GaussianBlurMask");
             m_offsetParameters = effect.Parameters["offsets"];
         }
@@ -92,38 +93,36 @@ namespace RogueCastle
         public void ComputeKernel()
         {
             Kernel = null;
-            Kernel = new float[radius*2 + 1];
-            Sigma = radius/amount;
-            var num = 2f*Sigma*Sigma;
-            var num2 = (float) Math.Sqrt(num*3.1415926535897931);
+            Kernel = new float[radius * 2 + 1];
+            Sigma = radius / amount;
+            var num = 2f * Sigma * Sigma;
+            var num2 = (float) Math.Sqrt(num * 3.1415926535897931);
             var num3 = 0f;
             for (var i = -radius; i <= radius; i++)
             {
-                float num4 = i*i;
+                float num4 = i * i;
                 var num5 = i + radius;
-                Kernel[num5] = (float) Math.Exp(-(double) num4/num)/num2;
+                Kernel[num5] = (float) Math.Exp(-(double) num4 / num) / num2;
                 num3 += Kernel[num5];
             }
-            for (var j = 0; j < Kernel.Length; j++)
-            {
-                Kernel[j] /= num3;
-            }
+
+            for (var j = 0; j < Kernel.Length; j++) Kernel[j] /= num3;
             effect.Parameters["weights"].SetValue(Kernel);
         }
 
         public void ComputeOffsets()
         {
             TextureOffsetsX = null;
-            TextureOffsetsX = new Vector2[radius*2 + 1];
+            TextureOffsetsX = new Vector2[radius * 2 + 1];
             TextureOffsetsY = null;
-            TextureOffsetsY = new Vector2[radius*2 + 1];
-            var num = 1f/m_renderHolder.Width;
-            var num2 = 1f/m_renderHolder.Height;
+            TextureOffsetsY = new Vector2[radius * 2 + 1];
+            var num = 1f / m_renderHolder.Width;
+            var num2 = 1f / m_renderHolder.Height;
             for (var i = -radius; i <= radius; i++)
             {
                 var num3 = i + radius;
-                TextureOffsetsX[num3] = new Vector2(i*num, 0f);
-                TextureOffsetsY[num3] = new Vector2(0f, i*num2);
+                TextureOffsetsX[num3] = new Vector2(i * num, 0f);
+                TextureOffsetsY[num3] = new Vector2(0f, i * num2);
             }
         }
 
@@ -133,6 +132,7 @@ namespace RogueCastle
             {
                 throw new InvalidOperationException("GaussianBlur.fx effect not loaded.");
             }
+
             Camera.GraphicsDevice.SetRenderTarget(m_renderHolder);
             m_offsetParameters.SetValue(TextureOffsetsX);
             if (mask != null)
@@ -140,6 +140,7 @@ namespace RogueCastle
                 Camera.GraphicsDevice.Textures[1] = mask;
                 Camera.GraphicsDevice.SamplerStates[1] = SamplerState.LinearClamp;
             }
+
             Camera.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearClamp, null, null, effect);
             if (LevelENV.SaveFrames)
             {
@@ -150,6 +151,7 @@ namespace RogueCastle
             {
                 Camera.Draw(srcTexture, Vector2.Zero, Color.White);
             }
+
             Camera.End();
             if (LevelENV.SaveFrames)
             {
@@ -159,6 +161,7 @@ namespace RogueCastle
                 {
                     Camera.GraphicsDevice.Textures[1] = mask;
                 }
+
                 Camera.Begin(SpriteSortMode.Deferred, BlendState.Opaque, null, null, null, effect);
                 Camera.Draw(m_renderHolder, Vector2.Zero, Color.White);
                 Camera.End();
@@ -169,12 +172,14 @@ namespace RogueCastle
                 Camera.End();
                 return;
             }
+
             Camera.GraphicsDevice.SetRenderTarget(srcTexture);
             m_offsetParameters.SetValue(TextureOffsetsY);
             if (mask != null)
             {
                 Camera.GraphicsDevice.Textures[1] = mask;
             }
+
             Camera.Begin(SpriteSortMode.Deferred, BlendState.Opaque, null, null, null, effect);
             Camera.Draw(m_renderHolder, Vector2.Zero, Color.White);
             Camera.End();

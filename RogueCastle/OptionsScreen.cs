@@ -55,7 +55,7 @@ namespace RogueCastle
             m_bgSprite.ForceDraw = true;
             m_optionsTitle = new SpriteObj("OptionsScreenTitle_Sprite");
             m_bgSprite.AddChild(m_optionsTitle);
-            m_optionsTitle.Position = new Vector2(0f, -(float) m_bgSprite.Width/2f + 60f);
+            m_optionsTitle.Position = new Vector2(0f, -(float) m_bgSprite.Width / 2f + 60f);
             m_changeControlsTitle = new SpriteObj("OptionsScreenChangeControls_Sprite");
             m_bgSprite.AddChild(m_changeControlsTitle);
             m_changeControlsTitle.Position = new Vector2(1320f, m_optionsTitle.Y);
@@ -76,8 +76,9 @@ namespace RogueCastle
             for (var i = 0; i < m_optionsArray.Count; i++)
             {
                 m_optionsArray[i].X = 420f;
-                m_optionsArray[i].Y = 160 + i*30;
+                m_optionsArray[i].Y = 160 + i * 30;
             }
+
             m_optionsBar = new SpriteObj("OptionsBar_Sprite");
             m_optionsBar.ForceDraw = true;
             m_optionsBar.Position = new Vector2(m_optionsArray[0].X - 20f, m_optionsArray[0].Y);
@@ -133,6 +134,7 @@ namespace RogueCastle
                 m_cancelText.ForcedScale = new Vector2(1f, 1f);
                 m_navigationText.Text = "Arrow keys to navigate options";
             }
+
             m_confirmText.Text = "[Input:" + 0 + "] to select option";
             m_cancelText.Text = "[Input:" + 2 + "] to exit options";
             m_confirmText.Opacity = 0f;
@@ -141,15 +143,17 @@ namespace RogueCastle
             Tween.To(m_confirmText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "1");
-            Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "DialogueMenuOpen");
+            Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogueMenuOpen");
             if (!m_optionsArray.Contains(m_backToMenuObj))
             {
                 m_optionsArray.Insert(m_optionsArray.Count - 1, m_backToMenuObj);
             }
+
             if (m_titleScreenOptions)
             {
                 m_optionsArray.RemoveAt(m_optionsArray.Count - 2);
             }
+
             m_transitioning = true;
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.8");
             m_selectedOptionIndex = 0;
@@ -163,13 +167,14 @@ namespace RogueCastle
             var num = 0;
             foreach (var current in m_optionsArray)
             {
-                current.Y = 160 + num*30 - 360f;
+                current.Y = 160 + num * 30 - 360f;
                 current.Opacity = 0f;
                 Tween.By(current, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
                 Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "1");
                 current.Initialize();
                 num++;
             }
+
             m_optionsBar.Opacity = 0f;
             Tween.To(m_optionsBar, 0.2f, Tween.EaseNone, "Opacity", "1");
             base.OnEnter();
@@ -196,12 +201,13 @@ namespace RogueCastle
             var num = 0;
             foreach (var current in m_optionsArray)
             {
-                current.Y = 160 + num*30;
+                current.Y = 160 + num * 30;
                 current.Opacity = 1f;
                 Tween.By(current, 0.5f, Quad.EaseOut, "Y", (-360f).ToString());
                 Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "0");
                 num++;
             }
+
             Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
         }
 
@@ -234,6 +240,7 @@ namespace RogueCastle
                             {
                                 SoundManager.PlaySound("frame_swap");
                             }
+
                             m_selectedOptionIndex--;
                         }
                         else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
@@ -242,37 +249,45 @@ namespace RogueCastle
                             {
                                 SoundManager.PlaySound("frame_swap");
                             }
+
                             m_selectedOptionIndex++;
                         }
+
                         if (m_selectedOptionIndex < 0)
                         {
                             m_selectedOptionIndex = m_optionsArray.Count - 1;
                         }
+
                         if (m_selectedOptionIndex > m_optionsArray.Count - 1)
                         {
                             m_selectedOptionIndex = 0;
                         }
+
                         if (selectedOptionIndex != m_selectedOptionIndex)
                         {
                             if (m_selectedOption != null)
                             {
                                 m_selectedOption.IsSelected = false;
                             }
+
                             m_selectedOption = m_optionsArray[m_selectedOptionIndex];
                             m_selectedOption.IsSelected = true;
                         }
                     }
+
                     if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                     {
                         SoundManager.PlaySound("Option_Menu_Select");
                         m_selectedOption.IsActive = true;
                     }
+
                     if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3) ||
                         Game.GlobalInput.JustPressed(4))
                     {
                         ExitTransition();
                     }
                 }
+
                 if (m_selectedOption == m_quickDropObj)
                 {
                     m_quickDropText.Visible = true;
@@ -299,15 +314,13 @@ namespace RogueCastle
             {
                 m_quickDropText.Visible = false;
             }
+
             base.HandleInput();
         }
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var current in m_optionsArray)
-            {
-                current.Update(gameTime);
-            }
+            foreach (var current in m_optionsArray) current.Update(gameTime);
             m_optionsBar.Position = new Vector2(m_selectedOption.X - 15f, m_selectedOption.Y);
             base.Update(gameTime);
         }
@@ -316,19 +329,14 @@ namespace RogueCastle
         {
             if (!m_changingControls)
             {
-                foreach (var current in m_optionsArray)
-                {
-                    Tween.By(current, 0.3f, Quad.EaseInOut, "X", "-1320");
-                }
+                foreach (var current in m_optionsArray) Tween.By(current, 0.3f, Quad.EaseInOut, "X", "-1320");
                 Tween.By(m_optionsTitle, 0.3f, Quad.EaseInOut, "X", "-1320");
                 Tween.By(m_changeControlsTitle, 0.3f, Quad.EaseInOut, "X", "-1320");
                 m_changingControls = true;
                 return;
             }
-            foreach (var current2 in m_optionsArray)
-            {
-                Tween.By(current2, 0.3f, Quad.EaseInOut, "X", "1320");
-            }
+
+            foreach (var current2 in m_optionsArray) Tween.By(current2, 0.3f, Quad.EaseInOut, "X", "1320");
             Tween.By(m_optionsTitle, 0.3f, Quad.EaseInOut, "X", "1320");
             Tween.By(m_changeControlsTitle, 0.3f, Quad.EaseInOut, "X", "1320");
             m_changingControls = false;
@@ -337,12 +345,9 @@ namespace RogueCastle
         public override void Draw(GameTime gametime)
         {
             Camera.Begin();
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_bgSprite.Draw(Camera);
-            foreach (var current in m_optionsArray)
-            {
-                current.Draw(Camera);
-            }
+            foreach (var current in m_optionsArray) current.Draw(Camera);
             m_quickDropText.Draw(Camera);
             m_confirmText.Draw(Camera);
             m_cancelText.Draw(Camera);
@@ -357,10 +362,7 @@ namespace RogueCastle
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Options Screen");
-                foreach (var current in m_optionsArray)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_optionsArray) current.Dispose();
                 m_optionsArray.Clear();
                 m_optionsArray = null;
                 m_bgSprite.Dispose();

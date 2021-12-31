@@ -44,10 +44,12 @@ namespace RogueCastle
             {
                 flag = true;
             }
+
             if (Flip != SpriteEffects.None && player.X < X)
             {
                 flag = true;
             }
+
             if (player != null &&
                 CollisionMath.Intersects(player.TerrainBounds,
                     new Rectangle(Bounds.X - 50, Bounds.Y, Bounds.Width + 100, Bounds.Height)) && flag &&
@@ -59,14 +61,16 @@ namespace RogueCastle
             {
                 m_talkIcon.Visible = false;
             }
+
             if (Flip == SpriteEffects.None)
             {
                 m_talkIcon.Position = new Vector2(Bounds.Left - m_talkIcon.AnchorX,
-                    Bounds.Top - m_talkIcon.AnchorY + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f);
+                    Bounds.Top - m_talkIcon.AnchorY + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f);
                 return;
             }
+
             m_talkIcon.Position = new Vector2(Bounds.Right + m_talkIcon.AnchorX,
-                Bounds.Top - m_talkIcon.AnchorY + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f);
+                Bounds.Top - m_talkIcon.AnchorY + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f);
         }
 
         public override void Draw(Camera2D camera)
@@ -79,6 +83,7 @@ namespace RogueCastle
             {
                 m_talkIcon.Flip = SpriteEffects.None;
             }
+
             base.Draw(camera);
             m_talkIcon.Draw(camera);
         }

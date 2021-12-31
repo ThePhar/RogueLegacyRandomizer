@@ -21,15 +21,21 @@ namespace RogueCastle
 {
     public class SaveGameManager
     {
-        private StorageContainer m_storageContainer;
-        private bool             m_autosaveLoaded;
-        private int              m_saveFailCounter;
+        private readonly string m_fileNameLineage =
+            string.Format("{0}_Lineage.rcdat", LevelENV.GameName.Replace(" ", ""));
 
-        private readonly string m_fileNameLineage  = string.Format("{0}_Lineage.rcdat", LevelENV.GameName.Replace(" ", ""));
-        private readonly string m_fileNameMap      = string.Format("{0}_Map.rcdat",     LevelENV.GameName.Replace(" ", ""));
-        private readonly string m_fileNameMapData  = string.Format("{0}_MapDat.rcdat",  LevelENV.GameName.Replace(" ", ""));
-        private readonly string m_fileNamePlayer   = string.Format("{0}_Player.rcdat",  LevelENV.GameName.Replace(" ", ""));
-        private readonly string m_fileNameUpgrades = string.Format("{0}_BP.rcdat",      LevelENV.GameName.Replace(" ", ""));
+        private readonly string m_fileNameMap = string.Format("{0}_Map.rcdat", LevelENV.GameName.Replace(" ", ""));
+
+        private readonly string m_fileNameMapData =
+            string.Format("{0}_MapDat.rcdat", LevelENV.GameName.Replace(" ", ""));
+
+        private readonly string m_fileNamePlayer =
+            string.Format("{0}_Player.rcdat", LevelENV.GameName.Replace(" ", ""));
+
+        private readonly string m_fileNameUpgrades = string.Format("{0}_BP.rcdat", LevelENV.GameName.Replace(" ", ""));
+        private bool m_autosaveLoaded;
+        private int m_saveFailCounter;
+        private StorageContainer m_storageContainer;
 
         public SaveGameManager()
         {
@@ -44,13 +50,16 @@ namespace RogueCastle
                 m_storageContainer.Dispose();
                 m_storageContainer = null;
             }
+
             PerformDirectoryCheck();
         }
 
         private void GetStorageContainer()
         {
             if (m_storageContainer != null && !m_storageContainer.IsDisposed)
+            {
                 return;
+            }
 
             var asyncResult = StorageDevice.BeginShowSelector(null, null);
             asyncResult.AsyncWaitHandle.WaitOne();
@@ -82,6 +91,7 @@ namespace RogueCastle
             {
                 m_storageContainer.CreateDirectory(string.Format("Profile_{0}", Game.ProfileName));
             }
+
             m_storageContainer.Dispose();
             m_storageContainer = null;
         }
@@ -110,6 +120,7 @@ namespace RogueCastle
                         var saveType = saveList[i];
                         SaveData(saveType, false);
                     }
+
                     m_saveFailCounter = 0;
                 }
                 catch
@@ -118,7 +129,7 @@ namespace RogueCastle
                     {
                         var screenManager = Game.ScreenManager;
                         screenManager.DialogueScreen.SetDialogue("Save File Error Antivirus");
-                        Tween.RunFunction(0.25f, screenManager, "DisplayScreen", 13, true, typeof (List<object>));
+                        Tween.RunFunction(0.25f, screenManager, "DisplayScreen", 13, true, typeof(List<object>));
                         m_saveFailCounter = 0;
                     }
                     else
@@ -132,6 +143,7 @@ namespace RogueCastle
                     {
                         m_storageContainer.Dispose();
                     }
+
                     m_storageContainer = null;
                 }
             }
@@ -147,6 +159,7 @@ namespace RogueCastle
                     var saveType = saveList[i];
                     SaveData(saveType, true);
                 }
+
                 m_storageContainer.Dispose();
                 m_storageContainer = null;
             }
@@ -159,7 +172,9 @@ namespace RogueCastle
                 SaveFiles(SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData, SaveType.Lineage);
                 return;
             }
-            SaveBackupFiles(SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData, SaveType.Lineage);
+
+            SaveBackupFiles(SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData,
+                SaveType.Lineage);
         }
 
         public void LoadFiles(ProceduralLevelScreen level, params SaveType[] loadList)
@@ -188,6 +203,7 @@ namespace RogueCastle
                         {
                             throw new Exception();
                         }
+
                         if (!m_autosaveLoaded)
                         {
                             var screenManager = Game.ScreenManager;
@@ -206,6 +222,7 @@ namespace RogueCastle
                             Game.PlayerStats.HeadPiece = 0;
                         }
                     }
+
                     return;
                 }
                 finally
@@ -225,6 +242,7 @@ namespace RogueCastle
                     var loadType = loadList[j];
                     LoadData(loadType, level);
                 }
+
                 m_storageContainer.Dispose();
                 m_storageContainer = null;
             }
@@ -236,6 +254,7 @@ namespace RogueCastle
             {
                 m_storageContainer.Dispose();
             }
+
             var screenManager = Game.ScreenManager;
             screenManager.DialogueScreen.SetDialogue("Save File Error");
             screenManager.DialogueScreen.SetConfirmEndHandler(this, "LoadAutosave");
@@ -271,16 +290,14 @@ namespace RogueCastle
 
         public void LoadAllFileTypes(ProceduralLevelScreen level)
         {
-            LoadFiles(level, SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData, SaveType.Lineage);
+            LoadFiles(level, SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData,
+                SaveType.Lineage);
         }
 
         public void ClearFiles(params SaveType[] deleteList)
         {
             GetStorageContainer();
-            foreach (var deleteType in deleteList)
-            {
-                DeleteData(deleteType);
-            }
+            foreach (var deleteType in deleteList) DeleteData(deleteType);
             m_storageContainer.Dispose();
             m_storageContainer = null;
         }
@@ -288,10 +305,7 @@ namespace RogueCastle
         public void ClearBackupFiles(params SaveType[] deleteList)
         {
             GetStorageContainer();
-            foreach (var deleteType in deleteList)
-            {
-                DeleteBackupData(deleteType);
-            }
+            foreach (var deleteType in deleteList) DeleteBackupData(deleteType);
 
             m_storageContainer.Dispose();
             m_storageContainer = null;
@@ -304,7 +318,9 @@ namespace RogueCastle
                 ClearFiles(SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData, SaveType.Lineage);
                 return;
             }
-            ClearBackupFiles(SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData, SaveType.Lineage);
+
+            ClearBackupFiles(SaveType.PlayerData, SaveType.UpgradeData, SaveType.Map, SaveType.MapData,
+                SaveType.Lineage);
         }
 
         private void DeleteData(SaveType deleteType)
@@ -319,7 +335,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNamePlayer));
                     }
+
                     break;
+
                 case SaveType.UpgradeData:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
@@ -328,7 +346,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameUpgrades));
                     }
+
                     break;
+
                 case SaveType.Map:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
@@ -337,7 +357,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMap));
                     }
+
                     break;
+
                 case SaveType.MapData:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
@@ -346,7 +368,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMapData));
                     }
+
                     break;
+
                 case SaveType.Lineage:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
@@ -355,6 +379,7 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameLineage));
                     }
+
                     break;
             }
 
@@ -373,7 +398,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNamePlayer));
                     }
+
                     break;
+
                 case SaveType.UpgradeData:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
@@ -382,7 +409,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameUpgrades));
                     }
+
                     break;
+
                 case SaveType.Map:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
@@ -391,7 +420,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameMap));
                     }
+
                     break;
+
                 case SaveType.MapData:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
@@ -400,7 +431,9 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameMapData));
                     }
+
                     break;
+
                 case SaveType.Lineage:
                     if (
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
@@ -409,6 +442,7 @@ namespace RogueCastle
                         m_storageContainer.DeleteFile(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                             m_fileNameLineage));
                     }
+
                     break;
             }
 
@@ -436,6 +470,7 @@ namespace RogueCastle
                 stream.Close();
                 stream2.Close();
             }
+
             if (
                 m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameUpgrades)) &&
@@ -453,6 +488,7 @@ namespace RogueCastle
                 stream3.Close();
                 stream4.Close();
             }
+
             if (
                 m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameMap)) &&
@@ -469,6 +505,7 @@ namespace RogueCastle
                 stream5.Close();
                 stream6.Close();
             }
+
             if (
                 m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameMapData)) &&
@@ -486,6 +523,7 @@ namespace RogueCastle
                 stream7.Close();
                 stream8.Close();
             }
+
             if (
                 m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/AutoSave_",
                     m_fileNameLineage)) &&
@@ -516,15 +554,19 @@ namespace RogueCastle
                 case SaveType.PlayerData:
                     SavePlayerData(saveBackup);
                     break;
+
                 case SaveType.UpgradeData:
                     SaveUpgradeData(saveBackup);
                     break;
+
                 case SaveType.Map:
                     SaveMap(saveBackup);
                     break;
+
                 case SaveType.MapData:
                     SaveMapData(saveBackup);
                     break;
+
                 case SaveType.Lineage:
                     SaveLineageData(saveBackup);
                     break;
@@ -540,6 +582,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
+
             text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
@@ -667,6 +710,7 @@ namespace RogueCastle
                         Console.WriteLine("Wizard Spell 2: " + Game.PlayerStats.WizardSpellList.Y);
                         Console.WriteLine("Wizard Spell 3: " + Game.PlayerStats.WizardSpellList.Z);
                     }
+
                     Console.WriteLine("///// ENEMY LIST DATA - BEGIN SAVING /////");
                     var enemiesKilledList = Game.PlayerStats.EnemiesKilledList;
                     foreach (var current in enemiesKilledList)
@@ -676,6 +720,7 @@ namespace RogueCastle
                         binaryWriter.Write((byte) current.Z);
                         binaryWriter.Write((byte) current.W);
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving Enemy List Data");
@@ -693,6 +738,7 @@ namespace RogueCastle
                             num++;
                         }
                     }
+
                     var count = Game.PlayerStats.EnemiesKilledInRun.Count;
                     var enemiesKilledInRun = Game.PlayerStats.EnemiesKilledInRun;
                     binaryWriter.Write(count);
@@ -701,6 +747,7 @@ namespace RogueCastle
                         binaryWriter.Write((int) current3.X);
                         binaryWriter.Write((int) current3.Y);
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving num enemies killed");
@@ -711,6 +758,7 @@ namespace RogueCastle
                             Console.WriteLine("Enemy Index in EnemyList: " + current4.Y);
                         }
                     }
+
                     Console.WriteLine("///// ENEMY LIST DATA - SAVE COMPLETE /////");
                     Console.WriteLine("///// DLC DATA - BEGIN SAVING /////");
                     binaryWriter.Write(Game.PlayerStats.ChallengeEyeballUnlocked);
@@ -729,13 +777,15 @@ namespace RogueCastle
                         Console.WriteLine("Skull Challenge Unlocked: " + Game.PlayerStats.ChallengeSkullUnlocked);
                         Console.WriteLine("Fireball Challenge Unlocked: " + Game.PlayerStats.ChallengeFireballUnlocked);
                         Console.WriteLine("Blob Challenge Unlocked: " + Game.PlayerStats.ChallengeBlobUnlocked);
-                        Console.WriteLine("Last Boss Challenge Unlocked: " + Game.PlayerStats.ChallengeLastBossUnlocked);
+                        Console.WriteLine("Last Boss Challenge Unlocked: " +
+                                          Game.PlayerStats.ChallengeLastBossUnlocked);
                         Console.WriteLine("Eyeball Challenge Beaten: " + Game.PlayerStats.ChallengeEyeballBeaten);
                         Console.WriteLine("Skull Challenge Beaten: " + Game.PlayerStats.ChallengeSkullBeaten);
                         Console.WriteLine("Fireball Challenge Beaten: " + Game.PlayerStats.ChallengeFireballBeaten);
                         Console.WriteLine("Blob Challenge Beaten: " + Game.PlayerStats.ChallengeBlobBeaten);
                         Console.WriteLine("Last Boss Challenge Beaten: " + Game.PlayerStats.ChallengeLastBossBeaten);
                     }
+
                     Console.WriteLine("///// DLC DATA - SAVE COMPLETE /////");
                     if (saveBackup)
                     {
@@ -745,8 +795,10 @@ namespace RogueCastle
                             fileStream.Flush(true);
                         }
                     }
+
                     binaryWriter.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -758,6 +810,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
+
             text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
@@ -767,11 +820,13 @@ namespace RogueCastle
                     {
                         Console.WriteLine("\nSaving Equipment States");
                     }
+
                     var getBlueprintArray = Game.PlayerStats.GetBlueprintArray;
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Standard Blueprints");
                     }
+
                     foreach (var current in getBlueprintArray)
                     {
                         var array = current;
@@ -784,16 +839,19 @@ namespace RogueCastle
                                 Console.Write(" " + b);
                             }
                         }
+
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
+
                     var getRuneArray = Game.PlayerStats.GetRuneArray;
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nRune Blueprints");
                     }
+
                     foreach (var current2 in getRuneArray)
                     {
                         var array2 = current2;
@@ -806,16 +864,19 @@ namespace RogueCastle
                                 Console.Write(" " + b2);
                             }
                         }
+
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
+
                     var getEquippedArray = Game.PlayerStats.GetEquippedArray;
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nEquipped Standard Item");
                     }
+
                     var array3 = getEquippedArray;
                     for (var k = 0; k < array3.Length; k++)
                     {
@@ -826,11 +887,13 @@ namespace RogueCastle
                             Console.Write(" " + b3);
                         }
                     }
+
                     var getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nEquipped Abilities");
                     }
+
                     var array4 = getEquippedRuneArray;
                     for (var l = 0; l < array4.Length; l++)
                     {
@@ -841,11 +904,13 @@ namespace RogueCastle
                             Console.Write(" " + b4);
                         }
                     }
+
                     var skillArray = SkillSystem.GetSkillArray();
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nskills");
                     }
+
                     var array5 = skillArray;
                     for (var m = 0; m < array5.Length; m++)
                     {
@@ -856,6 +921,7 @@ namespace RogueCastle
                             Console.Write(" " + skillObj.CurrentLevel);
                         }
                     }
+
                     if (saveBackup)
                     {
                         var fileStream = stream as FileStream;
@@ -864,8 +930,10 @@ namespace RogueCastle
                             fileStream.Flush(true);
                         }
                     }
+
                     binaryWriter.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -877,6 +945,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
+
             text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
@@ -886,6 +955,7 @@ namespace RogueCastle
                     {
                         Console.WriteLine("\nSaving Map");
                     }
+
                     var num = 0;
                     var levelScreen = Game.ScreenManager.GetLevelScreen();
                     if (levelScreen != null)
@@ -898,14 +968,15 @@ namespace RogueCastle
                         {
                             binaryWriter.Write(levelScreen.RoomList.Count - 12);
                         }
+
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.WriteLine("Map size: " + (levelScreen.RoomList.Count - 12));
                         }
+
                         var list = new List<byte>();
                         var list2 = new List<byte>();
                         foreach (var current in levelScreen.RoomList)
-                        {
                             if (current.Name != "Boss" && current.Name != "Tutorial" && current.Name != "Ending" &&
                                 current.Name != "Compass" && current.Name != "ChallengeBoss")
                             {
@@ -921,6 +992,7 @@ namespace RogueCastle
                                     Console.Write(string.Concat("I:", current.PoolIndex, " T:", (int) current.LevelType,
                                         ", "));
                                 }
+
                                 num++;
                                 if (num > 5)
                                 {
@@ -930,22 +1002,18 @@ namespace RogueCastle
                                         Console.Write("\n");
                                     }
                                 }
+
                                 foreach (var current2 in current.EnemyList)
-                                {
                                     if (current2.IsProcedural)
                                     {
                                         list.Add(current2.Type);
                                         list2.Add((byte) current2.Difficulty);
                                     }
-                                }
                             }
-                        }
+
                         var count = list.Count;
                         binaryWriter.Write(count);
-                        foreach (var current3 in list)
-                        {
-                            binaryWriter.Write(current3);
-                        }
+                        foreach (var current3 in list) binaryWriter.Write(current3);
                         using (var enumerator4 = list2.GetEnumerator())
                         {
                             while (enumerator4.MoveNext())
@@ -953,9 +1021,11 @@ namespace RogueCastle
                                 var current4 = enumerator4.Current;
                                 binaryWriter.Write(current4);
                             }
+
                             goto IL_34E;
                         }
                     }
+
                     Console.WriteLine(
                         "WARNING: Attempting to save LEVEL screen but it was null. Make sure it exists in the screen manager before saving it.");
                     IL_34E:
@@ -967,8 +1037,10 @@ namespace RogueCastle
                             fileStream.Flush(true);
                         }
                     }
+
                     binaryWriter.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -980,6 +1052,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
+
             text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
@@ -1007,6 +1080,7 @@ namespace RogueCastle
                             {
                                 list.Add(false);
                             }
+
                             var bonusRoomObj = current as BonusRoomObj;
                             if (bonusRoomObj != null)
                             {
@@ -1018,12 +1092,13 @@ namespace RogueCastle
                                 {
                                     list2.Add(false);
                                 }
+
                                 list3.Add(bonusRoomObj.ID);
                             }
+
                             if (current.Name != "Boss" && current.Name != "ChallengeBoss")
                             {
                                 foreach (var current2 in current.EnemyList)
-                                {
                                     if (current2.IsKilled)
                                     {
                                         list7.Add(true);
@@ -1032,8 +1107,8 @@ namespace RogueCastle
                                     {
                                         list7.Add(false);
                                     }
-                                }
                             }
+
                             if (current.Name != "Bonus" && current.Name != "Boss" && current.Name != "Compass" &&
                                 current.Name != "ChallengeBoss")
                             {
@@ -1051,6 +1126,7 @@ namespace RogueCastle
                                             list8.Add(false);
                                         }
                                     }
+
                                     var chestObj = current3 as ChestObj;
                                     if (chestObj != null)
                                     {
@@ -1063,6 +1139,7 @@ namespace RogueCastle
                                         {
                                             list4.Add(false);
                                         }
+
                                         var fairyChestObj = chestObj as FairyChestObj;
                                         if (fairyChestObj != null)
                                         {
@@ -1079,40 +1156,20 @@ namespace RogueCastle
                                 }
                             }
                         }
+
                         binaryWriter.Write(list.Count);
-                        foreach (var current4 in list)
-                        {
-                            binaryWriter.Write(current4);
-                        }
+                        foreach (var current4 in list) binaryWriter.Write(current4);
                         binaryWriter.Write(list2.Count);
-                        foreach (var current5 in list2)
-                        {
-                            binaryWriter.Write(current5);
-                        }
-                        foreach (var current6 in list3)
-                        {
-                            binaryWriter.Write(current6);
-                        }
+                        foreach (var current5 in list2) binaryWriter.Write(current5);
+                        foreach (var current6 in list3) binaryWriter.Write(current6);
                         binaryWriter.Write(list5.Count);
-                        foreach (var current7 in list5)
-                        {
-                            binaryWriter.Write(current7);
-                        }
+                        foreach (var current7 in list5) binaryWriter.Write(current7);
                         binaryWriter.Write(list4.Count);
-                        foreach (var current8 in list4)
-                        {
-                            binaryWriter.Write(current8);
-                        }
+                        foreach (var current8 in list4) binaryWriter.Write(current8);
                         binaryWriter.Write(list6.Count);
-                        foreach (var current9 in list6)
-                        {
-                            binaryWriter.Write(current9);
-                        }
+                        foreach (var current9 in list6) binaryWriter.Write(current9);
                         binaryWriter.Write(list7.Count);
-                        foreach (var current10 in list7)
-                        {
-                            binaryWriter.Write(current10);
-                        }
+                        foreach (var current10 in list7) binaryWriter.Write(current10);
                         binaryWriter.Write(list8.Count);
                         using (var enumerator11 = list8.GetEnumerator())
                         {
@@ -1121,9 +1178,11 @@ namespace RogueCastle
                                 var current11 = enumerator11.Current;
                                 binaryWriter.Write(current11);
                             }
+
                             goto IL_4C3;
                         }
                     }
+
                     Console.WriteLine(
                         "WARNING: Attempting to save level screen MAP data but level was null. Make sure it exists in the screen manager before saving it.");
                     IL_4C3:
@@ -1135,8 +1194,10 @@ namespace RogueCastle
                             fileStream.Flush(true);
                         }
                     }
+
                     binaryWriter.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -1148,6 +1209,7 @@ namespace RogueCastle
             {
                 text = text.Insert(0, "AutoSave_");
             }
+
             text = text.Insert(0, "Profile_" + Game.ProfileName + "/");
             using (var stream = m_storageContainer.CreateFile(text))
             {
@@ -1179,6 +1241,7 @@ namespace RogueCastle
                     {
                         binaryWriter.Write(num);
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving Current Branch Lineage Data");
@@ -1197,6 +1260,7 @@ namespace RogueCastle
                             Console.WriteLine("Is Female: " + currentBranches[j].IsFemale);
                         }
                     }
+
                     var familyTreeArray = Game.PlayerStats.FamilyTreeArray;
                     var num2 = 0;
                     if (familyTreeArray != null)
@@ -1222,6 +1286,7 @@ namespace RogueCastle
                     {
                         binaryWriter.Write(num2);
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Saving Family Tree Data");
@@ -1242,6 +1307,7 @@ namespace RogueCastle
                             Console.WriteLine("Is Female: " + familyTreeArray[l].IsFemale);
                         }
                     }
+
                     Console.WriteLine("///// PLAYER LINEAGE DATA - SAVE COMPLETE /////");
                     if (saveBackup)
                     {
@@ -1251,8 +1317,10 @@ namespace RogueCastle
                             fileStream.Flush(true);
                         }
                     }
+
                     binaryWriter.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -1266,12 +1334,15 @@ namespace RogueCastle
                     case SaveType.PlayerData:
                         LoadPlayerData();
                         break;
+
                     case SaveType.UpgradeData:
                         LoadUpgradeData();
                         break;
+
                     case SaveType.Map:
                         Console.WriteLine("Cannot load Map directly from LoadData. Call LoadMap() instead.");
                         break;
+
                     case SaveType.MapData:
                         if (level != null)
                         {
@@ -1281,14 +1352,18 @@ namespace RogueCastle
                         {
                             Console.WriteLine("Could not load Map data. Level was null.");
                         }
+
                         break;
+
                     case SaveType.Lineage:
                         LoadLineageData();
                         break;
                 }
+
                 Console.WriteLine("\nData of type " + loadType + " Loaded.");
                 return;
             }
+
             Console.WriteLine("Could not load data of type " + loadType + " because data did not exist.");
         }
 
@@ -1296,9 +1371,9 @@ namespace RogueCastle
         {
             using (
                 var stream =
-                    m_storageContainer.OpenFile(
-                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNamePlayer), FileMode.Open,
-                        FileAccess.Read, FileShare.Read))
+                m_storageContainer.OpenFile(
+                    string.Concat("Profile_", Game.ProfileName, "/", m_fileNamePlayer), FileMode.Open,
+                    FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
@@ -1422,6 +1497,7 @@ namespace RogueCastle
                         Console.WriteLine("Wizard Spell 2: " + Game.PlayerStats.WizardSpellList.Y);
                         Console.WriteLine("Wizard Spell 3: " + Game.PlayerStats.WizardSpellList.Z);
                     }
+
                     Console.WriteLine("///// ENEMY LIST DATA - BEGIN LOADING /////");
                     for (var i = 0; i < 34; i++)
                     {
@@ -1429,6 +1505,7 @@ namespace RogueCastle
                             binaryReader.ReadByte(), binaryReader.ReadByte());
                         Game.PlayerStats.EnemiesKilledList[i] = value;
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Loading Enemy List Data");
@@ -1446,12 +1523,14 @@ namespace RogueCastle
                             num++;
                         }
                     }
+
                     var num2 = binaryReader.ReadInt32();
                     for (var j = 0; j < num2; j++)
                     {
                         var item = new Vector2(binaryReader.ReadInt32(), binaryReader.ReadInt32());
                         Game.PlayerStats.EnemiesKilledInRun.Add(item);
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("Loading num enemies killed");
@@ -1462,6 +1541,7 @@ namespace RogueCastle
                             Console.WriteLine("Enemy Index in EnemyList: " + current2.Y);
                         }
                     }
+
                     Console.WriteLine("///// ENEMY LIST DATA - LOAD COMPLETE /////");
                     if (binaryReader.PeekChar() != -1)
                     {
@@ -1478,7 +1558,8 @@ namespace RogueCastle
                         Game.PlayerStats.ChallengeLastBossBeaten = binaryReader.ReadBoolean();
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
-                            Console.WriteLine("Eyeball Challenge Unlocked: " + Game.PlayerStats.ChallengeEyeballUnlocked);
+                            Console.WriteLine(
+                                "Eyeball Challenge Unlocked: " + Game.PlayerStats.ChallengeEyeballUnlocked);
                             Console.WriteLine("Skull Challenge Unlocked: " + Game.PlayerStats.ChallengeSkullUnlocked);
                             Console.WriteLine("Fireball Challenge Unlocked: " +
                                               Game.PlayerStats.ChallengeFireballUnlocked);
@@ -1489,16 +1570,20 @@ namespace RogueCastle
                             Console.WriteLine("Skull Challenge Beaten: " + Game.PlayerStats.ChallengeSkullBeaten);
                             Console.WriteLine("Fireball Challenge Beaten: " + Game.PlayerStats.ChallengeFireballBeaten);
                             Console.WriteLine("Blob Challenge Beaten: " + Game.PlayerStats.ChallengeBlobBeaten);
-                            Console.WriteLine("Last Boss Challenge Beaten: " + Game.PlayerStats.ChallengeLastBossBeaten);
+                            Console.WriteLine("Last Boss Challenge Beaten: " +
+                                              Game.PlayerStats.ChallengeLastBossBeaten);
                         }
+
                         Console.WriteLine("///// DLC DATA - LOADING COMPLETE /////");
                     }
                     else
                     {
                         Console.WriteLine("///// NO DLC DATA FOUND - SKIPPED LOADING /////");
                     }
+
                     binaryReader.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -1507,9 +1592,9 @@ namespace RogueCastle
         {
             using (
                 var stream =
-                    m_storageContainer.OpenFile(
-                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameUpgrades), FileMode.Open,
-                        FileAccess.Read, FileShare.Read))
+                m_storageContainer.OpenFile(
+                    string.Concat("Profile_", Game.ProfileName, "/", m_fileNameUpgrades), FileMode.Open,
+                    FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
@@ -1518,6 +1603,7 @@ namespace RogueCastle
                         Console.WriteLine("\nLoading Equipment States");
                         Console.WriteLine("\nLoading Standard Blueprints");
                     }
+
                     var getBlueprintArray = Game.PlayerStats.GetBlueprintArray;
                     for (var i = 0; i < 5; i++)
                     {
@@ -1529,15 +1615,18 @@ namespace RogueCastle
                                 Console.Write(" " + getBlueprintArray[i][j]);
                             }
                         }
+
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Ability Blueprints");
                     }
+
                     var getRuneArray = Game.PlayerStats.GetRuneArray;
                     for (var k = 0; k < 5; k++)
                     {
@@ -1549,15 +1638,18 @@ namespace RogueCastle
                                 Console.Write(" " + getRuneArray[k][l]);
                             }
                         }
+
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write("\n");
                         }
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Equipped Standard Items");
                     }
+
                     var getEquippedArray = Game.PlayerStats.GetEquippedArray;
                     for (var m = 0; m < 5; m++)
                     {
@@ -1567,10 +1659,12 @@ namespace RogueCastle
                             Console.Write(" " + getEquippedArray[m]);
                         }
                     }
+
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Equipped Abilities");
                     }
+
                     var getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
                     for (var n = 0; n < 5; n++)
                     {
@@ -1580,39 +1674,38 @@ namespace RogueCastle
                             Console.Write(" " + getEquippedRuneArray[n]);
                         }
                     }
+
                     var skillArray = SkillSystem.GetSkillArray();
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Traits");
                     }
+
                     SkillSystem.ResetAllTraits();
                     Game.PlayerStats.CurrentLevel = 0;
                     foreach (var skill in skillArray)
                     {
                         var level = binaryReader.ReadInt32();
-                        for (var j = 0; j < level; j++)
-                        {
-                            SkillSystem.LevelUpTrait(skill, false);
-                        }
+                        for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false);
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + skill.CurrentLevel);
                         }
                     }
+
                     binaryReader.Close();
                     Game.ScreenManager.Player.UpdateEquipmentColours();
                 }
+
                 stream.Close();
                 var flag = false;
                 var familyTreeArray = Game.PlayerStats.FamilyTreeArray;
                 foreach (var current in familyTreeArray)
-                {
                     if (current.Class > 3)
                     {
                         flag = true;
                         break;
                     }
-                }
             }
         }
 
@@ -1622,9 +1715,9 @@ namespace RogueCastle
             ProceduralLevelScreen proceduralLevelScreen = null;
             using (
                 var stream =
-                    m_storageContainer.OpenFile(
-                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMap), FileMode.Open,
-                        FileAccess.Read, FileShare.Read))
+                m_storageContainer.OpenFile(
+                    string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMap), FileMode.Open,
+                    FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
@@ -1641,23 +1734,20 @@ namespace RogueCastle
                         array2[i].Y = binaryReader.ReadByte();
                         array2[i].Z = binaryReader.ReadByte();
                     }
+
                     proceduralLevelScreen = LevelBuilder2.CreateLevel(array, array2);
                     var num2 = binaryReader.ReadInt32();
                     var list = new List<byte>();
-                    for (var j = 0; j < num2; j++)
-                    {
-                        list.Add(binaryReader.ReadByte());
-                    }
+                    for (var j = 0; j < num2; j++) list.Add(binaryReader.ReadByte());
                     var list2 = new List<byte>();
-                    for (var k = 0; k < num2; k++)
-                    {
-                        list2.Add(binaryReader.ReadByte());
-                    }
+                    for (var k = 0; k < num2; k++) list2.Add(binaryReader.ReadByte());
                     LevelBuilder2.OverrideProceduralEnemies(proceduralLevelScreen, list.ToArray(), list2.ToArray());
                     binaryReader.Close();
                 }
+
                 stream.Close();
             }
+
             m_storageContainer.Dispose();
             return proceduralLevelScreen;
         }
@@ -1666,59 +1756,35 @@ namespace RogueCastle
         {
             using (
                 var stream =
-                    m_storageContainer.OpenFile(
-                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMapData), FileMode.Open,
-                        FileAccess.Read, FileShare.Read))
+                m_storageContainer.OpenFile(
+                    string.Concat("Profile_", Game.ProfileName, "/", m_fileNameMapData), FileMode.Open,
+                    FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
                     var num = binaryReader.ReadInt32();
                     var list = new List<bool>();
-                    for (var i = 0; i < num; i++)
-                    {
-                        list.Add(binaryReader.ReadBoolean());
-                    }
+                    for (var i = 0; i < num; i++) list.Add(binaryReader.ReadBoolean());
                     var num2 = binaryReader.ReadInt32();
                     var list2 = new List<bool>();
-                    for (var j = 0; j < num2; j++)
-                    {
-                        list2.Add(binaryReader.ReadBoolean());
-                    }
+                    for (var j = 0; j < num2; j++) list2.Add(binaryReader.ReadBoolean());
                     var list3 = new List<int>();
-                    for (var k = 0; k < num2; k++)
-                    {
-                        list3.Add(binaryReader.ReadInt32());
-                    }
+                    for (var k = 0; k < num2; k++) list3.Add(binaryReader.ReadInt32());
                     var num3 = binaryReader.ReadInt32();
                     var list4 = new List<byte>();
-                    for (var l = 0; l < num3; l++)
-                    {
-                        list4.Add(binaryReader.ReadByte());
-                    }
+                    for (var l = 0; l < num3; l++) list4.Add(binaryReader.ReadByte());
                     num3 = binaryReader.ReadInt32();
                     var list5 = new List<bool>();
-                    for (var m = 0; m < num3; m++)
-                    {
-                        list5.Add(binaryReader.ReadBoolean());
-                    }
+                    for (var m = 0; m < num3; m++) list5.Add(binaryReader.ReadBoolean());
                     num3 = binaryReader.ReadInt32();
                     var list6 = new List<bool>();
-                    for (var n = 0; n < num3; n++)
-                    {
-                        list6.Add(binaryReader.ReadBoolean());
-                    }
+                    for (var n = 0; n < num3; n++) list6.Add(binaryReader.ReadBoolean());
                     var num4 = binaryReader.ReadInt32();
                     var list7 = new List<bool>();
-                    for (var num5 = 0; num5 < num4; num5++)
-                    {
-                        list7.Add(binaryReader.ReadBoolean());
-                    }
+                    for (var num5 = 0; num5 < num4; num5++) list7.Add(binaryReader.ReadBoolean());
                     var num6 = binaryReader.ReadInt32();
                     var list8 = new List<bool>();
-                    for (var num7 = 0; num7 < num6; num7++)
-                    {
-                        list8.Add(binaryReader.ReadBoolean());
-                    }
+                    for (var num7 = 0; num7 < num6; num7++) list8.Add(binaryReader.ReadBoolean());
                     var num8 = 0;
                     var num9 = 0;
                     var num10 = 0;
@@ -1739,9 +1805,11 @@ namespace RogueCastle
                                 {
                                     bonusRoomObj.RoomCompleted = true;
                                 }
+
                                 bonusRoomObj.ID = iD;
                             }
                         }
+
                         if (num4 > 0 && !Game.PlayerStats.LockCastle && current.Name != "Boss" &&
                             current.Name != "ChallengeBoss")
                         {
@@ -1755,6 +1823,7 @@ namespace RogueCastle
                                 }
                             }
                         }
+
                         if (current.Name != "Bonus" && current.Name != "Boss" && current.Name != "Compass" &&
                             current.Name != "ChallengeBoss")
                         {
@@ -1773,6 +1842,7 @@ namespace RogueCastle
                                         }
                                     }
                                 }
+
                                 var chestObj = current3 as ChestObj;
                                 if (chestObj != null)
                                 {
@@ -1786,6 +1856,7 @@ namespace RogueCastle
                                     {
                                         chestObj.ForceOpen();
                                     }
+
                                     if (!Game.PlayerStats.LockCastle)
                                     {
                                         var fairyChestObj = chestObj as FairyChestObj;
@@ -1803,21 +1874,23 @@ namespace RogueCastle
                             }
                         }
                     }
+
                     if (num > 0)
                     {
                         var list9 = new List<RoomObj>();
                         var count = list.Count;
                         for (var num14 = 0; num14 < count; num14++)
-                        {
                             if (list[num14])
                             {
                                 list9.Add(createdLevel.RoomList[num14]);
                             }
-                        }
+
                         createdLevel.MapRoomsUnveiled = list9;
                     }
+
                     binaryReader.Close();
                 }
+
                 stream.Close();
             }
         }
@@ -1826,9 +1899,9 @@ namespace RogueCastle
         {
             using (
                 var stream =
-                    m_storageContainer.OpenFile(
-                        string.Concat("Profile_", Game.ProfileName, "/", m_fileNameLineage), FileMode.Open,
-                        FileAccess.Read, FileShare.Read))
+                m_storageContainer.OpenFile(
+                    string.Concat("Profile_", Game.ProfileName, "/", m_fileNameLineage), FileMode.Open,
+                    FileAccess.Read, FileShare.Read))
             {
                 using (var binaryReader = new BinaryReader(stream))
                 {
@@ -1836,7 +1909,6 @@ namespace RogueCastle
                     var list = new List<PlayerLineageData>();
                     var num = binaryReader.ReadInt32();
                     for (var i = 0; i < num; i++)
-                    {
                         list.Add(new PlayerLineageData
                         {
                             Name = binaryReader.ReadString(),
@@ -1850,7 +1922,6 @@ namespace RogueCastle
                             Traits = new Vector2(binaryReader.ReadByte(), binaryReader.ReadByte()),
                             IsFemale = binaryReader.ReadBoolean()
                         });
-                    }
                     if (list.Count > 0)
                     {
                         Game.PlayerStats.CurrentBranches = list;
@@ -1874,6 +1945,7 @@ namespace RogueCastle
                             }
                         }
                     }
+
                     var list2 = new List<FamilyTreeNode>();
                     var num2 = binaryReader.ReadInt32();
                     for (var k = 0; k < num2; k++)
@@ -1892,6 +1964,7 @@ namespace RogueCastle
                         item.IsFemale = binaryReader.ReadBoolean();
                         list2.Add(item);
                     }
+
                     if (list2.Count > 0)
                     {
                         Game.PlayerStats.FamilyTreeArray = list2;
@@ -1917,16 +1990,18 @@ namespace RogueCastle
                             }
                         }
                     }
+
                     Console.WriteLine("///// PLAYER LINEAGE DATA - LOAD COMPLETE /////");
                     binaryReader.Close();
                 }
+
                 stream.Close();
             }
         }
 
         public bool FileExists(SaveType saveType)
         {
-            bool flag = !(m_storageContainer != null && !m_storageContainer.IsDisposed);
+            var flag = !(m_storageContainer != null && !m_storageContainer.IsDisposed);
 
             GetStorageContainer();
             var result = false;
@@ -1937,32 +2012,38 @@ namespace RogueCastle
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNamePlayer));
                     break;
+
                 case SaveType.UpgradeData:
                     result =
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameUpgrades));
                     break;
+
                 case SaveType.Map:
                     result =
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMap));
                     break;
+
                 case SaveType.MapData:
                     result =
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameMapData));
                     break;
+
                 case SaveType.Lineage:
                     result =
                         m_storageContainer.FileExists(string.Concat("Profile_", Game.ProfileName, "/",
                             m_fileNameLineage));
                     break;
             }
+
             if (flag)
             {
                 m_storageContainer.Dispose();
                 m_storageContainer = null;
             }
+
             return result;
         }
 
@@ -2035,55 +2116,43 @@ namespace RogueCastle
                         binaryReader.ReadBoolean();
                         binaryReader.Close();
                     }
+
                     stream.Close();
                 }
             }
+
             if (m_storageContainer.FileExists(string.Concat("Profile_", profile, "/", m_fileNameUpgrades)))
             {
                 using (
                     var stream2 =
-                        m_storageContainer.OpenFile(string.Concat("Profile_", profile, "/", m_fileNameUpgrades),
-                            FileMode.Open, FileAccess.Read, FileShare.Read))
+                    m_storageContainer.OpenFile(string.Concat("Profile_", profile, "/", m_fileNameUpgrades),
+                        FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     using (var binaryReader2 = new BinaryReader(stream2))
                     {
                         for (var i = 0; i < 5; i++)
-                        {
-                            for (var j = 0; j < 15; j++)
-                            {
-                                binaryReader2.ReadByte();
-                            }
-                        }
+                        for (var j = 0; j < 15; j++)
+                            binaryReader2.ReadByte();
                         for (var k = 0; k < 5; k++)
-                        {
-                            for (var l = 0; l < 11; l++)
-                            {
-                                binaryReader2.ReadByte();
-                            }
-                        }
-                        for (var m = 0; m < 5; m++)
-                        {
-                            binaryReader2.ReadSByte();
-                        }
-                        for (var n = 0; n < 5; n++)
-                        {
-                            binaryReader2.ReadSByte();
-                        }
+                        for (var l = 0; l < 11; l++)
+                            binaryReader2.ReadByte();
+                        for (var m = 0; m < 5; m++) binaryReader2.ReadSByte();
+                        for (var n = 0; n < 5; n++) binaryReader2.ReadSByte();
                         var num = 0;
                         for (var num2 = 0; num2 < 32; num2++)
                         {
                             var num3 = binaryReader2.ReadInt32();
-                            for (var num4 = 0; num4 < num3; num4++)
-                            {
-                                num++;
-                            }
+                            for (var num4 = 0; num4 < num3; num4++) num++;
                         }
+
                         playerLevel = num;
                         binaryReader2.Close();
                     }
+
                     stream2.Close();
                 }
             }
+
             m_storageContainer.Dispose();
             m_storageContainer = null;
         }

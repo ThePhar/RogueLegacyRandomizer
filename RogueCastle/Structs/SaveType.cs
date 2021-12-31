@@ -18,6 +18,6 @@ namespace RogueCastle.Structs
         UpgradeData,
         Map,
         MapData,
-        Lineage,
+        Lineage
     }
 }

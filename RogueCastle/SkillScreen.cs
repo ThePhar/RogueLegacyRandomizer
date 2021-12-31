@@ -12,13 +12,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Archipelago.MultiClient.Net.Enums;
-using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using RogueCastle.Structs;
 using RogueCastle.Systems;
 using Tweener;
@@ -30,46 +27,46 @@ namespace RogueCastle
     {
         private readonly int m_shakeAmount = 2;
         private readonly float m_shakeDelay = 0.01f;
+        private SpriteObj m_bg;
 
         private bool m_cameraTweening;
-        private bool m_fadingIn;
-        private bool m_horizontalShake;
-        private bool m_lockControls;
-        private bool m_shakeScreen;
-        private bool m_shookLeft;
-        private bool m_verticalShake;
-        private float m_screenShakeMagnitude;
-        private float m_shakeDuration;
-        private float m_shakeTimer;
-        private GameObj m_shakeObj;
-        private ImpactEffectPool m_impactEffectPool;
-        private KeyIconTextObj m_confirmText;
-        private KeyIconTextObj m_continueText;
-        private KeyIconTextObj m_inputDescription;
-        private KeyIconTextObj m_navigationText;
-        private KeyIconTextObj m_toggleIconsText;
-        private SpriteObj m_bg;
         private SpriteObj m_cloud1;
         private SpriteObj m_cloud2;
         private SpriteObj m_cloud3;
         private SpriteObj m_cloud4;
         private SpriteObj m_cloud5;
         private SpriteObj m_coinIcon;
+        private KeyIconTextObj m_confirmText;
+        private KeyIconTextObj m_continueText;
         private SpriteObj m_descriptionDivider;
-        private SpriteObj m_selectionIcon;
-        private SpriteObj m_skillCostBG;
-        private SpriteObj m_skillIcon;
-        private SpriteObj m_titleText;
         private ObjContainer m_dialoguePlate;
+        private bool m_fadingIn;
+        private bool m_horizontalShake;
+        private ImpactEffectPool m_impactEffectPool;
+        private KeyIconTextObj m_inputDescription;
+        private bool m_lockControls;
         private ObjContainer m_manor;
+        private KeyIconTextObj m_navigationText;
         private TextObj m_playerMoney;
+        private float m_screenShakeMagnitude;
+        private SkillType m_selectedTrait;
+        private SpriteObj m_selectionIcon;
+        private float m_shakeDuration;
+        private GameObj m_shakeObj;
+        private bool m_shakeScreen;
+        private float m_shakeTimer;
+        private bool m_shookLeft;
         private TextObj m_skillCost;
+        private SpriteObj m_skillCostBG;
         private TextObj m_skillCurrent;
         private TextObj m_skillDescription;
+        private SpriteObj m_skillIcon;
         private TextObj m_skillLevel;
         private TextObj m_skillTitle;
         private TextObj m_skillUpgrade;
-        private SkillType m_selectedTrait;
+        private SpriteObj m_titleText;
+        private KeyIconTextObj m_toggleIconsText;
+        private bool m_verticalShake;
 
         public SkillScreen()
         {
@@ -89,9 +86,10 @@ namespace RogueCastle
                 m_manor.GetChildAt(i).Visible = false;
                 m_manor.GetChildAt(i).Opacity = 0f;
             }
+
             m_dialoguePlate = new ObjContainer("TraitsScreenPlate_Container");
             m_dialoguePlate.ForceDraw = true;
-            m_dialoguePlate.Position = new Vector2(1320 - m_dialoguePlate.Width/2, 360f);
+            m_dialoguePlate.Position = new Vector2(1320 - m_dialoguePlate.Width / 2, 360f);
             m_skillIcon = new SpriteObj("Icon_Health_Up_Sprite");
             m_skillIcon.Position = new Vector2(-110f, -200f);
             m_dialoguePlate.AddChild(m_skillIcon);
@@ -120,7 +118,7 @@ namespace RogueCastle
             m_inputDescription.WordWrap(m_dialoguePlate.Width - 50);
             m_dialoguePlate.AddChild(m_inputDescription);
             m_descriptionDivider = new SpriteObj("Blank_Sprite");
-            m_descriptionDivider.ScaleX = 250f/m_descriptionDivider.Width;
+            m_descriptionDivider.ScaleX = 250f / m_descriptionDivider.Width;
             m_descriptionDivider.ScaleY = 0.25f;
             m_descriptionDivider.ForceDraw = true;
             m_descriptionDivider.DropShadow = new Vector2(2f, 2f);
@@ -131,10 +129,10 @@ namespace RogueCastle
             m_skillCurrent.TextureColor = new Color(228, 218, 208);
             m_skillCurrent.WordWrap(m_dialoguePlate.Width - 50);
             m_dialoguePlate.AddChild(m_skillCurrent);
-            m_skillUpgrade = (m_skillCurrent.Clone() as TextObj);
+            m_skillUpgrade = m_skillCurrent.Clone() as TextObj;
             m_skillUpgrade.Y += 15f;
             m_dialoguePlate.AddChild(m_skillUpgrade);
-            m_skillLevel = (m_skillUpgrade.Clone() as TextObj);
+            m_skillLevel = m_skillUpgrade.Clone() as TextObj;
             m_skillLevel.Y += 15f;
             m_dialoguePlate.AddChild(m_skillLevel);
             m_skillCost = new TextObj(Game.JunicodeFont);
@@ -149,7 +147,7 @@ namespace RogueCastle
             m_dialoguePlate.AddChild(m_skillCostBG);
             m_dialoguePlate.ForceDraw = true;
             m_bg = new SpriteObj("TraitsBG_Sprite");
-            m_bg.Scale = new Vector2(1320f/m_bg.Width, 1320f/m_bg.Width);
+            m_bg.Scale = new Vector2(1320f / m_bg.Width, 1320f / m_bg.Width);
             m_bg.ForceDraw = true;
             m_cloud1 = new SpriteObj("TraitsCloud1_Sprite")
             {
@@ -188,7 +186,7 @@ namespace RogueCastle
             m_selectionIcon.PlayAnimation();
             m_selectionIcon.Scale = new Vector2(1.1f, 1.1f);
             m_titleText = new SpriteObj("ManorTitleText_Sprite");
-            m_titleText.X = m_titleText.Width/2f + 20f;
+            m_titleText.X = m_titleText.Width / 2f + 20f;
             m_titleText.Y = 64.8f;
             m_titleText.ForceDraw = true;
             m_continueText = new KeyIconTextObj(Game.JunicodeFont);
@@ -244,10 +242,17 @@ namespace RogueCastle
 
                 if (s.TraitType == SkillType.Manor)
                 {
-                    var networkItem = Program.Game.ArchipelagoManager.LocationCache[(int) ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
-                    s.Description = string.Format("If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nThis upgrade contains {0} for {1}.", Program.Game.ArchipelagoManager.GetItemName(networkItem.Item), Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player));
-                    s.Description = s.Description.Replace("GENDER", Game.PlayerStats.IsFemale ? "motherless" : "fatherless");
-                    s.Description = AddSpacesToString(Enum.GetName(typeof(ManorPiece), SkillSystem.GetManorPiece(s))) + "\n\n" + s.Description;
+                    var networkItem =
+                        Program.Game.ArchipelagoManager.LocationCache[
+                            (int) ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
+                    s.Description = string.Format(
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nThis upgrade contains {0} for {1}.",
+                        Program.Game.ArchipelagoManager.GetItemName(networkItem.Item),
+                        Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player));
+                    s.Description =
+                        s.Description.Replace("GENDER", Game.PlayerStats.IsFemale ? "motherless" : "fatherless");
+                    s.Description = AddSpacesToString(Enum.GetName(typeof(ManorPiece), SkillSystem.GetManorPiece(s))) +
+                                    "\n\n" + s.Description;
                     s.Position = SkillSystem.GetSkillPosition(s);
                 }
             }
@@ -273,6 +278,7 @@ namespace RogueCastle
             {
                 m_navigationText.Text = "Arrow keys to navigate skills";
             }
+
             SkillSystem.UpdateAllTraitSprites();
             base.OnEnter();
         }
@@ -290,7 +296,8 @@ namespace RogueCastle
             if (skill.TraitType == SkillType.Manor && fadeIn)
             {
                 var piece = SkillSystem.GetManorPiece(skill);
-                SetManorPieceVisible(new Tuple<int, int>((int) piece, (int) ManorContainer.ArchipelagoLocationTable[piece]), skill);
+                SetManorPieceVisible(
+                    new Tuple<int, int>((int) piece, (int) ManorContainer.ArchipelagoLocationTable[piece]), skill);
                 Program.Game.ArchipelagoManager.CheckLocations((int) ManorContainer.ArchipelagoLocationTable[piece]);
 
                 return;
@@ -339,7 +346,6 @@ namespace RogueCastle
 
         public void SetManorPieceVisible(Tuple<int, int> manorPiece, SkillObj skillObj)
         {
-
             var manorIndex = manorPiece.Item1;
             var childAt = m_manor.GetChildAt(manorIndex);
             var num = 0f;
@@ -361,23 +367,25 @@ namespace RogueCastle
                         childAt.Opacity = 0f;
                         Tween.To(childAt, num, Tween.EaseNone, "Opacity", "1");
                         goto IL_A26;
+
                     case 1:
                     case 5:
                         childAt.Opacity = 1f;
                         num = 1f;
-                        childAt.X -= childAt.Width*2;
+                        childAt.X -= childAt.Width * 2;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "X", (childAt.Width*2).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height*2, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "X", (childAt.Width * 2).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
                         goto IL_A26;
+
                     case 2:
                     {
                         childAt.Opacity = 1f;
                         num = 1.5f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
                         var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
                         spriteObj.PlayAnimation();
                         spriteObj.OverrideParentAnimationDelay = true;
@@ -387,6 +395,7 @@ namespace RogueCastle
                         Tween.To(spriteObj, 0.5f, Tween.EaseNone, "delay", num.ToString(), "Opacity", "1");
                         goto IL_A26;
                     }
+
                     case 3:
                     case 6:
                     case 9:
@@ -396,92 +405,103 @@ namespace RogueCastle
                     case 25:
                         childAt.Opacity = 1f;
                         num = 1f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
                         goto IL_A26;
+
                     case 4:
                         pos.Y -= 50f;
                         childAt.Opacity = 1f;
                         num = 3f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2*0.25f, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
                         goto IL_A26;
+
                     case 7:
-                        pos.X = childAt.AbsBounds.Right - childAt.Width*2*0.25f;
+                        pos.X = childAt.AbsBounds.Right - childAt.Width * 2 * 0.25f;
                         childAt.Opacity = 1f;
                         num = 3f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2*0.25f, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
                         goto IL_A26;
+
                     case 8:
-                        pos.X = childAt.AbsBounds.Right - childAt.Width*2*0.25f;
+                        pos.X = childAt.AbsBounds.Right - childAt.Width * 2 * 0.25f;
                         childAt.Opacity = 1f;
                         num = 3f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2*0.25f, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
                         goto IL_A26;
+
                     case 10:
                     case 21:
                         childAt.Opacity = 1f;
                         num = 3f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
                         goto IL_A26;
+
                     case 12:
                     case 14:
                         childAt.Opacity = 1f;
                         num = 1f;
-                        childAt.X += childAt.Width*2;
+                        childAt.X += childAt.Width * 2;
                         pos.X = childAt.AbsPosition.X - 60f;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "X", (-(childAt.Width*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height*2, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "X", (-(childAt.Width * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
                         goto IL_A26;
+
                     case 16:
                         childAt.Opacity = 1f;
                         num = 3f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2*0.5f, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.5f, num);
                         goto IL_A26;
+
                     case 18:
                     case 19:
                         childAt.Opacity = 1f;
                         num = 3f;
-                        childAt.Y += childAt.Height*2;
+                        childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
-                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height*2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width*2*0.2f, num);
+                        Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
+                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.2f, num);
                         goto IL_A26;
+
                     case 23:
                         goto IL_A26;
+
                     case 29:
                     case 30:
                     case 31:
-                        Tween.RunFunction(0.25f, typeof (SoundManager), "PlaySound", "skill_tree_reveal_bounce");
+                        Tween.RunFunction(0.25f, typeof(SoundManager), "PlaySound", "skill_tree_reveal_bounce");
                         childAt.Opacity = 1f;
                         childAt.Scale = Vector2.Zero;
                         num = 1f;
                         Tween.To(childAt, num, Bounce.EaseOut, "ScaleX", "1", "ScaleY", "1");
                         goto IL_A26;
                 }
+
                 num = 0.7f;
                 var vector = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
                 childAt.Opacity = 1f;
                 childAt.Y -= 720f;
                 Tween.By(childAt, num, Quad.EaseIn, "Y", "720");
-                Tween.AddEndHandlerToLastTween(m_impactEffectPool, "SkillTreeDustEffect", vector, true, childAt.Width*2);
+                Tween.AddEndHandlerToLastTween(m_impactEffectPool, "SkillTreeDustEffect", vector, true,
+                    childAt.Width * 2);
                 Tween.RunFunction(num, this, "ShakeScreen", 5, true, true);
                 Tween.RunFunction(num + 0.2f, this, "StopScreenShake");
             }
@@ -492,6 +512,7 @@ namespace RogueCastle
             {
                 (m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
             }
+
             if (m_manor.GetChildAt(6).Visible && m_manor.GetChildAt(16).Visible)
             {
                 (m_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
@@ -513,83 +534,107 @@ namespace RogueCastle
                 case SkillType.Smithy:
                     b = 1;
                     break;
+
                 case SkillType.Enchanter:
                     b = 2;
                     break;
+
                 case SkillType.Architect:
                     b = 3;
                     break;
+
                 case SkillType.LichUnlock:
                     b = 7;
                     break;
+
                 case SkillType.BankerUnlock:
                     b = 5;
                     break;
+
                 case SkillType.SpellswordUnlock:
                     b = 6;
                     break;
+
                 case SkillType.NinjaUnlock:
                     b = 4;
                     break;
+
                 case SkillType.KnightUp:
                     b = 8;
                     if (Game.PlayerStats.Class == 0)
                     {
                         Game.PlayerStats.Class = 8;
                     }
+
                     break;
+
                 case SkillType.MageUp:
                     b = 9;
                     if (Game.PlayerStats.Class == 1)
                     {
                         Game.PlayerStats.Class = 9;
                     }
+
                     break;
+
                 case SkillType.AssassinUp:
                     b = 12;
                     if (Game.PlayerStats.Class == 3)
                     {
                         Game.PlayerStats.Class = 11;
                     }
+
                     break;
+
                 case SkillType.BankerUp:
                     b = 13;
                     if (Game.PlayerStats.Class == 5)
                     {
                         Game.PlayerStats.Class = 13;
                     }
+
                     break;
+
                 case SkillType.BarbarianUp:
                     b = 10;
                     if (Game.PlayerStats.Class == 2)
                     {
                         Game.PlayerStats.Class = 10;
                     }
+
                     break;
+
                 case SkillType.LichUp:
                     b = 15;
                     if (Game.PlayerStats.Class == 7)
                     {
                         Game.PlayerStats.Class = 15;
                     }
+
                     break;
+
                 case SkillType.NinjaUp:
                     b = 11;
                     if (Game.PlayerStats.Class == 4)
                     {
                         Game.PlayerStats.Class = 12;
                     }
+
                     break;
+
                 case SkillType.SpellSwordUp:
                     b = 14;
                     if (Game.PlayerStats.Class == 6)
                     {
                         Game.PlayerStats.Class = 14;
                     }
+
                     break;
+
                 case SkillType.SuperSecret:
                     b = 16;
                     break;
+
                 case SkillType.Manor:
                     b = SkillUnlockType.NetworkItem;
                     break;
@@ -600,7 +645,7 @@ namespace RogueCastle
                 var list = new List<object>
                 {
                     SkillUnlockType.NetworkItem,
-                    manorPiece.Item2,
+                    manorPiece.Item2
                 };
 
                 (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.SkillUnlock, true, list);
@@ -631,6 +676,7 @@ namespace RogueCastle
             {
                 m_shakeObj.X += m_shakeAmount;
             }
+
             m_shakeObj = null;
             m_shakeTimer = 0f;
         }
@@ -648,32 +694,38 @@ namespace RogueCastle
                 Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
                 Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
             }
+
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (m_cloud1.Bounds.Right < -100)
             {
                 m_cloud1.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
+
             if (m_cloud2.Bounds.Right < -100)
             {
                 m_cloud2.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
+
             if (m_cloud3.Bounds.Right < -100)
             {
                 m_cloud3.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
+
             if (m_cloud4.Bounds.Right < -100)
             {
                 m_cloud4.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
+
             if (m_cloud5.Bounds.Right < -100)
             {
                 m_cloud5.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
-            m_cloud1.X -= 20f*num;
-            m_cloud2.X -= 16f*num;
-            m_cloud3.X -= 15f*num;
-            m_cloud4.X -= 5f*num;
-            m_cloud5.X -= 10f*num;
+
+            m_cloud1.X -= 20f * num;
+            m_cloud2.X -= 16f * num;
+            m_cloud3.X -= 15f * num;
+            m_cloud4.X -= 5f * num;
+            m_cloud5.X -= 10f * num;
             if (m_shakeDuration > 0f)
             {
                 m_shakeDuration -= num;
@@ -696,10 +748,12 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (m_shakeScreen)
             {
                 UpdateShake();
             }
+
             base.Update(gameTime);
         }
 
@@ -738,28 +792,34 @@ namespace RogueCastle
                         m_playerMoney.Opacity = 1f;
                         m_titleText.Opacity = 1f;
                     }
+
                     flag = true;
                 }
+
                 if (SkillSystem.IconsVisible)
                 {
                     var selectedTrait = m_selectedTrait;
                     SkillType? vector = null;
                     // Move Up and Down
-                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) || Game.GlobalInput.JustPressed(InputMapType.PlayerUp2))
+                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) ||
+                        Game.GlobalInput.JustPressed(InputMapType.PlayerUp2))
                     {
                         vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.TopLink;
                     }
-                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerDown1) || Game.GlobalInput.JustPressed(InputMapType.PlayerDown2))
+                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerDown1) ||
+                             Game.GlobalInput.JustPressed(InputMapType.PlayerDown2))
                     {
                         vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.BottomLink;
                     }
 
                     // Move Left and Right
-                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerLeft1) || Game.GlobalInput.JustPressed(InputMapType.PlayerLeft2))
+                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerLeft1) ||
+                        Game.GlobalInput.JustPressed(InputMapType.PlayerLeft2))
                     {
                         vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.LeftLink;
                     }
-                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerRight1) || Game.GlobalInput.JustPressed(InputMapType.PlayerRight2))
+                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerRight1) ||
+                             Game.GlobalInput.JustPressed(InputMapType.PlayerRight2))
                     {
                         vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.RightLink;
                     }
@@ -789,7 +849,8 @@ namespace RogueCastle
                     // Purchase Skill Feature
                     var skill = SkillSystem.GetSkill(m_selectedTrait);
                     if (
-                        (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) || Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
+                        (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) ||
+                         Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
                         && Game.PlayerStats.Gold >= skill.TotalCost
                         && skill.CurrentLevel < skill.MaxLevel
                         && skill.CanPurchase)
@@ -806,16 +867,18 @@ namespace RogueCastle
                             {
                                 SoundManager.PlaySound("TraitMaxxed");
                             }
+
                             UpdateDescriptionPlate(skill);
                         }
                     }
-                    else if ((Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) || Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2)))
+                    else if (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) ||
+                             Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
                     {
                         SoundManager.PlaySound("TraitPurchaseFail");
                     }
 
                     // Toggle Hiding Skill Screen
-                    if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
+                    if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3) && !flag)
                     {
                         m_lockControls = true;
                         var rCScreenManager = ScreenManager as RCScreenManager;
@@ -867,6 +930,7 @@ namespace RogueCastle
                     stat *= 100f;
                     stat = (int) Math.Round(stat, MidpointRounding.AwayFromZero);
                 }
+
                 if (stat == 0f)
                 {
                     stat = skill.ModifierAmount;
@@ -876,6 +940,7 @@ namespace RogueCastle
                         stat = (int) Math.Round(stat, MidpointRounding.AwayFromZero);
                     }
                 }
+
                 m_skillCurrent.Text = "Current: " + stat + skill.UnitOfMeasurement;
                 if (skill.CurrentLevel < skill.MaxLevel)
                 {
@@ -888,17 +953,21 @@ namespace RogueCastle
                             mod = (int) Math.Round(mod, MidpointRounding.AwayFromZero);
                         }
                     }
+
                     m_skillUpgrade.Text = "Upgrade: +" + mod + skill.UnitOfMeasurement;
                 }
                 else
                 {
                     m_skillUpgrade.Text = "Upgrade: --";
                 }
+
                 m_skillLevel.Text = string.Concat("Level: ", skill.CurrentLevel, "/", skill.MaxLevel);
 
                 var upText = "unlock";
                 if (skill.CurrentLevel > 0)
+                {
                     upText = "upgrade";
+                }
 
                 if (skill.CanPurchase)
                 {
@@ -919,6 +988,7 @@ namespace RogueCastle
                 {
                     m_skillCurrent.Y = m_skillDescription.Bounds.Bottom + 40;
                 }
+
                 m_skillUpgrade.Y = m_skillCurrent.Y + 30f;
                 m_skillLevel.Y = m_skillUpgrade.Y + 30f;
                 m_descriptionDivider.Visible = true;
@@ -966,8 +1036,8 @@ namespace RogueCastle
 
         public override void Draw(GameTime gameTime)
         {
-            m_cloud1.Y = (m_cloud2.Y = (m_cloud3.Y = (m_cloud4.Y = (m_cloud5.Y = Camera.TopLeftCorner.Y*0.2f))));
-            m_bg.Y = Camera.TopLeftCorner.Y*0.2f;
+            m_cloud1.Y = m_cloud2.Y = m_cloud3.Y = m_cloud4.Y = m_cloud5.Y = Camera.TopLeftCorner.Y * 0.2f;
+            m_bg.Y = Camera.TopLeftCorner.Y * 0.2f;
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null,
                 Camera.GetTransformation());
             m_bg.Draw(Camera);
@@ -990,6 +1060,7 @@ namespace RogueCastle
                     skillObj.Draw(Camera);
                 }
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null);
             m_dialoguePlate.Draw(Camera);
@@ -1073,13 +1144,14 @@ namespace RogueCastle
         {
             if (m_horizontalShake)
             {
-                m_bg.X = CDGMath.RandomPlusMinus()*(CDGMath.RandomFloat(0f, 1f)*m_screenShakeMagnitude);
-                m_manor.X = CDGMath.RandomPlusMinus()*(CDGMath.RandomFloat(0f, 1f)*m_screenShakeMagnitude);
+                m_bg.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
+                m_manor.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
             }
+
             if (m_verticalShake)
             {
-                m_bg.Y = CDGMath.RandomPlusMinus()*(CDGMath.RandomFloat(0f, 1f)*m_screenShakeMagnitude);
-                m_manor.Y = CDGMath.RandomPlusMinus()*(CDGMath.RandomFloat(0f, 1f)*m_screenShakeMagnitude);
+                m_bg.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
+                m_manor.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
             }
         }
 
@@ -1092,19 +1164,25 @@ namespace RogueCastle
             m_manor.Y = 0f;
         }
 
-
         private static string AddSpacesToString(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
+            {
                 return "";
+            }
+
             var newText = new StringBuilder(text.Length * 2);
             newText.Append(text[0]);
             for (var i = 1; i < text.Length; i++)
             {
-                if ((char.IsUpper(text[i]) && text[i - 1] != ' ') || char.IsNumber(text[i]) && text[i - 1] != ' ')
+                if (char.IsUpper(text[i]) && text[i - 1] != ' ' || char.IsNumber(text[i]) && text[i - 1] != ' ')
+                {
                     newText.Append(' ');
+                }
+
                 newText.Append(text[i]);
             }
+
             return newText.ToString();
         }
     }

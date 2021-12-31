@@ -13,23 +13,23 @@ namespace RogueCastle.Structs
 {
     public static class EquipmentAbilityType
     {
-        public const int Vault           = 0;
-        public const int Sprint                 = 1;
-        public const int Vampire            = 2;
-        public const int Sky               = 3;
-        public const int Siphon             = 4;
-        public const int Retaliation         = 5;
-        public const int Bounty             = 6;
-        public const int Haste        = 7;
-        public const int Curse          = 8;
-        public const int Grace        = 9;
-        public const int Balance           = 10;
-        public const int ArchitectFee         = 20;
+        public const int Vault = 0;
+        public const int Sprint = 1;
+        public const int Vampire = 2;
+        public const int Sky = 3;
+        public const int Siphon = 4;
+        public const int Retaliation = 5;
+        public const int Bounty = 6;
+        public const int Haste = 7;
+        public const int Curse = 8;
+        public const int Grace = 9;
+        public const int Balance = 10;
+        public const int ArchitectFee = 20;
         public const int NewGamePlusGoldBonus = 21;
-        public const int Total                = 11;
+        public const int Total = 11;
 
         /// <summary>
-        /// Returns the string representation of a given ability's name.
+        ///     Returns the string representation of a given ability's name.
         /// </summary>
         /// <param name="type">Ability Identifier</param>
         /// <returns></returns>
@@ -82,7 +82,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a string describing this ability's features.
+        ///     Returns a string describing this ability's features.
         /// </summary>
         /// <param name="type">Ability Identifier</param>
         /// <returns></returns>
@@ -133,7 +133,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a shortened string describing this ability's features.
+        ///     Returns a shortened string describing this ability's features.
         /// </summary>
         /// <param name="type">Ability Identifier</param>
         /// <param name="amount">Rune Power Amount</param>
@@ -196,7 +196,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a string describing how to use a particular ability.
+        ///     Returns a string describing how to use a particular ability.
         /// </summary>
         /// <param name="type">Ability Identifier</param>
         /// <returns></returns>
@@ -244,7 +244,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns the resource name for this ability.
+        ///     Returns the resource name for this ability.
         /// </summary>
         /// <param name="type">Ability Identifier</param>
         /// <returns></returns>

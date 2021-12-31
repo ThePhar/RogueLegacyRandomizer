@@ -27,13 +27,12 @@ namespace RogueCastle
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             GameObjList.Add(m_speechBubble);
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "fountain")
                 {
                     m_fountain = current;
                     break;
                 }
-            }
+
             (m_fountain as SpriteObj).OutlineWidth = 2;
             m_speechBubble.X = m_fountain.X;
             base.Initialize();
@@ -50,6 +49,7 @@ namespace RogueCastle
             {
                 m_fountain.TextureColor = Color.White;
             }
+
             base.OnEnter();
         }
 
@@ -62,17 +62,18 @@ namespace RogueCastle
                 bounds.Width += 100;
                 if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
                 {
-                    m_speechBubble.Y = m_fountain.Y - 150f + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+                    m_speechBubble.Y = m_fountain.Y - 150f + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
                     m_speechBubble.Visible = true;
                 }
                 else
                 {
                     m_speechBubble.Visible = false;
                 }
+
                 if (m_speechBubble.Visible && (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)))
                 {
-                    var num = (int) (Player.MaxHealth*0.3f);
-                    var num2 = (int) (Player.MaxMana*0.3f);
+                    var num = (int) (Player.MaxHealth * 0.3f);
+                    var num2 = (int) (Player.MaxMana * 0.3f);
                     Player.CurrentHealth += num;
                     Player.CurrentMana += num2;
                     Console.WriteLine("Healed");
@@ -86,6 +87,7 @@ namespace RogueCastle
                     m_speechBubble.Visible = false;
                 }
             }
+
             base.Update(gameTime);
         }
 

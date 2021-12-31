@@ -31,7 +31,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_Fireball);
+            m_boss = EnemyList[0] as EnemyObj_Fireball;
             m_boss.SaveToFile = false;
             m_boss.IsNeo = true;
             base.Initialize();
@@ -88,7 +88,8 @@ namespace RogueCastle
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+                "Intro2");
             base.OnEnter();
             m_bossChest.ForcedItemType = 17;
         }
@@ -96,7 +97,7 @@ namespace RogueCastle
         public void Intro2()
         {
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y",
-                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height*0.5f)).ToString());
+                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString());
             Tween.AddEndHandlerToLastTween(this, "EndCutscene");
         }
 
@@ -114,18 +115,18 @@ namespace RogueCastle
             if (m_boss.CurrentHealth <= 0 && ActiveEnemies > 1)
             {
                 foreach (var current in EnemyList)
-                {
                     if (current is EnemyObj_BouncySpike)
                     {
                         current.Kill(false);
                     }
-                }
             }
+
             if (!m_cutsceneRunning && !SoundManager.IsMusicPlaying && !m_boss.BossVersionKilled &&
                 Player.CurrentHealth > 0)
             {
                 SoundManager.PlayMusic("TowerBossSong", true);
             }
+
             base.Update(gameTime);
         }
 

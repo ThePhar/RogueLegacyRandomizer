@@ -13,9 +13,9 @@ namespace RogueCastle.Structs
 {
     public static class LogicSetType
     {
-        public const int Null      = 0;
+        public const int Null = 0;
         public const int NonAttack = 1;
-        public const int Attack    = 2;
-        public const int Cd        = 3;
+        public const int Attack = 2;
+        public const int Cd = 3;
     }
 }

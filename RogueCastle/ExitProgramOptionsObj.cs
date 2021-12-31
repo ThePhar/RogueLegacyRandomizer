@@ -12,9 +12,7 @@ namespace RogueCastle
 {
     public class ExitProgramOptionsObj : OptionsObj
     {
-        public ExitProgramOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit Rogue Legacy")
-        {
-        }
+        public ExitProgramOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit Rogue Legacy") { }
 
         public override bool IsActive
         {

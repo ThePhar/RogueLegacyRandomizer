@@ -74,6 +74,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     SpellInterval = 0.15f;
                     Name = "Blazelock";
@@ -102,6 +103,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.FireWizard_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     m_spellOffset = new Vector2(40f, -130f);
                     SpellDelay = 1f;
@@ -132,6 +134,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.FireWizard_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Sol Mage";
                     MaxHealth = 240;
@@ -159,6 +162,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.FireWizard_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -273,6 +277,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -282,6 +287,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -293,6 +299,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -311,6 +318,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -320,6 +328,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -331,6 +340,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -349,6 +359,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -358,6 +369,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -369,6 +381,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -400,6 +413,7 @@ namespace RogueCastle
                     m_fireballSummon.Position = new Vector2(X - m_spellOffset.X, Y + m_spellOffset.Y);
                 }
             }
+
             if (m_fireParticleEffectCounter > 0f)
             {
                 m_fireParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -430,11 +444,13 @@ namespace RogueCastle
             {
                 projectileData.AngleOffset = CDGMath.RandomInt(-25, 25);
             }
+
             if (Difficulty == EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
                 projectileData.CollidesWithTerrain = false;
             }
+
             SoundManager.Play3DSound(this, m_target, "FireWizard_Attack_01", "FireWizard_Attack_02",
                 "FireWizard_Attack_03", "FireWizard_Attack_04");
             var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
@@ -472,6 +488,7 @@ namespace RogueCastle
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
                 projectileData.CollidesWithTerrain = false;
             }
+
             SoundManager.Play3DSound(this, m_target, "Fire_Wizard_Form");
             m_fireballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
             m_fireballSummon.Opacity = 0f;
@@ -515,6 +532,7 @@ namespace RogueCastle
                 m_currentActiveLB.StopLogicBlock();
                 ResetFireball();
             }
+
             base.Kill(giveXP);
         }
 
@@ -524,11 +542,13 @@ namespace RogueCastle
             {
                 CurrentSpeed = 0f;
             }
+
             if (collisionResponseType != 1)
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                 return;
             }
+
             if (!(otherBox.AbsParent is PlayerObj))
             {
                 var physicsObj = otherBox.AbsParent as IPhysicsObj;

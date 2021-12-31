@@ -23,12 +23,12 @@ namespace RogueCastle
     public class ChestObj : PhysicsObj
     {
         private readonly float GoldIncreasePerLevel = 1.425f;
-        private Vector2 BronzeChestGoldRange = new Vector2(9f, 14f);
-        private Vector2 GoldChestGoldRange = new Vector2(47f, 57f);
+        private readonly Vector2 BronzeChestGoldRange = new Vector2(9f, 14f);
+        private readonly Vector2 GoldChestGoldRange = new Vector2(47f, 57f);
         public int Level;
         private SpriteObj m_arrowIcon;
         private byte m_chestType;
-        private Vector2 SilverChestGoldRange = new Vector2(20f, 28f);
+        private readonly Vector2 SilverChestGoldRange = new Vector2(20f, 28f);
 
         public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
         {
@@ -61,22 +61,28 @@ namespace RogueCastle
                         ForcedItemType = 14;
                         ChangeSprite("BossChest_Sprite");
                         break;
+
                     case Structs.ChestType.Fairy:
                         ChangeSprite("Chest4_Sprite");
                         break;
+
                     case Structs.ChestType.Gold:
                         ChangeSprite("Chest3_Sprite");
                         break;
+
                     case Structs.ChestType.Silver:
                         ChangeSprite("Chest2_Sprite");
                         break;
+
                     default:
                         ChangeSprite("Chest1_Sprite");
                         break;
                 }
 
                 if (isOpen)
+                {
                     GoToFrame(2);
+                }
             }
         }
 
@@ -89,14 +95,18 @@ namespace RogueCastle
         {
             // Do not open chests that have been opened or are locked.
             if (IsOpen || IsLocked)
+            {
                 return;
+            }
 
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chest_Open_Large");
             GoToFrame(2);
 
             // If chest is empty, that's sad.
             if (IsEmpty)
+            {
                 return;
+            }
 
             var randomInt = CDGMath.RandomInt(1, 100);
             var dropType = 0;
@@ -107,9 +117,11 @@ namespace RogueCastle
                 case Structs.ChestType.Brown:
                     chances = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
                     break;
+
                 case Structs.ChestType.Silver:
                     chances = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
                     break;
+
                 default:
                     chances = GameEV.GOLDCHEST_ITEMDROP_CHANCE;
                     break;
@@ -195,7 +207,6 @@ namespace RogueCastle
         {
             var array = new int[numDrops];
             for (var i = 0; i < numDrops; i++)
-            {
                 if (statDropType == 0)
                 {
                     var num = CDGMath.RandomInt(1, 100);
@@ -256,18 +267,23 @@ namespace RogueCastle
                         case 4:
                             Game.PlayerStats.BonusStrength++;
                             break;
+
                         case 5:
                             Game.PlayerStats.BonusMagic++;
                             break;
+
                         case 6:
                             Game.PlayerStats.BonusDefense++;
                             break;
+
                         case 7:
                             Game.PlayerStats.BonusHealth++;
                             break;
+
                         case 8:
                             Game.PlayerStats.BonusMana++;
                             break;
+
                         case 9:
                             Game.PlayerStats.BonusWeight++;
                             break;
@@ -275,7 +291,6 @@ namespace RogueCastle
 
                     array[i] = statDropType;
                 }
-            }
 
             var list = new List<object>();
             list.Add(new Vector2(X, Y - Height / 2f));
@@ -326,14 +341,17 @@ namespace RogueCastle
                         total = ++Game.PlayerStats.OpenedChests.CastleFairyChests;
                         location = string.Format("Castle Hamson Fairy Chest {0}", total);
                         break;
+
                     case LevelType.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenFairyChests;
                         location = string.Format("Forest Abkhazia Fairy Chest {0}", total);
                         break;
+
                     case LevelType.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonFairyChests;
                         location = string.Format("The Land of Darkness Fairy Chest {0}", total);
                         break;
+
                     case LevelType.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerFairyChests;
                         location = string.Format("The Maya Fairy Chest {0}", total);

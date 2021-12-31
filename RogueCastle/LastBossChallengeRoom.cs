@@ -33,9 +33,9 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_LastBoss);
+            m_boss = EnemyList[0] as EnemyObj_LastBoss;
             m_boss.SaveToFile = false;
-            m_boss2 = (EnemyList[1] as EnemyObj_LastBoss);
+            m_boss2 = EnemyList[1] as EnemyObj_LastBoss;
             m_boss2.SaveToFile = false;
             base.Initialize();
         }
@@ -114,7 +114,8 @@ namespace RogueCastle
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+                "Intro2");
             base.OnEnter();
             m_bossChest.ForcedItemType = 19;
         }
@@ -123,18 +124,16 @@ namespace RogueCastle
         {
             if (!BossKilled)
             {
-                foreach (var current in EnemyList)
-                {
-                    current.Reset();
-                }
+                foreach (var current in EnemyList) current.Reset();
             }
+
             base.OnExit();
         }
 
         public void Intro2()
         {
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y",
-                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height*0.5f)).ToString());
+                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString());
             Tween.AddEndHandlerToLastTween(this, "EndCutscene");
         }
 

@@ -38,10 +38,7 @@ namespace RogueCastle
             get { return base.Text; }
             set
             {
-                foreach (var current in m_iconList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_iconList) current.Dispose();
                 m_iconList.Clear();
                 m_iconOffset.Clear();
                 var text = value;
@@ -53,8 +50,10 @@ namespace RogueCastle
                         throw new Exception(
                             "ERROR in KeyIconTextObj: Found starting index for icon but could not find ending index. Make sure every '[' ends with a ']'.");
                     }
+
                     text = AddKeyIcon(text, num, num2);
                 }
+
                 base.Text = text;
             }
         }
@@ -83,6 +82,7 @@ namespace RogueCastle
                     text2 = text2.Replace("Input", "Key");
                 }
             }
+
             if (text2.Contains("Key"))
             {
                 var text4 = text2.Replace("[Key:", "");
@@ -92,20 +92,19 @@ namespace RogueCastle
                 {
                     upperCase = false;
                 }
-                keyIconObj.SetKey((Keys) Enum.Parse(typeof (Keys), text4), upperCase);
-                var y = (Font.MeasureString("0")*m_internalFontSizeScale*Scale).Y;
-                keyIconObj.Scale = new Vector2(y/keyIconObj.Height, y/keyIconObj.Height)*ForcedScale;
-                m_yOffset = y/2f;
+
+                keyIconObj.SetKey((Keys) Enum.Parse(typeof(Keys), text4), upperCase);
+                var y = (Font.MeasureString("0") * m_internalFontSizeScale * Scale).Y;
+                keyIconObj.Scale = new Vector2(y / keyIconObj.Height, y / keyIconObj.Height) * ForcedScale;
+                m_yOffset = y / 2f;
                 var text5 = " ";
-                while (Font.MeasureString(text5).X*m_internalFontSizeScale.X*Scale.X < keyIconObj.Width)
-                {
+                while (Font.MeasureString(text5).X * m_internalFontSizeScale.X * Scale.X < keyIconObj.Width)
                     text5 += " ";
-                }
                 var text6 = text.Substring(0, text.IndexOf("["));
                 text = text.Replace(oldValue, text5);
-                var num = Font.MeasureString(text5).X*m_internalFontSizeScale.X*Scale.X;
+                var num = Font.MeasureString(text5).X * m_internalFontSizeScale.X * Scale.X;
                 num /= 2f;
-                var num2 = Font.MeasureString(text6).X*m_internalFontSizeScale.X*Scale.X;
+                var num2 = Font.MeasureString(text6).X * m_internalFontSizeScale.X * Scale.X;
                 var item = num2 + num;
                 m_iconOffset.Add(item);
             }
@@ -113,23 +112,22 @@ namespace RogueCastle
             {
                 var text7 = text2.Replace("[Button:", "");
                 text7 = text7.Replace("]", "");
-                keyIconObj.SetButton((Buttons) Enum.Parse(typeof (Buttons), text7));
-                var y2 = (Font.MeasureString("0")*m_internalFontSizeScale*Scale).Y;
-                keyIconObj.Scale = new Vector2(y2/keyIconObj.Height, y2/keyIconObj.Height)*ForcedScale;
-                m_yOffset = y2/2f;
+                keyIconObj.SetButton((Buttons) Enum.Parse(typeof(Buttons), text7));
+                var y2 = (Font.MeasureString("0") * m_internalFontSizeScale * Scale).Y;
+                keyIconObj.Scale = new Vector2(y2 / keyIconObj.Height, y2 / keyIconObj.Height) * ForcedScale;
+                m_yOffset = y2 / 2f;
                 var text8 = " ";
-                while (Font.MeasureString(text8).X*m_internalFontSizeScale.X*Scale.X < keyIconObj.Width)
-                {
+                while (Font.MeasureString(text8).X * m_internalFontSizeScale.X * Scale.X < keyIconObj.Width)
                     text8 += " ";
-                }
                 var text9 = text.Substring(0, text.IndexOf("["));
                 text = text.Replace(oldValue, text8);
-                var num3 = Font.MeasureString(text8).X*m_internalFontSizeScale.X*Scale.X;
+                var num3 = Font.MeasureString(text8).X * m_internalFontSizeScale.X * Scale.X;
                 num3 /= 2f;
-                var num4 = Font.MeasureString(text9).X*m_internalFontSizeScale.X*Scale.X;
+                var num4 = Font.MeasureString(text9).X * m_internalFontSizeScale.X * Scale.X;
                 var item2 = num4 + num3;
                 m_iconOffset.Add(item2);
             }
+
             m_iconList.Add(keyIconObj);
             return text;
         }
@@ -145,15 +143,19 @@ namespace RogueCastle
                 {
                     case Types.TextAlign.Left:
                         goto IL_A4;
+
                     case Types.TextAlign.Centre:
-                        keyIconObj.Position = new Vector2(AbsX + m_iconOffset[i] - Width/2, AbsY + m_yOffset);
+                        keyIconObj.Position = new Vector2(AbsX + m_iconOffset[i] - Width / 2, AbsY + m_yOffset);
                         break;
+
                     case Types.TextAlign.Right:
                         keyIconObj.Position = new Vector2(AbsX + m_iconOffset[i] - Width, AbsY + m_yOffset);
                         break;
+
                     default:
                         goto IL_A4;
                 }
+
                 IL_CF:
                 keyIconObj.ForceDraw = ForceDraw;
                 keyIconObj.Opacity = Opacity;
@@ -170,10 +172,7 @@ namespace RogueCastle
         public override void WordWrap(int width)
         {
             var list = new List<KeyIconObj>();
-            foreach (var current in m_iconList)
-            {
-                list.Add(current.Clone() as KeyIconObj);
-            }
+            foreach (var current in m_iconList) list.Add(current.Clone() as KeyIconObj);
             var list2 = new List<float>();
             list2.AddRange(m_iconOffset);
             base.WordWrap(width);
@@ -185,10 +184,7 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                foreach (var current in m_iconList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_iconList) current.Dispose();
                 m_iconList.Clear();
                 m_iconList = null;
                 m_iconOffset.Clear();

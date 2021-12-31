@@ -34,6 +34,7 @@ namespace RogueCastle
             {
                 Array.Clear(SecondaryAttribute, 0, SecondaryAttribute.Length);
             }
+
             SecondaryAttribute = null;
         }
     }

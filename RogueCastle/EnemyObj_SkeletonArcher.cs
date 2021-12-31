@@ -65,6 +65,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Ranger";
                     MaxHealth = 35;
@@ -92,6 +93,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.SkeletonArcher_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Sniper";
                     MaxHealth = 61;
@@ -119,6 +121,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.SkeletonArcher_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Sharpshooter";
                     MaxHealth = 600;
@@ -146,6 +149,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.SkeletonArcher_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -365,15 +369,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(false, m_generalBasicLB, 20, 15, 15, 50);
                     return;
+
                 case 2:
                     RunLogicBlock(false, m_generalBasicLB, 20, 15, 50, 15);
                     return;
+
                 case 3:
                     RunLogicBlock(false, m_generalBasicLB, 20, 50, 15, 15);
                     return;
+
                 default:
                     return;
             }
@@ -392,15 +400,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(false, m_generalAdvancedLB, 20, 15, 15, 50);
                     return;
+
                 case 2:
                     RunLogicBlock(false, m_generalAdvancedLB, 20, 15, 50, 15);
                     return;
+
                 case 3:
                     RunLogicBlock(false, m_generalAdvancedLB, 20, 50, 15, 15);
                     return;
+
                 default:
                     return;
             }
@@ -419,15 +431,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(false, m_generalExpertLB, 20, 15, 15, 50);
                     return;
+
                 case 2:
                     RunLogicBlock(false, m_generalExpertLB, 20, 50, 15, 15);
                     return;
+
                 case 3:
                     RunLogicBlock(false, m_generalExpertLB, 20, 15, 50, 15);
                     return;
+
                 default:
                     return;
             }
@@ -446,15 +462,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(false, m_generalBasicLB, 20, 15, 15, 50);
                     return;
+
                 case 2:
                     RunLogicBlock(false, m_generalBasicLB, 20, 15, 50, 15);
                     return;
+
                 case 3:
                     RunLogicBlock(false, m_generalBasicLB, 20, 50, 15, 15);
                     return;
+
                 default:
                     return;
             }
@@ -467,6 +487,7 @@ namespace RogueCastle
                 GetChildAt(1).Rotation = angle;
                 return;
             }
+
             GetChildAt(1).Rotation = -angle;
         }
 

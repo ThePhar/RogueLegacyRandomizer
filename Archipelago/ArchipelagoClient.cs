@@ -26,14 +26,25 @@ namespace Archipelago
     public class ArchipelagoClient
     {
         public readonly Version APVersion = Version.Parse("0.2.2");
+        private DeathLinkService m_deathLink;
+        private Dictionary<string, Permissions> m_permissions;
+        private string m_seed;
 
-        public ArchipelagoStatus            Status               { get; private set; }
-        public DateTime                     LastDeath            { get; private set; }
-        public DeathLink                    DeathLink            { get; private set; }
-        public Dictionary<int, NetworkItem> LocationCache        { get; private set; }
-        public LegacySlotData               Data                 { get; private set; }
-        public Queue<NetworkItem>           ItemQueue            { get; private set; }
-        public ConnectionInfo               CachedConnectionInfo { get; private set; }
+        private ArchipelagoSession m_session;
+        private List<string> m_tags;
+
+        public ArchipelagoClient()
+        {
+            Initialize();
+        }
+
+        public ArchipelagoStatus Status { get; private set; }
+        public DateTime LastDeath { get; private set; }
+        public DeathLink DeathLink { get; private set; }
+        public Dictionary<int, NetworkItem> LocationCache { get; private set; }
+        public LegacySlotData Data { get; private set; }
+        public Queue<NetworkItem> ItemQueue { get; private set; }
+        public ConnectionInfo CachedConnectionInfo { get; private set; }
 
         public bool CanForfeit
         {
@@ -43,17 +54,6 @@ namespace Archipelago
             }
         }
 
-        private ArchipelagoSession              m_session;
-        private DeathLinkService                m_deathLink;
-        private List<string>                    m_tags;
-        private string                          m_seed;
-        private Dictionary<string, Permissions> m_permissions;
-
-        public ArchipelagoClient()
-        {
-            Initialize();
-        }
-
         public void Connect(ConnectionInfo info)
         {
             // Cache our connection info in case we get disconnected later.
@@ -61,7 +61,9 @@ namespace Archipelago
 
             // Disconnect from any session we are currently in if we are attempting to connect.
             if (m_session != null)
+            {
                 Disconnect();
+            }
 
             Status = ArchipelagoStatus.Connecting;
             try
@@ -108,7 +110,9 @@ namespace Archipelago
             }
 
             if (m_deathLink != null)
+            {
                 m_deathLink.OnDeathLinkReceived -= OnDeathLink;
+            }
 
             Initialize();
         }
@@ -132,7 +136,7 @@ namespace Archipelago
         {
             m_session.Socket.SendPacket(new SayPacket
             {
-                Text = "!forfeit",
+                Text = "!forfeit"
             });
         }
 
@@ -140,14 +144,16 @@ namespace Archipelago
         {
             m_session.Socket.SendPacket(new StatusUpdatePacket
             {
-                Status = ArchipelagoClientState.ClientGoal,
+                Status = ArchipelagoClientState.ClientGoal
             });
         }
 
         public void ClearDeathLink()
         {
             if (m_deathLink != null)
+            {
                 DeathLink = null;
+            }
         }
 
         public void SendDeathLink(string cause)
@@ -157,11 +163,13 @@ namespace Archipelago
 
             if (Data.DeathLink && m_deathLink != null)
             {
-                var causeWithPlayerName = string.Format("{0}'s {1}.", m_session.Players.GetPlayerAlias(Data.Slot) , cause);
-                m_deathLink.SendDeathLink(new DeathLink(m_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName)
-                {
-                    Timestamp = LastDeath,
-                });
+                var causeWithPlayerName =
+                    string.Format("{0}'s {1}.", m_session.Players.GetPlayerAlias(Data.Slot), cause);
+                m_deathLink.SendDeathLink(
+                    new DeathLink(m_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName)
+                    {
+                        Timestamp = LastDeath
+                    });
             }
         }
 
@@ -224,10 +232,12 @@ namespace Archipelago
         {
             Console.WriteLine("REC: {0}", deathLink.Timestamp);
             Console.WriteLine("LST: {0}", LastDeath);
-            Console.WriteLine(deathLink.Timestamp.ToString(CultureInfo.InvariantCulture) != LastDeath.ToString(CultureInfo.InvariantCulture));
+            Console.WriteLine(deathLink.Timestamp.ToString(CultureInfo.InvariantCulture) !=
+                              LastDeath.ToString(CultureInfo.InvariantCulture));
 
             // Ignore deaths that died at the same time as us. Should also prevent the player from dying to themselves.
-            if (deathLink.Timestamp.ToString(CultureInfo.InvariantCulture) != LastDeath.ToString(CultureInfo.InvariantCulture))
+            if (deathLink.Timestamp.ToString(CultureInfo.InvariantCulture) !=
+                LastDeath.ToString(CultureInfo.InvariantCulture))
             {
                 DeathLink = deathLink;
             }
@@ -238,17 +248,21 @@ namespace Archipelago
             Console.WriteLine("Received a {0} packet", packet.GetType().Name);
             Console.WriteLine("==============================");
             foreach (var property in packet.GetType().GetProperties())
-            {
                 Console.WriteLine("{0}: {1}", property.Name, property.GetValue(packet));
-            }
             Console.WriteLine();
 
             if (packet is RoomInfoPacket)
+            {
                 OnRoomInfo((RoomInfoPacket) packet);
+            }
             else if (packet is ConnectedPacket)
+            {
                 OnConnected((ConnectedPacket) packet);
+            }
             else if (packet is PrintPacket)
+            {
                 OnPrint((PrintPacket) packet);
+            }
         }
 
         private void OnRoomInfo(RoomInfoPacket packet)
@@ -272,22 +286,18 @@ namespace Archipelago
 
                 // Clear old DeathLink handlers.
                 if (m_deathLink != null)
+                {
                     m_deathLink.OnDeathLinkReceived -= OnDeathLink;
+                }
 
                 m_deathLink = m_session.CreateDeathLinkServiceAndEnable();
                 m_deathLink.OnDeathLinkReceived += OnDeathLink;
             }
 
             var locations = new List<int>();
-            foreach (var code in Enum.GetValues(typeof(LocationCode)))
-            {
-                locations.Add((int) code);
-            }
+            foreach (var code in Enum.GetValues(typeof(LocationCode))) locations.Add((int) code);
 
-            for (var i = 0; i < 25; i++)
-            {
-                locations.Add(LocationCodeConstants.DiaryStartIndex + i);
-            }
+            for (var i = 0; i < 25; i++) locations.Add(LocationCodeConstants.DiaryStartIndex + i);
 
             for (var i = 0; i < Data.FairyChestsPerZone; i++)
             {
@@ -311,10 +321,7 @@ namespace Archipelago
 
         private void OnReceiveLocationCache(LocationInfoPacket packet)
         {
-            foreach (var item in packet.Locations)
-            {
-                LocationCache.Add(item.Location, item);
-            }
+            foreach (var item in packet.Locations) LocationCache.Add(item.Location, item);
         }
 
         private static void OnError(Exception exception, string message)

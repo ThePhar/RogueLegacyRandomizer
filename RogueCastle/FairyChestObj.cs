@@ -9,8 +9,6 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
-using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -59,6 +57,7 @@ namespace RogueCastle
             {
                 int.TryParse(Tag, out m_conditionType);
             }
+
             if (m_conditionType == 8)
             {
                 Timer = 5f;
@@ -71,6 +70,7 @@ namespace RogueCastle
             {
                 m_player.AttachedLevel.ObjectiveComplete();
             }
+
             State = 1;
             m_lockSprite.PlayAnimation(false);
             Tween.By(m_lockSprite, 0.2f, Linear.EaseNone, "Y", "40");
@@ -83,17 +83,19 @@ namespace RogueCastle
             {
                 m_player.AttachedLevel.ObjectiveFailed();
             }
+
             State = 2;
             m_errorSprite.Visible = true;
             m_errorSprite.Opacity = 0f;
             m_errorSprite.Scale = Vector2.One;
-            m_errorSprite.Position = new Vector2(X, Y - Height/2);
+            m_errorSprite.Position = new Vector2(X, Y - Height / 2);
             if (!skipTween)
             {
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "FairyChest_Fail");
                 Tween.To(m_errorSprite, 0.5f, Quad.EaseIn, "ScaleX", "0.5", "ScaleY", "0.5", "Opacity", "1");
                 return;
             }
+
             m_errorSprite.Scale = new Vector2(0.5f, 0.5f);
             m_errorSprite.Opacity = 1f;
         }
@@ -102,7 +104,9 @@ namespace RogueCastle
         {
             // Do not open chests that are locked or already open.
             if (State != 1 || IsOpen || IsLocked)
+            {
                 return;
+            }
 
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Chest_Open_Large");
             GoToFrame(2);
@@ -117,6 +121,7 @@ namespace RogueCastle
             {
                 ChestConditionChecker.SetConditionState(this, m_player);
             }
+
             if (!IsOpen)
             {
                 if (Game.ScreenManager.CurrentScreen is ProceduralLevelScreen && m_sparkleCounter > 0f)
@@ -130,38 +135,42 @@ namespace RogueCastle
                         {
                             Tween.To(this, num, Linear.EaseNone);
                             Tween.AddEndHandlerToLastTween(m_player.AttachedLevel.ImpactEffectPool,
-                                "DisplayChestSparkleEffect", new Vector2(X, Y - Height/2));
+                                "DisplayChestSparkleEffect", new Vector2(X, Y - Height / 2));
                             num += 0.5f;
                         }
                     }
                 }
+
                 if (ConditionType == 8 && State == 0)
                 {
                     if (!m_player.AttachedLevel.IsPaused)
                     {
                         Timer -= (float) camera.GameTime.ElapsedGameTime.TotalSeconds;
                     }
+
                     m_timerText.Position = new Vector2(Position.X, Y - 50f);
                     m_timerText.Text = ((int) Timer + 1).ToString();
                     m_timerText.Draw(camera);
                     m_player.AttachedLevel.UpdateObjectiveProgress(
-                        (DialogueManager.GetText("Chest_Locked " + ConditionType).Dialogue[0] + (int) (Timer + 1f)));
+                        DialogueManager.GetText("Chest_Locked " + ConditionType).Dialogue[0] + (int) (Timer + 1f));
                 }
             }
+
             if (ConditionType != 10 || IsOpen)
             {
                 base.Draw(camera);
                 m_lockSprite.Flip = Flip;
                 if (Flip == SpriteEffects.None)
                 {
-                    m_lockSprite.Position = new Vector2(X - 10f, Y - Height/2);
+                    m_lockSprite.Position = new Vector2(X - 10f, Y - Height / 2);
                 }
                 else
                 {
-                    m_lockSprite.Position = new Vector2(X + 10f, Y - Height/2);
+                    m_lockSprite.Position = new Vector2(X + 10f, Y - Height / 2);
                 }
+
                 m_lockSprite.Draw(camera);
-                m_errorSprite.Position = new Vector2(X, Y - Height/2);
+                m_errorSprite.Position = new Vector2(X, Y - Height / 2);
                 m_errorSprite.Draw(camera);
             }
         }
@@ -195,6 +204,7 @@ namespace RogueCastle
             {
                 Timer = 5f;
             }
+
             base.ResetChest();
         }
 

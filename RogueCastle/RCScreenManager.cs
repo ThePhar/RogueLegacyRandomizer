@@ -20,46 +20,45 @@ using RogueCastle.Screens;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
-
 using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
     public class RCScreenManager : ScreenManager
     {
-        private SpriteObj            m_blackScreen;
-        private BlacksmithScreen     m_blacksmithScreen;
-        private SpriteObj            m_blackTransitionIn;
-        private SpriteObj            m_blackTransitionOut;
-        private CreditsScreen        m_creditsScreen;
-        private DeathDefiedScreen    m_deathDefyScreen;
-        private DiaryEntryScreen     m_diaryEntryScreen;
-        private EnchantressScreen    m_enchantressScreen;
+        private ArchipelagoScreen m_archipelagoScreen;
+        private SpriteObj m_blackScreen;
+        private BlacksmithScreen m_blacksmithScreen;
+        private SpriteObj m_blackTransitionIn;
+        private SpriteObj m_blackTransitionOut;
+        private CreditsScreen m_creditsScreen;
+        private DeathDefiedScreen m_deathDefyScreen;
+        private DiaryEntryScreen m_diaryEntryScreen;
+        private EnchantressScreen m_enchantressScreen;
         private DiaryFlashbackScreen m_flashbackScreen;
-        private GameOverBossScreen   m_gameOverBossScreen;
-        private GameOverScreen       m_gameOverScreen;
-        private GetItemScreen        m_getItemScreen;
-        private bool                 m_isWipeTransitioning;
-        private MapScreen            m_mapScreen;
-        private OptionsScreen        m_optionsScreen;
-        private ArchipelagoScreen    m_archipelagoScreen;
-        private PauseScreen          m_pauseScreen;
-        private ProfileCardScreen    m_profileCardScreen;
-        private SkillUnlockScreen    m_skillUnlockScreen;
-        private TextScreen           m_textScreen;
-        private VirtualScreen        m_virtualScreen;
+        private GameOverBossScreen m_gameOverBossScreen;
+        private GameOverScreen m_gameOverScreen;
+        private GetItemScreen m_getItemScreen;
+        private bool m_isWipeTransitioning;
+        private MapScreen m_mapScreen;
+        private OptionsScreen m_optionsScreen;
+        private PauseScreen m_pauseScreen;
+        private ProfileCardScreen m_profileCardScreen;
+        private SkillUnlockScreen m_skillUnlockScreen;
+        private TextScreen m_textScreen;
+        private VirtualScreen m_virtualScreen;
 
-        public DialogueScreen DialogueScreen   { get; private set; }
-        public SkillScreen    SkillScreen      { get; private set; }
-        public PlayerObj      Player           { get; private set; }
-        public bool           IsTransitioning  { get; private set; }
+        public RCScreenManager(Game game) : base(game) { }
+
+        public DialogueScreen DialogueScreen { get; private set; }
+        public SkillScreen SkillScreen { get; private set; }
+        public PlayerObj Player { get; private set; }
+        public bool IsTransitioning { get; private set; }
 
         public RenderTarget2D RenderTarget
         {
             get { return m_virtualScreen.RenderTarget; }
         }
-
-        public RCScreenManager(Game game) : base(game) { }
 
         public override void Initialize()
         {
@@ -73,6 +72,7 @@ namespace RogueCastle
             {
                 form.MouseCaptureChanged += PauseGame;
             }
+
             Camera.GraphicsDevice.DeviceReset += ReinitializeContent;
         }
 
@@ -88,14 +88,8 @@ namespace RogueCastle
         public void ReinitializeContent(object sender, EventArgs e)
         {
             m_virtualScreen.ReinitializeRTs(Game.GraphicsDevice);
-            foreach (var current in m_screenArray)
-            {
-                current.DisposeRTs();
-            }
-            foreach (var current2 in m_screenArray)
-            {
-                current2.ReinitializeRTs();
-            }
+            foreach (var current in m_screenArray) current.DisposeRTs();
+            foreach (var current2 in m_screenArray) current2.ReinitializeRTs();
         }
 
         public void ReinitializeCamera(GraphicsDevice graphicsDevice)
@@ -146,16 +140,18 @@ namespace RogueCastle
             m_gameOverBossScreen.LoadContent();
             m_blackTransitionIn = new SpriteObj("Blank_Sprite");
             m_blackTransitionIn.Rotation = 15f;
-            m_blackTransitionIn.Scale = new Vector2(1320/m_blackTransitionIn.Width, 2000/m_blackTransitionIn.Height);
+            m_blackTransitionIn.Scale =
+                new Vector2(1320 / m_blackTransitionIn.Width, 2000 / m_blackTransitionIn.Height);
             m_blackTransitionIn.TextureColor = Color.Black;
             m_blackTransitionIn.ForceDraw = true;
             m_blackScreen = new SpriteObj("Blank_Sprite");
-            m_blackScreen.Scale = new Vector2(1320/m_blackScreen.Width, 720/m_blackScreen.Height);
+            m_blackScreen.Scale = new Vector2(1320 / m_blackScreen.Width, 720 / m_blackScreen.Height);
             m_blackScreen.TextureColor = Color.Black;
             m_blackScreen.ForceDraw = true;
             m_blackTransitionOut = new SpriteObj("Blank_Sprite");
             m_blackTransitionOut.Rotation = 15f;
-            m_blackTransitionOut.Scale = new Vector2(1320/m_blackTransitionOut.Width, 2000/m_blackTransitionOut.Height);
+            m_blackTransitionOut.Scale =
+                new Vector2(1320 / m_blackTransitionOut.Width, 2000 / m_blackTransitionOut.Height);
             m_blackTransitionOut.TextureColor = Color.Black;
             m_blackTransitionOut.ForceDraw = true;
             m_blackTransitionIn.X = 0f;
@@ -179,11 +175,14 @@ namespace RogueCastle
         private void LoadPlayer()
         {
             if (Player != null)
-                return;
-
-            Player = new PlayerObj("PlayerIdle_Character", PlayerIndex.One, Program.Game.PhysicsManager, null, Program.Game)
             {
-                Position = new Vector2(200f, 200f),
+                return;
+            }
+
+            Player = new PlayerObj("PlayerIdle_Character", PlayerIndex.One, Program.Game.PhysicsManager, null,
+                Program.Game)
+            {
+                Position = new Vector2(200f, 200f)
             };
 
             Player.Initialize();
@@ -198,7 +197,9 @@ namespace RogueCastle
                 foreach (var screen in screens)
                 {
                     if (screen != CurrentScreen)
+                    {
                         continue;
+                    }
 
                     screen.PauseScreen();
                     break;
@@ -442,6 +443,7 @@ namespace RogueCastle
             {
                 Camera.GameTime = gameTime;
             }
+
             base.Draw(gameTime);
             m_virtualScreen.EndCapture();
             Camera.GraphicsDevice.Clear(Color.Black);

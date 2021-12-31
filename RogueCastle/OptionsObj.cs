@@ -45,6 +45,7 @@ namespace RogueCastle
                 {
                     IsSelected = true;
                 }
+
                 m_isActive = value;
                 if (!value)
                 {
@@ -64,13 +65,12 @@ namespace RogueCastle
                     m_nameText.TextureColor = Color.Yellow;
                     return;
                 }
+
                 m_nameText.TextureColor = Color.White;
             }
         }
 
-        public virtual void Initialize()
-        {
-        }
+        public virtual void Initialize() { }
 
         public virtual void HandleInput()
         {
@@ -80,9 +80,7 @@ namespace RogueCastle
             }
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-        }
+        public virtual void Update(GameTime gameTime) { }
 
         public override void Dispose()
         {

@@ -27,7 +27,7 @@ namespace RogueCastle
             m_buttonText.FontSize = 16f;
             m_buttonText.DropShadow = new Vector2(1f, 1f);
             m_buttonText.Align = Types.TextAlign.Centre;
-            m_buttonText.Y = -(float) (m_buttonText.Height/2);
+            m_buttonText.Y = -(float) (m_buttonText.Height / 2);
             AddChild(m_buttonText);
             m_buttonText.Visible = false;
         }
@@ -51,11 +51,13 @@ namespace RogueCastle
                         case Keys.Back:
                         case Keys.Tab:
                             break;
+
                         default:
                             if (valueOrDefault != Keys.Enter && valueOrDefault != Keys.Escape)
                             {
                                 goto IL_186;
                             }
+
                             break;
                     }
                 }
@@ -66,27 +68,33 @@ namespace RogueCastle
                         case Keys.Space:
                             GetChildAt(0).ChangeSprite("KeyboardSpacebar_Sprite");
                             goto IL_1A7;
+
                         case Keys.PageUp:
                         case Keys.PageDown:
                         case Keys.End:
                         case Keys.Home:
                             goto IL_186;
+
                         case Keys.Left:
                             GetChildAt(0).ChangeSprite("KeyboardArrowLeft_Sprite");
                             flag = false;
                             goto IL_1A7;
+
                         case Keys.Up:
                             GetChildAt(0).ChangeSprite("KeyboardArrowUp_Sprite");
                             flag = false;
                             goto IL_1A7;
+
                         case Keys.Right:
                             GetChildAt(0).ChangeSprite("KeyboardArrowRight_Sprite");
                             flag = false;
                             goto IL_1A7;
+
                         case Keys.Down:
                             GetChildAt(0).ChangeSprite("KeyboardArrowDown_Sprite");
                             flag = false;
                             goto IL_1A7;
+
                         default:
                             switch (valueOrDefault)
                             {
@@ -102,6 +110,7 @@ namespace RogueCastle
                                 case Keys.NumPad9:
                                     GetChildAt(0).ChangeSprite("KeyboardButtonLong_Sprite");
                                     goto IL_1A7;
+
                                 default:
                                     switch (valueOrDefault)
                                     {
@@ -112,18 +121,23 @@ namespace RogueCastle
                                         case Keys.LeftAlt:
                                         case Keys.RightAlt:
                                             break;
+
                                         default:
                                             goto IL_186;
                                     }
+
                                     break;
                             }
+
                             break;
                     }
                 }
+
                 GetChildAt(0).ChangeSprite("KeyboardButtonLong_Sprite");
                 m_buttonText.FontSize = 16f;
                 goto IL_1A7;
             }
+
             IL_186:
             GetChildAt(0).ChangeSprite("KeyboardButton_Sprite");
             m_buttonText.FontSize = 24f;
@@ -132,6 +146,7 @@ namespace RogueCastle
             {
                 GetChildAt(0).ChangeSprite("KeyboardButtonLong_Sprite");
             }
+
             if (flag)
             {
                 if (upperCase)
@@ -147,7 +162,8 @@ namespace RogueCastle
             {
                 m_buttonText.Text = "";
             }
-            m_buttonText.Y = -(float) (m_buttonText.Height/2);
+
+            m_buttonText.Y = -(float) (m_buttonText.Height / 2);
             m_buttonText.Visible = true;
             IsGamepadButton = false;
             CalculateBounds();
@@ -167,14 +183,18 @@ namespace RogueCastle
                         case Buttons.DPadUp:
                             GetChildAt(0).ChangeSprite("GamepadUpArrow_Sprite");
                             break;
+
                         case Buttons.DPadDown:
                             GetChildAt(0).ChangeSprite("GamepadDownArrow_Sprite");
                             break;
+
                         case Buttons.DPadUp | Buttons.DPadDown:
                             break;
+
                         case Buttons.DPadLeft:
                             GetChildAt(0).ChangeSprite("GamepadLeftArrow_Sprite");
                             break;
+
                         default:
                             if (button != Buttons.DPadRight)
                             {
@@ -187,6 +207,7 @@ namespace RogueCastle
                             {
                                 GetChildAt(0).ChangeSprite("GamepadRightArrow_Sprite");
                             }
+
                             break;
                     }
                 }
@@ -262,6 +283,7 @@ namespace RogueCastle
             {
                 GetChildAt(0).ChangeSprite("GamepadRightTrigger_Sprite");
             }
+
             CalculateBounds();
         }
 
@@ -279,6 +301,7 @@ namespace RogueCastle
                 keyIconObj.SetButton(Button);
                 return;
             }
+
             keyIconObj.SetKey(Key);
         }
 

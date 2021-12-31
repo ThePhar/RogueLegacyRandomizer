@@ -52,7 +52,7 @@ namespace RogueCastle
             thread.Start();
             m_logo.Opacity = 0f;
             Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "0.5", "Opacity", "1");
-            Tween.AddEndHandlerToLastTween(typeof (SoundManager), "PlaySound", "CDGSplashCreak");
+            Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "CDGSplashCreak");
             base.OnEnter();
         }
 
@@ -87,11 +87,13 @@ namespace RogueCastle
                     Game.PlayerStats.TutorialComplete = false;
                     return;
                 }
+
                 if (!Game.PlayerStats.TutorialComplete)
                 {
                     (ScreenManager as RCScreenManager).DisplayScreen(23, true);
                     return;
                 }
+
                 (ScreenManager as RCScreenManager).DisplayScreen(3, true);
             }
             else
@@ -101,6 +103,7 @@ namespace RogueCastle
                     (ScreenManager as RCScreenManager).DisplayScreen(23, true);
                     return;
                 }
+
                 (ScreenManager as RCScreenManager).DisplayScreen(3, true);
             }
         }
@@ -113,6 +116,7 @@ namespace RogueCastle
                 m_totalElapsedTime += (float) gameTime.ElapsedGameTime.TotalSeconds;
                 m_loadingText.Opacity = opacity;
             }
+
             if (m_levelDataLoaded && !m_fadingOut)
             {
                 m_fadingOut = true;
@@ -123,6 +127,7 @@ namespace RogueCastle
                 Tween.To(m_loadingText, 0.5f, Tween.EaseNone, "Opacity", "0");
                 m_logo.Opacity = opacity2;
             }
+
             base.Update(gameTime);
         }
 

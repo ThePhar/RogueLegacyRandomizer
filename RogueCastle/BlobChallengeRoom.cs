@@ -38,28 +38,26 @@ namespace RogueCastle
             {
                 var num = 0;
                 foreach (var current in EnemyList)
-                {
                     if (current.Type == 2 && !current.IsKilled)
                     {
                         num++;
                     }
-                }
+
                 foreach (var current2 in TempEnemyList)
-                {
                     if (current2.Type == 2 && !current2.IsKilled)
                     {
                         num++;
                     }
-                }
+
                 return num;
             }
         }
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_Blob);
+            m_boss = EnemyList[0] as EnemyObj_Blob;
             m_boss.SaveToFile = false;
-            m_boss2 = (EnemyList[1] as EnemyObj_Blob);
+            m_boss2 = EnemyList[1] as EnemyObj_Blob;
             m_boss2.SaveToFile = false;
             base.Initialize();
         }
@@ -117,6 +115,7 @@ namespace RogueCastle
             {
                 m_boss.CurrentHealth = m_boss.MaxHealth;
             }
+
             if (m_boss2 != null)
             {
                 m_boss2.CurrentHealth = m_boss2.MaxHealth;
@@ -143,8 +142,10 @@ namespace RogueCastle
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X", m_boss.X.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name, "Intro2");
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X",
+                m_boss.X.ToString());
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+                "Intro2");
             base.OnEnter();
             m_bossChest.ForcedItemType = 18;
         }
@@ -194,6 +195,7 @@ namespace RogueCastle
             {
                 Player.Y = bounds.Bottom - 20;
             }
+
             if (Player.X > bounds.Right)
             {
                 Player.X = bounds.Left + 20;
@@ -202,6 +204,7 @@ namespace RogueCastle
             {
                 Player.X = bounds.Right - 20;
             }
+
             var list = Player.AttachedLevel.CurrentRoom.EnemyList;
             foreach (var current in list)
             {
@@ -213,6 +216,7 @@ namespace RogueCastle
                 {
                     current.Y = bounds.Bottom - 20;
                 }
+
                 if (current.X > bounds.Right - 10)
                 {
                     current.X = bounds.Left + 20;
@@ -222,6 +226,7 @@ namespace RogueCastle
                     current.X = bounds.Right - 20;
                 }
             }
+
             list = Player.AttachedLevel.CurrentRoom.TempEnemyList;
             foreach (var current2 in list)
             {
@@ -233,6 +238,7 @@ namespace RogueCastle
                 {
                     current2.Y = bounds.Bottom - 20;
                 }
+
                 if (current2.X > bounds.Right - 10)
                 {
                     current2.X = bounds.Left + 20;
@@ -242,6 +248,7 @@ namespace RogueCastle
                     current2.X = bounds.Right - 20;
                 }
             }
+
             base.Update(gameTime);
         }
 
@@ -249,41 +256,44 @@ namespace RogueCastle
         {
             base.Draw(camera);
             var position = Player.Position;
-            if (Player.X - Player.Width/2f < X)
+            if (Player.X - Player.Width / 2f < X)
             {
                 Player.Position = new Vector2(Player.X + Width, Player.Y);
                 Player.Draw(camera);
             }
-            else if (Player.X + Player.Width/2f > X + Width)
+            else if (Player.X + Player.Width / 2f > X + Width)
             {
                 Player.Position = new Vector2(Player.X - Width, Player.Y);
                 Player.Draw(camera);
             }
-            if (Player.Y - Player.Height/2f < Y)
+
+            if (Player.Y - Player.Height / 2f < Y)
             {
                 Player.Position = new Vector2(Player.X, Player.Y + Height);
                 Player.Draw(camera);
             }
-            else if (Player.Y + Player.Height/2f > Y + Height)
+            else if (Player.Y + Player.Height / 2f > Y + Height)
             {
                 Player.Position = new Vector2(Player.X, Player.Y - Height);
                 Player.Draw(camera);
             }
+
             Player.Position = position;
             foreach (var current in EnemyList)
             {
                 var position2 = current.Position;
                 var pureBounds = current.PureBounds;
-                if (current.X - current.Width/2f < X)
+                if (current.X - current.Width / 2f < X)
                 {
                     current.Position = new Vector2(current.X + Width, current.Y);
                     current.Draw(camera);
                 }
-                else if (current.X + current.Width/2f > X + Width)
+                else if (current.X + current.Width / 2f > X + Width)
                 {
                     current.Position = new Vector2(current.X - Width, current.Y);
                     current.Draw(camera);
                 }
+
                 if (pureBounds.Top < Y)
                 {
                     current.Position = new Vector2(current.X, current.Y + Height);
@@ -294,23 +304,26 @@ namespace RogueCastle
                     current.Position = new Vector2(current.X, current.Y - Height);
                     current.Draw(camera);
                 }
+
                 current.Position = position2;
             }
+
             foreach (var current2 in TempEnemyList)
             {
                 current2.ForceDraw = true;
                 var position3 = current2.Position;
                 var pureBounds2 = current2.PureBounds;
-                if (current2.X - current2.Width/2f < X)
+                if (current2.X - current2.Width / 2f < X)
                 {
                     current2.Position = new Vector2(current2.X + Width, current2.Y);
                     current2.Draw(camera);
                 }
-                else if (current2.X + current2.Width/2f > X + Width)
+                else if (current2.X + current2.Width / 2f > X + Width)
                 {
                     current2.Position = new Vector2(current2.X - Width, current2.Y);
                     current2.Draw(camera);
                 }
+
                 if (pureBounds2.Top < Y)
                 {
                     current2.Position = new Vector2(current2.X, current2.Y + Height);
@@ -321,6 +334,7 @@ namespace RogueCastle
                     current2.Position = new Vector2(current2.X, current2.Y - Height);
                     current2.Draw(camera);
                 }
+
                 current2.Position = position3;
             }
         }
@@ -329,16 +343,15 @@ namespace RogueCastle
         {
             if (!BossKilled)
             {
-                foreach (var current in EnemyList)
-                {
-                    current.Reset();
-                }
+                foreach (var current in EnemyList) current.Reset();
             }
+
             foreach (var current2 in TempEnemyList)
             {
                 current2.KillSilently();
                 current2.Dispose();
             }
+
             TempEnemyList.Clear();
             Player.CanBeKnockedBack = true;
             base.OnExit();

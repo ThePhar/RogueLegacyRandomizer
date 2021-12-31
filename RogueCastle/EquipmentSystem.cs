@@ -26,20 +26,15 @@ namespace RogueCastle
             for (var i = 0; i < 5; i++)
             {
                 var array = new EquipmentData[15];
-                for (var j = 0; j < 15; j++)
-                {
-                    array[j] = new EquipmentData();
-                }
+                for (var j = 0; j < 15; j++) array[j] = new EquipmentData();
                 m_equipmentDataArray.Add(array);
             }
+
             m_abilityCostArray = new List<int[]>();
             for (var k = 0; k < 5; k++)
             {
                 var array2 = new int[11];
-                for (var l = 0; l < 11; l++)
-                {
-                    array2[l] = 9999;
-                }
+                for (var l = 0; l < 11; l++) array2[l] = 9999;
                 m_abilityCostArray.Add(array2);
             }
         }
@@ -112,10 +107,12 @@ namespace RogueCastle
             CreateEquipmentData(3, 1, 0, 0, 200, 10, 0, 0, 0, 0, 5, new Color(210, 195, 125), new Color(210, 195, 125));
             CreateEquipmentData(2, 1, 0, 0, 350, 20, 0, 0, 9, 0, 0, new Color(190, 165, 105), new Color(155, 190, 366));
             CreateEquipmentData(0, 5, 0, 5, 375, 20, 0, 11, 0, 0, 0, new Color(135, 135, 135), new Color(95, 95, 95));
-            CreateEquipmentData(1, 3, 0, 5, 250, 15, 25, 0, 0, 20, 0, new Color(165, 165, 165), new Color(125, 235, 80));
+            CreateEquipmentData(1, 3, 0, 5, 250, 15, 25, 0, 0, 20, 0, new Color(165, 165, 165),
+                new Color(125, 235, 80));
             CreateEquipmentData(4, 5, 0, 5, 425, 15, 0, 0, 0, 0, 0, new Color(125, 235, 80), new Color(0, 0, 0),
                 new Vector2(2f, 0.15f));
-            CreateEquipmentData(3, 3, 0, 5, 375, 20, 0, 0, 0, 0, 11, new Color(155, 155, 155), new Color(155, 155, 155));
+            CreateEquipmentData(3, 3, 0, 5, 375, 20, 0, 0, 0, 0, 11, new Color(155, 155, 155),
+                new Color(155, 155, 155));
             CreateEquipmentData(2, 3, 0, 5, 525, 30, 0, 0, 16, 0, 0, new Color(120, 120, 120), new Color(95, 95, 95));
             CreateEquipmentData(0, 1, 2, 10, 500, 35, -30, 9, 0, 0, 0, new Color(105, 0, 0), new Color(105, 0, 0),
                 new Vector2(7f, 1f));
@@ -127,17 +124,22 @@ namespace RogueCastle
                 new Vector2(7f, 1f));
             CreateEquipmentData(2, 1, 2, 10, 500, 35, -30, 0, 14, 0, 0, new Color(230, 0, 0), new Color(105, 0, 0),
                 new Vector2(7f, 1f));
-            CreateEquipmentData(0, 10, 2, 1, 750, 35, 0, 17, 0, 0, 0, new Color(245, 255, 175), new Color(215, 215, 215));
-            CreateEquipmentData(1, 8, 0, 1, 550, 25, 35, 0, 0, 25, 0, new Color(245, 255, 175), new Color(215, 215, 215));
+            CreateEquipmentData(0, 10, 2, 1, 750, 35, 0, 17, 0, 0, 0, new Color(245, 255, 175),
+                new Color(215, 215, 215));
+            CreateEquipmentData(1, 8, 0, 1, 550, 25, 35, 0, 0, 25, 0, new Color(245, 255, 175),
+                new Color(215, 215, 215));
             CreateEquipmentData(4, 11, 2, 1, 850, 35, 0, 0, 0, 0, 0, new Color(245, 255, 175), new Color(0, 0, 0),
                 new Vector2(8f, 1f));
-            CreateEquipmentData(3, 8, 0, 1, 750, 35, 0, 0, 0, 0, 17, new Color(245, 255, 175), new Color(245, 255, 175));
-            CreateEquipmentData(2, 8, 0, 1, 950, 45, 0, 0, 25, 0, 0, new Color(245, 255, 175), new Color(215, 215, 215));
+            CreateEquipmentData(3, 8, 0, 1, 750, 35, 0, 0, 0, 0, 17, new Color(245, 255, 175),
+                new Color(245, 255, 175));
+            CreateEquipmentData(2, 8, 0, 1, 950, 45, 0, 0, 25, 0, 0, new Color(245, 255, 175),
+                new Color(215, 215, 215));
             CreateEquipmentData(0, 15, 2, 6, 1150, 40, 0, 22, 0, 0, 0, new Color(10, 150, 50), new Color(10, 150, 50));
             CreateEquipmentData(1, 12, 0, 6, 950, 30, 55, 0, 0, 15, 0, new Color(180, 120, 70), new Color(78, 181, 80));
             CreateEquipmentData(4, 13, 2, 6, 1300, 40, 0, 0, 0, 0, 0, new Color(135, 200, 130), new Color(0, 0, 0),
                 new Vector2(1f, 0.04f), new Vector2(2f, 0.15f));
-            CreateEquipmentData(3, 12, 0, 6, 1075, 40, 0, 0, 0, 0, 22, new Color(160, 125, 80), new Color(160, 125, 80));
+            CreateEquipmentData(3, 12, 0, 6, 1075, 40, 0, 0, 0, 0, 22, new Color(160, 125, 80),
+                new Color(160, 125, 80));
             CreateEquipmentData(2, 12, 0, 6, 1500, 55, 0, 0, 38, 0, 0, new Color(180, 120, 70), new Color(145, 55, 15));
             CreateEquipmentData(0, 10, 2, 11, 1250, 45, 0, -10, 0, 0, 0, new Color(240, 235, 90),
                 new Color(215, 135, 75), new Vector2(3f, 0.1f));
@@ -149,10 +151,13 @@ namespace RogueCastle
                 new Color(235, 220, 135), new Vector2(3f, 0.1f));
             CreateEquipmentData(2, 10, 3, 11, 1250, 45, 0, -10, 0, 0, 0, new Color(240, 235, 90),
                 new Color(235, 135, 75), new Vector2(3f, 0.1f));
-            CreateEquipmentData(0, 18, 0, 2, 1450, 55, 0, 14, 12, 0, 0, new Color(255, 190, 45), new Color(240, 230, 0));
-            CreateEquipmentData(1, 15, 0, 2, 1200, 45, 20, 0, 18, 20, 0, new Color(255, 190, 45), new Color(240, 230, 0));
+            CreateEquipmentData(0, 18, 0, 2, 1450, 55, 0, 14, 12, 0, 0, new Color(255, 190, 45),
+                new Color(240, 230, 0));
+            CreateEquipmentData(1, 15, 0, 2, 1200, 45, 20, 0, 18, 20, 0, new Color(255, 190, 45),
+                new Color(240, 230, 0));
             CreateEquipmentData(4, 19, 2, 2, 1600, 40, 0, 0, 27, 0, 0, new Color(255, 190, 45), new Color(0, 0, 0));
-            CreateEquipmentData(3, 15, 0, 2, 1400, 45, 0, 0, 18, 0, 10, new Color(255, 190, 45), new Color(240, 230, 0));
+            CreateEquipmentData(3, 15, 0, 2, 1400, 45, 0, 0, 18, 0, 10, new Color(255, 190, 45),
+                new Color(240, 230, 0));
             CreateEquipmentData(2, 15, 3, 2, 1875, 80, 0, 0, 70, 0, 0, new Color(255, 190, 45), new Color(240, 230, 0));
             CreateEquipmentData(0, 21, 2, 7, 1700, 45, 0, 27, 0, 0, 0, new Color(170, 255, 250),
                 new Color(255, 245, 255));
@@ -175,11 +180,14 @@ namespace RogueCastle
             CreateEquipmentData(2, 20, 2, 12, 1850, 50, 30, 0, -15, 30, 0, new Color(90, 90, 90), new Color(30, 30, 30),
                 new Vector2(4f, 0.5f));
             CreateEquipmentData(0, 27, 2, 3, 2300, 55, 0, 36, 0, 0, 0, new Color(240, 230, 0), new Color(240, 230, 0));
-            CreateEquipmentData(1, 25, 0, 3, 1900, 50, 55, 0, 0, 40, 0, new Color(115, 100, 190), new Color(240, 230, 0));
+            CreateEquipmentData(1, 25, 0, 3, 1900, 50, 55, 0, 0, 40, 0, new Color(115, 100, 190),
+                new Color(240, 230, 0));
             CreateEquipmentData(4, 29, 2, 3, 2600, 55, 0, 0, 0, 0, 0, new Color(55, 0, 145), new Color(0, 0, 0),
                 new Vector2(2f, 0.5f));
-            CreateEquipmentData(3, 25, 0, 3, 2250, 55, 0, 0, 0, 0, 36, new Color(115, 100, 190), new Color(50, 55, 210));
-            CreateEquipmentData(2, 25, 2, 3, 3000, 75, 0, 0, 59, 0, 0, new Color(115, 100, 190), new Color(50, 55, 210));
+            CreateEquipmentData(3, 25, 0, 3, 2250, 55, 0, 0, 0, 0, 36, new Color(115, 100, 190),
+                new Color(50, 55, 210));
+            CreateEquipmentData(2, 25, 2, 3, 3000, 75, 0, 0, 59, 0, 0, new Color(115, 100, 190),
+                new Color(50, 55, 210));
             CreateEquipmentData(0, 31, 2, 8, 2800, 75, 0, 46, 0, 0, 0, new Color(200, 0, 0), new Color(50, 50, 50));
             CreateEquipmentData(1, 29, 0, 8, 2400, 60, 75, 0, 0, 60, 0, new Color(50, 50, 50), new Color(120, 0, 0));
             CreateEquipmentData(4, 34, 3, 8, 3200, 75, 0, 0, 0, 0, 0, new Color(255, 0, 0), new Color(0, 0, 0),
@@ -245,9 +253,7 @@ namespace RogueCastle
             equipmentData.ChestColourRequirement = chestColourRequirement;
             equipmentData.SecondaryAttribute = new Vector2[secondaryAttributes.Length];
             for (var i = 0; i < secondaryAttributes.Length; i++)
-            {
                 equipmentData.SecondaryAttribute[i] = secondaryAttributes[i];
-            }
             m_equipmentDataArray[equipmentType][equipmentIndex] = equipmentData;
         }
 
@@ -260,7 +266,7 @@ namespace RogueCastle
         {
             return
                 (int)
-                    (m_abilityCostArray[categoryType][itemIndex] + Game.PlayerStats.TotalRunesPurchased*AbilityCostMod);
+                (m_abilityCostArray[categoryType][itemIndex] + Game.PlayerStats.TotalRunesPurchased * AbilityCostMod);
         }
 
         public int GetBaseAbilityCost(int categoryType, int itemIndex)
@@ -271,25 +277,18 @@ namespace RogueCastle
         public void SetBlueprintState(byte state)
         {
             foreach (var current in Game.PlayerStats.GetBlueprintArray)
-            {
                 for (var i = 0; i < current.Length; i++)
-                {
                     if (current[i] < state)
                     {
                         current[i] = state;
                     }
-                }
-            }
+
             foreach (var current2 in Game.PlayerStats.GetRuneArray)
-            {
                 for (var j = 0; j < current2.Length; j++)
-                {
                     if (current2[j] < state)
                     {
                         current2[j] = state;
                     }
-                }
-            }
         }
     }
 }

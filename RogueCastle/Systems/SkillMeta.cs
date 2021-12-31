@@ -15,21 +15,21 @@ namespace RogueCastle.Systems
 {
     public class SkillMeta
     {
-        public Vector2 Position { get; set; }
-        public ManorPiece ManorPiece { get; set; }
-        public SkillLink SkillLink { get; set; }
-
         public SkillMeta()
         {
             Position = new Vector2(0, 0);
             ManorPiece = ManorPiece.None;
-            SkillLink = new SkillLink()
+            SkillLink = new SkillLink
             {
                 BottomLink = null,
                 LeftLink = null,
                 RightLink = null,
-                TopLink = null,
+                TopLink = null
             };
         }
+
+        public Vector2 Position { get; set; }
+        public ManorPiece ManorPiece { get; set; }
+        public SkillLink SkillLink { get; set; }
     }
 }

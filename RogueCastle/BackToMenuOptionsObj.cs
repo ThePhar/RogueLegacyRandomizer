@@ -15,9 +15,7 @@ namespace RogueCastle
 {
     public class BackToMenuOptionsObj : OptionsObj
     {
-        public BackToMenuOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit to Title Screen")
-        {
-        }
+        public BackToMenuOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Quit to Title Screen") { }
 
         public override bool IsActive
         {
@@ -47,6 +45,7 @@ namespace RogueCastle
             {
                 m_nameText.Text = "Quit to Title Screen (skip tutorial)";
             }
+
             base.Initialize();
         }
 
@@ -62,28 +61,34 @@ namespace RogueCastle
                 {
                     (levelScreen.CurrentRoom as CarnivalShoot1BonusRoom).UnequipPlayer();
                 }
+
                 if (levelScreen.CurrentRoom is CarnivalShoot2BonusRoom)
                 {
                     (levelScreen.CurrentRoom as CarnivalShoot2BonusRoom).UnequipPlayer();
                 }
             }
+
             if (levelScreen != null)
             {
                 var challengeBossRoomObj = levelScreen.CurrentRoom as ChallengeBossRoomObj;
                 if (challengeBossRoomObj != null)
                 {
                     challengeBossRoomObj.LoadPlayerData();
-                    (m_parentScreen.ScreenManager.Game as Game).SaveManager.LoadFiles(levelScreen, SaveType.UpgradeData);
+                    (m_parentScreen.ScreenManager.Game as Game).SaveManager.LoadFiles(levelScreen,
+                        SaveType.UpgradeData);
                     levelScreen.Player.CurrentHealth = challengeBossRoomObj.StoredHP;
                     levelScreen.Player.CurrentMana = challengeBossRoomObj.StoredMP;
                 }
             }
-            (m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
+
+            (m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData,
+                SaveType.UpgradeData);
             if (Game.PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start" &&
                 levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
             {
                 (m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.MapData);
             }
+
             Game.ScreenManager.DisplayScreen(3, true);
         }
 

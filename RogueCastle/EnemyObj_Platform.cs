@@ -78,7 +78,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            var flag = (Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f);
+            var flag = Game.PlayerStats.Traits.X == 34f || Game.PlayerStats.Traits.Y == 34f;
             if (!flag)
             {
                 if (m_retractCounter > 0f)
@@ -94,6 +94,7 @@ namespace RogueCastle
                             num += 0.1f;
                         }
                     }
+
                     if (m_retractCounter <= 0f)
                     {
                         m_isExtended = false;
@@ -108,6 +109,7 @@ namespace RogueCastle
                 m_isExtended = true;
                 PlayAnimation("EndRetract", "EndRetract");
             }
+
             base.Update(gameTime);
         }
 
@@ -122,7 +124,8 @@ namespace RogueCastle
                 m_isExtended = true;
                 m_blinkedWarning = false;
                 PlayAnimation("StartRetract", "EndRetract");
-                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Platform_Activate_01", "Platform_Activate_02");
+                SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Platform_Activate_01",
+                    "Platform_Activate_02");
                 m_retractCounter = RetractDelay;
                 if (m_target.IsAirAttacking)
                 {
@@ -139,6 +142,7 @@ namespace RogueCastle
             {
                 return;
             }
+
             PlayAnimation(1, 1);
             m_isExtended = false;
             m_blinkedWarning = false;
@@ -152,6 +156,7 @@ namespace RogueCastle
             {
                 return;
             }
+
             PlayAnimation(1, 1);
             m_isExtended = false;
             m_blinkedWarning = false;

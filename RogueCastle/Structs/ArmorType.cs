@@ -19,6 +19,6 @@ namespace RogueCastle.Structs
         Ring,
         Foot,
         Hand,
-        All,
+        All
     }
 }

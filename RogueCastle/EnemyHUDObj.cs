@@ -52,12 +52,14 @@ namespace RogueCastle
             {
                 enemyName = "Default Enemy";
             }
+
             if (enemyName.Length > 17)
             {
                 enemyName = enemyName.Substring(0, 14) + "..";
             }
+
             m_enemyNameText.Text = enemyName;
-            m_enemyLevelText.Text = ((int) (enemyLevel*2.75f)).ToString();
+            m_enemyLevelText.Text = ((int) (enemyLevel * 2.75f)).ToString();
             m_enemyHPPercent = enemyHPPercent;
             if (enemyHPPercent <= 0f)
             {
@@ -77,6 +79,7 @@ namespace RogueCastle
             {
                 m_blinkDurationCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             if (m_blinkCounter > 0 && m_blinkDurationCounter <= 0f)
             {
                 if (m_opacity > 0f)
@@ -87,6 +90,7 @@ namespace RogueCastle
                 {
                     m_opacity = 0.5f;
                 }
+
                 m_enemyHPBar.Opacity = m_opacity;
                 m_enemyLevelText.Opacity = m_opacity;
                 m_enemyNameText.Opacity = m_opacity;
@@ -101,7 +105,7 @@ namespace RogueCastle
             base.Draw(camera);
             m_enemyHPBar.Position = new Vector2(X + 8f, Y + 17f);
             m_enemyHPBar.SpriteRect = new Rectangle(m_enemyHPBar.SpriteRect.X, m_enemyHPBar.SpriteRect.Y,
-                (int) (m_enemyHPBarLength*m_enemyHPPercent), m_enemyHPBar.SpriteRect.Height);
+                (int) (m_enemyHPBarLength * m_enemyHPPercent), m_enemyHPBar.SpriteRect.Height);
             m_enemyHPBar.Draw(camera);
             m_enemyNameText.Position = new Vector2(X + Width - 5f, Y - 10f);
             m_enemyNameText.Draw(camera);

@@ -56,11 +56,11 @@ namespace RogueCastle
             m_dialogContainer.Position = new Vector2(660f, 100f);
             m_dialogContainer.AddChild(textObj2);
             m_dialogContainer.ForceDraw = true;
-            textObj2.Position = new Vector2(-(float) m_dialogContainer.Width/2.2f,
-                -(float) m_dialogContainer.Height/1.6f);
+            textObj2.Position = new Vector2(-(float) m_dialogContainer.Width / 2.2f,
+                -(float) m_dialogContainer.Height / 1.6f);
             m_dialogContainer.AddChild(textObj);
-            textObj.Position = new Vector2(-(float) m_dialogContainer.Width/2.15f,
-                -(float) m_dialogContainer.Height/3.5f);
+            textObj.Position = new Vector2(-(float) m_dialogContainer.Width / 2.15f,
+                -(float) m_dialogContainer.Height / 3.5f);
             textObj.Text =
                 "This is a test to see how much text I can fit onto this dialog box without it running out of space. The text needs to be defined after the dialog text position is set, because the dialogtext width affects the entire width of the dialog container, which in END.";
             textObj.WordWrap(850);
@@ -89,7 +89,7 @@ namespace RogueCastle
             textObj3.Y -= 40f;
             m_dialogChoiceContainer.AddChild(textObj4);
             textObj4.Y += 7f;
-            spriteObj2.Position = new Vector2(textObj3.X, textObj3.Y + spriteObj2.Height/2 + 3f);
+            spriteObj2.Position = new Vector2(textObj3.X, textObj3.Y + spriteObj2.Height / 2 + 3f);
             m_dialogChoiceContainer.Scale = Vector2.Zero;
             m_dialogChoiceContainer.Visible = false;
             base.LoadContent();
@@ -104,6 +104,7 @@ namespace RogueCastle
             {
                 Array.Clear(m_confirmArgs, 0, m_confirmArgs.Length);
             }
+
             m_cancelMethodObj = null;
             m_cancelMethodInfo = null;
             if (m_cancelArgs != null)
@@ -122,10 +123,7 @@ namespace RogueCastle
         public void SetConfirmEndHandler(Type methodType, string functionName, params object[] args)
         {
             var array = new Type[args.Length];
-            for (var i = 0; i < args.Length; i++)
-            {
-                array[i] = args[i].GetType();
-            }
+            for (var i = 0; i < args.Length; i++) array[i] = args[i].GetType();
             m_confirmMethodInfo = methodType.GetMethod(functionName, array);
             m_confirmArgs = args;
             if (m_confirmMethodInfo == null)
@@ -137,6 +135,7 @@ namespace RogueCastle
                 m_confirmArgs = new object[1];
                 m_confirmArgs[0] = args;
             }
+
             m_confirmMethodObj = null;
         }
 
@@ -150,10 +149,7 @@ namespace RogueCastle
         public void SetCancelEndHandler(Type methodType, string functionName, params object[] args)
         {
             var array = new Type[args.Length];
-            for (var i = 0; i < args.Length; i++)
-            {
-                array[i] = args[i].GetType();
-            }
+            for (var i = 0; i < args.Length; i++) array[i] = args[i].GetType();
             m_cancelMethodInfo = methodType.GetMethod(functionName, array);
             m_cancelArgs = args;
             if (m_cancelMethodInfo == null)
@@ -165,6 +161,7 @@ namespace RogueCastle
                 m_cancelArgs = new object[1];
                 m_cancelArgs[0] = args;
             }
+
             m_cancelMethodObj = null;
         }
 
@@ -178,6 +175,7 @@ namespace RogueCastle
                 (m_dialogChoiceContainer.GetChildAt(2) as TextObj).RandomizeSentence(false);
                 (m_dialogChoiceContainer.GetChildAt(3) as TextObj).RandomizeSentence(false);
             }
+
             m_runChoiceDialogue = true;
         }
 
@@ -203,8 +201,9 @@ namespace RogueCastle
                                     textObj.RandomizeSentence(false);
                                     (m_dialogContainer.GetChildAt(1) as TextObj).RandomizeSentence(false);
                                 }
+
                                 textObj.WordWrap(850);
-                                textObj.BeginTypeWriting(m_dialogText[m_dialogCounter].Length*m_textScrollSpeed,
+                                textObj.BeginTypeWriting(m_dialogText[m_dialogCounter].Length * m_textScrollSpeed,
                                     "dialogue_tap");
                             }
                             else
@@ -224,6 +223,7 @@ namespace RogueCastle
                         {
                             (m_dialogContainer.GetChildAt(2) as TextObj).StopTypeWriting(true);
                         }
+
                         var spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
                         if (m_dialogCounter == m_dialogText.Length - 1)
                         {
@@ -253,9 +253,10 @@ namespace RogueCastle
                         {
                             m_highlightedChoice = 2;
                         }
+
                         m_dialogChoiceContainer.GetChildAt(1).Y =
                             m_dialogChoiceContainer.GetChildAt(m_highlightedChoice).Y +
-                            m_dialogChoiceContainer.GetChildAt(1).Height/2 + 3f;
+                            m_dialogChoiceContainer.GetChildAt(1).Height / 2 + 3f;
                     }
                     else if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
@@ -265,10 +266,12 @@ namespace RogueCastle
                         {
                             m_highlightedChoice = 3;
                         }
+
                         m_dialogChoiceContainer.GetChildAt(1).Y =
                             m_dialogChoiceContainer.GetChildAt(m_highlightedChoice).Y +
-                            m_dialogChoiceContainer.GetChildAt(1).Height/2 + 3f;
+                            m_dialogChoiceContainer.GetChildAt(1).Height / 2 + 3f;
                     }
+
                     if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                     {
                         m_runCancelEndHandler = false;
@@ -281,6 +284,7 @@ namespace RogueCastle
                         {
                             SoundManager.PlaySound("DialogueMenuConfirm");
                         }
+
                         m_lockControls = true;
                         SoundManager.PlaySound("DialogMenuClose");
                         Tween.To(m_dialogContainer, 0.3f, Quad.EaseInOut, "Opacity", "0", "Y", "100");
@@ -293,7 +297,7 @@ namespace RogueCastle
                         m_highlightedChoice = 3;
                         m_dialogChoiceContainer.GetChildAt(1).Y =
                             m_dialogChoiceContainer.GetChildAt(m_highlightedChoice).Y +
-                            m_dialogChoiceContainer.GetChildAt(1).Height/2 + 3f;
+                            m_dialogChoiceContainer.GetChildAt(1).Height / 2 + 3f;
                         m_runCancelEndHandler = true;
                         SoundManager.PlaySound("DialogueMenuCancel");
                         m_lockControls = true;
@@ -305,6 +309,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             base.HandleInput();
         }
 
@@ -314,6 +319,7 @@ namespace RogueCastle
             {
                 m_inputDelayTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             if (!m_dialogChoiceContainer.Visible && m_dialogCounter == m_dialogText.Length - 1 && m_runChoiceDialogue)
             {
                 var spriteObj = m_dialogContainer.GetChildAt(3) as SpriteObj;
@@ -324,21 +330,24 @@ namespace RogueCastle
                     textObj.StopTypeWriting(true);
                     m_dialogChoiceContainer.Visible = true;
                     Tween.To(m_dialogChoiceContainer, 0.3f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
-                    Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "DialogOpenBump");
+                    Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogOpenBump");
                 }
             }
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_dialogContainer.Draw(Camera);
             if (m_dialogContainer.ScaleX > 0f)
             {
-                m_dialogContainer.GetChildAt(3).Y = m_dialogContinueIconY + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+                m_dialogContainer.GetChildAt(3).Y =
+                    m_dialogContinueIconY + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
             }
+
             m_dialogChoiceContainer.Draw(Camera);
             Camera.End();
             base.Draw(gameTime);
@@ -353,7 +362,7 @@ namespace RogueCastle
             m_highlightedChoice = 2;
             m_dialogChoiceContainer.Scale = new Vector2(1f, 1f);
             m_dialogChoiceContainer.GetChildAt(1).Y = m_dialogChoiceContainer.GetChildAt(m_highlightedChoice).Y +
-                                                      m_dialogChoiceContainer.GetChildAt(1).Height/2 + 3f;
+                                                      m_dialogChoiceContainer.GetChildAt(1).Height / 2 + 3f;
             m_dialogChoiceContainer.Scale = Vector2.Zero;
             var text = DialogueManager.GetText(m_dialogueObjName);
             var speakers = text.Speakers;
@@ -367,6 +376,7 @@ namespace RogueCastle
             {
                 spriteObj.ChangeSprite("EndTextIcon_Sprite");
             }
+
             m_dialogCounter = 0;
             m_dialogTitles = speakers;
             m_dialogText = dialogue;
@@ -380,8 +390,9 @@ namespace RogueCastle
                 (m_dialogContainer.GetChildAt(2) as TextObj).RandomizeSentence(false);
                 (m_dialogContainer.GetChildAt(1) as TextObj).RandomizeSentence(false);
             }
+
             (m_dialogContainer.GetChildAt(2) as TextObj).BeginTypeWriting(
-                dialogue[m_dialogCounter].Length*m_textScrollSpeed, "dialogue_tap");
+                dialogue[m_dialogCounter].Length * m_textScrollSpeed, "dialogue_tap");
             Tween.To(m_dialogContainer, 0.3f, Quad.EaseInOut, "Opacity", "1", "Y", "150");
             Tween.To(this, 0.3f, Linear.EaseNone, "BackBufferOpacity", "0.5");
             base.OnEnter();
@@ -417,6 +428,7 @@ namespace RogueCastle
                 {
                     Array.Clear(m_confirmArgs, 0, m_confirmArgs.Length);
                 }
+
                 m_confirmArgs = null;
                 m_cancelMethodObj = null;
                 m_cancelMethodInfo = null;
@@ -424,6 +436,7 @@ namespace RogueCastle
                 {
                     Array.Clear(m_cancelArgs, 0, m_cancelArgs.Length);
                 }
+
                 m_cancelArgs = null;
                 m_dialogContainer.Dispose();
                 m_dialogContainer = null;
@@ -433,11 +446,13 @@ namespace RogueCastle
                 {
                     Array.Clear(m_dialogText, 0, m_dialogText.Length);
                 }
+
                 m_dialogText = null;
                 if (m_dialogTitles != null)
                 {
                     Array.Clear(m_dialogTitles, 0, m_dialogTitles.Length);
                 }
+
                 m_dialogTitles = null;
                 base.Dispose();
             }

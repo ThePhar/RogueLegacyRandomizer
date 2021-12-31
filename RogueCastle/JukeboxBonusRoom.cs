@@ -79,13 +79,12 @@ namespace RogueCastle
             m_speechBubble.Visible = false;
             GameObjList.Add(m_speechBubble);
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "Jukebox")
                 {
                     m_jukeBox = current;
                     break;
                 }
-            }
+
             (m_jukeBox as SpriteObj).OutlineWidth = 2;
             m_jukeBox.Y -= 2f;
             m_speechBubble.Position = new Vector2(m_jukeBox.X, m_jukeBox.Y - m_speechBubble.Height - 20f);
@@ -102,7 +101,7 @@ namespace RogueCastle
             m_songTitle.FontSize = 40f;
             m_songTitle.Position = new Vector2(1270f, 570f);
             m_songTitle.OutlineWidth = 2;
-            m_nowPlayingText = (m_songTitle.Clone() as TextObj);
+            m_nowPlayingText = m_songTitle.Clone() as TextObj;
             m_nowPlayingText.Text = "Now Playing";
             m_nowPlayingText.FontSize = 24f;
             m_nowPlayingText.Y -= 50f;
@@ -122,7 +121,7 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = true;
                 m_speechBubble.Y = m_jukeBox.Y - m_speechBubble.Height - 110f +
-                                   (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+                                   (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
                 if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                 {
                     Tween.StopAllContaining(m_jukeBox, false);
@@ -147,6 +146,7 @@ namespace RogueCastle
                     {
                         m_songIndex = 0;
                     }
+
                     AnimateJukebox();
                     CheckForSongRepeat();
 
@@ -157,6 +157,7 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = false;
             }
+
             base.Update(gameTime);
         }
 
@@ -186,6 +187,7 @@ namespace RogueCastle
                 Tween.To(m_jukeBox, 0.2f, Tween.EaseNone, "Rotation", "2");
                 m_rotatedLeft = false;
             }
+
             Tween.To(m_jukeBox, 0.2f, Tween.EaseNone, "ScaleY", "3.1", "ScaleX", "2.9");
             Tween.AddEndHandlerToLastTween(this, "AnimateJukebox");
         }

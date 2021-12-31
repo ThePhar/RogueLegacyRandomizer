@@ -76,6 +76,7 @@ namespace RogueCastle
                         m_target.NumAirBounces++;
                     }
                 }
+
                 m_levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
                 m_levelScreen.SetLastEnemyHit(this);
                 RandomizeName();

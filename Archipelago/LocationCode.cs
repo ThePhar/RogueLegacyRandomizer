@@ -72,10 +72,13 @@ namespace Archipelago
 
         // Boss
         KhindrBossChest = 91100,
+
         // Khindr2BossChest = 91101,
         AlexanderBossChest = 91102,
+
         // Alexander2BossChest = 91103,
         LeonBossChest = 91104,
+
         // LeonBoss2Chest = 91105,
         HerodotusBossChest = 91106,
         // Herodotus2BossChest = 91107,

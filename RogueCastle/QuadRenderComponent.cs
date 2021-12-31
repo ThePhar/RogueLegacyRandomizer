@@ -18,9 +18,7 @@ namespace RogueCastle
         private short[] ib;
         private VertexPositionTexture[] verts;
 
-        public QuadRenderComponent(Game game) : base(game)
-        {
-        }
+        public QuadRenderComponent(Game game) : base(game) { }
 
         protected override void LoadContent()
         {

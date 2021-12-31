@@ -23,7 +23,8 @@ namespace RogueCastle
         private readonly LogicBlock m_generalExpertLB = new LogicBlock();
         private readonly LogicBlock m_generalMiniBossLB = new LogicBlock();
 
-        public EnemyObj_Starburst(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+        public EnemyObj_Starburst(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo,
             EnemyDifficulty difficulty)
             : base("EnemyStarburstIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
@@ -61,6 +62,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Planky";
                     MaxHealth = 25;
@@ -88,6 +90,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Starburst_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Plonky";
                     MaxHealth = 42;
@@ -115,6 +118,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Starburst_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Ploo";
                     MaxHealth = 750;
@@ -142,6 +146,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Starburst_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -182,7 +187,8 @@ namespace RogueCastle
             logicSet2.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
             logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet2.AddAction(new DelayLogicAction(FireballDelay));
-            logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
+            logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player,
+                "Eyeball_ProjectileAttack"));
             logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-45f, -45f);
             logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
@@ -210,7 +216,8 @@ namespace RogueCastle
             logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
             logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet3.AddAction(new DelayLogicAction(FireballDelay));
-            logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
+            logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player,
+                "Eyeball_ProjectileAttack"));
             logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-45f, -45f);
             logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
@@ -229,7 +236,8 @@ namespace RogueCastle
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
             logicSet3.AddAction(new DelayLogicAction(1f, 1f));
             logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
-            logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
+            logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player,
+                "Eyeball_ProjectileAttack"));
             projectileData.Angle = new Vector2(25f, 25f);
             logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-25f, -25f);
@@ -278,6 +286,7 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalBasicLB, 0, 100);
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -289,6 +298,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -301,6 +311,7 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalAdvancedLB, 0, 100);
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -312,6 +323,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -324,6 +336,7 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalExpertLB, 0, 100);
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -335,6 +348,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -357,6 +371,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array);
                     return;
                 }
+
                 default:
                     return;
             }

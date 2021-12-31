@@ -90,31 +90,37 @@ namespace RogueCastle
                     m_indexText.Text = "Linker " + m_roomNumber;
                     return;
                 }
+
                 if (Name == "EntranceBoss")
                 {
                     m_indexText.Text = "Boss\nEnt. " + m_roomNumber;
                     return;
                 }
+
                 if (Name == "Boss")
                 {
                     m_indexText.Text = "Boss " + m_roomNumber;
                     return;
                 }
+
                 if (Name == "Secret")
                 {
                     m_indexText.Text = "Secret " + m_roomNumber;
                     return;
                 }
+
                 if (Name == "Bonus")
                 {
                     m_indexText.Text = "Bonus " + m_roomNumber;
                     return;
                 }
+
                 if (Name == "Start")
                 {
                     m_indexText.Text = "Starting Room";
                     return;
                 }
+
                 m_indexText.Text = m_roomNumber.ToString();
             }
         }
@@ -125,7 +131,8 @@ namespace RogueCastle
             set
             {
                 m_debugRoomPosition = value;
-                m_roomInfoText.Text = string.Concat("Level Editor Pos: ", m_debugRoomPosition.ToString(), "\nReversed: ",
+                m_roomInfoText.Text = string.Concat("Level Editor Pos: ", m_debugRoomPosition.ToString(),
+                    "\nReversed: ",
                     IsReversed);
             }
         }
@@ -137,12 +144,11 @@ namespace RogueCastle
             get
             {
                 foreach (var current in GameObjList)
-                {
                     if (current is FairyChestObj)
                     {
                         return true;
                     }
-                }
+
                 return false;
             }
         }
@@ -153,30 +159,24 @@ namespace RogueCastle
             {
                 var num = 0;
                 foreach (var current in EnemyList)
-                {
                     if (!current.NonKillable && !current.IsKilled)
                     {
                         num++;
                     }
-                }
+
                 foreach (var current2 in TempEnemyList)
-                {
                     if (!current2.NonKillable && !current2.IsKilled)
                     {
                         num++;
                     }
-                }
+
                 return num;
             }
         }
 
-        public virtual void Initialize()
-        {
-        }
+        public virtual void Initialize() { }
 
-        public virtual void LoadContent(GraphicsDevice graphics)
-        {
-        }
+        public virtual void LoadContent(GraphicsDevice graphics) { }
 
         public virtual void OnEnter()
         {
@@ -196,13 +196,11 @@ namespace RogueCastle
         {
             Player.AttachedLevel.ResetObjectivePlate(false);
             for (var i = 0; i < TempEnemyList.Count; i++)
-            {
                 if (TempEnemyList[i].IsDemented)
                 {
                     Player.AttachedLevel.RemoveEnemyFromRoom(TempEnemyList[i], this);
                     i--;
                 }
-            }
         }
 
         public virtual void InitializeRenderTarget(RenderTarget2D bgRenderTarget)
@@ -214,14 +212,14 @@ namespace RogueCastle
         {
             _width = width;
             m_pauseBG.Scale = Vector2.One;
-            m_pauseBG.Scale = new Vector2((Width + 20)/m_pauseBG.Width, (Height + 20)/m_pauseBG.Height);
+            m_pauseBG.Scale = new Vector2((Width + 20) / m_pauseBG.Width, (Height + 20) / m_pauseBG.Height);
         }
 
         public void SetHeight(int height)
         {
             _height = height;
             m_pauseBG.Scale = Vector2.One;
-            m_pauseBG.Scale = new Vector2((Width + 20)/m_pauseBG.Width, (Height + 20)/m_pauseBG.Height);
+            m_pauseBG.Scale = new Vector2((Width + 20) / m_pauseBG.Width, (Height + 20) / m_pauseBG.Height);
         }
 
         public virtual void Update(GameTime gameTime)
@@ -239,15 +237,15 @@ namespace RogueCastle
                     m_doorSparkleDelay -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+
             if (m_roomActivityCounter <= 0f)
             {
                 foreach (var current in EnemyList)
-                {
                     if (!current.IsKilled)
                     {
                         current.Update(gameTime);
                     }
-                }
+
                 using (var enumerator2 = TempEnemyList.GetEnumerator())
                 {
                     while (enumerator2.MoveNext())
@@ -258,9 +256,11 @@ namespace RogueCastle
                             current2.Update(gameTime);
                         }
                     }
+
                     return;
                 }
             }
+
             m_roomActivityCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
         }
 
@@ -269,7 +269,6 @@ namespace RogueCastle
             camera.GraphicsDevice.SetRenderTarget(BGRender);
             camera.GraphicsDevice.Clear(Color.White);
             foreach (var current in TerrainObjList)
-            {
                 if (current.Visible && current.Height > 40 && current.ShowTerrain)
                 {
                     current.ForceDraw = true;
@@ -278,75 +277,57 @@ namespace RogueCastle
                     current.ForceDraw = false;
                     current.TextureColor = Color.White;
                 }
-            }
         }
 
         public void DrawBGObjs(Camera2D camera)
         {
             foreach (var current in GameObjList)
-            {
                 if (current.Layer == -1f)
                 {
                     current.Draw(camera);
                 }
-            }
         }
 
         public override void Draw(Camera2D camera)
         {
             if (camera.Zoom != 1f)
             {
-                foreach (var current in TerrainObjList)
-                {
-                    current.Draw(camera);
-                }
+                foreach (var current in TerrainObjList) current.Draw(camera);
             }
-            foreach (var current2 in BorderList)
-            {
-                current2.Draw(camera);
-            }
+
+            foreach (var current2 in BorderList) current2.Draw(camera);
             foreach (var current3 in BorderList)
-            {
                 if (current3.Rotation == 0f)
                 {
                     current3.DrawCorners(camera);
                 }
-            }
+
             foreach (var current4 in GameObjList)
-            {
                 if (current4.Layer == 0f)
                 {
                     current4.Draw(camera);
                 }
-            }
+
             foreach (var current5 in GameObjList)
-            {
                 if (current5.Layer == 1f)
                 {
                     current5.Draw(camera);
                 }
-            }
+
             m_pauseBG.Position = Position;
             m_pauseBG.Draw(camera);
-            foreach (var current6 in EnemyList)
-            {
-                current6.Draw(camera);
-            }
-            foreach (var current7 in TempEnemyList)
-            {
-                current7.Draw(camera);
-            }
-            foreach (var current8 in DoorList)
-            {
-                current8.Draw(camera);
-            }
+            foreach (var current6 in EnemyList) current6.Draw(camera);
+            foreach (var current7 in TempEnemyList) current7.Draw(camera);
+            foreach (var current8 in DoorList) current8.Draw(camera);
             if (LevelENV.ShowDebugText)
             {
-                m_indexText.Position = new Vector2(Position.X + Width/2, Position.Y + Height/2 - m_indexText.Height/2);
+                m_indexText.Position =
+                    new Vector2(Position.X + Width / 2, Position.Y + Height / 2 - m_indexText.Height / 2);
                 m_indexText.Draw(camera);
-                m_roomInfoText.Position = new Vector2(Position.X + Width/2, Position.Y);
+                m_roomInfoText.Position = new Vector2(Position.X + Width / 2, Position.Y);
                 m_roomInfoText.Draw(camera);
             }
+
             m_fairyChestText.Draw(camera);
         }
 
@@ -362,6 +343,7 @@ namespace RogueCastle
                     count = EnemyList.Count;
                 }
             }
+
             for (var j = 0; j < TempEnemyList.Count; j++)
             {
                 TempEnemyList[j].Reset();
@@ -372,7 +354,7 @@ namespace RogueCastle
         public void Reverse()
         {
             IsReversed = true;
-            var num = X + Width/2;
+            var num = X + Width / 2;
             foreach (var current in TerrainObjList)
             {
                 if (current.Name == "Left")
@@ -455,12 +437,13 @@ namespace RogueCastle
                 {
                     current.Name = "TopLeft";
                 }
+
                 var num2 = current.X - num;
                 if (num2 >= 0f)
                 {
                     if (current.Rotation == 0f)
                     {
-                        current.X -= num2*2f + current.Width;
+                        current.X -= num2 * 2f + current.Width;
                     }
                     else
                     {
@@ -468,7 +451,7 @@ namespace RogueCastle
                             CollisionMath.UpperRightCorner(
                                 new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height),
                                 current.Rotation, Vector2.Zero);
-                        position.X -= (position.X - num)*2f;
+                        position.X -= (position.X - num) * 2f;
                         current.Position = position;
                         current.Rotation = -current.Rotation;
                     }
@@ -483,11 +466,12 @@ namespace RogueCastle
                         CollisionMath.UpperRightCorner(
                             new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height),
                             current.Rotation, Vector2.Zero);
-                    position2.X += (num - position2.X)*2f;
+                    position2.X += (num - position2.X) * 2f;
                     current.Position = position2;
                     current.Rotation = -current.Rotation;
                 }
             }
+
             foreach (var current2 in GameObjList)
             {
                 ReverseObjNames(current2);
@@ -501,6 +485,7 @@ namespace RogueCastle
                     {
                         current2.Flip = SpriteEffects.None;
                     }
+
                     var num3 = current2.X - X;
                     current2.X = Bounds.Right - num3;
                     if (current2.Rotation != 0f)
@@ -521,12 +506,13 @@ namespace RogueCastle
                             current2.Flip = SpriteEffects.None;
                         }
                     }
+
                     var num4 = current2.X - num;
                     if (num4 >= 0f)
                     {
                         if (current2.Rotation == 0f)
                         {
-                            current2.X -= num4*2f + current2.Width;
+                            current2.X -= num4 * 2f + current2.Width;
                         }
                         else
                         {
@@ -534,7 +520,7 @@ namespace RogueCastle
                                 CollisionMath.UpperRightCorner(
                                     new Rectangle((int) current2.X, (int) current2.Y, current2.Width, current2.Height),
                                     current2.Rotation, Vector2.Zero);
-                            position3.X -= (position3.X - num)*2f;
+                            position3.X -= (position3.X - num) * 2f;
                             current2.Position = position3;
                             current2.Rotation = -current2.Rotation;
                         }
@@ -549,12 +535,13 @@ namespace RogueCastle
                             CollisionMath.UpperRightCorner(
                                 new Rectangle((int) current2.X, (int) current2.Y, current2.Width, current2.Height),
                                 current2.Rotation, Vector2.Zero);
-                        position4.X += (num - position4.X)*2f;
+                        position4.X += (num - position4.X) * 2f;
                         current2.Position = position4;
                         current2.Rotation = -current2.Rotation;
                     }
                 }
             }
+
             foreach (var current3 in EnemyList)
             {
                 if (current3.Flip == SpriteEffects.None)
@@ -567,11 +554,12 @@ namespace RogueCastle
                     current3.Flip = SpriteEffects.None;
                     current3.InternalFlip = SpriteEffects.None;
                 }
+
                 ReverseObjNames(current3);
                 var num5 = current3.X - num;
                 if (num5 >= 0f)
                 {
-                    current3.X -= num5*2f;
+                    current3.X -= num5 * 2f;
                     current3.Rotation = -current3.Rotation;
                 }
                 else
@@ -580,6 +568,7 @@ namespace RogueCastle
                     current3.Rotation = -current3.Rotation;
                 }
             }
+
             foreach (var current4 in BorderList)
             {
                 ReverseObjNames(current4);
@@ -588,7 +577,7 @@ namespace RogueCastle
                 {
                     if (current4.Rotation == 0f)
                     {
-                        current4.X -= num6*2f + current4.Width;
+                        current4.X -= num6 * 2f + current4.Width;
                     }
                     else
                     {
@@ -596,7 +585,7 @@ namespace RogueCastle
                             CollisionMath.UpperRightCorner(
                                 new Rectangle((int) current4.X, (int) current4.Y, current4.Width, current4.Height),
                                 current4.Rotation, Vector2.Zero);
-                        position5.X -= (position5.X - num)*2f;
+                        position5.X -= (position5.X - num) * 2f;
                         current4.Position = position5;
                         current4.Rotation = -current4.Rotation;
                     }
@@ -611,16 +600,18 @@ namespace RogueCastle
                         CollisionMath.UpperRightCorner(
                             new Rectangle((int) current4.X, (int) current4.Y, current4.Width, current4.Height),
                             current4.Rotation, Vector2.Zero);
-                    position6.X += (num - position6.X)*2f;
+                    position6.X += (num - position6.X) * 2f;
                     current4.Position = position6;
                     current4.Rotation = -current4.Rotation;
                 }
+
                 if (current4.BorderRight)
                 {
                     if (!current4.BorderLeft)
                     {
                         current4.BorderRight = false;
                     }
+
                     current4.BorderLeft = true;
                 }
                 else if (current4.BorderLeft)
@@ -629,11 +620,12 @@ namespace RogueCastle
                     {
                         current4.BorderLeft = false;
                     }
+
                     current4.BorderRight = true;
                 }
             }
+
             foreach (var current5 in DoorList)
-            {
                 if (current5.DoorPosition == "Left")
                 {
                     current5.X = X + Width - current5.Width;
@@ -649,7 +641,7 @@ namespace RogueCastle
                     var num7 = current5.X - num;
                     if (num7 >= 0f)
                     {
-                        current5.X -= num7*2f + current5.Width;
+                        current5.X -= num7 * 2f + current5.Width;
                     }
                     else
                     {
@@ -661,14 +653,13 @@ namespace RogueCastle
                     var num8 = current5.X - num;
                     if (num8 >= 0f)
                     {
-                        current5.X -= num8*2f + current5.Width;
+                        current5.X -= num8 * 2f + current5.Width;
                     }
                     else
                     {
                         current5.X = num - num8 - current5.Width;
                     }
                 }
-            }
         }
 
         private void ReverseObjNames(GameObj obj)
@@ -678,96 +669,115 @@ namespace RogueCastle
                 obj.Name = "Right";
                 return;
             }
+
             if (obj.Name == "Right")
             {
                 obj.Name = "Left";
                 return;
             }
+
             if (obj.Name == "!Left")
             {
                 obj.Name = "!Right";
                 return;
             }
+
             if (obj.Name == "!Right")
             {
                 obj.Name = "!Left";
                 return;
             }
+
             if (obj.Name == "!RightTop")
             {
                 obj.Name = "!LeftTop";
                 return;
             }
+
             if (obj.Name == "!RightBottom")
             {
                 obj.Name = "!LeftBottom";
                 return;
             }
+
             if (obj.Name == "!LeftTop")
             {
                 obj.Name = "!RightTop";
                 return;
             }
+
             if (obj.Name == "!LeftBottom")
             {
                 obj.Name = "!RightBottom";
                 return;
             }
+
             if (obj.Name == "RightTop")
             {
                 obj.Name = "LeftTop";
                 return;
             }
+
             if (obj.Name == "RightBottom")
             {
                 obj.Name = "LeftBottom";
                 return;
             }
+
             if (obj.Name == "LeftTop")
             {
                 obj.Name = "RightTop";
                 return;
             }
+
             if (obj.Name == "LeftBottom")
             {
                 obj.Name = "RightBottom";
                 return;
             }
+
             if (obj.Name == "!BottomLeft")
             {
                 obj.Name = "!BottomRight";
                 return;
             }
+
             if (obj.Name == "!BottomRight")
             {
                 obj.Name = "!BottomLeft";
                 return;
             }
+
             if (obj.Name == "!TopLeft")
             {
                 obj.Name = "!TopRight";
                 return;
             }
+
             if (obj.Name == "!TopRight")
             {
                 obj.Name = "!TopLeft";
                 return;
             }
+
             if (obj.Name == "BottomLeft")
             {
                 obj.Name = "BottomRight";
                 return;
             }
+
             if (obj.Name == "BottomRight")
             {
                 obj.Name = "BottomLeft";
                 return;
             }
+
             if (obj.Name == "TopLeft")
             {
                 obj.Name = "TopRight";
                 return;
             }
+
             if (obj.Name == "TopRight")
             {
                 obj.Name = "TopLeft";
@@ -785,28 +795,17 @@ namespace RogueCastle
             var roomObj = obj as RoomObj;
             roomObj.SetWidth(_width);
             roomObj.SetHeight(_height);
-            foreach (var current in TerrainObjList)
-            {
-                roomObj.TerrainObjList.Add(current.Clone() as TerrainObj);
-            }
-            foreach (var current2 in GameObjList)
-            {
-                roomObj.GameObjList.Add(current2.Clone() as GameObj);
-            }
+            foreach (var current in TerrainObjList) roomObj.TerrainObjList.Add(current.Clone() as TerrainObj);
+            foreach (var current2 in GameObjList) roomObj.GameObjList.Add(current2.Clone() as GameObj);
             foreach (var current3 in DoorList)
             {
                 var doorObj = current3.Clone() as DoorObj;
                 doorObj.Room = roomObj;
                 roomObj.DoorList.Add(doorObj);
             }
-            foreach (var current4 in EnemyList)
-            {
-                roomObj.EnemyList.Add(current4.Clone() as EnemyObj);
-            }
-            foreach (var current5 in BorderList)
-            {
-                roomObj.BorderList.Add(current5.Clone() as BorderObj);
-            }
+
+            foreach (var current4 in EnemyList) roomObj.EnemyList.Add(current4.Clone() as EnemyObj);
+            foreach (var current5 in BorderList) roomObj.BorderList.Add(current5.Clone() as BorderObj);
             roomObj.AddToCastlePool = AddToCastlePool;
             roomObj.AddToGardenPool = AddToGardenPool;
             roomObj.AddToDungeonPool = AddToDungeonPool;
@@ -830,10 +829,12 @@ namespace RogueCastle
             {
                 if (current is FairyChestObj)
                 {
-                    fairyChestObj = (current as FairyChestObj);
+                    fairyChestObj = current as FairyChestObj;
                 }
+
                 var arg_2D_0 = current as WaypointObj;
             }
+
             if (fairyChestObj != null && !fairyChestObj.IsOpen && fairyChestObj.ConditionType != 0 &&
                 fairyChestObj.ConditionType != 10 && fairyChestObj.State != 1)
             {
@@ -842,6 +843,7 @@ namespace RogueCastle
                     DialogueManager.GetText("Chest_Locked " + fairyChestObj.ConditionType).Dialogue[0], true);
                 return;
             }
+
             m_fairyChestText.Text = "";
         }
 
@@ -859,20 +861,16 @@ namespace RogueCastle
                 {
                     animateableObj.PauseAnimation();
                 }
+
                 var textObj = current as TextObj;
                 if (textObj != null && textObj.IsTypewriting)
                 {
                     textObj.PauseTypewriting();
                 }
             }
-            foreach (var current2 in EnemyList)
-            {
-                current2.PauseAnimation();
-            }
-            foreach (var current3 in TempEnemyList)
-            {
-                current3.PauseAnimation();
-            }
+
+            foreach (var current2 in EnemyList) current2.PauseAnimation();
+            foreach (var current3 in TempEnemyList) current3.PauseAnimation();
         }
 
         public virtual void UnpauseRoom()
@@ -885,62 +883,40 @@ namespace RogueCastle
                 {
                     animateableObj.ResumeAnimation();
                 }
+
                 var textObj = current as TextObj;
                 if (textObj != null && textObj.IsTypewriting)
                 {
                     textObj.ResumeTypewriting();
                 }
             }
-            foreach (var current2 in EnemyList)
-            {
-                current2.ResumeAnimation();
-            }
-            foreach (var current3 in TempEnemyList)
-            {
-                current3.ResumeAnimation();
-            }
+
+            foreach (var current2 in EnemyList) current2.ResumeAnimation();
+            foreach (var current3 in TempEnemyList) current3.ResumeAnimation();
         }
 
         public override void Dispose()
         {
             if (!IsDisposed)
             {
-                foreach (var current in DoorList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in DoorList) current.Dispose();
                 DoorList.Clear();
                 DoorList = null;
-                foreach (var current2 in TerrainObjList)
-                {
-                    current2.Dispose();
-                }
+                foreach (var current2 in TerrainObjList) current2.Dispose();
                 TerrainObjList.Clear();
                 TerrainObjList = null;
-                foreach (var current3 in GameObjList)
-                {
-                    current3.Dispose();
-                }
+                foreach (var current3 in GameObjList) current3.Dispose();
                 GameObjList.Clear();
                 GameObjList = null;
-                foreach (var current4 in EnemyList)
-                {
-                    current4.Dispose();
-                }
+                foreach (var current4 in EnemyList) current4.Dispose();
                 EnemyList.Clear();
                 EnemyList = null;
-                foreach (var current5 in BorderList)
-                {
-                    current5.Dispose();
-                }
+                foreach (var current5 in BorderList) current5.Dispose();
                 BorderList.Clear();
                 BorderList = null;
                 BGRender = null;
                 LinkedRoom = null;
-                foreach (var current6 in TempEnemyList)
-                {
-                    current6.Dispose();
-                }
+                foreach (var current6 in TempEnemyList) current6.Dispose();
                 TempEnemyList.Clear();
                 TempEnemyList = null;
                 Player = null;
@@ -981,28 +957,17 @@ namespace RogueCastle
 
         public void CopyRoomObjects(RoomObj room)
         {
-            foreach (var current in room.TerrainObjList)
-            {
-                TerrainObjList.Add(current.Clone() as TerrainObj);
-            }
-            foreach (var current2 in room.GameObjList)
-            {
-                GameObjList.Add(current2.Clone() as GameObj);
-            }
+            foreach (var current in room.TerrainObjList) TerrainObjList.Add(current.Clone() as TerrainObj);
+            foreach (var current2 in room.GameObjList) GameObjList.Add(current2.Clone() as GameObj);
             foreach (var current3 in room.DoorList)
             {
                 var doorObj = current3.Clone() as DoorObj;
                 doorObj.Room = this;
                 DoorList.Add(doorObj);
             }
-            foreach (var current4 in room.EnemyList)
-            {
-                EnemyList.Add(current4.Clone() as EnemyObj);
-            }
-            foreach (var current5 in room.BorderList)
-            {
-                BorderList.Add(current5.Clone() as BorderObj);
-            }
+
+            foreach (var current4 in room.EnemyList) EnemyList.Add(current4.Clone() as EnemyObj);
+            foreach (var current5 in room.BorderList) BorderList.Add(current5.Clone() as BorderObj);
         }
 
         public override void PopulateFromXMLReader(XmlReader reader, CultureInfo ci)
@@ -1014,18 +979,22 @@ namespace RogueCastle
             {
                 AddToCastlePool = bool.Parse(reader.Value);
             }
+
             if (reader.MoveToAttribute("GardenPool"))
             {
                 AddToGardenPool = bool.Parse(reader.Value);
             }
+
             if (reader.MoveToAttribute("TowerPool"))
             {
                 AddToTowerPool = bool.Parse(reader.Value);
             }
+
             if (reader.MoveToAttribute("DungeonPool"))
             {
                 AddToDungeonPool = bool.Parse(reader.Value);
             }
+
             DebugRoomPosition = Position;
         }
     }

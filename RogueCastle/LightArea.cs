@@ -31,7 +31,7 @@ namespace RogueCastle
 
         public Vector2 ToRelativePosition(Vector2 worldPosition)
         {
-            return worldPosition - (LightPosition - LightAreaSize*0.5f);
+            return worldPosition - (LightPosition - LightAreaSize * 0.5f);
         }
 
         public void BeginDrawingShadowCasters()

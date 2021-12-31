@@ -17,11 +17,11 @@ namespace RogueCastle.Options
 {
     public abstract class ArchipelagoOptionsObj : ObjContainer
     {
+        protected bool m_isActive;
+        protected bool m_isSelected;
+        protected TextObj m_nameText;
+        protected int m_optionsTextOffset = 250;
         protected ArchipelagoScreen m_parentScreen;
-        protected TextObj           m_nameText;
-        protected bool              m_isActive;
-        protected bool              m_isSelected;
-        protected int               m_optionsTextOffset = 250;
 
         public ArchipelagoOptionsObj(ArchipelagoScreen parentScreen, string name)
         {
@@ -47,6 +47,7 @@ namespace RogueCastle.Options
                 {
                     IsSelected = true;
                 }
+
                 m_isActive = value;
                 if (!value)
                 {
@@ -66,6 +67,7 @@ namespace RogueCastle.Options
                     m_nameText.TextureColor = Color.Yellow;
                     return;
                 }
+
                 m_nameText.TextureColor = Color.White;
             }
         }

@@ -76,6 +76,7 @@ namespace RogueCastle
                 Console.WriteLine("ERROR: Turret set with delay of 0. Shoots too fast.");
                 num = 10000f;
             }
+
             var projectileData = new ProjectileData(this)
             {
                 SpriteName = "TurretProjectile_Sprite",

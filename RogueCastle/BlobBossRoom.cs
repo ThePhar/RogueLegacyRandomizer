@@ -34,26 +34,24 @@ namespace RogueCastle
             {
                 var num = 0;
                 foreach (var current in EnemyList)
-                {
                     if (current.Type == 2 && !current.IsKilled)
                     {
                         num++;
                     }
-                }
+
                 foreach (var current2 in TempEnemyList)
-                {
                     if (current2.Type == 2 && !current2.IsKilled)
                     {
                         num++;
                     }
-                }
+
                 return num;
             }
         }
 
         public override void Initialize()
         {
-            m_boss1 = (EnemyList[0] as EnemyObj_Blob);
+            m_boss1 = EnemyList[0] as EnemyObj_Blob;
             m_boss1.PauseEnemy(true);
             m_boss1.DisableAllWeight = false;
             m_desiredBossScale = m_boss1.Scale.X;
@@ -71,6 +69,7 @@ namespace RogueCastle
                 m_blobArray.Add(objContainer);
                 GameObjList.Add(objContainer);
             }
+
             base.Initialize();
         }
 
@@ -105,17 +104,18 @@ namespace RogueCastle
             {
                 Tween.By(m_blobArray[i], 1f, Quad.EaseIn, "delay", num.ToString(), "Y", "1150");
                 Tween.AddEndHandlerToLastTween(this, "GrowBlob", m_blobArray[i]);
-                num += 0.5f*(m_blobArray.Count - i)/m_blobArray.Count;
+                num += 0.5f * (m_blobArray.Count - i) / m_blobArray.Count;
             }
+
             Tween.RunFunction(num + 1f, m_boss1, "PlayAnimation", true);
-            Tween.RunFunction(num + 1f, typeof (SoundManager), "PlaySound", "Boss_Blob_Idle_Loop");
+            Tween.RunFunction(num + 1f, typeof(SoundManager), "PlaySound", "Boss_Blob_Idle_Loop");
             Tween.RunFunction(num + 1f, this, "DisplayBossTitle", "The Infinite", m_boss1.Name, "Intro2");
-            Tween.RunFunction(num + 1f, typeof (SoundManager), "PlaySound", "Boss_Blob_Spawn");
+            Tween.RunFunction(num + 1f, typeof(SoundManager), "PlaySound", "Boss_Blob_Spawn");
         }
 
         public void GrowBlob(GameObj blob)
         {
-            var num = (m_desiredBossScale - 0.5f)/m_numIntroBlobs;
+            var num = (m_desiredBossScale - 0.5f) / m_numIntroBlobs;
             blob.Visible = false;
             m_boss1.PlayAnimation(false);
             m_boss1.ScaleX += num;
@@ -128,7 +128,8 @@ namespace RogueCastle
             m_boss1.PlayAnimation();
             Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "delay", "0.5", "X",
                 (Player.X + GlobalEV.Camera_XOffset).ToString(), "Y",
-                (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString());
+                (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y))
+                .ToString());
             Tween.AddEndHandlerToLastTween(this, "BeginBattle");
         }
 
@@ -145,23 +146,22 @@ namespace RogueCastle
         {
             var bounds = Bounds;
             foreach (var current in EnemyList)
-            {
                 if (current.Type == 2 && !current.IsKilled &&
                     (current.X > Bounds.Right - 20 || current.X < Bounds.Left + 20 || current.Y > Bounds.Bottom - 20 ||
                      current.Y < Bounds.Top + 20))
                 {
                     current.Position = new Vector2(bounds.Center.X, bounds.Center.Y);
                 }
-            }
+
             foreach (var current2 in TempEnemyList)
-            {
                 if (current2.Type == 2 && !current2.IsKilled &&
-                    (current2.X > Bounds.Right - 20 || current2.X < Bounds.Left + 20 || current2.Y > Bounds.Bottom - 20 ||
+                    (current2.X > Bounds.Right - 20 || current2.X < Bounds.Left + 20 ||
+                     current2.Y > Bounds.Bottom - 20 ||
                      current2.Y < Bounds.Top + 20))
                 {
                     current2.Position = new Vector2(bounds.Center.X, bounds.Center.Y);
                 }
-            }
+
             base.Update(gameTime);
         }
 

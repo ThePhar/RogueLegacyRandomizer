@@ -21,7 +21,7 @@ namespace RogueCastle
         public int DropType;
         private float m_amount;
 
-        public ItemDropObj(string spriteName) : base(spriteName, null)
+        public ItemDropObj(string spriteName) : base(spriteName)
         {
             IsCollidable = true;
             IsWeighted = true;
@@ -45,40 +45,49 @@ namespace RogueCastle
                     ChangeSprite("ChickenLeg_Sprite");
                     PlayAnimation();
                     goto IL_11A;
+
                 case 3:
                     ChangeSprite("ManaPotion_Sprite");
                     PlayAnimation();
                     goto IL_11A;
+
                 case 4:
                     ChangeSprite("Sword_Sprite");
                     PlayAnimation();
                     goto IL_11A;
+
                 case 6:
                     ChangeSprite("Shield_Sprite");
                     PlayAnimation();
                     goto IL_11A;
+
                 case 7:
                     ChangeSprite("Heart_Sprite");
                     PlayAnimation();
                     goto IL_11A;
+
                 case 8:
                     ChangeSprite("Heart_Sprite");
                     PlayAnimation();
                     TextureColor = Color.Blue;
                     goto IL_11A;
+
                 case 9:
                     ChangeSprite("Backpack_Sprite");
                     PlayAnimation();
                     goto IL_11A;
+
                 case 10:
                     ChangeSprite("MoneyBag_Sprite");
                     PlayAnimation(1, 1);
                     goto IL_11A;
+
                 case 11:
                     ChangeSprite("Diamond_Sprite");
                     PlayAnimation();
                     goto IL_11A;
             }
+
             ChangeSprite("Coin_Sprite");
             PlayAnimation();
             IL_11A:
@@ -102,65 +111,81 @@ namespace RogueCastle
                     {
                         num = 0.6f;
                     }
+
                     var num2 =
-                        (int) Math.Round(m_amount*(1f + player.TotalGoldBonus) * num * Program.Game.ArchipelagoManager.Data.GoldGainMultiplier, MidpointRounding.AwayFromZero);
+                        (int) Math.Round(
+                            m_amount * (1f + player.TotalGoldBonus) * num *
+                            Program.Game.ArchipelagoManager.Data.GoldGainMultiplier, MidpointRounding.AwayFromZero);
                     Game.PlayerStats.Gold += num2;
                     textManager.DisplayNumberStringText(num2, "gold", Color.Yellow, new Vector2(X, Bounds.Top));
                     if (DropType == 10)
                     {
                         PlayAnimation(1, 1);
                     }
+
                     break;
                 }
+
                 case 2:
                 {
                     var num3 =
-                        (int) (player.MaxHealth*(m_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
+                        (int) (player.MaxHealth * (m_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
                     player.CurrentHealth += num3;
                     textManager.DisplayNumberStringText(num3, "hp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Collect_Health");
                     return;
                 }
+
                 case 3:
                 {
                     var num4 =
-                        (int) (player.MaxMana*(m_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
+                        (int) (player.MaxMana * (m_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
                     player.CurrentMana += num4;
                     textManager.DisplayNumberStringText(num4, "mp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Collect_Mana");
                     return;
                 }
+
                 case 4:
                     Game.PlayerStats.BonusStrength++;
-                    textManager.DisplayStringNumberText("Attack Up", 1, Color.LightSteelBlue, new Vector2(X, Bounds.Top));
+                    textManager.DisplayStringNumberText("Attack Up", 1, Color.LightSteelBlue,
+                        new Vector2(X, Bounds.Top));
                     return;
+
                 case 5:
                     Game.PlayerStats.BonusMagic++;
-                    textManager.DisplayStringNumberText("Magic Up", 1, Color.LightSteelBlue, new Vector2(X, Bounds.Top));
+                    textManager.DisplayStringNumberText("Magic Up", 1, Color.LightSteelBlue,
+                        new Vector2(X, Bounds.Top));
                     return;
+
                 case 6:
                     Game.PlayerStats.BonusDefense++;
-                    textManager.DisplayStringNumberText("Armor Up", 2, Color.LightSteelBlue, new Vector2(X, Bounds.Top));
+                    textManager.DisplayStringNumberText("Armor Up", 2, Color.LightSteelBlue,
+                        new Vector2(X, Bounds.Top));
                     return;
+
                 case 7:
                     Game.PlayerStats.BonusHealth++;
                     textManager.DisplayStringNumberText("Max Health Up", 5, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     player.CurrentHealth += 5;
                     return;
+
                 case 8:
                     Game.PlayerStats.BonusMana++;
                     textManager.DisplayStringNumberText("Max Mana Up", 5, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     player.CurrentMana += 5f;
                     return;
+
                 case 9:
                     Game.PlayerStats.BonusWeight++;
                     textManager.DisplayStringNumberText("Max Weight Up", 5, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     break;
+
                 default:
                     return;
             }
@@ -188,6 +213,7 @@ namespace RogueCastle
             {
                 CollectionCounter -= (float) camera.GameTime.ElapsedGameTime.TotalSeconds;
             }
+
             base.Draw(camera);
         }
     }

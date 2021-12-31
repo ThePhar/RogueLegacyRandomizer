@@ -57,6 +57,7 @@ namespace RogueCastle
             {
                 X = AttachedProjectile.X - camera.TopLeftCorner.X;
             }
+
             if (AttachedProjectile.Y <= camera.Bounds.Top + m_iconOffset)
             {
                 Y = m_iconOffset;
@@ -69,6 +70,7 @@ namespace RogueCastle
             {
                 Y = AttachedProjectile.Y - camera.TopLeftCorner.Y;
             }
+
             Rotation = CDGMath.AngleBetweenPts(camera.TopLeftCorner + Position, AttachedProjectile.Position);
             m_iconBG.Position = Position;
             m_iconBG.Rotation = Rotation;

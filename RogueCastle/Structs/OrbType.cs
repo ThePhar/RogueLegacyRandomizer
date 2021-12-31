@@ -13,9 +13,9 @@ namespace RogueCastle.Structs
 {
     public static class OrbType
     {
-        public const int Red    = 0;
-        public const int Blue   = 1;
-        public const int Green  = 2;
+        public const int Red = 0;
+        public const int Blue = 1;
+        public const int Green = 2;
         public const int Yellow = 3;
     }
 }

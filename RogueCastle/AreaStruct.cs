@@ -16,19 +16,19 @@ namespace RogueCastle
 {
     public struct AreaStruct
     {
-        public Color     Color;
-        public Color     MapColor;
+        public Color Color;
+        public Color MapColor;
         public LevelType LevelType;
-        public Vector2   BonusRooms;
-        public Vector2   EnemyLevel;
-        public Vector2   SecretRooms;
-        public Vector2   TotalRooms;
-        public bool      BossInArea;
-        public bool      IsFinalArea;
-        public bool      LinkToCastleOnly;
-        public byte      BossType;
-        public int       BossLevel;
-        public int       EnemyLevelScale;
-        public string    Name;
+        public Vector2 BonusRooms;
+        public Vector2 EnemyLevel;
+        public Vector2 SecretRooms;
+        public Vector2 TotalRooms;
+        public bool BossInArea;
+        public bool IsFinalArea;
+        public bool LinkToCastleOnly;
+        public byte BossType;
+        public int BossLevel;
+        public int EnemyLevelScale;
+        public string Name;
     }
 }

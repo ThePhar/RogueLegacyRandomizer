@@ -16,90 +16,52 @@ namespace RogueCastle
 {
     public static class LevelENV
     {
+        public const bool LinkToCastleOnly = true;
+        public const byte TotalJournalEntries = 25;
+        public const byte CastleBossRoom = 1;
+        public const byte TowerBossRoom = 6;
+        public const byte DungeonBossRoom = 7;
+        public const byte GardenBossRoom = 5;
+        public const byte LastBossRoom = 2;
+        public const float FrameLimit = 0.025f;
+        public const float EnemyLevelFakeMultiplier = 2.75f;
+        public const int EnemyLevelDifficultyMod = 32;
+        public const int RoomLevelMod = 4;
+        public const int EnemyExpertLevelMod = 4;
+        public const int EnemyMiniBossLevelMod = 7;
+        public const int LastBossMode1LevelMod = 8;
+        public const int LastBossMode2LevelMod = 10;
+        public const int CastleRoomLevelBoost = 0;
+        public const int GardenRoomLevelBoost = 2;
+        public const int TowerRoomLevelBoost = 4;
+        public const int DungeonRoomLevelBoost = 6;
+        public const int NewGamePlusLevelBase = 128;
+        public const int NewGamePlusLevelAppreciation = 128;
+        public const int NewGamePlusMiniBossLevelBase = 0;
+        public const int NewGamePlusMiniBossLevelAppreciation = 0;
+        public const int LevelCastleLeftDoor = 90;
+        public const int LevelCastleRightDoor = 90;
+        public const int LevelCastleTopDoor = 90;
+        public const int LevelCastleBottomDoor = 90;
+        public const int LevelGardenLeftDoor = 70;
+        public const int LevelGardenRightDoor = 100;
+        public const int LevelGardenTopDoor = 45;
+        public const int LevelGardenBottomDoor = 45;
+        public const int LevelTowerLeftDoor = 45;
+        public const int LevelTowerRightDoor = 45;
+        public const int LevelTowerTopDoor = 100;
+        public const int LevelTowerBottomDoor = 60;
+        public const int LevelDungeonLeftDoor = 55;
+        public const int LevelDungeonRightDoor = 55;
+        public const int LevelDungeonTopDoor = 45;
+        public const int LevelDungeonBottomDoor = 100;
+        public const string GameName = "Rogue Legacy Archipelago";
         public static readonly Version GameVersion = Version.Parse("0.4.2");
-
-        public const bool   LinkToCastleOnly                     = true;
-        public const byte   TotalJournalEntries                  = 25;
-        public const byte   CastleBossRoom                       = 1;
-        public const byte   TowerBossRoom                        = 6;
-        public const byte   DungeonBossRoom                      = 7;
-        public const byte   GardenBossRoom                       = 5;
-        public const byte   LastBossRoom                         = 2;
-        public const float  FrameLimit                           = 0.025f;
-        public const float  EnemyLevelFakeMultiplier             = 2.75f;
-        public const int    EnemyLevelDifficultyMod              = 32;
-        public const int    RoomLevelMod                         = 4;
-        public const int    EnemyExpertLevelMod                  = 4;
-        public const int    EnemyMiniBossLevelMod                = 7;
-        public const int    LastBossMode1LevelMod                = 8;
-        public const int    LastBossMode2LevelMod                = 10;
-        public const int    CastleRoomLevelBoost                 = 0;
-        public const int    GardenRoomLevelBoost                 = 2;
-        public const int    TowerRoomLevelBoost                  = 4;
-        public const int    DungeonRoomLevelBoost                = 6;
-        public const int    NewGamePlusLevelBase                 = 128;
-        public const int    NewGamePlusLevelAppreciation         = 128;
-        public const int    NewGamePlusMiniBossLevelBase         = 0;
-        public const int    NewGamePlusMiniBossLevelAppreciation = 0;
-        public const int    LevelCastleLeftDoor                  = 90;
-        public const int    LevelCastleRightDoor                 = 90;
-        public const int    LevelCastleTopDoor                   = 90;
-        public const int    LevelCastleBottomDoor                = 90;
-        public const int    LevelGardenLeftDoor                  = 70;
-        public const int    LevelGardenRightDoor                 = 100;
-        public const int    LevelGardenTopDoor                   = 45;
-        public const int    LevelGardenBottomDoor                = 45;
-        public const int    LevelTowerLeftDoor                   = 45;
-        public const int    LevelTowerRightDoor                  = 45;
-        public const int    LevelTowerTopDoor                    = 100;
-        public const int    LevelTowerBottomDoor                 = 60;
-        public const int    LevelDungeonLeftDoor                 = 55;
-        public const int    LevelDungeonRightDoor                = 55;
-        public const int    LevelDungeonTopDoor                  = 45;
-        public const int    LevelDungeonBottomDoor               = 100;
-        public const string GameName                             = "Rogue Legacy Archipelago";
-
-        public static LevelType TestRoomLevelType          { get; set; }
-        public static byte[]    DementiaFlightList         { get; set; }
-        public static byte[]    DementiaGroundList         { get; set; }
-        public static byte[]    CastleEnemyList            { get; set; }
-        public static byte[]    GardenEnemyList            { get; set; }
-        public static byte[]    TowerEnemyList             { get; set; }
-        public static byte[]    DungeonEnemyList           { get; set; }
-        public static byte[]    CastleEnemyDifficultyList  { get; set; }
-        public static byte[]    GardenEnemyDifficultyList  { get; set; }
-        public static byte[]    TowerEnemyDifficultyList   { get; set; }
-        public static byte[]    DungeonEnemyDifficultyList { get; set; }
-        public static string[]  CastleAssetSwapList        { get; set; }
-        public static string[]  DungeonAssetSwapList       { get; set; }
-        public static string[]  TowerAssetSwapList         { get; set; }
-        public static string[]  GardenAssetSwapList        { get; set; }
-        public static bool      ShowEnemyRadii             { get; set; }
-        public static bool      EnablePlayerDebug          { get; set; }
-        public static bool      UnlockAllAbilities         { get; set; }
-        public static bool      TestRoomReverse            { get; set; }
-        public static bool      RunTestRoom                { get; set; }
-        public static bool      ShowDebugText              { get; set; }
-        public static bool      LoadSplashScreen           { get; set; }
-        public static bool      ShowSaveLoadDebugText      { get; set; }
-        public static bool      DeleteSaveFile             { get; set; }
-        public static bool      CloseTestRoomDoors         { get; set; }
-        public static bool      RunTutorial                { get; set; }
-        public static bool      RunDemoVersion             { get; set; }
-        public static bool      DisableSaving              { get; set; }
-        public static bool      RunCrashLogs               { get; set; }
-        public static bool      WeakenBosses               { get; set; }
-        public static bool      EnableOffscreenControl     { get; set; }
-        public static bool      EnableBackupSaving         { get; set; }
-        public static bool      CreateRetailVersion        { get; set; }
-        public static bool      ShowFps                    { get; set; }
-        public static bool      SaveFrames                 { get; set; }
-        public static bool      ShowArchipelagoStatus      { get; set; }
 
         static LevelENV()
         {
             // Enemy Lists
-            CastleEnemyList = new []
+            CastleEnemyList = new[]
             {
                 EnemyType.Skeleton,
                 EnemyType.Knight,
@@ -112,9 +74,9 @@ namespace RogueCastle
                 EnemyType.Fireball,
                 EnemyType.Portrait,
                 EnemyType.Starburst,
-                EnemyType.HomingTurret,
+                EnemyType.HomingTurret
             };
-            GardenEnemyList = new []
+            GardenEnemyList = new[]
             {
                 EnemyType.Skeleton,
                 EnemyType.Blob,
@@ -129,9 +91,9 @@ namespace RogueCastle
                 EnemyType.Plant,
                 EnemyType.SkeletonArcher,
                 EnemyType.Starburst,
-                EnemyType.Horse,
+                EnemyType.Horse
             };
-            TowerEnemyList = new []
+            TowerEnemyList = new[]
             {
                 EnemyType.Knight,
                 EnemyType.BallAndChain,
@@ -148,9 +110,9 @@ namespace RogueCastle
                 EnemyType.Portrait,
                 EnemyType.Starburst,
                 EnemyType.HomingTurret,
-                EnemyType.Mimic,
+                EnemyType.Mimic
             };
-            DungeonEnemyList = new []
+            DungeonEnemyList = new[]
             {
                 EnemyType.Skeleton,
                 EnemyType.Knight,
@@ -169,9 +131,9 @@ namespace RogueCastle
                 EnemyType.Fireball,
                 EnemyType.Starburst,
                 EnemyType.HomingTurret,
-                EnemyType.Horse,
+                EnemyType.Horse
             };
-            DementiaFlightList = new []
+            DementiaFlightList = new[]
             {
                 EnemyType.FireWizard,
                 EnemyType.IceWizard,
@@ -179,9 +141,9 @@ namespace RogueCastle
                 EnemyType.Fairy,
                 EnemyType.BouncySpike,
                 EnemyType.Fireball,
-                EnemyType.Starburst,
+                EnemyType.Starburst
             };
-            DementiaGroundList = new []
+            DementiaGroundList = new[]
             {
                 EnemyType.Skeleton,
                 EnemyType.Knight,
@@ -192,17 +154,17 @@ namespace RogueCastle
                 EnemyType.Ninja,
                 EnemyType.Plant,
                 EnemyType.HomingTurret,
-                EnemyType.Horse,
+                EnemyType.Horse
             };
 
             // Enemy Difficulty Lists
-            CastleEnemyDifficultyList  = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            GardenEnemyDifficultyList  = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            TowerEnemyDifficultyList   = new byte[] { 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 };
+            CastleEnemyDifficultyList = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            GardenEnemyDifficultyList = new byte[] { 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            TowerEnemyDifficultyList = new byte[] { 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 };
             DungeonEnemyDifficultyList = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
             // Asset Swap Lists
-            CastleAssetSwapList = new []
+            CastleAssetSwapList = new[]
             {
                 "BreakableBarrel1_Character",
                 "BreakableBarrel2_Character",
@@ -229,9 +191,9 @@ namespace RogueCastle
                 "CastleAssetTable1_Character",
                 "CastleAssetTable2_Character",
                 "CastleDoorOpen_Sprite",
-                "CastleAssetFrame_Sprite",
+                "CastleAssetFrame_Sprite"
             };
-            DungeonAssetSwapList = new []
+            DungeonAssetSwapList = new[]
             {
                 "BreakableCrate1_Character",
                 "BreakableBarrel1_Character",
@@ -258,9 +220,9 @@ namespace RogueCastle
                 "DungeonTable1_Character",
                 "DungeonTable2_Character",
                 "DungeonDoorOpen_Sprite",
-                "",
+                ""
             };
-            TowerAssetSwapList = new []
+            TowerAssetSwapList = new[]
             {
                 "BreakableCrate1_Character",
                 "BreakableCrate2_Character",
@@ -287,9 +249,9 @@ namespace RogueCastle
                 "TowerTable1_Character",
                 "TowerTable2_Character",
                 "TowerDoorOpen_Sprite",
-                "CastleAssetFrame_Sprite",
+                "CastleAssetFrame_Sprite"
             };
-            GardenAssetSwapList = new []
+            GardenAssetSwapList = new[]
             {
                 "GardenUrn1_Character",
                 "GardenUrn2_Character",
@@ -316,32 +278,69 @@ namespace RogueCastle
                 "GardenTrunk1_Character",
                 "GardenTrunk2_Character",
                 "GardenDoorOpen_Sprite",
-                "",
+                ""
             };
 
             // Default Environment Variables
-            TestRoomLevelType      = LevelType.Castle;
-            ShowEnemyRadii         = false;
-            EnablePlayerDebug      = false;
-            UnlockAllAbilities     = false;
-            TestRoomReverse        = false;
-            RunTestRoom            = false;
-            ShowDebugText          = false;
-            LoadSplashScreen       = true;
-            ShowSaveLoadDebugText  = false;
-            DeleteSaveFile         = false;
-            CloseTestRoomDoors     = false;
-            RunTutorial            = false;
-            RunDemoVersion         = false;
-            DisableSaving          = false;
-            RunCrashLogs           = true;
-            WeakenBosses           = false;
+            TestRoomLevelType = LevelType.Castle;
+            ShowEnemyRadii = false;
+            EnablePlayerDebug = false;
+            UnlockAllAbilities = false;
+            TestRoomReverse = false;
+            RunTestRoom = false;
+            ShowDebugText = false;
+            LoadSplashScreen = true;
+            ShowSaveLoadDebugText = false;
+            DeleteSaveFile = false;
+            CloseTestRoomDoors = false;
+            RunTutorial = false;
+            RunDemoVersion = false;
+            DisableSaving = false;
+            RunCrashLogs = true;
+            WeakenBosses = false;
             EnableOffscreenControl = false;
-            EnableBackupSaving     = false;
-            CreateRetailVersion    = true;
-            ShowFps                = false;
-            SaveFrames             = false;
-            ShowArchipelagoStatus  = false;
+            EnableBackupSaving = false;
+            CreateRetailVersion = true;
+            ShowFps = false;
+            SaveFrames = false;
+            ShowArchipelagoStatus = false;
         }
+
+        public static LevelType TestRoomLevelType { get; set; }
+        public static byte[] DementiaFlightList { get; set; }
+        public static byte[] DementiaGroundList { get; set; }
+        public static byte[] CastleEnemyList { get; set; }
+        public static byte[] GardenEnemyList { get; set; }
+        public static byte[] TowerEnemyList { get; set; }
+        public static byte[] DungeonEnemyList { get; set; }
+        public static byte[] CastleEnemyDifficultyList { get; set; }
+        public static byte[] GardenEnemyDifficultyList { get; set; }
+        public static byte[] TowerEnemyDifficultyList { get; set; }
+        public static byte[] DungeonEnemyDifficultyList { get; set; }
+        public static string[] CastleAssetSwapList { get; set; }
+        public static string[] DungeonAssetSwapList { get; set; }
+        public static string[] TowerAssetSwapList { get; set; }
+        public static string[] GardenAssetSwapList { get; set; }
+        public static bool ShowEnemyRadii { get; set; }
+        public static bool EnablePlayerDebug { get; set; }
+        public static bool UnlockAllAbilities { get; set; }
+        public static bool TestRoomReverse { get; set; }
+        public static bool RunTestRoom { get; set; }
+        public static bool ShowDebugText { get; set; }
+        public static bool LoadSplashScreen { get; set; }
+        public static bool ShowSaveLoadDebugText { get; set; }
+        public static bool DeleteSaveFile { get; set; }
+        public static bool CloseTestRoomDoors { get; set; }
+        public static bool RunTutorial { get; set; }
+        public static bool RunDemoVersion { get; set; }
+        public static bool DisableSaving { get; set; }
+        public static bool RunCrashLogs { get; set; }
+        public static bool WeakenBosses { get; set; }
+        public static bool EnableOffscreenControl { get; set; }
+        public static bool EnableBackupSaving { get; set; }
+        public static bool CreateRetailVersion { get; set; }
+        public static bool ShowFps { get; set; }
+        public static bool SaveFrames { get; set; }
+        public static bool ShowArchipelagoStatus { get; set; }
     }
 }

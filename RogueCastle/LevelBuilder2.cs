@@ -87,46 +87,42 @@ namespace RogueCastle
                 var upperBound = castleRoomArray.GetUpperBound(0);
                 var upperBound2 = castleRoomArray.GetUpperBound(1);
                 for (var i = castleRoomArray.GetLowerBound(0); i <= upperBound; i++)
+                for (var j = castleRoomArray.GetLowerBound(1); j <= upperBound2; j++)
                 {
-                    for (var j = castleRoomArray.GetLowerBound(1); j <= upperBound2; j++)
-                    {
-                        var collection = castleRoomArray[i, j];
-                        list.AddRange(collection);
-                    }
+                    var collection = castleRoomArray[i, j];
+                    list.AddRange(collection);
                 }
+
                 var dungeonRoomArray = m_dungeonRoomArray;
                 var upperBound3 = dungeonRoomArray.GetUpperBound(0);
                 var upperBound4 = dungeonRoomArray.GetUpperBound(1);
                 for (var k = dungeonRoomArray.GetLowerBound(0); k <= upperBound3; k++)
+                for (var l = dungeonRoomArray.GetLowerBound(1); l <= upperBound4; l++)
                 {
-                    for (var l = dungeonRoomArray.GetLowerBound(1); l <= upperBound4; l++)
-                    {
-                        var collection2 = dungeonRoomArray[k, l];
-                        list.AddRange(collection2);
-                    }
+                    var collection2 = dungeonRoomArray[k, l];
+                    list.AddRange(collection2);
                 }
+
                 var towerRoomArray = m_towerRoomArray;
                 var upperBound5 = towerRoomArray.GetUpperBound(0);
                 var upperBound6 = towerRoomArray.GetUpperBound(1);
                 for (var m = towerRoomArray.GetLowerBound(0); m <= upperBound5; m++)
+                for (var n = towerRoomArray.GetLowerBound(1); n <= upperBound6; n++)
                 {
-                    for (var n = towerRoomArray.GetLowerBound(1); n <= upperBound6; n++)
-                    {
-                        var collection3 = towerRoomArray[m, n];
-                        list.AddRange(collection3);
-                    }
+                    var collection3 = towerRoomArray[m, n];
+                    list.AddRange(collection3);
                 }
+
                 var gardenRoomArray = m_gardenRoomArray;
                 var upperBound7 = gardenRoomArray.GetUpperBound(0);
                 var upperBound8 = gardenRoomArray.GetUpperBound(1);
                 for (var num = gardenRoomArray.GetLowerBound(0); num <= upperBound7; num++)
+                for (var num2 = gardenRoomArray.GetLowerBound(1); num2 <= upperBound8; num2++)
                 {
-                    for (var num2 = gardenRoomArray.GetLowerBound(1); num2 <= upperBound8; num2++)
-                    {
-                        var collection4 = gardenRoomArray[num, num2];
-                        list.AddRange(collection4);
-                    }
+                    var collection4 = gardenRoomArray[num, num2];
+                    list.AddRange(collection4);
                 }
+
                 list.AddRange(m_secretCastleRoomArray);
                 list.AddRange(m_secretTowerRoomArray);
                 list.AddRange(m_secretDungeonRoomArray);
@@ -145,15 +141,14 @@ namespace RogueCastle
         public static void Initialize()
         {
             for (var i = 0; i < 4; i++)
+            for (var j = 0; j < 4; j++)
             {
-                for (var j = 0; j < 4; j++)
-                {
-                    m_castleRoomArray[i, j] = new List<RoomObj>();
-                    m_dungeonRoomArray[i, j] = new List<RoomObj>();
-                    m_towerRoomArray[i, j] = new List<RoomObj>();
-                    m_gardenRoomArray[i, j] = new List<RoomObj>();
-                }
+                m_castleRoomArray[i, j] = new List<RoomObj>();
+                m_dungeonRoomArray[i, j] = new List<RoomObj>();
+                m_towerRoomArray[i, j] = new List<RoomObj>();
+                m_gardenRoomArray[i, j] = new List<RoomObj>();
             }
+
             m_secretCastleRoomArray = new List<RoomObj>();
             m_secretGardenRoomArray = new List<RoomObj>();
             m_secretTowerRoomArray = new List<RoomObj>();
@@ -173,22 +168,26 @@ namespace RogueCastle
         public static void StoreRoom(RoomObj room, LevelType levelType)
         {
             if (room.Name != "Start" && room.Name != "Linker" && room.Name != "Boss" && room.Name != "EntranceBoss" &&
-                room.Name != "Secret" && room.Name != "Bonus" && room.Name != "CastleEntrance" && room.Name != "Throne" &&
-                room.Name != "Tutorial" && room.Name != "Ending" && room.Name != "Compass" && room.Name != "DEBUG_ROOM" &&
+                room.Name != "Secret" && room.Name != "Bonus" && room.Name != "CastleEntrance" &&
+                room.Name != "Throne" &&
+                room.Name != "Tutorial" && room.Name != "Ending" && room.Name != "Compass" &&
+                room.Name != "DEBUG_ROOM" &&
                 room.Name != "ChallengeBoss")
             {
-                if (room.Width%1320 != 0)
+                if (room.Width % 1320 != 0)
                 {
                     throw new Exception(string.Concat("Room Name: ", room.Name, " is not a width divisible by ", 1320,
                         ". Cannot parse the file."));
                 }
-                if (room.Height%720 != 0)
+
+                if (room.Height % 720 != 0)
                 {
                     throw new Exception(string.Concat("Room Name: ", room.Name, " is not a height divisible by ", 720,
                         ". Cannot parse the file."));
                 }
-                var num = room.Width/1320;
-                var num2 = room.Height/720;
+
+                var num = room.Width / 1320;
+                var num2 = room.Height / 720;
                 if (!room.IsDLCMap)
                 {
                     List<RoomObj>[,] array = null;
@@ -197,22 +196,27 @@ namespace RogueCastle
                         case LevelType.Castle:
                             array = m_castleRoomArray;
                             break;
+
                         case LevelType.Garden:
                             array = m_gardenRoomArray;
                             break;
+
                         case LevelType.Dungeon:
                             array = m_dungeonRoomArray;
                             break;
+
                         case LevelType.Tower:
                             array = m_towerRoomArray;
                             break;
                     }
+
                     array[num - 1, num2 - 1].Add(room.Clone() as RoomObj);
                     var roomObj = room.Clone() as RoomObj;
                     roomObj.Reverse();
                     array[num - 1, num2 - 1].Add(roomObj);
                     return;
                 }
+
                 var sequencedDLCRoomList = GetSequencedDLCRoomList(levelType);
                 sequencedDLCRoomList.Add(room.Clone() as RoomObj);
                 var roomObj2 = room.Clone() as RoomObj;
@@ -225,9 +229,10 @@ namespace RogueCastle
         {
             if (storeDebug)
             {
-                m_testRoom = (room.Clone() as RoomObj);
+                m_testRoom = room.Clone() as RoomObj;
                 m_testRoom.LevelType = LevelENV.TestRoomLevelType;
             }
+
             string name;
             switch (name = room.Name)
             {
@@ -238,7 +243,9 @@ namespace RogueCastle
                         StartingRoom.CopyRoomProperties(room);
                         StartingRoom.CopyRoomObjects(room);
                     }
+
                     break;
+
                 case "Linker":
                 {
                     var roomObj = room.Clone() as RoomObj;
@@ -247,41 +254,46 @@ namespace RogueCastle
                         case LevelType.Castle:
                             m_linkerCastleRoom = roomObj;
                             break;
+
                         case LevelType.Garden:
                             m_linkerGardenRoom = roomObj;
                             break;
+
                         case LevelType.Dungeon:
                             m_linkerDungeonRoom = roomObj;
                             break;
+
                         case LevelType.Tower:
                             m_linkerTowerRoom = roomObj;
                             break;
                     }
+
                     var teleporterObj = new TeleporterObj();
                     teleporterObj.Position =
                         new Vector2(
-                            roomObj.X + roomObj.Width/2f - (teleporterObj.Bounds.Right - teleporterObj.AnchorX),
+                            roomObj.X + roomObj.Width / 2f - (teleporterObj.Bounds.Right - teleporterObj.AnchorX),
                             roomObj.Y + roomObj.Height - 60f);
                     roomObj.GameObjList.Add(teleporterObj);
                     return;
                 }
+
                 case "Boss":
                     foreach (var current in room.DoorList)
-                    {
                         if (current.IsBossDoor)
                         {
                             current.Locked = true;
                         }
-                    }
+
                     m_bossRoomArray.Add(room.Clone() as RoomObj);
                     return;
+
                 case "EntranceBoss":
                 {
                     var roomObj2 = room.Clone() as RoomObj;
                     var teleporterObj2 = new TeleporterObj();
                     teleporterObj2.Position =
                         new Vector2(
-                            roomObj2.X + roomObj2.Width/2f - (teleporterObj2.Bounds.Right - teleporterObj2.AnchorX),
+                            roomObj2.X + roomObj2.Width / 2f - (teleporterObj2.Bounds.Right - teleporterObj2.AnchorX),
                             roomObj2.Y + roomObj2.Height - 60f);
                     roomObj2.GameObjList.Add(teleporterObj2);
                     switch (levelType)
@@ -289,19 +301,24 @@ namespace RogueCastle
                         case LevelType.Castle:
                             m_bossCastleEntranceRoom = roomObj2;
                             return;
+
                         case LevelType.Garden:
                             m_bossGardenEntranceRoom = roomObj2;
                             return;
+
                         case LevelType.Dungeon:
                             m_bossDungeonEntranceRoom = roomObj2;
                             return;
+
                         case LevelType.Tower:
                             m_bossTowerEntranceRoom = roomObj2;
                             return;
+
                         default:
                             return;
                     }
                 }
+
                 case "CastleEntrance":
                     if (m_castleEntranceRoom == null)
                     {
@@ -310,7 +327,9 @@ namespace RogueCastle
                         m_castleEntranceRoom.CopyRoomObjects(room);
                         m_castleEntranceRoom.LevelType = LevelType.Castle;
                     }
+
                     break;
+
                 case "Compass":
                     if (m_compassRoom == null)
                     {
@@ -318,7 +337,9 @@ namespace RogueCastle
                         m_compassRoom.CopyRoomProperties(room);
                         m_compassRoom.CopyRoomObjects(room);
                     }
+
                     break;
+
                 case "Secret":
                 {
                     List<RoomObj> list = null;
@@ -327,22 +348,27 @@ namespace RogueCastle
                         case LevelType.Castle:
                             list = m_secretCastleRoomArray;
                             break;
+
                         case LevelType.Garden:
                             list = m_secretGardenRoomArray;
                             break;
+
                         case LevelType.Dungeon:
                             list = m_secretDungeonRoomArray;
                             break;
+
                         case LevelType.Tower:
                             list = m_secretTowerRoomArray;
                             break;
                     }
+
                     list.Add(room.Clone() as RoomObj);
                     var roomObj3 = room.Clone() as RoomObj;
                     roomObj3.Reverse();
                     list.Add(roomObj3);
                     return;
                 }
+
                 case "Bonus":
                 {
                     List<RoomObj> list2 = null;
@@ -351,22 +377,27 @@ namespace RogueCastle
                         case LevelType.Castle:
                             list2 = m_bonusCastleRoomArray;
                             break;
+
                         case LevelType.Garden:
                             list2 = m_bonusGardenRoomArray;
                             break;
+
                         case LevelType.Dungeon:
                             list2 = m_bonusDungeonRoomArray;
                             break;
+
                         case LevelType.Tower:
                             list2 = m_bonusTowerRoomArray;
                             break;
                     }
+
                     list2.Add(room.Clone() as RoomObj);
                     var roomObj4 = room.Clone() as RoomObj;
                     roomObj4.Reverse();
                     list2.Add(roomObj4);
                     return;
                 }
+
                 case "Tutorial":
                     if (m_tutorialRoom == null)
                     {
@@ -374,7 +405,9 @@ namespace RogueCastle
                         m_tutorialRoom.CopyRoomProperties(room);
                         m_tutorialRoom.CopyRoomObjects(room);
                     }
+
                     break;
+
                 case "Throne":
                     if (m_throneRoom == null)
                     {
@@ -382,7 +415,9 @@ namespace RogueCastle
                         m_throneRoom.CopyRoomProperties(room);
                         m_throneRoom.CopyRoomObjects(room);
                     }
+
                     break;
+
                 case "Ending":
                     if (m_endingRoom == null)
                     {
@@ -390,15 +425,16 @@ namespace RogueCastle
                         m_endingRoom.CopyRoomProperties(room);
                         m_endingRoom.CopyRoomObjects(room);
                     }
+
                     break;
+
                 case "ChallengeBoss":
                     foreach (var current2 in room.DoorList)
-                    {
                         if (current2.IsBossDoor)
                         {
                             current2.Locked = true;
                         }
-                    }
+
                     m_challengeRoomArray.Add(room.Clone() as RoomObj);
                     break;
             }
@@ -409,7 +445,7 @@ namespace RogueCastle
         {
             var flag = false;
             var num = -100f;
-            var num2 = 100f/areaSize;
+            var num2 = 100f / areaSize;
             if (areaInfo.BossInArea)
             {
                 num = 0f;
@@ -418,9 +454,10 @@ namespace RogueCastle
             {
                 flag = true;
             }
+
             var num3 = CDGMath.RandomInt((int) areaInfo.SecretRooms.X, (int) areaInfo.SecretRooms.Y);
             var num4 = num3;
-            var num5 = areaSize/(num3 + 1);
+            var num5 = areaSize / (num3 + 1);
             var num6 = num5;
             var list = new List<RoomObj>();
             List<RoomObj> list2 = null;
@@ -431,23 +468,27 @@ namespace RogueCastle
                     list2 = m_secretCastleRoomArray;
                     list3 = m_bonusCastleRoomArray;
                     break;
+
                 case LevelType.Garden:
                     list2 = m_secretGardenRoomArray;
                     list3 = m_bonusGardenRoomArray;
                     break;
+
                 case LevelType.Dungeon:
                     list2 = m_secretDungeonRoomArray;
                     list3 = m_bonusDungeonRoomArray;
                     break;
+
                 case LevelType.Tower:
                     list2 = m_secretTowerRoomArray;
                     list3 = m_bonusTowerRoomArray;
                     break;
             }
+
             list.AddRange(list2);
             var num7 = CDGMath.RandomInt((int) areaInfo.BonusRooms.X, (int) areaInfo.BonusRooms.Y);
             var num8 = num7;
-            var num9 = areaSize/(num7 + 1);
+            var num9 = areaSize / (num7 + 1);
             var num10 = num9;
             var list4 = new List<RoomObj>();
             list4.AddRange(list3);
@@ -456,11 +497,13 @@ namespace RogueCastle
                 throw new Exception(string.Concat("Cannot add ", (int) areaInfo.SecretRooms.Y,
                     " secret rooms from pool of ", list2.Count, " secret rooms."));
             }
+
             if (areaInfo.BonusRooms.Y > list3.Count)
             {
                 throw new Exception(string.Concat("Cannot add ", (int) areaInfo.BonusRooms.Y,
                     " bonus rooms from pool of ", list3.Count, " bonus rooms."));
             }
+
             var levelType = areaInfo.LevelType;
             var list5 = new List<RoomObj>();
             list5.AddRange(roomsToCheckCollisionsList);
@@ -481,6 +524,7 @@ namespace RogueCastle
                     num14 = 90;
                     text = "Right";
                     break;
+
                 case LevelType.Garden:
                     num11 = 70;
                     num12 = 100;
@@ -488,6 +532,7 @@ namespace RogueCastle
                     num14 = 45;
                     text = "Right";
                     break;
+
                 case LevelType.Dungeon:
                     num11 = 55;
                     num12 = 55;
@@ -495,6 +540,7 @@ namespace RogueCastle
                     num14 = 100;
                     text = "Bottom";
                     break;
+
                 case LevelType.Tower:
                     num11 = 45;
                     num12 = 45;
@@ -503,6 +549,7 @@ namespace RogueCastle
                     text = "Top";
                     break;
             }
+
             DoorObj doorObj = null;
             if (firstRoom)
             {
@@ -519,20 +566,21 @@ namespace RogueCastle
                     new Vector2(startingRoom.X + startingRoom.Width, startingRoom.Bounds.Bottom - roomObj.Height));
                 startingRoom = roomObj;
             }
+
             foreach (var current in startingRoom.DoorList)
-            {
                 if (current.DoorPosition == text)
                 {
                     list6.Add(current);
                     doorObj = current;
                     break;
                 }
-            }
+
             if (list6.Count == 0)
             {
                 throw new Exception("The starting room does not have a " + text +
                                     " positioned door. Cannot create level.");
             }
+
             while (i > 0)
             {
                 if (list6.Count <= 0)
@@ -540,9 +588,10 @@ namespace RogueCastle
                     Console.WriteLine("ERROR: Ran out of available rooms to make.");
                     break;
                 }
+
                 var flag2 = false;
                 var doorObj2 = list6[0];
-                if ((list6.Count <= 5 && doorObj2 != doorObj && i > 0) || doorObj2 == doorObj)
+                if (list6.Count <= 5 && doorObj2 != doorObj && i > 0 || doorObj2 == doorObj)
                 {
                     flag2 = true;
                 }
@@ -578,11 +627,13 @@ namespace RogueCastle
                             num15 = num11;
                         }
                     }
+
                     if (num15 - CDGMath.RandomInt(1, 100) >= 0)
                     {
                         flag2 = true;
                     }
                 }
+
                 if (flag2)
                 {
                     List<DoorObj> list8 = null;
@@ -595,16 +646,20 @@ namespace RogueCastle
                             case LevelType.Castle:
                                 roomObj2 = m_bossCastleEntranceRoom;
                                 break;
+
                             case LevelType.Garden:
                                 roomObj2 = m_bossGardenEntranceRoom;
                                 break;
+
                             case LevelType.Dungeon:
                                 roomObj2 = m_bossDungeonEntranceRoom;
                                 break;
+
                             case LevelType.Tower:
                                 roomObj2 = m_bossTowerEntranceRoom;
                                 break;
                         }
+
                         flag3 = true;
                         var oppositeDoorPosition = GetOppositeDoorPosition(doorObj2.DoorPosition);
                         list8 = new List<DoorObj>();
@@ -621,15 +676,18 @@ namespace RogueCastle
                                     break;
                                 }
                             }
+
                             goto IL_556;
                         }
+
                         goto IL_552;
                     }
+
                     goto IL_552;
                     IL_556:
                     var flag4 = false;
                     var flag5 = false;
-                    if ((flag3 && !flag) || !flag3)
+                    if (flag3 && !flag || !flag3)
                     {
                         if (list7.Count >= num6 && num3 > 0)
                         {
@@ -642,7 +700,8 @@ namespace RogueCastle
                             flag4 = true;
                             list8 = FindSuitableDoors(doorObj2, list4, list5);
                         }
-                        if (!flag4 || (flag4 && list8.Count == 0))
+
+                        if (!flag4 || flag4 && list8.Count == 0)
                         {
                             if (list7.Count < 5)
                             {
@@ -664,11 +723,13 @@ namespace RogueCastle
                             num7--;
                         }
                     }
+
                     if (list8.Count == 0)
                     {
                         list6.Remove(doorObj2);
                         continue;
                     }
+
                     var index = CDGMath.RandomInt(0, list8.Count - 1);
                     CDGMath.Shuffle(list8);
                     var doorObj3 = list8[index];
@@ -683,15 +744,15 @@ namespace RogueCastle
                             list4.Remove(doorObj3.Room);
                         }
                     }
+
                     var roomObj3 = doorObj3.Room.Clone() as RoomObj;
                     foreach (var current3 in roomObj3.DoorList)
-                    {
                         if (current3.Position == doorObj3.Position)
                         {
                             doorObj3 = current3;
                             break;
                         }
-                    }
+
                     roomObj3.LevelType = levelType;
                     roomObj3.TextureColor = areaInfo.Color;
                     list7.Add(roomObj3);
@@ -730,16 +791,16 @@ namespace RogueCastle
                                 doorObj2.Y - (doorObj3.Y - doorObj3.Room.Y));
                         }
                     }
+
                     MoveRoom(roomObj3, zero);
                     i--;
                     list6.Remove(doorObj2);
                     foreach (var current4 in roomObj3.DoorList)
-                    {
                         if (current4 != doorObj3 && current4.Room != startingRoom && current4.X >= StartingRoom.Width)
                         {
                             list6.Add(current4);
                         }
-                    }
+
                     doorObj3.Attached = true;
                     doorObj2.Attached = true;
                     continue;
@@ -747,18 +808,22 @@ namespace RogueCastle
                     num += num2;
                     goto IL_556;
                 }
+
                 list6.Remove(doorObj2);
             }
+
             if (num3 != 0)
             {
                 Console.WriteLine(string.Concat("WARNING: Only ", num4 - num3, " secret rooms of ", num4,
                     " creation attempts were successful"));
             }
+
             if (num7 != 0)
             {
                 Console.WriteLine(string.Concat("WARNING: Only ", num8 - num7, " secret rooms of ", num8,
                     " creation attempts were successful"));
             }
+
             return list7;
         }
 
@@ -768,51 +833,49 @@ namespace RogueCastle
             var list = new List<DoorObj>();
             var oppositeDoorPosition = GetOppositeDoorPosition(doorToCheck.DoorPosition);
             for (var i = 1; i <= roomWidth; i++)
+            for (var j = 1; j <= roomHeight; j++)
             {
-                for (var j = 1; j <= roomHeight; j++)
+                var roomList2 = GetRoomList(i, j, levelType);
+                foreach (var current in roomList2)
                 {
-                    var roomList2 = GetRoomList(i, j, levelType);
-                    foreach (var current in roomList2)
+                    var flag = false;
+                    if (!findRoomsWithMoreDoors || findRoomsWithMoreDoors && current.DoorList.Count > 1)
                     {
-                        var flag = false;
-                        if (!findRoomsWithMoreDoors || (findRoomsWithMoreDoors && current.DoorList.Count > 1))
-                        {
-                            flag = true;
-                        }
-                        if (flag)
-                        {
-                            foreach (var current2 in current.DoorList)
+                        flag = true;
+                    }
+
+                    if (flag)
+                    {
+                        foreach (var current2 in current.DoorList)
+                            if (current2.DoorPosition == oppositeDoorPosition &&
+                                !CheckForRoomCollision(doorToCheck, roomList, current2) && !list.Contains(current2))
                             {
-                                if (current2.DoorPosition == oppositeDoorPosition &&
-                                    !CheckForRoomCollision(doorToCheck, roomList, current2) && !list.Contains(current2))
-                                {
-                                    list.Add(current2);
-                                }
+                                list.Add(current2);
                             }
-                        }
                     }
                 }
             }
+
             var sequencedDLCRoomList = GetSequencedDLCRoomList(levelType);
             foreach (var current3 in sequencedDLCRoomList)
             {
                 var flag2 = false;
-                if (!findRoomsWithMoreDoors || (findRoomsWithMoreDoors && current3.DoorList.Count > 1))
+                if (!findRoomsWithMoreDoors || findRoomsWithMoreDoors && current3.DoorList.Count > 1)
                 {
                     flag2 = true;
                 }
+
                 if (flag2)
                 {
                     foreach (var current4 in current3.DoorList)
-                    {
                         if (current4.DoorPosition == oppositeDoorPosition &&
                             !CheckForRoomCollision(doorToCheck, roomList, current4) && !list.Contains(current4))
                         {
                             list.Add(current4);
                         }
-                    }
                 }
             }
+
             return list;
         }
 
@@ -822,19 +885,17 @@ namespace RogueCastle
             var list = new List<DoorObj>();
             var oppositeDoorPosition = GetOppositeDoorPosition(doorToCheck.DoorPosition);
             foreach (var current in roomList)
-            {
                 if (Game.PlayerStats.DiaryEntry < 24 || !(current.Name == "Bonus") || !(current.Tag == 6.ToString()))
                 {
                     foreach (var current2 in current.DoorList)
-                    {
                         if (current2.DoorPosition == oppositeDoorPosition &&
-                            !CheckForRoomCollision(doorToCheck, roomCollisionList, current2) && !list.Contains(current2))
+                            !CheckForRoomCollision(doorToCheck, roomCollisionList, current2) &&
+                            !list.Contains(current2))
                         {
                             list.Add(current2);
                         }
-                    }
                 }
-            }
+
             return list;
         }
 
@@ -879,6 +940,7 @@ namespace RogueCastle
                     borderObj.BorderRight = true;
                 }
             }
+
             room.BorderList.Add(borderObj);
             room.DoorList.Remove(doorToRemove);
             doorToRemove.Dispose();
@@ -889,19 +951,16 @@ namespace RogueCastle
             var list = new List<DoorObj>();
             var list2 = new List<DoorObj>();
             foreach (var current in roomList)
-            {
-                foreach (var current2 in current.DoorList)
+            foreach (var current2 in current.DoorList)
+                if (current2.DoorPosition != "None")
                 {
-                    if (current2.DoorPosition != "None")
+                    list2.Add(current2);
+                    if (!current2.Attached)
                     {
-                        list2.Add(current2);
-                        if (!current2.Attached)
-                        {
-                            list.Add(current2);
-                        }
+                        list.Add(current2);
                     }
                 }
-            }
+
             foreach (var current3 in list)
             {
                 var flag = true;
@@ -956,6 +1015,7 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 if (flag)
                 {
                     RemoveDoorFromRoom(current3);
@@ -970,52 +1030,50 @@ namespace RogueCastle
         public static void AddDoorBorders(List<RoomObj> roomList)
         {
             foreach (var current in roomList)
+            foreach (var current2 in current.DoorList)
             {
-                foreach (var current2 in current.DoorList)
+                string doorPosition;
+                if ((doorPosition = current2.DoorPosition) != null)
                 {
-                    string doorPosition;
-                    if ((doorPosition = current2.DoorPosition) != null)
+                    if (!(doorPosition == "Left") && !(doorPosition == "Right"))
                     {
-                        if (!(doorPosition == "Left") && !(doorPosition == "Right"))
+                        if (doorPosition == "Top" || doorPosition == "Bottom")
                         {
-                            if (doorPosition == "Top" || doorPosition == "Bottom")
-                            {
-                                var num = 0;
-                                var borderObj = new BorderObj();
-                                borderObj.Position =
-                                    new Vector2(current2.Room.X + (current2.X - current2.Room.X) + current2.Width,
-                                        current2.Room.Y + (current2.Y - current2.Room.Y) + num);
-                                borderObj.SetWidth(60);
-                                borderObj.SetHeight(current2.Height);
-                                borderObj.BorderLeft = true;
-                                current2.Room.BorderList.Add(borderObj);
-                                var borderObj2 = new BorderObj();
-                                borderObj2.Position = new Vector2(
-                                    current2.Room.X + (current2.X - current2.Room.X) - 60f,
+                            var num = 0;
+                            var borderObj = new BorderObj();
+                            borderObj.Position =
+                                new Vector2(current2.Room.X + (current2.X - current2.Room.X) + current2.Width,
                                     current2.Room.Y + (current2.Y - current2.Room.Y) + num);
-                                borderObj2.SetWidth(60);
-                                borderObj2.SetHeight(current2.Height);
-                                borderObj2.BorderRight = true;
-                                current2.Room.BorderList.Add(borderObj2);
-                            }
+                            borderObj.SetWidth(60);
+                            borderObj.SetHeight(current2.Height);
+                            borderObj.BorderLeft = true;
+                            current2.Room.BorderList.Add(borderObj);
+                            var borderObj2 = new BorderObj();
+                            borderObj2.Position = new Vector2(
+                                current2.Room.X + (current2.X - current2.Room.X) - 60f,
+                                current2.Room.Y + (current2.Y - current2.Room.Y) + num);
+                            borderObj2.SetWidth(60);
+                            borderObj2.SetHeight(current2.Height);
+                            borderObj2.BorderRight = true;
+                            current2.Room.BorderList.Add(borderObj2);
                         }
-                        else
-                        {
-                            var borderObj3 = new BorderObj();
-                            borderObj3.Position = new Vector2(current2.Room.X + (current2.X - current2.Room.X),
-                                current2.Room.Y + (current2.Y - current2.Room.Y) - 60f);
-                            borderObj3.SetWidth(current2.Width);
-                            borderObj3.SetHeight(60);
-                            borderObj3.BorderBottom = true;
-                            current2.Room.BorderList.Add(borderObj3);
-                            var borderObj4 = new BorderObj();
-                            borderObj4.Position = new Vector2(current2.Room.X + (current2.X - current2.Room.X),
-                                current2.Room.Y + (current2.Y - current2.Room.Y) + current2.Height);
-                            borderObj4.SetWidth(current2.Width);
-                            borderObj4.SetHeight(60);
-                            borderObj4.BorderTop = true;
-                            current2.Room.BorderList.Add(borderObj4);
-                        }
+                    }
+                    else
+                    {
+                        var borderObj3 = new BorderObj();
+                        borderObj3.Position = new Vector2(current2.Room.X + (current2.X - current2.Room.X),
+                            current2.Room.Y + (current2.Y - current2.Room.Y) - 60f);
+                        borderObj3.SetWidth(current2.Width);
+                        borderObj3.SetHeight(60);
+                        borderObj3.BorderBottom = true;
+                        current2.Room.BorderList.Add(borderObj3);
+                        var borderObj4 = new BorderObj();
+                        borderObj4.Position = new Vector2(current2.Room.X + (current2.X - current2.Room.X),
+                            current2.Room.Y + (current2.Y - current2.Room.Y) + current2.Height);
+                        borderObj4.SetWidth(current2.Width);
+                        borderObj4.SetHeight(60);
+                        borderObj4.BorderTop = true;
+                        current2.Room.BorderList.Add(borderObj4);
                     }
                 }
             }
@@ -1030,9 +1088,8 @@ namespace RogueCastle
             DoorObj doorObj = null;
             DoorObj doorObj2 = null;
             foreach (var current in roomList)
-            {
                 if (current != roomObj &&
-                    ((current.LevelType == LevelType.Castle && castleOnly) || !castleOnly))
+                    (current.LevelType == LevelType.Castle && castleOnly || !castleOnly))
                 {
                     var num2 = 0f;
                     if (furthestRoomDirection != null)
@@ -1063,18 +1120,17 @@ namespace RogueCastle
                             num2 = current.X - roomObj.X;
                         }
                     }
+
                     if (num2 >= num && (doorObj == null || num2 > num))
                     {
                         doorObj = null;
                         foreach (var current2 in current.DoorList)
-                        {
                             if (current2.DoorPosition != "None")
                             {
                                 if (current2.DoorPosition == doorPositionWanted)
                                 {
                                     var flag = true;
                                     foreach (var current3 in roomList)
-                                    {
                                         if (current3 != current2.Room &&
                                             CollisionMath.Intersects(
                                                 new Rectangle((int) current3.X - 10, (int) current3.Y - 10,
@@ -1083,7 +1139,7 @@ namespace RogueCastle
                                             flag = false;
                                             break;
                                         }
-                                    }
+
                                     if (flag)
                                     {
                                         doorObj2 = current2;
@@ -1095,7 +1151,6 @@ namespace RogueCastle
                                 {
                                     var flag2 = true;
                                     foreach (var current4 in roomList)
-                                    {
                                         if (current4 != current2.Room &&
                                             CollisionMath.Intersects(
                                                 new Rectangle((int) current4.X - 10, (int) current4.Y - 10,
@@ -1104,7 +1159,7 @@ namespace RogueCastle
                                             flag2 = false;
                                             break;
                                         }
-                                    }
+
                                     if (flag2)
                                     {
                                         num = num2;
@@ -1113,19 +1168,20 @@ namespace RogueCastle
                                     }
                                 }
                             }
-                        }
                     }
                 }
-            }
+
             if (doorObj2 == null)
             {
                 Console.WriteLine("Could not find suitable furthest door. That's a problem");
                 return null;
             }
+
             if (addLinkerRoom)
             {
                 return AddLinkerToRoom(roomList, doorObj2, doorPositionWanted);
             }
+
             return doorObj2;
         }
 
@@ -1136,29 +1192,32 @@ namespace RogueCastle
             switch (needsLinking.Room.LevelType)
             {
                 case LevelType.Castle:
-                    roomObj = (m_linkerCastleRoom.Clone() as RoomObj);
+                    roomObj = m_linkerCastleRoom.Clone() as RoomObj;
                     break;
+
                 case LevelType.Garden:
-                    roomObj = (m_linkerGardenRoom.Clone() as RoomObj);
+                    roomObj = m_linkerGardenRoom.Clone() as RoomObj;
                     break;
+
                 case LevelType.Dungeon:
-                    roomObj = (m_linkerDungeonRoom.Clone() as RoomObj);
+                    roomObj = m_linkerDungeonRoom.Clone() as RoomObj;
                     break;
+
                 case LevelType.Tower:
-                    roomObj = (m_linkerTowerRoom.Clone() as RoomObj);
+                    roomObj = m_linkerTowerRoom.Clone() as RoomObj;
                     break;
             }
+
             roomObj.TextureColor = needsLinking.Room.TextureColor;
             DoorObj doorObj = null;
             var oppositeDoorPosition = GetOppositeDoorPosition(needsLinking.DoorPosition);
             foreach (var current in roomObj.DoorList)
-            {
                 if (current.DoorPosition == oppositeDoorPosition)
                 {
                     doorObj = current;
                     break;
                 }
-            }
+
             var zero = Vector2.Zero;
             string doorPosition;
             if ((doorPosition = needsLinking.DoorPosition) != null)
@@ -1193,6 +1252,7 @@ namespace RogueCastle
                         needsLinking.Y - (doorObj.Y - doorObj.Room.Y));
                 }
             }
+
             MoveRoom(roomObj, zero);
             needsLinking.Attached = true;
             doorObj.Attached = true;
@@ -1204,6 +1264,7 @@ namespace RogueCastle
                     result = doorObj2;
                 }
             }
+
             roomObj.LevelType = needsLinking.Room.LevelType;
             roomList.Add(roomObj);
             return result;
@@ -1243,6 +1304,7 @@ namespace RogueCastle
                                         {
                                             hasRightTopDoor = true;
                                         }
+
                                         if (current.Bounds.Bottom - current2.Y == 480f)
                                         {
                                             hasRightBottomDoor = true;
@@ -1256,6 +1318,7 @@ namespace RogueCastle
                                     {
                                         hasLeftTopDoor = true;
                                     }
+
                                     if (current.Bounds.Bottom - current2.Y == 480f)
                                     {
                                         hasLeftBottomDoor = true;
@@ -1269,6 +1332,7 @@ namespace RogueCastle
                                 {
                                     hasBottomLeftDoor = true;
                                 }
+
                                 if (current.Bounds.Right - current2.X == 780f)
                                 {
                                     hasBottomRightDoor = true;
@@ -1282,6 +1346,7 @@ namespace RogueCastle
                             {
                                 hasTopLeftDoor = true;
                             }
+
                             if (current.Bounds.Right - current2.X == 780f)
                             {
                                 hasTopRightDoor = true;
@@ -1289,6 +1354,7 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 RemoveFromListHelper(current.TerrainObjList);
                 RemoveFromListHelper(current.GameObjList);
                 RemoveFromListHelper(current.EnemyList);
@@ -1303,42 +1369,47 @@ namespace RogueCastle
                 var name = (list[i] as GameObj).Name;
                 if (name != null)
                 {
-                    if ((!hasTopLeftDoor && name.IndexOf("TopLeft") != -1 && name.IndexOf("!TopLeft") == -1) ||
-                        (hasTopLeftDoor && name.IndexOf("!TopLeft") != -1) ||
-                        (!hasTopRightDoor && name.IndexOf("TopRight") != -1 && name.IndexOf("!TopRight") == -1) ||
-                        (hasTopRightDoor && name.IndexOf("!TopRight") != -1) ||
-                        (!hasTopDoor && name.IndexOf("Top") != -1 && name.IndexOf("!Top") == -1 && name.Length == 3) ||
-                        (hasTopDoor && name.IndexOf("!Top") != -1 && name.Length == 4))
+                    if (!hasTopLeftDoor && name.IndexOf("TopLeft") != -1 && name.IndexOf("!TopLeft") == -1 ||
+                        hasTopLeftDoor && name.IndexOf("!TopLeft") != -1 ||
+                        !hasTopRightDoor && name.IndexOf("TopRight") != -1 && name.IndexOf("!TopRight") == -1 ||
+                        hasTopRightDoor && name.IndexOf("!TopRight") != -1 ||
+                        !hasTopDoor && name.IndexOf("Top") != -1 && name.IndexOf("!Top") == -1 && name.Length == 3 ||
+                        hasTopDoor && name.IndexOf("!Top") != -1 && name.Length == 4)
                     {
                         list.Remove(list[i]);
                         i--;
                     }
-                    if ((!hasBottomLeftDoor && name.IndexOf("BottomLeft") != -1 && name.IndexOf("!BottomLeft") == -1) ||
-                        (hasBottomLeftDoor && name.IndexOf("!BottomLeft") != -1) ||
-                        (!hasBottomRightDoor && name.IndexOf("BottomRight") != -1 && name.IndexOf("!BottomRight") == -1) ||
-                        (hasBottomRightDoor && name.IndexOf("!BottomRight") != -1) ||
-                        (!hasBottomDoor && name.IndexOf("Bottom") != -1 && name.IndexOf("!Bottom") == -1 &&
-                         name.Length == 6) || (hasBottomDoor && name.IndexOf("!Bottom") != -1 && name.Length == 7))
+
+                    if (!hasBottomLeftDoor && name.IndexOf("BottomLeft") != -1 && name.IndexOf("!BottomLeft") == -1 ||
+                        hasBottomLeftDoor && name.IndexOf("!BottomLeft") != -1 ||
+                        !hasBottomRightDoor && name.IndexOf("BottomRight") != -1 &&
+                        name.IndexOf("!BottomRight") == -1 ||
+                        hasBottomRightDoor && name.IndexOf("!BottomRight") != -1 ||
+                        !hasBottomDoor && name.IndexOf("Bottom") != -1 && name.IndexOf("!Bottom") == -1 &&
+                        name.Length == 6 || hasBottomDoor && name.IndexOf("!Bottom") != -1 && name.Length == 7)
                     {
                         list.Remove(list[i]);
                         i--;
                     }
-                    if ((!hasLeftTopDoor && name.IndexOf("LeftTop") != -1 && name.IndexOf("!LeftTop") == -1) ||
-                        (hasLeftTopDoor && name.IndexOf("!LeftTop") != -1) ||
-                        (!hasLeftBottomDoor && name.IndexOf("LeftBottom") != -1 && name.IndexOf("!LeftBottom") == -1) ||
-                        (hasLeftBottomDoor && name.IndexOf("!LeftBottom") != -1) ||
-                        (!hasLeftDoor && name.IndexOf("Left") != -1 && name.IndexOf("!Left") == -1 && name.Length == 4) ||
-                        (hasLeftDoor && name.IndexOf("!Left") != -1 && name.Length == 5))
+
+                    if (!hasLeftTopDoor && name.IndexOf("LeftTop") != -1 && name.IndexOf("!LeftTop") == -1 ||
+                        hasLeftTopDoor && name.IndexOf("!LeftTop") != -1 ||
+                        !hasLeftBottomDoor && name.IndexOf("LeftBottom") != -1 && name.IndexOf("!LeftBottom") == -1 ||
+                        hasLeftBottomDoor && name.IndexOf("!LeftBottom") != -1 ||
+                        !hasLeftDoor && name.IndexOf("Left") != -1 && name.IndexOf("!Left") == -1 && name.Length == 4 ||
+                        hasLeftDoor && name.IndexOf("!Left") != -1 && name.Length == 5)
                     {
                         list.Remove(list[i]);
                         i--;
                     }
-                    if ((!hasRightTopDoor && name.IndexOf("RightTop") != -1 && name.IndexOf("!RightTop") == -1) ||
-                        (hasRightTopDoor && name.IndexOf("!RightTop") != -1) ||
-                        (!hasRightBottomDoor && name.IndexOf("RightBottom") != -1 && name.IndexOf("!RightBottom") == -1) ||
-                        (hasRightBottomDoor && name.IndexOf("!RightBottom") != -1) ||
-                        (!hasRightDoor && name.IndexOf("Right") != -1 && name.IndexOf("!Right") == -1 &&
-                         name.Length == 5) || (hasRightDoor && name.IndexOf("!Right") != -1 && name.Length == 6))
+
+                    if (!hasRightTopDoor && name.IndexOf("RightTop") != -1 && name.IndexOf("!RightTop") == -1 ||
+                        hasRightTopDoor && name.IndexOf("!RightTop") != -1 ||
+                        !hasRightBottomDoor && name.IndexOf("RightBottom") != -1 &&
+                        name.IndexOf("!RightBottom") == -1 ||
+                        hasRightBottomDoor && name.IndexOf("!RightBottom") != -1 ||
+                        !hasRightDoor && name.IndexOf("Right") != -1 && name.IndexOf("!Right") == -1 &&
+                        name.Length == 5 || hasRightDoor && name.IndexOf("!Right") != -1 && name.Length == 6)
                     {
                         list.Remove(list[i]);
                         i--;
@@ -1360,65 +1431,56 @@ namespace RogueCastle
                         array = LevelENV.CastleEnemyList;
                         array2 = LevelENV.CastleEnemyDifficultyList;
                         break;
+
                     case LevelType.Garden:
                         array = LevelENV.GardenEnemyList;
                         array2 = LevelENV.GardenEnemyDifficultyList;
                         break;
+
                     case LevelType.Dungeon:
                         array = LevelENV.DungeonEnemyList;
                         array2 = LevelENV.DungeonEnemyDifficultyList;
                         break;
+
                     case LevelType.Tower:
                         array = LevelENV.TowerEnemyList;
                         array2 = LevelENV.TowerEnemyDifficultyList;
                         break;
+
                     default:
                         array = LevelENV.CastleEnemyList;
                         array2 = LevelENV.CastleEnemyDifficultyList;
                         break;
                 }
+
                 if (array.Length != array2.Length)
                 {
                     throw new Exception(
                         "Cannot create enemy. Enemy pool != enemy difficulty pool - LevelBuilder2.cs - AddProceduralEnemies()");
                 }
+
                 var num = CDGMath.RandomInt(0, array.Length - 1);
                 var num2 = num;
                 var enemyType = array[num];
                 var difficulty = array2[num];
-                while (num == num2)
-                {
-                    num = CDGMath.RandomInt(0, array.Length - 1);
-                }
+                while (num == num2) num = CDGMath.RandomInt(0, array.Length - 1);
                 num2 = num;
                 var enemyType2 = array[num];
                 var difficulty2 = array2[num];
-                while (num == num2)
-                {
-                    num = CDGMath.RandomInt(0, array.Length - 1);
-                }
+                while (num == num2) num = CDGMath.RandomInt(0, array.Length - 1);
                 num2 = num;
                 var enemyType3 = array[num];
                 var difficulty3 = array2[num];
-                while (num == num2)
-                {
-                    num = CDGMath.RandomInt(0, array.Length - 1);
-                }
+                while (num == num2) num = CDGMath.RandomInt(0, array.Length - 1);
                 num2 = num;
                 var enemyType4 = array[num];
                 var difficulty4 = array2[num];
-                while (num == num2)
-                {
-                    num = CDGMath.RandomInt(0, array.Length - 1);
-                }
+                while (num == num2) num = CDGMath.RandomInt(0, array.Length - 1);
                 var enemyType5 = array[num];
                 var difficulty5 = array2[num];
                 num = CDGMath.RandomInt(0, array.Length - 1);
                 byte b;
-                for (b = array[num]; b == 3; b = array[num])
-                {
-                    num = CDGMath.RandomInt(0, array.Length - 1);
-                }
+                for (b = array[num]; b == 3; b = array[num]) num = CDGMath.RandomInt(0, array.Length - 1);
                 for (var i = 0; i < current.GameObjList.Count; i++)
                 {
                     var enemyOrbObj = current.GameObjList[i] as EnemyOrbObj;
@@ -1454,12 +1516,14 @@ namespace RogueCastle
                         {
                             enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, EnemyDifficulty.Expert);
                         }
+
                         while (enemyOrbObj.ForceFlying && enemyObj.IsWeighted)
                         {
                             if (enemyObj != null)
                             {
                                 enemyObj.Dispose();
                             }
+
                             if (enemyOrbObj.OrbType == 0)
                             {
                                 num = CDGMath.RandomInt(0, array.Length - 1);
@@ -1507,6 +1571,7 @@ namespace RogueCastle
                                 enemyObj = EnemyBuilder.BuildEnemy(b, null, null, null, EnemyDifficulty.Expert);
                             }
                         }
+
                         enemyObj.Position = enemyOrbObj.Position;
                         enemyObj.IsProcedural = true;
                         current.EnemyList.Add(enemyObj);
@@ -1541,7 +1606,6 @@ namespace RogueCastle
                 "////////////////// OVERRIDING CREATED ENEMIES. LOADING PRE-CONSTRUCTED ENEMY LIST ////////");
             var num = 0;
             foreach (var current in level.RoomList)
-            {
                 for (var i = 0; i < current.EnemyList.Count; i++)
                 {
                     var enemyObj = current.EnemyList[i];
@@ -1558,36 +1622,32 @@ namespace RogueCastle
                         num++;
                     }
                 }
-            }
+
             Console.WriteLine("//////////////// PRE-CONSTRUCTED ENEMY LIST LOADED ////////////////");
         }
 
         public static void AddBottomPlatforms(List<RoomObj> roomList)
         {
             foreach (var current in roomList)
-            {
-                foreach (var current2 in current.DoorList)
+            foreach (var current2 in current.DoorList)
+                if (current2.DoorPosition == "Bottom")
                 {
-                    if (current2.DoorPosition == "Bottom")
-                    {
-                        var terrainObj = new TerrainObj(current2.Width, current2.Height);
-                        terrainObj.AddCollisionBox(0, 0, terrainObj.Width, terrainObj.Height, 0);
-                        terrainObj.AddCollisionBox(0, 0, terrainObj.Width, terrainObj.Height, 2);
-                        terrainObj.Position = current2.Position;
-                        terrainObj.CollidesBottom = false;
-                        terrainObj.CollidesLeft = false;
-                        terrainObj.CollidesRight = false;
-                        terrainObj.SetHeight(30);
-                        current.TerrainObjList.Add(terrainObj);
-                        var borderObj = new BorderObj();
-                        borderObj.Position = terrainObj.Position;
-                        borderObj.SetWidth(terrainObj.Width);
-                        borderObj.SetHeight(terrainObj.Height);
-                        borderObj.BorderTop = true;
-                        current.BorderList.Add(borderObj);
-                    }
+                    var terrainObj = new TerrainObj(current2.Width, current2.Height);
+                    terrainObj.AddCollisionBox(0, 0, terrainObj.Width, terrainObj.Height, 0);
+                    terrainObj.AddCollisionBox(0, 0, terrainObj.Width, terrainObj.Height, 2);
+                    terrainObj.Position = current2.Position;
+                    terrainObj.CollidesBottom = false;
+                    terrainObj.CollidesLeft = false;
+                    terrainObj.CollidesRight = false;
+                    terrainObj.SetHeight(30);
+                    current.TerrainObjList.Add(terrainObj);
+                    var borderObj = new BorderObj();
+                    borderObj.Position = terrainObj.Position;
+                    borderObj.SetWidth(terrainObj.Width);
+                    borderObj.SetHeight(terrainObj.Height);
+                    borderObj.BorderTop = true;
+                    current.BorderList.Add(borderObj);
                 }
-            }
         }
 
         public static void AddCompassRoom(List<RoomObj> roomList)
@@ -1679,24 +1739,25 @@ namespace RogueCastle
                 RoomObj roomObj;
                 if (num2 < 10000)
                 {
-                    roomObj = (sequencedRoomList[num2].Clone() as RoomObj);
+                    roomObj = sequencedRoomList[num2].Clone() as RoomObj;
                 }
                 else if (num2 >= 10000 && num2 < 20000)
                 {
-                    roomObj = (sequencedDLCRoomList[num2 - 10000].Clone() as RoomObj);
+                    roomObj = sequencedDLCRoomList[num2 - 10000].Clone() as RoomObj;
                 }
                 else if (num2 >= 20000 && num2 < 30000)
                 {
-                    roomObj = (sequencedDLCRoomList2[num2 - 20000].Clone() as RoomObj);
+                    roomObj = sequencedDLCRoomList2[num2 - 20000].Clone() as RoomObj;
                 }
                 else if (num2 >= 30000 && num2 < 40000)
                 {
-                    roomObj = (sequencedDLCRoomList3[num2 - 30000].Clone() as RoomObj);
+                    roomObj = sequencedDLCRoomList3[num2 - 30000].Clone() as RoomObj;
                 }
                 else
                 {
-                    roomObj = (sequencedDLCRoomList4[num2 - 40000].Clone() as RoomObj);
+                    roomObj = sequencedDLCRoomList4[num2 - 40000].Clone() as RoomObj;
                 }
+
                 roomObj.LevelType = (LevelType) vector.X;
                 MoveRoom(roomObj, new Vector2(vector.Y, vector.Z));
                 list.Add(roomObj);
@@ -1704,6 +1765,7 @@ namespace RogueCastle
                     (byte) roomColorList[num].Z);
                 num++;
             }
+
             proceduralLevelScreen.AddRooms(list);
             CloseRemainingDoors(proceduralLevelScreen.RoomList);
             AddDoorBorders(proceduralLevelScreen.RoomList);
@@ -1731,12 +1793,14 @@ namespace RogueCastle
                 {
                     roomObj.Reverse();
                 }
+
                 MoveRoom(roomObj, Vector2.Zero);
                 proceduralLevelScreen.AddRoom(roomObj);
                 if (LevelENV.CloseTestRoomDoors)
                 {
                     CloseRemainingDoors(proceduralLevelScreen.RoomList);
                 }
+
                 AddDoorBorders(proceduralLevelScreen.RoomList);
                 AddBottomPlatforms(proceduralLevelScreen.RoomList);
                 AddRemoveExtraObjects(proceduralLevelScreen.RoomList);
@@ -1749,12 +1813,12 @@ namespace RogueCastle
                 proceduralLevelScreen.RoomList[0].LevelType = LevelENV.TestRoomLevelType;
                 return proceduralLevelScreen;
             }
+
             var proceduralLevelScreen2 = new ProceduralLevelScreen();
             var list = new List<RoomObj>();
             var list2 = new List<AreaStruct>();
             var list3 = new List<AreaStruct>();
             foreach (var item in areaStructs)
-            {
                 if (item.LevelType == LevelType.Castle || item.LevelType == LevelType.Garden)
                 {
                     list2.Add(item);
@@ -1763,7 +1827,7 @@ namespace RogueCastle
                 {
                     list3.Add(item);
                 }
-            }
+
             var count = list2.Count;
             var count2 = list3.Count;
             var array = new List<RoomObj>[count];
@@ -1791,6 +1855,7 @@ namespace RogueCastle
                             {
                                 flag = false;
                             }
+
                             if (j == 0)
                             {
                                 if (startingRoom == null)
@@ -1813,12 +1878,15 @@ namespace RogueCastle
                                 {
                                     goto IL_16C;
                                 }
+
                                 array[j] = CreateArea(num2, areaInfo, list4, doorObj.Room, false);
                             }
+
                             if (array[j].Any(current => current.Name == "EntranceBoss"))
                             {
                                 flag = true;
                             }
+
                             if (!flag)
                             {
                                 Console.WriteLine(
@@ -1828,32 +1896,39 @@ namespace RogueCastle
                             {
                                 Console.WriteLine("Created sequential area of size: " + array[j].Count);
                             }
+
                             num++;
                             if (num > 15)
                             {
                                 goto Block_13;
                             }
                         }
+
                         if (j != 0)
                         {
                             list.Add(doorObj.Room);
                         }
+
                         if (FindFurthestDoor(array[j], "Right", "Right", false, false) != null &&
                             FindFurthestDoor(array[j], "Top", "Top", false, false) != null &&
                             FindFurthestDoor(array[j], "Bottom", "Bottom", false, false) != null)
                         {
                             break;
                         }
+
                         var flag2 = j == 0 || list.Remove(doorObj.Room);
                         Console.WriteLine("Attempting re-creation of sequential area. Linker Room removed: " + flag2);
                     }
+
                     list.AddRange(array[j]);
                     j++;
                     continue;
                     Block_13:
-                    Console.WriteLine("Could not create non-sequential area after 15 attempts. Recreating entire level.");
+                    Console.WriteLine(
+                        "Could not create non-sequential area after 15 attempts. Recreating entire level.");
                     goto IL_16C;
                 }
+
                 Console.WriteLine("////////// ALL SEQUENTIAL AREAS SUCCESSFULLY ADDED");
                 var k = 0;
                 while (k < list3.Count)
@@ -1870,13 +1945,16 @@ namespace RogueCastle
                             case LevelType.Garden:
                                 text = "Right";
                                 goto IL_457;
+
                             case LevelType.Dungeon:
                                 text = "Bottom";
                                 goto IL_457;
+
                             case LevelType.Tower:
                                 text = "Top";
                                 goto IL_457;
                         }
+
                         goto Block_22;
                         IL_457:
                         DoorObj doorObj2 = null;
@@ -1888,6 +1966,7 @@ namespace RogueCastle
                             {
                                 flag3 = false;
                             }
+
                             var list5 = new List<RoomObj>();
                             list5.AddRange(list);
                             doorObj2 = FindFurthestDoor(list5, text, text, true, true);
@@ -1895,16 +1974,19 @@ namespace RogueCastle
                             {
                                 goto IL_16C;
                             }
+
                             array2[k] = CreateArea(num4, areaInfo2, list5, doorObj2.Room, false);
                             num3++;
                             if (num3 > 15)
                             {
                                 goto Block_25;
                             }
+
                             if (array2[k].Any(current2 => current2.Name == "EntranceBoss"))
                             {
                                 flag3 = true;
                             }
+
                             if (!flag3)
                             {
                                 Console.WriteLine(
@@ -1915,29 +1997,35 @@ namespace RogueCastle
                                 Console.WriteLine("Created non-sequential area of size: " + array2[k].Count);
                             }
                         }
+
                         list.Add(doorObj2.Room);
                         if ((areaInfo2.LevelType != LevelType.Tower ||
-                             (FindFurthestDoor(array2[k], "Right", "Right", false, false) != null &&
-                              FindFurthestDoor(array2[k], "Top", "Top", false, false) != null)) &&
+                             FindFurthestDoor(array2[k], "Right", "Right", false, false) != null &&
+                             FindFurthestDoor(array2[k], "Top", "Top", false, false) != null) &&
                             (areaInfo2.LevelType != LevelType.Dungeon ||
-                             (FindFurthestDoor(array2[k], "Right", "Right", false, false) != null &&
-                              FindFurthestDoor(array2[k], "Bottom", "Bottom", false, false) != null)))
+                             FindFurthestDoor(array2[k], "Right", "Right", false, false) != null &&
+                             FindFurthestDoor(array2[k], "Bottom", "Bottom", false, false) != null))
                         {
                             break;
                         }
+
                         var flag4 = list.Remove(doorObj2.Room);
                         Console.WriteLine("Attempting re-creation of a non-sequential area. Linker Room removed: " +
                                           flag4);
                     }
+
                     list.AddRange(array2[k]);
                     k++;
                     continue;
                     Block_25:
-                    Console.WriteLine("Could not create non-sequential area after 15 attempts. Recreating entire level.");
+                    Console.WriteLine(
+                        "Could not create non-sequential area after 15 attempts. Recreating entire level.");
                     goto IL_16C;
                 }
+
                 goto Block_35;
             }
+
             Block_22:
             throw new Exception("Could not create non-sequential area of type " + areaInfo2.LevelType);
             Block_35:
@@ -1971,43 +2059,55 @@ namespace RogueCastle
                     {
                         roomObj.Tag = "0";
                     }
+
                     RoomObj roomObj2 = null;
                     switch (int.Parse(roomObj.Tag, NumberStyles.Any, cultureInfo))
                     {
                         case 1:
                             roomObj2 = new ChestBonusRoomObj();
                             break;
+
                         case 2:
                             roomObj2 = new SpecialItemRoomObj();
                             break;
+
                         case 3:
                             roomObj2 = new RandomTeleportRoomObj();
                             break;
+
                         case 4:
                             roomObj2 = new SpellSwapRoomObj();
                             break;
+
                         case 5:
                             roomObj2 = new VitaChamberRoomObj();
                             break;
+
                         case 6:
                             roomObj2 = new DiaryRoomObj();
                             break;
+
                         case 7:
                             roomObj2 = new PortraitRoomObj();
                             break;
+
                         case 8:
                             roomObj2 = new CarnivalShoot1BonusRoom();
                             break;
+
                         case 9:
                             roomObj2 = new CarnivalShoot2BonusRoom();
                             break;
+
                         case 10:
                             roomObj2 = new ArenaBonusRoom();
                             break;
+
                         case 11:
                             roomObj2 = new JukeboxBonusRoom();
                             break;
                     }
+
                     if (roomObj2 != null)
                     {
                         roomObj2.CopyRoomProperties(roomObj);
@@ -2032,25 +2132,31 @@ namespace RogueCastle
                     {
                         roomObj.Tag = "0";
                     }
+
                     RoomObj roomObj2 = null;
                     switch (int.Parse(roomObj.Tag, NumberStyles.Any, cultureInfo))
                     {
                         case 1:
                             roomObj2 = new EyeballBossRoom();
                             break;
+
                         case 2:
                             roomObj2 = new LastBossRoom();
                             break;
+
                         case 5:
                             roomObj2 = new FairyBossRoom();
                             break;
+
                         case 6:
                             roomObj2 = new FireballBossRoom();
                             break;
+
                         case 7:
                             roomObj2 = new BlobBossRoom();
                             break;
                     }
+
                     if (roomObj2 != null)
                     {
                         roomObj2.CopyRoomProperties(roomObj);
@@ -2060,6 +2166,7 @@ namespace RogueCastle
                             roomObj2.LinkedRoom = roomObj.LinkedRoom;
                             roomObj2.LinkedRoom.LinkedRoom = roomObj2;
                         }
+
                         roomList.Insert(roomList.IndexOf(roomObj), roomObj2);
                         roomList.Remove(roomObj);
                     }
@@ -2080,6 +2187,7 @@ namespace RogueCastle
                     {
                         roomObj.Tag = "0";
                     }
+
                     RoomObj roomObj2;
                     switch (int.Parse(roomObj.Tag, NumberStyles.Any, cultureInfo))
                     {
@@ -2087,28 +2195,35 @@ namespace RogueCastle
                             roomObj2 = new EyeballChallengeRoom();
                             MoveRoom(roomObj2, new Vector2(0f, 5000000f));
                             break;
+
                         case 2:
                             roomObj2 = new LastBossChallengeRoom();
                             MoveRoom(roomObj2, new Vector2(0f, -9000000f));
                             break;
+
                         case 3:
                         case 4:
                             goto IL_138;
+
                         case 5:
                             roomObj2 = new FairyChallengeRoom();
                             MoveRoom(roomObj2, new Vector2(0f, -6000000f));
                             break;
+
                         case 6:
                             roomObj2 = new FireballChallengeRoom();
                             MoveRoom(roomObj2, new Vector2(0f, -7000000f));
                             break;
+
                         case 7:
                             roomObj2 = new BlobChallengeRoom();
                             MoveRoom(roomObj2, new Vector2(0f, -8000000f));
                             break;
+
                         default:
                             goto IL_138;
                     }
+
                     IL_153:
                     if (roomObj2 != null)
                     {
@@ -2120,26 +2235,25 @@ namespace RogueCastle
                         {
                             roomObj2.LinkedRoom = roomObj.LinkedRoom;
                         }
+
                         roomList.Insert(roomList.IndexOf(roomObj), roomObj2);
                         roomList.Remove(roomObj);
                     }
+
                     goto IL_19E;
                     IL_138:
                     roomObj2 = new EyeballChallengeRoom();
                     MoveRoom(roomObj2, new Vector2(0f, -5000000f));
                     goto IL_153;
                 }
-                IL_19E:
-                ;
+
+                IL_19E: ;
             }
         }
 
         private static void InitializeRooms(List<RoomObj> roomList)
         {
-            foreach (var current in roomList)
-            {
-                current.Initialize();
-            }
+            foreach (var current in roomList) current.Initialize();
         }
 
         private static string GetOppositeDoorPosition(string doorPosition)
@@ -2173,6 +2287,7 @@ namespace RogueCastle
                     result = "Right";
                 }
             }
+
             return result;
         }
 
@@ -2212,6 +2327,7 @@ namespace RogueCastle
                         doorToCheck.Y - (otherDoorToCheck.Y - otherDoorToCheck.Room.Y));
                 }
             }
+
             return
                 roomList.Any(
                     current =>
@@ -2225,26 +2341,11 @@ namespace RogueCastle
         {
             var value = room.Position - newPosition;
             room.Position = newPosition;
-            foreach (var current in room.TerrainObjList)
-            {
-                current.Position -= value;
-            }
-            foreach (var current2 in room.GameObjList)
-            {
-                current2.Position -= value;
-            }
-            foreach (var current3 in room.DoorList)
-            {
-                current3.Position -= value;
-            }
-            foreach (var current4 in room.EnemyList)
-            {
-                current4.Position -= value;
-            }
-            foreach (var current5 in room.BorderList)
-            {
-                current5.Position -= value;
-            }
+            foreach (var current in room.TerrainObjList) current.Position -= value;
+            foreach (var current2 in room.GameObjList) current2.Position -= value;
+            foreach (var current3 in room.DoorList) current3.Position -= value;
+            foreach (var current4 in room.EnemyList) current4.Position -= value;
+            foreach (var current5 in room.BorderList) current5.Position -= value;
         }
 
         public static void LinkAllBossEntrances(List<RoomObj> roomList)
@@ -2262,27 +2363,33 @@ namespace RogueCastle
                     case LevelType.Castle:
                         bossRoomType = 1;
                         break;
+
                     case LevelType.Garden:
                         bossRoomType = 5;
                         break;
+
                     case LevelType.Dungeon:
                         bossRoomType = 7;
                         break;
+
                     case LevelType.Tower:
                         bossRoomType = 6;
                         break;
                 }
+
                 if (current.Name == "EntranceBoss")
                 {
                     var roomObj = GetSpecificBossRoom(bossRoomType);
                     if (roomObj != null)
                     {
-                        roomObj = (roomObj.Clone() as RoomObj);
+                        roomObj = roomObj.Clone() as RoomObj;
                     }
+
                     if (roomObj == null)
                     {
-                        roomObj = (GetBossRoom(CDGMath.RandomInt(0, max)).Clone() as RoomObj);
+                        roomObj = GetBossRoom(CDGMath.RandomInt(0, max)).Clone() as RoomObj;
                     }
+
                     roomObj.LevelType = current.LevelType;
                     MoveRoom(roomObj, newPosition);
                     newPosition.X += roomObj.Width;
@@ -2293,11 +2400,12 @@ namespace RogueCastle
                         throw new Exception(
                             "Could not find a boss room for the boss entrance. This should NOT be possible. LinkAllBossEntrances()");
                     }
+
                     list.Add(roomObj);
                     roomObj2 = GetChallengeRoom(bossRoomType);
                     if (roomObj2 != null)
                     {
-                        roomObj2 = (roomObj2.Clone() as RoomObj);
+                        roomObj2 = roomObj2.Clone() as RoomObj;
                         roomObj2.LevelType = current.LevelType;
                         roomObj2.LinkedRoom = current;
                         list2.Add(roomObj2);
@@ -2317,18 +2425,21 @@ namespace RogueCastle
                         throw new Exception(
                             "Could not find a boss room for the boss entrance. This should NOT be possible. LinkAllBossEntrances()");
                     }
+
                     list.Add(roomObj);
                     list.Add(tutorialRoomObj);
                 }
             }
+
             roomObj2 = GetChallengeRoom(2);
             if (roomObj2 != null)
             {
-                roomObj2 = (roomObj2.Clone() as RoomObj);
+                roomObj2 = roomObj2.Clone() as RoomObj;
                 roomObj2.LevelType = LevelType.Castle;
                 roomObj2.LinkedRoom = null;
                 list2.Add(roomObj2);
             }
+
             roomList.AddRange(list);
             roomList.AddRange(list2);
         }
@@ -2358,7 +2469,8 @@ namespace RogueCastle
 
         public static RoomObj GetChallengeBossRoomFromRoomList(LevelType levelType, List<RoomObj> roomList)
         {
-            return roomList.FirstOrDefault(current => current.Name == "ChallengeBoss" && current.LevelType == levelType);
+            return roomList.FirstOrDefault(current =>
+                current.Name == "ChallengeBoss" && current.LevelType == levelType);
         }
 
         public static List<RoomObj>[,] GetLevelTypeRoomArray(LevelType levelType)
@@ -2368,14 +2480,19 @@ namespace RogueCastle
                 case LevelType.None:
                     //IL_1C:
                     throw new Exception("Cannot create level of type NONE");
+
                 case LevelType.Castle:
                     return m_castleRoomArray;
+
                 case LevelType.Garden:
                     return m_gardenRoomArray;
+
                 case LevelType.Dungeon:
                     return m_dungeonRoomArray;
+
                 case LevelType.Tower:
                     return m_towerRoomArray;
+
                 default:
                     throw new Exception("Cannot create level of type NONE");
             }
@@ -2392,6 +2509,7 @@ namespace RogueCastle
                 current.PoolIndex = num;
                 num++;
             }
+
             num = 10000;
             var sequencedDLCRoomList = GetSequencedDLCRoomList(LevelType.Castle);
             foreach (var current2 in sequencedDLCRoomList)
@@ -2399,6 +2517,7 @@ namespace RogueCastle
                 current2.PoolIndex = num;
                 num++;
             }
+
             num = 20000;
             sequencedDLCRoomList = GetSequencedDLCRoomList(LevelType.Garden);
             foreach (var current3 in sequencedDLCRoomList)
@@ -2406,6 +2525,7 @@ namespace RogueCastle
                 current3.PoolIndex = num;
                 num++;
             }
+
             num = 30000;
             sequencedDLCRoomList = GetSequencedDLCRoomList(LevelType.Tower);
             foreach (var current4 in sequencedDLCRoomList)
@@ -2413,6 +2533,7 @@ namespace RogueCastle
                 current4.PoolIndex = num;
                 num++;
             }
+
             num = 40000;
             sequencedDLCRoomList = GetSequencedDLCRoomList(LevelType.Dungeon);
             foreach (var current5 in sequencedDLCRoomList)
@@ -2428,12 +2549,16 @@ namespace RogueCastle
             {
                 case LevelType.Castle:
                     return m_dlcCastleRoomArray;
+
                 case LevelType.Garden:
                     return m_dlcGardenRoomArray;
+
                 case LevelType.Dungeon:
                     return m_dlcDungeonRoomArray;
+
                 case LevelType.Tower:
                     return m_dlcTowerRoomArray;
+
                 default:
                     return null;
             }

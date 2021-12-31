@@ -42,7 +42,7 @@ namespace RogueCastle
 
         public override void PassInData(List<object> objList)
         {
-            m_lastBoss = (objList[0] as EnemyObj_LastBoss);
+            m_lastBoss = objList[0] as EnemyObj_LastBoss;
             m_bossKneesSound = new FrameSoundObj(m_lastBoss, 3, "FinalBoss_St2_Deathsceen_Knees");
             m_bossFallSound = new FrameSoundObj(m_lastBoss, 13, "FinalBoss_St2_Deathsceen_Fall");
             base.PassInData(objList);
@@ -66,7 +66,7 @@ namespace RogueCastle
             textObj.Text = "Your valor shown in battle shall never be forgotten.";
             textObj.FontSize = 18f;
             textObj.DropShadow = dropShadow;
-            textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height/2 + 25);
+            textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height / 2 + 25);
             m_dialoguePlate.AddChild(textObj);
             var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 12f;
@@ -123,8 +123,8 @@ namespace RogueCastle
             m_dialoguePlate.Opacity = 0f;
             m_playerGhost.Opacity = 0f;
             m_spotlight.Opacity = 0f;
-            m_playerGhost.Position = new Vector2(m_lastBoss.X - m_playerGhost.Width/2, m_lastBoss.Bounds.Top - 20);
-            Tween.RunFunction(3f, typeof (SoundManager), "PlaySound", "Player_Ghost");
+            m_playerGhost.Position = new Vector2(m_lastBoss.X - m_playerGhost.Width / 2, m_lastBoss.Bounds.Top - 20);
+            Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
             Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
             Tween.By(m_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
             m_playerGhost.Opacity = 0.4f;
@@ -133,9 +133,9 @@ namespace RogueCastle
             m_playerGhost.PlayAnimation();
             Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
             Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
-            Tween.AddEndHandlerToLastTween(typeof (SoundManager), "PlaySound", "Player_Death_Spotlight");
-            Tween.RunFunction(2f, typeof (SoundManager), "PlaySound", "FinalBoss_St1_DeathGrunt");
-            Tween.RunFunction(1.2f, typeof (SoundManager), "PlayMusic", "GameOverBossStinger", false, 0.5f);
+            Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
+            Tween.RunFunction(2f, typeof(SoundManager), "PlaySound", "FinalBoss_St1_DeathGrunt");
+            Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", "GameOverBossStinger", false, 0.5f);
             Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_lastBoss.AbsX.ToString(), "Y",
                 (m_lastBoss.Bounds.Bottom - 10).ToString());
             Tween.RunFunction(2f, m_lastBoss, "PlayAnimation", false);
@@ -172,12 +172,14 @@ namespace RogueCastle
         public override void HandleInput()
         {
             if (!m_lockControls &&
-                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) || Game.GlobalInput.JustPressed(2) ||
+                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) ||
+                 Game.GlobalInput.JustPressed(2) ||
                  Game.GlobalInput.JustPressed(3)) && m_continueText.Opacity == 1f)
             {
                 m_lockControls = true;
                 ExitTransition();
             }
+
             base.HandleInput();
         }
 
@@ -214,6 +216,7 @@ namespace RogueCastle
                 m_bossKneesSound.Update();
                 m_bossFallSound.Update();
             }
+
             base.Update(gameTime);
         }
 
@@ -223,14 +226,15 @@ namespace RogueCastle
                 Camera.GetTransformation());
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X - 10, (int) Camera.TopLeftCorner.Y - 10, 1420, 820),
-                Color.Black*BackBufferOpacity);
+                Color.Black * BackBufferOpacity);
             m_king.Draw(Camera);
             m_playerFrame.Draw(Camera);
             m_lastBoss.Draw(Camera);
             if (m_playerGhost.Opacity > 0f)
             {
-                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTimeSeconds*5f);
+                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTimeSeconds * 5f);
             }
+
             m_playerGhost.Draw(Camera);
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);

@@ -18,55 +18,47 @@ namespace RogueCastle.Structs
 {
     public static class TraitType
     {
-        public const byte None           = 0;
-        public const byte ColorBlind     = 1;
-        public const byte Gay            = 2;
-        public const byte NearSighted    = 3;
-        public const byte FarSighted     = 4;
-        public const byte Dyslexia       = 5;
-        public const byte Gigantism      = 6;
-        public const byte Dwarfism       = 7;
-        public const byte Baldness       = 8;
-        public const byte Endomorph      = 9;
-        public const byte Ectomorph      = 10;
-        public const byte Alzheimers     = 11;
-        public const byte Dextrocardia   = 12;
-        public const byte Coprolalia     = 13;
-        public const byte Hyperactive    = 14;
-        public const byte OCD            = 15;
-        public const byte Hypergonadism  = 16;
-        public const byte Hypogonadism   = 17;
-        public const byte StereoBlind    = 18;
-        public const byte IBS            = 19;
-        public const byte Vertigo        = 20;
-        public const byte TunnelVision   = 21;
-        public const byte Ambilevous     = 22;
-        public const byte PAD            = 23;
+        public const byte None = 0;
+        public const byte ColorBlind = 1;
+        public const byte Gay = 2;
+        public const byte NearSighted = 3;
+        public const byte FarSighted = 4;
+        public const byte Dyslexia = 5;
+        public const byte Gigantism = 6;
+        public const byte Dwarfism = 7;
+        public const byte Baldness = 8;
+        public const byte Endomorph = 9;
+        public const byte Ectomorph = 10;
+        public const byte Alzheimers = 11;
+        public const byte Dextrocardia = 12;
+        public const byte Coprolalia = 13;
+        public const byte Hyperactive = 14;
+        public const byte OCD = 15;
+        public const byte Hypergonadism = 16;
+        public const byte Hypogonadism = 17;
+        public const byte StereoBlind = 18;
+        public const byte IBS = 19;
+        public const byte Vertigo = 20;
+        public const byte TunnelVision = 21;
+        public const byte Ambilevous = 22;
+        public const byte PAD = 23;
         public const byte Alektorophobia = 24;
-        public const byte Hypochondriac  = 25;
-        public const byte Dementia       = 26;
-        public const byte Flexible       = 27;
-        public const byte EideticMemory  = 28;
-        public const byte Nostalgic      = 29;
-        public const byte CIP            = 30;
-        public const byte Savant         = 31;
-        public const byte TheOne         = 32;
-        public const byte Clumsy         = 33;
-        public const byte EHS            = 34;
-        public const byte Glaucoma       = 35;
-        public const byte Adopted        = 100; // Hilarious that this is a trait in the game.
-        public const byte Total          = 36;
-
-        public static class TraitRarity
-        {
-            public const byte NoRarity = 0;
-            public const byte Common   = 1;
-            public const byte Uncommon = 2;
-            public const byte Rare     = 3;
-        }
+        public const byte Hypochondriac = 25;
+        public const byte Dementia = 26;
+        public const byte Flexible = 27;
+        public const byte EideticMemory = 28;
+        public const byte Nostalgic = 29;
+        public const byte CIP = 30;
+        public const byte Savant = 31;
+        public const byte TheOne = 32;
+        public const byte Clumsy = 33;
+        public const byte EHS = 34;
+        public const byte Glaucoma = 35;
+        public const byte Adopted = 100; // Hilarious that this is a trait in the game.
+        public const byte Total = 36;
 
         /// <summary>
-        /// Returns a rarity identifier for a given trait.
+        ///     Returns a rarity identifier for a given trait.
         /// </summary>
         /// <param name="traitType">Trait Identifier</param>
         /// <returns></returns>
@@ -185,7 +177,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns the string representation of a given trait's name.
+        ///     Returns the string representation of a given trait's name.
         /// </summary>
         /// <param name="traitType">Trait Identifier</param>
         /// <returns></returns>
@@ -304,7 +296,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns the description for a given trait.
+        ///     Returns the description for a given trait.
         /// </summary>
         /// <param name="traitType">Trait Identifier</param>
         /// <param name="isFemale">Is player female?</param>
@@ -427,7 +419,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a shortened description for the Profile card.
+        ///     Returns a shortened description for the Profile card.
         /// </summary>
         /// <param name="traitType">Trait Identifier</param>
         /// <returns></returns>
@@ -562,17 +554,22 @@ namespace RogueCastle.Structs
             for (var i = 0; i < num2; i++)
             {
                 if (rand1 < num3)
+                {
                     num++;
+                }
+
                 num3 -= num4;
                 if (num3 < num5)
+                {
                     num3 = num5;
+                }
             }
 
             int[] array =
             {
                 48,
                 37,
-                15,
+                15
             };
 
             byte b = 0;
@@ -593,7 +590,10 @@ namespace RogueCastle.Structs
 
                 for (byte b2 = 0; b2 < 36; b2 += 1)
                     if (b == Rarity(b2))
+                    {
                         list.Add(b2);
+                    }
+
                 traits.X = list[CDGMath.RandomInt(0, list.Count - 1)];
             }
 
@@ -615,7 +615,10 @@ namespace RogueCastle.Structs
 
                 for (byte b3 = 0; b3 < 36; b3 += 1)
                     if (b == Rarity(b3))
+                    {
                         list.Add(b3);
+                    }
+
                 do
                 {
                     traits.Y = list[CDGMath.RandomInt(0, list.Count - 1)];
@@ -626,7 +629,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns true if two given traits would conflict with each other.
+        ///     Returns true if two given traits would conflict with each other.
         /// </summary>
         /// <param name="traits"></param>
         /// <returns></returns>
@@ -655,6 +658,14 @@ namespace RogueCastle.Structs
                 // ColorBlind and Nostalgic
                 traits.X == ColorBlind && traits.Y == Nostalgic ||
                 traits.Y == ColorBlind && traits.X == Nostalgic;
+        }
+
+        public static class TraitRarity
+        {
+            public const byte NoRarity = 0;
+            public const byte Common = 1;
+            public const byte Uncommon = 2;
+            public const byte Rare = 3;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Randomchaos2DGodRays
                 3,
                 0
             };
-            vb = new VertexBuffer(Game.GraphicsDevice, typeof (VertexPositionTexture), corners.Length, BufferUsage.None);
+            vb = new VertexBuffer(Game.GraphicsDevice, typeof(VertexPositionTexture), corners.Length, BufferUsage.None);
             vb.SetData(corners);
         }
 

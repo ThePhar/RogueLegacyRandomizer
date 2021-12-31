@@ -80,12 +80,16 @@ namespace Archipelago
                 {
                     case 1:
                         return 0.25f;
+
                     case 2:
                         return 0.5f;
+
                     case 3:
                         return 2f;
+
                     case 4:
                         return 4f;
+
                     default:
                         return 1f;
                 }

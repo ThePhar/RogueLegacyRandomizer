@@ -46,31 +46,33 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_LastBoss);
+            m_boss = EnemyList[0] as EnemyObj_LastBoss;
             foreach (var current in GameObjList)
             {
                 if (current.Name == "fountain")
                 {
-                    m_fountain = (current as ObjContainer);
+                    m_fountain = current as ObjContainer;
                 }
+
                 if (current.Name == "stainglass")
                 {
                     current.Opacity = 0.5f;
                 }
+
                 if (current.Name == "door")
                 {
-                    m_bossDoorSprite = (current as SpriteObj);
+                    m_bossDoorSprite = current as SpriteObj;
                 }
             }
+
             foreach (var current2 in DoorList)
-            {
                 if (current2.Name == "FinalBossDoor")
                 {
                     m_bossDoor = current2;
                     m_bossDoor.Locked = true;
                     break;
                 }
-            }
+
             base.Initialize();
         }
 
@@ -127,6 +129,7 @@ namespace RogueCastle
             {
                 rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk01");
             }
+
             rCScreenManager.DisplayScreen(13, true);
         }
 
@@ -228,22 +231,20 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (!m_cutsceneRunning)
             {
                 foreach (var current in EnemyList)
-                {
                     if (!current.IsKilled)
                     {
                         current.Update(gameTime);
                     }
-                }
+
                 foreach (var current2 in TempEnemyList)
-                {
                     if (!current2.IsKilled)
                     {
                         current2.Update(gameTime);
                     }
-                }
             }
         }
 
@@ -251,18 +252,16 @@ namespace RogueCastle
         {
             base.Draw(camera);
             camera.Draw(Game.GenericTexture, new Rectangle((int) X, (int) Y, Width, Height),
-                Color.White*BackBufferOpacity);
+                Color.White * BackBufferOpacity);
         }
 
         public void ChangeWindowOpacity()
         {
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "stainglass")
                 {
                     Tween.To(current, 2f, Tween.EaseNone, "Opacity", "0.2");
                 }
-            }
         }
 
         public override void BossCleanup()
@@ -288,18 +287,9 @@ namespace RogueCastle
         private void DropGold()
         {
             var list = new List<int>();
-            for (var i = 0; i < m_bossCoins; i++)
-            {
-                list.Add(0);
-            }
-            for (var j = 0; j < m_bossMoneyBags; j++)
-            {
-                list.Add(1);
-            }
-            for (var k = 0; k < m_bossDiamonds; k++)
-            {
-                list.Add(2);
-            }
+            for (var i = 0; i < m_bossCoins; i++) list.Add(0);
+            for (var j = 0; j < m_bossMoneyBags; j++) list.Add(1);
+            for (var k = 0; k < m_bossDiamonds; k++) list.Add(2);
             CDGMath.Shuffle(list);
             var num = 0f;
             SoundManager.PlaySound("Boss_Flash");
@@ -308,15 +298,15 @@ namespace RogueCastle
                 var position = m_boss.Position;
                 if (list[l] == 0)
                 {
-                    Tween.RunFunction(l*num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 1, 10);
+                    Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 1, 10);
                 }
                 else if (list[l] == 1)
                 {
-                    Tween.RunFunction(l*num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 10, 100);
+                    Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 10, 100);
                 }
                 else
                 {
-                    Tween.RunFunction(l*num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 11, 500);
+                    Tween.RunFunction(l * num, Player.AttachedLevel.ItemDropManager, "DropItemWide", position, 11, 500);
                 }
             }
         }

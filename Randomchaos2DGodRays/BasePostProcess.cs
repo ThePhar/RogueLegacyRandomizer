@@ -32,17 +32,22 @@ namespace Randomchaos2DGodRays
 
         protected SpriteBatch spriteBatch
         {
-            get { return (SpriteBatch) Game.Services.GetService(typeof (SpriteBatch)); }
+            get { return (SpriteBatch) Game.Services.GetService(typeof(SpriteBatch)); }
         }
 
         public virtual void Draw(GameTime gameTime)
         {
-            if (!Enabled) return;
+            if (!Enabled)
+            {
+                return;
+            }
+
             if (sq == null)
             {
                 sq = new ScreenQuad(Game);
                 sq.Initialize();
             }
+
             effect.CurrentTechnique.Passes[0].Apply();
             sq.Draw();
         }

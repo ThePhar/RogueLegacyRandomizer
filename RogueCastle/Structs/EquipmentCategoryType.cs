@@ -14,14 +14,14 @@ namespace RogueCastle.Structs
     public static class EquipmentCategoryType
     {
         public const int Sword = 0;
-        public const int Helm  = 1;
+        public const int Helm = 1;
         public const int Chest = 2;
         public const int Limbs = 3;
-        public const int Cape  = 4;
+        public const int Cape = 4;
         public const int Total = 5;
 
         /// <summary>
-        /// Returns the string representation of a given equipment type.
+        ///     Returns the string representation of a given equipment type.
         /// </summary>
         /// <param name="equipmentType">Equipment Type Identifier</param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns an alternative string representation of a given equipment type.
+        ///     Returns an alternative string representation of a given equipment type.
         /// </summary>
         /// <param name="equipmentType">Equipment Type Identifier</param>
         /// <returns></returns>

@@ -9,7 +9,6 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
 using Archipelago;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -19,10 +18,10 @@ namespace RogueCastle
 {
     public class ArchipelagoStatusIndicator : DrawableGameComponent
     {
-        private          string         m_status = "";
         private readonly ContentManager m_content;
-        private          SpriteBatch    m_spriteBatch;
-        private          SpriteFont     m_spriteFont;
+        private SpriteBatch m_spriteBatch;
+        private SpriteFont m_spriteFont;
+        private string m_status = "";
 
         public ArchipelagoStatusIndicator(Game game) : base(game)
         {
@@ -86,7 +85,7 @@ namespace RogueCastle
         {
             m_spriteBatch.Begin();
             m_spriteBatch.DrawString(m_spriteFont, m_status, new Vector2(64f, 33f), Color.Black);
-            m_spriteBatch.DrawString(m_spriteFont, m_status, new Vector2(65f,32f), Color.White);
+            m_spriteBatch.DrawString(m_spriteFont, m_status, new Vector2(65f, 32f), Color.White);
             m_spriteBatch.End();
         }
     }

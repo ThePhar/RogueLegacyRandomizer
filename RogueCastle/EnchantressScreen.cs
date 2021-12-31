@@ -51,10 +51,7 @@ namespace RogueCastle
         {
             m_currentCategoryIndex = 6;
             m_masterIconArray = new List<SpriteObj[]>();
-            for (var i = 0; i < 5; i++)
-            {
-                m_masterIconArray.Add(new SpriteObj[11]);
-            }
+            for (var i = 0; i < 5; i++) m_masterIconArray.Add(new SpriteObj[11]);
         }
 
         public float BackBufferOpacity { get; set; }
@@ -78,10 +75,7 @@ namespace RogueCastle
             m_playerMoney.AnchorY = 10f;
             m_enchantressUI.AddChild(m_playerMoney);
             m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 3).ChangeSprite("EnchantressUI_Title_Sprite");
-            for (var i = 0; i < m_enchantressUI.NumChildren; i++)
-            {
-                m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
-            }
+            for (var i = 0; i < m_enchantressUI.NumChildren; i++) m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
             m_selectionIcon = new SpriteObj("BlacksmithUI_SelectionIcon_Sprite");
             m_selectionIcon.PlayAnimation();
             m_selectionIcon.Scale = Vector2.Zero;
@@ -109,13 +103,14 @@ namespace RogueCastle
                     current[j].Scale = Vector2.Zero;
                     current[j].ForceDraw = true;
                     absPosition.X += num;
-                    if (absPosition.X > x + num*4f)
+                    if (absPosition.X > x + num * 4f)
                     {
                         absPosition.X = x;
                         absPosition.Y += num2;
                     }
                 }
             }
+
             InitializeTextObjs();
             m_equippedIcon = new SpriteObj("BlacksmithUI_EquippedIcon_Sprite");
             m_confirmText = new KeyIconTextObj(Game.JunicodeFont);
@@ -141,6 +136,7 @@ namespace RogueCastle
                 spriteObj.Scale = new Vector2(1.1f, 1.1f);
                 m_newIconList.Add(spriteObj);
             }
+
             base.LoadContent();
         }
 
@@ -165,7 +161,7 @@ namespace RogueCastle
             m_unlockCostContainer.AddChild(new SpriteObj("BlacksmithUI_CoinBG_Sprite"));
             m_unlockCostContainer.AddChild(textObj);
             m_descriptionText.Position = new Vector2(m_enchantressUI.X + 140f,
-                m_enchantressUI.Y - m_enchantressUI.Height/2 + 20f + 40f);
+                m_enchantressUI.Y - m_enchantressUI.Height / 2 + 20f + 40f);
             m_instructionsTitleText.Position = new Vector2(m_enchantressUI.X + 140f,
                 m_descriptionText.Bounds.Bottom + 20);
             m_instructionsText.Position = new Vector2(m_instructionsTitleText.X, m_instructionsTitleText.Bounds.Bottom);
@@ -195,19 +191,19 @@ namespace RogueCastle
                         "ScaleY", "0");
                 }
             }
+
             m_activeIconArray = m_masterIconArray[equipmentType];
             num = 0.25f;
             for (var j = 0; j < 11; j++)
-            {
                 Tween.To(m_activeIconArray[j], duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY",
                     "1");
-            }
             foreach (var current in m_newIconList)
             {
                 Tween.StopAllContaining(current, false);
                 current.Scale = Vector2.Zero;
                 Tween.To(current, duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1", "ScaleY", "1");
             }
+
             UpdateNewIcons();
             m_equippedIcon.Scale = Vector2.Zero;
             Tween.StopAllContaining(m_equippedIcon, false);
@@ -226,6 +222,7 @@ namespace RogueCastle
                 Tween.To(m_enchantressUI.GetChildAt(i), duration, Back.EaseOut, "delay", num.ToString(), "ScaleX", "1",
                     "ScaleY", "1");
             }
+
             Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 1), duration, Back.EaseOut, "delay",
                 num.ToString(), "ScaleX", "1", "ScaleY", "1");
             Tween.To(m_enchantressUI.GetChildAt(m_enchantressUI.NumChildren - 2), duration, Back.EaseOut, "delay",
@@ -242,10 +239,7 @@ namespace RogueCastle
 
         private void EaseOutMenu()
         {
-            foreach (var current in m_newIconList)
-            {
-                current.Visible = false;
-            }
+            foreach (var current in m_newIconList) current.Visible = false;
             m_equippedIcon.Visible = false;
             Tween.To(m_confirmText, 0.2f, Linear.EaseNone, "Opacity", "0");
             Tween.To(m_cancelText, 0.2f, Linear.EaseNone, "Opacity", "0");
@@ -264,18 +258,15 @@ namespace RogueCastle
                 {
                     Tween.To(m_selectionIcon, num, Back.EaseIn, "delay", num2.ToString(), "ScaleX", "0", "ScaleY", "0");
                 }
+
                 Tween.To(m_enchantressUI.GetChildAt(i), num, Back.EaseIn, "delay", num2.ToString(), "ScaleX", "0",
                     "ScaleY", "0");
                 num2 += 0.05f;
             }
-            for (var j = 1; j < 6; j++)
-            {
-                m_enchantressUI.GetChildAt(j).Scale = Vector2.Zero;
-            }
+
+            for (var j = 1; j < 6; j++) m_enchantressUI.GetChildAt(j).Scale = Vector2.Zero;
             for (var k = 0; k < m_activeIconArray.Length; k++)
-            {
                 Tween.To(m_activeIconArray[k], num, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
-            }
             Tween.To(m_enchantressUI.GetChildAt(0), num, Back.EaseIn, "delay", "0.3", "ScaleX", "0", "ScaleY", "0");
             Tween.RunFunction(num + 0.35f, ScreenManager, "HideCurrentScreen");
         }
@@ -283,23 +274,22 @@ namespace RogueCastle
         private void UpdateIconStates()
         {
             for (var i = 0; i < Game.PlayerStats.GetRuneArray.Count; i++)
+            for (var j = 0; j < Game.PlayerStats.GetRuneArray[i].Length; j++)
             {
-                for (var j = 0; j < Game.PlayerStats.GetRuneArray[i].Length; j++)
+                var b = Game.PlayerStats.GetRuneArray[i][j];
+                if (b == 0)
                 {
-                    var b = Game.PlayerStats.GetRuneArray[i][j];
-                    if (b == 0)
-                    {
-                        m_masterIconArray[i][j].ChangeSprite("BlacksmithUI_QuestionMarkIcon_Sprite");
-                    }
-                    else
-                    {
-                        m_masterIconArray[i][j].ChangeSprite(EquipmentAbilityType.Icon(j));
-                        m_masterIconArray[i][j].Opacity = 0.2f;
-                    }
-                    if (b >= 3)
-                    {
-                        m_masterIconArray[i][j].Opacity = 1f;
-                    }
+                    m_masterIconArray[i][j].ChangeSprite("BlacksmithUI_QuestionMarkIcon_Sprite");
+                }
+                else
+                {
+                    m_masterIconArray[i][j].ChangeSprite(EquipmentAbilityType.Icon(j));
+                    m_masterIconArray[i][j].Opacity = 0.2f;
+                }
+
+                if (b >= 3)
+                {
+                    m_masterIconArray[i][j].Opacity = 1f;
                 }
             }
         }
@@ -310,6 +300,7 @@ namespace RogueCastle
             {
                 m_rainSound.Dispose();
             }
+
             if (DateTime.Now.Month != 12 && DateTime.Now.Month != 1)
             {
                 m_rainSound = SoundManager.PlaySound("Rain1_Filtered");
@@ -318,10 +309,12 @@ namespace RogueCastle
             {
                 m_rainSound = SoundManager.PlaySound("snowloop_filtered");
             }
+
             if (Game.PlayerStats.TotalRunesFound >= 55)
             {
                 GameUtil.UnlockAchievement("LOVE_OF_KNOWLEDGE");
             }
+
             m_lockControls = true;
             SoundManager.PlaySound("ShopMenuOpen");
             m_confirmText.Opacity = 0f;
@@ -340,6 +333,7 @@ namespace RogueCastle
             {
                 m_navigationText.Text = "[Button:LeftStick] to navigate";
             }
+
             m_currentEquipmentIndex = 0;
             m_inCategoryMenu = true;
             m_selectionIcon.Position = m_enchantressUI.GetChildAt(6).AbsPosition;
@@ -358,17 +352,11 @@ namespace RogueCastle
             {
                 m_rainSound.Stop(AudioStopOptions.Immediate);
             }
-            for (var i = 0; i < m_enchantressUI.NumChildren; i++)
-            {
-                m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
-            }
+
+            for (var i = 0; i < m_enchantressUI.NumChildren; i++) m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
             foreach (var current in m_masterIconArray)
-            {
                 for (var j = 0; j < current.Length; j++)
-                {
                     current[j].Scale = Vector2.Zero;
-                }
-            }
             m_selectionIcon.Scale = Vector2.Zero;
             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
             var flag = true;
@@ -382,10 +370,12 @@ namespace RogueCastle
                     break;
                 }
             }
+
             if (flag)
             {
                 GameUtil.UnlockAchievement("LOVE_OF_CHANGE");
             }
+
             base.OnExit();
         }
 
@@ -402,6 +392,7 @@ namespace RogueCastle
                     EquipmentSelectionInput();
                 }
             }
+
             base.HandleInput();
         }
 
@@ -424,12 +415,12 @@ namespace RogueCastle
                     m_currentCategoryIndex = 6;
                 }
             }
+
             if (currentCategoryIndex != m_currentCategoryIndex)
             {
                 SoundManager.PlaySound("ShopBSMenuMove");
                 m_selectionIcon.Position = m_enchantressUI.GetChildAt(m_currentCategoryIndex).AbsPosition;
                 for (var i = 1; i < 6; i++)
-                {
                     if (i == 1)
                     {
                         m_enchantressUI.GetChildAt(i).Scale = new Vector2(1f, 1f);
@@ -438,7 +429,7 @@ namespace RogueCastle
                     {
                         m_enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
                     }
-                }
+
                 if (m_currentCategoryIndex != 6)
                 {
                     m_enchantressUI.GetChildAt(m_currentCategoryIndex - 5).Scale = new Vector2(1f, 1f);
@@ -447,15 +438,18 @@ namespace RogueCastle
                 {
                     m_enchantressUI.GetChildAt(m_currentCategoryIndex - 5).Scale = Vector2.Zero;
                 }
+
                 DisplayCategory(m_currentCategoryIndex - 6);
             }
+
             if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
             {
                 m_lockControls = true;
                 Tween.To(this, 0.2f, Linear.EaseNone, "delay", "0.5", "BackBufferOpacity", "0");
                 EaseOutMenu();
-                Tween.RunFunction(0.13f, typeof (SoundManager), "PlaySound", "ShopMenuClose");
+                Tween.RunFunction(0.13f, typeof(SoundManager), "PlaySound", "ShopMenuClose");
             }
+
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 m_inCategoryMenu = false;
@@ -466,6 +460,7 @@ namespace RogueCastle
                 {
                     Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex] = 2;
                 }
+
                 UpdateNewIcons();
                 UpdateIconSelectionText();
                 SoundManager.PlaySound("ShopMenuConfirm");
@@ -481,38 +476,44 @@ namespace RogueCastle
                 {
                     m_currentEquipmentIndex -= 5;
                 }
+
                 if (m_currentEquipmentIndex < 0)
                 {
                     m_currentEquipmentIndex = 0;
                 }
             }
+
             if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
             {
                 if (m_currentEquipmentIndex < 6)
                 {
                     m_currentEquipmentIndex += 5;
                 }
+
                 if (m_currentEquipmentIndex > 10)
                 {
                     m_currentEquipmentIndex -= 5;
                 }
             }
+
             if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
             {
                 m_currentEquipmentIndex--;
-                if ((m_currentEquipmentIndex + 1)%5 == 0)
+                if ((m_currentEquipmentIndex + 1) % 5 == 0)
                 {
                     m_currentEquipmentIndex++;
                 }
             }
+
             if (Game.GlobalInput.JustPressed(22) || Game.GlobalInput.JustPressed(23))
             {
                 m_currentEquipmentIndex++;
-                if (m_currentEquipmentIndex%5 == 0 || m_currentEquipmentIndex > 10)
+                if (m_currentEquipmentIndex % 5 == 0 || m_currentEquipmentIndex > 10)
                 {
                     m_currentEquipmentIndex--;
                 }
             }
+
             if (currentEquipmentIndex != m_currentEquipmentIndex)
             {
                 var b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex];
@@ -520,11 +521,13 @@ namespace RogueCastle
                 {
                     Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][m_currentEquipmentIndex] = 2;
                 }
+
                 UpdateNewIcons();
                 UpdateIconSelectionText();
                 m_selectionIcon.Position = m_activeIconArray[m_currentEquipmentIndex].AbsPosition;
                 SoundManager.PlaySound("ShopBSMenuMove");
             }
+
             if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
             {
                 SoundManager.PlaySound("ShopMenuCancel");
@@ -532,6 +535,7 @@ namespace RogueCastle
                 m_selectionIcon.Position = m_enchantressUI.GetChildAt(m_currentCategoryIndex).AbsPosition;
                 UpdateIconSelectionText();
             }
+
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 var num = m_currentCategoryIndex - 6;
@@ -553,6 +557,7 @@ namespace RogueCastle
                         UpdateIconSelectionText();
                     }
                 }
+
                 if (num3 != m_currentEquipmentIndex && num2 == 3)
                 {
                     m_equippedIcon.Scale = new Vector2(1f, 1f);
@@ -565,6 +570,7 @@ namespace RogueCastle
                     UpdateNewIcons();
                     return;
                 }
+
                 if (num3 == m_currentEquipmentIndex)
                 {
                     m_equippedIcon.Scale = Vector2.Zero;
@@ -587,12 +593,14 @@ namespace RogueCastle
                 m_equipmentDescriptionText.Text = "Select a category";
                 return;
             }
+
             if (Game.PlayerStats.GetRuneArray[m_currentCategoryIndex - 6][m_currentEquipmentIndex] == 0)
             {
                 m_equipmentDescriptionText.Position = new Vector2(230f, -20f);
                 m_equipmentDescriptionText.Text = "Rune needed";
                 return;
             }
+
             if (Game.PlayerStats.GetRuneArray[m_currentCategoryIndex - 6][m_currentEquipmentIndex] < 3)
             {
                 m_equipmentDescriptionText.Text = "Purchase Info Here";
@@ -611,6 +619,7 @@ namespace RogueCastle
                 UpdateEquipmentDataText();
                 return;
             }
+
             m_descriptionText.Visible = true;
             m_instructionsTitleText.Visible = true;
             m_instructionsText.Visible = true;
@@ -640,10 +649,7 @@ namespace RogueCastle
         {
             UpdateMoneyText();
             m_newIconListIndex = 0;
-            foreach (var current in m_newIconList)
-            {
-                current.Visible = false;
-            }
+            foreach (var current in m_newIconList) current.Visible = false;
             for (var i = 0; i < Game.PlayerStats.GetRuneArray[CurrentCategoryIndex].Length; i++)
             {
                 var b = Game.PlayerStats.GetRuneArray[CurrentCategoryIndex][i];
@@ -658,6 +664,7 @@ namespace RogueCastle
                     m_newIconListIndex++;
                 }
             }
+
             var b2 = Game.PlayerStats.GetEquippedRuneArray[CurrentCategoryIndex];
             if (b2 > -1)
             {
@@ -666,6 +673,7 @@ namespace RogueCastle
                 m_equippedIcon.Visible = true;
                 return;
             }
+
             m_equippedIcon.Visible = false;
         }
 
@@ -682,7 +690,7 @@ namespace RogueCastle
         public override void Draw(GameTime gameTime)
         {
             Camera.Begin();
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_enchantressUI.Draw(Camera);
             m_selectionIcon.Draw(Camera);
             m_descriptionText.Draw(Camera);
@@ -691,20 +699,13 @@ namespace RogueCastle
             m_unlockCostContainer.Draw(Camera);
             m_equipmentTitleText.Draw(Camera);
             foreach (var current in m_masterIconArray)
-            {
                 for (var i = 0; i < current.Length; i++)
-                {
                     current[i].Draw(Camera);
-                }
-            }
             m_navigationText.Draw(Camera);
             m_cancelText.Draw(Camera);
             m_confirmText.Draw(Camera);
             m_equippedIcon.Draw(Camera);
-            foreach (var current2 in m_newIconList)
-            {
-                current2.Draw(Camera);
-            }
+            foreach (var current2 in m_newIconList) current2.Draw(Camera);
             Camera.End();
             base.Draw(gameTime);
         }
@@ -718,6 +719,7 @@ namespace RogueCastle
                 {
                     m_rainSound.Dispose();
                 }
+
                 m_rainSound = null;
                 m_enchantressUI.Dispose();
                 m_enchantressUI = null;
@@ -735,8 +737,10 @@ namespace RogueCastle
                         current[i].Dispose();
                         current[i] = null;
                     }
+
                     Array.Clear(current, 0, current.Length);
                 }
+
                 m_masterIconArray.Clear();
                 m_masterIconArray = null;
                 m_descriptionText.Dispose();
@@ -757,10 +761,7 @@ namespace RogueCastle
                 m_navigationText.Dispose();
                 m_navigationText = null;
                 m_playerMoney = null;
-                foreach (var current2 in m_newIconList)
-                {
-                    current2.Dispose();
-                }
+                foreach (var current2 in m_newIconList) current2.Dispose();
                 m_newIconList.Clear();
                 m_newIconList = null;
                 base.Dispose();

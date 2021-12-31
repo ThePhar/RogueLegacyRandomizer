@@ -140,6 +140,7 @@ namespace RogueCastle
                     projectileData.DestroysWithTerrain = true;
                     projectileData.Scale = new Vector2(2.5f, 2.5f);
                     break;
+
                 case 2:
                     projectileData.SpriteName = "SpellAxe_Sprite";
                     projectileData.Angle = new Vector2(-74f, -74f);
@@ -152,6 +153,7 @@ namespace RogueCastle
                     projectileData.DestroysWithEnemy = false;
                     projectileData.Scale = new Vector2(3f, 3f);
                     break;
+
                 case 3:
                     projectileData.SpriteName = "SpellTimeBomb_Sprite";
                     projectileData.Angle = new Vector2(-35f, -35f);
@@ -165,9 +167,11 @@ namespace RogueCastle
                     projectileData.CollidesWith1Ways = true;
                     projectileData.Scale = new Vector2(3f, 3f);
                     break;
+
                 case 4:
                 case 6:
                     break;
+
                 case 5:
                     projectileData.SpriteName = "SpellNuke_Sprite";
                     projectileData.Angle = new Vector2(-65f, -65f);
@@ -180,6 +184,7 @@ namespace RogueCastle
                     projectileData.DestroysWithEnemy = true;
                     projectileData.Scale = new Vector2(2f, 2f);
                     break;
+
                 case 7:
                     projectileData.SourceAnchor = new Vector2(0f, 0f);
                     projectileData.SpriteName = "SpellDisplacer_Sprite";
@@ -192,6 +197,7 @@ namespace RogueCastle
                     projectileData.CollidesWith1Ways = true;
                     projectileData.Scale = new Vector2(2f, 2f);
                     break;
+
                 case 8:
                     projectileData.SpriteName = "SpellBoomerang_Sprite";
                     projectileData.Angle = new Vector2(0f, 0f);
@@ -204,6 +210,7 @@ namespace RogueCastle
                     projectileData.DestroysWithEnemy = false;
                     projectileData.Scale = new Vector2(3f, 3f);
                     break;
+
                 case 9:
                     projectileData.SpriteName = "SpellDualBlades_Sprite";
                     projectileData.Angle = new Vector2(-55f, -55f);
@@ -216,6 +223,7 @@ namespace RogueCastle
                     projectileData.DestroysWithEnemy = false;
                     projectileData.Scale = new Vector2(2f, 2f);
                     break;
+
                 case 10:
                     projectileData.SpriteName = "SpellClose_Sprite";
                     projectileData.SourceAnchor = new Vector2(120f, -60f);
@@ -228,6 +236,7 @@ namespace RogueCastle
                     projectileData.Scale = new Vector2(2.5f, 2.5f);
                     projectileData.LockPosition = true;
                     break;
+
                 case 11:
                     projectileData.SpriteName = "SpellDamageShield_Sprite";
                     projectileData.Angle = new Vector2(-65f, -65f);
@@ -241,6 +250,7 @@ namespace RogueCastle
                     projectileData.Scale = new Vector2(3f, 3f);
                     projectileData.DestroyOnRoomTransition = false;
                     break;
+
                 case 12:
                     projectileData.SpriteName = "SpellBounce_Sprite";
                     projectileData.Angle = new Vector2(-135f, -135f);
@@ -255,6 +265,7 @@ namespace RogueCastle
                     projectileData.CollidesWithTerrain = true;
                     projectileData.Scale = new Vector2(3.25f, 3.25f);
                     break;
+
                 case 13:
                     projectileData.SpriteName = "TurretProjectile_Sprite";
                     projectileData.Angle = Vector2.Zero;
@@ -267,6 +278,7 @@ namespace RogueCastle
                     projectileData.DestroysWithTerrain = true;
                     projectileData.Scale = new Vector2(2.5f, 2.5f);
                     break;
+
                 case 14:
                     projectileData.SpriteName = "LaserSpell_Sprite";
                     projectileData.Angle = new Vector2(0f, 0f);
@@ -281,6 +293,7 @@ namespace RogueCastle
                     projectileData.CollidesWithTerrain = false;
                     projectileData.LockPosition = true;
                     break;
+
                 case 15:
                     projectileData.SpriteName = "TurretProjectile_Sprite";
                     projectileData.Angle = Vector2.Zero;
@@ -293,6 +306,7 @@ namespace RogueCastle
                     projectileData.DestroysWithTerrain = true;
                     projectileData.Scale = new Vector2(2.75f, 2.75f);
                     break;
+
                 default:
                     if (spellType == 100)
                     {
@@ -309,8 +323,10 @@ namespace RogueCastle
                         projectileData.CollidesWithTerrain = false;
                         projectileData.LockPosition = true;
                     }
+
                     break;
             }
+
             return projectileData;
         }
 
@@ -320,39 +336,55 @@ namespace RogueCastle
             {
                 case 1:
                     return 10;
+
                 case 2:
                     return 15;
+
                 case 3:
                     return 15;
+
                 case 4:
                     return 15;
+
                 case 5:
                     return 40;
+
                 case 6:
                     return 5;
+
                 case 7:
                     return 10;
+
                 case 8:
                     return 15;
+
                 case 9:
                     return 15;
+
                 case 10:
                     return 15;
+
                 case 11:
                     return 15;
+
                 case 12:
                     return 30;
+
                 case 13:
                     return 15;
+
                 case 14:
                     return 30;
+
                 case 15:
                     return 0;
+
                 default:
                     if (spellType != 100)
                     {
                         return 0;
                     }
+
                     return 15;
             }
         }
@@ -363,39 +395,55 @@ namespace RogueCastle
             {
                 case 1:
                     return 1;
+
                 case 2:
                     return 1;
+
                 case 3:
                     return 1;
+
                 case 4:
                     return 2;
+
                 case 5:
                     return 3;
+
                 case 6:
                     return 3;
+
                 case 7:
                     return 0;
+
                 case 8:
                     return 2;
+
                 case 9:
                     return 1;
+
                 case 10:
                     return 2;
+
                 case 11:
                     return 2;
+
                 case 12:
                     return 3;
+
                 case 13:
                     return 3;
+
                 case 14:
                     return 1;
+
                 case 15:
                     return 3;
+
                 default:
                     if (spellType != 100)
                     {
                         return 0;
                     }
+
                     return 3;
             }
         }
@@ -406,39 +454,55 @@ namespace RogueCastle
             {
                 case 1:
                     return 1f;
+
                 case 2:
                     return 1f;
+
                 case 3:
                     return 1.5f;
+
                 case 4:
                     return 0f;
+
                 case 5:
                     return 0.75f;
+
                 case 6:
                     return 0f;
+
                 case 7:
                     return 0f;
+
                 case 8:
                     return 1f;
+
                 case 9:
                     return 1f;
+
                 case 10:
                     return 0.5f;
+
                 case 11:
                     return 1f;
+
                 case 12:
                     return 0.4f;
+
                 case 13:
                     return 1f;
+
                 case 14:
                     return 0.75f;
+
                 case 15:
                     return 1f;
+
                 default:
                     if (spellType != 100)
                     {
                         return 0f;
                     }
+
                     return 1f;
             }
         }
@@ -449,41 +513,58 @@ namespace RogueCastle
             {
                 case 1:
                     return 0f;
+
                 case 2:
                     return 0f;
+
                 case 3:
                     return 1f;
+
                 case 4:
                     return 3f;
+
                 case 5:
                     return 0f;
+
                 case 6:
                     return 0f;
+
                 case 7:
                     return 0f;
+
                 case 8:
                     return 18f;
+
                 case 9:
                     return 0f;
+
                 case 10:
                     return 2.1f;
+
                 case 11:
                     return 9999f;
+
                 case 12:
                     return 3.5f;
+
                 case 13:
                     return 0.35f;
+
                 case 14:
                     break;
+
                 case 15:
                     return 0.75f;
+
                 default:
                     if (spellType == 100)
                     {
                         return 5f;
                     }
+
                     break;
             }
+
             return 0f;
         }
 
@@ -493,41 +574,58 @@ namespace RogueCastle
             {
                 case 1:
                     return 0f;
+
                 case 2:
                     return 0f;
+
                 case 3:
                     return 0f;
+
                 case 4:
                     return 0f;
+
                 case 5:
                     return 0f;
+
                 case 6:
                     return 0f;
+
                 case 7:
                     return 0f;
+
                 case 8:
                     return 0f;
+
                 case 9:
                     return 0f;
+
                 case 10:
                     return 0f;
+
                 case 11:
                     return 5f;
+
                 case 12:
                     return 0f;
+
                 case 13:
                     return 0f;
+
                 case 14:
                     break;
+
                 case 15:
                     return 0f;
+
                 default:
                     if (spellType == 100)
                     {
                         return 0f;
                     }
+
                     break;
             }
+
             return 0f;
         }
     }

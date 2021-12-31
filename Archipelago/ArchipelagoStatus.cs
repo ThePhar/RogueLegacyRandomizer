@@ -20,6 +20,6 @@ namespace Archipelago
         FetchingLocations,
         Connected,
         Playing,
-        Reconnecting,
+        Reconnecting
     }
 }

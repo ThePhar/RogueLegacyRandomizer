@@ -41,7 +41,7 @@ namespace RogueCastle
             m_alzheimersQuestionMarks.ForceDraw = true;
             m_alzheimersQuestionMarks.Text = "?????";
             m_alzheimersQuestionMarks.Align = Types.TextAlign.Centre;
-            m_alzheimersQuestionMarks.Position = new Vector2(660f, 360f - m_alzheimersQuestionMarks.Height/2f);
+            m_alzheimersQuestionMarks.Position = new Vector2(660f, 360f - m_alzheimersQuestionMarks.Height / 2f);
         }
 
         public bool IsTeleporter
@@ -57,6 +57,7 @@ namespace RogueCastle
                     {
                         Array.Clear(m_teleporterList, 0, m_teleporterList.Length);
                     }
+
                     m_teleporterList = m_mapDisplay.TeleporterList();
                 }
             }
@@ -69,32 +70,34 @@ namespace RogueCastle
             var num3 = 3.40282347E+38f;
             var num4 = -3.40282347E+38f;
             foreach (var current in roomList)
-            {
                 if (current.Name != "Boss" &&
                     (current.LevelType == levelType ||
-                     (current.LevelType == LevelType.Castle &&
-                      (current.Name == "Start" || current.Name == "CastleEntrance"))))
+                     current.LevelType == LevelType.Castle &&
+                     (current.Name == "Start" || current.Name == "CastleEntrance")))
                 {
                     if (current.X < num)
                     {
                         num = current.X;
                     }
+
                     if (current.X + current.Width > num2)
                     {
                         num2 = current.X + current.Width;
                     }
+
                     if (current.Y < num3)
                     {
                         num3 = current.Y;
                     }
+
                     if (current.Y + current.Height > num4)
                     {
                         num4 = current.Y + current.Height;
                     }
                 }
-            }
-            pos = new Vector2((num2 + num)/2f, (num4 + num3)/2f);
-            pos = new Vector2(pos.X/1320f*60f, pos.Y/720f*32f);
+
+            pos = new Vector2((num2 + num) / 2f, (num4 + num3) / 2f);
+            pos = new Vector2(pos.X / 1320f * 60f, pos.Y / 720f * 32f);
         }
 
         public void SetPlayer(PlayerObj player)
@@ -113,7 +116,7 @@ namespace RogueCastle
             spriteObj.Scale = new Vector2(0.75f, 0.58f);
             var textObj = new TextObj(Game.JunicodeFont);
             textObj.Align = Types.TextAlign.Centre;
-            textObj.Position = new Vector2(m_legend.Width/2*spriteObj.ScaleX, m_legend.Bounds.Top + 10);
+            textObj.Position = new Vector2(m_legend.Width / 2 * spriteObj.ScaleX, m_legend.Bounds.Top + 10);
             textObj.Text = "Legend";
             textObj.FontSize = 12f;
             textObj.DropShadow = new Vector2(2f, 2f);
@@ -223,6 +226,7 @@ namespace RogueCastle
             {
                 m_mapDisplay.DrawNothing = false;
             }
+
             m_continueText.Text = "[Input:" + 9 + "]  to close map";
             m_recentreText.Text = "[Input:" + 0 + "]  to center on player";
             if (!InputManager.GamePadIsConnected(PlayerIndex.One))
@@ -233,12 +237,14 @@ namespace RogueCastle
             {
                 m_navigationText.Text = "[Button:LeftStick] to move map";
             }
+
             if (IsTeleporter && m_teleporterList.Length > 0)
             {
                 var spriteObj = m_teleporterList[m_selectedTeleporter];
                 m_playerIcon.Position = new Vector2(spriteObj.X + 7f, spriteObj.Y - 20f);
                 m_mapDisplay.CentreAroundTeleporter(m_selectedTeleporter);
             }
+
             base.OnEnter();
         }
 
@@ -256,6 +262,7 @@ namespace RogueCastle
                 Game.ScreenManager.Player.UnlockControls();
                 (ScreenManager as RCScreenManager).HideCurrentScreen();
             }
+
             if (!IsTeleporter)
             {
                 var num = 5f;
@@ -269,6 +276,7 @@ namespace RogueCastle
                     var expr_B5_cp_0 = m_mapDisplay;
                     expr_B5_cp_0.CameraOffset.Y = expr_B5_cp_0.CameraOffset.Y - num;
                 }
+
                 if (Game.GlobalInput.Pressed(20) || Game.GlobalInput.Pressed(21))
                 {
                     var expr_E9_cp_0 = m_mapDisplay;
@@ -279,6 +287,7 @@ namespace RogueCastle
                     var expr_11F_cp_0 = m_mapDisplay;
                     expr_11F_cp_0.CameraOffset.X = expr_11F_cp_0.CameraOffset.X - num;
                 }
+
                 if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                 {
                     m_mapDisplay.CentreAroundPlayer();
@@ -307,16 +316,19 @@ namespace RogueCastle
                         m_selectedTeleporter = 0;
                     }
                 }
+
                 if (selectedTeleporter != m_selectedTeleporter)
                 {
                     m_mapDisplay.CentreAroundTeleporter(m_selectedTeleporter, true);
                 }
+
                 if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                 {
                     m_mapDisplay.TeleportPlayer(m_selectedTeleporter);
                     (ScreenManager as RCScreenManager).HideCurrentScreen();
                 }
             }
+
             base.HandleInput();
         }
 
@@ -328,7 +340,8 @@ namespace RogueCastle
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
             Camera.GraphicsDevice.SetRenderTarget(Game.ScreenManager.RenderTarget);
             Camera.GraphicsDevice.Clear(Color.Black);
-            Camera.Draw((ScreenManager as RCScreenManager).GetLevelScreen().RenderTarget, Vector2.Zero, Color.White*0.3f);
+            Camera.Draw((ScreenManager as RCScreenManager).GetLevelScreen().RenderTarget, Vector2.Zero,
+                Color.White * 0.3f);
             m_mapDisplay.Draw(Camera);
             if (IsTeleporter && m_teleporterList.Length > 0)
             {
@@ -337,15 +350,18 @@ namespace RogueCastle
                 m_playerIcon.Position = new Vector2(spriteObj.X + 14f, spriteObj.Y - 20f);
                 m_playerIcon.Draw(Camera);
             }
+
             if (!IsTeleporter)
             {
                 m_recentreText.Draw(Camera);
                 m_navigationText.Draw(Camera);
             }
+
             if (!IsTeleporter && (Game.PlayerStats.Traits.X == 11f || Game.PlayerStats.Traits.Y == 11f))
             {
                 m_alzheimersQuestionMarks.Draw(Camera);
             }
+
             m_continueText.Draw(Camera);
             m_legend.Draw(Camera);
             Camera.End();
@@ -372,41 +388,49 @@ namespace RogueCastle
                 {
                     m_mapDisplay.Dispose();
                 }
+
                 m_mapDisplay = null;
                 if (m_legend != null)
                 {
                     m_legend.Dispose();
                 }
+
                 m_legend = null;
                 if (m_playerIcon != null)
                 {
                     m_playerIcon.Dispose();
                 }
+
                 m_playerIcon = null;
                 if (m_teleporterList != null)
                 {
                     Array.Clear(m_teleporterList, 0, m_teleporterList.Length);
                 }
+
                 m_teleporterList = null;
                 if (m_titleText != null)
                 {
                     m_titleText.Dispose();
                 }
+
                 m_titleText = null;
                 if (m_continueText != null)
                 {
                     m_continueText.Dispose();
                 }
+
                 m_continueText = null;
                 if (m_recentreText != null)
                 {
                     m_recentreText.Dispose();
                 }
+
                 m_recentreText = null;
                 if (m_navigationText != null)
                 {
                     m_navigationText.Dispose();
                 }
+
                 m_navigationText = null;
                 m_alzheimersQuestionMarks.Dispose();
                 m_alzheimersQuestionMarks = null;

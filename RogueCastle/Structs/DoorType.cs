@@ -16,6 +16,6 @@ namespace RogueCastle.Structs
         Null,
         Open,
         Locked,
-        Blocked,
+        Blocked
     }
 }

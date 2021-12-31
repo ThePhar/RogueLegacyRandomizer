@@ -23,7 +23,7 @@ namespace RogueCastle
         {
             m_deadZoneBarBG = new SpriteObj("OptionsScreenVolumeBG_Sprite");
             m_deadZoneBarBG.X = m_optionsTextOffset;
-            m_deadZoneBarBG.Y = m_deadZoneBarBG.Height/2f - 2f;
+            m_deadZoneBarBG.Y = m_deadZoneBarBG.Height / 2f - 2f;
             AddChild(m_deadZoneBarBG);
             m_deadZoneBar = new SpriteObj("OptionsScreenVolumeBar_Sprite");
             m_deadZoneBar.X = m_deadZoneBarBG.X + 6f;
@@ -42,13 +42,14 @@ namespace RogueCastle
                     m_deadZoneBar.TextureColor = Color.Yellow;
                     return;
                 }
+
                 m_deadZoneBar.TextureColor = Color.White;
             }
         }
 
         public override void Initialize()
         {
-            m_deadZoneBar.ScaleX = InputManager.Deadzone/95f;
+            m_deadZoneBar.ScaleX = InputManager.Deadzone / 95f;
             base.Initialize();
         }
 
@@ -62,22 +63,25 @@ namespace RogueCastle
                     UpdateDeadZoneBar();
                 }
             }
-            else if ((Game.GlobalInput.Pressed(22) || Game.GlobalInput.Pressed(23)) && InputManager.Deadzone + 1f <= 95f)
+            else if ((Game.GlobalInput.Pressed(22) || Game.GlobalInput.Pressed(23)) &&
+                     InputManager.Deadzone + 1f <= 95f)
             {
                 InputManager.Deadzone += 1f;
                 UpdateDeadZoneBar();
             }
+
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) || Game.GlobalInput.JustPressed(2) ||
                 Game.GlobalInput.JustPressed(3))
             {
                 IsActive = false;
             }
+
             base.HandleInput();
         }
 
         public void UpdateDeadZoneBar()
         {
-            m_deadZoneBar.ScaleX = InputManager.Deadzone/95f;
+            m_deadZoneBar.ScaleX = InputManager.Deadzone / 95f;
         }
 
         public override void Dispose()

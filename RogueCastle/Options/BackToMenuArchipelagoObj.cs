@@ -15,9 +15,8 @@ namespace RogueCastle.Options
 {
     public class BackToMenuArchipelagoObj : ArchipelagoOptionsObj
     {
-        public BackToMenuArchipelagoObj(ArchipelagoScreen parentScreen) : base(parentScreen, "Close Archipelago Menu")
-        {
-        }
+        public BackToMenuArchipelagoObj(ArchipelagoScreen parentScreen) :
+            base(parentScreen, "Close Archipelago Menu") { }
 
         public override bool IsActive
         {

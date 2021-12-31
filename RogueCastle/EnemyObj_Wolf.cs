@@ -70,6 +70,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Wargen";
                     MaxHealth = 25;
@@ -97,6 +98,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Wolf_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Wargenflorgen";
                     MaxHealth = 52;
@@ -124,6 +126,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Wolf_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Zorg Warg";
                     MaxHealth = 500;
@@ -151,6 +154,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Wolf_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -216,7 +220,9 @@ namespace RogueCastle
                             array[1] = 100;
                             RunLogicBlock(arg_C7_1, arg_C7_2, array);
                         }
+
                         break;
+
                     case 1:
                         if (!Chasing)
                         {
@@ -226,7 +232,9 @@ namespace RogueCastle
                             array2[0] = 100;
                             RunLogicBlock(arg_A1_1, arg_A1_2, array2);
                         }
+
                         break;
+
                     case 2:
                     case 3:
                     {
@@ -235,6 +243,7 @@ namespace RogueCastle
                             RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                             return;
                         }
+
                         var arg_7E_1 = false;
                         var arg_7E_2 = m_generalBasicLB;
                         var array3 = new int[3];
@@ -242,6 +251,7 @@ namespace RogueCastle
                         RunLogicBlock(arg_7E_1, arg_7E_2, array3);
                         return;
                     }
+
                     default:
                         return;
                 }
@@ -261,7 +271,9 @@ namespace RogueCastle
                         array[1] = 100;
                         RunLogicBlock(arg_B7_1, arg_B7_2, array);
                     }
+
                     break;
+
                 case 1:
                     if (!Chasing)
                     {
@@ -271,7 +283,9 @@ namespace RogueCastle
                         array2[0] = 100;
                         RunLogicBlock(arg_91_1, arg_91_2, array2);
                     }
+
                     break;
+
                 case 2:
                 case 3:
                 {
@@ -280,6 +294,7 @@ namespace RogueCastle
                         RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_6E_1 = false;
                     var arg_6E_2 = m_generalBasicLB;
                     var array3 = new int[3];
@@ -287,6 +302,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -305,7 +321,9 @@ namespace RogueCastle
                         array[1] = 100;
                         RunLogicBlock(arg_B7_1, arg_B7_2, array);
                     }
+
                     break;
+
                 case 1:
                     if (!Chasing)
                     {
@@ -315,7 +333,9 @@ namespace RogueCastle
                         array2[0] = 100;
                         RunLogicBlock(arg_91_1, arg_91_2, array2);
                     }
+
                     break;
+
                 case 2:
                 case 3:
                 {
@@ -324,6 +344,7 @@ namespace RogueCastle
                         RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_6E_1 = false;
                     var arg_6E_2 = m_generalBasicLB;
                     var array3 = new int[3];
@@ -331,6 +352,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -349,7 +371,9 @@ namespace RogueCastle
                         array[1] = 100;
                         RunLogicBlock(arg_B7_1, arg_B7_2, array);
                     }
+
                     break;
+
                 case 1:
                     if (!Chasing)
                     {
@@ -359,7 +383,9 @@ namespace RogueCastle
                         array2[0] = 100;
                         RunLogicBlock(arg_91_1, arg_91_2, array2);
                     }
+
                     break;
+
                 case 2:
                 case 3:
                 {
@@ -368,6 +394,7 @@ namespace RogueCastle
                         RunLogicBlock(false, m_generalBasicLB, 0, 0, 100);
                         return;
                     }
+
                     var arg_6E_1 = false;
                     var arg_6E_2 = m_generalBasicLB;
                     var array3 = new int[3];
@@ -375,6 +402,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -386,16 +414,19 @@ namespace RogueCastle
             {
                 m_startDelayCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             if (!m_isTouchingGround && IsWeighted && CurrentSpeed == 0f && SpriteName == "EnemyWargJump_Character")
             {
                 CurrentSpeed = Speed;
             }
+
             base.Update(gameTime);
             if (m_isTouchingGround && CurrentSpeed == 0f && !IsAnimating)
             {
                 ChangeSprite("EnemyWargIdle_Character");
                 PlayAnimation();
             }
+
             if (SpriteName == "EnemyWargRun_Character")
             {
                 m_runFrameSound.Update();
@@ -409,6 +440,7 @@ namespace RogueCastle
             {
                 m_currentActiveLB.StopLogicBlock();
             }
+
             m_currentActiveLB = m_wolfHitLB;
             m_currentActiveLB.RunLogicBlock(100);
             base.HitEnemy(damage, position, isPlayer);

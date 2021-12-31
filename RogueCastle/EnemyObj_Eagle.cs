@@ -90,18 +90,24 @@ namespace RogueCastle
                     {
                         RunLogicBlock(false, m_basicAttackLB, 0, 100);
                     }
+
                     if (X > m_levelScreen.CurrentRoom.Bounds.Right)
                     {
-                        Y = m_levelScreen.CurrentRoom.Y + CDGMath.RandomInt(100, m_levelScreen.CurrentRoom.Height - 100);
+                        Y = m_levelScreen.CurrentRoom.Y +
+                            CDGMath.RandomInt(100, m_levelScreen.CurrentRoom.Height - 100);
                         m_flyingLeft = true;
                         return;
                     }
+
                     if (X < m_levelScreen.CurrentRoom.Bounds.Left)
                     {
-                        Y = m_levelScreen.CurrentRoom.Y + CDGMath.RandomInt(100, m_levelScreen.CurrentRoom.Height - 100);
+                        Y = m_levelScreen.CurrentRoom.Y +
+                            CDGMath.RandomInt(100, m_levelScreen.CurrentRoom.Height - 100);
                         m_flyingLeft = false;
                     }
+
                     return;
+
                 default:
                     return;
             }
@@ -149,6 +155,7 @@ namespace RogueCastle
             {
                 PlayAnimation();
             }
+
             base.Update(gameTime);
         }
     }

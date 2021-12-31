@@ -70,6 +70,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Doomtrait";
                     MaxHealth = 43;
@@ -97,6 +98,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Portrait_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Doomscape";
                     MaxHealth = 61;
@@ -124,6 +126,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Portrait_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Sallos";
                     MaxHealth = 215;
@@ -151,6 +154,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Portrait_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -186,10 +190,10 @@ namespace RogueCastle
             logicBlocksToDispose.Add(m_generalCooldownLB);
             base.InitializeLogic();
             CollisionBoxes.Clear();
-            CollisionBoxes.Add(new CollisionBox((int) (-18f*ScaleX), (int) (-24f*ScaleY), (int) (36f*ScaleX),
-                (int) (48f*ScaleY), 2, this));
-            CollisionBoxes.Add(new CollisionBox((int) (-15f*ScaleX), (int) (-21f*ScaleY), (int) (31f*ScaleX),
-                (int) (44f*ScaleY), 1, this));
+            CollisionBoxes.Add(new CollisionBox((int) (-18f * ScaleX), (int) (-24f * ScaleY), (int) (36f * ScaleX),
+                (int) (48f * ScaleY), 2, this));
+            CollisionBoxes.Add(new CollisionBox((int) (-15f * ScaleX), (int) (-21f * ScaleY), (int) (31f * ScaleX),
+                (int) (44f * ScaleY), 1, this));
             if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 (GetChildAt(0) as SpriteObj).ChangeSprite("GiantPortrait_Sprite");
@@ -292,6 +296,7 @@ namespace RogueCastle
                 {
                     case 0:
                         break;
+
                     case 1:
                     {
                         var arg_42_1 = true;
@@ -301,10 +306,12 @@ namespace RogueCastle
                         RunLogicBlock(arg_42_1, arg_42_2, array);
                         return;
                     }
+
                     case 2:
                     case 3:
                         ChasePlayer();
                         return;
+
                     default:
                         return;
                 }
@@ -323,6 +330,7 @@ namespace RogueCastle
                 {
                     case 0:
                         break;
+
                     case 1:
                     {
                         var arg_42_1 = true;
@@ -332,10 +340,12 @@ namespace RogueCastle
                         RunLogicBlock(arg_42_1, arg_42_2, array);
                         return;
                     }
+
                     case 2:
                     case 3:
                         ChasePlayer();
                         return;
+
                     default:
                         return;
                 }
@@ -354,6 +364,7 @@ namespace RogueCastle
                 {
                     case 0:
                         break;
+
                     case 1:
                     {
                         var arg_42_1 = true;
@@ -363,10 +374,12 @@ namespace RogueCastle
                         RunLogicBlock(arg_42_1, arg_42_2, array);
                         return;
                     }
+
                     case 2:
                     case 3:
                         ChasePlayer();
                         return;
+
                     default:
                         return;
                 }
@@ -385,6 +398,7 @@ namespace RogueCastle
                 {
                     case 0:
                         break;
+
                     case 1:
                     {
                         var arg_43_1 = true;
@@ -394,10 +408,12 @@ namespace RogueCastle
                         RunLogicBlock(arg_43_1, arg_43_2, array);
                         return;
                     }
+
                     case 2:
                     case 3:
                         Chasing = true;
                         return;
+
                     default:
                         return;
                 }
@@ -417,7 +433,7 @@ namespace RogueCastle
                 {
                     if (Shake)
                     {
-                        Rotation = (float) Math.Sin(Game.TotalGameTimeSeconds*15f)*2f;
+                        Rotation = (float) Math.Sin(Game.TotalGameTimeSeconds * 15f) * 2f;
                     }
                     else
                     {
@@ -429,18 +445,20 @@ namespace RogueCastle
             {
                 if (Difficulty == EnemyDifficulty.MiniBoss)
                 {
-                    Rotation += 420f*num;
+                    Rotation += 420f * num;
                 }
                 else
                 {
-                    Rotation += 600f*num;
+                    Rotation += 600f * num;
                 }
+
                 var spriteObj = GetChildAt(0) as SpriteObj;
                 if (spriteObj.SpriteName != "EnemyPortrait" + (int) Difficulty + "_Sprite")
                 {
                     ChangePortrait();
                 }
             }
+
             base.Update(gameTime);
         }
 
@@ -456,6 +474,7 @@ namespace RogueCastle
             {
                 ChasePlayer();
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 
@@ -467,12 +486,14 @@ namespace RogueCastle
                 {
                     m_currentActiveLB.StopLogicBlock();
                 }
+
                 Chasing = true;
                 if (m_target.X < X)
                 {
                     Orientation = 0f;
                     return;
                 }
+
                 Orientation = MathHelper.ToRadians(180f);
             }
         }

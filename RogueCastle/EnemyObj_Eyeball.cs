@@ -74,6 +74,7 @@ namespace RogueCastle
                     ItemDropChance = 0f;
                     m_saveToEnemiesKilledList = false;
                 }
+
                 m_isNeo = value;
             }
         }
@@ -135,6 +136,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Eyeball_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Visionary";
                     MaxHealth = 57;
@@ -162,6 +164,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Eyeball_Expert_KnockBack;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Khidr";
                     MaxHealth = 580;
@@ -193,8 +196,10 @@ namespace RogueCastle
                     {
                         MaxHealth = 1;
                     }
+
                     break;
             }
+
             if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyEyeballBossEye_Character";
@@ -250,7 +255,8 @@ namespace RogueCastle
             var logicSet4 = new LogicSet(this);
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet4.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
-            logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+            logicSet4.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite",
+                "EnemyEyeballBossPupilFire_Sprite"));
             logicSet4.AddAction(new DelayLogicAction(FireballDelay));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
             logicSet4.AddAction(new DelayLogicAction(0.1f));
@@ -263,7 +269,8 @@ namespace RogueCastle
             var logicSet5 = new LogicSet(this);
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet5.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
-            logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+            logicSet5.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite",
+                "EnemyEyeballBossPupilFire_Sprite"));
             logicSet5.AddAction(new DelayLogicAction(FireballDelay));
             logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
             logicSet5.AddAction(new DelayLogicAction(0.1f));
@@ -276,7 +283,8 @@ namespace RogueCastle
             var logicSet6 = new LogicSet(this);
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet6.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
-            logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+            logicSet6.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite",
+                "EnemyEyeballBossPupilFire_Sprite"));
             logicSet6.AddAction(new DelayLogicAction(FireballDelay));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
             logicSet6.AddAction(new DelayLogicAction(0.1f));
@@ -291,7 +299,8 @@ namespace RogueCastle
             var logicSet7 = new LogicSet(this);
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemyEyeballBossFire_Character"));
             logicSet7.AddAction(new RunFunctionLogicAction(this, "LockEyeball"));
-            logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite", "EnemyEyeballBossPupilFire_Sprite"));
+            logicSet7.AddAction(new RunFunctionLogicAction(m_pupil, "ChangeSprite",
+                "EnemyEyeballBossPupilFire_Sprite"));
             logicSet7.AddAction(new DelayLogicAction(FireballDelay));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
             logicSet7.AddAction(new DelayLogicAction(0.1f));
@@ -354,6 +363,7 @@ namespace RogueCastle
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
                 ls.AddAction(new DelayLogicAction(0.1f));
             }
+
             projectileData.Dispose();
         }
 
@@ -376,16 +386,17 @@ namespace RogueCastle
             var num = CDGMath.RandomPlusMinus();
             for (var i = 0; i <= 170; i += 10)
             {
-                projectileData.AngleOffset = i*num;
+                projectileData.AngleOffset = i * num;
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-                projectileData.AngleOffset = 90 + i*num;
+                projectileData.AngleOffset = 90 + i * num;
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-                projectileData.AngleOffset = 180 + i*num;
+                projectileData.AngleOffset = 180 + i * num;
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-                projectileData.AngleOffset = 270 + i*num;
+                projectileData.AngleOffset = 270 + i * num;
                 ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
                 ls.AddAction(new DelayLogicAction(0.175f));
             }
+
             projectileData.Dispose();
         }
 
@@ -411,13 +422,14 @@ namespace RogueCastle
                 {
                     flipper = CDGMath.RandomPlusMinus();
                 }
-                projectileData.AngleOffset = -10 + startProjIndex*10*flipper;
+
+                projectileData.AngleOffset = -10 + startProjIndex * 10 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-                projectileData.AngleOffset = 80 + startProjIndex*10*flipper;
+                projectileData.AngleOffset = 80 + startProjIndex * 10 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-                projectileData.AngleOffset = 170 + startProjIndex*10*flipper;
+                projectileData.AngleOffset = 170 + startProjIndex * 10 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-                projectileData.AngleOffset = 260 + startProjIndex*10*flipper;
+                projectileData.AngleOffset = 260 + startProjIndex * 10 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileData.Dispose();
                 startProjIndex++;
@@ -447,13 +459,14 @@ namespace RogueCastle
                 {
                     flipper = CDGMath.RandomPlusMinus();
                 }
-                projectileData.AngleOffset = -10 + startProjIndex*17*flipper;
+
+                projectileData.AngleOffset = -10 + startProjIndex * 17 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-                projectileData.AngleOffset = 80 + startProjIndex*17*flipper;
+                projectileData.AngleOffset = 80 + startProjIndex * 17 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-                projectileData.AngleOffset = 170 + startProjIndex*17*flipper;
+                projectileData.AngleOffset = 170 + startProjIndex * 17 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
-                projectileData.AngleOffset = 260 + startProjIndex*17*flipper;
+                projectileData.AngleOffset = 260 + startProjIndex * 17 * flipper;
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileData.Dispose();
                 startProjIndex++;
@@ -504,12 +517,15 @@ namespace RogueCastle
                 {
                     projectileData.AngleOffset = 20 + i;
                 }
+
                 m_levelScreen.ProjectileManager.FireProjectile(projectileData);
             }
+
             if (firstShot)
             {
                 Tween.RunFunction(0.8f, this, "ThrowSprayProjectiles", false);
             }
+
             projectileData.Dispose();
         }
 
@@ -555,6 +571,7 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalBasicLB, 0, 100);
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -566,6 +583,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -578,6 +596,7 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalAdvancedLB, 0, 100);
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -589,6 +608,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -601,6 +621,7 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalExpertLB, 0, 100);
                     return;
+
                 case 1:
                 case 2:
                 case 3:
@@ -612,6 +633,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_33_1, arg_33_2, array);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -637,6 +659,7 @@ namespace RogueCastle
                         RunLogicBlock(arg_45_1, arg_45_2, array);
                         return;
                     }
+
                     var arg_6A_1 = false;
                     var arg_6A_2 = m_generalNeoLB;
                     var array2 = new int[4];
@@ -646,6 +669,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6A_1, arg_6A_2, array2);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -657,11 +681,12 @@ namespace RogueCastle
             {
                 m_deathLoop = SoundManager.PlaySound("Boss_Eyeball_Death_Loop");
             }
+
             var num = m_target.Y - Y;
             var num2 = m_target.X - X;
             var num3 = (float) Math.Atan2(num, num2);
-            m_pupil.X = (float) Math.Cos(num3)*PupilOffset;
-            m_pupil.Y = (float) Math.Sin(num3)*PupilOffset;
+            m_pupil.X = (float) Math.Cos(num3) * PupilOffset;
+            m_pupil.Y = (float) Math.Sin(num3) * PupilOffset;
             if (m_shake && m_shakeTimer > 0f)
             {
                 m_shakeTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -680,6 +705,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             m_squishSound.Update();
             base.Update(gameTime);
         }
@@ -694,6 +720,7 @@ namespace RogueCastle
                     playerObj.HitPlayer(this);
                 }
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 
@@ -713,6 +740,7 @@ namespace RogueCastle
                 base.Kill(giveXP);
                 return;
             }
+
             if (m_target.CurrentHealth > 0)
             {
                 Game.PlayerStats.EyeballBossBeaten = true;
@@ -721,6 +749,7 @@ namespace RogueCastle
                 {
                     m_currentActiveLB.StopLogicBlock();
                 }
+
                 SoundManager.StopMusic();
                 m_bossVersionKilled = true;
                 m_target.LockControls();
@@ -745,6 +774,7 @@ namespace RogueCastle
             {
                 m_currentActiveLB.StopLogicBlock();
             }
+
             LockEyeball();
             PauseEnemy(true);
             ChangeSprite("EnemyEyeballBossFire_Character");
@@ -755,6 +785,7 @@ namespace RogueCastle
             {
                 m_target.InvincibleToSpikes = true;
             }
+
             object arg_106_0 = m_levelScreen.Camera;
             var arg_106_1 = 0.5f;
             Easing arg_106_2 = Quad.EaseInOut;
@@ -777,47 +808,39 @@ namespace RogueCastle
             {
                 var vector = new Vector2(CDGMath.RandomInt(Bounds.Left, Bounds.Right),
                     CDGMath.RandomInt(Bounds.Top, Bounds.Bottom));
-                Tween.RunFunction(i*0.1f, typeof (SoundManager), "Play3DSound", this, m_target, new[]
+                Tween.RunFunction(i * 0.1f, typeof(SoundManager), "Play3DSound", this, m_target, new[]
                 {
                     "Boss_Explo_01",
                     "Boss_Explo_02",
                     "Boss_Explo_03"
                 });
-                Tween.RunFunction(i*0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
+                Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
             }
+
             Tween.AddEndHandlerToLastTween(this, "Part3");
             if (!IsNeo)
             {
                 var list = new List<int>();
-                for (var j = 0; j < m_bossCoins; j++)
-                {
-                    list.Add(0);
-                }
-                for (var k = 0; k < m_bossMoneyBags; k++)
-                {
-                    list.Add(1);
-                }
-                for (var l = 0; l < m_bossDiamonds; l++)
-                {
-                    list.Add(2);
-                }
+                for (var j = 0; j < m_bossCoins; j++) list.Add(0);
+                for (var k = 0; k < m_bossMoneyBags; k++) list.Add(1);
+                for (var l = 0; l < m_bossDiamonds; l++) list.Add(2);
                 CDGMath.Shuffle(list);
-                var num = 2.5f/list.Count;
+                var num = 2.5f / list.Count;
                 for (var m = 0; m < list.Count; m++)
                 {
                     var vector2 = new Vector2(CDGMath.RandomInt(m_pupil.AbsBounds.Left, m_pupil.AbsBounds.Right),
                         CDGMath.RandomInt(m_pupil.AbsBounds.Top, m_pupil.AbsBounds.Bottom));
                     if (list[m] == 0)
                     {
-                        Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", vector2, 1, 10);
+                        Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 1, 10);
                     }
                     else if (list[m] == 1)
                     {
-                        Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", vector2, 10, 100);
+                        Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 10, 100);
                     }
                     else
                     {
-                        Tween.RunFunction(m*num, m_levelScreen.ItemDropManager, "DropItem", vector2, 11, 500);
+                        Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 11, 500);
                     }
                 }
             }
@@ -831,6 +854,7 @@ namespace RogueCastle
             {
                 m_deathLoop.Stop(AudioStopOptions.Immediate);
             }
+
             GoToFrame(1);
             StopAnimation();
             Tween.To(this, 2f, Tween.EaseNone, "Rotation", "-1080");
@@ -856,6 +880,7 @@ namespace RogueCastle
                 {
                     m_deathLoop.Dispose();
                 }
+
                 m_deathLoop = null;
                 base.Dispose();
             }

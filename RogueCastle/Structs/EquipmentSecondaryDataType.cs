@@ -13,26 +13,26 @@ namespace RogueCastle.Structs
 {
     public static class EquipmentSecondaryDataType
     {
-        public const int None              = 0;
-        public const int CritChance        = 1;
-        public const int CritDamage        = 2;
-        public const int GoldBonus         = 3;
-        public const int DamageReturn      = 4;
-        public const int XPBonus           = 5;
-        public const int AirAttack         = 6;
-        public const int Vampirism         = 7;
-        public const int Siphon            = 8;
-        public const int AirJump           = 9;
-        public const int MoveSpeed         = 10;
-        public const int AirDash           = 11;
-        public const int Block             = 12;
-        public const int Float             = 13;
+        public const int None = 0;
+        public const int CritChance = 1;
+        public const int CritDamage = 2;
+        public const int GoldBonus = 3;
+        public const int DamageReturn = 4;
+        public const int XPBonus = 5;
+        public const int AirAttack = 6;
+        public const int Vampirism = 7;
+        public const int Siphon = 8;
+        public const int AirJump = 9;
+        public const int MoveSpeed = 10;
+        public const int AirDash = 11;
+        public const int Block = 12;
+        public const int Float = 13;
         public const int AttackProjectiles = 14;
-        public const int Flight            = 15;
-        public const int Total             = 16;
+        public const int Flight = 15;
+        public const int Total = 16;
 
         /// <summary>
-        /// Returns the string representation of a given equipment characteristic.
+        ///     Returns the string representation of a given equipment characteristic.
         /// </summary>
         /// <param name="equipmentSecondaryDataType">Equipment Characteristic Identifier</param>
         /// <returns></returns>

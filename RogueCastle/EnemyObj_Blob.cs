@@ -131,6 +131,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Blob_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     SetNumberOfHits(4);
                     BlobSizeChange = new Vector2(0.65f, 0.65f);
@@ -160,6 +161,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Blob_Expert_KnockBack;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     SetNumberOfHits(5);
                     BlobSizeChange = new Vector2(0.6f, 0.6f);
@@ -194,8 +196,10 @@ namespace RogueCastle
                         MaxHealth = 1;
                         SetNumberOfHits(1);
                     }
+
                     break;
             }
+
             if (Difficulty == EnemyDifficulty.Basic)
             {
                 _objectList[0].TextureColor = Color.Green;
@@ -220,6 +224,7 @@ namespace RogueCastle
                 (_objectList[1] as SpriteObj).OutlineColour = Color.Yellow;
                 _objectList[1].TextureColor = Color.Yellow;
             }
+
             if (Difficulty == EnemyDifficulty.MiniBoss)
             {
                 m_resetSpriteName = "EnemyBlobBossIdle_Character";
@@ -248,7 +253,7 @@ namespace RogueCastle
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
             logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
             logicSet4.AddAction(new DelayLogicAction(JumpDelay));
-            logicSet4.AddAction(new MoveLogicAction(m_target, true, Speed*6.75f));
+            logicSet4.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
             logicSet4.AddAction(new JumpLogicAction());
             logicSet4.AddAction(new LockFaceDirectionLogicAction(true));
@@ -285,7 +290,7 @@ namespace RogueCastle
             logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
             logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
             logicSet5.AddAction(new DelayLogicAction(JumpDelay));
-            logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed*6.75f));
+            logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
             logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
             logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
             logicSet5.AddAction(new JumpLogicAction());
@@ -308,7 +313,7 @@ namespace RogueCastle
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobJump_Character", false, false));
             logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
             logicSet6.AddAction(new DelayLogicAction(JumpDelay));
-            logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed*6.75f));
+            logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
             logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
             logicSet6.AddAction(new JumpLogicAction());
@@ -348,7 +353,7 @@ namespace RogueCastle
             logicSet10.AddAction(new ChangeSpriteLogicAction("EnemyBlobBossJump_Character", false, false));
             logicSet10.AddAction(new PlayAnimationLogicAction("Start", "BeforeJump"));
             logicSet10.AddAction(new DelayLogicAction(JumpDelay));
-            logicSet10.AddAction(new MoveLogicAction(m_target, true, Speed*6.75f));
+            logicSet10.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
             logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
             logicSet10.AddAction(new JumpLogicAction());
             logicSet10.AddAction(new LockFaceDirectionLogicAction(true));
@@ -391,6 +396,7 @@ namespace RogueCastle
             {
                 SetCooldownLogicBlock(m_generalCooldownLB, 40, 40, 20);
             }
+
             base.InitializeLogic();
         }
 
@@ -403,11 +409,13 @@ namespace RogueCastle
                     case 0:
                         RunLogicBlock(true, m_generalBasicLB, 10, 10, 75, 5);
                         break;
+
                     case 1:
                     case 2:
                     case 3:
                         RunLogicBlock(true, m_generalBasicLB, 45, 0, 0, 55);
                         return;
+
                     default:
                         return;
                 }
@@ -423,11 +431,13 @@ namespace RogueCastle
                     case 0:
                         RunLogicBlock(true, m_generalAdvancedLB, 10, 10, 75, 5);
                         break;
+
                     case 1:
                     case 2:
                     case 3:
                         RunLogicBlock(true, m_generalAdvancedLB, 45, 0, 0, 55);
                         return;
+
                     default:
                         return;
                 }
@@ -443,11 +453,13 @@ namespace RogueCastle
                     case 0:
                         RunLogicBlock(true, m_generalExpertLB, 10, 10, 75, 5);
                         break;
+
                     case 1:
                     case 2:
                     case 3:
                         RunLogicBlock(true, m_generalExpertLB, 45, 0, 0, 55);
                         return;
+
                     default:
                         return;
                 }
@@ -468,7 +480,9 @@ namespace RogueCastle
                         {
                             RunLogicBlock(true, m_generalMiniBossLB, 45, 0, 0, 55);
                         }
+
                         break;
+
                     default:
                         return;
                 }
@@ -498,9 +512,10 @@ namespace RogueCastle
             {
                 enemyObj_Blob.Orientation = MathHelper.ToRadians(180f);
             }
+
             enemyObj_Blob.Level = Level;
             m_levelScreen.AddEnemyToCurrentRoom(enemyObj_Blob);
-            enemyObj_Blob.Scale = new Vector2(ScaleX*BlobSizeChange.X, ScaleY*BlobSizeChange.Y);
+            enemyObj_Blob.Scale = new Vector2(ScaleX * BlobSizeChange.X, ScaleY * BlobSizeChange.Y);
             enemyObj_Blob.SetNumberOfHits(numHits);
             enemyObj_Blob.Speed *= BlobSpeedChange;
             enemyObj_Blob.MainBlob = false;
@@ -511,13 +526,14 @@ namespace RogueCastle
                 enemyObj_Blob.Name = Name;
                 enemyObj_Blob.IsWeighted = false;
                 enemyObj_Blob.TurnSpeed = TurnSpeed;
-                enemyObj_Blob.Speed = Speed*BlobSpeedChange;
+                enemyObj_Blob.Speed = Speed * BlobSpeedChange;
                 enemyObj_Blob.Level = Level;
                 enemyObj_Blob.MaxHealth = MaxHealth;
                 enemyObj_Blob.CurrentHealth = enemyObj_Blob.MaxHealth;
                 enemyObj_Blob.Damage = Damage;
                 enemyObj_Blob.ChangeNeoStats(BlobSizeChange.X, BlobSpeedChange, numHits);
             }
+
             var num = CDGMath.RandomInt(-500, -300);
             var num2 = CDGMath.RandomInt(300, 700);
             if (enemyObj_Blob.X < m_target.X)
@@ -528,6 +544,7 @@ namespace RogueCastle
             {
                 enemyObj_Blob.AccelerationX += m_target.EnemyKnockBack.X + num;
             }
+
             enemyObj_Blob.AccelerationY += -(m_target.EnemyKnockBack.Y + num2);
             if (enemyObj_Blob.Difficulty == EnemyDifficulty.MiniBoss)
             {
@@ -536,17 +553,20 @@ namespace RogueCastle
                     enemyObj_Blob.GetChildAt(i).Opacity = GetChildAt(i).Opacity;
                     enemyObj_Blob.GetChildAt(i).TextureColor = GetChildAt(i).TextureColor;
                 }
+
                 enemyObj_Blob.ChangeSprite("EnemyBlobBossAir_Character");
             }
             else
             {
                 enemyObj_Blob.ChangeSprite("EnemyBlobAir_Character");
             }
+
             enemyObj_Blob.PlayAnimation();
             if (LevelENV.ShowEnemyRadii)
             {
                 enemyObj_Blob.InitializeDebugRadii();
             }
+
             enemyObj_Blob.SaveToFile = false;
             enemyObj_Blob.SpawnRoom = m_levelScreen.CurrentRoom;
             enemyObj_Blob.GivesLichHealth = false;
@@ -566,6 +586,7 @@ namespace RogueCastle
             {
                 enemyObj_EarthWizard.Orientation = MathHelper.ToRadians(180f);
             }
+
             enemyObj_EarthWizard.Level = Level;
             enemyObj_EarthWizard.Level -= m_bossEarthWizardLevelReduction;
             m_levelScreen.AddEnemyToCurrentRoom(enemyObj_EarthWizard);
@@ -580,12 +601,14 @@ namespace RogueCastle
             {
                 enemyObj_EarthWizard.AccelerationX += m_target.EnemyKnockBack.X + num;
             }
+
             enemyObj_EarthWizard.AccelerationY += -(m_target.EnemyKnockBack.Y + num2);
             enemyObj_EarthWizard.PlayAnimation();
             if (LevelENV.ShowEnemyRadii)
             {
                 enemyObj_EarthWizard.InitializeDebugRadii();
             }
+
             enemyObj_EarthWizard.SaveToFile = false;
             enemyObj_EarthWizard.SpawnRoom = m_levelScreen.CurrentRoom;
             enemyObj_EarthWizard.GivesLichHealth = false;
@@ -600,6 +623,7 @@ namespace RogueCastle
                 {
                     CurrentSpeed = Speed;
                 }
+
                 if (!m_currentActiveLB.IsActive && m_isTouchingGround && SpriteName != "EnemyBlobBossIdle_Character")
                 {
                     ChangeSprite("EnemyBlobBossIdle_Character");
@@ -612,39 +636,39 @@ namespace RogueCastle
                 {
                     CurrentSpeed = Speed;
                 }
+
                 if (!m_currentActiveLB.IsActive && m_isTouchingGround && SpriteName != "EnemyBlobIdle_Character")
                 {
                     ChangeSprite("EnemyBlobIdle_Character");
                     PlayAnimation();
                 }
             }
+
             if (IsNeo)
             {
                 foreach (var current in m_levelScreen.CurrentRoom.EnemyList)
-                {
                     if (current != this && current is EnemyObj_Blob)
                     {
                         var num = Vector2.Distance(Position, current.Position);
                         if (num < 150f)
                         {
-                            var facePosition = 2f*Position - current.Position;
+                            var facePosition = 2f * Position - current.Position;
                             CDGMath.TurnToFace(this, facePosition);
                         }
                     }
-                }
+
                 foreach (var current2 in m_levelScreen.CurrentRoom.TempEnemyList)
-                {
                     if (current2 != this && current2 is EnemyObj_Blob)
                     {
                         var num2 = Vector2.Distance(Position, current2.Position);
                         if (num2 < 150f)
                         {
-                            var facePosition2 = 2f*Position - current2.Position;
+                            var facePosition2 = 2f * Position - current2.Position;
                             CDGMath.TurnToFace(this, facePosition2);
                         }
                     }
-                }
             }
+
             base.Update(gameTime);
         }
 
@@ -665,9 +689,10 @@ namespace RogueCastle
                             {
                                 m_flipTween.StopTween(false);
                             }
+
                             ScaleX = ScaleY;
                             CreateBlob(Difficulty, NumHits);
-                            Scale = new Vector2(ScaleX*BlobSizeChange.X, ScaleY*BlobSizeChange.Y);
+                            Scale = new Vector2(ScaleX * BlobSizeChange.X, ScaleY * BlobSizeChange.Y);
                             Speed *= BlobSpeedChange;
                             if (Difficulty == EnemyDifficulty.MiniBoss)
                             {
@@ -680,13 +705,15 @@ namespace RogueCastle
                             {
                                 m_flipTween.StopTween(false);
                             }
+
                             ScaleX = ScaleY;
                             CreateBlob(Difficulty, NumHits, true);
-                            Scale = new Vector2(ScaleX*BlobSizeChange.X, ScaleY*BlobSizeChange.Y);
+                            Scale = new Vector2(ScaleX * BlobSizeChange.X, ScaleY * BlobSizeChange.Y);
                             Speed *= BlobSpeedChange;
                         }
                     }
                 }
+
                 if (NumHits <= 0)
                 {
                     Kill();
@@ -704,6 +731,7 @@ namespace RogueCastle
                     playerObj.HitPlayer(this);
                 }
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 
@@ -714,12 +742,13 @@ namespace RogueCastle
                 base.Kill(giveXP);
                 return;
             }
+
             if (m_target.CurrentHealth > 0)
             {
                 var blobBossRoom = m_levelScreen.CurrentRoom as BlobBossRoom;
                 var blobChallengeRoom = m_levelScreen.CurrentRoom as BlobChallengeRoom;
-                if (((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1) ||
-                     (blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1)) && !m_bossVersionKilled)
+                if ((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1 ||
+                     blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1) && !m_bossVersionKilled)
                 {
                     Game.PlayerStats.BlobBossBeaten = true;
                     SoundManager.StopMusic();
@@ -763,32 +792,23 @@ namespace RogueCastle
             {
                 m_currentActiveLB.StopLogicBlock();
             }
+
             m_target.CurrentSpeed = 0f;
             m_target.ForceInvincible = true;
             foreach (var current in m_levelScreen.CurrentRoom.TempEnemyList)
-            {
                 if (!current.IsKilled)
                 {
                     current.Kill();
                 }
-            }
+
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Blob_Death");
             base.Kill();
             if (!IsNeo)
             {
                 var list = new List<int>();
-                for (var i = 0; i < m_bossCoins; i++)
-                {
-                    list.Add(0);
-                }
-                for (var j = 0; j < m_bossMoneyBags; j++)
-                {
-                    list.Add(1);
-                }
-                for (var k = 0; k < m_bossDiamonds; k++)
-                {
-                    list.Add(2);
-                }
+                for (var i = 0; i < m_bossCoins; i++) list.Add(0);
+                for (var j = 0; j < m_bossMoneyBags; j++) list.Add(1);
+                for (var k = 0; k < m_bossDiamonds; k++) list.Add(2);
                 CDGMath.Shuffle(list);
                 var num = 0f;
                 for (var l = 0; l < list.Count; l++)
@@ -796,15 +816,15 @@ namespace RogueCastle
                     var position = Position;
                     if (list[l] == 0)
                     {
-                        Tween.RunFunction(l*num, m_levelScreen.ItemDropManager, "DropItemWide", position, 1, 10);
+                        Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 1, 10);
                     }
                     else if (list[l] == 1)
                     {
-                        Tween.RunFunction(l*num, m_levelScreen.ItemDropManager, "DropItemWide", position, 10, 100);
+                        Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 10, 100);
                     }
                     else
                     {
-                        Tween.RunFunction(l*num, m_levelScreen.ItemDropManager, "DropItemWide", position, 11, 500);
+                        Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 11, 500);
                     }
                 }
             }
@@ -818,6 +838,7 @@ namespace RogueCastle
                 Dispose();
                 return;
             }
+
             switch (Difficulty)
             {
                 case EnemyDifficulty.Basic:
@@ -825,21 +846,25 @@ namespace RogueCastle
                     Scale = EnemyEV.Blob_Basic_Scale;
                     NumHits = 2;
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Speed = 80f;
                     Scale = EnemyEV.Blob_Advanced_Scale;
                     NumHits = 3;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Speed = 90f;
                     Scale = EnemyEV.Blob_Expert_Scale;
                     NumHits = 4;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     Speed = 110f;
                     NumHits = 6;
                     break;
             }
+
             base.Reset();
         }
 

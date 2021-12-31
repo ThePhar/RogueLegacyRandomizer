@@ -15,6 +15,6 @@ namespace RogueCastle.Structs
     {
         None,
         Weapon,
-        Armor,
+        Armor
     }
 }

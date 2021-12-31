@@ -29,13 +29,12 @@ namespace RogueCastle
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             GameObjList.Add(m_speechBubble);
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "diary")
                 {
-                    m_diary = (current as SpriteObj);
+                    m_diary = current as SpriteObj;
                     break;
                 }
-            }
+
             m_diary.OutlineWidth = 2;
             m_speechBubble.Position = new Vector2(m_diary.X, m_diary.Y - m_speechBubble.Height - 20f);
             base.Initialize();
@@ -51,21 +50,24 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = false;
             }
+
             if (!RoomCompleted)
             {
                 m_diaryIndex = Game.PlayerStats.DiaryEntry;
             }
+
             if (m_diaryIndex >= 24)
             {
                 m_speechBubble.Visible = false;
             }
+
             base.OnEnter();
         }
 
         public override void Update(GameTime gameTime)
         {
             m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
-                               (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+                               (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
             var bounds = m_diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;
@@ -73,6 +75,7 @@ namespace RogueCastle
             {
                 m_speechBubble.ChangeSprite("ExclamationSquare_Sprite");
             }
+
             if (!RoomCompleted || CollisionMath.Intersects(Player.Bounds, bounds))
             {
                 m_speechBubble.Visible = true;
@@ -81,16 +84,19 @@ namespace RogueCastle
             {
                 m_speechBubble.Visible = false;
             }
+
             if (m_diaryIndex >= 24)
             {
                 m_speechBubble.Visible = false;
             }
+
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
             {
                 if (m_speechBubble.SpriteName == "ExclamationSquare_Sprite")
                 {
                     m_speechBubble.ChangeSprite("UpArrowSquare_Sprite");
                 }
+
                 if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                 {
                     if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 24)
@@ -114,6 +120,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             base.Update(gameTime);
         }
 

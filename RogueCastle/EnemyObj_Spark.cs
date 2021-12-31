@@ -35,7 +35,7 @@ namespace RogueCastle
         {
             get
             {
-                return new Rectangle(Bounds.Left + m_collisionBoxSize, Bounds.Top, Width - m_collisionBoxSize*2,
+                return new Rectangle(Bounds.Left + m_collisionBoxSize, Bounds.Top, Width - m_collisionBoxSize * 2,
                     m_collisionBoxSize);
             }
         }
@@ -45,7 +45,7 @@ namespace RogueCastle
             get
             {
                 return new Rectangle(Bounds.Left + m_collisionBoxSize, Bounds.Bottom - m_collisionBoxSize,
-                    Width - m_collisionBoxSize*2, m_collisionBoxSize);
+                    Width - m_collisionBoxSize * 2, m_collisionBoxSize);
             }
         }
 
@@ -54,7 +54,7 @@ namespace RogueCastle
             get
             {
                 return new Rectangle(Bounds.Left, Bounds.Top + m_collisionBoxSize, m_collisionBoxSize,
-                    Height - m_collisionBoxSize*2);
+                    Height - m_collisionBoxSize * 2);
             }
         }
 
@@ -63,7 +63,7 @@ namespace RogueCastle
             get
             {
                 return new Rectangle(Bounds.Right - m_collisionBoxSize, Bounds.Top + m_collisionBoxSize,
-                    m_collisionBoxSize, Height - m_collisionBoxSize*2);
+                    m_collisionBoxSize, Height - m_collisionBoxSize * 2);
             }
         }
 
@@ -132,6 +132,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Mr. Spark";
                     MaxHealth = 20;
@@ -159,6 +160,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Spark_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Grandpa Spark";
                     MaxHealth = 20;
@@ -186,6 +188,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Spark_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Lord Spark, King of Sparkatonia";
                     MaxHealth = 500;
@@ -213,6 +216,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Spark_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -230,18 +234,17 @@ namespace RogueCastle
             var num = 1000f;
             TerrainObj terrainObj = null;
             foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
-            {
                 if (current.Y >= Y && current.Y - Y < num &&
                     CollisionMath.Intersects(current.Bounds,
-                        new Rectangle((int) X, (int) (Y + (current.Y - Y) + 5f), Width, Height/2)))
+                        new Rectangle((int) X, (int) (Y + (current.Y - Y) + 5f), Width, Height / 2)))
                 {
                     num = current.Y - Y;
                     terrainObj = current;
                 }
-            }
+
             if (terrainObj != null)
             {
-                Y = terrainObj.Y - Height/2 + 5f;
+                Y = terrainObj.Y - Height / 2 + 5f;
             }
         }
 
@@ -299,11 +302,13 @@ namespace RogueCastle
             {
                 HookToGround();
             }
+
             CollisionCheckRight();
             if (!IsPaused)
             {
-                Position += Heading*(CurrentSpeed*(float) gameTime.ElapsedGameTime.TotalSeconds);
+                Position += Heading * (CurrentSpeed * (float) gameTime.ElapsedGameTime.TotalSeconds);
             }
+
             base.Update(gameTime);
         }
 
@@ -330,6 +335,7 @@ namespace RogueCastle
                 flag3 = true;
                 flag7 = true;
             }
+
             if (Bounds.Top <= m_levelScreen.CurrentRoom.Bounds.Top)
             {
                 flag6 = true;
@@ -342,21 +348,24 @@ namespace RogueCastle
                 flag2 = true;
                 flag8 = true;
             }
+
             foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
             {
                 var b = new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height);
                 if (CollisionMath.RotatedRectIntersects(TopLeftPoint, 0f, Vector2.Zero, b, current.Rotation,
-                    Vector2.Zero))
+                        Vector2.Zero))
                 {
                     flag5 = true;
                 }
+
                 if (CollisionMath.RotatedRectIntersects(TopRightPoint, 0f, Vector2.Zero, b, current.Rotation,
-                    Vector2.Zero))
+                        Vector2.Zero))
                 {
                     flag6 = true;
                 }
+
                 if (CollisionMath.RotatedRectIntersects(BottomRightPoint, 0f, Vector2.Zero, b, current.Rotation,
-                    Vector2.Zero))
+                        Vector2.Zero))
                 {
                     flag8 = true;
                     if (current.Rotation != 0f)
@@ -369,8 +378,9 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 if (CollisionMath.RotatedRectIntersects(BottomLeftPoint, 0f, Vector2.Zero, b, current.Rotation,
-                    Vector2.Zero))
+                        Vector2.Zero))
                 {
                     flag7 = true;
                     if (current.Rotation != 0f)
@@ -383,59 +393,74 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 if (CollisionMath.RotatedRectIntersects(TopRect, 0f, Vector2.Zero, b, current.Rotation, Vector2.Zero))
                 {
                     flag = true;
                 }
-                if (CollisionMath.RotatedRectIntersects(BottomRect, 0f, Vector2.Zero, b, current.Rotation, Vector2.Zero))
+
+                if (CollisionMath.RotatedRectIntersects(BottomRect, 0f, Vector2.Zero, b, current.Rotation,
+                        Vector2.Zero))
                 {
                     flag2 = true;
                 }
+
                 if (CollisionMath.RotatedRectIntersects(LeftRect, 0f, Vector2.Zero, b, current.Rotation, Vector2.Zero))
                 {
                     flag3 = true;
                 }
+
                 if (CollisionMath.RotatedRectIntersects(RightRect, 0f, Vector2.Zero, b, current.Rotation, Vector2.Zero))
                 {
                     flag4 = true;
                 }
             }
+
             if (flag8 && !flag6 && !flag4)
             {
                 Orientation = 0f;
             }
+
             if (flag6 && flag8 && !flag5)
             {
                 Orientation = MathHelper.ToRadians(-90f);
             }
+
             if (flag6 && flag5 && !flag7)
             {
                 Orientation = MathHelper.ToRadians(-180f);
             }
+
             if (flag5 && flag3 && !flag2)
             {
                 Orientation = MathHelper.ToRadians(90f);
             }
+
             if (flag6 && !flag && !flag4)
             {
                 Orientation = MathHelper.ToRadians(-90f);
             }
+
             if (flag5 && !flag && !flag3)
             {
                 Orientation = MathHelper.ToRadians(-180f);
             }
+
             if (flag7 && !flag3 && !flag4 && !flag2)
             {
                 Orientation = MathHelper.ToRadians(90f);
             }
+
             if (flag8 && !flag2 && !flag4)
             {
                 Orientation = 0f;
             }
-            if (num != 0f && ((num < 0f && flag8 && flag4) || (num > 0f && !flag8)))
+
+            if (num != 0f && (num < 0f && flag8 && flag4 || num > 0f && !flag8))
             {
                 Orientation = MathHelper.ToRadians(num);
             }
+
             HeadingX = (float) Math.Cos(Orientation);
             HeadingY = (float) Math.Sin(Orientation);
         }

@@ -86,6 +86,7 @@ namespace RogueCastle
             {
                 throw new Exception("Cannot have a projectile with no source");
             }
+
             var projectileObj = m_projectilePool.CheckOut();
             projectileObj.Reset();
             projectileObj.LifeSpan = data.Lifespan;
@@ -133,6 +134,7 @@ namespace RogueCastle
                 {
                     num = CDGMath.RandomFloat(data.Angle.X, data.Angle.Y) + data.AngleOffset;
                 }
+
                 if (source.Flip != SpriteEffects.None && source.Rotation != 0f)
                 {
                     num -= 180f;
@@ -142,10 +144,12 @@ namespace RogueCastle
                     num = 180f - num;
                 }
             }
+
             if (!data.LockPosition)
             {
                 projectileObj.Rotation = num;
             }
+
             num = MathHelper.ToRadians(num);
             projectileObj.Damage = data.Damage;
             m_levelScreen.PhysicsManager.AddObject(projectileObj);
@@ -160,6 +164,7 @@ namespace RogueCastle
             {
                 projectileObj.X = source.AbsX + data.SourceAnchor.X;
             }
+
             projectileObj.Y = source.AbsY + data.SourceAnchor.Y;
             projectileObj.IsWeighted = data.IsWeighted;
             var vector = new Vector2((float) Math.Cos(num), (float) Math.Sin(num));
@@ -168,8 +173,9 @@ namespace RogueCastle
             {
                 num4 = CDGMath.RandomFloat(data.Speed.X, data.Speed.Y);
             }
-            projectileObj.AccelerationX = vector.X*num4;
-            projectileObj.AccelerationY = vector.Y*num4;
+
+            projectileObj.AccelerationX = vector.X * num4;
+            projectileObj.AccelerationY = vector.Y * num4;
             projectileObj.CurrentSpeed = num4;
             if (source is PlayerObj)
             {
@@ -177,6 +183,7 @@ namespace RogueCastle
                 {
                     projectileObj.LifeSpan = (source as PlayerObj).ProjectileLifeSpan;
                 }
+
                 projectileObj.CollisionTypeTag = 2;
                 projectileObj.Scale = data.Scale;
             }
@@ -186,13 +193,16 @@ namespace RogueCastle
                 {
                     projectileObj.LifeSpan = 15f;
                 }
+
                 projectileObj.CollisionTypeTag = 3;
                 projectileObj.Scale = data.Scale;
             }
+
             if (data.Target != null && data.Source.Flip == SpriteEffects.FlipHorizontally && data.ChaseTarget)
             {
                 projectileObj.Orientation = MathHelper.ToRadians(180f);
             }
+
             if (data.Source is PlayerObj && (Game.PlayerStats.Traits.X == 22f || Game.PlayerStats.Traits.Y == 22f))
             {
                 projectileObj.AccelerationX *= -1f;
@@ -208,6 +218,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             projectileObj.PlayAnimation();
             return projectileObj;
         }
@@ -239,48 +250,47 @@ namespace RogueCastle
             {
                 var projectileObj = array2[i];
                 if (destroyRoomTransitionProjectiles ||
-                    (!destroyRoomTransitionProjectiles && projectileObj.DestroyOnRoomTransition))
+                    !destroyRoomTransitionProjectiles && projectileObj.DestroyOnRoomTransition)
                 {
                     DestroyProjectile(projectileObj);
                 }
             }
+
             PerformProjectileCleanup();
         }
 
         public void PauseAllProjectiles(bool pausePlayerProjectiles)
         {
             foreach (var current in m_projectilePool.ActiveObjsList)
-            {
                 if (current.CollisionTypeTag != 2 || pausePlayerProjectiles)
                 {
                     current.GamePaused = true;
                     current.PauseAnimation();
-                    if (current.Spell != 11 || (current.Spell == 11 && current.CollisionTypeTag == 3))
+                    if (current.Spell != 11 || current.Spell == 11 && current.CollisionTypeTag == 3)
                     {
                         current.AccelerationXEnabled = false;
                         current.AccelerationYEnabled = false;
                     }
                 }
-            }
-            Tween.PauseAllContaining(typeof (ProjectileObj));
+
+            Tween.PauseAllContaining(typeof(ProjectileObj));
         }
 
         public void UnpauseAllProjectiles()
         {
             foreach (var current in m_projectilePool.ActiveObjsList)
-            {
                 if (current.GamePaused)
                 {
                     current.GamePaused = false;
                     current.ResumeAnimation();
-                    if (current.Spell != 11 || (current.Spell == 11 && current.CollisionTypeTag == 3))
+                    if (current.Spell != 11 || current.Spell == 11 && current.CollisionTypeTag == 3)
                     {
                         current.AccelerationXEnabled = true;
                         current.AccelerationYEnabled = true;
                     }
                 }
-            }
-            Tween.ResumeAllContaining(typeof (ProjectileObj));
+
+            Tween.ResumeAllContaining(typeof(ProjectileObj));
         }
 
         public void Update(GameTime gameTime)
@@ -299,16 +309,18 @@ namespace RogueCastle
                         current.X = currentRoom.X;
                     }
                 }
+
                 current.Update(gameTime);
             }
+
             if (currentRoom != null)
             {
                 if (m_projectilesToRemoveList.Count > 0)
                 {
                     m_projectilesToRemoveList.Clear();
                 }
+
                 foreach (var current2 in m_projectilePool.ActiveObjsList)
-                {
                     if (current2.IsAlive && !current2.IsDying && !current2.IgnoreBoundsCheck)
                     {
                         if (current2.Bounds.Left < m_levelScreen.CurrentRoom.Bounds.Left - 200 ||
@@ -325,11 +337,8 @@ namespace RogueCastle
                     {
                         m_projectilesToRemoveList.Add(current2);
                     }
-                }
-                foreach (var current3 in m_projectilesToRemoveList)
-                {
-                    DestroyProjectile(current3);
-                }
+
+                foreach (var current3 in m_projectilesToRemoveList) DestroyProjectile(current3);
             }
         }
 
@@ -341,8 +350,8 @@ namespace RogueCastle
                 {
                     m_projectilesToRemoveList.Clear();
                 }
+
                 foreach (var current in m_projectilePool.ActiveObjsList)
-                {
                     if (current.IsAlive && !current.IsDying && !current.IgnoreBoundsCheck)
                     {
                         if (current.Bounds.Left < m_levelScreen.CurrentRoom.Bounds.Left - 200 ||
@@ -359,20 +368,14 @@ namespace RogueCastle
                     {
                         m_projectilesToRemoveList.Add(current);
                     }
-                }
-                foreach (var current2 in m_projectilesToRemoveList)
-                {
-                    DestroyProjectile(current2);
-                }
+
+                foreach (var current2 in m_projectilesToRemoveList) DestroyProjectile(current2);
             }
         }
 
         public void Draw(Camera2D camera)
         {
-            foreach (var current in m_projectilePool.ActiveObjsList)
-            {
-                current.Draw(camera);
-            }
+            foreach (var current in m_projectilePool.ActiveObjsList) current.Draw(camera);
         }
     }
 }
