@@ -61,7 +61,7 @@ namespace RogueCastle
             Content.RootDirectory = "Content";
             EngineEV.ScreenWidth = 1320;
             EngineEV.ScreenHeight = 720;
-            Window.Title = "Rogue Legacy Archipelago";
+            Window.Title = "Rogue Legacy Randomizer";
             IsFixedTimeStep = false;
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = !LevelENV.ShowFps;
             Window.AllowUserResizing = false;

@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - ChestObj.cs
 //  Last Modified 2021-12-30
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -311,6 +311,7 @@ namespace RogueCastle
 
             if (ForcedItemType == 1)
             {
+                GiveGold(manager);
                 return;
             }
 
@@ -350,52 +351,28 @@ namespace RogueCastle
             }
             else
             {
-                // Check to make sure we can send this item.
-                var potential = 0;
                 var total = 0;
-                switch (room.LevelType)
-                {
-                    case LevelType.None:
-                    case LevelType.Castle:
-                        potential = (++Game.PlayerStats.OpenedChests.CastleChests) % arch.Data.ItemsEveryNthChests;
-                        total = (Game.PlayerStats.OpenedChests.CastleChests) / arch.Data.ItemsEveryNthChests;
-                        break;
-
-                    case LevelType.Garden:
-                        potential = (++Game.PlayerStats.OpenedChests.GardenChests) % arch.Data.ItemsEveryNthChests;
-                        total = (Game.PlayerStats.OpenedChests.GardenChests) / arch.Data.ItemsEveryNthChests;
-                        break;
-
-                    case LevelType.Dungeon:
-                        potential = (++Game.PlayerStats.OpenedChests.DungeonChests) % arch.Data.ItemsEveryNthChests;
-                        total = (Game.PlayerStats.OpenedChests.DungeonChests) / arch.Data.ItemsEveryNthChests;
-                        break;
-
-                    case LevelType.Tower:
-                        potential = (++Game.PlayerStats.OpenedChests.TowerChests) % arch.Data.ItemsEveryNthChests;
-                        total = (Game.PlayerStats.OpenedChests.TowerChests) / arch.Data.ItemsEveryNthChests;
-                        break;
-                }
-
-                if (potential != 0 || total > arch.Data.ChestsPerZone)
-                {
-                    GiveGold(manager);
-                    return;
-                }
 
                 switch (room.LevelType)
                 {
                     case LevelType.None:
                     case LevelType.Castle:
+                        total = ++Game.PlayerStats.OpenedChests.CastleChests;
                         location = string.Format("Castle Hamson Chest {0}", total);
                         break;
+
                     case LevelType.Garden:
+                        total = ++Game.PlayerStats.OpenedChests.GardenChests;
                         location = string.Format("Forest Abkhazia Chest {0}", total);
                         break;
+
                     case LevelType.Dungeon:
+                        total = ++Game.PlayerStats.OpenedChests.DungeonChests;
                         location = string.Format("The Land of Darkness Chest {0}", total);
                         break;
+
                     case LevelType.Tower:
+                        total = ++Game.PlayerStats.OpenedChests.TowerChests;
                         location = string.Format("The Maya Chest {0}", total);
                         break;
 
@@ -403,7 +380,11 @@ namespace RogueCastle
                         throw new ArgumentOutOfRangeException();
                 }
 
-                GiveGold(manager);
+                if (total > arch.Data.ChestsPerZone)
+                {
+                    GiveGold(manager);
+                    return;
+                }
             }
 
             var code = LocationManager.GetCodeByName(location);
