@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - Game.cs
 //  Last Modified 2021-12-30
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -858,7 +858,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.VaultRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vault] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vault] = 1;
@@ -878,7 +878,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SprintRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sprint] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sprint] = 1;
@@ -898,7 +898,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.VampireRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Vampire] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Vampire] = 1;
@@ -918,7 +918,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SkyRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Sky] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Sky] = 1;
@@ -938,7 +938,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SiphonRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Siphon] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Siphon] = 1;
@@ -958,7 +958,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.RetaliationRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Retaliation] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Retaliation] = 1;
@@ -978,7 +978,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.BountyRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Bounty] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Bounty] = 1;
@@ -998,7 +998,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.HasteRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Haste] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Haste] = 1;
@@ -1018,7 +1018,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.CurseRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Curse] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Curse] = 1;
@@ -1038,7 +1038,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.GraceRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Grace] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Grace] = 1;
@@ -1058,7 +1058,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.BalanceRunes:
-                    if (ArchipelagoManager.Data.RequirePurchasingRunes)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Sword][EquipmentAbilityType.Balance] = 1;
                         PlayerStats.GetRuneArray[EquipmentCategoryType.Helm][ EquipmentAbilityType.Balance] = 1;
@@ -1078,7 +1078,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SquireArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Squire] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Squire] = 1;
@@ -1098,7 +1098,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SilverArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Silver] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Silver] = 1;
@@ -1118,7 +1118,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.GuardianArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Guardian] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Guardian] = 1;
@@ -1138,7 +1138,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.ImperialArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Imperial] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Imperial] = 1;
@@ -1158,7 +1158,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.RoyalArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Royal] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Royal] = 1;
@@ -1178,7 +1178,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.KnightArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Knight] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Knight] = 1;
@@ -1198,7 +1198,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.RangerArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Ranger] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Ranger] = 1;
@@ -1218,7 +1218,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SkyArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sky] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sky] = 1;
@@ -1238,7 +1238,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.DragonArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dragon] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dragon] = 1;
@@ -1258,7 +1258,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SlayerArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Slayer] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Slayer] = 1;
@@ -1278,7 +1278,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.BloodArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Blood] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Blood] = 1;
@@ -1298,7 +1298,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.SageArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Sage] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Sage] = 1;
@@ -1318,7 +1318,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.RetributionArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Retribution] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Retribution] = 1;
@@ -1338,7 +1338,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.HolyArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Holy] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Holy] = 1;
@@ -1358,7 +1358,7 @@ namespace RogueCastle
                     break;
 
                 case ItemCode.DarkArmorBlueprints:
-                    if (ArchipelagoManager.Data.RequirePurchasingEquipment)
+                    if (ArchipelagoManager.Data.RequirePurchasing)
                     {
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Sword][EquipmentBaseType.Dark] = 1;
                         PlayerStats.GetBlueprintArray[EquipmentCategoryType.Helm][ EquipmentBaseType.Dark] = 1;

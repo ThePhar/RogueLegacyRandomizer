@@ -1,13 +1,13 @@
-﻿// 
+﻿//
 //  RogueLegacyArchipelago - SlotData.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -65,19 +65,9 @@ namespace Archipelago
             get { return Convert.ToInt32(this["chests_per_zone"]); }
         }
 
-        public int ItemsEveryNthChests
+        public bool RequirePurchasing
         {
-            get { return Convert.ToInt32(this["items_every_nth_chests"]); }
-        }
-
-        public bool RequirePurchasingEquipment
-        {
-            get { return Convert.ToInt32(this["require_purchasing_equipment"]) == 1; }
-        }
-
-        public bool RequirePurchasingRunes
-        {
-            get { return Convert.ToInt32(this["require_purchasing_runes"]) == 1; }
+            get { return Convert.ToInt32(this["require_purchasing"]) == 1; }
         }
 
         public float GoldGainMultiplier
@@ -102,5 +92,14 @@ namespace Archipelago
             }
         }
 
+        public int NumberOfChildren
+        {
+            get { return Convert.ToInt32(this["number_of_children"]); }
+        }
+
+        public bool DisableCharon
+        {
+            get { return Convert.ToInt32(this["disable_charon"]) == 1; }
+        }
     }
 }
