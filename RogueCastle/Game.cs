@@ -50,7 +50,7 @@ namespace RogueCastle
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US", false);
             }
 
-            ArchipelagoManager = new ArchipelagoClient();
+            ArchipelagoManager = new Client();
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             ScreenManager = new RCScreenManager(this);
             SaveManager = new SaveGameManager();
@@ -117,7 +117,7 @@ namespace RogueCastle
         public static float TotalGameTimeHours { get; set; }
         public static string ProfileName { get; set; }
 
-        public ArchipelagoClient ArchipelagoManager { get; private set; }
+        public Client ArchipelagoManager { get; private set; }
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
         public PhysicsManager PhysicsManager { get; private set; }
         public SaveGameManager SaveManager { get; private set; }
@@ -490,7 +490,7 @@ namespace RogueCastle
             switch (ArchipelagoManager.Status)
             {
                 // We're ready!
-                case ArchipelagoStatus.Connected:
+                case Status.Connected:
                 {
                     if (!(ScreenManager.CurrentScreen is ArchipelagoScreen))
                     {

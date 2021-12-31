@@ -43,35 +43,35 @@ namespace RogueCastle
         {
             switch (Program.Game.ArchipelagoManager.Status)
             {
-                case ArchipelagoStatus.Disconnected:
+                case Status.Disconnected:
                     m_status = "Disconnected";
                     break;
 
-                case ArchipelagoStatus.Disconnecting:
+                case Status.Disconnecting:
                     m_status = "Disconnecting";
                     break;
 
-                case ArchipelagoStatus.Connecting:
+                case Status.Connecting:
                     m_status = "Connecting";
                     break;
 
-                case ArchipelagoStatus.Initialized:
+                case Status.Initialized:
                     m_status = "Initialized";
                     break;
 
-                case ArchipelagoStatus.FetchingLocations:
+                case Status.FetchingLocations:
                     m_status = "Fetching Locations";
                     break;
 
-                case ArchipelagoStatus.Connected:
+                case Status.Connected:
                     m_status = "Connected";
                     break;
 
-                case ArchipelagoStatus.Playing:
+                case Status.Playing:
                     m_status = "Playing";
                     break;
 
-                case ArchipelagoStatus.Reconnecting:
+                case Status.Reconnecting:
                     m_status = "Reconnecting";
                     break;
 

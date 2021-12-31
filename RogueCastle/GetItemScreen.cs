@@ -272,7 +272,7 @@ namespace RogueCastle
                     m_itemFoundPlayerText.Visible = true;
                     switch (m_network_item.GetItemType())
                     {
-                        case LegacyItemType.Blueprint:
+                        case ItemType.Blueprint:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                             m_itemSpinning = true;
@@ -282,7 +282,7 @@ namespace RogueCastle
                             m_itemFoundText.TextureColor = Color.Yellow;
                             break;
 
-                        case LegacyItemType.Rune:
+                        case ItemType.Rune:
                             m_itemFoundText.Y += 40f;
                             m_itemSpinning = true;
                             m_itemSprite.ChangeSprite("RuneIcon_Sprite");
@@ -292,8 +292,8 @@ namespace RogueCastle
                             m_itemSprite.AnimationDelay = 0.05f;
                             break;
 
-                        case LegacyItemType.Skill:
-                        case LegacyItemType.SpecialSkill:
+                        case ItemType.Skill:
+                        case ItemType.SpecialSkill:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite(GetSkillPlateIcon(m_network_item));
                             m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
@@ -302,7 +302,7 @@ namespace RogueCastle
                             m_itemFoundText.TextureColor = Color.Yellow;
                             break;
 
-                        case LegacyItemType.Stats:
+                        case ItemType.Stats:
                             m_itemFoundText.Y += 50f;
                             m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
                             m_itemFoundText.Text = GetStatText((int) m_itemInfo.X);
@@ -331,7 +331,7 @@ namespace RogueCastle
 
                             break;
 
-                        case LegacyItemType.Gold:
+                        case ItemType.Gold:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite("MoneyBag_Sprite");
                             m_itemSprite.AnimationSpeed = 0;
