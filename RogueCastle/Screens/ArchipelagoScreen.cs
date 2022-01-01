@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - ArchipelagoScreen.cs
 // Last Modified 2021-12-27
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -65,9 +65,9 @@ namespace RogueCastle.Screens
             m_archipelagoTitle.Position = new Vector2(0f, -(float) m_bgSprite.Width / 2f + 60f);
 
             // Archipelago Options
-            m_hostname = new TextBoxOptionsObj(this, "Hostname", "localhost");
+            m_hostname = new TextBoxOptionsObj(this, "Hostname", "archipelago.gg");
             m_port = new TextBoxOptionsObj(this, "Port", "38281");
-            m_slot = new TextBoxOptionsObj(this, "Slot Name", "Phar");
+            m_slot = new TextBoxOptionsObj(this, "Slot Name", "Lee");
             m_password = new TextBoxOptionsObj(this, "Password", "");
 
             m_archipelagoArray.Add(m_hostname);

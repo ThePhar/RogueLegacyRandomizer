@@ -339,22 +339,22 @@ namespace RogueCastle
                     case LevelType.None:
                     case LevelType.Castle:
                         total = ++Game.PlayerStats.OpenedChests.CastleFairyChests;
-                        location = string.Format("Castle Hamson Fairy Chest {0}", total);
+                        location = string.Format("Castle Hamson - Fairy Chest {0}", total);
                         break;
 
                     case LevelType.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenFairyChests;
-                        location = string.Format("Forest Abkhazia Fairy Chest {0}", total);
+                        location = string.Format("Forest Abkhazia - Fairy Chest {0}", total);
                         break;
 
                     case LevelType.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonFairyChests;
-                        location = string.Format("The Land of Darkness Fairy Chest {0}", total);
+                        location = string.Format("The Land of Darkness - Fairy Chest {0}", total);
                         break;
 
                     case LevelType.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerFairyChests;
-                        location = string.Format("The Maya Fairy Chest {0}", total);
+                        location = string.Format("The Maya - Fairy Chest {0}", total);
                         break;
 
                     default:
@@ -376,22 +376,22 @@ namespace RogueCastle
                     case LevelType.None:
                     case LevelType.Castle:
                         total = ++Game.PlayerStats.OpenedChests.CastleChests;
-                        location = string.Format("Castle Hamson Chest {0}", total);
+                        location = string.Format("Castle Hamson - Chest {0}", total);
                         break;
 
                     case LevelType.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenChests;
-                        location = string.Format("Forest Abkhazia Chest {0}", total);
+                        location = string.Format("Forest Abkhazia - Chest {0}", total);
                         break;
 
                     case LevelType.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonChests;
-                        location = string.Format("The Land of Darkness Chest {0}", total);
+                        location = string.Format("The Land of Darkness - Chest {0}", total);
                         break;
 
                     case LevelType.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerChests;
-                        location = string.Format("The Maya Chest {0}", total);
+                        location = string.Format("The Maya - Chest {0}", total);
                         break;
 
                     default:
