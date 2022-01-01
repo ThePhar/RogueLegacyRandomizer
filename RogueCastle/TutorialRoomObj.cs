@@ -324,13 +324,33 @@ namespace RogueCastle
             Game.PlayerStats.ReadLastDiary = true;
             Game.PlayerStats.DiaryEntry = 25;
 
-            // Unlock all diary screens at once.
-            for (var i = 0; i < 25; i++)
-            {
-                var location = string.Format("Diary {0}", i + 1);
-                Program.Game.ArchipelagoManager.CheckLocations(LocationDefinitions
-                    .GetLocation(Program.Game.ArchipelagoManager.Data, location).Code);
-            }
+            Program.Game.ArchipelagoManager.CheckLocations(
+                LocationDefinitions.Diary1.Code,
+                LocationDefinitions.Diary2.Code,
+                LocationDefinitions.Diary3.Code,
+                LocationDefinitions.Diary4.Code,
+                LocationDefinitions.Diary5.Code,
+                LocationDefinitions.Diary6.Code,
+                LocationDefinitions.Diary7.Code,
+                LocationDefinitions.Diary8.Code,
+                LocationDefinitions.Diary9.Code,
+                LocationDefinitions.Diary10.Code,
+                LocationDefinitions.Diary11.Code,
+                LocationDefinitions.Diary12.Code,
+                LocationDefinitions.Diary13.Code,
+                LocationDefinitions.Diary14.Code,
+                LocationDefinitions.Diary15.Code,
+                LocationDefinitions.Diary16.Code,
+                LocationDefinitions.Diary17.Code,
+                LocationDefinitions.Diary18.Code,
+                LocationDefinitions.Diary19.Code,
+                LocationDefinitions.Diary20.Code,
+                LocationDefinitions.Diary21.Code,
+                LocationDefinitions.Diary22.Code,
+                LocationDefinitions.Diary23.Code,
+                LocationDefinitions.Diary24.Code,
+                LocationDefinitions.Diary25.Code
+            );
 
             (Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
         }

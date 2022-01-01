@@ -1473,10 +1473,22 @@ namespace RogueCastle
         public void Forfeit()
         {
             Program.Game.ArchipelagoManager.Forfeit();
+            Part2();
         }
 
-        public void NoForfeit()
+        public void ForfeitPrompt()
         {
+            if (Program.Game.ArchipelagoManager.CanForfeit)
+            {
+                var rCScreenManager = Game.ScreenManager;
+                DialogueManager.AddText("Forfeit", new[] { "Congrats!" },
+                    new[] { "Would you like to forfeit your remaining items?" });
+                rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
+                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
+                rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "Part2");
+                rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+            }
         }
 
         public override void Kill(bool giveXP = true)
@@ -1487,18 +1499,6 @@ namespace RogueCastle
                 {
                     // Announce our victory!
                     Program.Game.ArchipelagoManager.AnnounceVictory();
-
-                    if (Program.Game.ArchipelagoManager.CanForfeit)
-                    {
-                        var rCScreenManager = Game.ScreenManager;
-                        DialogueManager.AddText("Forfeit", new[] { "Congrats!" },
-                            new[] { "Would you like to forfeit your remaining items?" });
-                        rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
-                        rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-                        rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
-                        rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "NoForfeit");
-                        rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
-                    }
 
                     m_bossVersionKilled = true;
                     SetPlayerData();
@@ -1516,7 +1516,7 @@ namespace RogueCastle
                         Flip = SpriteEffects.None;
                     }
 
-                    Tween.RunFunction(1f, this, "Part2");
+                    Tween.RunFunction(1f, this, "ForfeitPrompt");
                     SoundManager.PlaySound("Boss_Flash");
                     SoundManager.PlaySound("Boss_Eyeball_Freeze");
                     SoundManager.StopMusic();

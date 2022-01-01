@@ -56,7 +56,7 @@ namespace RogueCastle
         public const int LevelDungeonTopDoor = 45;
         public const int LevelDungeonBottomDoor = 100;
         public const string GameName = "Rogue Legacy Randomizer";
-        public static readonly Version GameVersion = Version.Parse("0.5.3");
+        public static readonly Version GameVersion = Version.Parse("0.5.4");
 
         static LevelENV()
         {
@@ -304,6 +304,7 @@ namespace RogueCastle
             ShowFps = false;
             SaveFrames = false;
             ShowArchipelagoStatus = false;
+            RunConsole = false;
         }
 
         public static LevelType TestRoomLevelType { get; set; }
@@ -342,5 +343,6 @@ namespace RogueCastle
         public static bool ShowFps { get; set; }
         public static bool SaveFrames { get; set; }
         public static bool ShowArchipelagoStatus { get; set; }
+        public static bool RunConsole { get; set; }
     }
 }

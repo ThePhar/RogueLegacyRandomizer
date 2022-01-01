@@ -522,6 +522,7 @@ namespace RogueCastle
                     {
                         PlayerStats.CharacterFound = true;
                         PlayerStats.Gold = 0;
+
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
                         PlayerStats.EnemiesKilledInRun.Clear();
 
