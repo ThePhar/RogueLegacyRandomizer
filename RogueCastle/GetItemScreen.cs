@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - GetItemScreen.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -293,7 +293,6 @@ namespace RogueCastle
                             break;
 
                         case ItemType.Skill:
-                        case ItemType.SpecialSkill:
                             m_itemFoundText.Y += 40f;
                             m_itemSprite.ChangeSprite(GetSkillPlateIcon(m_network_item));
                             m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
@@ -309,25 +308,22 @@ namespace RogueCastle
                             m_itemSprite.AnimationDelay = 0.05f;
                             m_itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
                             m_itemFoundPlayerText.Text = string.Format("You received from {0}", m_network_player);
-                            if (m_network_item == (int) ItemCode.TripleStatIncreases)
-                            {
-                                m_tripStat1FoundText.Visible = true;
-                                m_tripStat2FoundText.Visible = true;
-                                m_tripStat1.ChangeSprite(GetStatSpriteName((int) m_tripStatData.X));
-                                m_tripStat2.ChangeSprite(GetStatSpriteName((int) m_tripStatData.Y));
-                                m_tripStat1.Visible = true;
-                                m_tripStat2.Visible = true;
-                                m_tripStat1.AnimationDelay = 0.05f;
-                                m_tripStat2.AnimationDelay = 0.05f;
-                                Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", true);
-                                Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", true);
-                                m_tripStat1FoundText.Text = GetStatText((int) m_tripStatData.X);
-                                m_tripStat2FoundText.Text = GetStatText((int) m_tripStatData.Y);
-                                m_tripStat1FoundText.Y = m_itemFoundText.Y + 50f;
-                                m_tripStat2FoundText.Y = m_itemFoundText.Y + 100f;
-                                m_tripStat1FoundText.TextureColor = Color.Yellow;
-                                m_tripStat2FoundText.TextureColor = Color.Yellow;
-                            }
+                            m_tripStat1FoundText.Visible = true;
+                            m_tripStat2FoundText.Visible = true;
+                            m_tripStat1.ChangeSprite(GetStatSpriteName((int) m_tripStatData.X));
+                            m_tripStat2.ChangeSprite(GetStatSpriteName((int) m_tripStatData.Y));
+                            m_tripStat1.Visible = true;
+                            m_tripStat2.Visible = true;
+                            m_tripStat1.AnimationDelay = 0.05f;
+                            m_tripStat2.AnimationDelay = 0.05f;
+                            Tween.RunFunction(0.1f, m_tripStat1, "PlayAnimation", true);
+                            Tween.RunFunction(0.2f, m_tripStat2, "PlayAnimation", true);
+                            m_tripStat1FoundText.Text = GetStatText((int) m_tripStatData.X);
+                            m_tripStat2FoundText.Text = GetStatText((int) m_tripStatData.Y);
+                            m_tripStat1FoundText.Y = m_itemFoundText.Y + 50f;
+                            m_tripStat2FoundText.Y = m_itemFoundText.Y + 100f;
+                            m_tripStat1FoundText.TextureColor = Color.Yellow;
+                            m_tripStat2FoundText.TextureColor = Color.Yellow;
 
                             break;
 

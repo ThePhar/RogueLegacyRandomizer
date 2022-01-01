@@ -43,7 +43,7 @@ namespace Archipelago
         public DateTime LastDeath { get; private set; }
         public DeathLink DeathLink { get; private set; }
         public Dictionary<int, NetworkItem> LocationCache { get; private set; }
-        public LegacySlotData Data { get; private set; }
+        public SlotData Data { get; private set; }
         public Queue<NetworkItem> ItemQueue { get; private set; }
         public ConnectionInfo CachedConnectionInfo { get; private set; }
 
@@ -186,7 +186,7 @@ namespace Archipelago
 
         public string GetPlayerName(int slot)
         {
-            var name = m_session.Players.GetPlayerAliasAndName(slot);
+            var name = m_session.Players.GetPlayerAlias(slot);
             return string.IsNullOrEmpty(name) ? "Archipelago" : name;
         }
 
@@ -277,7 +277,7 @@ namespace Archipelago
 
         private void OnConnected(ConnectedPacket packet)
         {
-            Data = new LegacySlotData(packet.SlotData, m_seed, packet.Slot, CachedConnectionInfo.Name);
+            Data = new SlotData(packet.SlotData, m_seed, packet.Slot, CachedConnectionInfo.Name);
 
             // Check if DeathLink is enabled and establish the appropriate helper.
             if (Data.DeathLink)
@@ -296,7 +296,7 @@ namespace Archipelago
             }
 
             // Build our location cache.
-            var locations = LocationDefinitions.GetAllLocations().Select(location => location.Code);
+            var locations = LocationDefinitions.GetAllLocations(Data).Select(location => location.Code);
             m_session.Locations.ScoutLocationsAsync(OnReceiveLocationCache, locations.ToArray());
         }
 

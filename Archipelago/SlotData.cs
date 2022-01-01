@@ -15,9 +15,9 @@ using System.Collections.ObjectModel;
 
 namespace Archipelago
 {
-    public class LegacySlotData : ReadOnlyDictionary<string, object>
+    public class SlotData : ReadOnlyDictionary<string, object>
     {
-        public LegacySlotData(IDictionary<string, object> dictionary, string seed, int slot, string name) : base(
+        public SlotData(IDictionary<string, object> dictionary, string seed, int slot, string name) : base(
             dictionary)
         {
             dictionary.Add("seed", seed);

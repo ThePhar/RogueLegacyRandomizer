@@ -18,7 +18,7 @@ namespace Archipelago
     public static class LocationDefinitions
     {
         // Manor Upgrades
-        public static readonly LocationData ManorGroundBase       = new LocationData(91000, "Manor Renovation - Ground Road");
+        public static readonly LocationData ManorGroundRoad       = new LocationData(91000, "Manor Renovation - Ground Road");
         public static readonly LocationData ManorMainBase         = new LocationData(91001, "Manor Renovation - Main Base");
         public static readonly LocationData ManorMainBottomWindow = new LocationData(91002, "Manor Renovation - Main Bottom Window");
         public static readonly LocationData ManorMainTopWindow    = new LocationData(91003, "Manor Renovation - Main Top Window");
@@ -276,23 +276,52 @@ namespace Archipelago
         public static readonly LocationData FairyDungeon14        = new LocationData(91563, "The Land of Darkness - Fairy Chest 14");
         public static readonly LocationData FairyDungeon15        = new LocationData(91564, "The Land of Darkness - Fairy Chest 15");
 
-        public static IEnumerable<LocationData> GetAllLocations()
+        public static IEnumerable<LocationData> GetAllLocations(SlotData data)
         {
-            return typeof(LocationDefinitions)
-                .GetFields(BindingFlags.Static | BindingFlags.Public)
-                .Where(field => field.FieldType == typeof(LocationData))
-                .Select(field => (LocationData) field.GetValue(null))
-                .ToList();
+            var list = new List<LocationData>();
+            foreach (var field in typeof(LocationDefinitions).GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                if (field.FieldType != typeof(LocationData))
+                {
+                    continue;
+                }
+
+                var location = (LocationData) field.GetValue(null);
+
+                // Ignore chests we don't have enabled in our seed.
+                if (location.Code >= 91600 && location.Code <= 91629 && location.Code >= 91600 + data.ChestsPerZone)
+                    continue;
+                if (location.Code >= 91700 && location.Code <= 91729 && location.Code >= 91700 + data.ChestsPerZone)
+                    continue;
+                if (location.Code >= 91800 && location.Code <= 91829 && location.Code >= 91800 + data.ChestsPerZone)
+                    continue;
+                if (location.Code >= 91900 && location.Code <= 91929 && location.Code >= 91900 + data.ChestsPerZone)
+                    continue;
+
+                // Ignore fairy chests we don't have enabled in our seed.
+                if (location.Code >= 91400 && location.Code <= 91414 && location.Code >= 91400 + data.FairyChestsPerZone)
+                    continue;
+                if (location.Code >= 91450 && location.Code <= 91464 && location.Code >= 91450 + data.FairyChestsPerZone)
+                    continue;
+                if (location.Code >= 91500 && location.Code <= 91514 && location.Code >= 91500 + data.FairyChestsPerZone)
+                    continue;
+                if (location.Code >= 91550 && location.Code <= 91564 && location.Code >= 91550 + data.FairyChestsPerZone)
+                    continue;
+
+                list.Add(location);
+            }
+
+            return list;
         }
 
-        public static LocationData GetLocation(int code)
+        public static LocationData GetLocation(SlotData data, int code)
         {
-            return GetAllLocations().First(location => location.Code == code);
+            return GetAllLocations(data).First(location => location.Code == code);
         }
 
-        public static LocationData GetLocation(string name)
+        public static LocationData GetLocation(SlotData data, string name)
         {
-            return GetAllLocations().First(location => location.Name == name);
+            return GetAllLocations(data).First(location => location.Name == name);
         }
     }
 }

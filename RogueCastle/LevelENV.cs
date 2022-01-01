@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - LevelENV.cs
 //  Last Modified 2021-12-30
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using RogueCastle.Structs;
@@ -55,8 +55,8 @@ namespace RogueCastle
         public const int LevelDungeonRightDoor = 55;
         public const int LevelDungeonTopDoor = 45;
         public const int LevelDungeonBottomDoor = 100;
-        public const string GameName = "Rogue Legacy Archipelago";
-        public static readonly Version GameVersion = Version.Parse("0.4.2");
+        public const string GameName = "Rogue Legacy Randomizer";
+        public static readonly Version GameVersion = Version.Parse("0.5.0");
 
         static LevelENV()
         {
@@ -289,14 +289,14 @@ namespace RogueCastle
             TestRoomReverse = false;
             RunTestRoom = false;
             ShowDebugText = false;
-            LoadSplashScreen = true;
+            LoadSplashScreen = false;
             ShowSaveLoadDebugText = false;
             DeleteSaveFile = false;
             CloseTestRoomDoors = false;
             RunTutorial = false;
             RunDemoVersion = false;
             DisableSaving = false;
-            RunCrashLogs = true;
+            RunCrashLogs = false;
             WeakenBosses = false;
             EnableOffscreenControl = false;
             EnableBackupSaving = false;

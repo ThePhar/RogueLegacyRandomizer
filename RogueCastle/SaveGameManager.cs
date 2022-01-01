@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - SaveGameManager.cs
 // Last Modified 2021-12-28
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -639,6 +639,14 @@ namespace RogueCastle
                     binaryWriter.Write(Game.PlayerStats.ReadLastDiary);
                     binaryWriter.Write(Game.PlayerStats.SpokenToLastBoss);
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.CastleChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.GardenChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.TowerChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.DungeonChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.CastleFairyChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.GardenFairyChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.TowerFairyChests);
+                    binaryWriter.Write(Game.PlayerStats.OpenedChests.DungeonFairyChests);
                     binaryWriter.Write(Game.ProfileName);
                     var value = Game.PlayerStats.TotalHoursPlayed + Game.PlaySessionLength;
                     binaryWriter.Write(value);
@@ -1425,6 +1433,14 @@ namespace RogueCastle
                     Game.PlayerStats.ReadLastDiary = binaryReader.ReadBoolean();
                     Game.PlayerStats.SpokenToLastBoss = binaryReader.ReadBoolean();
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
+                    Game.PlayerStats.OpenedChests.CastleChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.GardenChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.TowerChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.DungeonChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.CastleFairyChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.GardenFairyChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.TowerFairyChests = binaryReader.ReadInt32();
+                    Game.PlayerStats.OpenedChests.DungeonFairyChests = binaryReader.ReadInt32();
                     Game.ProfileName = binaryReader.ReadString();
                     Game.PlayerStats.TotalHoursPlayed = binaryReader.ReadSingle();
                     var b = binaryReader.ReadByte();
@@ -1686,7 +1702,7 @@ namespace RogueCastle
                     foreach (var skill in skillArray)
                     {
                         var level = binaryReader.ReadInt32();
-                        for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false);
+                        for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false, false);
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + skill.CurrentLevel);

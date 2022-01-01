@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - SkillScreen.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -49,7 +49,7 @@ namespace RogueCastle
         private KeyIconTextObj m_navigationText;
         private TextObj m_playerMoney;
         private float m_screenShakeMagnitude;
-        private SkillType m_selectedTrait;
+        private Vector2 m_selectedTraitIndex;
         private SpriteObj m_selectionIcon;
         private float m_shakeDuration;
         private GameObj m_shakeObj;
@@ -70,7 +70,7 @@ namespace RogueCastle
 
         public SkillScreen()
         {
-            m_selectedTrait = SkillType.ManorMainBase;
+            m_selectedTraitIndex = new Vector2(5f, 9f);
             m_impactEffectPool = new ImpactEffectPool(1000);
             DrawIfCovered = true;
         }
@@ -228,32 +228,31 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            var flag = true;
+            m_lockControls = false;
             m_manor.GetChildAt(23).Visible = true;
             m_manor.GetChildAt(23).Opacity = 1f;
-            m_lockControls = false;
-
             Camera.Position = new Vector2(660f, 360f);
             var skillArray = SkillSystem.GetSkillArray();
-
-            foreach (var s in skillArray)
+            for (var i = 0; i < skillArray.Length; i++)
             {
-                SetVisible(s, false);
-
-                if (s.TraitType == SkillType.Manor)
+                if (skillArray[i].CurrentLevel > 0)
                 {
-                    var networkItem =
-                        Program.Game.ArchipelagoManager.LocationCache[
-                            (int) ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
-                    s.Description = string.Format(
+                    SetVisible(skillArray[i], false);
+                }
+
+                if (skillArray[i].TraitType >= SkillType.ManorGroundRoad)
+                {
+                    var networkItem = Program.Game.ArchipelagoManager.LocationCache[ManorContainer.ArchipelagoLocationTable[skillArray[i].ManorPiece]];
+                    skillArray[i].Description = string.Format(
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nThis upgrade contains {0} for {1}.",
                         Program.Game.ArchipelagoManager.GetItemName(networkItem.Item),
                         Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player));
-                    s.Description =
-                        s.Description.Replace("GENDER", Game.PlayerStats.IsFemale ? "motherless" : "fatherless");
-                    s.Description = AddSpacesToString(Enum.GetName(typeof(ManorPiece), SkillSystem.GetManorPiece(s))) +
-                                    "\n\n" + s.Description;
-                    s.Position = SkillSystem.GetSkillPosition(s);
+
+                    skillArray[i].Description =
+                        skillArray[i].Description.Replace("GENDER", Game.PlayerStats.IsFemale ? "motherless" : "fatherless");
+
+                    skillArray[i].Description = AddSpacesToString(Enum.GetName(typeof(ManorPiece), SkillSystem.GetManorPiece(skillArray[i]))) +
+                                                "\n\n" + skillArray[i].Description;
                 }
             }
 
@@ -262,8 +261,7 @@ namespace RogueCastle
                 SoundManager.PlayMusic("SkillTreeSong", true, 1f);
             }
 
-            var skill = SkillSystem.GetSkill(m_selectedTrait);
-
+            var skill = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
             m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill);
             UpdateDescriptionPlate(skill);
             m_dialoguePlate.Visible = true;
@@ -291,34 +289,26 @@ namespace RogueCastle
             base.OnExit();
         }
 
-        public void SetVisible(SkillObj skill, bool fadeIn)
+        public void SetVisible(SkillObj trait, bool fadeIn)
         {
-            if (skill.TraitType == SkillType.Manor && fadeIn)
+            var manorPiece = SkillSystem.GetManorPiece(trait);
+            if (fadeIn)
             {
-                var piece = SkillSystem.GetManorPiece(skill);
-                SetManorPieceVisible(
-                    new Tuple<int, int>((int) piece, (int) ManorContainer.ArchipelagoLocationTable[piece]), skill);
-                Program.Game.ArchipelagoManager.CheckLocations((int) ManorContainer.ArchipelagoLocationTable[piece]);
-
+                var location = ManorContainer.ArchipelagoLocationTable[(ManorPiece) manorPiece];
+                SetManorPieceVisible(new Tuple<int, int>(manorPiece, location), trait);
+                Program.Game.ArchipelagoManager.CheckLocations(ManorContainer.ArchipelagoLocationTable[(ManorPiece) manorPiece]);
                 return;
             }
 
-            foreach (var s in SkillSystem.GetSkillArray())
+            var childAt = m_manor.GetChildAt(manorPiece);
+            childAt.Opacity = 1f;
+            childAt.Visible = true;
+            foreach (var current in SkillSystem.GetAllConnectingTraits(trait))
             {
-                if (skill.TraitType == SkillType.Manor)
+                if (!current.Visible)
                 {
-                    var childAt = m_manor.GetChildAt((int) SkillSystem.GetManorPiece(skill));
-                    if (skill.CurrentLevel > 0)
-                    {
-                        childAt.Opacity = 1f;
-                        childAt.Visible = true;
-                    }
-                }
-
-                if (!s.Visible)
-                {
-                    s.Visible = true;
-                    s.Opacity = 1f;
+                    current.Visible = true;
+                    current.Opacity = 1f;
                 }
             }
 
@@ -346,15 +336,14 @@ namespace RogueCastle
 
         public void SetManorPieceVisible(Tuple<int, int> manorPiece, SkillObj skillObj)
         {
-            var manorIndex = manorPiece.Item1;
-            var childAt = m_manor.GetChildAt(manorIndex);
+            var childAt = m_manor.GetChildAt(manorPiece.Item1);
             var num = 0f;
             if (!childAt.Visible)
             {
                 m_lockControls = true;
                 childAt.Visible = true;
                 var pos = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
-                switch (manorIndex)
+                switch (manorPiece.Item1)
                 {
                     case 0:
                     case 11:
@@ -522,6 +511,17 @@ namespace RogueCastle
         public void SetSkillIconVisible(SkillObj skill, Tuple<int, int> manorPiece)
         {
             var num = 0f;
+            foreach (var current in SkillSystem.GetAllConnectingTraits(skill))
+            {
+                if (!current.Visible)
+                {
+                    current.Visible = true;
+                    current.Opacity = 0f;
+                    Tween.To(current, 0.2f, Linear.EaseNone, "Opacity", "1");
+                    num += 0.2f;
+                }
+            }
+
             Tween.RunFunction(num, this, "UnlockControls");
             Tween.RunFunction(num, this, "CheckForSkillUnlock", skill, true, manorPiece);
         }
@@ -635,7 +635,7 @@ namespace RogueCastle
                     b = 16;
                     break;
 
-                case SkillType.Manor:
+                default:
                     b = SkillUnlockType.NetworkItem;
                     break;
             }
@@ -798,87 +798,87 @@ namespace RogueCastle
 
                 if (SkillSystem.IconsVisible)
                 {
-                    var selectedTrait = m_selectedTrait;
-                    SkillType? vector = null;
-                    // Move Up and Down
-                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) ||
-                        Game.GlobalInput.JustPressed(InputMapType.PlayerUp2))
+                    var selectedTraitIndex = m_selectedTraitIndex;
+                    var vector = new Vector2(-1f, -1f);
+                    if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
-                        vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.TopLink;
+                        vector =
+                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                                .TopLink;
+                        var skill = SkillSystem.GetSkill(SkillType.SuperSecret);
+                        if (!m_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
+                        {
+                            m_cameraTweening = true;
+                            Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 60f.ToString());
+                            Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
+                        }
                     }
-                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerDown1) ||
-                             Game.GlobalInput.JustPressed(InputMapType.PlayerDown2))
+                    else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
                     {
-                        vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.BottomLink;
-                    }
-
-                    // Move Left and Right
-                    if (Game.GlobalInput.JustPressed(InputMapType.PlayerLeft1) ||
-                        Game.GlobalInput.JustPressed(InputMapType.PlayerLeft2))
-                    {
-                        vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.LeftLink;
-                    }
-                    else if (Game.GlobalInput.JustPressed(InputMapType.PlayerRight1) ||
-                             Game.GlobalInput.JustPressed(InputMapType.PlayerRight2))
-                    {
-                        vector = SkillSystem.GetSkillMeta(m_selectedTrait).SkillLink.RightLink;
+                        vector =
+                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                                .BottomLink;
                     }
 
-                    // Move selection.
-                    if (vector != null)
+                    if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
                     {
-                        var skill2 = SkillSystem.GetSkill((SkillType) vector);
+                        vector =
+                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                                .LeftLink;
+                    }
+                    else if (Game.GlobalInput.JustPressed(22) || Game.GlobalInput.JustPressed(23))
+                    {
+                        vector =
+                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                                .RightLink;
+                    }
+
+                    if (vector.X != -1f && vector.Y != -1f)
+                    {
+                        var skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
                         if (skill2.TraitType != SkillType.Null && skill2.Visible)
                         {
-                            m_selectedTrait = (SkillType) vector;
+                            m_selectedTraitIndex = vector;
                         }
                     }
 
-                    // Update current selected trait.
-                    if (selectedTrait != m_selectedTrait)
+                    if (selectedTraitIndex != m_selectedTraitIndex)
                     {
-                        var selectedSkill = SkillSystem.GetSkill(m_selectedTrait);
-                        m_selectionIcon.Position = SkillSystem.GetSkillPosition(selectedSkill);
-                        UpdateDescriptionPlate(selectedSkill);
+                        var skill3 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X,
+                            (int) m_selectedTraitIndex.Y);
+                        m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill3);
+                        UpdateDescriptionPlate(skill3);
                         SoundManager.PlaySound("ShopMenuMove");
-                        selectedSkill.Scale = new Vector2(1.1f, 1.1f);
-                        Tween.To(selectedSkill, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
+                        skill3.Scale = new Vector2(1.1f, 1.1f);
+                        Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
                         m_dialoguePlate.Visible = true;
                     }
 
-                    // Purchase Skill Feature
-                    var skill = SkillSystem.GetSkill(m_selectedTrait);
-                    if (
-                        (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) ||
-                         Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
-                        && Game.PlayerStats.Gold >= skill.TotalCost
-                        && skill.CurrentLevel < skill.MaxLevel
-                        && skill.CanPurchase)
+                    var skill4 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
+                    if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
+                        Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
                     {
                         SoundManager.PlaySound("TraitUpgrade");
                         if (!m_fadingIn)
                         {
-                            Game.PlayerStats.Gold -= skill.TotalCost;
-                            SetVisible(skill, true);
-
-                            SkillSystem.LevelUpTrait(skill, false);
-
-                            if (skill.CurrentLevel >= skill.MaxLevel)
+                            Game.PlayerStats.Gold -= skill4.TotalCost;
+                            SetVisible(skill4, true);
+                            SkillSystem.LevelUpTrait(skill4, true, false);
+                            if (skill4.CurrentLevel >= skill4.MaxLevel)
                             {
                                 SoundManager.PlaySound("TraitMaxxed");
                             }
 
-                            UpdateDescriptionPlate(skill);
+                            UpdateDescriptionPlate(skill4);
                         }
                     }
-                    else if (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) ||
-                             Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
+                    else if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
+                             Game.PlayerStats.Gold < skill4.TotalCost)
                     {
                         SoundManager.PlaySound("TraitPurchaseFail");
                     }
 
-                    // Toggle Hiding Skill Screen
-                    if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3) && !flag)
+                    if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
                     {
                         m_lockControls = true;
                         var rCScreenManager = ScreenManager as RCScreenManager;

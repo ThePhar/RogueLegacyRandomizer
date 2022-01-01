@@ -1,13 +1,13 @@
-// 
-//  RogueLegacyArchipelago - SkillBuilder.cs
-//  Last Modified 2021-12-29
-// 
+//
+//  Rogue Legacy Randomizer - SkillBuilder.cs
+//  Last Modified 2021-12-31
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using Microsoft.Xna.Framework;
 using RogueCastle.Structs;
@@ -273,7 +273,7 @@ namespace RogueCastle
 
                 case SkillType.PotionUp:
                     skillObj.Name = "Potion Up";
-                    skillObj.Description = "Gut cleansing leads to noticeable improvements from both potions and meat.";
+                    skillObj.Description = "Gut cleansing leads to noticable improvements from both potions and meat.";
                     skillObj.PerLevelModifier = 0.01f;
                     skillObj.BaseCost = 750;
                     skillObj.Appreciation = 1750;
@@ -494,7 +494,6 @@ namespace RogueCastle
                     skillObj.IconName = "Icon_Display_Boss_RoomsLocked_Sprite";
                     skillObj.InputDescription = "Fountain text here.";
                     skillObj.UnitOfMeasurement = "hp";
-                    skillObj.DisplayStat = true;
                     break;
 
                 case SkillType.StoutHeart:
@@ -816,22 +815,619 @@ namespace RogueCastle
                     skillObj.IconName = "IconBootLocked_Sprite";
                     break;
 
-                case SkillType.Manor:
+                case SkillType.ManorGroundRoad:
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
                     skillObj.BaseCost = 2000;
                     skillObj.MaxLevel = 1;
-                    skillObj.IconName = "Icon_SwordLocked_Sprite";
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
                     skillObj.StatType = 0;
                     skillObj.CanPurchase = true;
-                    skillObj.Position = new Vector2(40f, 50f);
+                    break;
+
+                case SkillType.ManorMainBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorMainWindowBottom:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorMainWindowTop:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorMainRoof:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftWingBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftWingWindow:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftWingRoof:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftBigBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftBigUpper1:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftBigUpper2:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftBigWindows:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftBigRoof:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftFarBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftFarRoof:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftExtension:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftTree1:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorLeftTree2:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightWingBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightWingWindow:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightWingRoof:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightBigBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightBigUpper:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightBigRoof:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightHighBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightHighUpper:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightHighTower:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightExtension:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorRightTree:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorObservatoryBase:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.ManorObservatoryTelescope:
+                    skillObj.Name = "Manor Renovation";
+                    skillObj.Description =
+                        "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.BaseCost = 2000;
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
                     break;
             }
 
             skillObj.TraitType = skillType;
             return skillObj;
+        }
+
+        public static SkillLinker GetSkillLinker(int xIndex, int yIndex)
+        {
+            var result = default(SkillLinker);
+            if (xIndex == 5 && yIndex == 9)
+            {
+                result.TopLink = new Vector2(5f, 8f);
+                result.BottomLink = new Vector2(6f, 9f);
+                result.LeftLink = new Vector2(4f, 5f);
+                result.RightLink = new Vector2(6f, 5f);
+            }
+            else if (xIndex == 8 && yIndex == 8)
+            {
+                result.TopLink = new Vector2(5f, 9f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(2f, 8f);
+                result.RightLink = new Vector2(8f, 7f);
+            }
+            else if (xIndex == 3 && yIndex == 4)
+            {
+                result.TopLink = new Vector2(2f, 3f);
+                result.BottomLink = new Vector2(3f, 6f);
+                result.LeftLink = new Vector2(2f, 4f);
+                result.RightLink = new Vector2(5f, 6f);
+            }
+            else if (xIndex == 4 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(3f, 6f);
+                result.BottomLink = new Vector2(4f, 5f);
+                result.LeftLink = new Vector2(1f, 5f);
+                result.RightLink = new Vector2(5f, 8f);
+            }
+            else if (xIndex == 2 && yIndex == 8)
+            {
+                result.TopLink = new Vector2(4f, 5f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(2f, 7f);
+                result.RightLink = new Vector2(6f, 9f);
+            }
+            else if (xIndex == 2 && yIndex == 5)
+            {
+                result.TopLink = new Vector2(2f, 4f);
+                result.BottomLink = new Vector2(2f, 6f);
+                result.LeftLink = new Vector2(0f, 5f);
+                result.RightLink = new Vector2(3f, 6f);
+            }
+            else if (xIndex == 1 && yIndex == 5)
+            {
+                result.TopLink = new Vector2(0f, 5f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(0f, 6f);
+                result.RightLink = new Vector2(4f, 6f);
+            }
+            else if (xIndex == 8 && yIndex == 5)
+            {
+                result.TopLink = new Vector2(8f, 4f);
+                result.BottomLink = new Vector2(7f, 6f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 2 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(2f, 5f);
+                result.BottomLink = new Vector2(2f, 7f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(4f, 5f);
+            }
+            else if (xIndex == 5 && yIndex == 8)
+            {
+                result.TopLink = new Vector2(5f, 7f);
+                result.BottomLink = new Vector2(5f, 9f);
+                result.LeftLink = new Vector2(4f, 6f);
+                result.RightLink = new Vector2(6f, 6f);
+            }
+            else if (xIndex == 5 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(5f, 7f);
+                result.LeftLink = new Vector2(3f, 4f);
+                result.RightLink = new Vector2(8f, 3f);
+            }
+            else if (xIndex == 3 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(3f, 4f);
+                result.BottomLink = new Vector2(4f, 6f);
+                result.LeftLink = new Vector2(2f, 5f);
+                result.RightLink = new Vector2(5f, 7f);
+            }
+            else if (xIndex == 7 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(8f, 5f);
+                result.BottomLink = new Vector2(6f, 6f);
+                result.LeftLink = new Vector2(5f, 7f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 6 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(7f, 6f);
+                result.BottomLink = new Vector2(6f, 5f);
+                result.LeftLink = new Vector2(5f, 8f);
+                result.RightLink = new Vector2(8f, 6f);
+            }
+            else if (xIndex == 8 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(8f, 7f);
+                result.LeftLink = new Vector2(6f, 6f);
+                result.RightLink = new Vector2(9f, 6f);
+            }
+            else if (xIndex == 8 && yIndex == 4)
+            {
+                result.TopLink = new Vector2(8f, 1f);
+                result.BottomLink = new Vector2(8f, 5f);
+                result.LeftLink = new Vector2(8f, 3f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 8 && yIndex == 7)
+            {
+                result.TopLink = new Vector2(8f, 6f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(6f, 9f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 2 && yIndex == 7)
+            {
+                result.TopLink = new Vector2(2f, 6f);
+                result.BottomLink = new Vector2(2f, 7f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(2f, 8f);
+            }
+            else if (xIndex == 8 && yIndex == 3)
+            {
+                result.TopLink = new Vector2(8f, 2f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(5f, 6f);
+                result.RightLink = new Vector2(8f, 4f);
+            }
+            else if (xIndex == 8 && yIndex == 2)
+            {
+                result.TopLink = new Vector2(7f, 2f);
+                result.BottomLink = new Vector2(8f, 3f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(8f, 1f);
+            }
+            else if (xIndex == 9 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(8f, 6f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 2 && yIndex == 4)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(2f, 5f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(3f, 4f);
+            }
+            else if (xIndex == 5 && yIndex == 7)
+            {
+                result.TopLink = new Vector2(5f, 6f);
+                result.BottomLink = new Vector2(5f, 8f);
+                result.LeftLink = new Vector2(3f, 6f);
+                result.RightLink = new Vector2(7f, 6f);
+            }
+            else if (xIndex == 4 && yIndex == 5)
+            {
+                result.TopLink = new Vector2(4f, 6f);
+                result.BottomLink = new Vector2(2f, 8f);
+                result.LeftLink = new Vector2(2f, 6f);
+                result.RightLink = new Vector2(5f, 9f);
+            }
+            else if (xIndex == 6 && yIndex == 5)
+            {
+                result.TopLink = new Vector2(6f, 6f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(5f, 9f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 2 && yIndex == 3)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(3f, 4f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 7 && yIndex == 2)
+            {
+                result.TopLink = new Vector2(7f, 1f);
+                result.BottomLink = new Vector2(8f, 2f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 7 && yIndex == 1)
+            {
+                result.BottomLink = new Vector2(7f, 2f);
+                result.TopLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+            else if (xIndex == 0 && yIndex == 5)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(1f, 5f);
+                result.LeftLink = new Vector2(0f, 6f);
+                result.RightLink = new Vector2(2f, 5f);
+            }
+            else if (xIndex == 0 && yIndex == 6)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(-11f, -1f);
+                result.LeftLink = new Vector2(-1f, -1f);
+                result.RightLink = new Vector2(0f, 5f);
+            }
+            else if (xIndex == 6 && yIndex == 9)
+            {
+                result.TopLink = new Vector2(5f, 9f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(2f, 8f);
+                result.RightLink = new Vector2(8f, 7f);
+            }
+            else if (xIndex == 8 && yIndex == 1)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(8f, 4f);
+                result.LeftLink = new Vector2(8f, 2f);
+                result.RightLink = new Vector2(8f, 0f);
+            }
+            else if (xIndex == 8 && yIndex == 0)
+            {
+                result.TopLink = new Vector2(-1f, -1f);
+                result.BottomLink = new Vector2(-1f, -1f);
+                result.LeftLink = new Vector2(8f, 1f);
+                result.RightLink = new Vector2(-1f, -1f);
+            }
+
+            return result;
         }
     }
 }

@@ -107,7 +107,7 @@ namespace RogueCastle
 
                         // Check location.
                         var location = string.Format("Diary {0}", m_diaryIndex + 1);
-                        Program.Game.ArchipelagoManager.CheckLocations(LocationManager.GetCodeByName(location));
+                        Program.Game.ArchipelagoManager.CheckLocations(LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, location).Code);
 
                         Game.PlayerStats.DiaryEntry += 1;
                         RoomCompleted = true;

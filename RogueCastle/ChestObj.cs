@@ -405,7 +405,7 @@ namespace RogueCastle
                 }
             }
 
-            var code = LocationManager.GetCodeByName(location);
+            var code = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, location).Code;
             var name = arch.GetPlayerName(arch.LocationCache[code].Player);
             var item = arch.LocationCache[code].Item;
 

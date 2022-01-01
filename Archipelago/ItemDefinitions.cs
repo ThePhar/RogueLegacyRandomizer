@@ -106,5 +106,10 @@ namespace Archipelago
         {
             return GetAllItems().First(item => item.Name == name);
         }
+
+        public static ItemType GetItemType(this int code)
+        {
+            return GetItem(code).Type;
+        }
     }
 }

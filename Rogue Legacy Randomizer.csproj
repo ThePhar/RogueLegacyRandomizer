@@ -255,7 +255,7 @@
     <Compile Include="RogueCastle\ShadowmapResolver.cs" />
     <Compile Include="RogueCastle\ShadowmapSize.cs" />
     <Compile Include="RogueCastle\SkillBuilder.cs" />
-    <Compile Include="RogueCastle\SkillLink.cs" />
+    <Compile Include="RogueCastle\SkillLinker.cs" />
     <Compile Include="RogueCastle\SkillObj.cs" />
     <Compile Include="RogueCastle\SkillScreen.cs" />
     <Compile Include="RogueCastle\SkillSystem.cs" />
@@ -275,7 +275,6 @@
     <Compile Include="RogueCastle\Structs\LevelType.cs" />
     <Compile Include="RogueCastle\Structs\ManorPieces.cs" />
     <Compile Include="RogueCastle\Systems\ManorContainer.cs" />
-    <Compile Include="RogueCastle\Systems\SkillMeta.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
     <Compile Include="RogueCastle\TextManager.cs" />
