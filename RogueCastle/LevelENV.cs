@@ -284,7 +284,7 @@ namespace RogueCastle
             // Default Environment Variables
             TestRoomLevelType = LevelType.Castle;
             ShowEnemyRadii = false;
-            EnablePlayerDebug = false;
+            EnablePlayerDebug = true;
             UnlockAllAbilities = false;
             TestRoomReverse = false;
             RunTestRoom = false;
@@ -297,7 +297,7 @@ namespace RogueCastle
             RunDemoVersion = false;
             DisableSaving = false;
             RunCrashLogs = false;
-            WeakenBosses = false;
+            WeakenBosses = true;
             EnableOffscreenControl = false;
             EnableBackupSaving = false;
             CreateRetailVersion = true;

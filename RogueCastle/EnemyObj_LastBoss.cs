@@ -1470,6 +1470,15 @@ namespace RogueCastle
             }
         }
 
+        public void Forfeit()
+        {
+            Program.Game.ArchipelagoManager.Forfeit();
+        }
+
+        public void NoForfeit()
+        {
+        }
+
         public override void Kill(bool giveXP = true)
         {
             if (m_target.CurrentHealth > 0)
@@ -1478,6 +1487,18 @@ namespace RogueCastle
                 {
                     // Announce our victory!
                     Program.Game.ArchipelagoManager.AnnounceVictory();
+
+                    if (Program.Game.ArchipelagoManager.CanForfeit)
+                    {
+                        var rCScreenManager = Game.ScreenManager;
+                        DialogueManager.AddText("Forfeit", new[] { "Congrats!" },
+                            new[] { "Would you like to forfeit your remaining items?" });
+                        rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
+                        rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                        rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
+                        rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "NoForfeit");
+                        rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+                    }
 
                     m_bossVersionKilled = true;
                     SetPlayerData();
