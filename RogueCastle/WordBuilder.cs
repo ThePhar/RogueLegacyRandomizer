@@ -37,12 +37,16 @@ namespace RogueCastle
             {
                 case LevelType.Castle:
                     return "Castle Hamson";
+
                 case LevelType.Garden:
                     return "Forest Abkhazia";
+
                 case LevelType.Dungeon:
                     return "The Land of Darkness";
+
                 case LevelType.Tower:
                     return "The Maya";
+
                 default:
                     return "";
             }

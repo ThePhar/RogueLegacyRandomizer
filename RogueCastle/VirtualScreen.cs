@@ -29,7 +29,7 @@ namespace RogueCastle
         {
             VirtualWidth = virtualWidth;
             VirtualHeight = virtualHeight;
-            VirtualAspectRatio = virtualWidth/(float) virtualHeight;
+            VirtualAspectRatio = virtualWidth / (float) virtualHeight;
             this.graphicsDevice = graphicsDevice;
             RenderTarget = new RenderTarget2D(graphicsDevice, virtualWidth, virtualHeight);
         }
@@ -44,6 +44,7 @@ namespace RogueCastle
                 RenderTarget.Dispose();
                 RenderTarget = null;
             }
+
             RenderTarget = new RenderTarget2D(graphicsDevice, VirtualWidth, VirtualHeight);
         }
 
@@ -58,28 +59,31 @@ namespace RogueCastle
             {
                 return;
             }
+
             areaIsDirty = false;
             var width = graphicsDevice.Viewport.Width;
             var height = graphicsDevice.Viewport.Height;
             var aspectRatio = graphicsDevice.Viewport.AspectRatio;
-            if ((int) (aspectRatio*10f) == (int) (VirtualAspectRatio*10f))
+            if ((int) (aspectRatio * 10f) == (int) (VirtualAspectRatio * 10f))
             {
                 area = new Rectangle(0, 0, width, height);
                 return;
             }
+
             if (VirtualAspectRatio > aspectRatio)
             {
-                var num = width/(float) VirtualWidth;
-                var num2 = VirtualWidth*num;
-                var num3 = VirtualHeight*num;
-                var y = (int) ((height - num3)/2f);
+                var num = width / (float) VirtualWidth;
+                var num2 = VirtualWidth * num;
+                var num3 = VirtualHeight * num;
+                var y = (int) ((height - num3) / 2f);
                 area = new Rectangle(0, y, (int) num2, (int) num3);
                 return;
             }
-            var num4 = height/(float) VirtualHeight;
-            var num5 = VirtualWidth*num4;
-            var num6 = VirtualHeight*num4;
-            var x = (int) ((width - num5)/2f);
+
+            var num4 = height / (float) VirtualHeight;
+            var num5 = VirtualWidth * num4;
+            var num6 = VirtualHeight * num4;
+            var x = (int) ((width - num5) / 2f);
             area = new Rectangle(x, 0, (int) num5, (int) num6);
         }
 
@@ -96,6 +100,7 @@ namespace RogueCastle
             {
                 Game.GenericTexture.Dispose();
             }
+
             Game.GenericTexture = new Texture2D(graphicsDevice, 1, 1);
             Game.GenericTexture.SetData(new[]
             {
@@ -110,6 +115,7 @@ namespace RogueCastle
             {
                 RecreateGraphics();
             }
+
             graphicsDevice.SetRenderTarget(RenderTarget);
         }
 
@@ -122,7 +128,8 @@ namespace RogueCastle
         {
             if (!(Game.ScreenManager.CurrentScreen is SkillScreen) &&
                 !(Game.ScreenManager.CurrentScreen is LineageScreen) &&
-                !(Game.ScreenManager.CurrentScreen is SkillUnlockScreen) && Game.ScreenManager.GetLevelScreen() != null &&
+                !(Game.ScreenManager.CurrentScreen is SkillUnlockScreen) &&
+                Game.ScreenManager.GetLevelScreen() != null &&
                 (Game.PlayerStats.Traits.X == 20f || Game.PlayerStats.Traits.Y == 20f) &&
                 Game.PlayerStats.SpecialItem != 8)
             {
@@ -130,6 +137,7 @@ namespace RogueCastle
                     0f);
                 return;
             }
+
             spriteBatch.Draw(RenderTarget, area, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
         }
     }

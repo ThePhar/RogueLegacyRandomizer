@@ -38,6 +38,7 @@ namespace Randomchaos2DGodRays
             {
                 effect = Game.Content.Load<Effect>("Shaders/LightRays");
             }
+
             effect.CurrentTechnique = effect.Techniques["LightRayFX"];
             effect.Parameters["halfPixel"].SetValue(HalfPixel);
             effect.Parameters["Density"].SetValue(Density);

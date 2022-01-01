@@ -13,28 +13,28 @@ namespace RogueCastle.Structs
 {
     public static class SkillUnlockType
     {
-        public const byte None         = 0;
-        public const byte Blacksmith   = 1;
-        public const byte Enchantress  = 2;
-        public const byte Architect    = 3;
-        public const byte Ninja        = 4;
-        public const byte Banker       = 5;
-        public const byte SpellSword   = 6;
-        public const byte Lich         = 7;
-        public const byte KnightUp     = 8;
-        public const byte WizardUp     = 9;
-        public const byte BarbarianUp  = 10;
-        public const byte NinjaUp      = 11;
-        public const byte AssassinUp   = 12;
-        public const byte BankerUp     = 13;
+        public const byte None = 0;
+        public const byte Blacksmith = 1;
+        public const byte Enchantress = 2;
+        public const byte Architect = 3;
+        public const byte Ninja = 4;
+        public const byte Banker = 5;
+        public const byte SpellSword = 6;
+        public const byte Lich = 7;
+        public const byte KnightUp = 8;
+        public const byte WizardUp = 9;
+        public const byte BarbarianUp = 10;
+        public const byte NinjaUp = 11;
+        public const byte AssassinUp = 12;
+        public const byte BankerUp = 13;
         public const byte SpellSwordUp = 14;
-        public const byte LichUp       = 15;
-        public const byte Dragon       = 16;
-        public const byte Traitor      = 17;
-        public const byte NetworkItem  = 18;
+        public const byte LichUp = 15;
+        public const byte Dragon = 16;
+        public const byte Traitor = 17;
+        public const byte NetworkItem = 18;
 
         /// <summary>
-        /// Returns the full unlock description for this skill unlock.
+        ///     Returns the full unlock description for this skill unlock.
         /// </summary>
         /// <param name="unlockType">Unlock Type Identifier</param>
         /// <returns></returns>

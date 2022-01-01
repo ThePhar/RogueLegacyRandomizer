@@ -17,6 +17,6 @@ namespace RogueCastle.Structs
         Castle,
         Garden,
         Dungeon,
-        Tower,
+        Tower
     }
 }

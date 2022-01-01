@@ -75,7 +75,7 @@ namespace RogueCastle
                 var textObj2 = textObj.Clone() as TextObj;
                 textObj2.Text = array[i];
                 textObj2.X = 1320f;
-                textObj2.Y = m_startingY + i*30;
+                textObj2.Y = m_startingY + i * 30;
                 AddChild(textObj2);
                 m_buttonTitle.Add(textObj2);
                 var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
@@ -91,6 +91,7 @@ namespace RogueCastle
                 AddChild(keyIconTextObj2);
                 m_gamepadControls.Add(keyIconTextObj2);
             }
+
             UpdateKeyBindings();
             m_setKeyPlate = new ObjContainer("GameOverStatPlate_Character");
             m_setKeyPlate.ForceDraw = true;
@@ -101,7 +102,7 @@ namespace RogueCastle
             textObj3.DropShadow = new Vector2(2f, 2f);
             textObj3.ForceDraw = true;
             textObj3.Text = "Press Any Key";
-            textObj3.Y -= textObj3.Height/2f;
+            textObj3.Y -= textObj3.Height / 2f;
             m_setKeyPlate.AddChild(textObj3);
             m_selectionBar = new SpriteObj("OptionsBar_Sprite");
         }
@@ -119,10 +120,12 @@ namespace RogueCastle
                 {
                     OnExit();
                 }
+
                 if (value != m_isActive)
                 {
                     m_parentScreen.ToggleControlsConfig();
                 }
+
                 base.IsActive = value;
             }
         }
@@ -145,6 +148,7 @@ namespace RogueCastle
             {
                 m_selectedEntry.TextureColor = Color.White;
             }
+
             if (m_selectedButton != null)
             {
                 m_selectedButton.TextureColor = Color.White;
@@ -168,20 +172,24 @@ namespace RogueCastle
                         SoundManager.PlaySound("frame_swap");
                         m_selectedEntryIndex++;
                     }
+
                     if (m_selectedEntryIndex > m_buttonTitle.Count - 1)
                     {
                         m_selectedEntryIndex = 0;
                     }
+
                     if (m_selectedEntryIndex < 0)
                     {
                         m_selectedEntryIndex = m_buttonTitle.Count - 1;
                     }
+
                     if (selectedEntryIndex != m_selectedEntryIndex)
                     {
                         m_selectedEntry.TextureColor = Color.White;
                         m_selectedEntry = m_buttonTitle[m_selectedEntryIndex];
                         m_selectedEntry.TextureColor = Color.Yellow;
                     }
+
                     if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                     {
                         SoundManager.PlaySound("Option_Menu_Select");
@@ -205,9 +213,11 @@ namespace RogueCastle
                     {
                         IsActive = false;
                     }
+
                     base.HandleInput();
                     return;
                 }
+
                 if (InputManager.AnyButtonPressed(PlayerIndex.One) || InputManager.AnyKeyPressed())
                 {
                     ChangeKey();
@@ -230,6 +240,7 @@ namespace RogueCastle
                 {
                     return;
                 }
+
                 var flag = false;
                 Keys[] array =
                 {
@@ -259,10 +270,12 @@ namespace RogueCastle
                         break;
                     }
                 }
+
                 if (flag)
                 {
                     return;
                 }
+
                 if (keys == Keys.Escape)
                 {
                     Tween.To(m_setKeyPlate, 0.3f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
@@ -278,6 +291,7 @@ namespace RogueCastle
                     return;
                 }
             }
+
             SoundManager.PlaySound("Gen_Menu_Toggle");
             Tween.To(m_setKeyPlate, 0.3f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
             m_settingKey = false;
@@ -309,12 +323,14 @@ namespace RogueCastle
                             break;
                         }
                     }
+
                     if (flag2 && Game.GlobalInput.ButtonList[j] == buttons2)
                     {
                         Game.GlobalInput.ButtonList[j] =
                             Game.GlobalInput.ButtonList[m_controlKeys[m_selectedEntryIndex]];
                     }
                 }
+
                 Game.GlobalInput.ButtonList[m_controlKeys[m_selectedEntryIndex]] = buttons2;
             }
             else if (InputManager.AnyKeyPressed())
@@ -345,20 +361,22 @@ namespace RogueCastle
                             break;
                         }
                     }
+
                     if (flag3 && Game.GlobalInput.KeyList[l] == keys3)
                     {
                         Game.GlobalInput.KeyList[l] = Game.GlobalInput.KeyList[m_controlKeys[m_selectedEntryIndex]];
                     }
                 }
+
                 Game.GlobalInput.KeyList[m_controlKeys[m_selectedEntryIndex]] = keys3;
             }
+
             UpdateKeyBindings();
         }
 
         private void UpdateKeyBindings()
         {
             for (var i = 0; i < m_keyboardControls.Count; i++)
-            {
                 if (m_controlKeys[i] == -1)
                 {
                     m_keyboardControls[i].Text = "";
@@ -373,25 +391,33 @@ namespace RogueCastle
                         {
                             case 16:
                                 m_keyboardControls[i].Text = string.Concat("[Key:",
-                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[17],
+                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:",
+                                    Game.GlobalInput.KeyList[17],
                                     "]");
                                 goto IL_30B;
+
                             case 18:
                                 m_keyboardControls[i].Text = string.Concat("[Key:",
-                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[19],
+                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:",
+                                    Game.GlobalInput.KeyList[19],
                                     "]");
                                 goto IL_30B;
+
                             case 20:
                                 m_keyboardControls[i].Text = string.Concat("[Key:",
-                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[21],
+                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:",
+                                    Game.GlobalInput.KeyList[21],
                                     "]");
                                 goto IL_30B;
+
                             case 22:
                                 m_keyboardControls[i].Text = string.Concat("[Key:",
-                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:", Game.GlobalInput.KeyList[23],
+                                    Game.GlobalInput.KeyList[m_controlKeys[i]], "], [Key:",
+                                    Game.GlobalInput.KeyList[23],
                                     "]");
                                 goto IL_30B;
                         }
+
                         m_keyboardControls[i].Text = "[Key:" + Game.GlobalInput.KeyList[m_controlKeys[i]] + "]";
                     }
                     else
@@ -399,18 +425,20 @@ namespace RogueCastle
                         m_keyboardControls[i].Text = string.Concat("[Key:", Game.GlobalInput.KeyList[m_controlKeys[i]],
                             "], [Key:", Game.GlobalInput.KeyList[11], "]");
                     }
+
                     IL_30B:
                     m_gamepadControls[i].Text = "[Button:" + Game.GlobalInput.ButtonList[m_controlKeys[i]] + "]";
                     if (Game.GlobalInput.ButtonList[m_controlKeys[i]] == 0)
                     {
                         m_gamepadControls[i].Text = "";
                     }
+
                     if (Game.GlobalInput.KeyList[m_controlKeys[i]] == Keys.None)
                     {
                         m_keyboardControls[i].Text = "";
                     }
                 }
-            }
+
             Game.GlobalInput.KeyList[1] = Game.GlobalInput.KeyList[12];
             Game.GlobalInput.KeyList[3] = Game.GlobalInput.KeyList[10];
         }

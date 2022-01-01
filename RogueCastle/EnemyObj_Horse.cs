@@ -54,6 +54,7 @@ namespace RogueCastle
                 {
                     return new Rectangle((int) X - m_wallDistanceCheck, (int) Y, 2, 2);
                 }
+
                 return new Rectangle((int) X + m_wallDistanceCheck, (int) Y, 2, 2);
             }
         }
@@ -64,9 +65,10 @@ namespace RogueCastle
             {
                 if (HeadingX < 0f)
                 {
-                    return new Rectangle((int) (X - m_wallDistanceCheck*ScaleX), (int) (Y + 60f*ScaleY), 2, 2);
+                    return new Rectangle((int) (X - m_wallDistanceCheck * ScaleX), (int) (Y + 60f * ScaleY), 2, 2);
                 }
-                return new Rectangle((int) (X + m_wallDistanceCheck*ScaleX), (int) (Y + 60f*ScaleY), 2, 2);
+
+                return new Rectangle((int) (X + m_wallDistanceCheck * ScaleX), (int) (Y + 60f * ScaleY), 2, 2);
             }
         }
 
@@ -102,6 +104,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Dark Stallion";
                     MaxHealth = 37;
@@ -129,6 +132,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Horse_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Night Mare";
                     MaxHealth = 60;
@@ -156,6 +160,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Horse_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "My Little Pony";
                     MaxHealth = 800;
@@ -183,6 +188,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Horse_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -271,8 +277,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3C_1, arg_3C_2, array);
                         return;
                     }
+
                     RunLogicBlock(true, m_generalBasicLB, 0, 100);
                     return;
+
                 default:
                     return;
             }
@@ -295,8 +303,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3C_1, arg_3C_2, array);
                         return;
                     }
+
                     RunLogicBlock(true, m_generalBasicLB, 0, 100);
                     return;
+
                 default:
                     return;
             }
@@ -319,8 +329,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3C_1, arg_3C_2, array);
                         return;
                     }
+
                     RunLogicBlock(true, m_generalBasicLB, 0, 100);
                     return;
+
                 default:
                     return;
             }
@@ -343,8 +355,10 @@ namespace RogueCastle
                         RunLogicBlock(arg_3C_1, arg_3C_2, array);
                         return;
                     }
+
                     RunLogicBlock(true, m_generalBasicLB, 0, 100);
                     return;
+
                 default:
                     return;
             }
@@ -356,6 +370,7 @@ namespace RogueCastle
             {
                 m_gallopSound.Update();
             }
+
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (Difficulty >= EnemyDifficulty.Advanced && m_fireDropTimer > 0f)
             {
@@ -366,15 +381,18 @@ namespace RogueCastle
                     m_fireDropTimer = m_fireDropInterval;
                 }
             }
+
             if (Difficulty == EnemyDifficulty.Expert && !IsPaused && m_fireShieldList.Count < 1)
             {
                 CastFireShield(m_numFireShieldObjs);
             }
+
             if ((Bounds.Left < m_levelScreen.CurrentRoom.Bounds.Left ||
                  Bounds.Right > m_levelScreen.CurrentRoom.Bounds.Right) && m_collisionCheckTimer <= 0f)
             {
                 TurnHorse();
             }
+
             var b = default(Rectangle);
             var b2 = default(Rectangle);
             if (Flip == SpriteEffects.FlipHorizontally)
@@ -387,23 +405,25 @@ namespace RogueCastle
                 b = new Rectangle(Bounds.Right + 10, Bounds.Bottom + 20, 5, 5);
                 b2 = new Rectangle(Bounds.Left - 50, Bounds.Bottom - 20, 5, 5);
             }
+
             var flag = true;
             foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
-            {
                 if (CollisionMath.Intersects(current.Bounds, b) || CollisionMath.Intersects(current.Bounds, b2))
                 {
                     flag = false;
                     break;
                 }
-            }
+
             if (flag)
             {
                 TurnHorse();
             }
+
             if (m_collisionCheckTimer > 0f)
             {
                 m_collisionCheckTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             base.Update(gameTime);
         }
 
@@ -457,7 +477,7 @@ namespace RogueCastle
             var fireDistance = m_fireDistance;
             for (var i = 0; i < numFires; i++)
             {
-                var altX = 360f/numFires*i;
+                var altX = 360f / numFires * i;
                 var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.AltX = altX;
                 projectileObj.AltY = fireDistance;
@@ -489,6 +509,7 @@ namespace RogueCastle
                     array[0] = 100;
                     RunLogicBlock(arg_63_1, arg_63_2, array);
                 }
+
                 m_collisionCheckTimer = 0.5f;
             }
         }
@@ -503,6 +524,7 @@ namespace RogueCastle
             {
                 TurnHorse();
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 
@@ -514,10 +536,7 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            foreach (var current in m_fireShieldList)
-            {
-                current.RunDestroyAnimation(false);
-            }
+            foreach (var current in m_fireShieldList) current.RunDestroyAnimation(false);
             m_fireShieldList.Clear();
             SoundManager.Play3DSound(this, m_target, "Enemy_Horse_Dead");
             base.Kill(giveXP);
@@ -537,6 +556,7 @@ namespace RogueCastle
                 {
                     m_gallopSound.Dispose();
                 }
+
                 m_gallopSound = null;
                 base.Dispose();
             }

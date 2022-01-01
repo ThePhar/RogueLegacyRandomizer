@@ -38,17 +38,23 @@ namespace Randomchaos2DGodRays
 
         public virtual void Draw(GameTime gameTime, Texture2D scene)
         {
-            HalfPixel = -new Vector2(0.5f/Game.GraphicsDevice.Viewport.Width, 0.5f/Game.GraphicsDevice.Viewport.Height);
+            HalfPixel = -new Vector2(0.5f / Game.GraphicsDevice.Viewport.Width,
+                0.5f / Game.GraphicsDevice.Viewport.Height);
             var count = postProcessingEffects.Count;
             Scene = scene;
             for (var i = 0; i < count; i++)
             {
-                if (!postProcessingEffects[i].Enabled) continue;
+                if (!postProcessingEffects[i].Enabled)
+                {
+                    continue;
+                }
+
                 postProcessingEffects[i].HalfPixel = HalfPixel;
                 postProcessingEffects[i].orgScene = scene;
                 postProcessingEffects[i].Draw(gameTime, Scene);
                 Scene = postProcessingEffects[i].lastScene;
             }
+
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
             spriteBatch.Draw(Scene,
                 new Rectangle(0, 0, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height),

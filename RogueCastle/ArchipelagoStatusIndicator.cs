@@ -9,7 +9,6 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
 using Archipelago;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -19,10 +18,10 @@ namespace RogueCastle
 {
     public class ArchipelagoStatusIndicator : DrawableGameComponent
     {
-        private          string         m_status = "";
         private readonly ContentManager m_content;
-        private          SpriteBatch    m_spriteBatch;
-        private          SpriteFont     m_spriteFont;
+        private SpriteBatch m_spriteBatch;
+        private SpriteFont m_spriteFont;
+        private string m_status = "";
 
         public ArchipelagoStatusIndicator(Game game) : base(game)
         {
@@ -44,35 +43,35 @@ namespace RogueCastle
         {
             switch (Program.Game.ArchipelagoManager.Status)
             {
-                case ArchipelagoStatus.Disconnected:
+                case Status.Disconnected:
                     m_status = "Disconnected";
                     break;
 
-                case ArchipelagoStatus.Disconnecting:
+                case Status.Disconnecting:
                     m_status = "Disconnecting";
                     break;
 
-                case ArchipelagoStatus.Connecting:
+                case Status.Connecting:
                     m_status = "Connecting";
                     break;
 
-                case ArchipelagoStatus.Initialized:
+                case Status.Initialized:
                     m_status = "Initialized";
                     break;
 
-                case ArchipelagoStatus.FetchingLocations:
+                case Status.FetchingLocations:
                     m_status = "Fetching Locations";
                     break;
 
-                case ArchipelagoStatus.Connected:
+                case Status.Connected:
                     m_status = "Connected";
                     break;
 
-                case ArchipelagoStatus.Playing:
+                case Status.Playing:
                     m_status = "Playing";
                     break;
 
-                case ArchipelagoStatus.Reconnecting:
+                case Status.Reconnecting:
                     m_status = "Reconnecting";
                     break;
 
@@ -86,7 +85,7 @@ namespace RogueCastle
         {
             m_spriteBatch.Begin();
             m_spriteBatch.DrawString(m_spriteFont, m_status, new Vector2(64f, 33f), Color.Black);
-            m_spriteBatch.DrawString(m_spriteFont, m_status, new Vector2(65f,32f), Color.White);
+            m_spriteBatch.DrawString(m_spriteFont, m_status, new Vector2(65f, 32f), Color.White);
             m_spriteBatch.End();
         }
     }

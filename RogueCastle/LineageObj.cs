@@ -94,12 +94,12 @@ namespace RogueCastle
             m_trait1Title.Text = "";
             m_trait1Title.LimitCorners = true;
             AddChild(m_trait1Title);
-            m_trait2Title = (m_trait1Title.Clone() as TextObj);
+            m_trait2Title = m_trait1Title.Clone() as TextObj;
             m_trait2Title.Y += 20f;
             m_trait2Title.Text = "";
             m_trait2Title.LimitCorners = true;
             AddChild(m_trait2Title);
-            m_ageText = (m_trait1Title.Clone() as TextObj);
+            m_ageText = m_trait1Title.Clone() as TextObj;
             m_ageText.Text = "xxx - xxx";
             m_ageText.Visible = false;
             m_ageText.LimitCorners = true;
@@ -114,6 +114,7 @@ namespace RogueCastle
                 {
                     IsFemale = true;
                 }
+
                 if (IsFemale)
                 {
                     CreateFemaleName(screen);
@@ -122,6 +123,7 @@ namespace RogueCastle
                 {
                     CreateMaleName(screen);
                 }
+
                 Traits = TraitType.CreateRandomTraits();
                 Class = ClassType.GetRandomClass();
                 m_classTextObj.Text = "the " + ClassType.ToString(Class, IsFemale);
@@ -131,17 +133,18 @@ namespace RogueCastle
                     {
                         break;
                     }
+
                     Traits = TraitType.CreateRandomTraits();
                 }
+
                 while ((Class == 1 || Class == 9 || Class == 16) && (Traits.X == 31f || Traits.Y == 31f))
-                {
                     Traits = TraitType.CreateRandomTraits();
-                }
                 var spellList = ClassType.GetSpellList(Class);
                 do
                 {
                     Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
                 } while ((Spell == 11 || Spell == 4 || Spell == 6) && (Traits.X == 31f || Traits.Y == 31f));
+
                 Array.Clear(spellList, 0, spellList.Length);
                 Age = (byte) CDGMath.RandomInt(18, 30);
                 ChildAge = (byte) CDGMath.RandomInt(2, 5);
@@ -174,6 +177,7 @@ namespace RogueCastle
                     m_ageText.Visible = true;
                     return;
                 }
+
                 m_trait1Title.Visible = true;
                 m_trait2Title.Visible = true;
                 m_ageText.Visible = false;
@@ -206,22 +210,26 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (text != null)
             {
                 if (text.Length > 10)
                 {
                     text = text.Substring(0, 9) + ".";
                 }
+
                 var num2 = 0;
                 var text2 = "";
                 if (screen != null)
                 {
                     num2 = screen.NameCopies(text);
                 }
+
                 if (num2 > 0)
                 {
                     text2 = CDGMath.ToRoman(num2 + 1);
                 }
+
                 m_playerName.Text = "Sir " + text;
                 if (text2 != "")
                 {
@@ -251,22 +259,26 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (text != null)
             {
                 if (text.Length > 10)
                 {
                     text = text.Substring(0, 9) + ".";
                 }
+
                 var num2 = 0;
                 var text2 = "";
                 if (screen != null)
                 {
                     num2 = screen.NameCopies(text);
                 }
+
                 if (num2 > 0)
                 {
                     text2 = CDGMath.ToRoman(num2 + 1);
                 }
+
                 m_playerName.Text = "Lady " + text;
                 if (text2 != "")
                 {
@@ -293,6 +305,7 @@ namespace RogueCastle
             {
                 num = 6;
             }
+
             SetPortrait((byte) num, (byte) num2, (byte) num3);
         }
 
@@ -337,10 +350,12 @@ namespace RogueCastle
             {
                 m_playerSprite.GetChildAt(7).Visible = false;
             }
+
             if (Traits.X == 20f || Traits.Y == 20f)
             {
                 FlipPortrait = true;
             }
+
             m_classTextObj.Text = "the " + ClassType.ToString(Class, IsFemale);
             m_spellIcon.ChangeSprite(SpellType.Icon(Spell));
             if (Class == 0 || Class == 8)
@@ -372,16 +387,19 @@ namespace RogueCastle
             {
                 m_playerSprite.GetChildAt(15).Visible = false;
             }
+
             m_playerSprite.GetChildAt(0).Visible = false;
             if (Class == 16)
             {
                 m_playerSprite.GetChildAt(0).Visible = true;
                 m_playerSprite.GetChildAt(12).ChangeSprite("PlayerIdleHead" + 6 + "_Sprite");
             }
+
             if (Class == 17)
             {
                 m_playerSprite.GetChildAt(12).ChangeSprite("PlayerIdleHead" + 7 + "_Sprite");
             }
+
             if (!IsFemale)
             {
                 m_playerSprite.GetChildAt(5).Visible = false;
@@ -392,38 +410,44 @@ namespace RogueCastle
                 m_playerSprite.GetChildAt(5).Visible = true;
                 m_playerSprite.GetChildAt(13).Visible = true;
             }
+
             if (Traits.X == 6f || Traits.Y == 6f)
             {
                 m_playerSprite.Scale = new Vector2(3f, 3f);
             }
+
             if (Traits.X == 7f || Traits.Y == 7f)
             {
                 m_playerSprite.Scale = new Vector2(1.35f, 1.35f);
             }
+
             if (Traits.X == 10f || Traits.Y == 10f)
             {
                 m_playerSprite.ScaleX *= 0.825f;
                 m_playerSprite.ScaleY *= 1.25f;
             }
+
             if (Traits.X == 9f || Traits.Y == 9f)
             {
                 m_playerSprite.ScaleX *= 1.25f;
                 m_playerSprite.ScaleY *= 1.175f;
             }
+
             if (Class == 6 || Class == 14)
             {
                 m_playerSprite.OutlineColour = Color.White;
                 return;
             }
+
             m_playerSprite.OutlineColour = Color.Black;
         }
 
         public void DropFrame()
         {
             m_frameDropping = true;
-            Tween.By(m_frameSprite, 0.7f, Back.EaseOut, "X", (-(float) m_frameSprite.Width/2f - 2f).ToString(), "Y",
+            Tween.By(m_frameSprite, 0.7f, Back.EaseOut, "X", (-(float) m_frameSprite.Width / 2f - 2f).ToString(), "Y",
                 "30", "Rotation", "45");
-            Tween.By(m_playerSprite, 0.7f, Back.EaseOut, "X", (-(float) m_frameSprite.Width/2f - 2f).ToString(), "Y",
+            Tween.By(m_playerSprite, 0.7f, Back.EaseOut, "X", (-(float) m_frameSprite.Width / 2f - 2f).ToString(), "Y",
                 "30", "Rotation", "45");
             Tween.RunFunction(1.5f, this, "DropFrame2");
         }
@@ -441,12 +465,14 @@ namespace RogueCastle
             {
                 m_playerSprite.Rotation = 180f;
             }
+
             if (!m_frameDropping)
             {
                 m_frameSprite.Position = Position;
                 m_frameSprite.Y -= 12f;
                 m_frameSprite.X += 5f;
             }
+
             m_frameSprite.Opacity = Opacity;
             m_frameSprite.Draw(camera);
             if (!IsDead && Spell != 0)
@@ -456,6 +482,7 @@ namespace RogueCastle
                 m_spellIconHolder.Draw(camera);
                 m_spellIcon.Draw(camera);
             }
+
             m_playerSprite.OutlineColour = OutlineColour;
             m_playerSprite.OutlineWidth = OutlineWidth;
             if (!m_frameDropping)
@@ -468,6 +495,7 @@ namespace RogueCastle
                     m_playerSprite.Y -= 30f;
                 }
             }
+
             m_playerSprite.Opacity = Opacity;
             m_playerSprite.Draw(camera);
             if (CollisionMath.Intersects(Bounds, camera.Bounds))
@@ -491,6 +519,7 @@ namespace RogueCastle
                     {
                         m_playerSprite.GetChildAt(13).Draw(camera);
                     }
+
                     m_playerSprite.GetChildAt(15).Draw(camera);
                 }
                 else if (Class == 3 || Class == 11)
@@ -512,9 +541,11 @@ namespace RogueCastle
                     {
                         m_playerSprite.GetChildAt(13).Draw(camera);
                     }
+
                     m_playerSprite.GetChildAt(15).Draw(camera);
                 }
             }
+
             if (!DisablePlaque)
             {
                 if (!m_frameDropping)
@@ -523,11 +554,13 @@ namespace RogueCastle
                     m_plaqueSprite.X += 5f;
                     m_plaqueSprite.Y = m_frameSprite.Y + m_frameSprite.Height - 30f;
                 }
+
                 m_plaqueSprite.Draw(camera);
                 camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
                 base.Draw(camera);
                 camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             }
+
             if (m_frameDropping)
             {
                 m_frameSprite.Draw(camera);
@@ -547,10 +580,12 @@ namespace RogueCastle
             {
                 m_trait1Title.Text = "";
             }
+
             if (Traits.Y != 0f)
             {
                 text = text + ", " + TraitType.ToString((byte) Traits.Y);
             }
+
             m_trait1Title.Text = text;
         }
 
@@ -608,6 +643,7 @@ namespace RogueCastle
             {
                 text += "Divine ";
             }
+
             text += ClassType.ToString(Class, IsFemale);
             m_classTextObj.Text = text;
         }

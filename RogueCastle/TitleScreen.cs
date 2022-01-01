@@ -24,36 +24,36 @@ namespace RogueCastle
 {
     public class TitleScreen : Screen
     {
-        private bool m_optionsEntered;
-        private bool m_startPressed;
-        private float m_hardCoreModeOpacity;
-        private float m_randomSeagullSfx;
-        private CrepuscularRays m_godRay;
-        private Cue m_seagullCue;
-        private KeyIconTextObj m_creditsKey;
-        private KeyIconTextObj m_optionsKey;
-        private KeyIconTextObj m_pressStartText;
-        private KeyIconTextObj m_profileCardKey;
-        private PostProcessingManager m_ppm;
         private SpriteObj m_bg;
         private SpriteObj m_castle;
+        private TextObj m_copyrightText;
         private SpriteObj m_creditsIcon;
+        private KeyIconTextObj m_creditsKey;
         private SpriteObj m_dlcIcon;
+        private CrepuscularRays m_godRay;
+        private RenderTarget2D m_godRayTexture;
+        private float m_hardCoreModeOpacity;
         private SpriteObj m_largeCloud1;
         private SpriteObj m_largeCloud2;
         private SpriteObj m_largeCloud3;
         private SpriteObj m_largeCloud4;
         private SpriteObj m_logo;
+        private bool m_optionsEntered;
         private SpriteObj m_optionsIcon;
+        private KeyIconTextObj m_optionsKey;
+        private PostProcessingManager m_ppm;
+        private KeyIconTextObj m_pressStartText;
+        private TextObj m_pressStartText2;
         private SpriteObj m_profileCard;
+        private KeyIconTextObj m_profileCardKey;
+        private float m_randomSeagullSfx;
+        private Cue m_seagullCue;
         private SpriteObj m_smallCloud1;
         private SpriteObj m_smallCloud2;
         private SpriteObj m_smallCloud3;
         private SpriteObj m_smallCloud4;
         private SpriteObj m_smallCloud5;
-        private RenderTarget2D m_godRayTexture;
-        private TextObj m_pressStartText2;
-        private TextObj m_copyrightText;
+        private bool m_startPressed;
         private TextObj m_titleText;
         private TextObj m_versionNumber;
 
@@ -86,7 +86,7 @@ namespace RogueCastle
             // Castle
             m_castle = new SpriteObj("TitleCastle_Sprite")
             {
-                Scale = new Vector2(2f, 2f),
+                Scale = new Vector2(2f, 2f)
             };
             m_castle.Position = new Vector2(630f, 720 - m_castle.Height / 2);
 
@@ -145,7 +145,7 @@ namespace RogueCastle
             m_copyrightText.Position = new Vector2(660f, 720 - m_copyrightText.Height - 10);
 
             // Version Number
-            m_versionNumber = (m_copyrightText.Clone() as TextObj);
+            m_versionNumber = m_copyrightText.Clone() as TextObj;
             m_versionNumber.Align = Types.TextAlign.Left;
             m_versionNumber.FontSize = 8f;
             m_versionNumber.Position = new Vector2(14f, 5f);
@@ -201,7 +201,7 @@ namespace RogueCastle
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + InputMapType.MenuProfileCard + "]",
+                Text = "[Input:" + InputMapType.MenuProfileCard + "]"
             };
             m_profileCardKey.Position =
                 new Vector2(m_profileCard.X, m_profileCard.Bounds.Top - m_profileCardKey.Height - 10);
@@ -239,7 +239,6 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-
             Camera.Zoom = 1f;
             SoundManager.PlayMusic("TitleScreenSong", true, 1f);
             Game.ScreenManager.Player.ForceInvincible = false;
@@ -343,14 +342,14 @@ namespace RogueCastle
             if (Game.GlobalInput.JustPressed(InputMapType.MenuConfirm1) ||
                 Game.GlobalInput.JustPressed(InputMapType.MenuConfirm2))
             {
-                var list = new List<object> {this};
+                var list = new List<object> { this };
                 (ScreenManager as RCScreenManager).DisplayScreen(80, false, list);
             }
 
             if (Game.GlobalInput.JustPressed(InputMapType.MenuOptions))
             {
                 m_optionsEntered = true;
-                var list = new List<object> {true};
+                var list = new List<object> { true };
                 (ScreenManager as RCScreenManager).DisplayScreen(4, false, list);
             }
 
@@ -427,7 +426,9 @@ namespace RogueCastle
         public override void Dispose()
         {
             if (IsDisposed)
+            {
                 return;
+            }
 
             Console.WriteLine("Disposing Title Screen");
             m_godRayTexture.Dispose();

@@ -37,6 +37,7 @@ namespace RogueCastle
                         characterObj.AccelerationY = -characterObj.JumpHeight;
                     }
                 }
+
                 base.Execute();
             }
         }

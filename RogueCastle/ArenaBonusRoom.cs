@@ -23,13 +23,12 @@ namespace RogueCastle
         public override void Initialize()
         {
             foreach (var current in GameObjList)
-            {
                 if (current is ChestObj)
                 {
-                    m_chest = (current as ChestObj);
+                    m_chest = current as ChestObj;
                     break;
                 }
-            }
+
             m_chest.ChestType = 3;
             m_chestStartingY = m_chest.Y - 200f + m_chest.Height + 6f;
             base.Initialize();
@@ -77,10 +76,12 @@ namespace RogueCastle
                     m_chestRevealed = false;
                 }
             }
+
             if (m_chest.PhysicsMngr == null)
             {
                 Player.PhysicsMngr.AddObject(m_chest);
             }
+
             base.OnEnter();
         }
 
@@ -88,7 +89,6 @@ namespace RogueCastle
         {
             var flag = false;
             foreach (var current in EnemyList)
-            {
                 if (current is EnemyObj_EarthWizard)
                 {
                     if (!flag)
@@ -125,7 +125,6 @@ namespace RogueCastle
                         current.Name = "Focalor";
                     }
                 }
-            }
         }
 
         public override void Update(GameTime gameTime)
@@ -142,6 +141,7 @@ namespace RogueCastle
             {
                 RoomCompleted = true;
             }
+
             base.Update(gameTime);
         }
 
@@ -156,26 +156,32 @@ namespace RogueCastle
             {
                 flag = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[22].W > 0f)
             {
                 flag2 = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[32].W > 0f)
             {
                 flag3 = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[12].W > 0f)
             {
                 flag4 = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[5].W > 0f)
             {
                 flag5 = true;
             }
+
             if (flag && flag2 && flag3 && flag4 && flag5)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_ANIMALS");
             }
+
             base.OnExit();
         }
 
@@ -188,7 +194,11 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (IsDisposed) return;
+            if (IsDisposed)
+            {
+                return;
+            }
+
             m_chest = null;
             base.Dispose();
         }

@@ -120,7 +120,7 @@ namespace RogueCastle
             m_roomTitle.FontSize = 40f;
             m_roomTitle.Position = new Vector2(1270f, 570f);
             m_roomTitle.OutlineWidth = 2;
-            m_roomEnteringTitle = (m_roomTitle.Clone() as TextObj);
+            m_roomEnteringTitle = m_roomTitle.Clone() as TextObj;
             m_roomEnteringTitle.Text = "Now Entering";
             m_roomEnteringTitle.FontSize = 24f;
             m_roomEnteringTitle.Y -= 50f;
@@ -246,7 +246,7 @@ namespace RogueCastle
             m_playerHUD = new PlayerHUDObj();
             m_playerHUD.SetPosition(new Vector2(20f, 40f));
             m_enemyHUD = new EnemyHUDObj();
-            m_enemyHUD.Position = new Vector2(660 - m_enemyHUD.Width/2, 20f);
+            m_enemyHUD.Position = new Vector2(660 - m_enemyHUD.Width / 2, 20f);
             m_miniMapDisplay.SetPlayer(Player);
             m_miniMapDisplay.InitializeAlphaMap(new Rectangle(1070, 50, 200, 100), Camera);
             InitializeAllRooms(true);
@@ -260,10 +260,10 @@ namespace RogueCastle
             m_borderSize = 100;
             m_blackBorder1 = new SpriteObj("Blank_Sprite");
             m_blackBorder1.TextureColor = Color.Black;
-            m_blackBorder1.Scale = new Vector2(1340f/m_blackBorder1.Width, m_borderSize/m_blackBorder1.Height);
+            m_blackBorder1.Scale = new Vector2(1340f / m_blackBorder1.Width, m_borderSize / m_blackBorder1.Height);
             m_blackBorder2 = new SpriteObj("Blank_Sprite");
             m_blackBorder2.TextureColor = Color.Black;
-            m_blackBorder2.Scale = new Vector2(1340f/m_blackBorder2.Width, m_borderSize/m_blackBorder2.Height);
+            m_blackBorder2.Scale = new Vector2(1340f / m_blackBorder2.Width, m_borderSize / m_blackBorder2.Height);
             m_blackBorder1.ForceDraw = true;
             m_blackBorder2.ForceDraw = true;
             m_blackBorder1.Y = -(float) m_borderSize;
@@ -301,8 +301,8 @@ namespace RogueCastle
             textObj3.WordWrap(250);
             textObj3.OutlineWidth = 2;
             m_objectivePlate.AddChild(textObj3);
-            m_objectivePlate.Scale = new Vector2(250f/m_objectivePlate.GetChildAt(0).Width,
-                130f/m_objectivePlate.GetChildAt(0).Height);
+            m_objectivePlate.Scale = new Vector2(250f / m_objectivePlate.GetChildAt(0).Width,
+                130f / m_objectivePlate.GetChildAt(0).Height);
             m_objectivePlate.Position = new Vector2(1470f, 250f);
             var spriteObj = new SpriteObj("Blank_Sprite");
             spriteObj.TextureColor = Color.Red;
@@ -323,7 +323,7 @@ namespace RogueCastle
             m_sky.LoadContent(Camera);
             m_whiteBG = new SpriteObj("Blank_Sprite");
             m_whiteBG.Opacity = 0f;
-            m_whiteBG.Scale = new Vector2(1320f/m_whiteBG.Width, 720f/m_whiteBG.Height);
+            m_whiteBG.Scale = new Vector2(1320f / m_whiteBG.Width, 720f / m_whiteBG.Height);
             m_filmGrain = new SpriteObj("FilmGrain_Sprite");
             m_filmGrain.ForceDraw = true;
             m_filmGrain.Scale = new Vector2(2.015f, 2.05f);
@@ -369,7 +369,7 @@ namespace RogueCastle
             m_creditsText.Text = "Cellar Door Games";
             m_creditsText.DropShadow = new Vector2(2f, 2f);
             m_creditsText.Opacity = 0f;
-            m_creditsTitleText = (m_creditsText.Clone() as TextObj);
+            m_creditsTitleText = m_creditsText.Clone() as TextObj;
             m_creditsTitleText.FontSize = 14f;
             m_creditsTitleText.Position = new Vector2(50f, 580f);
             m_creditsText.Position = m_creditsTitleText.Position;
@@ -383,6 +383,7 @@ namespace RogueCastle
             {
                 m_creditsIndex = 0;
             }
+
             m_creditsTitleText.Opacity = 0f;
             m_creditsText.Opacity = 0f;
             if (m_creditsIndex < m_creditsTextList.Length)
@@ -442,6 +443,7 @@ namespace RogueCastle
                             m_backgroundSprite.Scale = new Vector2(2f, 2f);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             break;
+
                         case LevelType.Garden:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
@@ -450,6 +452,7 @@ namespace RogueCastle
                             m_backgroundSprite.Scale = new Vector2(2f, 2f);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             break;
+
                         case LevelType.Dungeon:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
@@ -458,6 +461,7 @@ namespace RogueCastle
                             m_backgroundSprite.Scale = new Vector2(2f, 2f);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             break;
+
                         case LevelType.Tower:
                             m_backgroundSprite.Scale = Vector2.One;
                             m_foregroundSprite.Scale = Vector2.One;
@@ -468,6 +472,7 @@ namespace RogueCastle
                             break;
                     }
                 }
+
                 if (Game.PlayerStats.Traits.X == 32f || Game.PlayerStats.Traits.Y == 32f)
                 {
                     m_foregroundSprite.Scale = Vector2.One;
@@ -475,6 +480,7 @@ namespace RogueCastle
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                 }
             }
+
             m_backgroundSprite.Position = CurrentRoom.Position;
             m_foregroundSprite.Position = CurrentRoom.Position;
             base.ReinitializeRTs();
@@ -484,14 +490,8 @@ namespace RogueCastle
         {
             var value = new Rectangle((int) room.X - 100, (int) room.Y - 100, room.Width + 200, room.Height + 200);
             m_physicsManager.RemoveAllObjects();
-            foreach (var current in CurrentRoom.TerrainObjList)
-            {
-                m_physicsManager.AddObject(current);
-            }
-            foreach (var current2 in m_projectileManager.ActiveProjectileList)
-            {
-                m_physicsManager.AddObject(current2);
-            }
+            foreach (var current in CurrentRoom.TerrainObjList) m_physicsManager.AddObject(current);
+            foreach (var current2 in m_projectileManager.ActiveProjectileList) m_physicsManager.AddObject(current2);
             foreach (var current3 in CurrentRoom.GameObjList)
             {
                 var physicsObj = current3 as IPhysicsObj;
@@ -504,10 +504,8 @@ namespace RogueCastle
                     }
                 }
             }
-            foreach (var current4 in CurrentRoom.DoorList)
-            {
-                m_physicsManager.AddObject(current4);
-            }
+
+            foreach (var current4 in CurrentRoom.DoorList) m_physicsManager.AddObject(current4);
             foreach (var current5 in CurrentRoom.EnemyList)
             {
                 m_physicsManager.AddObject(current5);
@@ -520,10 +518,8 @@ namespace RogueCastle
                     }
                 }
             }
-            foreach (var current6 in CurrentRoom.TempEnemyList)
-            {
-                m_physicsManager.AddObject(current6);
-            }
+
+            foreach (var current6 in CurrentRoom.TempEnemyList) m_physicsManager.AddObject(current6);
             m_physicsManager.AddObject(Player);
         }
 
@@ -531,139 +527,145 @@ namespace RogueCastle
         {
             var list = new List<TerrainObj>();
             foreach (var current in RoomList)
+            foreach (var current2 in current.EnemyList)
             {
-                foreach (var current2 in current.EnemyList)
+                current2.SetPlayerTarget(Player);
+                current2.SetLevelScreen(this);
+                var level = current.Level;
+                if (current.Name == "Boss" && current.LinkedRoom != null)
                 {
-                    current2.SetPlayerTarget(Player);
-                    current2.SetLevelScreen(this);
-                    var level = current.Level;
-                    if (current.Name == "Boss" && current.LinkedRoom != null)
+                    level = current.LinkedRoom.Level;
+                    var level2 = (int) (level / (4f + Game.PlayerStats.GetNumberOfEquippedRunes(9) * 0.75f));
+                    current2.Level = level2;
+                }
+                else
+                {
+                    var num = (int) (level / (4f + Game.PlayerStats.GetNumberOfEquippedRunes(9) * 0.75f));
+                    if (num < 1)
                     {
-                        level = current.LinkedRoom.Level;
-                        var level2 = (int) (level/(4f + Game.PlayerStats.GetNumberOfEquippedRunes(9)*0.75f));
-                        current2.Level = level2;
+                        num = 1;
+                    }
+
+                    current2.Level = num;
+                }
+
+                var num2 = current2.Level / 32;
+                if (num2 > 2)
+                {
+                    num2 = 2;
+                }
+
+                if (current2.IsProcedural)
+                {
+                    if (current2.Difficulty == EnemyDifficulty.Expert)
+                    {
+                        current2.Level += 4;
+                    }
+
+                    if (current2.Difficulty < (EnemyDifficulty) num2)
+                    {
+                        current2.SetDifficulty((EnemyDifficulty) num2, false);
+                    }
+                }
+                else if (current2.Difficulty == EnemyDifficulty.MiniBoss)
+                {
+                    if (current is ArenaBonusRoom)
+                    {
+                        current2.Level += 4;
                     }
                     else
                     {
-                        var num = (int) (level/(4f + Game.PlayerStats.GetNumberOfEquippedRunes(9)*0.75f));
-                        if (num < 1)
-                        {
-                            num = 1;
-                        }
-                        current2.Level = num;
+                        current2.Level += 7;
                     }
-                    var num2 = current2.Level/32;
-                    if (num2 > 2)
-                    {
-                        num2 = 2;
-                    }
-                    if (current2.IsProcedural)
-                    {
-                        if (current2.Difficulty == EnemyDifficulty.Expert)
+                }
+
+                current2.Initialize();
+                if (current2.IsWeighted)
+                {
+                    var num3 = 3.40282347E+38f;
+                    TerrainObj terrainObj = null;
+                    list.Clear();
+                    var rectangle = new Rectangle((int) current2.X, current2.TerrainBounds.Bottom, 1, 5000);
+                    foreach (var current3 in current.TerrainObjList)
+                        if (current3.Rotation == 0f)
                         {
-                            current2.Level += 4;
-                        }
-                        if (current2.Difficulty < (EnemyDifficulty) num2)
-                        {
-                            current2.SetDifficulty((EnemyDifficulty) num2, false);
-                        }
-                    }
-                    else if (current2.Difficulty == EnemyDifficulty.MiniBoss)
-                    {
-                        if (current is ArenaBonusRoom)
-                        {
-                            current2.Level += 4;
-                        }
-                        else
-                        {
-                            current2.Level += 7;
-                        }
-                    }
-                    current2.Initialize();
-                    if (current2.IsWeighted)
-                    {
-                        var num3 = 3.40282347E+38f;
-                        TerrainObj terrainObj = null;
-                        list.Clear();
-                        var rectangle = new Rectangle((int) current2.X, current2.TerrainBounds.Bottom, 1, 5000);
-                        foreach (var current3 in current.TerrainObjList)
-                        {
-                            if (current3.Rotation == 0f)
-                            {
-                                if (current3.Bounds.Top >= current2.TerrainBounds.Bottom &&
-                                    CollisionMath.Intersects(current3.Bounds, rectangle))
-                                {
-                                    list.Add(current3);
-                                }
-                            }
-                            else if (CollisionMath.RotatedRectIntersects(rectangle, 0f, Vector2.Zero,
-                                current3.TerrainBounds, current3.Rotation, Vector2.Zero))
+                            if (current3.Bounds.Top >= current2.TerrainBounds.Bottom &&
+                                CollisionMath.Intersects(current3.Bounds, rectangle))
                             {
                                 list.Add(current3);
                             }
                         }
-                        foreach (var current4 in list)
+                        else if (CollisionMath.RotatedRectIntersects(rectangle, 0f, Vector2.Zero,
+                                     current3.TerrainBounds, current3.Rotation, Vector2.Zero))
                         {
-                            var flag = false;
-                            int num4;
-                            if (current4.Rotation == 0f)
+                            list.Add(current3);
+                        }
+
+                    foreach (var current4 in list)
+                    {
+                        var flag = false;
+                        int num4;
+                        if (current4.Rotation == 0f)
+                        {
+                            flag = true;
+                            num4 = current4.TerrainBounds.Top - current2.TerrainBounds.Bottom;
+                        }
+                        else
+                        {
+                            Vector2 vector;
+                            Vector2 vector2;
+                            if (current4.Width > current4.Height)
+                            {
+                                vector = CollisionMath.UpperLeftCorner(current4.TerrainBounds, current4.Rotation,
+                                    Vector2.Zero);
+                                vector2 = CollisionMath.UpperRightCorner(current4.TerrainBounds, current4.Rotation,
+                                    Vector2.Zero);
+                            }
+                            else if (current4.Rotation > 0f)
+                            {
+                                vector = CollisionMath.LowerLeftCorner(current4.TerrainBounds, current4.Rotation,
+                                    Vector2.Zero);
+                                vector2 = CollisionMath.UpperLeftCorner(current4.TerrainBounds, current4.Rotation,
+                                    Vector2.Zero);
+                            }
+                            else
+                            {
+                                vector = CollisionMath.UpperRightCorner(current4.TerrainBounds, current4.Rotation,
+                                    Vector2.Zero);
+                                vector2 = CollisionMath.LowerRightCorner(current4.TerrainBounds, current4.Rotation,
+                                    Vector2.Zero);
+                            }
+
+                            if (current2.X > vector.X && current2.X < vector2.X)
                             {
                                 flag = true;
-                                num4 = current4.TerrainBounds.Top - current2.TerrainBounds.Bottom;
                             }
-                            else
-                            {
-                                Vector2 vector;
-                                Vector2 vector2;
-                                if (current4.Width > current4.Height)
-                                {
-                                    vector = CollisionMath.UpperLeftCorner(current4.TerrainBounds, current4.Rotation,
-                                        Vector2.Zero);
-                                    vector2 = CollisionMath.UpperRightCorner(current4.TerrainBounds, current4.Rotation,
-                                        Vector2.Zero);
-                                }
-                                else if (current4.Rotation > 0f)
-                                {
-                                    vector = CollisionMath.LowerLeftCorner(current4.TerrainBounds, current4.Rotation,
-                                        Vector2.Zero);
-                                    vector2 = CollisionMath.UpperLeftCorner(current4.TerrainBounds, current4.Rotation,
-                                        Vector2.Zero);
-                                }
-                                else
-                                {
-                                    vector = CollisionMath.UpperRightCorner(current4.TerrainBounds, current4.Rotation,
-                                        Vector2.Zero);
-                                    vector2 = CollisionMath.LowerRightCorner(current4.TerrainBounds, current4.Rotation,
-                                        Vector2.Zero);
-                                }
-                                if (current2.X > vector.X && current2.X < vector2.X)
-                                {
-                                    flag = true;
-                                }
-                                var num5 = vector2.X - vector.X;
-                                var num6 = vector2.Y - vector.Y;
-                                var x = vector.X;
-                                var y = vector.Y;
-                                var x2 = current2.X;
-                                num4 = (int) (y + (x2 - x)*(num6/num5)) - current2.TerrainBounds.Bottom;
-                            }
-                            if (flag && num4 < num3 && num4 > 0)
-                            {
-                                num3 = num4;
-                                terrainObj = current4;
-                            }
+
+                            var num5 = vector2.X - vector.X;
+                            var num6 = vector2.Y - vector.Y;
+                            var x = vector.X;
+                            var y = vector.Y;
+                            var x2 = current2.X;
+                            num4 = (int) (y + (x2 - x) * (num6 / num5)) - current2.TerrainBounds.Bottom;
                         }
-                        if (terrainObj != null)
+
+                        if (flag && num4 < num3 && num4 > 0)
                         {
-                            current2.UpdateCollisionBoxes();
-                            if (terrainObj.Rotation == 0f)
-                            {
-                                current2.Y = terrainObj.Y - (current2.TerrainBounds.Bottom - current2.Y);
-                            }
-                            else
-                            {
-                                HookEnemyToSlope(current2, terrainObj);
-                            }
+                            num3 = num4;
+                            terrainObj = current4;
+                        }
+                    }
+
+                    if (terrainObj != null)
+                    {
+                        current2.UpdateCollisionBoxes();
+                        if (terrainObj.Rotation == 0f)
+                        {
+                            current2.Y = terrainObj.Y - (current2.TerrainBounds.Bottom - current2.Y);
+                        }
+                        else
+                        {
+                            HookEnemyToSlope(current2, terrainObj);
                         }
                     }
                 }
@@ -689,14 +691,15 @@ namespace RogueCastle
                 vector = CollisionMath.UpperRightCorner(terrain.TerrainBounds, terrain.Rotation, Vector2.Zero);
                 vector2 = CollisionMath.LowerRightCorner(terrain.TerrainBounds, terrain.Rotation, Vector2.Zero);
             }
+
             var num = vector2.X - vector.X;
             var num2 = vector2.Y - vector.Y;
             var x = vector.X;
             var y = vector.Y;
             var x2 = enemy.X;
-            var num3 = y + (x2 - x)*(num2/num);
+            var num3 = y + (x2 - x) * (num2 / num);
             enemy.UpdateCollisionBoxes();
-            num3 -= enemy.Bounds.Bottom - enemy.Y + 5f*(enemy as GameObj).ScaleX;
+            num3 -= enemy.Bounds.Bottom - enemy.Y + 5f * (enemy as GameObj).ScaleX;
             enemy.Y = (float) Math.Round(num3, MidpointRounding.ToEven);
         }
 
@@ -704,63 +707,69 @@ namespace RogueCastle
         {
             ChestList.Clear();
             foreach (var current in RoomList)
+            foreach (var current2 in current.GameObjList)
             {
-                foreach (var current2 in current.GameObjList)
+                var chestObj = current2 as ChestObj;
+                if (chestObj != null && chestObj.ChestType != 4)
                 {
-                    var chestObj = current2 as ChestObj;
-                    if (chestObj != null && chestObj.ChestType != 4)
+                    chestObj.Level =
+                        (int) (current.Level / (4f + Game.PlayerStats.GetNumberOfEquippedRunes(9) * 0.75f));
+                    if (chestObj.IsProcedural)
                     {
-                        chestObj.Level = (int) (current.Level/(4f + Game.PlayerStats.GetNumberOfEquippedRunes(9)*0.75f));
-                        if (chestObj.IsProcedural)
+                        if (resetChests)
                         {
-                            if (resetChests)
+                            chestObj.ResetChest();
+                        }
+
+                        var num = CDGMath.RandomInt(1, 100);
+                        var num2 = 0;
+                        var i = 0;
+                        while (i < GameEV.CHEST_TYPE_CHANCE.Length)
+                        {
+                            num2 += GameEV.CHEST_TYPE_CHANCE[i];
+                            if (num <= num2)
                             {
-                                chestObj.ResetChest();
-                            }
-                            var num = CDGMath.RandomInt(1, 100);
-                            var num2 = 0;
-                            var i = 0;
-                            while (i < GameEV.CHEST_TYPE_CHANCE.Length)
-                            {
-                                num2 += GameEV.CHEST_TYPE_CHANCE[i];
-                                if (num <= num2)
+                                if (i == 0)
                                 {
-                                    if (i == 0)
-                                    {
-                                        chestObj.ChestType = 1;
-                                        break;
-                                    }
-                                    if (i == 1)
-                                    {
-                                        chestObj.ChestType = 2;
-                                        break;
-                                    }
-                                    chestObj.ChestType = 3;
+                                    chestObj.ChestType = 1;
                                     break;
                                 }
-                                i++;
+
+                                if (i == 1)
+                                {
+                                    chestObj.ChestType = 2;
+                                    break;
+                                }
+
+                                chestObj.ChestType = 3;
+                                break;
                             }
-                        }
-                        ChestList.Add(chestObj);
-                    }
-                    else if (chestObj != null && chestObj.ChestType == 4)
-                    {
-                        var fairyChestObj = chestObj as FairyChestObj;
-                        if (fairyChestObj != null)
-                        {
-                            if (chestObj.IsProcedural && resetChests)
-                            {
-                                fairyChestObj.ResetChest();
-                            }
-                            fairyChestObj.SetConditionType();
+
+                            i++;
                         }
                     }
+
                     ChestList.Add(chestObj);
-                    if (chestObj != null)
+                }
+                else if (chestObj != null && chestObj.ChestType == 4)
+                {
+                    var fairyChestObj = chestObj as FairyChestObj;
+                    if (fairyChestObj != null)
                     {
-                        chestObj.X += chestObj.Width/2;
-                        chestObj.Y += 60f;
+                        if (chestObj.IsProcedural && resetChests)
+                        {
+                            fairyChestObj.ResetChest();
+                        }
+
+                        fairyChestObj.SetConditionType();
                     }
+                }
+
+                ChestList.Add(chestObj);
+                if (chestObj != null)
+                {
+                    chestObj.X += chestObj.Width / 2;
+                    chestObj.Y += 60f;
                 }
             }
         }
@@ -800,15 +809,17 @@ namespace RogueCastle
             if (Game.PlayerStats.Traits.X == 32f || Game.PlayerStats.Traits.Y == 32f)
             {
                 cornerLTextureString3 =
-                    (cornerLTextureString = (cornerLTextureString2 = (cornerLTextureString4 = text2)));
-                cornerTextureString3 = (cornerTextureString = (cornerTextureString2 = (cornerTextureString4 = text)));
+                    cornerLTextureString = cornerLTextureString2 = cornerLTextureString4 = text2;
+                cornerTextureString3 = cornerTextureString = cornerTextureString2 = cornerTextureString4 = text;
             }
+
             var num = 0;
-            num = Game.PlayerStats.GetNumberOfEquippedRunes(8)*8;
+            num = Game.PlayerStats.GetNumberOfEquippedRunes(8) * 8;
             if (m_roomBWRenderTarget != null)
             {
                 m_roomBWRenderTarget.Dispose();
             }
+
             m_roomBWRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
             foreach (var current in RoomList)
             {
@@ -818,29 +829,35 @@ namespace RogueCastle
                     case LevelType.Castle:
                         num2 = 0;
                         break;
+
                     case LevelType.Garden:
                         num2 = 0;
                         break;
+
                     case LevelType.Dungeon:
                         num2 = 0;
                         break;
+
                     case LevelType.Tower:
                         num2 = 0;
                         break;
                 }
+
                 if (Game.PlayerStats.TimesCastleBeaten == 0)
                 {
                     current.Level = num + num2;
                 }
                 else
                 {
-                    current.Level = num + num2 + (128 + (Game.PlayerStats.TimesCastleBeaten - 1)*128);
+                    current.Level = num + num2 + 128 + (Game.PlayerStats.TimesCastleBeaten - 1) * 128;
                 }
+
                 num++;
                 if (loadContent)
                 {
                     current.LoadContent(Camera.GraphicsDevice);
                 }
+
                 current.InitializeRenderTarget(m_roomBWRenderTarget);
                 if (current.Name == "ChallengeBoss")
                 {
@@ -852,10 +869,13 @@ namespace RogueCastle
                             current2.SetBorderTextures(m_neoBorderTexture, text, text2);
                             current2.NeoTexture = m_neoBorderTexture;
                         }
+
                         goto IL_3D6;
                     }
+
                     goto IL_311;
                 }
+
                 goto IL_311;
                 IL_3D6:
                 var flag = false;
@@ -863,6 +883,7 @@ namespace RogueCastle
                 {
                     flag = true;
                 }
+
                 foreach (var current3 in current.GameObjList)
                 {
                     var hazardObj = current3 as HazardObj;
@@ -870,37 +891,41 @@ namespace RogueCastle
                     {
                         hazardObj.InitializeTextures(Camera);
                     }
+
                     var hoverObj = current3 as HoverObj;
                     if (hoverObj != null)
                     {
                         hoverObj.SetStartingPos(hoverObj.Position);
                     }
+
                     if (flag)
                     {
                         var breakableObj = current3 as BreakableObj;
                         if (breakableObj != null && !breakableObj.HitBySpellsOnly && !breakableObj.HasTerrainHitBox)
                         {
                             breakableObj.CollisionBoxes.Add(new CollisionBox(breakableObj.RelativeBounds.X,
-                                breakableObj.RelativeBounds.Y, breakableObj.Width, breakableObj.Height, 0, breakableObj));
+                                breakableObj.RelativeBounds.Y, breakableObj.Width, breakableObj.Height, 0,
+                                breakableObj));
                             breakableObj.DisableHitboxUpdating = true;
                             breakableObj.UpdateTerrainBox();
                         }
                     }
                 }
+
                 if (LevelENV.RunTestRoom && loadContent)
                 {
                     foreach (var current4 in current.GameObjList)
-                    {
                         if (current4 is PlayerStartObj)
                         {
                             Player.Position = current4.Position;
                         }
-                    }
                 }
+
                 if ((current.Name == "Boss" || current.Name == "ChallengeBoss") && current.LinkedRoom != null)
                 {
                     CloseBossDoor(current.LinkedRoom, current.LevelType);
                 }
+
                 continue;
                 IL_311:
                 foreach (var current5 in current.BorderList)
@@ -909,21 +934,27 @@ namespace RogueCastle
                     {
                         case LevelType.Castle:
                             goto IL_39E;
+
                         case LevelType.Garden:
                             current5.SetBorderTextures(m_gardenBorderTexture, cornerTextureString4,
                                 cornerLTextureString4);
                             current5.TextureOffset = new Vector2(0f, -18f);
                             break;
+
                         case LevelType.Dungeon:
                             current5.SetBorderTextures(m_dungeonBorderTexture, cornerTextureString3,
                                 cornerLTextureString3);
                             break;
+
                         case LevelType.Tower:
-                            current5.SetBorderTextures(m_towerBorderTexture, cornerTextureString2, cornerLTextureString2);
+                            current5.SetBorderTextures(m_towerBorderTexture, cornerTextureString2,
+                                cornerLTextureString2);
                             break;
+
                         default:
                             goto IL_39E;
                     }
+
                     IL_3AD:
                     current5.NeoTexture = m_neoBorderTexture;
                     continue;
@@ -931,6 +962,7 @@ namespace RogueCastle
                     current5.SetBorderTextures(m_castleBorderTexture, cornerTextureString, cornerLTextureString);
                     goto IL_3AD;
                 }
+
                 goto IL_3D6;
             }
         }
@@ -945,34 +977,40 @@ namespace RogueCastle
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Garden:
                     if (Game.PlayerStats.FairyBossBeaten)
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Dungeon:
                     if (Game.PlayerStats.BlobBossBeaten)
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Tower:
                     if (Game.PlayerStats.FireballBossBeaten)
                     {
                         flag = true;
                     }
+
                     break;
             }
+
             if (flag)
             {
                 foreach (var current in linkedRoom.DoorList)
-                {
                     if (current.IsBossDoor)
                     {
                         foreach (var current2 in linkedRoom.GameObjList)
-                        {
                             if (current2.Name == "BossDoor")
                             {
                                 current2.ChangeSprite((current2 as SpriteObj).SpriteName.Replace("Open", ""));
@@ -981,12 +1019,12 @@ namespace RogueCastle
                                 linkedRoom.LinkedRoom = null;
                                 break;
                             }
-                        }
+
                         current.Locked = true;
                         break;
                     }
-                }
             }
+
             OpenChallengeBossDoor(linkedRoom, levelType);
             if (Game.PlayerStats.ChallengeLastBossUnlocked)
             {
@@ -998,15 +1036,13 @@ namespace RogueCastle
         {
             LastBossChallengeRoom linkedRoom = null;
             foreach (var current in RoomList)
-            {
                 if (current.Name == "ChallengeBoss" && current is LastBossChallengeRoom)
                 {
-                    linkedRoom = (current as LastBossChallengeRoom);
+                    linkedRoom = current as LastBossChallengeRoom;
                     break;
                 }
-            }
+
             foreach (var current2 in RoomList)
-            {
                 if (current2.Name == "EntranceBoss")
                 {
                     var flag = false;
@@ -1026,15 +1062,14 @@ namespace RogueCastle
                     {
                         flag = true;
                     }
+
                     if (flag)
                     {
                         foreach (var current3 in current2.DoorList)
-                        {
                             if (current3.IsBossDoor)
                             {
                                 current2.LinkedRoom = linkedRoom;
                                 foreach (var current4 in current2.GameObjList)
-                                {
                                     if (current4.Name == "BossDoor")
                                     {
                                         if (Game.PlayerStats.ChallengeLastBossBeaten)
@@ -1044,28 +1079,28 @@ namespace RogueCastle
                                                 current4.ChangeSprite((current4 as SpriteObj).SpriteName.Replace(
                                                     "Open", ""));
                                             }
+
                                             current4.TextureColor = Color.White;
                                             current4.Opacity = 1f;
                                             current2.LinkedRoom = null;
                                             current3.Locked = true;
                                             break;
                                         }
+
                                         if (!(current4 as SpriteObj).SpriteName.Contains("Open"))
                                         {
                                             current4.ChangeSprite((current4 as SpriteObj).SpriteName.Replace("_Sprite",
                                                 "Open_Sprite"));
                                         }
+
                                         current4.TextureColor = new Color(0, 255, 255);
                                         current4.Opacity = 0.6f;
                                         current3.Locked = false;
                                         break;
                                     }
-                                }
                             }
-                        }
                     }
                 }
-            }
         }
 
         public void OpenChallengeBossDoor(RoomObj linkerRoom, LevelType levelType)
@@ -1079,40 +1114,46 @@ namespace RogueCastle
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Garden:
                     if (Game.PlayerStats.FairyBossBeaten && !Game.PlayerStats.ChallengeSkullBeaten &&
                         Game.PlayerStats.ChallengeSkullUnlocked)
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Dungeon:
                     if (Game.PlayerStats.BlobBossBeaten && !Game.PlayerStats.ChallengeBlobBeaten &&
                         Game.PlayerStats.ChallengeBlobUnlocked)
                     {
                         flag = true;
                     }
+
                     break;
+
                 case LevelType.Tower:
                     if (Game.PlayerStats.FireballBossBeaten && !Game.PlayerStats.ChallengeFireballBeaten &&
                         Game.PlayerStats.ChallengeFireballUnlocked)
                     {
                         flag = true;
                     }
+
                     break;
             }
+
             if (flag)
             {
                 var challengeBossRoomFromRoomList = LevelBuilder2.GetChallengeBossRoomFromRoomList(levelType,
                     RoomList);
                 linkerRoom.LinkedRoom = challengeBossRoomFromRoomList;
                 foreach (var current in linkerRoom.DoorList)
-                {
                     if (current.IsBossDoor)
                     {
                         foreach (var current2 in linkerRoom.GameObjList)
-                        {
                             if (current2.Name == "BossDoor")
                             {
                                 current2.ChangeSprite((current2 as SpriteObj).SpriteName.Replace("_Sprite",
@@ -1121,11 +1162,10 @@ namespace RogueCastle
                                 current2.Opacity = 0.6f;
                                 break;
                             }
-                        }
+
                         current.Locked = false;
                         break;
                     }
-                }
             }
         }
 
@@ -1138,14 +1178,17 @@ namespace RogueCastle
                 {
                     m_leftMostBorder = (int) current.X;
                 }
+
                 if (current.X + current.Width > m_rightMostBorder)
                 {
                     m_rightMostBorder = (int) current.X + current.Width;
                 }
+
                 if (current.Y < m_topMostBorder)
                 {
                     m_topMostBorder = (int) current.Y;
                 }
+
                 if (current.Y + current.Height > m_bottomMostBorder)
                 {
                     m_bottomMostBorder = (int) current.Y + current.Height;
@@ -1160,14 +1203,17 @@ namespace RogueCastle
             {
                 m_leftMostBorder = (int) room.X;
             }
+
             if (room.X + room.Width > m_rightMostBorder)
             {
                 m_rightMostBorder = (int) room.X + room.Width;
             }
+
             if (room.Y < m_topMostBorder)
             {
                 m_topMostBorder = (int) room.Y;
             }
+
             if (room.Y + room.Height > m_bottomMostBorder)
             {
                 m_bottomMostBorder = (int) room.Y + room.Height;
@@ -1179,27 +1225,26 @@ namespace RogueCastle
             if (Player != null)
             {
                 foreach (var current in RoomList)
-                {
                     if (current != CurrentRoom && current.Bounds.Contains((int) Player.X, (int) Player.Y))
                     {
                         ResetEnemyPositions();
                         if (CurrentRoom != null)
                         {
-                            foreach (var current2 in EnemyList)
-                            {
-                                current2.ResetState();
-                            }
+                            foreach (var current2 in EnemyList) current2.ResetState();
                         }
+
                         if (EnemiesPaused)
                         {
                             UnpauseAllEnemies();
                         }
+
                         Player.RoomTransitionReset();
                         m_miniMapDisplay.AddRoom(current);
                         if (current.Name != "Start")
                         {
                             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.MapData);
                         }
+
                         if (current.Name == "ChallengeBoss")
                         {
                             m_backgroundSprite.Scale = Vector2.One;
@@ -1209,8 +1254,9 @@ namespace RogueCastle
                             m_foregroundSprite.ChangeSprite("NeoFG_Sprite", ScreenManager.Camera);
                             m_foregroundSprite.Scale = new Vector2(2f, 2f);
                         }
+
                         if ((CurrentRoom == null || CurrentLevelType != current.LevelType ||
-                             (CurrentRoom != null && CurrentRoom.Name == "ChallengeBoss")) && current.Name != "Start")
+                             CurrentRoom != null && CurrentRoom.Name == "ChallengeBoss") && current.Name != "Start")
                         {
                             if (current.Name != "ChallengeBoss")
                             {
@@ -1224,6 +1270,7 @@ namespace RogueCastle
                                         m_backgroundSprite.Scale = new Vector2(2f, 2f);
                                         m_foregroundSprite.Scale = new Vector2(2f, 2f);
                                         break;
+
                                     case LevelType.Garden:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
@@ -1232,6 +1279,7 @@ namespace RogueCastle
                                         m_backgroundSprite.Scale = new Vector2(2f, 2f);
                                         m_foregroundSprite.Scale = new Vector2(2f, 2f);
                                         break;
+
                                     case LevelType.Dungeon:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
@@ -1240,6 +1288,7 @@ namespace RogueCastle
                                         m_backgroundSprite.Scale = new Vector2(2f, 2f);
                                         m_foregroundSprite.Scale = new Vector2(2f, 2f);
                                         break;
+
                                     case LevelType.Tower:
                                         m_backgroundSprite.Scale = Vector2.One;
                                         m_foregroundSprite.Scale = Vector2.One;
@@ -1250,12 +1299,14 @@ namespace RogueCastle
                                         break;
                                 }
                             }
+
                             if (Game.PlayerStats.Traits.X == 32f || Game.PlayerStats.Traits.Y == 32f)
                             {
                                 m_foregroundSprite.Scale = Vector2.One;
                                 m_foregroundSprite.ChangeSprite("NeoFG_Sprite", ScreenManager.Camera);
                                 m_foregroundSprite.Scale = new Vector2(2f, 2f);
                             }
+
                             if (current.LevelType == LevelType.Dungeon || Game.PlayerStats.Traits.X == 35f ||
                                 Game.PlayerStats.Traits.Y == 35f || current.Name == "Compass")
                             {
@@ -1265,11 +1316,13 @@ namespace RogueCastle
                             {
                                 Game.ShadowEffect.Parameters["ShadowIntensity"].SetValue(0);
                             }
+
                             m_roomTitle.Text = WordBuilder.BuildDungeonName(current.LevelType);
                             if (Game.PlayerStats.Traits.X == 5f || Game.PlayerStats.Traits.Y == 5f)
                             {
                                 m_roomTitle.RandomizeSentence(false);
                             }
+
                             m_roomTitle.Opacity = 0f;
                             if (current.Name != "Boss" && current.Name != "Tutorial" && current.Name != "Ending" &&
                                 current.Name != "ChallengeBoss")
@@ -1292,6 +1345,7 @@ namespace RogueCastle
                                     m_roomEnteringTitle.X = 1250f;
                                     m_roomEnteringTitle.Align = Types.TextAlign.Right;
                                 }
+
                                 Tween.To(m_roomTitle, 0.5f, Linear.EaseNone, "delay", "0.2", "Opacity", "1");
                                 m_roomTitle.Opacity = 1f;
                                 Tween.To(m_roomTitle, 0.5f, Linear.EaseNone, "delay", "2.2", "Opacity", "0");
@@ -1308,13 +1362,16 @@ namespace RogueCastle
                                 m_roomTitle.Opacity = 0f;
                                 m_roomEnteringTitle.Opacity = 0f;
                             }
+
                             JukeboxEnabled = false;
                             Console.WriteLine("Now entering " + current.LevelType);
                         }
+
                         if (m_currentRoom != null)
                         {
                             m_currentRoom.OnExit();
                         }
+
                         m_currentRoom = current;
                         m_backgroundSprite.Position = CurrentRoom.Position;
                         m_foregroundSprite.Position = CurrentRoom.Position;
@@ -1323,14 +1380,17 @@ namespace RogueCastle
                         {
                             SoundManager.ResumeMusic();
                         }
+
                         if (!DisableSongUpdating && !JukeboxEnabled)
                         {
                             UpdateLevelSong();
                         }
+
                         if (m_currentRoom.Player == null)
                         {
                             m_currentRoom.Player = Player;
                         }
+
                         if (m_currentRoom.Name != "Start" && m_currentRoom.Name != "Tutorial" &&
                             m_currentRoom.Name != "Ending" && m_currentRoom.Name != "CastleEntrance" &&
                             m_currentRoom.Name != "Bonus" && m_currentRoom.Name != "Throne" &&
@@ -1341,20 +1401,17 @@ namespace RogueCastle
                         {
                             SpawnDementiaEnemy();
                         }
+
                         if (m_currentRoom.HasFairyChest)
                         {
                             m_currentRoom.DisplayFairyChestInfo();
                         }
+
                         m_tempEnemyStartPositions.Clear();
                         m_enemyStartPositions.Clear();
-                        foreach (var current3 in CurrentRoom.EnemyList)
-                        {
-                            m_enemyStartPositions.Add(current3.Position);
-                        }
+                        foreach (var current3 in CurrentRoom.EnemyList) m_enemyStartPositions.Add(current3.Position);
                         foreach (var current4 in CurrentRoom.TempEnemyList)
-                        {
                             m_tempEnemyStartPositions.Add(current4.Position);
-                        }
                         m_projectileManager.DestroyAllProjectiles(false);
                         LoadPhysicsObjects(current);
                         m_itemDropManager.DestroyAllItemDrops();
@@ -1362,11 +1419,9 @@ namespace RogueCastle
                         m_enemyPauseDuration = 0f;
                         if (LevelENV.ShowEnemyRadii)
                         {
-                            foreach (var current5 in current.EnemyList)
-                            {
-                                current5.InitializeDebugRadii();
-                            }
+                            foreach (var current5 in current.EnemyList) current5.InitializeDebugRadii();
                         }
+
                         m_lastEnemyHit = null;
                         foreach (var current6 in m_currentRoom.GameObjList)
                         {
@@ -1375,6 +1430,7 @@ namespace RogueCastle
                             {
                                 var arg_BC6_0 = fairyChestObj.IsOpen;
                             }
+
                             var animateableObj = current6 as IAnimateableObj;
                             if (animateableObj != null && animateableObj.TotalFrames > 1 &&
                                 !(animateableObj is ChestObj) && !(current6 is BreakableObj))
@@ -1383,19 +1439,21 @@ namespace RogueCastle
                                 animateableObj.PlayAnimation();
                             }
                         }
+
                         if (!DisableRoomOnEnter)
                         {
                             m_currentRoom.OnEnter();
                         }
+
                         break;
                     }
-                }
             }
         }
 
         private void UpdateLevelSong()
         {
-            if (!(CurrentRoom.Name != "Start") || !(CurrentRoom.Name != "Tutorial") || !(CurrentRoom.Name != "Ending") ||
+            if (!(CurrentRoom.Name != "Start") || !(CurrentRoom.Name != "Tutorial") ||
+                !(CurrentRoom.Name != "Ending") ||
                 SoundManager.IsMusicPlaying)
             {
                 if (!(m_currentRoom is StartingRoomObj) && SoundManager.IsMusicPlaying)
@@ -1406,52 +1464,63 @@ namespace RogueCastle
                         SoundManager.PlayMusic("PooyanSong", true, 1f);
                         return;
                     }
+
                     if (m_currentRoom.LevelType == LevelType.Castle &&
                         SoundManager.GetCurrentMusicName() != "CastleSong")
                     {
                         SoundManager.PlayMusic("CastleSong", true, 1f);
                         return;
                     }
+
                     if (m_currentRoom.LevelType == LevelType.Garden &&
                         SoundManager.GetCurrentMusicName() != "GardenSong")
                     {
                         SoundManager.PlayMusic("GardenSong", true, 1f);
                         return;
                     }
+
                     if (m_currentRoom.LevelType == LevelType.Dungeon &&
                         SoundManager.GetCurrentMusicName() != "DungeonSong")
                     {
                         SoundManager.PlayMusic("DungeonSong", true, 1f);
                         return;
                     }
+
                     if (m_currentRoom.LevelType == LevelType.Tower &&
                         SoundManager.GetCurrentMusicName() != "TowerSong")
                     {
                         SoundManager.PlayMusic("TowerSong", true, 1f);
                     }
                 }
+
                 return;
             }
+
             if (m_currentRoom is CarnivalShoot1BonusRoom || m_currentRoom is CarnivalShoot2BonusRoom)
             {
                 SoundManager.PlayMusic("PooyanSong", true, 1f);
                 return;
             }
+
             switch (m_currentRoom.LevelType)
             {
                 case LevelType.Castle:
                     //IL_A8:
                     SoundManager.PlayMusic("CastleSong", true, 1f);
                     return;
+
                 case LevelType.Garden:
                     SoundManager.PlayMusic("GardenSong", true, 1f);
                     return;
+
                 case LevelType.Dungeon:
                     SoundManager.PlayMusic("DungeonSong", true, 1f);
                     return;
+
                 case LevelType.Tower:
                     SoundManager.PlayMusic("TowerSong", true, 1f);
                     return;
+
                 default:
                     SoundManager.PlayMusic("CastleSong", true, 1f);
                     return;
@@ -1474,11 +1543,13 @@ namespace RogueCastle
                         StopTimeStop();
                     }
                 }
+
                 CurrentRoom.Update(gameTime);
                 if (Player != null)
                 {
                     Player.Update(gameTime);
                 }
+
                 m_enemyHUD.Update(gameTime);
                 m_playerHUD.Update(Player);
                 m_projectileManager.Update(gameTime);
@@ -1488,13 +1559,16 @@ namespace RogueCastle
                 {
                     CheckForRoomTransition();
                 }
+
                 if ((!m_inputMap.Pressed(2) ||
-                     (m_inputMap.Pressed(2) && (LevelENV.RunDemoVersion || LevelENV.CreateRetailVersion))) &&
+                     m_inputMap.Pressed(2) && (LevelENV.RunDemoVersion || LevelENV.CreateRetailVersion)) &&
                     CameraLockedToPlayer)
                 {
                     UpdateCamera();
                 }
-                if (Game.PlayerStats.SpecialItem == 6 && CurrentRoom.Name != "Start" && CurrentRoom.Name != "Tutorial" &&
+
+                if (Game.PlayerStats.SpecialItem == 6 && CurrentRoom.Name != "Start" &&
+                    CurrentRoom.Name != "Tutorial" &&
                     CurrentRoom.Name != "Boss" && CurrentRoom.Name != "Throne" && CurrentRoom.Name != "ChallengeBoss")
                 {
                     if (!m_compassDisplayed)
@@ -1510,6 +1584,7 @@ namespace RogueCastle
                 {
                     HideCompass();
                 }
+
                 if (m_objectivePlate.X == 1170f)
                 {
                     var flag = false;
@@ -1520,17 +1595,17 @@ namespace RogueCastle
                     {
                         flag = true;
                     }
+
                     if (!flag)
                     {
                         foreach (var current in CurrentRoom.EnemyList)
-                        {
                             if (CollisionMath.Intersects(current.Bounds, bounds))
                             {
                                 flag = true;
                                 break;
                             }
-                        }
                     }
+
                     if (flag)
                     {
                         m_objectivePlate.Opacity = 0.5f;
@@ -1541,6 +1616,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             base.Update(gameTime);
         }
 
@@ -1551,38 +1627,42 @@ namespace RogueCastle
                 ScreenManager.Camera.X = (int) (Player.Position.X + GlobalEV.Camera_XOffset);
                 ScreenManager.Camera.Y = (int) (Player.Position.Y + GlobalEV.Camera_YOffset);
             }
+
             if (m_currentRoom != null)
             {
                 if (ScreenManager.Camera.Width < m_currentRoom.Width)
                 {
                     if (ScreenManager.Camera.Bounds.Left < m_currentRoom.Bounds.Left)
                     {
-                        ScreenManager.Camera.X = (int) (m_currentRoom.Bounds.Left + ScreenManager.Camera.Width*0.5f);
+                        ScreenManager.Camera.X = (int) (m_currentRoom.Bounds.Left + ScreenManager.Camera.Width * 0.5f);
                     }
                     else if (ScreenManager.Camera.Bounds.Right > m_currentRoom.Bounds.Right)
                     {
-                        ScreenManager.Camera.X = (int) (m_currentRoom.Bounds.Right - ScreenManager.Camera.Width*0.5f);
+                        ScreenManager.Camera.X = (int) (m_currentRoom.Bounds.Right - ScreenManager.Camera.Width * 0.5f);
                     }
                 }
                 else
                 {
-                    ScreenManager.Camera.X = (int) (m_currentRoom.X + m_currentRoom.Width*0.5f);
+                    ScreenManager.Camera.X = (int) (m_currentRoom.X + m_currentRoom.Width * 0.5f);
                 }
+
                 if (ScreenManager.Camera.Height < m_currentRoom.Height)
                 {
                     if (ScreenManager.Camera.Bounds.Top < m_currentRoom.Bounds.Top)
                     {
-                        ScreenManager.Camera.Y = (int) (m_currentRoom.Bounds.Top + ScreenManager.Camera.Height*0.5f);
+                        ScreenManager.Camera.Y = (int) (m_currentRoom.Bounds.Top + ScreenManager.Camera.Height * 0.5f);
                         return;
                     }
+
                     if (ScreenManager.Camera.Bounds.Bottom > m_currentRoom.Bounds.Bottom)
                     {
-                        ScreenManager.Camera.Y = (int) (m_currentRoom.Bounds.Bottom - ScreenManager.Camera.Height*0.5f);
+                        ScreenManager.Camera.Y =
+                            (int) (m_currentRoom.Bounds.Bottom - ScreenManager.Camera.Height * 0.5f);
                     }
                 }
                 else
                 {
-                    ScreenManager.Camera.Y = (int) (m_currentRoom.Y + m_currentRoom.Height*0.5f);
+                    ScreenManager.Camera.Y = (int) (m_currentRoom.Y + m_currentRoom.Height * 0.5f);
                 }
             }
         }
@@ -1593,6 +1673,7 @@ namespace RogueCastle
             {
                 (ScreenManager as RCScreenManager).DisplayScreen(16, true);
             }
+
             if (!LevelENV.RunDemoVersion && !LevelENV.CreateRetailVersion)
             {
                 if (InputManager.JustPressed(Keys.RightControl, null))
@@ -1610,14 +1691,17 @@ namespace RogueCastle
                         SoundManager.PlayMusic("CastleSong", true, 0.5f);
                     }
                 }
+
                 if (m_inputMap.JustPressed(0))
                 {
                     m_miniMapDisplay.AddAllRooms(RoomList);
                 }
+
                 if (m_inputMap.JustPressed(7))
                 {
                     LevelENV.ShowDebugText = !LevelENV.ShowDebugText;
                 }
+
                 if (m_inputMap.JustPressed(1))
                 {
                     if (Camera.Zoom < 1f)
@@ -1629,31 +1713,35 @@ namespace RogueCastle
                         Camera.Zoom = 0.05f;
                     }
                 }
+
                 var num = 2000f;
                 if (m_inputMap.Pressed(2) && m_inputMap.Pressed(3))
                 {
-                    Camera.X -= num*(float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
+                    Camera.X -= num * (float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
                 }
                 else if (m_inputMap.Pressed(2) && m_inputMap.Pressed(4))
                 {
-                    Camera.X += num*(float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
+                    Camera.X += num * (float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
                 }
+
                 if (m_inputMap.Pressed(2) && m_inputMap.Pressed(5))
                 {
-                    Camera.Y -= num*(float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
+                    Camera.Y -= num * (float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
                 }
                 else if (m_inputMap.Pressed(2) && m_inputMap.Pressed(6))
                 {
-                    Camera.Y += num*(float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
+                    Camera.Y += num * (float) Camera.GameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+
             if (Player != null &&
                 (!m_inputMap.Pressed(2) ||
-                 (m_inputMap.Pressed(2) && (LevelENV.RunDemoVersion || LevelENV.CreateRetailVersion))) &&
+                 m_inputMap.Pressed(2) && (LevelENV.RunDemoVersion || LevelENV.CreateRetailVersion)) &&
                 !Player.IsKilled)
             {
                 Player.HandleInput();
             }
+
             base.HandleInput();
         }
 
@@ -1670,19 +1758,19 @@ namespace RogueCastle
                 {
                     var flag = false;
                     foreach (var current2 in current.EnemyList)
-                    {
                         if (current2.IsWeighted)
                         {
                             flag = true;
                             break;
                         }
-                    }
+
                     if (current.Name != "Ending" && current.Name != "Tutorial" && current.Name != "Boss" &&
                         current.Name != "Secret" && current.Name != "Bonus" && flag && current.Name != "ChallengeBoss")
                     {
                         list.Add(current);
                     }
                 }
+
                 if (list.Count > 0)
                 {
                     roomObj = list[CDGMath.RandomInt(0, list.Count - 1)];
@@ -1692,6 +1780,7 @@ namespace RogueCastle
                         enemyObj = roomObj.EnemyList[num];
                         num++;
                     }
+
                     var doorObj = new DoorObj(roomObj, 120, 180, DoorType.Open);
                     doorObj.Position = enemyObj.Position;
                     doorObj.IsBossDoor = true;
@@ -1701,16 +1790,15 @@ namespace RogueCastle
                     var num2 = 3.40282347E+38f;
                     TerrainObj terrainObj = null;
                     foreach (var current3 in roomObj.TerrainObjList)
-                    {
                         if (current3.Y >= doorObj.Y && current3.Y - doorObj.Y < num2 &&
                             CollisionMath.Intersects(current3.Bounds,
                                 new Rectangle((int) doorObj.X, (int) (doorObj.Y + (current3.Y - doorObj.Y) + 5f),
-                                    doorObj.Width, doorObj.Height/2)))
+                                    doorObj.Width, doorObj.Height / 2)))
                         {
                             num2 = current3.Y - doorObj.Y;
                             terrainObj = current3;
                         }
-                    }
+
                     if (terrainObj != null)
                     {
                         doorObj.UpdateCollisionBoxes();
@@ -1723,6 +1811,7 @@ namespace RogueCastle
                             HookEnemyToSlope(doorObj, terrainObj);
                         }
                     }
+
                     roomObj.DoorList.Add(doorObj);
                     roomObj.LinkedRoom = RoomList[RoomList.Count - 1];
                     roomObj.LinkedRoom.LinkedRoom = roomObj;
@@ -1740,10 +1829,11 @@ namespace RogueCastle
                         var text = "NeoCorner_Sprite";
                         var text2 = "NeoCornerL_Sprite";
                         cornerLTextureString3 =
-                            (cornerLTextureString = (cornerLTextureString2 = (cornerLTextureString4 = text2)));
+                            cornerLTextureString = cornerLTextureString2 = cornerLTextureString4 = text2;
                         cornerTextureString3 =
-                            (cornerTextureString = (cornerTextureString2 = (cornerTextureString4 = text)));
+                            cornerTextureString = cornerTextureString2 = cornerTextureString4 = text;
                     }
+
                     foreach (var current4 in roomObj.LinkedRoom.BorderList)
                     {
                         switch (roomObj.LinkedRoom.LevelType)
@@ -1753,20 +1843,25 @@ namespace RogueCastle
                                     cornerLTextureString4);
                                 current4.TextureOffset = new Vector2(0f, -18f);
                                 continue;
+
                             case LevelType.Dungeon:
                                 current4.SetBorderTextures(m_dungeonBorderTexture, cornerTextureString3,
                                     cornerLTextureString3);
                                 continue;
+
                             case LevelType.Tower:
                                 current4.SetBorderTextures(m_towerBorderTexture, cornerTextureString2,
                                     cornerLTextureString2);
                                 continue;
                         }
+
                         current4.SetBorderTextures(m_castleBorderTexture, cornerTextureString, cornerLTextureString);
                     }
+
                     m_compassDoor = doorObj;
                 }
             }
+
             if (m_compassDoor != null)
             {
                 m_compass.Rotation = CDGMath.AngleBetweenPts(Player.Position,
@@ -1812,16 +1907,19 @@ namespace RogueCastle
                 num /= 2;
                 num2 /= 2;
             }
+
             if (m_fgRenderTarget != null)
             {
                 m_fgRenderTarget.Dispose();
             }
+
             m_fgRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, num, num2, false, SurfaceFormat.Bgra5551,
                 DepthFormat.None);
             if (m_shadowRenderTarget != null)
             {
                 m_shadowRenderTarget.Dispose();
             }
+
             m_shadowRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, num, num2, false, SurfaceFormat.Bgra4444,
                 DepthFormat.None);
             Camera.Begin();
@@ -1832,28 +1930,33 @@ namespace RogueCastle
             {
                 m_lightSourceRenderTarget.Dispose();
             }
+
             m_lightSourceRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, num, num2, false,
                 SurfaceFormat.Bgra4444, DepthFormat.None);
             if (RenderTarget != null)
             {
                 RenderTarget.Dispose();
             }
+
             RenderTarget = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
             if (m_skyRenderTarget != null)
             {
                 m_skyRenderTarget.Dispose();
             }
+
             m_skyRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, num, num2);
             if (m_bgRenderTarget != null)
             {
                 m_bgRenderTarget.Dispose();
             }
+
             m_bgRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720, false, SurfaceFormat.Color,
                 DepthFormat.None);
             if (m_traitAuraRenderTarget != null)
             {
                 m_traitAuraRenderTarget.Dispose();
             }
+
             m_traitAuraRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, num, num2);
             InitializeBackgroundObjs();
         }
@@ -1864,6 +1967,7 @@ namespace RogueCastle
             {
                 m_foregroundSprite.Dispose();
             }
+
             m_foregroundSprite = new BackgroundObj("CastleFG1_Sprite");
             m_foregroundSprite.SetRepeated(true, true, Camera, SamplerState.PointWrap);
             m_foregroundSprite.Scale = new Vector2(2f, 2f);
@@ -1871,6 +1975,7 @@ namespace RogueCastle
             {
                 m_backgroundSprite.Dispose();
             }
+
             m_backgroundSprite = new BackgroundObj("CastleBG1_Sprite");
             m_backgroundSprite.SetRepeated(true, true, Camera, SamplerState.PointWrap);
             m_backgroundSprite.Scale = new Vector2(2f, 2f);
@@ -1878,6 +1983,7 @@ namespace RogueCastle
             {
                 m_backgroundParallaxSprite.Dispose();
             }
+
             m_backgroundParallaxSprite = new BackgroundObj("TowerBGFrame_Sprite");
             m_backgroundParallaxSprite.SetRepeated(true, true, Camera, SamplerState.PointWrap);
             m_backgroundParallaxSprite.Scale = new Vector2(2f, 2f);
@@ -1885,6 +1991,7 @@ namespace RogueCastle
             {
                 m_gardenParallaxFG.Dispose();
             }
+
             m_gardenParallaxFG = new BackgroundObj("ParallaxDifferenceClouds_Sprite");
             m_gardenParallaxFG.SetRepeated(true, true, Camera, SamplerState.LinearWrap);
             m_gardenParallaxFG.TextureColor = Color.White;
@@ -1899,12 +2006,14 @@ namespace RogueCastle
             {
                 ReinitializeRTs();
             }
+
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                 Camera.GetTransformation());
             if (CurrentRoom != null)
             {
                 CurrentRoom.DrawRenderTargets(Camera);
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                 Camera.GetTransformation());
@@ -1925,6 +2034,7 @@ namespace RogueCastle
                     m_traitAura.Scale = new Vector2(10f, 10f);
                 }
             }
+
             Camera.GraphicsDevice.SetRenderTarget(m_traitAuraRenderTarget);
             Camera.GraphicsDevice.Clear(Color.Transparent);
             if (CurrentRoom != null)
@@ -1932,6 +2042,7 @@ namespace RogueCastle
                 m_traitAura.Position = Player.Position;
                 m_traitAura.Draw(Camera);
             }
+
             Camera.GraphicsDevice.SetRenderTarget(m_lightSourceRenderTarget);
             Camera.GraphicsDevice.Clear(Color.Transparent);
             if (CurrentRoom != null)
@@ -1939,6 +2050,7 @@ namespace RogueCastle
                 m_dungeonLight.Position = Player.Position;
                 m_dungeonLight.Draw(Camera);
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
             m_miniMapDisplay.DrawRenderTargets(Camera);
@@ -1951,7 +2063,7 @@ namespace RogueCastle
 
         private static Vector2 MoveInCircle(GameTime gameTime, float speed)
         {
-            double num = Game.TotalGameTimeSeconds*speed;
+            double num = Game.TotalGameTimeSeconds * speed;
             var x = (float) Math.Cos(num);
             var y = (float) Math.Sin(num);
             return new Vector2(x, y);
@@ -1966,17 +2078,15 @@ namespace RogueCastle
             m_backgroundSprite.Draw(Camera);
             if (CurrentRoom != null && Camera.Zoom == 1f &&
                 (!m_inputMap.Pressed(2) ||
-                 (m_inputMap.Pressed(2) && (LevelENV.RunDemoVersion || LevelENV.CreateRetailVersion))))
+                 m_inputMap.Pressed(2) && (LevelENV.RunDemoVersion || LevelENV.CreateRetailVersion)))
             {
                 CurrentRoom.DrawBGObjs(Camera);
             }
             else
             {
-                foreach (var current in RoomList)
-                {
-                    current.DrawBGObjs(Camera);
-                }
+                foreach (var current in RoomList) current.DrawBGObjs(Camera);
             }
+
             Camera.End();
             Camera.GraphicsDevice.SetRenderTarget(RenderTarget);
             Camera.GraphicsDevice.Clear(Color.Black);
@@ -1984,6 +2094,7 @@ namespace RogueCastle
             {
                 Camera.GraphicsDevice.Clear(Color.White);
             }
+
             Camera.GraphicsDevice.Textures[1] = m_skyRenderTarget;
             Camera.GraphicsDevice.Textures[1].GraphicsDevice.SamplerStates[1] = SamplerState.LinearClamp;
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
@@ -1992,6 +2103,7 @@ namespace RogueCastle
             {
                 Camera.Draw(m_bgRenderTarget, Vector2.Zero, Color.White);
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null,
                 RasterizerState.CullNone, Game.BWMaskEffect, Camera.GetTransformation());
@@ -2009,14 +2121,13 @@ namespace RogueCastle
                 Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                     Camera.GetTransformation());
             }
+
             CurrentRoom.Draw(Camera);
             if (LevelENV.ShowEnemyRadii)
             {
-                foreach (var current2 in m_currentRoom.EnemyList)
-                {
-                    current2.DrawDetectionRadii(Camera);
-                }
+                foreach (var current2 in m_currentRoom.EnemyList) current2.DrawDetectionRadii(Camera);
             }
+
             m_projectileManager.Draw(Camera);
             if (EnemiesPaused)
             {
@@ -2035,21 +2146,24 @@ namespace RogueCastle
                     Game.HSVEffect);
                 Camera.Draw(m_bgRenderTarget, Vector2.Zero, Color.White);
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,
                 Camera.GetTransformation());
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X, (int) Camera.TopLeftCorner.Y, 1320, 720),
-                Color.Black*BackBufferOpacity);
+                Color.Black * BackBufferOpacity);
             if (!Player.IsKilled)
             {
                 Player.Draw(Camera);
             }
+
             if (!LevelENV.CreateRetailVersion)
             {
                 DebugTextObj.Position = new Vector2(Camera.X, Camera.Y - 300f);
                 DebugTextObj.Draw(Camera);
             }
+
             m_itemDropManager.Draw(Camera);
             ImpactEffectPool.Draw(Camera);
             Camera.End();
@@ -2060,11 +2174,12 @@ namespace RogueCastle
             {
                 m_gardenParallaxFG.Draw(Camera);
             }
+
             m_whiteBG.Draw(Camera);
             Camera.End();
             if ((CurrentLevelType == LevelType.Dungeon || Game.PlayerStats.Traits.X == 35f ||
                  Game.PlayerStats.Traits.Y == 35f) &&
-                (Game.PlayerStats.Class != 13 || (Game.PlayerStats.Class == 13 && !Player.LightOn)))
+                (Game.PlayerStats.Class != 13 || Game.PlayerStats.Class == 13 && !Player.LightOn))
             {
                 Camera.GraphicsDevice.Textures[1] = m_lightSourceRenderTarget;
                 Camera.GraphicsDevice.Textures[1].GraphicsDevice.SamplerStates[1] = SamplerState.LinearClamp;
@@ -2079,8 +2194,10 @@ namespace RogueCastle
                 {
                     Camera.Draw(m_shadowRenderTarget, Vector2.Zero, Color.White);
                 }
+
                 Camera.End();
             }
+
             if (CurrentRoom.Name != "Ending")
             {
                 if ((Game.PlayerStats.Traits.X == 3f || Game.PlayerStats.Traits.Y == 3f) &&
@@ -2096,6 +2213,7 @@ namespace RogueCastle
                     Game.GaussianBlur.Draw(RenderTarget, Camera, m_traitAuraRenderTarget);
                 }
             }
+
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null);
             m_projectileIconPool.Draw(Camera);
             m_playerHUD.Draw(Camera);
@@ -2103,21 +2221,25 @@ namespace RogueCastle
             {
                 m_enemyHUD.Draw(Camera);
             }
+
             if (m_enemyHUDCounter > 0f)
             {
                 m_enemyHUDCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             if (CurrentRoom.Name != "Start" && CurrentRoom.Name != "Boss" && CurrentRoom.Name != "ChallengeBoss" &&
                 m_miniMapDisplay.Visible)
             {
                 m_mapBG.Draw(Camera);
                 m_miniMapDisplay.Draw(Camera);
             }
+
             if (CurrentRoom.Name != "Boss" && CurrentRoom.Name != "Ending")
             {
                 m_compassBG.Draw(Camera);
                 m_compass.Draw(Camera);
             }
+
             m_objectivePlate.Draw(Camera);
             m_roomEnteringTitle.Draw(Camera);
             m_roomTitle.Draw(Camera);
@@ -2127,6 +2249,7 @@ namespace RogueCastle
             {
                 m_filmGrain.Draw(Camera);
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
             m_blackBorder1.Draw(Camera);
@@ -2137,15 +2260,17 @@ namespace RogueCastle
             var vector = Player.Position - Camera.TopLeftCorner;
             if (Game.PlayerStats.Class == 2 || Game.PlayerStats.Class == 10)
             {
-                Game.RippleEffect.Parameters["xcenter"].SetValue(vector.X/1320f);
-                Game.RippleEffect.Parameters["ycenter"].SetValue(vector.Y/720f);
+                Game.RippleEffect.Parameters["xcenter"].SetValue(vector.X / 1320f);
+                Game.RippleEffect.Parameters["ycenter"].SetValue(vector.Y / 720f);
                 Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
                     Game.RippleEffect);
             }
             else
             {
-                Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
+                Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
+                    null);
             }
+
             Camera.Draw(RenderTarget, Vector2.Zero, Color.White);
             Camera.End();
             Camera.GraphicsDevice.SetRenderTarget((ScreenManager as RCScreenManager).RenderTarget);
@@ -2190,8 +2315,10 @@ namespace RogueCastle
             }
             else
             {
-                Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
+                Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
+                    null);
             }
+
             Camera.Draw(m_bgRenderTarget, Vector2.Zero, Color.White);
             Camera.End();
             base.Draw(gameTime);
@@ -2201,7 +2328,7 @@ namespace RogueCastle
         {
             m_whiteBG.Position = CurrentRoom.Position;
             m_whiteBG.Scale = Vector2.One;
-            m_whiteBG.Scale = new Vector2(CurrentRoom.Width/m_whiteBG.Width, m_currentRoom.Height/m_whiteBG.Height);
+            m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
             m_whiteBG.Opacity = 1f;
             Tween.To(m_whiteBG, 0.2f, Tween.EaseNone, "Opacity", "0");
             Tween.RunFunction(0.2f, this, "RunWhiteSlash2");
@@ -2211,7 +2338,7 @@ namespace RogueCastle
         {
             m_whiteBG.Position = CurrentRoom.Position;
             m_whiteBG.Scale = Vector2.One;
-            m_whiteBG.Scale = new Vector2(CurrentRoom.Width/m_whiteBG.Width, m_currentRoom.Height/m_whiteBG.Height);
+            m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
             m_whiteBG.Opacity = 1f;
             Tween.To(m_whiteBG, 0.2f, Tween.EaseNone, "Opacity", "0");
         }
@@ -2220,7 +2347,7 @@ namespace RogueCastle
         {
             m_whiteBG.Position = CurrentRoom.Position;
             m_whiteBG.Scale = Vector2.One;
-            m_whiteBG.Scale = new Vector2(CurrentRoom.Width/m_whiteBG.Width, m_currentRoom.Height/m_whiteBG.Height);
+            m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
             m_whiteBG.Opacity = 1f;
             Tween.To(m_whiteBG, 0.2f, Tween.EaseNone, "Opacity", "0");
             Tween.RunFunction(0.2f, this, "LightningEffectOnce");
@@ -2230,7 +2357,7 @@ namespace RogueCastle
         {
             m_whiteBG.Position = CurrentRoom.Position;
             m_whiteBG.Scale = Vector2.One;
-            m_whiteBG.Scale = new Vector2(CurrentRoom.Width/m_whiteBG.Width, m_currentRoom.Height/m_whiteBG.Height);
+            m_whiteBG.Scale = new Vector2(CurrentRoom.Width / m_whiteBG.Width, m_currentRoom.Height / m_whiteBG.Height);
             m_whiteBG.Opacity = 1f;
             Tween.To(m_whiteBG, 1f, Tween.EaseNone, "Opacity", "0");
             SoundManager.PlaySound("LightningClap1", "LightningClap2");
@@ -2240,13 +2367,12 @@ namespace RogueCastle
         {
             var list = new List<EnemyObj>();
             foreach (var current in m_currentRoom.EnemyList)
-            {
                 if (current.Type != 17 && current.Type != 21 && current.Type != 27 && current.Type != 32 &&
                     current.Type != 6 && current.Type != 31)
                 {
                     list.Add(current);
                 }
-            }
+
             if (list.Count > 0)
             {
                 var enemyObj = list[CDGMath.RandomInt(0, list.Count - 1)];
@@ -2259,6 +2385,7 @@ namespace RogueCastle
                 {
                     array = LevelENV.DementiaFlightList;
                 }
+
                 var enemyObj2 = EnemyBuilder.BuildEnemy(array[CDGMath.RandomInt(0, array.Length - 1)], null, null,
                     null, EnemyDifficulty.Basic, true);
                 enemyObj2.Position = enemyObj.Position;
@@ -2308,13 +2435,9 @@ namespace RogueCastle
         public void ResetEnemyPositions()
         {
             for (var i = 0; i < m_enemyStartPositions.Count; i++)
-            {
                 CurrentRoom.EnemyList[i].Position = m_enemyStartPositions[i];
-            }
             for (var j = 0; j < m_tempEnemyStartPositions.Count; j++)
-            {
                 CurrentRoom.TempEnemyList[j].Position = m_tempEnemyStartPositions[j];
-            }
         }
 
         public override void PauseScreen()
@@ -2329,6 +2452,7 @@ namespace RogueCastle
                 {
                     m_projectileManager.PauseAllProjectiles(true);
                 }
+
                 SoundManager.PauseAllSounds("Pauseable");
                 Player.PauseAnimation();
                 base.PauseScreen();
@@ -2347,6 +2471,7 @@ namespace RogueCastle
                 {
                     m_projectileManager.UnpauseAllProjectiles();
                 }
+
                 SoundManager.ResumeAllSounds("Pauseable");
                 Player.ResumeAnimation();
                 base.UnpauseScreen();
@@ -2360,7 +2485,6 @@ namespace RogueCastle
             var enemiesKilledInRun = Game.PlayerStats.EnemiesKilledInRun;
             var count = RoomList.Count;
             for (var i = 0; i < enemiesKilledInRun.Count; i++)
-            {
                 if (enemiesKilledInRun[i].X != -1f && enemiesKilledInRun[i].Y != -1f &&
                     (int) enemiesKilledInRun[i].X < count)
                 {
@@ -2373,7 +2497,7 @@ namespace RogueCastle
                         m_killedEnemyObjList.Add(item);
                     }
                 }
-            }
+
             var list = new List<object>();
             list.Add(Player);
             list.Add(m_killedEnemyObjList);
@@ -2413,6 +2537,7 @@ namespace RogueCastle
             {
                 (ScreenManager as RCScreenManager).ActivateMapScreenTeleporter();
             }
+
             (ScreenManager as RCScreenManager).DisplayScreen(14, true);
         }
 
@@ -2420,14 +2545,8 @@ namespace RogueCastle
         {
             EnemiesPaused = true;
             CurrentRoom.PauseRoom();
-            foreach (var current in CurrentRoom.EnemyList)
-            {
-                current.PauseEnemy();
-            }
-            foreach (var current2 in CurrentRoom.TempEnemyList)
-            {
-                current2.PauseEnemy();
-            }
+            foreach (var current in CurrentRoom.EnemyList) current.PauseEnemy();
+            foreach (var current2 in CurrentRoom.TempEnemyList) current2.PauseEnemy();
             m_projectileManager.PauseAllProjectiles(false);
         }
 
@@ -2453,14 +2572,8 @@ namespace RogueCastle
             Game.HSVEffect.Parameters["UseMask"].SetValue(false);
             EnemiesPaused = false;
             CurrentRoom.UnpauseRoom();
-            foreach (var current in CurrentRoom.EnemyList)
-            {
-                current.UnpauseEnemy();
-            }
-            foreach (var current2 in CurrentRoom.TempEnemyList)
-            {
-                current2.UnpauseEnemy();
-            }
+            foreach (var current in CurrentRoom.EnemyList) current.UnpauseEnemy();
+            foreach (var current2 in CurrentRoom.TempEnemyList) current2.UnpauseEnemy();
             m_projectileManager.UnpauseAllProjectiles();
         }
 
@@ -2469,21 +2582,18 @@ namespace RogueCastle
             var list = new List<EnemyObj>();
             list.AddRange(CurrentRoom.TempEnemyList);
             foreach (var current in list)
-            {
                 if (!current.IsDemented && !current.IsKilled)
                 {
                     current.HitEnemy(damage, current.Position, true);
                 }
-            }
+
             list.Clear();
             list = null;
             foreach (var current2 in CurrentRoom.EnemyList)
-            {
                 if (!current2.IsDemented && !current2.IsKilled)
                 {
                     current2.HitEnemy(damage, current2.Position, true);
                 }
-            }
         }
 
         public virtual void Reset()
@@ -2500,23 +2610,20 @@ namespace RogueCastle
                 Player.ResetLevels();
                 Player.Position = new Vector2(200f, 200f);
             }
+
             ResetEnemyPositions();
-            foreach (var current in RoomList)
-            {
-                current.Reset();
-            }
+            foreach (var current in RoomList) current.Reset();
             InitializeChests(false);
             foreach (var current2 in RoomList)
+            foreach (var current3 in current2.GameObjList)
             {
-                foreach (var current3 in current2.GameObjList)
+                var breakableObj = current3 as BreakableObj;
+                if (breakableObj != null)
                 {
-                    var breakableObj = current3 as BreakableObj;
-                    if (breakableObj != null)
-                    {
-                        breakableObj.Reset();
-                    }
+                    breakableObj.Reset();
                 }
             }
+
             m_projectileManager.DestroyAllProjectiles(true);
             Game.ShadowEffect.Parameters["ShadowIntensity"].SetValue(0);
         }
@@ -2559,10 +2666,7 @@ namespace RogueCastle
                 Tween.StopAll(false);
                 m_currentRoom = null;
                 DisposeRTs();
-                foreach (var current in RoomList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in RoomList) current.Dispose();
                 RoomList.Clear();
                 RoomList = null;
                 m_enemyStartPositions.Clear();
@@ -2635,6 +2739,7 @@ namespace RogueCastle
                 {
                     m_compassDoor.Dispose();
                 }
+
                 m_compassDoor = null;
                 m_castleBorderTexture.Dispose();
                 m_gardenBorderTexture.Dispose();
@@ -2656,7 +2761,7 @@ namespace RogueCastle
             m_lastEnemyHit = enemy;
             m_enemyHUDCounter = m_enemyHUDDuration;
             m_enemyHUD.UpdateEnemyInfo(m_lastEnemyHit.Name, m_lastEnemyHit.Level,
-                m_lastEnemyHit.CurrentHealth/(float) m_lastEnemyHit.MaxHealth);
+                m_lastEnemyHit.CurrentHealth / (float) m_lastEnemyHit.MaxHealth);
         }
 
         public void KillEnemy(EnemyObj enemy)
@@ -2669,6 +2774,7 @@ namespace RogueCastle
                     throw new Exception(
                         "Could not find killed enemy in either CurrentRoom or CurrentRoom.EnemyList. This may be because the enemy was a blob");
                 }
+
                 Game.PlayerStats.EnemiesKilledInRun.Add(item);
             }
         }
@@ -2680,18 +2786,22 @@ namespace RogueCastle
                 m_coinsCollected++;
                 return;
             }
+
             switch (itemDropType)
             {
                 case 10:
                     m_bagsCollected++;
                     return;
+
                 case 11:
                     m_diamondsCollected++;
                     return;
+
                 case 12:
                 case 13:
                     m_blueprintsCollected++;
                     return;
+
                 default:
                     return;
             }
@@ -2716,6 +2826,7 @@ namespace RogueCastle
             {
                 m_objectivePlateTween.StopTween(false);
             }
+
             (m_objectivePlate.GetChildAt(1) as TextObj).Text = objectiveTitle;
             (m_objectivePlate.GetChildAt(2) as TextObj).Text = objectiveDescription;
             (m_objectivePlate.GetChildAt(3) as TextObj).Text = objectiveProgress;
@@ -2724,6 +2835,7 @@ namespace RogueCastle
                 m_objectivePlateTween = Tween.By(m_objectivePlate, 0.5f, Back.EaseOut, "X", "-300");
                 return;
             }
+
             m_objectivePlate.X -= 300f;
         }
 
@@ -2737,11 +2849,13 @@ namespace RogueCastle
                 {
                     m_objectivePlateTween.StopTween(false);
                 }
+
                 if (tween)
                 {
                     Tween.By(m_objectivePlate, 0.5f, Back.EaseIn, "X", "300");
                     return;
                 }
+
                 m_objectivePlate.X += 300f;
             }
         }
@@ -2768,6 +2882,7 @@ namespace RogueCastle
             {
                 m_objectivePlateTween.StopTween(false);
             }
+
             (m_objectivePlate.GetChildAt(1) as TextObj).Text = "Objective Complete!";
         }
 
@@ -2789,6 +2904,7 @@ namespace RogueCastle
             {
                 Player.Scale = new Vector2(2f, 2f);
             }
+
             if (Game.PlayerStats.Traits.X == 10f || Game.PlayerStats.Traits.Y == 10f)
             {
                 Player.ScaleX *= 0.825f;
@@ -2799,6 +2915,7 @@ namespace RogueCastle
                 Player.ScaleX *= 1.25f;
                 Player.ScaleY *= 1.175f;
             }
+
             Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
             Player.CurrentMana = Game.PlayerStats.CurrentMana;
             if (LevelENV.RunTestRoom)
@@ -2806,6 +2923,7 @@ namespace RogueCastle
                 Game.ScreenManager.Player.CurrentHealth = Game.ScreenManager.Player.MaxHealth;
                 Game.ScreenManager.Player.CurrentMana = Game.ScreenManager.Player.MaxMana;
             }
+
             Player.UpdateInternalScale();
             CheckForRoomTransition();
             UpdateCamera();
@@ -2817,50 +2935,62 @@ namespace RogueCastle
                 m_miniMapDisplay.AddAllIcons(RoomList);
                 (ScreenManager as RCScreenManager).AddIconsToMap(RoomList);
             }
+
             if (Game.PlayerStats.EyeballBossBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_EYES");
             }
+
             if (Game.PlayerStats.FairyBossBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
             }
+
             if (Game.PlayerStats.BlobBossBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_SLIME");
             }
+
             if (Game.PlayerStats.FireballBossBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_FIRE");
             }
+
             if (Game.PlayerStats.LastbossBeaten || Game.PlayerStats.TimesCastleBeaten > 0)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_FATHERS");
             }
+
             if (Game.PlayerStats.TimesCastleBeaten > 1)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_TWINS");
             }
+
             if (Game.PlayerStats.ChallengeEyeballBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_BLINDNESS");
             }
+
             if (Game.PlayerStats.ChallengeSkullBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_BONES");
             }
+
             if (Game.PlayerStats.ChallengeFireballBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_CHEMICALS");
             }
+
             if (Game.PlayerStats.ChallengeBlobBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_SPACE");
             }
+
             if (Game.PlayerStats.ChallengeLastBossBeaten)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_RELATIVES");
             }
+
             var flag = false;
             var flag2 = false;
             var flag3 = false;
@@ -2870,34 +3000,42 @@ namespace RogueCastle
             {
                 flag = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[22].W > 0f)
             {
                 flag2 = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[32].W > 0f)
             {
                 flag3 = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[12].W > 0f)
             {
                 flag4 = true;
             }
+
             if (Game.PlayerStats.EnemiesKilledList[5].W > 0f)
             {
                 flag5 = true;
             }
+
             if (flag && flag2 && flag3 && flag4 && flag5)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_ANIMALS");
             }
+
             if (Game.PlayerStats.TotalHoursPlayed + Game.PlaySessionLength >= 20f)
             {
                 GameUtil.UnlockAchievement("FEAR_OF_SLEEP");
             }
+
             if (Game.PlayerStats.TotalRunesFound > 10)
             {
                 GameUtil.UnlockAchievement("LOVE_OF_MAGIC");
             }
+
             base.OnEnter();
         }
 
@@ -2907,6 +3045,7 @@ namespace RogueCastle
             {
                 m_currentRoom.OnExit();
             }
+
             SoundManager.StopAllSounds("Default");
             SoundManager.StopAllSounds("Pauseable");
             base.OnExit();
@@ -2934,6 +3073,7 @@ namespace RogueCastle
                 {
                     num2 = CurrentRoom.Bounds.Bottom - current.Bounds.Top;
                 }
+
                 int num3;
                 if (current.X < vector.X)
                 {
@@ -2943,6 +3083,7 @@ namespace RogueCastle
                 {
                     num3 = CurrentRoom.Bounds.Right - current.Bounds.Left;
                 }
+
                 if (Math.Abs(num3) > Math.Abs(num2))
                 {
                     list.Add(new Vector2(0f, num2));
@@ -2953,8 +3094,10 @@ namespace RogueCastle
                     list.Add(new Vector2(num3, 0f));
                     Tween.By(current, 0.5f, Back.EaseIn, "delay", num.ToString(), "X", num3.ToString());
                 }
+
                 num += 0.05f;
             }
+
             Tween.RunFunction(num + 0.5f, this, "ZoomInAllObjects", list);
         }
 
@@ -2983,6 +3126,7 @@ namespace RogueCastle
                     m_backgroundSprite.Scale = new Vector2(2f, 2f);
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
+
                 case LevelType.Garden:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
@@ -2991,6 +3135,7 @@ namespace RogueCastle
                     m_backgroundSprite.Scale = new Vector2(2f, 2f);
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
+
                 case LevelType.Dungeon:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
@@ -2999,6 +3144,7 @@ namespace RogueCastle
                     m_backgroundSprite.Scale = new Vector2(2f, 2f);
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
+
                 case LevelType.Tower:
                     m_backgroundSprite.Scale = Vector2.One;
                     m_foregroundSprite.Scale = Vector2.One;
@@ -3008,11 +3154,13 @@ namespace RogueCastle
                     m_foregroundSprite.Scale = new Vector2(2f, 2f);
                     break;
             }
+
             if (levelType == LevelType.Dungeon)
             {
                 Game.ShadowEffect.Parameters["ShadowIntensity"].SetValue(0.7f);
                 return;
             }
+
             Game.ShadowEffect.Parameters["ShadowIntensity"].SetValue(0);
         }
 

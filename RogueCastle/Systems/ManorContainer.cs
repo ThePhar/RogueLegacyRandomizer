@@ -1,13 +1,13 @@
-﻿// 
+﻿//
 //  RogueLegacyArchipelago - ManorContainer.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System.Collections.Generic;
 using Archipelago;
@@ -19,43 +19,43 @@ namespace RogueCastle.Systems
         static ManorContainer()
         {
             // Define a lookup table between our internal identifiers and the ones used by the AP service.
-            ArchipelagoLocationTable = new Dictionary<ManorPiece, LocationCode>
+            ArchipelagoLocationTable = new Dictionary<ManorPiece, int>
             {
-                { ManorPiece.GroundRoad, LocationCode.ManorGroundRoad },
-                { ManorPiece.MainBase, LocationCode.ManorMainBase },
-                { ManorPiece.MainWindowBottom, LocationCode.ManorMainWindowBottom },
-                { ManorPiece.MainWindowTop, LocationCode.ManorMainWindowTop },
-                { ManorPiece.MainRoof, LocationCode.ManorMainRoof },
-                { ManorPiece.LeftWingBase, LocationCode.ManorLeftWingBase },
-                { ManorPiece.LeftWingWindow, LocationCode.ManorLeftWingWindow },
-                { ManorPiece.LeftWingRoof, LocationCode.ManorLeftWingRoof },
-                { ManorPiece.LeftBigBase, LocationCode.ManorLeftBigBase },
-                { ManorPiece.LeftBigUpper1, LocationCode.ManorLeftBigUpper1 },
-                { ManorPiece.LeftBigUpper2, LocationCode.ManorLeftBigUpper2 },
-                { ManorPiece.LeftBigWindows, LocationCode.ManorLeftBigWindows },
-                { ManorPiece.LeftBigRoof, LocationCode.ManorLeftBigRoof },
-                { ManorPiece.LeftFarBase, LocationCode.ManorLeftFarBase },
-                { ManorPiece.LeftFarRoof, LocationCode.ManorLeftFarRoof },
-                { ManorPiece.LeftExtension, LocationCode.ManorLeftExtension },
-                { ManorPiece.LeftTree1, LocationCode.ManorLeftTree1 },
-                { ManorPiece.LeftTree2, LocationCode.ManorLeftTree2 },
-                { ManorPiece.RightWingBase, LocationCode.ManorRightWingBase },
-                { ManorPiece.RightWingWindow, LocationCode.ManorRightWingWindow },
-                { ManorPiece.RightWingRoof, LocationCode.ManorRightWingRoof },
-                { ManorPiece.RightBigBase, LocationCode.ManorRightBigBase },
-                { ManorPiece.RightBigUpper, LocationCode.ManorRightBigUpper },
-                { ManorPiece.RightBigRoof, LocationCode.ManorRightBigRoof },
-                { ManorPiece.RightHighBase, LocationCode.ManorRightHighBase },
-                { ManorPiece.RightHighUpper, LocationCode.ManorRightHighUpper },
-                { ManorPiece.RightHighTower, LocationCode.ManorRightHighTower },
-                { ManorPiece.RightExtension, LocationCode.ManorRightExtension },
-                { ManorPiece.RightTree, LocationCode.ManorRightTree },
-                { ManorPiece.ObservatoryBase, LocationCode.ManorObservatoryBase },
-                { ManorPiece.ObservatoryTelescope, LocationCode.ManorObservatoryTelescope }
+                { ManorPiece.GroundRoad, LocationDefinitions.ManorGroundRoad.Code },
+                { ManorPiece.MainBase, LocationDefinitions.ManorMainBase.Code },
+                { ManorPiece.MainWindowBottom, LocationDefinitions.ManorMainBottomWindow.Code },
+                { ManorPiece.MainWindowTop, LocationDefinitions.ManorMainTopWindow.Code },
+                { ManorPiece.MainRoof, LocationDefinitions.ManorMainRoof.Code },
+                { ManorPiece.LeftWingBase, LocationDefinitions.ManorLeftWingBase.Code },
+                { ManorPiece.LeftWingWindow, LocationDefinitions.ManorLeftWingWindow.Code },
+                { ManorPiece.LeftWingRoof, LocationDefinitions.ManorLeftWingRoof.Code },
+                { ManorPiece.LeftBigBase, LocationDefinitions.ManorLeftBigBase.Code },
+                { ManorPiece.LeftBigUpper1, LocationDefinitions.ManorLeftBigUpper1.Code },
+                { ManorPiece.LeftBigUpper2, LocationDefinitions.ManorLeftBigUpper2.Code },
+                { ManorPiece.LeftBigWindows, LocationDefinitions.ManorLeftBigWindows.Code },
+                { ManorPiece.LeftBigRoof, LocationDefinitions.ManorLeftBigRoof.Code },
+                { ManorPiece.LeftFarBase, LocationDefinitions.ManorLeftFarBase.Code },
+                { ManorPiece.LeftFarRoof, LocationDefinitions.ManorLeftFarRoof.Code },
+                { ManorPiece.LeftExtension, LocationDefinitions.ManorLeftExtension.Code },
+                { ManorPiece.LeftTree1, LocationDefinitions.ManorLeftTree1.Code },
+                { ManorPiece.LeftTree2, LocationDefinitions.ManorLeftTree2.Code },
+                { ManorPiece.RightWingBase, LocationDefinitions.ManorRightWingBase.Code },
+                { ManorPiece.RightWingWindow, LocationDefinitions.ManorRightWingWindow.Code },
+                { ManorPiece.RightWingRoof, LocationDefinitions.ManorRightWingRoof.Code },
+                { ManorPiece.RightBigBase, LocationDefinitions.ManorRightBigBase.Code },
+                { ManorPiece.RightBigUpper, LocationDefinitions.ManorRightBigUpper.Code },
+                { ManorPiece.RightBigRoof, LocationDefinitions.ManorRightBigRoof.Code },
+                { ManorPiece.RightHighBase, LocationDefinitions.ManorRightHighBase.Code },
+                { ManorPiece.RightHighUpper, LocationDefinitions.ManorRightHighUpper.Code },
+                { ManorPiece.RightHighTower, LocationDefinitions.ManorRightHighTower.Code },
+                { ManorPiece.RightExtension, LocationDefinitions.ManorRightExtension.Code },
+                { ManorPiece.RightTree, LocationDefinitions.ManorRightTree.Code },
+                { ManorPiece.ObservatoryBase, LocationDefinitions.ManorObservatoryBase.Code },
+                { ManorPiece.ObservatoryTelescope, LocationDefinitions.ManorObservatoryScope.Code },
             };
         }
 
-        public static Dictionary<ManorPiece, LocationCode> ArchipelagoLocationTable { get; private set; }
+        public static Dictionary<ManorPiece, int> ArchipelagoLocationTable { get; private set; }
     }
 
     public enum ManorPiece

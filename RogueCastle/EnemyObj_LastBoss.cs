@@ -11,9 +11,6 @@
 
 using System;
 using System.Collections.Generic;
-using Archipelago.MultiClient.Net;
-using Archipelago.MultiClient.Net.Enums;
-using Archipelago.MultiClient.Net.Packets;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -74,10 +71,7 @@ namespace RogueCastle
             EnemyDifficulty difficulty)
             : base("PlayerIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
-            foreach (var current in _objectList)
-            {
-                current.TextureColor = new Color(100, 100, 100);
-            }
+            foreach (var current in _objectList) current.TextureColor = new Color(100, 100, 100);
             Type = 29;
             m_damageShieldProjectiles = new List<ProjectileObj>();
             _objectList[5].Visible = false;
@@ -174,6 +168,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.LastBoss_Advanced_KnockBack;
                     return;
+
                 case EnemyDifficulty.Expert:
                     Name = "Johannes";
                     MaxHealth = 100;
@@ -201,6 +196,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.LastBoss_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Fountain of Youth";
                     MaxHealth = 100;
@@ -229,6 +225,7 @@ namespace RogueCastle
                     KnockBack = EnemyEV.LastBoss_Miniboss_KnockBack;
                     return;
             }
+
             AnimationDelay = 0.1f;
             if (LevelENV.WeakenBosses)
             {
@@ -505,6 +502,7 @@ namespace RogueCastle
                 m_axeProjData.Dispose();
                 m_axeProjData = null;
             }
+
             m_axeProjData = new ProjectileData(this)
             {
                 SpriteName = "SpellAxe_Sprite",
@@ -533,6 +531,7 @@ namespace RogueCastle
                 m_axeProjData.Dispose();
                 m_axeProjData = null;
             }
+
             m_axeProjData = new ProjectileData(this)
             {
                 SpriteName = "SpellAxe_Sprite",
@@ -558,6 +557,7 @@ namespace RogueCastle
             {
                 m_axeProjData.AngleOffset = CDGMath.RandomInt(-70, 70);
             }
+
             m_levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
             SoundManager.Play3DSound(this, m_target, "Cast_Axe");
             m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 45f, true);
@@ -570,6 +570,7 @@ namespace RogueCastle
                 m_daggerProjData.Dispose();
                 m_daggerProjData = null;
             }
+
             m_daggerProjData = new ProjectileData(this)
             {
                 SpriteName = "SpellDagger_Sprite",
@@ -597,6 +598,7 @@ namespace RogueCastle
                 m_daggerProjData.Dispose();
                 m_daggerProjData = null;
             }
+
             m_daggerProjData = new ProjectileData(this)
             {
                 SpriteName = "SpellDagger_Sprite",
@@ -621,6 +623,7 @@ namespace RogueCastle
             {
                 m_daggerProjData.AngleOffset = CDGMath.RandomInt(-8, 8);
             }
+
             m_levelScreen.ProjectileManager.FireProjectile(m_daggerProjData);
             SoundManager.Play3DSound(this, m_target, "Cast_Dagger");
             m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 0f, true);
@@ -670,6 +673,7 @@ namespace RogueCastle
                                     RunLogicBlock(arg_182_1, arg_182_2, array);
                                     return;
                                 }
+
                                 var arg_1B2_1 = true;
                                 var arg_1B2_2 = m_generalBasicNeoLB;
                                 var array2 = new int[8];
@@ -680,6 +684,7 @@ namespace RogueCastle
                                 RunLogicBlock(arg_1B2_1, arg_1B2_2, array2);
                                 return;
                             }
+
                             case 1:
                             {
                                 if (!IsNeo)
@@ -693,6 +698,7 @@ namespace RogueCastle
                                     RunLogicBlock(arg_126_1, arg_126_2, array3);
                                     return;
                                 }
+
                                 var arg_156_1 = true;
                                 var arg_156_2 = m_generalBasicNeoLB;
                                 var array4 = new int[8];
@@ -703,22 +709,27 @@ namespace RogueCastle
                                 RunLogicBlock(arg_156_1, arg_156_2, array4);
                                 return;
                             }
+
                             case 2:
                                 if (!IsNeo)
                                 {
                                     RunLogicBlock(true, m_generalBasicLB, 35, 0, 0, 25, 0, 0, 20, 20);
                                     return;
                                 }
+
                                 RunLogicBlock(true, m_generalBasicNeoLB, 25, 0, 20, 15, 0, 0, 15, 25);
                                 return;
+
                             case 3:
                                 if (!IsNeo)
                                 {
                                     RunLogicBlock(true, m_generalBasicLB, 0, 0, 0, 35, 35, 0, 0, 30);
                                     return;
                                 }
+
                                 RunLogicBlock(true, m_generalBasicNeoLB, 0, 0, 0, 50, 20, 0, 0, 30);
                                 return;
+
                             default:
                                 return;
                         }
@@ -738,15 +749,19 @@ namespace RogueCastle
                 case 0:
                     RunLogicBlock(true, m_generalAdvancedLB, 63, 0, 0, 0, 15, 12, 5, 5);
                     return;
+
                 case 1:
                     RunLogicBlock(true, m_generalAdvancedLB, 68, 0, 0, 0, 10, 12, 5, 5);
                     return;
+
                 case 2:
                     RunLogicBlock(true, m_generalAdvancedLB, 52, 12, 0, 0, 11, 15, 5, 5);
                     return;
+
                 case 3:
                     RunLogicBlock(true, m_generalAdvancedLB, 31, 15, 0, 26, 3, 13, 6, 6);
                     return;
+
                 default:
                     return;
             }
@@ -776,6 +791,7 @@ namespace RogueCastle
                                     RunLogicBlock(arg_1C2_1, arg_1C2_2, array);
                                     return;
                                 }
+
                                 var arg_1F2_1 = true;
                                 var arg_1F2_2 = m_generalBasicLB;
                                 var array2 = new int[8];
@@ -786,30 +802,37 @@ namespace RogueCastle
                                 RunLogicBlock(arg_1F2_1, arg_1F2_2, array2);
                                 return;
                             }
+
                             case 1:
                                 if (!m_target.IsJumping)
                                 {
                                     RunLogicBlock(true, m_generalBasicLB, 30, 0, 15, 20, 0, 25, 0, 10);
                                     return;
                                 }
+
                                 RunLogicBlock(true, m_generalBasicLB, 50, 0, 15, 0, 0, 25, 0, 10);
                                 return;
+
                             case 2:
                                 if (!m_target.IsJumping)
                                 {
                                     RunLogicBlock(true, m_generalBasicLB, 20, 0, 10, 10, 0, 15, 20, 10);
                                     return;
                                 }
+
                                 RunLogicBlock(true, m_generalBasicLB, 40, 0, 15, 0, 0, 15, 20, 10);
                                 return;
+
                             case 3:
                                 if (m_isTouchingGround)
                                 {
                                     RunLogicBlock(true, m_generalBasicLB, 0, 10, 0, 20, 35, 10, 0, 25);
                                     return;
                                 }
+
                                 RunLogicBlock(true, m_generalBasicLB, 0, 10, 0, 0, 55, 10, 0, 25);
                                 return;
+
                             default:
                                 return;
                         }
@@ -856,9 +879,10 @@ namespace RogueCastle
                     x = m_levelScreen.CurrentRoom.Bounds.Left + 200;
                 }
             }
+
             zero = new Vector2(x, Y);
             var num = Math.Abs(CDGMath.DistanceBetweenPts(Position, zero));
-            m_teleportDuration = num*0.001f;
+            m_teleportDuration = num * 0.001f;
             m_delayObj.X = m_teleportDuration;
             Tween.To(this, m_teleportDuration, Quad.EaseInOut, "X", zero.X.ToString());
             SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_BlockMove");
@@ -883,8 +907,9 @@ namespace RogueCastle
             var num2 = MegaFlyingDaggerProjectileSpeed;
             if (!castLeft)
             {
-                num2 = MegaFlyingDaggerProjectileSpeed*-1;
+                num2 = MegaFlyingDaggerProjectileSpeed * -1;
             }
+
             SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_SwordSummon_b");
             for (var i = 0; i < MegaFlyingSwordAmount; i++)
             {
@@ -893,7 +918,7 @@ namespace RogueCastle
                 projectileObj.Position = vector;
                 Tween.By(projectileObj, 2.5f, Tween.EaseNone, "delay", num.ToString(), "X", num2.ToString());
                 Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
-                Tween.RunFunction(num, typeof (SoundManager), "Play3DSound", this, m_target, new[]
+                Tween.RunFunction(num, typeof(SoundManager), "Play3DSound", this, m_target, new[]
                 {
                     "FinalBoss_St2_SwordSummon_c_01",
                     "FinalBoss_St2_SwordSummon_c_02",
@@ -940,7 +965,7 @@ namespace RogueCastle
                 projectileObj.Y = Y + (Bounds.Bottom - Y);
                 projectileObj.StopAnimation();
                 num += projectileObj.Width;
-                Tween.RunFunction(num3, typeof (SoundManager), "Play3DSound", this, m_target, new[]
+                Tween.RunFunction(num3, typeof(SoundManager), "Play3DSound", this, m_target, new[]
                 {
                     "FinalBoss_St2_Lance_01",
                     "FinalBoss_St2_Lance_02",
@@ -953,7 +978,7 @@ namespace RogueCastle
                 });
                 Tween.RunFunction(num3, projectileObj, "PlayAnimation", "Before", "End", false);
                 Tween.RunFunction(num3 + duration, projectileObj, "PlayAnimation", "Retract", "RetractComplete", false);
-                Tween.RunFunction(num3 + duration, typeof (SoundManager), "Play3DSound", this, m_target, new[]
+                Tween.RunFunction(num3 + duration, typeof(SoundManager), "Play3DSound", this, m_target, new[]
                 {
                     "FinalBoss_St2_Lance_Retract_01",
                     "FinalBoss_St2_Lance_Retract_02",
@@ -970,10 +995,12 @@ namespace RogueCastle
                 projectileObj2.StopAnimation();
                 num2 -= projectileObj2.Width;
                 Tween.RunFunction(num3, projectileObj2, "PlayAnimation", "Before", "End", false);
-                Tween.RunFunction(num3 + duration, projectileObj2, "PlayAnimation", "Retract", "RetractComplete", false);
+                Tween.RunFunction(num3 + duration, projectileObj2, "PlayAnimation", "Retract", "RetractComplete",
+                    false);
                 Tween.RunFunction(num3 + duration + 1f, projectileObj2, "KillProjectile");
                 num3 += 0.05f;
             }
+
             projectileData.Dispose();
         }
 
@@ -1023,21 +1050,19 @@ namespace RogueCastle
                 num2 = -CDGMath.RandomInt(50, 1000);
                 num3 += 0.25f;
             }
+
             projectileData.Dispose();
         }
 
         public void ChangeProjectileSpeed(ProjectileObj proj, float speed, Vector2 heading)
         {
-            proj.AccelerationX = heading.X*speed;
-            proj.AccelerationY = -heading.Y*speed;
+            proj.AccelerationX = heading.X * speed;
+            proj.AccelerationY = -heading.Y * speed;
         }
 
         public void CastDamageShield(int numOrbs)
         {
-            foreach (var current in m_damageShieldProjectiles)
-            {
-                current.KillProjectile();
-            }
+            foreach (var current in m_damageShieldProjectiles) current.KillProjectile();
             m_damageShieldProjectiles.Clear();
             var data = new ProjectileData(this)
             {
@@ -1053,13 +1078,13 @@ namespace RogueCastle
                 CanBeFusRohDahed = false,
                 ShowIcon = false,
                 Lifespan = 9999f,
-                Damage = Damage/2
+                Damage = Damage / 2
             };
             SoundManager.Play3DSound(this, m_target, "FinalBoss_St2_SwordSummon_b");
             var mega_Shield_Distance = m_Mega_Shield_Distance;
             for (var i = 0; i < numOrbs; i++)
             {
-                var num = 360f/numOrbs*i;
+                var num = 360f / numOrbs * i;
                 var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.AltX = num;
                 projectileObj.AltY = mega_Shield_Distance;
@@ -1083,6 +1108,7 @@ namespace RogueCastle
                 {
                     HeadingX = 1f;
                 }
+
                 if (Flip == SpriteEffects.None)
                 {
                     ChangeSprite("PlayerFrontDash_Character");
@@ -1091,6 +1117,7 @@ namespace RogueCastle
                 {
                     ChangeSprite("PlayerDash_Character");
                 }
+
                 m_levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), false);
             }
             else
@@ -1099,6 +1126,7 @@ namespace RogueCastle
                 {
                     HeadingX = -1f;
                 }
+
                 if (Flip == SpriteEffects.None)
                 {
                     ChangeSprite("PlayerDash_Character");
@@ -1107,12 +1135,15 @@ namespace RogueCastle
                 {
                     ChangeSprite("PlayerFrontDash_Character");
                 }
+
                 m_levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), true);
             }
+
             if (heading != 0)
             {
                 HeadingX = heading;
             }
+
             SoundManager.Play3DSound(this, m_target, "Player_Dash");
             LockFlip = true;
             AccelerationX = 0f;
@@ -1152,6 +1183,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (m_smokeCounter > 0f && !IsSecondForm)
             {
                 m_smokeCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -1162,9 +1194,11 @@ namespace RogueCastle
                     {
                         m_smokeCounter = 0.05f;
                     }
+
                     m_levelScreen.ImpactEffectPool.BlackSmokeEffect(this);
                 }
             }
+
             if (!IsSecondForm)
             {
                 if (!m_isTouchingGround && m_currentActiveLB != null && SpriteName != "PlayerAttacking3_Character" &&
@@ -1181,7 +1215,8 @@ namespace RogueCastle
                         PlayAnimation();
                     }
                 }
-                else if (m_isTouchingGround && m_currentActiveLB != null && SpriteName == "PlayerAttacking3_Character" &&
+                else if (m_isTouchingGround && m_currentActiveLB != null &&
+                         SpriteName == "PlayerAttacking3_Character" &&
                          CurrentSpeed != 0f)
                 {
                     var spriteObj = GetChildAt(2) as SpriteObj;
@@ -1200,6 +1235,7 @@ namespace RogueCastle
                 m_walkUpSoundFinalBoss.Update();
                 m_walkDownSoundFinalBoss.Update();
             }
+
             if (!IsSecondForm && CurrentHealth <= 0 && m_target.CurrentHealth > 0 && !IsNeo)
             {
                 if (IsTouchingGround && !m_firstFormDying)
@@ -1232,21 +1268,25 @@ namespace RogueCastle
                     {
                         Flip = SpriteEffects.None;
                     }
+
                     if (m_currentActiveLB != null && m_currentActiveLB.IsActive)
                     {
                         m_currentActiveLB.StopLogicBlock();
                     }
                 }
+
                 if (m_target.IsTouchingGround && !IsSecondForm && SpriteName == "PlayerDeath_Character")
                 {
                     MovePlayerTo();
                 }
             }
-            if ((!m_firstFormDying && !IsSecondForm) || (m_firstFormDying && IsSecondForm) ||
-                (IsNeo && CurrentHealth > 0))
+
+            if (!m_firstFormDying && !IsSecondForm || m_firstFormDying && IsSecondForm ||
+                IsNeo && CurrentHealth > 0)
             {
                 base.Update(gameTime);
             }
+
             if (!IsSecondForm && CurrentHealth <= 0 && m_target.CurrentHealth > 0 && IsNeo && IsTouchingGround &&
                 !m_firstFormDying)
             {
@@ -1265,7 +1305,7 @@ namespace RogueCastle
             m_currentActiveLB.StopLogicBlock();
             var num = 250;
             var zero = Vector2.Zero;
-            if ((m_target.X < X && X > m_levelScreen.CurrentRoom.X + 500f) ||
+            if (m_target.X < X && X > m_levelScreen.CurrentRoom.X + 500f ||
                 X > m_levelScreen.CurrentRoom.Bounds.Right - 500)
             {
                 zero = new Vector2(X - num, Y);
@@ -1278,12 +1318,14 @@ namespace RogueCastle
             {
                 zero = new Vector2(X + num, Y);
             }
+
             m_target.Flip = SpriteEffects.None;
             if (zero.X < m_target.X)
             {
                 m_target.Flip = SpriteEffects.FlipHorizontally;
             }
-            var num2 = CDGMath.DistanceBetweenPts(m_target.Position, zero)/m_target.Speed;
+
+            var num2 = CDGMath.DistanceBetweenPts(m_target.Position, zero) / m_target.Speed;
             m_target.UpdateCollisionBoxes();
             m_target.State = 1;
             m_target.IsWeighted = false;
@@ -1312,19 +1354,21 @@ namespace RogueCastle
             {
                 m_target.Flip = SpriteEffects.FlipHorizontally;
             }
+
             PlayAnimation(false);
             SoundManager.PlaySound("FinalBoss_St1_DeathGrunt");
-            Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "Player_Death_SwordTwirl");
-            Tween.RunFunction(0.7f, typeof (SoundManager), "PlaySound", "Player_Death_SwordLand");
-            Tween.RunFunction(1.2f, typeof (SoundManager), "PlaySound", "Player_Death_BodyFall");
+            Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "Player_Death_SwordTwirl");
+            Tween.RunFunction(0.7f, typeof(SoundManager), "PlaySound", "Player_Death_SwordLand");
+            Tween.RunFunction(1.2f, typeof(SoundManager), "PlaySound", "Player_Death_BodyFall");
             var num = 2f;
             Tween.RunFunction(2f, this, "PlayBlackSmokeSounds");
             for (var i = 0; i < 30; i++)
             {
                 Tween.RunFunction(num, m_levelScreen.ImpactEffectPool, "BlackSmokeEffect", Position,
-                    new Vector2(1f + num*1f, 1f + num*1f));
+                    new Vector2(1f + num * 1f, 1f + num * 1f));
                 num += 0.05f;
             }
+
             Tween.RunFunction(3f, this, "HideEnemy");
             Tween.RunFunction(6f, this, "SecondFormDialogue");
         }
@@ -1361,6 +1405,7 @@ namespace RogueCastle
             {
                 CurrentHealth = 1;
             }
+
             MinMoneyDropAmount = 20;
             MaxMoneyDropAmount = 30;
             MoneyDropChance = 1f;
@@ -1394,6 +1439,7 @@ namespace RogueCastle
             {
                 UnpauseEnemy(true);
             }
+
             m_levelScreen.CameraLockedToPlayer = true;
             m_target.UnlockControls();
             m_target.IsWeighted = true;
@@ -1424,6 +1470,15 @@ namespace RogueCastle
             }
         }
 
+        public void Forfeit()
+        {
+            Program.Game.ArchipelagoManager.Forfeit();
+        }
+
+        public void NoForfeit()
+        {
+        }
+
         public override void Kill(bool giveXP = true)
         {
             if (m_target.CurrentHealth > 0)
@@ -1432,6 +1487,18 @@ namespace RogueCastle
                 {
                     // Announce our victory!
                     Program.Game.ArchipelagoManager.AnnounceVictory();
+
+                    if (Program.Game.ArchipelagoManager.CanForfeit)
+                    {
+                        var rCScreenManager = Game.ScreenManager;
+                        DialogueManager.AddText("Forfeit", new[] { "Congrats!" },
+                            new[] { "Would you like to forfeit your remaining items?" });
+                        rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
+                        rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                        rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
+                        rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "NoForfeit");
+                        rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+                    }
 
                     m_bossVersionKilled = true;
                     SetPlayerData();
@@ -1448,6 +1515,7 @@ namespace RogueCastle
                     {
                         Flip = SpriteEffects.None;
                     }
+
                     Tween.RunFunction(1f, this, "Part2");
                     SoundManager.PlaySound("Boss_Flash");
                     SoundManager.PlaySound("Boss_Eyeball_Freeze");
@@ -1459,6 +1527,7 @@ namespace RogueCastle
                         GameUtil.UnlockAchievement("FEAR_OF_TWINS");
                     }
                 }
+
                 if (IsNeo && !m_neoDying)
                 {
                     m_neoDying = true;
@@ -1468,7 +1537,7 @@ namespace RogueCastle
                     SoundManager.PlaySound("Boss_Flash");
                     SoundManager.PlaySound("Boss_Eyeball_Freeze");
                     Tween.RunFunction(1f, m_levelScreen, "UnpauseScreen");
-                    Tween.RunFunction(1f, typeof (SoundManager), "ResumeMusic");
+                    Tween.RunFunction(1f, typeof(SoundManager), "ResumeMusic");
                 }
             }
         }
@@ -1480,6 +1549,7 @@ namespace RogueCastle
             {
                 m_currentActiveLB.StopLogicBlock();
             }
+
             IsWeighted = false;
             IsCollidable = false;
             AnimationDelay = 0.1f;
@@ -1489,9 +1559,9 @@ namespace RogueCastle
             ChangeSprite("PlayerDeath_Character");
             PlayAnimation(false);
             SoundManager.PlaySound("FinalBoss_St1_DeathGrunt");
-            Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "Player_Death_SwordTwirl");
-            Tween.RunFunction(0.7f, typeof (SoundManager), "PlaySound", "Player_Death_SwordLand");
-            Tween.RunFunction(1.2f, typeof (SoundManager), "PlaySound", "Player_Death_BodyFall");
+            Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "Player_Death_SwordTwirl");
+            Tween.RunFunction(0.7f, typeof(SoundManager), "PlaySound", "Player_Death_SwordLand");
+            Tween.RunFunction(1.2f, typeof(SoundManager), "PlaySound", "Player_Death_BodyFall");
         }
 
         public void SetPlayerData()
@@ -1532,6 +1602,7 @@ namespace RogueCastle
             {
                 playerObj.HitPlayer(this);
             }
+
             if (m_isTouchingGround && m_isHurt)
             {
                 m_isHurt = false;
@@ -1540,10 +1611,12 @@ namespace RogueCastle
                     ChangeSprite("PlayerIdle_Character");
                 }
             }
+
             if (!(otherBox.AbsParent is EnemyObj_Platform))
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
             }
+
             var terrainObj = otherBox.AbsParent as TerrainObj;
             if (terrainObj != null && !m_isTouchingGround && !(terrainObj is DoorObj) && !IsSecondForm)
             {
@@ -1551,11 +1624,13 @@ namespace RogueCastle
                 {
                     m_currentActiveLB.StopLogicBlock();
                 }
+
                 if (vector.X > 0f)
                 {
                     RunLogicBlock(true, m_firstFormDashAwayLB, 0, 100);
                     return;
                 }
+
                 if (vector.X < 0f)
                 {
                     var arg_11D_1 = true;
@@ -1575,6 +1650,7 @@ namespace RogueCastle
             {
                 m_currentActiveLB.StopLogicBlock();
             }
+
             PauseEnemy(true);
             m_target.CurrentSpeed = 0f;
             m_target.ForceInvincible = true;
@@ -1624,6 +1700,7 @@ namespace RogueCastle
                 m_blinkTimer = 0f;
                 TextureColor = Color.White;
             }
+
             base.Draw(camera);
         }
 
@@ -1649,11 +1726,13 @@ namespace RogueCastle
                     m_daggerProjData.Dispose();
                     m_daggerProjData = null;
                 }
+
                 if (m_axeProjData != null)
                 {
                     m_axeProjData.Dispose();
                     m_axeProjData = null;
                 }
+
                 base.Dispose();
             }
         }

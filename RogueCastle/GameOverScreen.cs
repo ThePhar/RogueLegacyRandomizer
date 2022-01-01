@@ -54,7 +54,7 @@ namespace RogueCastle
         {
             if (objList != null)
             {
-                m_player = (objList[0] as PlayerObj);
+                m_player = objList[0] as PlayerObj;
                 if (m_playerFallSound == null)
                 {
                     m_playerFallSound = new FrameSoundObj(m_player, 14, "Player_Death_BodyFall");
@@ -62,13 +62,13 @@ namespace RogueCastle
                     m_playerSwordFallSound = new FrameSoundObj(m_player, 9, "Player_Death_SwordLand");
                 }
 
-                m_enemyList = (objList[1] as List<EnemyObj>);
+                m_enemyList = objList[1] as List<EnemyObj>;
                 m_coinsCollected = (int) objList[2];
                 m_bagsCollected = (int) objList[3];
                 m_diamondsCollected = (int) objList[4];
                 if (objList[5] != null)
                 {
-                    m_objKilledPlayer = (objList[5] as GameObj);
+                    m_objKilledPlayer = objList[5] as GameObj;
                 }
 
                 var cause = SetObjectKilledPlayerText();
@@ -320,7 +320,7 @@ namespace RogueCastle
                 }
                 else if (projectileObj != null)
                 {
-                    enemyObj = (projectileObj.Source as EnemyObj);
+                    enemyObj = projectileObj.Source as EnemyObj;
                     if (enemyObj != null)
                     {
                         if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
@@ -340,7 +340,7 @@ namespace RogueCastle
                 else if (deathLinkObj != null)
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + deathLinkObj.Name +
-                        "'s carelessness";
+                                   "'s carelessness";
                 }
 
                 var hazardObj = m_objKilledPlayer as HazardObj;
@@ -420,10 +420,7 @@ namespace RogueCastle
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X - 10, (int) Camera.TopLeftCorner.Y - 10, 1420, 820),
                 Color.Black * BackBufferOpacity);
-            foreach (var current in m_enemyList)
-            {
-                current.Draw(Camera);
-            }
+            foreach (var current in m_enemyList) current.Draw(Camera);
 
             m_playerFrame.Draw(Camera);
             m_player.Draw(Camera);

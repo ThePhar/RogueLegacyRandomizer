@@ -45,12 +45,11 @@ namespace RogueCastle
             {
                 var num = 0;
                 foreach (var current in m_chestList)
-                {
                     if (current.IsOpen)
                     {
                         num++;
                     }
-                }
+
                 return num;
             }
         }
@@ -60,28 +59,30 @@ namespace RogueCastle
             var vector = Vector2.Zero;
             var zero = Vector2.Zero;
             foreach (var current in GameObjList)
-            {
                 if (current is WaypointObj)
                 {
                     zero.X = current.X;
                 }
-            }
+
             foreach (var current2 in TerrainObjList)
             {
                 if (current2.Name == "GatePosition")
                 {
                     vector = new Vector2(current2.X, current2.Bounds.Bottom);
                 }
+
                 if (current2.Name == "Floor")
                 {
                     zero.Y = current2.Y;
                 }
             }
+
             m_gate.Position = new Vector2(vector.X, vector.Y);
             if (!IsReversed)
             {
                 m_elf.Flip = SpriteEffects.FlipHorizontally;
             }
+
             m_elf.Position = new Vector2(zero.X, zero.Y - (m_elf.Bounds.Bottom - m_elf.AnchorY) - 2f);
             GameObjList.Add(m_elf);
             GameObjList.Add(m_gate);
@@ -101,6 +102,7 @@ namespace RogueCastle
                     chestObj.IsLocked = true;
                 }
             }
+
             (m_elf.GetChildAt(2) as SpriteObj).StopAnimation();
             base.OnEnter();
         }
@@ -133,8 +135,9 @@ namespace RogueCastle
                     else
                     {
                         chestObj.IsEmpty = false;
-                        chestObj.ForcedAmount = goldPaid*3f;
+                        chestObj.ForcedAmount = goldPaid * 3f;
                     }
+
                     num++;
                     m_chestList.Add(chestObj);
                     chestObj.IsLocked = false;
@@ -163,6 +166,7 @@ namespace RogueCastle
                         Player.X = X + Width - 50f;
                     }
                 }
+
                 if (NumberOfChestsOpen >= 1)
                 {
                     var flag = false;
@@ -172,8 +176,10 @@ namespace RogueCastle
                         {
                             flag = true;
                         }
+
                         current.IsLocked = true;
                     }
+
                     RoomCompleted = true;
                     var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     if (!flag)
@@ -184,9 +190,11 @@ namespace RogueCastle
                     {
                         rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Lost");
                     }
+
                     Game.ScreenManager.DisplayScreen(13, true);
                 }
             }
+
             HandleInput();
             base.Update(gameTime);
         }
@@ -203,7 +211,7 @@ namespace RogueCastle
                         rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom" + ID + "-Start");
                         rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                         rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "PlayChestGame");
-                        rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof (Console), "WriteLine",
+                        rCScreenManager.DialogueScreen.SetCancelEndHandler(typeof(Console), "WriteLine",
                             "Canceling Selection");
                     }
                     else
@@ -215,6 +223,7 @@ namespace RogueCastle
                 {
                     rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-End");
                 }
+
                 Game.ScreenManager.DisplayScreen(13, true);
             }
         }
@@ -237,7 +246,8 @@ namespace RogueCastle
                 {
                     num = 0.75f;
                 }
-                var num2 = (int) (Game.PlayerStats.Gold*num);
+
+                var num2 = (int) (Game.PlayerStats.Gold * num);
                 Game.PlayerStats.Gold -= num2;
                 ShuffleChests(num2);
                 Player.AttachedLevel.TextManager.DisplayNumberStringText(-num2, "gold", Color.Yellow,
@@ -245,23 +255,23 @@ namespace RogueCastle
                 Tween.By(m_gate, 1f, Quad.EaseInOut, "Y", (-m_gate.Height).ToString());
                 return;
             }
-            (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen.SetDialogue("ChestBonusRoom1-NoMoney");
+
+            (Player.AttachedLevel.ScreenManager as RCScreenManager).DialogueScreen.SetDialogue(
+                "ChestBonusRoom1-NoMoney");
             Tween.To(this, 0f, Linear.EaseNone);
             Tween.AddEndHandlerToLastTween(Player.AttachedLevel.ScreenManager, "DisplayScreen", 13, true,
-                typeof (List<object>));
+                typeof(List<object>));
         }
 
         public override void Reset()
         {
-            foreach (var current in m_chestList)
-            {
-                current.ResetChest();
-            }
+            foreach (var current in m_chestList) current.ResetChest();
             if (m_paid)
             {
                 m_gate.Y += m_gate.Height;
                 m_paid = false;
             }
+
             base.Reset();
         }
 

@@ -54,7 +54,7 @@ namespace RogueCastle
             {
                 var objContainer = new ObjContainer("DialogBox_Character");
                 objContainer.ForceDraw = true;
-                objContainer.Scale = new Vector2(180f/objContainer.Width, 50f/objContainer.Height);
+                objContainer.Scale = new Vector2(180f / objContainer.Width, 50f / objContainer.Height);
                 objContainer.Position = new Vector2(num3, num4);
                 var textObj = new TextObj(Game.JunicodeFont);
                 textObj.Text = "Entry #" + (i + 1);
@@ -73,11 +73,13 @@ namespace RogueCastle
                     num3 = num;
                     num4 += num5;
                 }
+
                 if (i > 13)
                 {
                     objContainer.Visible = false;
                 }
             }
+
             base.LoadContent();
         }
 
@@ -93,8 +95,8 @@ namespace RogueCastle
             {
                 GameUtil.UnlockAchievement("LOVE_OF_BOOKS");
             }
+
             for (var i = 0; i < m_diaryList.Count; i++)
-            {
                 if (i < m_unlockedEntries)
                 {
                     m_diaryList[i].Visible = true;
@@ -103,7 +105,7 @@ namespace RogueCastle
                 {
                     m_diaryList[i].Visible = false;
                 }
-            }
+
             BackBufferOpacity = 0f;
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.7");
             m_titleText.Opacity = 0f;
@@ -111,7 +113,6 @@ namespace RogueCastle
             var num = 0;
             var num2 = 0f;
             foreach (var current in m_diaryList)
-            {
                 if (current.Visible)
                 {
                     current.Opacity = 0f;
@@ -120,11 +121,12 @@ namespace RogueCastle
                         num = 0;
                         num2 += 0.05f;
                     }
+
                     num++;
                     Tween.To(current, 0.25f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "1");
                     Tween.By(current, 0.25f, Quad.EaseOut, "delay", num2.ToString(), "Y", "50");
                 }
-            }
+
             base.OnEnter();
         }
 
@@ -134,7 +136,6 @@ namespace RogueCastle
             var num = 0;
             var num2 = 0f;
             foreach (var current in m_diaryList)
-            {
                 if (current.Visible)
                 {
                     current.Opacity = 1f;
@@ -143,11 +144,12 @@ namespace RogueCastle
                         num = 0;
                         num2 += 0.05f;
                     }
+
                     num++;
                     Tween.To(current, 0.25f, Tween.EaseNone, "delay", num2.ToString(), "Opacity", "0");
                     Tween.By(current, 0.25f, Quad.EaseOut, "delay", num2.ToString(), "Y", "-50");
                 }
-            }
+
             m_titleText.Opacity = 1f;
             Tween.To(m_titleText, 0.25f, Tween.EaseNone, "Opacity", "0");
             m_inputDelay = 1f;
@@ -167,6 +169,7 @@ namespace RogueCastle
                 {
                     ExitTransition();
                 }
+
                 if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
                 {
                     if (m_entryIndex > 0 && m_diaryList[m_entryIndex - 1].Visible)
@@ -199,22 +202,27 @@ namespace RogueCastle
                     m_entryIndex += 5;
                     SoundManager.PlaySound("frame_swap");
                 }
+
                 if (m_entryRow > 5)
                 {
                     m_entryRow = 5;
                 }
+
                 if (m_entryRow < 1)
                 {
                     m_entryRow = 1;
                 }
-                if (m_entryIndex >= m_entryRow*5)
+
+                if (m_entryIndex >= m_entryRow * 5)
                 {
-                    m_entryIndex = m_entryRow*5 - 1;
+                    m_entryIndex = m_entryRow * 5 - 1;
                 }
-                if (m_entryIndex < m_entryRow*5 - 5)
+
+                if (m_entryIndex < m_entryRow * 5 - 5)
                 {
-                    m_entryIndex = m_entryRow*5 - 5;
+                    m_entryIndex = m_entryRow * 5 - 5;
                 }
+
                 UpdateSelection();
                 base.HandleInput();
             }
@@ -233,6 +241,7 @@ namespace RogueCastle
             {
                 m_selectedEntry.TextureColor = Color.White;
             }
+
             m_selectedEntry = m_diaryList[m_entryIndex];
             m_selectedEntry.TextureColor = Color.Yellow;
         }
@@ -243,19 +252,17 @@ namespace RogueCastle
             {
                 m_inputDelay -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gametime)
         {
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             m_titleText.Draw(Camera);
-            foreach (var current in m_diaryList)
-            {
-                current.Draw(Camera);
-            }
+            foreach (var current in m_diaryList) current.Draw(Camera);
             Camera.End();
             base.Draw(gametime);
         }
@@ -265,10 +272,7 @@ namespace RogueCastle
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Diary Entry Screen");
-                foreach (var current in m_diaryList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_diaryList) current.Dispose();
                 m_diaryList.Clear();
                 m_diaryList = null;
                 m_selectedEntry = null;

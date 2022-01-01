@@ -58,51 +58,60 @@ namespace RogueCastle
                 {
                     terrainObj = current;
                 }
+
                 if (current.Name == "EnchantressBlock")
                 {
                     terrainObj2 = current;
                 }
+
                 if (current.Name == "ArchitectBlock")
                 {
                     terrainObj3 = current;
                 }
+
                 if (current.Name == "SignBlock")
                 {
                     terrainObj4 = current;
                 }
             }
+
             if (terrainObj != null)
             {
                 TerrainObjList.Remove(terrainObj);
             }
+
             if (terrainObj2 != null)
             {
                 TerrainObjList.Remove(terrainObj2);
             }
+
             if (terrainObj3 != null)
             {
                 TerrainObjList.Remove(terrainObj3);
             }
+
             if (terrainObj4 != null)
             {
                 TerrainObjList.Remove(terrainObj4);
             }
+
             if (m_tree1 == null)
             {
                 foreach (var current2 in GameObjList)
                 {
                     if (current2.Name == "Mountains 1")
                     {
-                        m_mountain1 = (current2 as SpriteObj);
+                        m_mountain1 = current2 as SpriteObj;
                     }
                     else if (current2.Name == "Mountains 2")
                     {
-                        m_mountain2 = (current2 as SpriteObj);
+                        m_mountain2 = current2 as SpriteObj;
                     }
                     else if (current2.Name == "Sign")
                     {
                         current2.Visible = false;
                     }
+
                     if (current2.Name == "Tree1")
                     {
                         m_tree1 = current2;
@@ -129,6 +138,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             EnemyList.Clear();
             base.Initialize();
         }
@@ -157,6 +167,7 @@ namespace RogueCastle
             {
                 m_rainSFX.Dispose();
             }
+
             m_rainSFX = SoundManager.PlaySound("Rain1");
             Player.UpdateCollisionBoxes();
             Player.Position = new Vector2(10f, 660f - (Player.Bounds.Bottom - Player.Y));
@@ -234,16 +245,13 @@ namespace RogueCastle
         public override void Update(GameTime gameTime)
         {
             var totalGameTime = Game.TotalGameTimeSeconds;
-            m_tree1.Rotation = -(float) Math.Sin(totalGameTime)*2f;
-            m_tree2.Rotation = (float) Math.Sin(totalGameTime*2f);
-            m_tree3.Rotation = (float) Math.Sin(totalGameTime*2f)*2f;
-            m_fern1.Rotation = (float) Math.Sin(totalGameTime*3f)/2f;
-            m_fern2.Rotation = -(float) Math.Sin(totalGameTime*4f);
-            m_fern3.Rotation = (float) Math.Sin(totalGameTime*4f)/2f;
-            foreach (var current in m_rainFG)
-            {
-                current.Update(TerrainObjList, gameTime);
-            }
+            m_tree1.Rotation = -(float) Math.Sin(totalGameTime) * 2f;
+            m_tree2.Rotation = (float) Math.Sin(totalGameTime * 2f);
+            m_tree3.Rotation = (float) Math.Sin(totalGameTime * 2f) * 2f;
+            m_fern1.Rotation = (float) Math.Sin(totalGameTime * 3f) / 2f;
+            m_fern2.Rotation = -(float) Math.Sin(totalGameTime * 4f);
+            m_fern3.Rotation = (float) Math.Sin(totalGameTime * 4f) / 2f;
+            foreach (var current in m_rainFG) current.Update(TerrainObjList, gameTime);
             if (m_inSecondPart && m_smokeCounter < 0.2f)
             {
                 m_smokeCounter += (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -256,19 +264,17 @@ namespace RogueCastle
                         new Vector2(Player.AttachedLevel.Camera.X + 380f, Player.AttachedLevel.Camera.Bounds.Top));
                 }
             }
+
             base.Update(gameTime);
         }
 
         public override void Draw(Camera2D camera)
         {
-            m_mountain1.X = camera.TopLeftCorner.X*0.5f;
+            m_mountain1.X = camera.TopLeftCorner.X * 0.5f;
             m_mountain2.X = m_mountain1.X + 2640f;
             base.Draw(camera);
-            camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 2640, 720), Color.Black*0.6f);
-            foreach (var current in m_rainFG)
-            {
-                current.Draw(camera);
-            }
+            camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 2640, 720), Color.Black * 0.6f);
+            foreach (var current in m_rainFG) current.Draw(camera);
             if (m_inSecondPart)
             {
                 camera.Draw(Game.GenericTexture, new Rectangle(1650, 0, 3000, 720), Color.Black);
@@ -277,10 +283,7 @@ namespace RogueCastle
 
         public override void PauseRoom()
         {
-            foreach (var current in m_rainFG)
-            {
-                current.PauseAnimation();
-            }
+            foreach (var current in m_rainFG) current.PauseAnimation();
             if (m_rainSFX != null)
             {
                 m_rainSFX.Pause();
@@ -289,10 +292,7 @@ namespace RogueCastle
 
         public override void UnpauseRoom()
         {
-            foreach (var current in m_rainFG)
-            {
-                current.ResumeAnimation();
-            }
+            foreach (var current in m_rainFG) current.ResumeAnimation();
             if (m_rainSFX != null && m_rainSFX.IsPaused)
             {
                 m_rainSFX.Resume();
@@ -303,10 +303,7 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                foreach (var current in m_rainFG)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_rainFG) current.Dispose();
                 m_rainFG.Clear();
                 m_rainFG = null;
                 m_mountain1 = null;
@@ -315,6 +312,7 @@ namespace RogueCastle
                 {
                     m_rainSFX.Dispose();
                 }
+
                 m_rainSFX = null;
                 m_tree1 = null;
                 m_tree2 = null;

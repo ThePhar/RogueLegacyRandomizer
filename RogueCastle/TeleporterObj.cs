@@ -19,7 +19,7 @@ namespace RogueCastle
     {
         private SpriteObj m_arrowIcon;
 
-        public TeleporterObj() : base("TeleporterBase_Sprite", null)
+        public TeleporterObj() : base("TeleporterBase_Sprite")
         {
             CollisionTypeTag = 1;
             SetCollision(false);
@@ -46,10 +46,11 @@ namespace RogueCastle
             if (m_arrowIcon.Visible)
             {
                 m_arrowIcon.Position = new Vector2(Bounds.Center.X,
-                    Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f);
+                    Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f);
                 m_arrowIcon.Draw(camera);
                 m_arrowIcon.Visible = false;
             }
+
             base.Draw(camera);
         }
 
@@ -60,6 +61,7 @@ namespace RogueCastle
             {
                 m_arrowIcon.Visible = true;
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 

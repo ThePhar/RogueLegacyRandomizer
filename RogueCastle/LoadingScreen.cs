@@ -65,16 +65,18 @@ namespace RogueCastle
             m_effectPool.Initialize();
             m_blackTransitionIn = new SpriteObj("Blank_Sprite");
             m_blackTransitionIn.Rotation = 15f;
-            m_blackTransitionIn.Scale = new Vector2(1320/m_blackTransitionIn.Width, 2000/m_blackTransitionIn.Height);
+            m_blackTransitionIn.Scale =
+                new Vector2(1320 / m_blackTransitionIn.Width, 2000 / m_blackTransitionIn.Height);
             m_blackTransitionIn.TextureColor = Color.Black;
             m_blackTransitionIn.ForceDraw = true;
             m_blackScreen = new SpriteObj("Blank_Sprite");
-            m_blackScreen.Scale = new Vector2(1320/m_blackScreen.Width, 720/m_blackScreen.Height);
+            m_blackScreen.Scale = new Vector2(1320 / m_blackScreen.Width, 720 / m_blackScreen.Height);
             m_blackScreen.TextureColor = Color.Black;
             m_blackScreen.ForceDraw = true;
             m_blackTransitionOut = new SpriteObj("Blank_Sprite");
             m_blackTransitionOut.Rotation = 15f;
-            m_blackTransitionOut.Scale = new Vector2(1320/m_blackTransitionOut.Width, 2000/m_blackTransitionOut.Height);
+            m_blackTransitionOut.Scale =
+                new Vector2(1320 / m_blackTransitionOut.Width, 2000 / m_blackTransitionOut.Height);
             m_blackTransitionOut.TextureColor = Color.Black;
             m_blackTransitionOut.ForceDraw = true;
             base.LoadContent();
@@ -100,6 +102,7 @@ namespace RogueCastle
             {
                 m_loadingText.Text = "Building";
             }
+
             if (!m_loadingComplete)
             {
                 if (m_screenTypeToLoad == 27)
@@ -118,7 +121,7 @@ namespace RogueCastle
                         SoundManager.PlaySound("GateDrop");
                         Tween.To(m_gateSprite, 0.5f, Tween.EaseNone, "Y", "0");
                         Tween.RunFunction(0.3f, m_effectPool, "LoadingGateSmokeEffect", 40);
-                        Tween.RunFunction(0.3f, typeof (SoundManager), "PlaySound", "GateSlam");
+                        Tween.RunFunction(0.3f, typeof(SoundManager), "PlaySound", "GateSlam");
                         Tween.RunFunction(0.55f, this, "ShakeScreen", 4, true, true);
                         Tween.RunFunction(0.65f, this, "StopScreenShake");
                         Tween.RunFunction(1.5f, this, "BeginThreading");
@@ -131,6 +134,7 @@ namespace RogueCastle
                         Tween.AddEndHandlerToLastTween(this, "BeginThreading");
                     }
                 }
+
                 base.OnEnter();
             }
         }
@@ -144,6 +148,7 @@ namespace RogueCastle
                 thread.CurrentCulture = new CultureInfo("en-US", false);
                 thread.CurrentUICulture = new CultureInfo("en-US", false);
             }
+
             thread.Start();
         }
 
@@ -163,52 +168,67 @@ namespace RogueCastle
                             m_loadingComplete = true;
                             return;
                         }
+
                     case 2:
                     case 4:
                         return;
+
                     case 3:
                         goto IL_199;
+
                     case 5:
                         goto IL_205;
+
                     default:
                         if (screenTypeToLoad != 9)
                         {
                             return;
                         }
+
                         goto IL_1CF;
                 }
             }
+
             if (screenTypeToLoad == 15)
             {
                 goto IL_205;
             }
+
             if (screenTypeToLoad == 18)
             {
                 goto IL_11E;
             }
+
             switch (screenTypeToLoad)
             {
                 case 23:
                 case 24:
                     goto IL_205;
+
                 case 25:
                 case 26:
                     return;
+
                 case 27:
                     goto IL_199;
+
                 case 28:
                     goto IL_E8;
+
                 case 29:
                     break;
+
                 default:
                     return;
             }
+
             m_levelToLoad = new DemoEndScreen();
             lock (m_levelToLoad)
             {
                 m_loadingComplete = true;
                 return;
             }
+
             IL_E8:
             m_levelToLoad = new DemoStartScreen();
             lock (m_levelToLoad)
@@ -216,6 +236,7 @@ namespace RogueCastle
                 m_loadingComplete = true;
                 return;
             }
+
             IL_11E:
             m_levelToLoad = new CreditsScreen();
             var isEnding = true;
@@ -229,12 +250,14 @@ namespace RogueCastle
                     break;
                 }
             }
+
             (m_levelToLoad as CreditsScreen).IsEnding = isEnding;
             lock (m_levelToLoad)
             {
                 m_loadingComplete = true;
                 return;
             }
+
             IL_199:
             m_levelToLoad = new TitleScreen();
             lock (m_levelToLoad)
@@ -242,6 +265,7 @@ namespace RogueCastle
                 m_loadingComplete = true;
                 return;
             }
+
             IL_1CF:
             m_levelToLoad = new LineageScreen();
             lock (m_levelToLoad)
@@ -249,6 +273,7 @@ namespace RogueCastle
                 m_loadingComplete = true;
                 return;
             }
+
             IL_205:
             var rCScreenManager = ScreenManager as RCScreenManager;
             var area1List = Game.Area1List;
@@ -280,6 +305,7 @@ namespace RogueCastle
                         {
                             m_gameCrashed = true;
                         }
+
                         if (!m_gameCrashed)
                         {
                             (ScreenManager.Game as Game).SaveManager.LoadFiles(m_levelToLoad as ProceduralLevelScreen,
@@ -310,6 +336,7 @@ namespace RogueCastle
                     {
                         m_gameCrashed = true;
                     }
+
                     if (!m_gameCrashed)
                     {
                         Game.ScreenManager.Player.Position =
@@ -317,6 +344,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             if (!m_gameCrashed)
             {
                 lock (m_levelToLoad)
@@ -325,14 +353,13 @@ namespace RogueCastle
                     proceduralLevelScreen.Player = rCScreenManager.Player;
                     rCScreenManager.Player.AttachLevel(proceduralLevelScreen);
                     for (var j = 0; j < proceduralLevelScreen.RoomList.Count; j++)
-                    {
                         proceduralLevelScreen.RoomList[j].RoomNumber = j + 1;
-                    }
                     rCScreenManager.AttachMap(proceduralLevelScreen);
                     if (!m_wipeTransition)
                     {
                         Thread.Sleep(100);
                     }
+
                     m_loadingComplete = true;
                 }
             }
@@ -344,17 +371,20 @@ namespace RogueCastle
             {
                 (ScreenManager.Game as Game).SaveManager.ForceBackup();
             }
+
             if (m_isLoading && m_loadingComplete && !m_gameCrashed)
             {
                 EndLoading();
             }
+
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            m_gateSprite.GetChildAt(1).Rotation += 120f*num;
-            m_gateSprite.GetChildAt(2).Rotation -= 120f*num;
+            m_gateSprite.GetChildAt(1).Rotation += 120f * num;
+            m_gateSprite.GetChildAt(2).Rotation -= 120f * num;
             if (m_shakeScreen)
             {
                 UpdateShake();
             }
+
             base.Update(gameTime);
         }
 
@@ -375,6 +405,7 @@ namespace RogueCastle
                     screenManager.RemoveScreen(screen, false);
                 }
             }
+
             ScreenManager = screenManager;
             m_levelToLoad.DrawIfCovered = true;
             if (m_screenTypeToLoad == 15)
@@ -383,12 +414,14 @@ namespace RogueCastle
                 {
                     (m_levelToLoad as ProceduralLevelScreen).DisableRoomOnEnter = true;
                 }
+
                 ScreenManager.AddScreen(m_levelToLoad, PlayerIndex.One);
                 if (Game.PlayerStats.IsDead)
                 {
                     ScreenManager.AddScreen((ScreenManager as RCScreenManager).SkillScreen, PlayerIndex.One);
                     (m_levelToLoad as ProceduralLevelScreen).DisableRoomOnEnter = false;
                 }
+
                 m_levelToLoad.UpdateIfCovered = false;
             }
             else
@@ -396,6 +429,7 @@ namespace RogueCastle
                 ScreenManager.AddScreen(m_levelToLoad, PlayerIndex.One);
                 m_levelToLoad.UpdateIfCovered = true;
             }
+
             ScreenManager.AddScreen(this, PlayerIndex.One);
             AddFinalTransition();
         }
@@ -409,6 +443,7 @@ namespace RogueCastle
                 Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", this, true);
                 return;
             }
+
             if (!m_wipeTransition)
             {
                 SoundManager.PlaySound("GateRise");
@@ -416,6 +451,7 @@ namespace RogueCastle
                 Tween.AddEndHandlerToLastTween(ScreenManager, "RemoveScreen", this, true);
                 return;
             }
+
             m_blackTransitionOut.Y = -500f;
             Tween.By(m_blackTransitionIn, 0.2f, Tween.EaseNone, "X", (-m_blackTransitionIn.Bounds.Width).ToString());
             Tween.By(m_blackScreen, 0.2f, Tween.EaseNone, "X", (-m_blackTransitionIn.Bounds.Width).ToString());
@@ -442,7 +478,8 @@ namespace RogueCastle
                     m_blackScreen.Draw(Camera);
                 }
             }
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.White*BackBufferOpacity);
+
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.White * BackBufferOpacity);
             Camera.End();
             base.Draw(gameTime);
         }
@@ -459,11 +496,12 @@ namespace RogueCastle
         {
             if (m_horizontalShake)
             {
-                m_gateSprite.X = CDGMath.RandomPlusMinus()*(CDGMath.RandomFloat(0f, 1f)*m_screenShakeMagnitude);
+                m_gateSprite.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
             }
+
             if (m_verticalShake)
             {
-                m_gateSprite.Y = CDGMath.RandomPlusMinus()*(CDGMath.RandomFloat(0f, 1f)*m_screenShakeMagnitude);
+                m_gateSprite.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
             }
         }
 

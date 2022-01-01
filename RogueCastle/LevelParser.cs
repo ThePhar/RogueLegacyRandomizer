@@ -42,13 +42,13 @@ namespace RogueCastle
                 xmlReader = XmlReader.Create(contentManager.RootDirectory + "\\Levels\\" + filePath + ".xml",
                     xmlReaderSettings);
             }
+
             RoomObj roomObj = null;
             RoomObj roomObj2 = null;
             RoomObj roomObj3 = null;
             RoomObj roomObj4 = null;
             RoomObj roomObj5 = null;
             while (xmlReader.Read())
-            {
                 if (xmlReader.NodeType == XmlNodeType.Element)
                 {
                     if (xmlReader.Name == "RoomObject")
@@ -59,11 +59,13 @@ namespace RogueCastle
                         {
                             roomObj.IsDLCMap = true;
                         }
-                        roomObj2 = (roomObj.Clone() as RoomObj);
-                        roomObj3 = (roomObj.Clone() as RoomObj);
-                        roomObj4 = (roomObj.Clone() as RoomObj);
-                        roomObj5 = (roomObj.Clone() as RoomObj);
+
+                        roomObj2 = roomObj.Clone() as RoomObj;
+                        roomObj3 = roomObj.Clone() as RoomObj;
+                        roomObj4 = roomObj.Clone() as RoomObj;
+                        roomObj5 = roomObj.Clone() as RoomObj;
                     }
+
                     if (xmlReader.Name == "GameObject")
                     {
                         xmlReader.MoveToAttribute("Type");
@@ -75,9 +77,11 @@ namespace RogueCastle
                             case "CollHullObj":
                                 gameObj = new TerrainObj(0, 0);
                                 break;
+
                             case "DoorObj":
                                 gameObj = new DoorObj(roomObj, 0, 0, DoorType.Open);
                                 break;
+
                             case "ChestObj":
                                 if (xmlReader.MoveToAttribute("Fairy"))
                                 {
@@ -95,13 +99,17 @@ namespace RogueCastle
                                 {
                                     gameObj = new ChestObj(null);
                                 }
+
                                 break;
+
                             case "HazardObj":
                                 gameObj = new HazardObj(0, 0);
                                 break;
+
                             case "BorderObj":
                                 gameObj = new BorderObj();
                                 break;
+
                             case "EnemyObj":
                                 xmlReader.MoveToAttribute("Procedural");
                                 if (!bool.Parse(xmlReader.Value))
@@ -111,12 +119,13 @@ namespace RogueCastle
                                     xmlReader.MoveToAttribute("Difficulty");
                                     var difficulty =
                                         (EnemyDifficulty)
-                                            Enum.Parse(typeof (EnemyDifficulty), xmlReader.Value, true);
+                                        Enum.Parse(typeof(EnemyDifficulty), xmlReader.Value, true);
                                     gameObj = EnemyBuilder.BuildEnemy(enemyType, null, null, null, difficulty);
                                     if (xmlReader.MoveToAttribute("Flip") && bool.Parse(xmlReader.Value))
                                     {
                                         gameObj.Flip = SpriteEffects.FlipHorizontally;
                                     }
+
                                     if (xmlReader.MoveToAttribute("InitialDelay"))
                                     {
                                         (gameObj as EnemyObj).InitialLogicDelay = float.Parse(xmlReader.Value,
@@ -130,7 +139,9 @@ namespace RogueCastle
                                     gameObj = new EnemyTagObj();
                                     (gameObj as EnemyTagObj).EnemyType = value2;
                                 }
+
                                 break;
+
                             case "EnemyOrbObj":
                             {
                                 xmlReader.MoveToAttribute("OrbType");
@@ -140,6 +151,7 @@ namespace RogueCastle
                                 {
                                     flag = bool.Parse(xmlReader.Value);
                                 }
+
                                 if (flag)
                                 {
                                     gameObj = new WaypointObj();
@@ -154,8 +166,10 @@ namespace RogueCastle
                                         (gameObj as EnemyOrbObj).ForceFlying = bool.Parse(xmlReader.Value);
                                     }
                                 }
+
                                 break;
                             }
+
                             case "SpriteObj":
                                 xmlReader.MoveToAttribute("SpriteName");
                                 if (xmlReader.Value == "LightSource_Sprite")
@@ -166,7 +180,9 @@ namespace RogueCastle
                                 {
                                     gameObj = new SpriteObj(xmlReader.Value);
                                 }
+
                                 break;
+
                             case "PhysicsObj":
                             {
                                 xmlReader.MoveToAttribute("SpriteName");
@@ -178,6 +194,7 @@ namespace RogueCastle
                                 physicsObj.CollidesRight = false;
                                 break;
                             }
+
                             case "PhysicsObjContainer":
                             {
                                 var flag2 = false;
@@ -185,6 +202,7 @@ namespace RogueCastle
                                 {
                                     flag2 = bool.Parse(xmlReader.Value);
                                 }
+
                                 xmlReader.MoveToAttribute("SpriteName");
                                 if (flag2)
                                 {
@@ -194,22 +212,27 @@ namespace RogueCastle
                                 {
                                     gameObj = new PhysicsObjContainer(xmlReader.Value);
                                 }
+
                                 break;
                             }
+
                             case "ObjContainer":
                                 xmlReader.MoveToAttribute("SpriteName");
                                 gameObj = new ObjContainer(xmlReader.Value);
                                 break;
+
                             case "PlayerStartObj":
                                 gameObj = new PlayerStartObj();
                                 break;
                         }
+
                         ParseGenericXML(xmlReader, gameObj);
                         var levelType = LevelType.None;
                         if (xmlReader.MoveToAttribute("LevelType"))
                         {
                             levelType = (LevelType) int.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
                         }
+
                         if (levelType == LevelType.Castle)
                         {
                             StoreObj(gameObj, roomObj2);
@@ -242,6 +265,7 @@ namespace RogueCastle
                             StoreObj(gameObj, roomObj4);
                             StoreObj(gameObj, roomObj);
                         }
+
                         if (LevelENV.RunTestRoom &&
                             (levelType == LevelENV.TestRoomLevelType || levelType == LevelType.Castle))
                         {
@@ -254,6 +278,7 @@ namespace RogueCastle
                                 StoreSwappedObj(gameObj, LevelENV.TestRoomLevelType, roomObj);
                             }
                         }
+
                         if (gameObj is PlayerStartObj)
                         {
                             var expr_65E = roomObj;
@@ -272,22 +297,26 @@ namespace RogueCastle
                                 LevelBuilder2.StoreRoom(roomObj2, LevelType.Castle);
                                 LevelBuilder2.StoreSpecialRoom(roomObj2, LevelType.Castle);
                             }
+
                             if (roomObj.AddToDungeonPool)
                             {
                                 LevelBuilder2.StoreRoom(roomObj3, LevelType.Dungeon);
                                 LevelBuilder2.StoreSpecialRoom(roomObj3, LevelType.Dungeon);
                             }
+
                             if (roomObj.AddToGardenPool)
                             {
                                 LevelBuilder2.StoreRoom(roomObj4, LevelType.Garden);
                                 LevelBuilder2.StoreSpecialRoom(roomObj4, LevelType.Garden);
                             }
+
                             if (roomObj.AddToTowerPool)
                             {
                                 LevelBuilder2.StoreRoom(roomObj5, LevelType.Tower);
                                 LevelBuilder2.StoreSpecialRoom(roomObj5, LevelType.Tower);
                             }
                         }
+
                         if (roomObj.Name.Contains("DEBUG_ROOM"))
                         {
                             roomObj.Name = roomObj.Name.Replace("DEBUG_ROOM", "");
@@ -295,15 +324,16 @@ namespace RogueCastle
                             {
                                 LevelBuilder2.StoreSpecialRoom(roomObj, LevelType.Castle, true);
                             }
+
                             LevelBuilder2.StoreSpecialRoom(roomObj, LevelENV.TestRoomLevelType, true);
                         }
                     }
+
                     if (roomObj.X < 10000f && (roomObj.Name == "Boss" || roomObj.Name == "ChallengeBoss"))
                     {
                         LevelBuilder2.StoreSpecialRoom(roomObj, LevelType.Castle);
                     }
                 }
-            }
         }
 
         public static void ParseGenericXML(XmlReader reader, GameObj obj)
@@ -316,10 +346,12 @@ namespace RogueCastle
             {
                 flag = bool.Parse(reader.Value);
             }
+
             if (flag)
             {
                 obj.Layer = -1f;
             }
+
             var breakableObj = obj as BreakableObj;
             if (breakableObj != null)
             {
@@ -335,20 +367,25 @@ namespace RogueCastle
                 case LevelType.Garden:
                     array = LevelENV.GardenAssetSwapList;
                     break;
+
                 case LevelType.Dungeon:
                     array = LevelENV.DungeonAssetSwapList;
                     break;
+
                 case LevelType.Tower:
                     array = LevelENV.TowerAssetSwapList;
                     break;
+
                 default:
                     throw new Exception("Cannot find asset swaplist for leveltype " + levelType);
             }
+
             var breakableObj = obj as BreakableObj;
             if (breakableObj != null && breakableObj.SpriteName.Contains("CastleAssetUrn"))
             {
                 breakableObj.CollidesTop = false;
             }
+
             var flag = false;
             var animateableObj = obj.Clone() as IAnimateableObj;
             if (animateableObj != null)
@@ -373,6 +410,7 @@ namespace RogueCastle
                                     (animateableObj as GameObj).Visible = false;
                                 }
                             }
+
                             if (text.Contains("GardenFloatingRock"))
                             {
                                 animateableObj = new HoverObj(text)
@@ -385,14 +423,17 @@ namespace RogueCastle
                                 };
                             }
                         }
+
                         if (text == "CastleAssetFrame_Sprite")
                         {
                             text = "FramePicture" + CDGMath.RandomInt(1, 16) + "_Sprite";
                         }
+
                         if (!(text != ""))
                         {
                             break;
                         }
+
                         animateableObj.ChangeSprite(text);
                         flag = true;
                         if (text.Contains("GardenFairy"))
@@ -401,11 +442,14 @@ namespace RogueCastle
                             (animateableObj as GameObj).Y += CDGMath.RandomInt(-25, 25);
                             (animateableObj as GameObj).Opacity = 0.8f;
                         }
+
                         break;
                     }
+
                     i++;
                 }
             }
+
             if (flag)
             {
                 StoreObj(animateableObj as GameObj, currentRoom);
@@ -419,21 +463,25 @@ namespace RogueCastle
                 currentRoom.EnemyList.Add(obj as EnemyObj);
                 return;
             }
+
             if (obj is DoorObj)
             {
                 currentRoom.DoorList.Add(obj as DoorObj);
                 return;
             }
+
             if (obj is TerrainObj)
             {
                 currentRoom.TerrainObjList.Add(obj as TerrainObj);
                 return;
             }
+
             if (obj is BorderObj)
             {
                 currentRoom.BorderList.Add(obj as BorderObj);
                 return;
             }
+
             currentRoom.GameObjList.Add(obj);
         }
     }

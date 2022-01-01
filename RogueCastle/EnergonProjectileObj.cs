@@ -40,12 +40,15 @@ namespace RogueCastle
                 case 0:
                     ChangeSprite("EnergonSwordProjectile_Sprite");
                     return;
+
                 case 1:
                     ChangeSprite("EnergonShieldProjectile_Sprite");
                     return;
+
                 case 2:
                     ChangeSprite("EnergonDownSwordProjectile_Sprite");
                     return;
+
                 default:
                     return;
             }
@@ -56,9 +59,9 @@ namespace RogueCastle
             var playerObj = otherBox.AbsParent as PlayerObj;
             if (playerObj != null && !m_canHitEnemy)
             {
-                if ((AttackType == 0 && otherBox.Type == 1 && !playerObj.IsAirAttacking) ||
-                    (AttackType == 1 && otherBox.Type == 2 && playerObj.State == 6) ||
-                    (AttackType == 2 && otherBox.Type == 1 && playerObj.IsAirAttacking))
+                if (AttackType == 0 && otherBox.Type == 1 && !playerObj.IsAirAttacking ||
+                    AttackType == 1 && otherBox.Type == 2 && playerObj.State == 6 ||
+                    AttackType == 2 && otherBox.Type == 1 && playerObj.IsAirAttacking)
                 {
                     Target = m_parent;
                     CollisionTypeTag = 2;
@@ -66,6 +69,7 @@ namespace RogueCastle
                     playerObj.AttachedLevel.ImpactEffectPool.DisplayEnemyImpactEffect(Position);
                     return;
                 }
+
                 if (otherBox.Type == 2)
                 {
                     m_parent.DestroyProjectile(this);

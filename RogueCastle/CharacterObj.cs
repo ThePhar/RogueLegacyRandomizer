@@ -55,6 +55,7 @@ namespace RogueCastle
                 {
                     m_currentHealth = MaxHealth;
                 }
+
                 if (m_currentHealth < 0)
                 {
                     m_currentHealth = 0;
@@ -81,9 +82,7 @@ namespace RogueCastle
         protected abstract void InitializeEV();
         protected abstract void InitializeLogic();
 
-        public virtual void HandleInput()
-        {
-        }
+        public virtual void HandleInput() { }
 
         public virtual void Update(GameTime gameTime)
         {
@@ -93,6 +92,7 @@ namespace RogueCastle
                 TextureColor = m_blinkColour;
                 return;
             }
+
             if (TextureColor == m_blinkColour)
             {
                 TextureColor = Color.White;

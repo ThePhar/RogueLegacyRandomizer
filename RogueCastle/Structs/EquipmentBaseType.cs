@@ -13,25 +13,25 @@ namespace RogueCastle.Structs
 {
     public static class EquipmentBaseType
     {
-        public const int Squire      = 0;
-        public const int Silver      = 1;
-        public const int Guardian    = 2;
-        public const int Imperial    = 3;
-        public const int Royal       = 4;
-        public const int Knight      = 5;
-        public const int Ranger      = 6;
-        public const int Sky         = 7;
-        public const int Dragon      = 8;
-        public const int Slayer      = 9;
-        public const int Blood       = 10;
-        public const int Sage        = 11;
+        public const int Squire = 0;
+        public const int Silver = 1;
+        public const int Guardian = 2;
+        public const int Imperial = 3;
+        public const int Royal = 4;
+        public const int Knight = 5;
+        public const int Ranger = 6;
+        public const int Sky = 7;
+        public const int Dragon = 8;
+        public const int Slayer = 9;
+        public const int Blood = 10;
+        public const int Sage = 11;
         public const int Retribution = 12;
-        public const int Holy        = 13;
-        public const int Dark        = 14;
-        public const int Total       = 15;
+        public const int Holy = 13;
+        public const int Dark = 14;
+        public const int Total = 15;
 
         /// <summary>
-        /// Returns the string representation of a given equipment base's name.
+        ///     Returns the string representation of a given equipment base's name.
         /// </summary>
         /// <param name="equipmentBaseType">Equipment Base Identifier</param>
         /// <returns></returns>

@@ -22,14 +22,13 @@ namespace RogueCastle
             m_teleporter = new TeleporterObj();
             SpriteObj item = null;
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "teleporter")
                 {
                     m_teleporter.Position = current.Position;
-                    item = (current as SpriteObj);
+                    item = current as SpriteObj;
                     break;
                 }
-            }
+
             GameObjList.Remove(item);
             GameObjList.Add(m_teleporter);
             m_teleporter.OutlineWidth = 2;
@@ -59,6 +58,7 @@ namespace RogueCastle
                 {
                     num = 1;
                 }
+
                 var index = CDGMath.RandomInt(0, num);
                 var roomObj = levelScreen.RoomList[index];
                 while (roomObj.Name == "Boss" || roomObj.Name == "Start" || roomObj.Name == "Ending" ||
@@ -70,6 +70,7 @@ namespace RogueCastle
                     index = CDGMath.RandomInt(0, num);
                     roomObj = levelScreen.RoomList[index];
                 }
+
                 foreach (var current in roomObj.DoorList)
                 {
                     var flag = false;
@@ -91,11 +92,13 @@ namespace RogueCastle
                             position.Y = current.Bounds.Bottom - (player.Bounds.Bottom - player.Y);
                         }
                     }
+
                     if (flag)
                     {
                         break;
                     }
                 }
+
                 player.TeleportPlayer(position, m_teleporter);
             }
         }

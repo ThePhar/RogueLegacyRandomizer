@@ -71,6 +71,7 @@ namespace RogueCastle
                 m_abilitiesSpriteArray[i].Scale = new Vector2(0.5f, 0.5f);
                 position.X += num;
             }
+
             m_hpBarContainer = new ObjContainer("PlayerHUDHPBar_Character");
             m_hpBarContainer.ForceDraw = true;
             m_mpBarContainer = new ObjContainer("PlayerHUDMPBar_Character");
@@ -88,7 +89,7 @@ namespace RogueCastle
             m_iconHolder1.ForceDraw = true;
             m_iconHolder1.Opacity = 0.5f;
             m_iconHolder1.Scale = new Vector2(0.8f, 0.8f);
-            m_iconHolder2 = (m_iconHolder1.Clone() as SpriteObj);
+            m_iconHolder2 = m_iconHolder1.Clone() as SpriteObj;
             m_spellCost = new TextObj(Game.JunicodeFont);
             m_spellCost.Align = Types.TextAlign.Centre;
             m_spellCost.ForceDraw = true;
@@ -121,6 +122,7 @@ namespace RogueCastle
                 objContainer = m_mpBarContainer;
                 objContainer2 = m_hpBarContainer;
             }
+
             Position = position;
             spriteObj.Position = new Vector2(X + 7f, Y + 60f);
             spriteObj2.Position = new Vector2(X + 8f, Y + 29f);
@@ -140,6 +142,7 @@ namespace RogueCastle
                 m_mpText.Position = m_hpText.Position;
                 m_mpText.Y += 30f;
             }
+
             objContainer2.Position = new Vector2(X, Y + 17f);
             if (spriteObj2 == m_hpBar)
             {
@@ -149,6 +152,7 @@ namespace RogueCastle
             {
                 spriteObj2.Position = new Vector2(objContainer2.X + 2f, objContainer2.Y + 6f);
             }
+
             objContainer.Position = new Vector2(X, objContainer2.Bounds.Bottom);
             if (spriteObj == m_mpBar)
             {
@@ -158,6 +162,7 @@ namespace RogueCastle
             {
                 spriteObj.Position = new Vector2(objContainer.X + 2f, objContainer.Y + 7f);
             }
+
             m_coin.Position = new Vector2(X, objContainer.Bounds.Bottom + 2);
             m_goldText.Position = new Vector2(m_coin.X + 28f, m_coin.Y - 2f);
             m_iconHolder1.Position = new Vector2(m_coin.X + 25f, m_coin.Y + 60f);
@@ -174,12 +179,14 @@ namespace RogueCastle
             {
                 num = 0;
             }
+
             m_playerLevelText.Text = num.ToString();
             var num2 = Game.PlayerStats.Gold;
             if (num2 < 0)
             {
                 num2 = 0;
             }
+
             m_goldText.Text = num2.ToString();
             m_hpText.Text = player.CurrentHealth + "/" + player.MaxHealth;
             m_mpText.Text = player.CurrentMana + "/" + player.MaxMana;
@@ -190,35 +197,37 @@ namespace RogueCastle
         private void UpdatePlayerHP(PlayerObj player)
         {
             var num = player.MaxHealth - player.BaseHealth;
-            var num2 = player.CurrentHealth/(float) player.MaxHealth;
-            var num3 = (int) (88f + num/5f);
+            var num2 = player.CurrentHealth / (float) player.MaxHealth;
+            var num3 = (int) (88f + num / 5f);
             if (num3 > m_maxBarLength)
             {
                 num3 = m_maxBarLength;
             }
-            var scaleX = (num3 - 28 - 28)/32f;
+
+            var scaleX = (num3 - 28 - 28) / 32f;
             m_hpBarContainer.GetChildAt(1).ScaleX = scaleX;
             m_hpBarContainer.GetChildAt(2).X = m_hpBarContainer.GetChildAt(1).Bounds.Right;
             m_hpBarContainer.CalculateBounds();
             m_hpBar.ScaleX = 1f;
-            m_hpBar.ScaleX = (m_hpBarContainer.Width - 8)/(float) m_hpBar.Width*num2;
+            m_hpBar.ScaleX = (m_hpBarContainer.Width - 8) / (float) m_hpBar.Width * num2;
         }
 
         private void UpdatePlayerMP(PlayerObj player)
         {
             var num = (int) (player.MaxMana - player.BaseMana);
-            var num2 = player.CurrentMana/player.MaxMana;
-            var num3 = (int) (88f + num/5f);
+            var num2 = player.CurrentMana / player.MaxMana;
+            var num3 = (int) (88f + num / 5f);
             if (num3 > m_maxBarLength)
             {
                 num3 = m_maxBarLength;
             }
-            var scaleX = (num3 - 28 - 28)/32f;
+
+            var scaleX = (num3 - 28 - 28) / 32f;
             m_mpBarContainer.GetChildAt(1).ScaleX = scaleX;
             m_mpBarContainer.GetChildAt(2).X = m_mpBarContainer.GetChildAt(1).Bounds.Right;
             m_mpBarContainer.CalculateBounds();
             m_mpBar.ScaleX = 1f;
-            m_mpBar.ScaleX = (m_mpBarContainer.Width - 8)/(float) m_mpBar.Width*num2;
+            m_mpBar.ScaleX = (m_mpBarContainer.Width - 8) / (float) m_mpBar.Width * num2;
         }
 
         public void UpdatePlayerLevel()
@@ -234,6 +243,7 @@ namespace RogueCastle
                 var spriteObj = abilitiesSpriteArray[i];
                 spriteObj.ChangeSprite("Blank_Sprite");
             }
+
             var num = 0;
             var getEquippedRuneArray = Game.PlayerStats.GetEquippedRuneArray;
             for (var j = 0; j < getEquippedRuneArray.Length; j++)
@@ -271,8 +281,8 @@ namespace RogueCastle
                 m_iconHolder1.Opacity = 1f;
                 m_spellCost.Text =
                     (int)
-                        (SpellEV.GetManaCost(Game.PlayerStats.Spell)*
-                         (1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount)) + " mp";
+                    (SpellEV.GetManaCost(Game.PlayerStats.Spell) *
+                     (1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount)) + " mp";
                 m_spellCost.Visible = true;
             }
         }
@@ -294,6 +304,7 @@ namespace RogueCastle
                         var spriteObj = abilitiesSpriteArray[i];
                         spriteObj.Draw(camera);
                     }
+
                     m_iconHolder1.Draw(camera);
                     m_iconHolder2.Draw(camera);
                     m_spellIcon.Draw(camera);
@@ -301,6 +312,7 @@ namespace RogueCastle
                     camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
                     m_spellCost.Draw(camera);
                 }
+
                 m_mpBar.Draw(camera);
                 m_mpText.Draw(camera);
                 if (Game.PlayerStats.Traits.X != 30f && Game.PlayerStats.Traits.Y != 30f)
@@ -308,6 +320,7 @@ namespace RogueCastle
                     m_hpBar.Draw(camera);
                     m_hpText.Draw(camera);
                 }
+
                 m_mpBarContainer.Draw(camera);
                 m_hpBarContainer.Draw(camera);
             }
@@ -323,6 +336,7 @@ namespace RogueCastle
                     var spriteObj = abilitiesSpriteArray[i];
                     spriteObj.Dispose();
                 }
+
                 Array.Clear(m_abilitiesSpriteArray, 0, m_abilitiesSpriteArray.Length);
                 m_abilitiesSpriteArray = null;
                 m_coin.Dispose();

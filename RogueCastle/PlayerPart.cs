@@ -44,14 +44,19 @@ namespace RogueCastle
             {
                 case 0:
                     return new Vector3(10f, 11f, -1f);
+
                 case 1:
                     return new Vector3(12f, 7f, -1f);
+
                 case 2:
                     return new Vector3(4f, 3f, 9f);
+
                 case 3:
                     return new Vector3(6f, 2f, -1f);
+
                 case 4:
                     return new Vector3(1f, 8f, -1f);
+
                 default:
                     return new Vector3(-1f, -1f, -1f);
             }

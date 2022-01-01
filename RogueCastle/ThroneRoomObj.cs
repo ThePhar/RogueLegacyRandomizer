@@ -25,18 +25,14 @@ namespace RogueCastle
         public override void Initialize()
         {
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "fountain")
                 {
                     (current as ObjContainer).OutlineWidth = 2;
                     current.Y -= 2f;
                     break;
                 }
-            }
-            foreach (var current2 in DoorList)
-            {
-                current2.Locked = true;
-            }
+
+            foreach (var current2 in DoorList) current2.Locked = true;
             base.Initialize();
         }
 
@@ -64,6 +60,7 @@ namespace RogueCastle
             {
                 Player.PhysicsMngr.AddObject(m_king);
             }
+
             m_kingKilled = false;
             Player.UnlockControls();
             m_displayText = false;
@@ -91,15 +88,18 @@ namespace RogueCastle
                 Tween.StopAllContaining(m_tutorialText, false);
                 Tween.To(m_tutorialText, 0.5f, Tween.EaseNone, "Opacity", "0");
             }
+
             if (Player.X > m_king.X - 100f)
             {
                 Player.X = m_king.X - 100f;
             }
+
             if (!m_kingKilled && m_king.WasHit)
             {
                 m_kingKilled = true;
                 Game.ScreenManager.DisplayScreen(27, false);
             }
+
             base.Update(gameTime);
         }
 

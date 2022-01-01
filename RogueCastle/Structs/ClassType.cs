@@ -16,29 +16,29 @@ namespace RogueCastle.Structs
 {
     public static class ClassType
     {
-        public const byte Knight        = 0;
-        public const byte Mage          = 1;
-        public const byte Barbarian     = 2;
-        public const byte Knave         = 3;
-        public const byte Shinobi       = 4;
-        public const byte Miner         = 5;
-        public const byte Spellthief    = 6;
-        public const byte Lich          = 7;
-        public const byte Paladin       = 8;
-        public const byte Archmage      = 9;
+        public const byte Knight = 0;
+        public const byte Mage = 1;
+        public const byte Barbarian = 2;
+        public const byte Knave = 3;
+        public const byte Shinobi = 4;
+        public const byte Miner = 5;
+        public const byte Spellthief = 6;
+        public const byte Lich = 7;
+        public const byte Paladin = 8;
+        public const byte Archmage = 9;
         public const byte BarbarianKing = 10;
-        public const byte Assassin      = 11;
-        public const byte Hokage        = 12;
-        public const byte Spelunker     = 13;
-        public const byte Spellsword    = 14;
-        public const byte LichKing      = 15;
-        public const byte Dragon        = 16;
-        public const byte Traitor       = 17;
-        public const byte TotalUniques  = 10;
-        public const byte Total         = 18;
+        public const byte Assassin = 11;
+        public const byte Hokage = 12;
+        public const byte Spelunker = 13;
+        public const byte Spellsword = 14;
+        public const byte LichKing = 15;
+        public const byte Dragon = 16;
+        public const byte Traitor = 17;
+        public const byte TotalUniques = 10;
+        public const byte Total = 18;
 
         /// <summary>
-        /// Returns the string representation of a given class's name. Takes into account character gender if specified.
+        ///     Returns the string representation of a given class's name. Takes into account character gender if specified.
         /// </summary>
         /// <param name="classType">Class Identifier</param>
         /// <param name="isFemale">Is this character female?</param>
@@ -107,7 +107,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a string describing this character's features.
+        ///     Returns a string describing this character's features.
         /// </summary>
         /// <param name="classType">Class Identifier</param>
         /// <returns></returns>
@@ -161,7 +161,8 @@ namespace RogueCastle.Structs
                     return "A hero for experts. Hit enemies to restore mana.\nSPECIAL: Empowered Spell.";
 
                 case LichKing:
-                    return "Feed off the dead. Gain permanent life for every kill up to a cap. Extremely intelligent.\nSPECIAL: HP Conversion.";
+                    return
+                        "Feed off the dead. Gain permanent life for every kill up to a cap. Extremely intelligent.\nSPECIAL: HP Conversion.";
 
                 case Dragon:
                     return "You are a man-dragon.";
@@ -175,7 +176,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a string describing more detailed information about this character's features for the Profile Card.
+        ///     Returns a string describing more detailed information about this character's features for the Profile Card.
         /// </summary>
         /// <param name="classType">Class Identifier</param>
         /// <returns></returns>
@@ -256,7 +257,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a random class identifier based on what the player has unlocked.
+        ///     Returns a random class identifier based on what the player has unlocked.
         /// </summary>
         /// <returns></returns>
         public static byte GetRandomClass()
@@ -270,33 +271,47 @@ namespace RogueCastle.Structs
             };
 
             if (SkillSystem.GetSkill(SkillType.NinjaUnlock).ModifierAmount > 0f)
+            {
                 list.Add(Shinobi);
+            }
 
             if (SkillSystem.GetSkill(SkillType.BankerUnlock).ModifierAmount > 0f)
+            {
                 list.Add(Miner);
+            }
 
             if (SkillSystem.GetSkill(SkillType.SpellswordUnlock).ModifierAmount > 0f)
+            {
                 list.Add(Spellthief);
+            }
 
             if (SkillSystem.GetSkill(SkillType.LichUnlock).ModifierAmount > 0f)
+            {
                 list.Add(Lich);
+            }
 
             if (SkillSystem.GetSkill(SkillType.SuperSecret).ModifierAmount > 0f)
+            {
                 list.Add(Dragon);
+            }
 
             if (SkillSystem.GetSkill(SkillType.Traitorous).ModifierAmount > 0f)
+            {
                 list.Add(Traitor);
+            }
 
             // Upgraded versions are 8 positions away in the table.
             var randomClass = list[CDGMath.RandomInt(0, list.Count - 1)];
             if (Upgraded(randomClass))
+            {
                 randomClass += 8;
+            }
 
             return randomClass;
         }
 
         /// <summary>
-        /// Returns true if this class type has been upgraded.
+        ///     Returns true if this class type has been upgraded.
         /// </summary>
         /// <param name="classType">Class Identifier</param>
         /// <returns></returns>
@@ -334,7 +349,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns an array of all possible spells a given class can cast.
+        ///     Returns an array of all possible spells a given class can cast.
         /// </summary>
         /// <param name="classType">Class Identifier</param>
         /// <returns></returns>

@@ -14,13 +14,13 @@ namespace RogueCastle
     public class ChestTracker
     {
         public int CastleChests;
-        public int GardenChests;
-        public int TowerChests;
-        public int DungeonChests;
         public int CastleFairyChests;
-        public int GardenFairyChests;
-        public int TowerFairyChests;
+        public int DungeonChests;
         public int DungeonFairyChests;
+        public int GardenChests;
+        public int GardenFairyChests;
+        public int TowerChests;
+        public int TowerFairyChests;
 
         // This is the worst case I've ever written. Do not look.
         public ChestTracker(params int[] amount)
@@ -35,35 +35,40 @@ namespace RogueCastle
             DungeonFairyChests = 0;
 
             for (var i = 0; i < amount.Length; i++)
-            {
                 switch (i)
                 {
                     case 0:
                         CastleChests = amount[i];
                         break;
+
                     case 1:
                         GardenChests = amount[i];
                         break;
+
                     case 2:
                         TowerChests = amount[i];
                         break;
+
                     case 3:
                         DungeonChests = amount[i];
                         break;
+
                     case 4:
                         CastleFairyChests = amount[i];
                         break;
+
                     case 5:
                         GardenFairyChests = amount[i];
                         break;
+
                     case 6:
                         TowerFairyChests = amount[i];
                         break;
+
                     case 7:
                         DungeonFairyChests = amount[i];
                         break;
                 }
-            }
         }
     }
 }

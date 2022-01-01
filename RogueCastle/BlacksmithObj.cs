@@ -27,8 +27,8 @@ namespace RogueCastle
 
         public BlacksmithObj() : base("Blacksmith_Character")
         {
-            m_hammerSprite = (_objectList[5] as SpriteObj);
-            m_headSprite = (_objectList[3] as SpriteObj);
+            m_hammerSprite = _objectList[5] as SpriteObj;
+            m_headSprite = _objectList[3] as SpriteObj;
             AnimationDelay = 0.1f;
         }
 
@@ -40,6 +40,7 @@ namespace RogueCastle
                 m_hammerAnimCounter = CDGMath.RandomFloat(0.5f, 3f);
                 return;
             }
+
             m_hammerAnimCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
         }
 

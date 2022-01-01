@@ -98,32 +98,29 @@ namespace RogueCastle
         public void DestroyAllIcons()
         {
             foreach (var current in m_projectileManager.ActiveProjectileList)
-            {
                 if (current.AttachedIcon != null)
                 {
                     DestroyIcon(current);
                 }
-            }
         }
 
         public void Update(Camera2D camera)
         {
             var player = m_screenManager.Player;
             foreach (var current in m_projectileManager.ActiveProjectileList)
-            {
                 if (current.ShowIcon)
                 {
                     if (current.AttachedIcon == null)
                     {
                         if (!CollisionMath.Intersects(current.Bounds, camera.Bounds) &&
-                            ((current.AccelerationX > 1f && current.X < player.X && current.Y > camera.Bounds.Top &&
-                              current.Y < camera.Bounds.Bottom) ||
-                             (current.AccelerationX < -1f && current.X > player.X && current.Y > camera.Bounds.Top &&
-                              current.Y < camera.Bounds.Bottom) ||
-                             (current.AccelerationY > 1f && current.Y < player.Y && current.X > camera.Bounds.Left &&
-                              current.X < camera.Bounds.Right) ||
-                             (current.AccelerationY < -1f && current.Y > player.Y && current.X > camera.Bounds.Left &&
-                              current.X < camera.Bounds.Right)))
+                            (current.AccelerationX > 1f && current.X < player.X && current.Y > camera.Bounds.Top &&
+                             current.Y < camera.Bounds.Bottom ||
+                             current.AccelerationX < -1f && current.X > player.X && current.Y > camera.Bounds.Top &&
+                             current.Y < camera.Bounds.Bottom ||
+                             current.AccelerationY > 1f && current.Y < player.Y && current.X > camera.Bounds.Left &&
+                             current.X < camera.Bounds.Right ||
+                             current.AccelerationY < -1f && current.Y > player.Y && current.X > camera.Bounds.Left &&
+                             current.X < camera.Bounds.Right))
                         {
                             AddIcon(current);
                         }
@@ -133,29 +130,22 @@ namespace RogueCastle
                         DestroyIcon(current);
                     }
                 }
-            }
+
             for (var i = 0; i < m_resourcePool.ActiveObjsList.Count; i++)
-            {
                 if (!m_resourcePool.ActiveObjsList[i].AttachedProjectile.IsAlive)
                 {
                     DestroyIcon(m_resourcePool.ActiveObjsList[i].AttachedProjectile);
                     i--;
                 }
-            }
-            foreach (var current2 in m_resourcePool.ActiveObjsList)
-            {
-                current2.Update(camera);
-            }
+
+            foreach (var current2 in m_resourcePool.ActiveObjsList) current2.Update(camera);
         }
 
         public void Draw(Camera2D camera)
         {
             if (Game.PlayerStats.Traits.X != 21f && Game.PlayerStats.Traits.Y != 21f)
             {
-                foreach (var current in m_resourcePool.ActiveObjsList)
-                {
-                    current.Draw(camera);
-                }
+                foreach (var current in m_resourcePool.ActiveObjsList) current.Draw(camera);
             }
         }
     }

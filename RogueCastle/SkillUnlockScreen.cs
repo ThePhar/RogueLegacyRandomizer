@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - SkillUnlockScreen.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -25,15 +25,15 @@ namespace RogueCastle
 {
     public class SkillUnlockScreen : Screen
     {
-        private SpriteObj    m_picture;
+        private int m_locationId;
+        private SpriteObj m_picture;
         private ObjContainer m_picturePlate;
         private ObjContainer m_plate;
-        private byte         m_skillUnlockType;
-        private int          m_locationId;
-        private TextObj      m_text;
-        private SpriteObj    m_title;
-        private SpriteObj    m_titlePlate;
-        public  float        BackBufferOpacity { get; set; }
+        private byte m_skillUnlockType;
+        private TextObj m_text;
+        private SpriteObj m_title;
+        private SpriteObj m_titlePlate;
+        public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
@@ -72,7 +72,9 @@ namespace RogueCastle
             m_skillUnlockType = (byte) objList[0];
 
             if (m_skillUnlockType == SkillUnlockType.NetworkItem)
+            {
                 m_locationId = (int) objList[1];
+            }
         }
 
         public override void OnEnter()
@@ -111,66 +113,82 @@ namespace RogueCastle
                     m_picture.ChangeSprite("BlacksmithUnlockPicture_Sprite");
                     m_title.ChangeSprite("SmithyUnlockedText_Sprite");
                     break;
+
                 case 2:
                     m_picture.ChangeSprite("EnchantressUnlockPicture_Sprite");
                     m_title.ChangeSprite("EnchantressUnlockedText_Sprite");
                     break;
+
                 case 3:
                     m_picture.ChangeSprite("ArchitectUnlockPicture_Sprite");
                     m_title.ChangeSprite("ArchitectUnlockedText_Sprite");
                     break;
+
                 case 4:
                     m_picture.ChangeSprite("NinjaUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
+
                 case 5:
                     m_picture.ChangeSprite("BankerUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
+
                 case 6:
                     m_picture.ChangeSprite("SpellSwordUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
+
                 case 7:
                     m_picture.ChangeSprite("LichUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
+
                 case 8:
                     m_picture.ChangeSprite("KnightUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 9:
                     m_picture.ChangeSprite("MageUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 10:
                     m_picture.ChangeSprite("BarbarianUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 11:
                     m_picture.ChangeSprite("NinjaUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 12:
                     m_picture.ChangeSprite("AssassinUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 13:
                     m_picture.ChangeSprite("BankerUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 14:
                     m_picture.ChangeSprite("SpellSwordUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 15:
                     m_picture.ChangeSprite("LichUpgradePicture_Sprite");
                     m_title.ChangeSprite("ClassUpgradedText_Sprite");
                     break;
+
                 case 16:
                     m_picture.ChangeSprite("DragonUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
+
                 case 17:
                     m_picture.ChangeSprite("TraitorUnlockPicture_Sprite");
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
@@ -178,9 +196,13 @@ namespace RogueCastle
 
                 case SkillUnlockType.NetworkItem:
                     var item = Program.Game.ArchipelagoManager.LocationCache[m_locationId];
-                    Console.WriteLine("{0}, {1}, {2}", item.Item, item.Location, item.Player);
-                    var location = ManorContainer.ArchipelagoLocationTable.First(kp => kp.Value == (LocationCode) m_locationId).Key;
-                    m_text.Text = string.Format("\"I just finished building your {0} and found this {1} for {2} while building. You may as well take it.\"", location, Program.Game.ArchipelagoManager.GetItemName(item.Item), Program.Game.ArchipelagoManager.GetPlayerName(item.Player));
+
+                    var location = ManorContainer.ArchipelagoLocationTable.First(kp => kp.Value == m_locationId).Key;
+                    m_text.Text = string.Format(
+                        "\"I just finished building your {0} and found this {1} for {2} while building. You may as well take it.\"",
+                        location,
+                        Program.Game.ArchipelagoManager.GetItemName(item.Item),
+                        Program.Game.ArchipelagoManager.GetPlayerName(item.Player));
                     break;
             }
 
@@ -202,11 +224,13 @@ namespace RogueCastle
         public override void HandleInput()
         {
             if (m_plate.ScaleX == 1f &&
-                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) || Game.GlobalInput.JustPressed(2) ||
+                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) ||
+                 Game.GlobalInput.JustPressed(2) ||
                  Game.GlobalInput.JustPressed(3)))
             {
                 ExitTransition();
             }
+
             base.HandleInput();
         }
 

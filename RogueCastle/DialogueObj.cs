@@ -21,6 +21,7 @@ namespace RogueCastle
             {
                 throw new Exception("Cannot create dialogue obj with mismatching speakers and dialogue");
             }
+
             Speakers = speakers;
             Dialogue = dialogue;
         }

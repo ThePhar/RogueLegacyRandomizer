@@ -25,22 +25,20 @@ namespace RogueCastle.Screens
 {
     public class ArchipelagoScreen : Screen
     {
-        private ObjContainer                m_bgSprite;
-        private KeyIconTextObj              m_cancelText;
-        private KeyIconTextObj              m_confirmText;
-        private KeyIconTextObj              m_navigationText;
         private List<ArchipelagoOptionsObj> m_archipelagoArray;
-        private SpriteObj                   m_archipelagoBar;
-        private SpriteObj                   m_archipelagoTitle;
-        private ArchipelagoOptionsObj       m_selectedOption;
-        private int                         m_selectedOptionIndex;
-        private bool                        m_transitioning;
-        private TextBoxOptionsObj           m_hostname;
-        private TextBoxOptionsObj           m_port;
-        private TextBoxOptionsObj           m_slot;
-        private TextBoxOptionsObj           m_password;
-
-        public bool LockControls { get; set; }
+        private SpriteObj m_archipelagoBar;
+        private SpriteObj m_archipelagoTitle;
+        private ObjContainer m_bgSprite;
+        private KeyIconTextObj m_cancelText;
+        private KeyIconTextObj m_confirmText;
+        private TextBoxOptionsObj m_hostname;
+        private KeyIconTextObj m_navigationText;
+        private TextBoxOptionsObj m_password;
+        private TextBoxOptionsObj m_port;
+        private ArchipelagoOptionsObj m_selectedOption;
+        private int m_selectedOptionIndex;
+        private TextBoxOptionsObj m_slot;
+        private bool m_transitioning;
 
         public ArchipelagoScreen()
         {
@@ -48,6 +46,8 @@ namespace RogueCastle.Screens
             UpdateIfCovered = true;
             DrawIfCovered = true;
         }
+
+        public bool LockControls { get; set; }
 
         public float BackBufferOpacity { get; set; }
 
@@ -79,7 +79,7 @@ namespace RogueCastle.Screens
             for (var i = 0; i < m_archipelagoArray.Count; i++)
             {
                 m_archipelagoArray[i].X = 420f;
-                m_archipelagoArray[i].Y = 160 + (i * 30);
+                m_archipelagoArray[i].Y = 160 + i * 30;
             }
 
             // Scrollbar
@@ -134,7 +134,7 @@ namespace RogueCastle.Screens
                     Hostname = m_hostname.GetValue,
                     Port = port,
                     Name = m_slot.GetValue,
-                    Password = m_password.GetValue,
+                    Password = m_password.GetValue
                 });
             }
             catch (FormatException ex)
@@ -331,10 +331,7 @@ namespace RogueCastle.Screens
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var current in m_archipelagoArray)
-            {
-                current.Update(gameTime);
-            }
+            foreach (var current in m_archipelagoArray) current.Update(gameTime);
 
             m_archipelagoBar.Position = new Vector2(m_selectedOption.X - 15f, m_selectedOption.Y);
             base.Update(gameTime);
@@ -345,10 +342,7 @@ namespace RogueCastle.Screens
             Camera.Begin();
             Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_bgSprite.Draw(Camera);
-            foreach (var current in m_archipelagoArray)
-            {
-                current.Draw(Camera);
-            }
+            foreach (var current in m_archipelagoArray) current.Draw(Camera);
 
             m_confirmText.Draw(Camera);
             m_cancelText.Draw(Camera);
@@ -363,10 +357,7 @@ namespace RogueCastle.Screens
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Archipelago Screen");
-                foreach (var current in m_archipelagoArray)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_archipelagoArray) current.Dispose();
 
                 m_archipelagoArray.Clear();
                 m_archipelagoArray = null;

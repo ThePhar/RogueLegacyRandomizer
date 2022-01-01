@@ -15,9 +15,7 @@ namespace RogueCastle
 {
     public class KingObj : PhysicsObj
     {
-        public KingObj(string spriteName) : base(spriteName, null)
-        {
-        }
+        public KingObj(string spriteName) : base(spriteName) { }
 
         public bool WasHit { get; private set; }
 
@@ -35,10 +33,12 @@ namespace RogueCastle
                 {
                     center = Rectangle.Intersect(thisBox.AbsParent.Bounds, otherBox.AbsParent.Bounds).Center;
                 }
+
                 var position = new Vector2(center.X, center.Y);
                 (otherBox.AbsParent as PlayerObj).AttachedLevel.ImpactEffectPool.DisplayEnemyImpactEffect(position);
                 WasHit = true;
             }
+
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
         }
 

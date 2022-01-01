@@ -34,7 +34,7 @@ namespace RogueCastle
         private SpriteObj m_playerSprite;
         private List<SpriteObj> m_roomSpriteList;
         private List<Vector2> m_roomSpritePosList;
-        private Vector2 m_spriteScale;
+        private readonly Vector2 m_spriteScale;
         private List<SpriteObj> m_teleporterList;
         private List<Vector2> m_teleporterPosList;
         private TweenObject m_xOffsetTween;
@@ -88,7 +88,8 @@ namespace RogueCastle
             var spriteObj = new SpriteObj("MapMask_Sprite");
             spriteObj.ForceDraw = true;
             spriteObj.Position = new Vector2(mapSize.X, mapSize.Y);
-            spriteObj.Scale = new Vector2(mapSize.Width/(float) spriteObj.Width, mapSize.Height/(float) spriteObj.Height);
+            spriteObj.Scale = new Vector2(mapSize.Width / (float) spriteObj.Width,
+                mapSize.Height / (float) spriteObj.Height);
             camera.GraphicsDevice.SetRenderTarget(m_alphaMaskRT);
             camera.GraphicsDevice.Clear(Color.White);
             camera.Begin();
@@ -120,19 +121,18 @@ namespace RogueCastle
 
         public void AddRoom(RoomObj room)
         {
-            if (!AddedRoomsList.Contains(room) && room.Width/1320 < 5)
+            if (!AddedRoomsList.Contains(room) && room.Width / 1320 < 5)
             {
                 var spriteObj =
-                    new SpriteObj(string.Concat("MapRoom", room.Width/1320, "x", room.Height/720, "_Sprite"));
-                spriteObj.Position = new Vector2(room.X/m_spriteScale.X, room.Y/m_spriteScale.Y);
-                spriteObj.Scale = new Vector2((spriteObj.Width - 3f)/spriteObj.Width,
-                    (spriteObj.Height - 3f)/spriteObj.Height);
+                    new SpriteObj(string.Concat("MapRoom", room.Width / 1320, "x", room.Height / 720, "_Sprite"));
+                spriteObj.Position = new Vector2(room.X / m_spriteScale.X, room.Y / m_spriteScale.Y);
+                spriteObj.Scale = new Vector2((spriteObj.Width - 3f) / spriteObj.Width,
+                    (spriteObj.Height - 3f) / spriteObj.Height);
                 spriteObj.ForceDraw = true;
                 spriteObj.TextureColor = room.TextureColor;
                 m_roomSpriteList.Add(spriteObj);
                 m_roomSpritePosList.Add(spriteObj.Position);
                 foreach (var current in room.DoorList)
-                {
                     if (!(room.Name == "CastleEntrance") || !(current.DoorPosition == "Left"))
                     {
                         var flag = false;
@@ -150,41 +150,42 @@ namespace RogueCastle
                                         if (doorPosition == "Top")
                                         {
                                             spriteObj2.Rotation = -90f;
-                                            spriteObj2.Position = new Vector2(current.X/m_spriteScale.X,
-                                                current.Y/m_spriteScale.Y + 2f);
+                                            spriteObj2.Position = new Vector2(current.X / m_spriteScale.X,
+                                                current.Y / m_spriteScale.Y + 2f);
                                             flag = true;
                                         }
                                     }
                                     else
                                     {
                                         spriteObj2.Rotation = -90f;
-                                        spriteObj2.Position = new Vector2(current.X/m_spriteScale.X,
-                                            (current.Y + current.Height)/m_spriteScale.Y + 2f);
+                                        spriteObj2.Position = new Vector2(current.X / m_spriteScale.X,
+                                            (current.Y + current.Height) / m_spriteScale.Y + 2f);
                                         flag = true;
                                     }
                                 }
                                 else
                                 {
-                                    spriteObj2.Position = new Vector2(room.Bounds.Right/m_spriteScale.X - 5f,
-                                        current.Y/m_spriteScale.Y - 2f);
+                                    spriteObj2.Position = new Vector2(room.Bounds.Right / m_spriteScale.X - 5f,
+                                        current.Y / m_spriteScale.Y - 2f);
                                     flag = true;
                                 }
                             }
                             else
                             {
                                 spriteObj2.Position =
-                                    new Vector2(room.Bounds.Left/m_spriteScale.X - spriteObj2.Width + 2f,
-                                        current.Y/m_spriteScale.Y - 2f);
+                                    new Vector2(room.Bounds.Left / m_spriteScale.X - spriteObj2.Width + 2f,
+                                        current.Y / m_spriteScale.Y - 2f);
                                 flag = true;
                             }
                         }
+
                         if (flag)
                         {
                             m_doorSpritePosList.Add(spriteObj2.Position);
                             m_doorSpriteList.Add(spriteObj2);
                         }
                     }
-                }
+
                 if (room.Name != "Bonus" && Game.PlayerStats.Class != 13)
                 {
                     foreach (var current2 in room.GameObjList)
@@ -209,20 +210,23 @@ namespace RogueCastle
                             {
                                 spriteObj3 = new SpriteObj("MapLockedChestIcon_Sprite");
                             }
+
                             m_iconSpriteList.Add(spriteObj3);
                             spriteObj3.AnimationDelay = 0.0333333351f;
                             spriteObj3.PlayAnimation();
                             spriteObj3.ForceDraw = true;
-                            spriteObj3.Position = new Vector2(current2.X/m_spriteScale.X - 8f,
-                                current2.Y/m_spriteScale.Y - 12f);
+                            spriteObj3.Position = new Vector2(current2.X / m_spriteScale.X - 8f,
+                                current2.Y / m_spriteScale.Y - 12f);
                             if (room.IsReversed)
                             {
-                                spriteObj3.X -= current2.Width/m_spriteScale.X;
+                                spriteObj3.X -= current2.Width / m_spriteScale.X;
                             }
+
                             m_iconSpritePosList.Add(spriteObj3.Position);
                         }
                     }
                 }
+
                 if (room.Name == "EntranceBoss")
                 {
                     var spriteObj4 = new SpriteObj("MapBossIcon_Sprite");
@@ -230,8 +234,8 @@ namespace RogueCastle
                     spriteObj4.ForceDraw = true;
                     spriteObj4.PlayAnimation();
                     spriteObj4.Position = new Vector2(
-                        (room.X + room.Width/2f)/m_spriteScale.X - spriteObj4.Width/2 - 1f,
-                        (room.Y + room.Height/2f)/m_spriteScale.Y - spriteObj4.Height/2 - 2f);
+                        (room.X + room.Width / 2f) / m_spriteScale.X - spriteObj4.Width / 2 - 1f,
+                        (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj4.Height / 2 - 2f);
                     m_iconSpriteList.Add(spriteObj4);
                     m_iconSpritePosList.Add(spriteObj4.Position);
                     m_teleporterList.Add(spriteObj4);
@@ -244,8 +248,8 @@ namespace RogueCastle
                     spriteObj5.ForceDraw = true;
                     spriteObj5.PlayAnimation();
                     spriteObj5.Position = new Vector2(
-                        (room.X + room.Width/2f)/m_spriteScale.X - spriteObj5.Width/2 - 1f,
-                        (room.Y + room.Height/2f)/m_spriteScale.Y - spriteObj5.Height/2 - 2f);
+                        (room.X + room.Width / 2f) / m_spriteScale.X - spriteObj5.Width / 2 - 1f,
+                        (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj5.Height / 2 - 2f);
                     m_iconSpriteList.Add(spriteObj5);
                     m_iconSpritePosList.Add(spriteObj5.Position);
                     m_teleporterList.Add(spriteObj5);
@@ -258,13 +262,14 @@ namespace RogueCastle
                     spriteObj6.ForceDraw = true;
                     spriteObj6.PlayAnimation();
                     spriteObj6.Position = new Vector2(
-                        (room.X + room.Width/2f)/m_spriteScale.X - spriteObj6.Width/2 - 1f,
-                        (room.Y + room.Height/2f)/m_spriteScale.Y - spriteObj6.Height/2 - 2f);
+                        (room.X + room.Width / 2f) / m_spriteScale.X - spriteObj6.Width / 2 - 1f,
+                        (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj6.Height / 2 - 2f);
                     m_iconSpriteList.Add(spriteObj6);
                     m_iconSpritePosList.Add(spriteObj6.Position);
                     m_teleporterList.Add(spriteObj6);
                     m_teleporterPosList.Add(spriteObj6.Position);
                 }
+
                 if (Game.PlayerStats.Class != 13 && room.Name == "Bonus")
                 {
                     var spriteObj7 = new SpriteObj("MapBonusIcon_Sprite");
@@ -272,27 +277,24 @@ namespace RogueCastle
                     spriteObj7.AnimationDelay = 0.0333333351f;
                     spriteObj7.ForceDraw = true;
                     spriteObj7.Position = new Vector2(
-                        (room.X + room.Width/2f)/m_spriteScale.X - spriteObj7.Width/2 - 1f,
-                        (room.Y + room.Height/2f)/m_spriteScale.Y - spriteObj7.Height/2 - 2f);
+                        (room.X + room.Width / 2f) / m_spriteScale.X - spriteObj7.Width / 2 - 1f,
+                        (room.Y + room.Height / 2f) / m_spriteScale.Y - spriteObj7.Height / 2 - 2f);
                     m_iconSpriteList.Add(spriteObj7);
                     m_iconSpritePosList.Add(spriteObj7.Position);
                 }
+
                 AddedRoomsList.Add(room);
             }
         }
 
         public void AddAllRooms(List<RoomObj> roomList)
         {
-            foreach (var current in roomList)
-            {
-                AddRoom(current);
-            }
+            foreach (var current in roomList) AddRoom(current);
         }
 
         public void AddAllIcons(List<RoomObj> roomList)
         {
             foreach (var current in roomList)
-            {
                 if (!AddedRoomsList.Contains(current))
                 {
                     if (current.Name != "Bonus")
@@ -322,22 +324,26 @@ namespace RogueCastle
                                     {
                                         spriteObj = new SpriteObj("MapLockedChestIcon_Sprite");
                                     }
+
                                     m_iconSpriteList.Add(spriteObj);
                                     spriteObj.AnimationDelay = 0.0333333351f;
                                     spriteObj.PlayAnimation();
                                     spriteObj.ForceDraw = true;
-                                    spriteObj.Position = new Vector2(current2.X/m_spriteScale.X - 8f,
-                                        current2.Y/m_spriteScale.Y - 12f);
+                                    spriteObj.Position = new Vector2(current2.X / m_spriteScale.X - 8f,
+                                        current2.Y / m_spriteScale.Y - 12f);
                                     if (current.IsReversed)
                                     {
-                                        spriteObj.X -= current2.Width/m_spriteScale.X;
+                                        spriteObj.X -= current2.Width / m_spriteScale.X;
                                     }
+
                                     m_iconSpritePosList.Add(spriteObj.Position);
                                 }
                             }
+
                             continue;
                         }
                     }
+
                     if (current.Name == "Bonus")
                     {
                         var spriteObj2 = new SpriteObj("MapBonusIcon_Sprite");
@@ -345,24 +351,21 @@ namespace RogueCastle
                         spriteObj2.AnimationDelay = 0.0333333351f;
                         spriteObj2.ForceDraw = true;
                         spriteObj2.Position =
-                            new Vector2((current.X + current.Width/2f)/m_spriteScale.X - spriteObj2.Width/2 - 1f,
-                                (current.Y + current.Height/2f)/m_spriteScale.Y - spriteObj2.Height/2 - 2f);
+                            new Vector2((current.X + current.Width / 2f) / m_spriteScale.X - spriteObj2.Width / 2 - 1f,
+                                (current.Y + current.Height / 2f) / m_spriteScale.Y - spriteObj2.Height / 2 - 2f);
                         m_iconSpriteList.Add(spriteObj2);
                         m_iconSpritePosList.Add(spriteObj2.Position);
                     }
                 }
-            }
         }
 
         public void AddLinkerRoom(LevelType levelType, List<RoomObj> roomList)
         {
             foreach (var current in roomList)
-            {
                 if (current.Name == "Linker" && current.LevelType == levelType)
                 {
                     AddRoom(current);
                 }
-            }
         }
 
         public void RefreshChestIcons(RoomObj room)
@@ -372,16 +375,14 @@ namespace RogueCastle
                 var chestObj = current as ChestObj;
                 if (chestObj != null && chestObj.IsOpen)
                 {
-                    var pt = new Vector2(chestObj.X/m_spriteScale.X - 8f, chestObj.Y/m_spriteScale.Y - 12f);
+                    var pt = new Vector2(chestObj.X / m_spriteScale.X - 8f, chestObj.Y / m_spriteScale.Y - 12f);
                     for (var i = 0; i < m_iconSpritePosList.Count; i++)
-                    {
                         if (CDGMath.DistanceBetweenPts(pt, m_iconSpritePosList[i]) < 15f)
                         {
                             m_iconSpriteList[i].ChangeSprite("MapChestUnlocked_Sprite");
                             m_iconSpriteList[i].Opacity = 1f;
                             break;
                         }
-                    }
                 }
             }
         }
@@ -390,22 +391,25 @@ namespace RogueCastle
         {
             if (!tween)
             {
-                CameraOffset.X = m_alphaMaskRect.X + m_alphaMaskRect.Width/2f - pos.X/1320f*60f;
-                CameraOffset.Y = m_alphaMaskRect.Y + m_alphaMaskRect.Height/2f - pos.Y/720f*32f;
+                CameraOffset.X = m_alphaMaskRect.X + m_alphaMaskRect.Width / 2f - pos.X / 1320f * 60f;
+                CameraOffset.Y = m_alphaMaskRect.Y + m_alphaMaskRect.Height / 2f - pos.Y / 720f * 32f;
                 return;
             }
+
             if (m_xOffsetTween != null && m_xOffsetTween.TweenedObject == this)
             {
                 m_xOffsetTween.StopTween(false);
             }
+
             if (m_yOffsetTween != null && m_yOffsetTween.TweenedObject == this)
             {
                 m_yOffsetTween.StopTween(false);
             }
+
             m_xOffsetTween = Tween.To(this, 0.3f, Quad.EaseOut, "CameraOffsetX",
-                (m_alphaMaskRect.X + m_alphaMaskRect.Width/2f - pos.X/1320f*60f).ToString());
+                (m_alphaMaskRect.X + m_alphaMaskRect.Width / 2f - pos.X / 1320f * 60f).ToString());
             m_yOffsetTween = Tween.To(this, 0.3f, Quad.EaseOut, "CameraOffsetY",
-                (m_alphaMaskRect.Y + m_alphaMaskRect.Height/2f - pos.Y/720f*32f).ToString());
+                (m_alphaMaskRect.Y + m_alphaMaskRect.Height / 2f - pos.Y / 720f * 32f).ToString());
         }
 
         public void CentreAroundObj(GameObj obj)
@@ -437,6 +441,7 @@ namespace RogueCastle
                 {
                     position.Y += 290f;
                 }
+
                 m_player.TeleportPlayer(position);
             }
         }
@@ -453,9 +458,10 @@ namespace RogueCastle
         {
             if (FollowPlayer)
             {
-                CameraOffset.X = (int) (m_alphaMaskRect.X + m_alphaMaskRect.Width/2f - m_player.X/1320f*60f);
-                CameraOffset.Y = m_alphaMaskRect.Y + m_alphaMaskRect.Height/2f - (int) m_player.Y/720f*32f;
+                CameraOffset.X = (int) (m_alphaMaskRect.X + m_alphaMaskRect.Width / 2f - m_player.X / 1320f * 60f);
+                CameraOffset.Y = m_alphaMaskRect.Y + m_alphaMaskRect.Height / 2f - (int) m_player.Y / 720f * 32f;
             }
+
             camera.GraphicsDevice.SetRenderTarget(m_mapScreenRT);
             camera.GraphicsDevice.Clear(Color.Transparent);
             for (var i = 0; i < m_roomSpriteList.Count; i++)
@@ -463,11 +469,13 @@ namespace RogueCastle
                 m_roomSpriteList[i].Position = CameraOffset + m_roomSpritePosList[i];
                 m_roomSpriteList[i].Draw(camera);
             }
+
             for (var j = 0; j < m_doorSpriteList.Count; j++)
             {
                 m_doorSpriteList[j].Position = CameraOffset + m_doorSpritePosList[j];
                 m_doorSpriteList[j].Draw(camera);
             }
+
             if (!DrawTeleportersOnly)
             {
                 for (var k = 0; k < m_iconSpriteList.Count; k++)
@@ -484,27 +492,25 @@ namespace RogueCastle
                     m_teleporterList[l].Draw(camera);
                 }
             }
+
             if (Game.PlayerStats.Traits.X == 28f || Game.PlayerStats.Traits.Y == 28f)
             {
                 m_playerSprite.TextureColor = Color.Red;
                 foreach (var current in AddedRoomsList)
-                {
-                    foreach (var current2 in current.EnemyList)
+                foreach (var current2 in current.EnemyList)
+                    if (!current2.IsKilled && !current2.IsDemented && current2.SaveToFile && current2.Type != 21 &&
+                        current2.Type != 27 && current2.Type != 17)
                     {
-                        if (!current2.IsKilled && !current2.IsDemented && current2.SaveToFile && current2.Type != 21 &&
-                            current2.Type != 27 && current2.Type != 17)
-                        {
-                            m_playerSprite.Position =
-                                new Vector2(current2.X/m_spriteScale.X - 9f, current2.Y/m_spriteScale.Y - 10f) +
-                                CameraOffset;
-                            m_playerSprite.Draw(camera);
-                        }
+                        m_playerSprite.Position =
+                            new Vector2(current2.X / m_spriteScale.X - 9f, current2.Y / m_spriteScale.Y - 10f) +
+                            CameraOffset;
+                        m_playerSprite.Draw(camera);
                     }
-                }
             }
+
             m_playerSprite.TextureColor = Color.White;
             m_playerSprite.Position =
-                new Vector2(m_level.Player.X/m_spriteScale.X - 9f, m_level.Player.Y/m_spriteScale.Y - 10f) +
+                new Vector2(m_level.Player.X / m_spriteScale.X - 9f, m_level.Player.Y / m_spriteScale.Y - 10f) +
                 CameraOffset;
             m_playerSprite.Draw(camera);
         }
@@ -522,8 +528,10 @@ namespace RogueCastle
                 {
                     camera.Draw(m_mapScreenRT, Vector2.Zero, Color.White);
                 }
+
                 camera.End();
-                camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
+                camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
+                    null);
                 if (DrawNothing)
                 {
                     m_playerSprite.Draw(camera);
@@ -546,28 +554,21 @@ namespace RogueCastle
                 {
                     m_alphaMaskRT.Dispose();
                 }
+
                 m_alphaMaskRT = null;
                 if (m_mapScreenRT != null && !m_mapScreenRT.IsDisposed)
                 {
                     m_mapScreenRT.Dispose();
                 }
+
                 m_mapScreenRT = null;
-                foreach (var current in m_roomSpriteList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_roomSpriteList) current.Dispose();
                 m_roomSpriteList.Clear();
                 m_roomSpriteList = null;
-                foreach (var current2 in m_doorSpriteList)
-                {
-                    current2.Dispose();
-                }
+                foreach (var current2 in m_doorSpriteList) current2.Dispose();
                 m_doorSpriteList.Clear();
                 m_doorSpriteList = null;
-                foreach (var current3 in m_iconSpriteList)
-                {
-                    current3.Dispose();
-                }
+                foreach (var current3 in m_iconSpriteList) current3.Dispose();
                 m_iconSpriteList.Clear();
                 m_iconSpriteList = null;
                 AddedRoomsList.Clear();
@@ -580,10 +581,7 @@ namespace RogueCastle
                 m_iconSpritePosList = null;
                 m_playerSprite.Dispose();
                 m_playerSprite = null;
-                foreach (var current4 in m_teleporterList)
-                {
-                    current4.Dispose();
-                }
+                foreach (var current4 in m_teleporterList) current4.Dispose();
                 m_teleporterList.Clear();
                 m_teleporterList = null;
                 m_teleporterPosList.Clear();

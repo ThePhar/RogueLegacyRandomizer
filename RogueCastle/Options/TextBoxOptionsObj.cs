@@ -9,24 +9,23 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
-using System;
 using System.Linq;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using RogueCastle.Screens;
-using Tweener.Ease;
 
 namespace RogueCastle.Options
 {
     public class TextBoxOptionsObj : ArchipelagoOptionsObj
     {
-        private readonly string        m_placeholder;
-        private          string        m_currentValue = "";
-        private          KeyboardState m_keyboardState;
-        private          TextObj       m_toggleText;
+        private readonly string m_placeholder;
+        private string m_currentValue = "";
+        private KeyboardState m_keyboardState;
+        private TextObj m_toggleText;
 
-        public TextBoxOptionsObj(ArchipelagoScreen parentScreen, string name, string placeholder) : base(parentScreen, name)
+        public TextBoxOptionsObj(ArchipelagoScreen parentScreen, string name, string placeholder) : base(parentScreen,
+            name)
         {
             m_placeholder = placeholder;
 
@@ -78,7 +77,6 @@ namespace RogueCastle.Options
             var pressedKeys = currentKeyboardState.GetPressedKeys();
 
             foreach (var key in pressedKeys)
-            {
                 if (m_keyboardState.IsKeyUp(key))
                 {
                     switch (key)
@@ -86,7 +84,10 @@ namespace RogueCastle.Options
                         // Backspace key, obviously.
                         case Keys.Back:
                             if (m_currentValue.Length != 0)
+                            {
                                 m_currentValue = m_currentValue.Remove(m_currentValue.Length - 1, 1);
+                            }
+
                             break;
 
                         // Add a space.
@@ -229,7 +230,6 @@ namespace RogueCastle.Options
                             break;
                     }
                 }
-            }
 
             // Update keyboard state.
             m_keyboardState = currentKeyboardState;
@@ -263,7 +263,9 @@ namespace RogueCastle.Options
         private string HandleShift(Keys[] keys, string uppercase, string lowercase)
         {
             if (keys.Contains(Keys.LeftShift) || keys.Contains(Keys.RightShift))
+            {
                 return uppercase;
+            }
 
             return lowercase;
         }

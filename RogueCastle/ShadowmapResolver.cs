@@ -47,16 +47,15 @@ namespace RogueCastle
             resolveShadowsEffect = content.Load<Effect>("Shaders\\resolveShadowsEffect");
             blender = content.Load<Effect>("Shaders\\2xMultiBlend");
             var preferredFormat = SurfaceFormat.Color;
-            distortRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize, false, preferredFormat, DepthFormat.None);
+            distortRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize, false, preferredFormat,
+                DepthFormat.None);
             distancesRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize, false, preferredFormat,
                 DepthFormat.None);
             shadowMap = new RenderTarget2D(graphicsDevice, 2, baseSize, false, preferredFormat, DepthFormat.None);
             reductionRT = new RenderTarget2D[reductionChainCount];
             for (var i = 0; i < reductionChainCount; i++)
-            {
                 reductionRT[i] = new RenderTarget2D(graphicsDevice, 2 << i, baseSize, false, preferredFormat,
                     DepthFormat.None);
-            }
             shadowsRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize);
             processedShadowsRT = new RenderTarget2D(graphicsDevice, baseSize, baseSize);
         }
@@ -88,16 +87,19 @@ namespace RogueCastle
             {
                 resolveShadowsEffect.Parameters["InputTexture"].SetValue(source);
             }
+
             if (shadowMap != null)
             {
                 resolveShadowsEffect.Parameters["ShadowMapTexture"].SetValue(shadowMap);
             }
+
             resolveShadowsEffect.CurrentTechnique = resolveShadowsEffect.Techniques[techniqueName];
             foreach (var current in resolveShadowsEffect.CurrentTechnique.Passes)
             {
                 current.Apply();
-                quadRender.Render(Vector2.One*-1f, Vector2.One);
+                quadRender.Render(Vector2.One * -1f, Vector2.One);
             }
+
             graphicsDevice.SetRenderTarget(null);
         }
 
@@ -113,25 +115,28 @@ namespace RogueCastle
                 graphicsDevice.SetRenderTarget(renderTarget2D2);
                 graphicsDevice.Clear(Color.White);
                 reductionEffect.Parameters["SourceTexture"].SetValue(renderTarget2D);
-                var value = new Vector2(1f/renderTarget2D.Width, 1f/renderTarget2D.Height);
+                var value = new Vector2(1f / renderTarget2D.Width, 1f / renderTarget2D.Height);
                 reductionEffect.Parameters["TextureDimensions"].SetValue(value);
                 foreach (var current in reductionEffect.CurrentTechnique.Passes)
                 {
                     current.Apply();
-                    quadRender.Render(Vector2.One*-1f, new Vector2(1f, 1f));
+                    quadRender.Render(Vector2.One * -1f, new Vector2(1f, 1f));
                 }
+
                 graphicsDevice.SetRenderTarget(null);
                 renderTarget2D = renderTarget2D2;
                 i--;
             }
+
             graphicsDevice.SetRenderTarget(destination);
             reductionEffect.CurrentTechnique = reductionEffect.Techniques["Copy"];
             reductionEffect.Parameters["SourceTexture"].SetValue(renderTarget2D2);
             foreach (var current2 in reductionEffect.CurrentTechnique.Passes)
             {
                 current2.Apply();
-                quadRender.Render(Vector2.One*-1f, new Vector2(1f, 1f));
+                quadRender.Render(Vector2.One * -1f, new Vector2(1f, 1f));
             }
+
             reductionEffect.Parameters["SourceTexture"].SetValue(reductionRT[reductionChainCount - 1]);
             graphicsDevice.SetRenderTarget(null);
         }

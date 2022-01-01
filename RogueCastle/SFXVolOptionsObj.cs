@@ -22,7 +22,7 @@ namespace RogueCastle
         {
             m_volumeBarBG = new SpriteObj("OptionsScreenVolumeBG_Sprite");
             m_volumeBarBG.X = m_optionsTextOffset;
-            m_volumeBarBG.Y = m_volumeBarBG.Height/2f - 2f;
+            m_volumeBarBG.Y = m_volumeBarBG.Height / 2f - 2f;
             AddChild(m_volumeBarBG);
             m_volumeBar = new SpriteObj("OptionsScreenVolumeBar_Sprite");
             m_volumeBar.X = m_volumeBarBG.X + 6f;
@@ -41,6 +41,7 @@ namespace RogueCastle
                     m_volumeBar.TextureColor = Color.Yellow;
                     return;
                 }
+
                 m_volumeBar.TextureColor = Color.White;
             }
         }
@@ -63,11 +64,13 @@ namespace RogueCastle
                 SoundManager.GlobalSFXVolume += 0.01f;
                 SetVolumeLevel();
             }
+
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) || Game.GlobalInput.JustPressed(2) ||
                 Game.GlobalInput.JustPressed(3))
             {
                 IsActive = false;
             }
+
             base.HandleInput();
         }
 

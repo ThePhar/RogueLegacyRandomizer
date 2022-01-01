@@ -62,18 +62,19 @@ namespace RogueCastle
                     m_currentLevel = MaxLevel;
                     return;
                 }
+
                 m_currentLevel = value;
             }
         }
 
         public int TotalCost
         {
-            get { return BaseCost + CurrentLevel*Appreciation + 10*Game.PlayerStats.CurrentLevel; }
+            get { return BaseCost + CurrentLevel * Appreciation + 10 * Game.PlayerStats.CurrentLevel; }
         }
 
         public float ModifierAmount
         {
-            get { return CurrentLevel*PerLevelModifier; }
+            get { return CurrentLevel * PerLevelModifier; }
         }
 
         public override void Draw(Camera2D camera)
@@ -91,8 +92,9 @@ namespace RogueCastle
                 TextureColor = Color.White;
                 Opacity = opacity;
             }
+
             base.Draw(camera);
-            LevelText.Position = new Vector2(X, Bounds.Bottom - LevelText.Height/2);
+            LevelText.Position = new Vector2(X, Bounds.Bottom - LevelText.Height / 2);
             LevelText.Text = CurrentLevel + "/" + MaxLevel;
             LevelText.Opacity = Opacity;
             if (CurrentLevel >= MaxLevel)
@@ -104,6 +106,7 @@ namespace RogueCastle
             {
                 LevelText.TextureColor = Color.White;
             }
+
             LevelText.Draw(camera);
             if (Game.PlayerStats.Gold >= TotalCost && CurrentLevel < MaxLevel && CanPurchase)
             {

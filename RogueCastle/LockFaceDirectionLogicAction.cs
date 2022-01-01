@@ -41,6 +41,7 @@ namespace RogueCastle
                         characterObj.Flip = SpriteEffects.FlipHorizontally;
                     }
                 }
+
                 base.Execute();
             }
         }

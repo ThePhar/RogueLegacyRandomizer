@@ -21,7 +21,8 @@ namespace RogueCastle
         private float ExtractDelay;
         private LogicSet m_extractLS;
 
-        public EnemyObj_SpikeTrap(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+        public EnemyObj_SpikeTrap(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo,
             EnemyDifficulty difficulty)
             : base("EnemySpikeTrap_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
@@ -35,7 +36,7 @@ namespace RogueCastle
         {
             get
             {
-                return new Rectangle((int) (X - DetectionRect.Width/2f), (int) (Y - DetectionRect.Height),
+                return new Rectangle((int) (X - DetectionRect.Width / 2f), (int) (Y - DetectionRect.Height),
                     DetectionRect.Width, DetectionRect.Height);
             }
         }
@@ -154,11 +155,13 @@ namespace RogueCastle
                         PlayAnimation("StartRetract", "RetractComplete");
                     }
                 }
+
                 if (m_extractLS.IsActive)
                 {
                     m_extractLS.Update(gameTime);
                 }
             }
+
             base.Update(gameTime);
         }
 

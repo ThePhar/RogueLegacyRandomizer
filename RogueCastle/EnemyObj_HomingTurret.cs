@@ -69,6 +69,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     FireDelay = 1.5f;
                     Name = "GuardBox XL";
@@ -97,6 +98,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     FireDelay = 2.25f;
                     Name = "GuardBox 2000";
@@ -125,6 +127,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "GuardBox Gigasaur";
                     MaxHealth = 500;
@@ -152,6 +155,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.HomingTurret_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -167,10 +171,12 @@ namespace RogueCastle
                 Console.WriteLine("ERROR: Turret set with delay of 0. Shoots too fast.");
                 num = FireDelay;
             }
+
             if (num2 == 0f)
             {
                 num2 = ProjectileSpeed;
             }
+
             var projectileData = new ProjectileData(this)
             {
                 SpriteName = "HomingProjectile_Sprite",
@@ -245,6 +251,7 @@ namespace RogueCastle
             {
                 position.X -= 30f;
             }
+
             m_levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
             m_levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
             m_levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
@@ -266,6 +273,7 @@ namespace RogueCastle
                     return;
                 }
             }
+
             var arg_4F_1 = false;
             var arg_4F_2 = m_generalBasicLB;
             var array2 = new int[2];
@@ -289,6 +297,7 @@ namespace RogueCastle
                     return;
                 }
             }
+
             var arg_4F_1 = false;
             var arg_4F_2 = m_generalAdvancedLB;
             var array2 = new int[2];
@@ -312,6 +321,7 @@ namespace RogueCastle
                     return;
                 }
             }
+
             RunLogicBlock(false, m_generalExpertLB, 0, 100);
         }
 
@@ -331,6 +341,7 @@ namespace RogueCastle
                     return;
                 }
             }
+
             var arg_4F_1 = false;
             var arg_4F_2 = m_generalBasicLB;
             var array2 = new int[2];

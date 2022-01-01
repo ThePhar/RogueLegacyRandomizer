@@ -33,11 +33,13 @@ namespace RogueCastle
             {
                 if (current is EnemyObj_Fireball)
                 {
-                    m_boss = (current as EnemyObj_Fireball);
+                    m_boss = current as EnemyObj_Fireball;
                 }
+
                 current.Visible = false;
                 current.PauseEnemy(true);
             }
+
             m_boss.ChangeSprite("EnemyGhostBossIdle_Character");
             m_bossStartingScale = m_boss.ScaleX;
             m_fireList = new List<SpriteObj>();
@@ -55,6 +57,7 @@ namespace RogueCastle
                 m_fireList.Add(spriteObj);
                 GameObjList.Add(spriteObj);
             }
+
             base.Initialize();
         }
 
@@ -68,7 +71,8 @@ namespace RogueCastle
             m_boss.PlayAnimation();
             Player.AttachedLevel.UpdateCamera();
             Player.AttachedLevel.CameraLockedToPlayer = false;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_boss.X.ToString(), "Y", m_boss.Y.ToString());
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_boss.X.ToString(), "Y",
+                m_boss.Y.ToString());
             Tween.RunFunction(1.5f, this, "Intro2");
             Player.AttachedLevel.RunCinematicBorders(10f);
             base.OnEnter();
@@ -82,6 +86,7 @@ namespace RogueCastle
                 Tween.RunFunction(num, this, "DisplayOrb", i);
                 num += 0.1f;
             }
+
             Tween.RunFunction(num + 0.5f, this, "Intro3");
         }
 
@@ -100,6 +105,7 @@ namespace RogueCastle
                 Tween.RunFunction(num, this, "AbsorbOrb", i);
                 num += 0.1f;
             }
+
             Tween.RunFunction(num + 0.5f, this, "DisplayBossTitle", "The Sentinel", m_boss.Name, "Intro4");
         }
 
@@ -108,8 +114,8 @@ namespace RogueCastle
             SoundManager.PlaySound("Boss_Fireball_Puff_01");
             Tween.To(m_fireList[index], 0.2f, Quad.EaseIn, "X", m_boss.X.ToString(), "Y", m_boss.Y.ToString());
             Tween.To(m_fireList[index], 0.1f, Tween.EaseNone, "delay", "0.1", "Opacity", "0");
-            m_boss.ScaleX += m_bossStartingScale/15f;
-            m_boss.ScaleY += m_bossStartingScale/15f;
+            m_boss.ScaleX += m_bossStartingScale / 15f;
+            m_boss.ScaleY += m_bossStartingScale / 15f;
         }
 
         public void Intro4()
@@ -118,7 +124,8 @@ namespace RogueCastle
             m_boss.PlayAnimation();
             Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "delay", "0.5", "X",
                 (Player.X + GlobalEV.Camera_XOffset).ToString(), "Y",
-                (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString());
+                (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y))
+                .ToString());
             Tween.AddEndHandlerToLastTween(this, "BeginFight");
         }
 
@@ -133,9 +140,11 @@ namespace RogueCastle
                 {
                     Player.AttachedLevel.ImpactEffectPool.DisplaySpawnEffect(current.Position);
                 }
+
                 current.UnpauseEnemy(true);
                 current.Visible = true;
             }
+
             m_cutsceneRunning = false;
         }
 
@@ -144,29 +153,28 @@ namespace RogueCastle
             if (m_boss.CurrentHealth <= 0 && ActiveEnemies > 1)
             {
                 foreach (var current in EnemyList)
-                {
                     if (current is EnemyObj_BouncySpike)
                     {
                         current.Kill(false);
                     }
-                }
             }
+
             if (!m_cutsceneRunning && !SoundManager.IsMusicPlaying && !m_boss.BossVersionKilled)
             {
                 SoundManager.PlayMusic("TowerBossSong", true);
             }
+
             base.Update(gameTime);
         }
 
         public override void BossCleanup()
         {
             foreach (var current in EnemyList)
-            {
                 if (current is EnemyObj_BouncySpike)
                 {
                     current.Kill(false);
                 }
-            }
+
             base.BossCleanup();
         }
 

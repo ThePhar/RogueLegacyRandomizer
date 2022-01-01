@@ -78,6 +78,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Corrupt Vanguard";
                     MaxHealth = 58;
@@ -105,6 +106,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Knight_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Corrupt Lord";
                     MaxHealth = 79;
@@ -132,6 +134,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Knight_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Botis";
                     MaxHealth = 265;
@@ -159,6 +162,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Knight_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -454,15 +458,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_AA_1, arg_AA_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(true, m_generalBasicLB, 55, 30, 0, 0, 15);
                     return;
+
                 case 2:
                     RunLogicBlock(true, m_generalBasicLB, 20, 20, 10, 0, 50);
                     return;
+
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 20, 15, 0, 0, 65);
                     return;
+
                 default:
                     return;
             }
@@ -481,15 +489,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(true, m_generalAdvancedLB, 55, 30, 0, 0, 15);
                     return;
+
                 case 2:
                     RunLogicBlock(true, m_generalAdvancedLB, 15, 15, 10, 15, 45);
                     return;
+
                 case 3:
                     RunLogicBlock(true, m_generalAdvancedLB, 15, 10, 0, 60, 15);
                     return;
+
                 default:
                     return;
             }
@@ -508,15 +520,19 @@ namespace RogueCastle
                     RunLogicBlock(arg_B4_1, arg_B4_2, array);
                     return;
                 }
+
                 case 1:
                     RunLogicBlock(true, m_generalExpertLB, 55, 30, 0, 0, 15);
                     return;
+
                 case 2:
                     RunLogicBlock(true, m_generalExpertLB, 15, 15, 10, 15, 45);
                     return;
+
                 case 3:
                     RunLogicBlock(true, m_generalExpertLB, 15, 10, 0, 60, 15);
                     return;
+
                 default:
                     return;
             }
@@ -532,6 +548,7 @@ namespace RogueCastle
                 case 3:
                     RunLogicBlock(true, m_generalMiniBossLB, 14, 13, 11, 26, 18, 18);
                     return;
+
                 default:
                     return;
             }
@@ -544,6 +561,7 @@ namespace RogueCastle
                 m_walkSound.Update();
                 m_walkSound2.Update();
             }
+
             base.Update(gameTime);
         }
 

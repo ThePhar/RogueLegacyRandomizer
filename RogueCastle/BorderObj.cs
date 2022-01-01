@@ -75,34 +75,39 @@ namespace RogueCastle
                 TextureOffset = Vector2.Zero;
                 texture2D = NeoTexture;
             }
+
             if (BorderBottom)
             {
                 camera.Draw(texture2D,
                     new Vector2(Bounds.Right - CornerTexture.Width + TextureOffset.X, Bounds.Bottom - TextureOffset.Y),
-                    new Rectangle(0, 0, (int) (Width/TextureScale.X) - CornerTexture.Width*2, texture2D.Height),
+                    new Rectangle(0, 0, (int) (Width / TextureScale.X) - CornerTexture.Width * 2, texture2D.Height),
                     TextureColor, MathHelper.ToRadians(180f), Vector2.Zero, TextureScale, SpriteEffects.None, 0f);
             }
+
             if (BorderLeft)
             {
                 camera.Draw(texture2D,
                     new Vector2(X + TextureOffset.Y, Bounds.Bottom - CornerTexture.Width - TextureOffset.X),
-                    new Rectangle(0, 0, (int) (Height/TextureScale.Y) - CornerTexture.Width*2, texture2D.Height),
+                    new Rectangle(0, 0, (int) (Height / TextureScale.Y) - CornerTexture.Width * 2, texture2D.Height),
                     TextureColor, MathHelper.ToRadians(-90f), Vector2.Zero, TextureScale, SpriteEffects.None, 0f);
             }
+
             if (BorderRight)
             {
                 camera.Draw(texture2D,
                     new Vector2(Bounds.Right - TextureOffset.Y, Y + CornerTexture.Width + TextureOffset.X),
-                    new Rectangle(0, 0, (int) (Height/TextureScale.Y) - CornerTexture.Width*2, texture2D.Height),
+                    new Rectangle(0, 0, (int) (Height / TextureScale.Y) - CornerTexture.Width * 2, texture2D.Height),
                     TextureColor, MathHelper.ToRadians(90f), Vector2.Zero, TextureScale, SpriteEffects.None, 0f);
             }
+
             if (BorderTop)
             {
                 if (Rotation == 0f)
                 {
                     camera.Draw(texture2D, new Vector2(X + CornerTexture.Width + TextureOffset.X, Y + TextureOffset.Y),
-                        new Rectangle(0, 0, (int) (Width/TextureScale.X) - CornerTexture.Width*2, texture2D.Height),
-                        TextureColor, MathHelper.ToRadians(Rotation), Vector2.Zero, TextureScale, SpriteEffects.None, 0f);
+                        new Rectangle(0, 0, (int) (Width / TextureScale.X) - CornerTexture.Width * 2, texture2D.Height),
+                        TextureColor, MathHelper.ToRadians(Rotation), Vector2.Zero, TextureScale, SpriteEffects.None,
+                        0f);
                 }
                 else
                 {
@@ -117,15 +122,16 @@ namespace RogueCastle
                         CornerTexture.Rotation = 0f;
                         CornerTexture.Draw(camera);
                         CornerTexture.Flip = SpriteEffects.None;
-                        CornerTexture.Position = new Vector2(position2.X - CornerTexture.Width/2f, position2.Y);
+                        CornerTexture.Position = new Vector2(position2.X - CornerTexture.Width / 2f, position2.Y);
                         CornerTexture.Rotation = 0f;
                         CornerTexture.Draw(camera);
                     }
+
                     if (Rotation < 0f && Rotation > -80f)
                     {
                         CornerTexture.Flip = SpriteEffects.FlipHorizontally;
                         CornerTexture.Position = position;
-                        CornerTexture.X += CornerTexture.Width/2f;
+                        CornerTexture.X += CornerTexture.Width / 2f;
                         CornerTexture.Rotation = 0f;
                         CornerTexture.Draw(camera);
                         CornerTexture.Flip = SpriteEffects.None;
@@ -133,14 +139,16 @@ namespace RogueCastle
                         CornerTexture.Rotation = 0f;
                         CornerTexture.Draw(camera);
                     }
+
                     camera.Draw(texture2D,
                         new Vector2(
-                            X + TextureOffset.X - (float) Math.Sin(MathHelper.ToRadians(Rotation))*TextureOffset.Y,
-                            Y + (float) Math.Cos(MathHelper.ToRadians(Rotation))*TextureOffset.Y),
-                        new Rectangle(0, 0, (int) (Width/TextureScale.X), texture2D.Height), TextureColor,
+                            X + TextureOffset.X - (float) Math.Sin(MathHelper.ToRadians(Rotation)) * TextureOffset.Y,
+                            Y + (float) Math.Cos(MathHelper.ToRadians(Rotation)) * TextureOffset.Y),
+                        new Rectangle(0, 0, (int) (Width / TextureScale.X), texture2D.Height), TextureColor,
                         MathHelper.ToRadians(Rotation), Vector2.Zero, TextureScale, SpriteEffects.None, 0f);
                 }
             }
+
             base.Draw(camera);
         }
 
@@ -163,6 +171,7 @@ namespace RogueCastle
                     CornerTexture.Position = new Vector2(Bounds.Right - CornerTexture.Width, Bounds.Top);
                     CornerTexture.Draw(camera);
                 }
+
                 CornerLTexture.Flip = SpriteEffects.FlipHorizontally;
                 CornerTexture.Flip = SpriteEffects.FlipHorizontally;
                 if (BorderLeft)
@@ -176,6 +185,7 @@ namespace RogueCastle
                     CornerTexture.Draw(camera);
                 }
             }
+
             if (BorderBottom)
             {
                 CornerTexture.Flip = SpriteEffects.FlipVertically;
@@ -193,6 +203,7 @@ namespace RogueCastle
                         Bounds.Bottom - CornerTexture.Height);
                     CornerTexture.Draw(camera);
                 }
+
                 if (BorderLeft)
                 {
                     CornerLTexture.Position = new Vector2(Bounds.Left + CornerLTexture.Width,
@@ -210,6 +221,7 @@ namespace RogueCastle
                     CornerTexture.Rotation = 0f;
                 }
             }
+
             if (BorderLeft)
             {
                 CornerTexture.Flip = SpriteEffects.None;
@@ -222,6 +234,7 @@ namespace RogueCastle
                     CornerTexture.Draw(camera);
                     CornerTexture.Rotation = 0f;
                 }
+
                 if (!BorderTop)
                 {
                     CornerTexture.Position = new Vector2(Bounds.Left, Bounds.Top + CornerTexture.Width);
@@ -231,6 +244,7 @@ namespace RogueCastle
                     CornerTexture.Rotation = 0f;
                 }
             }
+
             if (BorderRight)
             {
                 CornerTexture.Flip = SpriteEffects.None;
@@ -242,6 +256,7 @@ namespace RogueCastle
                     CornerTexture.Draw(camera);
                     CornerTexture.Rotation = 0f;
                 }
+
                 if (!BorderTop)
                 {
                     CornerTexture.Position = new Vector2(Bounds.Right, Bounds.Top + CornerTexture.Width);
@@ -296,14 +311,17 @@ namespace RogueCastle
             {
                 BorderTop = bool.Parse(reader.Value);
             }
+
             if (reader.MoveToAttribute("CollidesBottom"))
             {
                 BorderBottom = bool.Parse(reader.Value);
             }
+
             if (reader.MoveToAttribute("CollidesLeft"))
             {
                 BorderLeft = bool.Parse(reader.Value);
             }
+
             if (reader.MoveToAttribute("CollidesRight"))
             {
                 BorderRight = bool.Parse(reader.Value);

@@ -21,7 +21,7 @@ namespace RogueCastle
         {
             if (ParentLogicSet != null && ParentLogicSet.IsActive)
             {
-                m_obj = (ParentLogicSet.ParentGameObj as CharacterObj);
+                m_obj = ParentLogicSet.ParentGameObj as CharacterObj;
                 SequenceType = Types.Sequence.Serial;
                 base.Execute();
             }

@@ -21,7 +21,7 @@ namespace RogueCastle
     {
         private bool m_internalIsWeighted;
 
-        public BreakableObj(string spriteName) : base(spriteName, null)
+        public BreakableObj(string spriteName) : base(spriteName)
         {
             DisableCollisionBoxRotations = true;
             Broken = false;
@@ -31,10 +31,7 @@ namespace RogueCastle
             CollidesLeft = false;
             CollidesRight = false;
             CollidesBottom = false;
-            foreach (var current in _objectList)
-            {
-                current.Visible = false;
-            }
+            foreach (var current in _objectList) current.Visible = false;
             _objectList[0].Visible = true;
             DropItem = true;
         }
@@ -50,19 +47,23 @@ namespace RogueCastle
             {
                 Break();
             }
+
             var projectileObj = otherBox.AbsParent as ProjectileObj;
-            if (projectileObj != null && (projectileObj.CollisionTypeTag == 2 || projectileObj.CollisionTypeTag == 10) &&
+            if (projectileObj != null &&
+                (projectileObj.CollisionTypeTag == 2 || projectileObj.CollisionTypeTag == 10) &&
                 otherBox.Type == 1)
             {
                 if (!Broken)
                 {
                     Break();
                 }
+
                 if (projectileObj.DestroysWithTerrain && SpriteName == "Target1_Character")
                 {
                     projectileObj.RunDestroyAnimation(false);
                 }
             }
+
             if ((otherBox.AbsRect.Y > thisBox.AbsRect.Y || otherBox.AbsRotation != 0f) &&
                 (otherBox.Parent is TerrainObj || otherBox.AbsParent is BreakableObj))
             {
@@ -73,10 +74,7 @@ namespace RogueCastle
         public void Break()
         {
             var player = Game.ScreenManager.Player;
-            foreach (var current in _objectList)
-            {
-                current.Visible = true;
-            }
+            foreach (var current in _objectList) current.Visible = true;
             GoToFrame(2);
             Broken = true;
             m_internalIsWeighted = IsWeighted;
@@ -95,6 +93,7 @@ namespace RogueCastle
                     player.AttachedLevel.ItemDropManager.DropItem(Position, 3, 0.1f);
                     flag = true;
                 }
+
                 if (flag)
                 {
                     for (var i = 0; i < NumChildren; i++)
@@ -103,6 +102,7 @@ namespace RogueCastle
                             "50", "Rotation", CDGMath.RandomInt(-360, 360).ToString());
                         Tween.To(GetChildAt(i), 0.1f, Linear.EaseNone, "delay", "0.2", "Opacity", "0");
                     }
+
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3",
                         "EnemyHit4", "EnemyHit5", "EnemyHit6");
                     SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Break1", "Break2", "Break3");
@@ -112,8 +112,10 @@ namespace RogueCastle
                         player.AttachedLevel.TextManager.DisplayNumberStringText(1, "mp", Color.RoyalBlue,
                             new Vector2(player.X, player.Bounds.Top - 30));
                     }
+
                     return;
                 }
+
                 var num = CDGMath.RandomInt(1, 100);
                 var num2 = 0;
                 var j = 0;
@@ -129,6 +131,7 @@ namespace RogueCastle
                                 player.AttachedLevel.ItemDropManager.DropItem(Position, 2, 0.1f);
                                 break;
                             }
+
                             var enemyObj_Chicken = new EnemyObj_Chicken(null, null, null,
                                 EnemyDifficulty.Basic);
                             enemyObj_Chicken.AccelerationY = -500f;
@@ -142,32 +145,40 @@ namespace RogueCastle
                                 "Chicken_Cluck_02", "Chicken_Cluck_03");
                             break;
                         }
+
                         if (j == 1)
                         {
                             player.AttachedLevel.ItemDropManager.DropItem(Position, 3, 0.1f);
                             break;
                         }
+
                         if (j == 2)
                         {
                             player.AttachedLevel.ItemDropManager.DropItem(Position, 1, 10f);
                             break;
                         }
+
                         if (j == 3)
                         {
                             player.AttachedLevel.ItemDropManager.DropItem(Position, 10, 100f);
                         }
+
                         break;
                     }
+
                     j++;
                 }
             }
+
             for (var k = 0; k < NumChildren; k++)
             {
                 Tween.By(GetChildAt(k), 0.3f, Linear.EaseNone, "X", CDGMath.RandomInt(-50, 50).ToString(), "Y", "50",
                     "Rotation", CDGMath.RandomInt(-360, 360).ToString());
                 Tween.To(GetChildAt(k), 0.1f, Linear.EaseNone, "delay", "0.2", "Opacity", "0");
             }
-            SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3", "EnemyHit4",
+
+            SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3",
+                "EnemyHit4",
                 "EnemyHit5", "EnemyHit6");
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Break1", "Break2", "Break3");
             if (Game.PlayerStats.Traits.X == 15f || Game.PlayerStats.Traits.Y == 15f)
@@ -185,6 +196,7 @@ namespace RogueCastle
                 current.Visible = true;
                 current.Opacity = 0f;
             }
+
             GoToFrame(2);
             Broken = true;
             m_internalIsWeighted = IsWeighted;
@@ -204,23 +216,19 @@ namespace RogueCastle
                 GetChildAt(i).Opacity = 1f;
                 GetChildAt(i).Rotation = 0f;
             }
-            foreach (var current in _objectList)
-            {
-                current.Visible = false;
-            }
+
+            foreach (var current in _objectList) current.Visible = false;
             _objectList[0].Visible = true;
         }
 
         public void UpdateTerrainBox()
         {
             foreach (var current in CollisionBoxes)
-            {
                 if (current.Type == 0)
                 {
                     m_terrainBounds = current.AbsRect;
                     break;
                 }
-            }
         }
 
         protected override GameObj CreateCloneInstance()

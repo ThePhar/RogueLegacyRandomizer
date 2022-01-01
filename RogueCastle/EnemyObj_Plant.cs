@@ -87,6 +87,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Plant_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Flowermon";
                     MaxHealth = 53;
@@ -114,6 +115,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Plant_Expert_KnockBack;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Stolas & Focalor";
                     MaxHealth = 165;
@@ -142,6 +144,7 @@ namespace RogueCastle
                     KnockBack = EnemyEV.Plant_Miniboss_KnockBack;
                     break;
             }
+
             _objectList[1].TextureColor = new Color(201, 59, 136);
         }
 
@@ -279,6 +282,7 @@ namespace RogueCastle
                 array[1] = 50;
                 SetCooldownLogicBlock(arg_AA5_1, array);
             }
+
             projectileData.Dispose();
             base.InitializeLogic();
         }
@@ -289,11 +293,13 @@ namespace RogueCastle
             {
                 case 0:
                     break;
+
                 case 1:
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 100);
                     break;
+
                 default:
                     return;
             }
@@ -305,11 +311,13 @@ namespace RogueCastle
             {
                 case 0:
                     break;
+
                 case 1:
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalAdvancedLB, 100);
                     break;
+
                 default:
                     return;
             }
@@ -321,11 +329,13 @@ namespace RogueCastle
             {
                 case 0:
                     break;
+
                 case 1:
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalExpertLB, 100);
                     break;
+
                 default:
                     return;
             }
@@ -341,6 +351,7 @@ namespace RogueCastle
                 case 3:
                     RunLogicBlock(true, m_generalMiniBossLB, 100);
                     return;
+
                 default:
                     return;
             }

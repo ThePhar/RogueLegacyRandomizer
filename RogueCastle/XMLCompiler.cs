@@ -17,7 +17,8 @@ namespace RogueCastle
     {
         public static void CompileEnemies(List<EnemyEditorData> enemyDataList, string filePath)
         {
-            var xmlWriterSettings = new XmlWriterSettings {Indent = true, ConformanceLevel = ConformanceLevel.Fragment};
+            var xmlWriterSettings = new XmlWriterSettings
+                { Indent = true, ConformanceLevel = ConformanceLevel.Fragment };
             var xmlWriter = XmlWriter.Create(filePath + "\\EnemyList.xml", xmlWriterSettings);
             var str = "<xml>";
             xmlWriter.WriteStartElement("xml");
@@ -65,6 +66,7 @@ namespace RogueCastle
                 xmlWriter.WriteEndElement();
                 str += "</EnemyObj>\n";
             }
+
             xmlWriter.WriteEndElement();
             xmlWriter.Flush();
             xmlWriter.Close();

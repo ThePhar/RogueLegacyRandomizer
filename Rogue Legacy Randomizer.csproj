@@ -65,12 +65,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Archipelago\ArchipelagoClient.cs" />
-    <Compile Include="Archipelago\ArchipelagoStatus.cs" />
+    <Compile Include="Archipelago\Client.cs" />
+    <Compile Include="Archipelago\ItemData.cs" />
+    <Compile Include="Archipelago\ItemType.cs" />
+    <Compile Include="Archipelago\LocationDefinitions.cs" />
+    <Compile Include="Archipelago\LocationData.cs" />
+    <Compile Include="Archipelago\Status.cs" />
     <Compile Include="Archipelago\ConnectionInfo.cs" />
-    <Compile Include="Archipelago\ItemCode.cs" />
-    <Compile Include="Archipelago\LocationCode.cs" />
-    <Compile Include="Archipelago\LocationManager.cs" />
+    <Compile Include="Archipelago\ItemDefinitions.cs" />
     <Compile Include="Archipelago\SlotData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Randomchaos2DGodRays\BasePostProcess.cs" />
@@ -253,7 +255,7 @@
     <Compile Include="RogueCastle\ShadowmapResolver.cs" />
     <Compile Include="RogueCastle\ShadowmapSize.cs" />
     <Compile Include="RogueCastle\SkillBuilder.cs" />
-    <Compile Include="RogueCastle\SkillLink.cs" />
+    <Compile Include="RogueCastle\SkillLinker.cs" />
     <Compile Include="RogueCastle\SkillObj.cs" />
     <Compile Include="RogueCastle\SkillScreen.cs" />
     <Compile Include="RogueCastle\SkillSystem.cs" />
@@ -273,7 +275,6 @@
     <Compile Include="RogueCastle\Structs\LevelType.cs" />
     <Compile Include="RogueCastle\Structs\ManorPieces.cs" />
     <Compile Include="RogueCastle\Systems\ManorContainer.cs" />
-    <Compile Include="RogueCastle\Systems\SkillMeta.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
     <Compile Include="RogueCastle\TextManager.cs" />

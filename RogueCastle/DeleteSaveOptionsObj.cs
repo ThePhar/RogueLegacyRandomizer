@@ -14,9 +14,7 @@ namespace RogueCastle
 {
     public class DeleteSaveOptionsObj : OptionsObj
     {
-        public DeleteSaveOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Delete Save")
-        {
-        }
+        public DeleteSaveOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Delete Save") { }
 
         public override bool IsActive
         {

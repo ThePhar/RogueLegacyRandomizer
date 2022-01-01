@@ -34,7 +34,7 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            if ((ShowTerrain && CollisionMath.Intersects(Bounds, camera.Bounds)) || ForceDraw)
+            if (ShowTerrain && CollisionMath.Intersects(Bounds, camera.Bounds) || ForceDraw)
             {
                 camera.Draw(Game.GenericTexture, Position, new Rectangle(0, 0, Width, Height), TextureColor,
                     MathHelper.ToRadians(Rotation), Vector2.Zero, 1f, SpriteEffects.None, 0f);
@@ -52,9 +52,7 @@ namespace RogueCastle
             var terrainObj = obj as TerrainObj;
             terrainObj.ShowTerrain = ShowTerrain;
             foreach (var current in CollisionBoxes)
-            {
                 terrainObj.AddCollisionBox(current.X, current.Y, current.Width, current.Height, current.Type);
-            }
         }
 
         public override void PopulateFromXMLReader(XmlReader reader, CultureInfo ci)
@@ -66,7 +64,7 @@ namespace RogueCastle
             AddCollisionBox(0, 0, _width, _height, 2);
             if (CollidesTop && !CollidesBottom && !CollidesLeft && !CollidesRight)
             {
-                SetHeight(Height/2);
+                SetHeight(Height / 2);
             }
         }
 

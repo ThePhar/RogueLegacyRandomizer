@@ -28,7 +28,7 @@ namespace RogueCastle
             m_text.FontSize = 20f;
             m_text.Text = "Thanks for playing the Rogue Legacy Demo. You're pretty good at games.";
             m_text.ForceDraw = true;
-            m_text.Position = new Vector2(660f - m_text.Width/2f, 360f - m_text.Height/2f - 30f);
+            m_text.Position = new Vector2(660f - m_text.Width / 2f, 360f - m_text.Height / 2f - 30f);
             m_playerShrug = new SpriteObj("PlayerShrug_Sprite");
             m_playerShrug.ForceDraw = true;
             m_playerShrug.Position = new Vector2(660f, m_text.Bounds.Bottom + 100);
@@ -39,14 +39,14 @@ namespace RogueCastle
         public override void OnEnter()
         {
             BackBufferOpacity = 1f;
-            Tween.RunFunction(8f, ScreenManager, "DisplayScreen", 3, true, typeof (List<object>));
+            Tween.RunFunction(8f, ScreenManager, "DisplayScreen", 3, true, typeof(List<object>));
             base.OnEnter();
         }
 
         public override void Draw(GameTime gametime)
         {
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
-            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black*BackBufferOpacity);
+            Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             m_playerShrug.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             m_text.Draw(Camera);

@@ -93,6 +93,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     SpellDelay = 0.5f;
                     SpellDuration = 1f;
@@ -122,6 +123,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     SpellDelay = 0.7f;
                     SpellDuration = 3.5f;
@@ -151,6 +153,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     SpellDelay = 0.85f;
                     SpellDuration = 2f;
@@ -181,6 +184,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.EarthWizard_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -323,6 +327,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -332,6 +337,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -343,6 +349,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -361,6 +368,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -370,6 +378,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -381,6 +390,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -399,6 +409,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -408,6 +419,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -419,6 +431,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -439,6 +452,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_82_1, arg_82_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_5D_1 = true;
@@ -448,6 +462,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_5D_1, arg_5D_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -461,6 +476,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_42_1, arg_42_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -472,7 +488,7 @@ namespace RogueCastle
             m_earthSummonInSprite.AnimationDelay = 0.1f;
             m_earthSummonInSprite.PlayAnimation();
             m_earthSummonInSprite.Scale = Vector2.Zero;
-            m_earthSummonOutSprite = (m_earthSummonInSprite.Clone() as SpriteObj);
+            m_earthSummonOutSprite = m_earthSummonInSprite.Clone() as SpriteObj;
             m_earthSummonOutSprite.PlayAnimation();
             m_earthProjectileObj = new ProjectileObj("WizardEarthSpell_Sprite");
             m_earthProjectileObj.IsWeighted = false;
@@ -496,6 +512,7 @@ namespace RogueCastle
                 SoundManager.Play3DSound(this, m_target, "Earth_Wizard_Fall");
                 m_earthProjectileObj.PlayAnimation("Grown", "End");
             }
+
             m_levelScreen.PhysicsManager.RemoveObject(m_earthProjectileObj);
         }
 
@@ -519,7 +536,6 @@ namespace RogueCastle
             var num = 2147483647;
             TerrainObj terrainObj = null;
             foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
-            {
                 if (CollisionMath.Intersects(new Rectangle((int) m_target.X, (int) m_target.Y, 2, 720), current.Bounds))
                 {
                     var num2 = current.Bounds.Top - m_target.TerrainBounds.Bottom;
@@ -529,7 +545,7 @@ namespace RogueCastle
                         terrainObj = current;
                     }
                 }
-            }
+
             if (terrainObj != null)
             {
                 if (terrainObj.Rotation == 0f)
@@ -561,16 +577,18 @@ namespace RogueCastle
                         vector2 = CollisionMath.LowerRightCorner(terrainObj.TerrainBounds, terrainObj.Rotation,
                             Vector2.Zero);
                     }
+
                     var num3 = vector2.X - vector.X;
                     var num4 = vector2.Y - vector.Y;
                     var x = vector.X;
                     var y = vector.Y;
                     var x2 = m_earthSummonOutSprite.X;
-                    var num5 = y + (x2 - x)*(num4/num3);
+                    var num5 = y + (x2 - x) * (num4 / num3);
                     num5 -= m_earthSummonOutSprite.Bounds.Bottom - m_earthSummonOutSprite.Y;
                     m_earthSummonOutSprite.Y = (float) Math.Round(num5, MidpointRounding.ToEven);
                 }
             }
+
             object arg_2A0_0 = m_earthSummonOutSprite;
             var arg_2A0_1 = 0.5f;
             Easing arg_2A0_2 = Back.EaseOut;
@@ -609,6 +627,7 @@ namespace RogueCastle
             {
                 m_earthSummonInSprite.Position = new Vector2(X - m_spellOffset.X, Y + m_spellOffset.Y);
             }
+
             if (m_fireballSummon != null)
             {
                 if (Flip == SpriteEffects.None)
@@ -620,6 +639,7 @@ namespace RogueCastle
                     m_fireballSummon.Position = new Vector2(X - m_spellOffset.X, Y + m_spellOffset.Y);
                 }
             }
+
             if (m_iceballSummon != null)
             {
                 if (Flip == SpriteEffects.None)
@@ -631,6 +651,7 @@ namespace RogueCastle
                     m_iceballSummon.Position = new Vector2(X - m_spellOffset.X, Y + m_spellOffset.Y);
                 }
             }
+
             if (m_earthParticleEffectCounter > 0f)
             {
                 m_earthParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -650,6 +671,7 @@ namespace RogueCastle
                         {
                             m_levelScreen.ImpactEffectPool.DisplayIceParticleEffect(this);
                         }
+
                         m_effectCycle++;
                         if (m_effectCycle > 2)
                         {
@@ -660,6 +682,7 @@ namespace RogueCastle
                     {
                         m_levelScreen.ImpactEffectPool.DisplayEarthParticleEffect(this);
                     }
+
                     m_earthParticleEffectCounter = 0.15f;
                 }
             }
@@ -684,10 +707,12 @@ namespace RogueCastle
             {
                 projectileData.AngleOffset = CDGMath.RandomInt(-25, 25);
             }
+
             if (Difficulty == EnemyDifficulty.Expert)
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
             }
+
             SoundManager.Play3DSound(this, m_target, "FireWizard_Attack_01", "FireWizard_Attack_02",
                 "FireWizard_Attack_03", "FireWizard_Attack_04");
             var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
@@ -720,6 +745,7 @@ namespace RogueCastle
             {
                 projectileData.SpriteName = "GhostBossProjectile_Sprite";
             }
+
             SoundManager.Play3DSound(this, m_target, "Fire_Wizard_Form");
             m_fireballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
             m_fireballSummon.Opacity = 0f;
@@ -770,6 +796,7 @@ namespace RogueCastle
             {
                 m_iceballSummon.PlayAnimation("Grown", "End");
             }
+
             var projectileData = new ProjectileData(this)
             {
                 SpriteName = "WizardIceProjectile_Sprite",
@@ -784,7 +811,7 @@ namespace RogueCastle
                 Scale = MiniBossIceSize
             };
             var num = 0f;
-            float num2 = 360/numIceballs;
+            float num2 = 360 / numIceballs;
             for (var i = 0; i < numIceballs; i++)
             {
                 projectileData.Angle = new Vector2(num, num);
@@ -792,6 +819,7 @@ namespace RogueCastle
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num += num2;
             }
+
             projectileData.Dispose();
         }
 
@@ -817,6 +845,7 @@ namespace RogueCastle
                 CancelEarthSpellIn();
                 m_currentActiveLB.StopLogicBlock();
             }
+
             base.Kill(giveXP);
         }
 
@@ -834,11 +863,13 @@ namespace RogueCastle
             {
                 CurrentSpeed = 0f;
             }
+
             if (collisionResponseType != 1)
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                 return;
             }
+
             if (!(otherBox.AbsParent is PlayerObj))
             {
                 var physicsObj = otherBox.AbsParent as IPhysicsObj;
@@ -876,16 +907,19 @@ namespace RogueCastle
                     m_earthSummonInSprite.Dispose();
                     m_earthSummonInSprite = null;
                 }
+
                 if (m_earthSummonOutSprite != null)
                 {
                     m_earthSummonOutSprite.Dispose();
                     m_earthSummonOutSprite = null;
                 }
+
                 if (m_earthProjectileObj != null)
                 {
                     m_earthProjectileObj.Dispose();
                     m_earthProjectileObj = null;
                 }
+
                 SpawnRoom = null;
                 base.Dispose();
             }

@@ -33,16 +33,15 @@ namespace RogueCastle
             m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
             m_icon = new SpriteObj("Blank_Sprite");
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "pedestal")
                 {
-                    m_pedestal = (current as SpriteObj);
+                    m_pedestal = current as SpriteObj;
                     break;
                 }
-            }
+
             m_pedestal.OutlineWidth = 2;
             m_icon.X = m_pedestal.X;
-            m_icon.Y = m_pedestal.Y - (m_pedestal.Y - m_pedestal.Bounds.Top) - m_icon.Height/2f - 20f;
+            m_icon.Y = m_pedestal.Y - (m_pedestal.Y - m_pedestal.Bounds.Top) - m_icon.Height / 2f - 20f;
             m_icon.OutlineWidth = 2;
             m_iconYPos = m_icon.Y;
             GameObjList.Add(m_icon);
@@ -63,6 +62,7 @@ namespace RogueCastle
                     Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
                 } while ((Game.PlayerStats.Traits.X == 31f || Game.PlayerStats.Traits.Y == 31f) &&
                          (Spell == 6 || Spell == 4 || Spell == 11));
+
                 Array.Clear(spellList, 0, spellList.Length);
                 ID = Spell;
             }
@@ -76,6 +76,7 @@ namespace RogueCastle
                 ID = 14;
                 Spell = 14;
             }
+
             m_icon.ChangeSprite(SpellType.Icon(Spell));
         }
 
@@ -86,13 +87,15 @@ namespace RogueCastle
                 while (true)
                 {
                     RandomizeItem();
-                    if ((Spell != Game.PlayerStats.Spell || Game.PlayerStats.Class == 16 || Game.PlayerStats.Class == 17) &&
+                    if ((Spell != Game.PlayerStats.Spell || Game.PlayerStats.Class == 16 ||
+                         Game.PlayerStats.Class == 17) &&
                         (Spell != 13 || Game.PlayerStats.Class == 16))
                     {
                         if (Spell != 14)
                         {
                             break;
                         }
+
                         if (Game.PlayerStats.Class == 17)
                         {
                             break;
@@ -110,13 +113,14 @@ namespace RogueCastle
                     m_speechBubble.Visible = false;
                 }
             }
+
             base.OnEnter();
         }
 
         public override void Update(GameTime gameTime)
         {
-            m_icon.Y = m_iconYPos - 10f + (float) Math.Sin(Game.TotalGameTimeSeconds*2f)*5f;
-            m_speechBubble.Y = m_iconYPos - 90f + (float) Math.Sin(Game.TotalGameTimeSeconds*20f)*2f;
+            m_icon.Y = m_iconYPos - 10f + (float) Math.Sin(Game.TotalGameTimeSeconds * 2f) * 5f;
+            m_speechBubble.Y = m_iconYPos - 90f + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
             if (!RoomCompleted)
             {
                 m_icon.Visible = true;
@@ -137,6 +141,7 @@ namespace RogueCastle
             {
                 m_icon.Visible = false;
             }
+
             base.Update(gameTime);
         }
 
@@ -148,12 +153,13 @@ namespace RogueCastle
             {
                 Game.PlayerStats.WizardSpellList = SpellType.GetNext3Spells();
             }
+
             Spell = 0;
             m_speechBubble.Visible = false;
             m_icon.Visible = false;
             (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerSpellIcon();
             var list = new List<object>();
-            list.Add(new Vector2(m_icon.X, m_icon.Y - m_icon.Height/2f));
+            list.Add(new Vector2(m_icon.X, m_icon.Y - m_icon.Height / 2f));
             list.Add(4);
             list.Add(new Vector2(Game.PlayerStats.Spell, 0f));
             (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(12, true, list);

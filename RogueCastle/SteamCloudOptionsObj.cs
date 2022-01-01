@@ -19,7 +19,7 @@ namespace RogueCastle
 
         public SteamCloudOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Enable Steam Cloud")
         {
-            m_toggleText = (m_nameText.Clone() as TextObj);
+            m_toggleText = m_nameText.Clone() as TextObj;
             m_toggleText.X = m_optionsTextOffset;
             m_toggleText.Text = "No";
             AddChild(m_toggleText);
@@ -36,6 +36,7 @@ namespace RogueCastle
                     m_toggleText.TextureColor = Color.Yellow;
                     return;
                 }
+
                 m_toggleText.TextureColor = Color.White;
             }
         }
@@ -50,12 +51,14 @@ namespace RogueCastle
             {
                 m_toggleText.Text = "No";
             }
+
             base.Initialize();
         }
 
         public override void HandleInput()
         {
-            if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21) || Game.GlobalInput.JustPressed(22) ||
+            if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21) ||
+                Game.GlobalInput.JustPressed(22) ||
                 Game.GlobalInput.JustPressed(23))
             {
                 SoundManager.PlaySound("frame_swap");
@@ -68,6 +71,7 @@ namespace RogueCastle
                     m_toggleText.Text = "No";
                 }
             }
+
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 SoundManager.PlaySound("Option_Menu_Select");
@@ -79,8 +83,10 @@ namespace RogueCastle
                 {
                     Game.GameConfig.EnableSteamCloud = false;
                 }
+
                 IsActive = false;
             }
+
             if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
             {
                 if (Game.GameConfig.EnableSteamCloud)
@@ -91,8 +97,10 @@ namespace RogueCastle
                 {
                     m_toggleText.Text = "No";
                 }
+
                 IsActive = false;
             }
+
             base.HandleInput();
         }
 

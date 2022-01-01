@@ -33,7 +33,8 @@ namespace RogueCastle
         private float SpellDelay = 0.8f;
         private int SpellProjectileCount = 7;
 
-        public EnemyObj_IceWizard(PlayerObj target, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo,
+        public EnemyObj_IceWizard(PlayerObj target, PhysicsManager physicsManager,
+            ProceduralLevelScreen levelToAttachTo,
             EnemyDifficulty difficulty)
             : base("EnemyWizardIdle_Character", target, physicsManager, levelToAttachTo, difficulty)
         {
@@ -74,6 +75,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     SpellProjectileCount = 14;
                     Name = "Icen";
@@ -104,6 +106,7 @@ namespace RogueCastle
                     m_spellOffset = new Vector2(40f, -100f);
                     IceScale = new Vector2(1.5f, 1.5f);
                     break;
+
                 case EnemyDifficulty.Expert:
                     SpellProjectileCount = 8;
                     SpellDelay = 1f;
@@ -135,6 +138,7 @@ namespace RogueCastle
                     KnockBack = EnemyEV.IceWizard_Expert_KnockBack;
                     IceScale = new Vector2(2f, 2f);
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Luna Mage";
                     MaxHealth = 240;
@@ -162,6 +166,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.IceWizard_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -264,6 +269,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -273,6 +279,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -284,6 +291,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -302,6 +310,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -311,6 +320,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -322,6 +332,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -340,6 +351,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_6E_1, arg_6E_2, array);
                     return;
                 }
+
                 case 1:
                 {
                     var arg_53_1 = true;
@@ -349,6 +361,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_53_1, arg_53_2, array2);
                     return;
                 }
+
                 case 2:
                 case 3:
                 {
@@ -360,6 +373,7 @@ namespace RogueCastle
                     RunLogicBlock(arg_38_1, arg_38_2, array3);
                     return;
                 }
+
                 default:
                     return;
             }
@@ -391,6 +405,7 @@ namespace RogueCastle
                     m_iceballSummon.Position = new Vector2(X - m_spellOffset.X, Y + m_spellOffset.Y);
                 }
             }
+
             if (m_iceParticleEffectCounter > 0f)
             {
                 m_iceParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -433,6 +448,7 @@ namespace RogueCastle
             {
                 m_iceballSummon.PlayAnimation("Grown", "End");
             }
+
             var projectileData = new ProjectileData(this)
             {
                 SpriteName = "WizardIceProjectile_Sprite",
@@ -447,7 +463,7 @@ namespace RogueCastle
                 Scale = ProjectileScale
             };
             var num = 0f;
-            float num2 = 360/numIceballs;
+            float num2 = 360 / numIceballs;
             for (var i = 0; i < numIceballs; i++)
             {
                 projectileData.Angle = new Vector2(num, num);
@@ -455,6 +471,7 @@ namespace RogueCastle
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num += num2;
             }
+
             projectileData.Dispose();
         }
 
@@ -465,6 +482,7 @@ namespace RogueCastle
             {
                 m_iceballSummon.PlayAnimation("Grown", "End");
             }
+
             var projectileData = new ProjectileData(this)
             {
                 SpriteName = "WizardIceProjectile_Sprite",
@@ -487,6 +505,7 @@ namespace RogueCastle
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num2 += num;
             }
+
             projectileData.Dispose();
         }
 
@@ -511,6 +530,7 @@ namespace RogueCastle
                 m_currentActiveLB.StopLogicBlock();
                 ResetIceball();
             }
+
             base.Kill(giveXP);
         }
 
@@ -520,11 +540,13 @@ namespace RogueCastle
             {
                 CurrentSpeed = 0f;
             }
+
             if (collisionResponseType != 1)
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                 return;
             }
+
             if (!(otherBox.AbsParent is PlayerObj))
             {
                 var physicsObj = otherBox.AbsParent as IPhysicsObj;

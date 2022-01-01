@@ -16,6 +16,6 @@ namespace RogueCastle.Structs
         Basic,
         Advanced,
         Expert,
-        MiniBoss,
+        MiniBoss
     }
 }

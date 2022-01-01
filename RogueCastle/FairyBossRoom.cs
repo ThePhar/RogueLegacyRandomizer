@@ -28,7 +28,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_Fairy);
+            m_boss = EnemyList[0] as EnemyObj_Fairy;
             m_boss.PauseEnemy(true);
             m_bossShadow = new ObjContainer("EnemyFairyGhostBossMove_Character");
             m_boss.ChangeSprite("EnemyFairyGhostBossIdle_Character");
@@ -52,7 +52,7 @@ namespace RogueCastle
                 (Bounds.Top + 400).ToString());
             Tween.By(m_bossShadow, 0.5f, Tween.EaseNone, "delay", "1", "X", "3000");
             Tween.RunFunction(1.8f, this, "Intro2");
-            Tween.RunFunction(0.5f, typeof (SoundManager), "PlaySound", "Boss_Flameskull_Whoosh_01");
+            Tween.RunFunction(0.5f, typeof(SoundManager), "PlaySound", "Boss_Flameskull_Whoosh_01");
             base.OnEnter();
         }
 
@@ -64,7 +64,7 @@ namespace RogueCastle
                 (Bounds.Bottom - 400).ToString());
             Tween.By(m_bossShadow, 0.5f, Tween.EaseNone, "delay", "1", "X", "-3000");
             Tween.RunFunction(1.8f, this, "Intro3");
-            Tween.RunFunction(0.2f, typeof (SoundManager), "PlaySound", "Boss_Flameskull_Whoosh_02");
+            Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", "Boss_Flameskull_Whoosh_02");
         }
 
         public void Intro3()
@@ -72,10 +72,11 @@ namespace RogueCastle
             m_bossShadow.Position = m_boss.Position;
             m_bossShadow.X -= 1500f;
             m_bossShadow.Flip = SpriteEffects.None;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_boss.X.ToString(), "Y", m_boss.Y.ToString());
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", m_boss.X.ToString(), "Y",
+                m_boss.Y.ToString());
             Tween.By(m_bossShadow, 1f, Quad.EaseOut, "delay", "1", "X", "1500");
             Tween.RunFunction(1.8f, this, "Intro4");
-            Tween.RunFunction(0.2f, typeof (SoundManager), "PlaySound", "Boss_Flameskull_Spawn");
+            Tween.RunFunction(0.2f, typeof(SoundManager), "PlaySound", "Boss_Flameskull_Spawn");
         }
 
         public void Intro4()
@@ -92,7 +93,8 @@ namespace RogueCastle
         {
             Tween.To(Player.AttachedLevel.Camera, 0.5f, Quad.EaseInOut, "delay", "0.3", "X",
                 (Player.X + GlobalEV.Camera_XOffset).ToString(), "Y",
-                (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y)).ToString());
+                (Bounds.Bottom - (Player.AttachedLevel.Camera.Bounds.Bottom - Player.AttachedLevel.Camera.Y))
+                .ToString());
             Tween.AddEndHandlerToLastTween(this, "BeginFight");
         }
 
@@ -120,6 +122,7 @@ namespace RogueCastle
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                     camera.GetTransformation());
             }
+
             base.Draw(camera);
         }
 

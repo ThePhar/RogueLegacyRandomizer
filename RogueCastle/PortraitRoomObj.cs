@@ -22,13 +22,12 @@ namespace RogueCastle
         public override void Initialize()
         {
             foreach (var current in GameObjList)
-            {
                 if (current.Name == "portrait")
                 {
-                    m_portraitFrame = (current as SpriteObj);
+                    m_portraitFrame = current as SpriteObj;
                     break;
                 }
-            }
+
             m_portraitFrame.ChangeSprite("GiantPortrait_Sprite");
             m_portraitFrame.Scale = new Vector2(2f, 2f);
             m_portrait = new SpriteObj("Blank_Sprite");
@@ -48,6 +47,7 @@ namespace RogueCastle
                 base.OnEnter();
                 return;
             }
+
             if (ID != -1)
             {
                 m_portraitIndex = ID;
@@ -67,6 +67,7 @@ namespace RogueCastle
                     screenManager.DisplayScreen(13, true);
                 }
             }
+
             base.Update(gameTime);
         }
 

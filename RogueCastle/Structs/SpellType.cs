@@ -16,28 +16,28 @@ namespace RogueCastle.Structs
 {
     public static class SpellType
     {
-        public const byte None          = 0;
-        public const byte Dagger        = 1;
-        public const byte Axe           = 2;
-        public const byte Bomb      = 3;
-        public const byte TimeStop      = 4;
-        public const byte CrowStorm          = 5;
-        public const byte QuantumTranslocator  = 6;
-        public const byte Displacer     = 7;
-        public const byte Chakram     = 8;
-        public const byte Scythe    = 9;
-        public const byte BladeWall         = 10;
-        public const byte FlameBarrier  = 11;
-        public const byte Conflux        = 12;
-        public const byte DragonFire    = 13;
-        public const byte RapidDagger   = 14;
+        public const byte None = 0;
+        public const byte Dagger = 1;
+        public const byte Axe = 2;
+        public const byte Bomb = 3;
+        public const byte TimeStop = 4;
+        public const byte CrowStorm = 5;
+        public const byte QuantumTranslocator = 6;
+        public const byte Displacer = 7;
+        public const byte Chakram = 8;
+        public const byte Scythe = 9;
+        public const byte BladeWall = 10;
+        public const byte FlameBarrier = 11;
+        public const byte Conflux = 12;
+        public const byte DragonFire = 13;
+        public const byte RapidDagger = 14;
         public const byte DragonFireNeo = 15;
-        public const byte Shout         = 20;
-        public const byte Laser         = 100;
-        public const byte Total         = 16;
+        public const byte Shout = 20;
+        public const byte Laser = 100;
+        public const byte Total = 16;
 
         /// <summary>
-        /// Returns the string representation of a given spell's name.
+        ///     Returns the string representation of a given spell's name.
         /// </summary>
         /// <param name="spellType">Spell Identifier</param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a string describing this spell's features.
+        ///     Returns a string describing this spell's features.
         /// </summary>
         /// <param name="spellType">Spell Identifier</param>
         /// <returns></returns>
@@ -165,7 +165,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns the resource name for this spell's icon.
+        ///     Returns the resource name for this spell's icon.
         /// </summary>
         /// <param name="spellType">Spell Identifier</param>
         /// <returns></returns>
@@ -222,7 +222,7 @@ namespace RogueCastle.Structs
         }
 
         /// <summary>
-        /// Returns a list of the next three spells in the Archmage SpellList array.
+        ///     Returns a list of the next three spells in the Archmage SpellList array.
         /// </summary>
         /// <returns></returns>
         public static Vector3 GetNext3Spells()
@@ -241,7 +241,9 @@ namespace RogueCastle.Structs
 
                 // Don't overflow.
                 if (index >= spellList.Length)
+                {
                     index = 0;
+                }
             }
 
             return new Vector3(spells[0], spells[1], spells[2]);

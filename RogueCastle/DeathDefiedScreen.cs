@@ -53,21 +53,22 @@ namespace RogueCastle
             {
                 m_player = (ScreenManager as RCScreenManager).Player;
             }
+
             m_titlePlate.Scale = Vector2.Zero;
             m_title.Scale = Vector2.Zero;
             m_title.Opacity = 1f;
             m_titlePlate.Opacity = 1f;
             m_storedMusicVolume = SoundManager.GlobalMusicVolume;
             m_songName = SoundManager.GetCurrentMusicName();
-            Tween.To(typeof (SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume",
-                (m_storedMusicVolume*0.1f).ToString());
+            Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume",
+                (m_storedMusicVolume * 0.1f).ToString());
             SoundManager.PlaySound("Player_Death_FadeToBlack");
             m_player.Visible = true;
             m_player.Opacity = 1f;
             m_spotlight.Opacity = 0f;
             Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
             Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
-            Tween.AddEndHandlerToLastTween(typeof (SoundManager), "PlaySound", "Player_Death_Spotlight");
+            Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
             Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_player.AbsX.ToString(), "Y",
                 (m_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
             Tween.RunFunction(2f, this, "PlayerLevelUpAnimation");
@@ -80,13 +81,13 @@ namespace RogueCastle
             m_player.PlayAnimation(false);
             Tween.To(m_titlePlate, 0.5f, Back.EaseOut, "ScaleX", "1", "ScaleY", "1");
             Tween.To(m_title, 0.5f, Back.EaseOut, "delay", "0.1", "ScaleX", "0.8", "ScaleY", "0.8");
-            Tween.RunFunction(0.1f, typeof (SoundManager), "PlaySound", "GetItemStinger3");
+            Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "GetItemStinger3");
             Tween.RunFunction(2f, this, "ExitTransition");
         }
 
         public void ExitTransition()
         {
-            Tween.To(typeof (SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", m_storedMusicVolume.ToString());
+            Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", m_storedMusicVolume.ToString());
             Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_cameraPos.X.ToString(), "Y", m_cameraPos.Y.ToString());
             Tween.To(m_spotlight, 0.5f, Tween.EaseNone, "Opacity", "0");
             Tween.To(m_titlePlate, 0.5f, Tween.EaseNone, "Opacity", "0");
@@ -101,7 +102,7 @@ namespace RogueCastle
                 Camera.GetTransformation());
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X - 10, (int) Camera.TopLeftCorner.Y - 10, 1340, 740),
-                Color.Black*BackBufferOpacity);
+                Color.Black * BackBufferOpacity);
             m_player.Draw(Camera);
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);

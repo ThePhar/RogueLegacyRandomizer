@@ -69,6 +69,7 @@ namespace RogueCastle
             {
                 return;
             }
+
             itemDropObj.ConvertDrop(dropType, amount);
             m_physicsManager.AddObject(itemDropObj);
             itemDropObj.Position = position;
@@ -91,6 +92,7 @@ namespace RogueCastle
             {
                 return;
             }
+
             itemDropObj.ConvertDrop(dropType, amount);
             m_physicsManager.AddObject(itemDropObj);
             itemDropObj.Position = position;
@@ -128,26 +130,17 @@ namespace RogueCastle
 
         public void PauseAllAnimations()
         {
-            foreach (var current in m_itemDropPool.ActiveObjsList)
-            {
-                current.PauseAnimation();
-            }
+            foreach (var current in m_itemDropPool.ActiveObjsList) current.PauseAnimation();
         }
 
         public void ResumeAllAnimations()
         {
-            foreach (var current in m_itemDropPool.ActiveObjsList)
-            {
-                current.ResumeAnimation();
-            }
+            foreach (var current in m_itemDropPool.ActiveObjsList) current.ResumeAnimation();
         }
 
         public void Draw(Camera2D camera)
         {
-            foreach (var current in m_itemDropPool.ActiveObjsList)
-            {
-                current.Draw(camera);
-            }
+            foreach (var current in m_itemDropPool.ActiveObjsList) current.Draw(camera);
         }
     }
 }

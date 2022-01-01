@@ -50,6 +50,7 @@ namespace RogueCastle
             {
                 throw new Exception("Cannot create a projectile without a source");
             }
+
             Source = source;
         }
 

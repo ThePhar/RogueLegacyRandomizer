@@ -21,9 +21,7 @@ namespace RogueCastle
         public float HoverSpeed = 1f;
         private Vector2 m_startPos;
 
-        public HoverObj(string spriteName) : base(spriteName)
-        {
-        }
+        public HoverObj(string spriteName) : base(spriteName) { }
 
         public void SetStartingPos(Vector2 pos)
         {
@@ -32,7 +30,7 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            Y = m_startPos.Y + (float) Math.Sin(Game.TotalGameTimeSeconds*HoverSpeed)*Amplitude;
+            Y = m_startPos.Y + (float) Math.Sin(Game.TotalGameTimeSeconds * HoverSpeed) * Amplitude;
             base.Draw(camera);
         }
 

@@ -28,12 +28,10 @@ namespace RogueCastle
                 Console.WriteLine("Disposing Dialogue Manager");
                 foreach (var current in m_languageArray)
                 {
-                    foreach (var current2 in current.Value)
-                    {
-                        current2.Value.Dispose();
-                    }
+                    foreach (var current2 in current.Value) current2.Value.Dispose();
                     current.Value.Clear();
                 }
+
                 m_languageArray.Clear();
                 m_languageArray = null;
                 IsDisposed = true;
@@ -78,6 +76,7 @@ namespace RogueCastle
                     {
                         throw new Exception("Cannot create text dictionary from file. Unspecified language type.");
                     }
+
                     if (text2.Contains("@language"))
                     {
                         SetLanguage(text3);
@@ -91,9 +90,11 @@ namespace RogueCastle
                                 list2.Add(text);
                                 text = null;
                             }
+
                             AddText(key, list.ToArray(), list2.ToArray());
                             flag = true;
                         }
+
                         if (flag)
                         {
                             flag = false;
@@ -115,6 +116,7 @@ namespace RogueCastle
                         {
                             list2.Add(text);
                         }
+
                         text = text3;
                     }
                     else
@@ -122,12 +124,15 @@ namespace RogueCastle
                         text = text + "\n" + text2;
                     }
                 }
+
                 num++;
             }
+
             if (text != null)
             {
                 list2.Add(text);
             }
+
             AddText(key, list.ToArray(), list2.ToArray());
         }
 
@@ -154,6 +159,7 @@ namespace RogueCastle
                             {
                                 break;
                             }
+
                             if (text2.Contains("@language"))
                             {
                                 SetLanguage(text3);
@@ -167,9 +173,11 @@ namespace RogueCastle
                                         list2.Add(text);
                                         text = null;
                                     }
+
                                     AddText(key, list.ToArray(), list2.ToArray());
                                     flag = true;
                                 }
+
                                 if (flag)
                                 {
                                     flag = false;
@@ -191,6 +199,7 @@ namespace RogueCastle
                                 {
                                     list2.Add(text);
                                 }
+
                                 text = text3;
                             }
                             else if (text2 != "eof")
@@ -198,12 +207,14 @@ namespace RogueCastle
                                 text = text + "\n" + text2;
                             }
                         }
+
                         num++;
                         if (text2 == "eof")
                         {
                             goto Block_18;
                         }
                     }
+
                     throw new Exception("Cannot create text dictionary from file. Unspecified language type.");
                     Block_18:
                     if (!flag)
@@ -212,6 +223,7 @@ namespace RogueCastle
                         {
                             list2.Add(text);
                         }
+
                         AddText(key, list.ToArray(), list2.ToArray());
                     }
                 }
@@ -235,11 +247,13 @@ namespace RogueCastle
                 Console.WriteLine("Call SetLanguage() before attempting to add text to a specified language.");
                 return;
             }
+
             if (m_languageArray[m_currentLanguage].ContainsKey(key))
             {
                 Console.WriteLine("Cannot add text. Text with title already specified.");
                 return;
             }
+
             var value = new DialogueObj(speakers, text);
             m_languageArray[m_currentLanguage].Add(key, value);
         }

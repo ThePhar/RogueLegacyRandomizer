@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - PlayerStats.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -38,10 +38,7 @@ namespace RogueCastle
             IsFemale = false;
             TimesCastleBeaten = 0;
             EnemiesKilledList = new List<Vector4>();
-            for (var i = 0; i < 34; i++)
-            {
-                EnemiesKilledList.Add(default(Vector4));
-            }
+            for (var i = 0; i < 34; i++) EnemiesKilledList.Add(default(Vector4));
             WizardSpellList = new Vector3(1f, 2f, 8f);
             Traits = new Vector2(0f, 0f);
             Gold = 0;
@@ -65,15 +62,28 @@ namespace RogueCastle
                 GetEquippedArray[j] = -1;
                 GetEquippedRuneArray[j] = -1;
             }
+
             HeadPiece = (byte) CDGMath.RandomInt(1, 5);
             ShoulderPiece = (byte) CDGMath.RandomInt(1, 5);
             ChestPiece = (byte) CDGMath.RandomInt(1, 5);
             CDGMath.RandomInt(0, 14);
-            GetBlueprintArray[1][0] = 1;
-            GetBlueprintArray[3][0] = 1;
-            GetBlueprintArray[0][0] = 1;
-            GetRuneArray[1][0] = 1;
-            GetRuneArray[0][1] = 1;
+
+            if (Program.Game == null || Program.Game.ArchipelagoManager.Data.RequirePurchasing)
+            {
+                GetBlueprintArray[1][0] = 1;
+                GetBlueprintArray[3][0] = 1;
+                GetBlueprintArray[0][0] = 1;
+                GetRuneArray[1][0] = 1;
+                GetRuneArray[0][1] = 1;
+            }
+            else
+            {
+                GetBlueprintArray[1][0] = 3;
+                GetBlueprintArray[3][0] = 3;
+                GetBlueprintArray[0][0] = 3;
+                GetRuneArray[1][0] = 3;
+                GetRuneArray[0][1] = 3;
+            }
 
             OpenedChests = new ChestTracker();
         }
@@ -93,69 +103,68 @@ namespace RogueCastle
             }
         }
 
-        public int          CurrentHealth             { get; set; }
-        public int          CurrentMana               { get; set; }
-        public byte         Age                       { get; set; }
-        public byte         ChildAge                  { get; set; }
-        public byte         Spell                     { get; set; }
-        public byte         Class                     { get; set; }
-        public byte         SpecialItem               { get; set; }
-        public Vector2      Traits                    { get; set; }
-        public string       PlayerName                { get; set; }
-        public byte         HeadPiece                 { get; set; }
-        public byte         ShoulderPiece             { get; set; }
-        public byte         ChestPiece                { get; set; }
-        public byte         DiaryEntry                { get; set; }
-        public int          BonusHealth               { get; set; }
-        public int          BonusStrength             { get; set; }
-        public int          BonusMana                 { get; set; }
-        public int          BonusDefense              { get; set; }
-        public int          BonusWeight               { get; set; }
-        public int          BonusMagic                { get; set; }
-        public int          LichHealth                { get; set; }
-        public int          LichMana                  { get; set; }
-        public float        LichHealthMod             { get; set; }
-        public bool         NewBossBeaten             { get; set; }
-        public bool         EyeballBossBeaten         { get; set; }
-        public bool         FairyBossBeaten           { get; set; }
-        public bool         FireballBossBeaten        { get; set; }
-        public bool         BlobBossBeaten            { get; set; }
-        public bool         LastbossBeaten            { get; set; }
-        public int          TimesCastleBeaten         { get; set; }
-        public int          NumEnemiesBeaten          { get; set; }
-        public bool         TutorialComplete          { get; set; }
-        public bool         CharacterFound            { get; set; }
-        public bool         LoadStartingRoom          { get; set; }
-        public bool         LockCastle                { get; set; }
-        public bool         SpokeToBlacksmith         { get; set; }
-        public bool         SpokeToEnchantress        { get; set; }
-        public bool         SpokeToArchitect          { get; set; }
-        public bool         SpokeToTollCollector      { get; set; }
-        public bool         IsDead                    { get; set; }
-        public bool         FinalDoorOpened           { get; set; }
-        public bool         RerolledChildren          { get; set; }
-        public bool         IsFemale                  { get; set; }
-        public int          TimesDead                 { get; set; }
-        public bool         HasArchitectFee           { get; set; }
-        public bool         ReadLastDiary             { get; set; }
-        public bool         SpokenToLastBoss          { get; set; }
-        public bool         HardcoreMode              { get; set; }
-        public float        TotalHoursPlayed          { get; set; }
-        public Vector3      WizardSpellList           { get; set; }
-        public bool         ChallengeEyeballUnlocked  { get; set; }
-        public bool         ChallengeFireballUnlocked { get; set; }
-        public bool         ChallengeBlobUnlocked     { get; set; }
-        public bool         ChallengeSkullUnlocked    { get; set; }
-        public bool         ChallengeLastBossUnlocked { get; set; }
-        public bool         ChallengeEyeballBeaten    { get; set; }
-        public bool         ChallengeFireballBeaten   { get; set; }
-        public bool         ChallengeBlobBeaten       { get; set; }
-        public bool         ChallengeSkullBeaten      { get; set; }
-        public bool         ChallengeLastBossBeaten   { get; set; }
-        public List<byte[]> GetBlueprintArray         { get; private set; }
-        public sbyte[]      GetEquippedArray          { get; private set; }
-        public ChestTracker OpenedChests              { get; set; }
-
+        public int CurrentHealth { get; set; }
+        public int CurrentMana { get; set; }
+        public byte Age { get; set; }
+        public byte ChildAge { get; set; }
+        public byte Spell { get; set; }
+        public byte Class { get; set; }
+        public byte SpecialItem { get; set; }
+        public Vector2 Traits { get; set; }
+        public string PlayerName { get; set; }
+        public byte HeadPiece { get; set; }
+        public byte ShoulderPiece { get; set; }
+        public byte ChestPiece { get; set; }
+        public byte DiaryEntry { get; set; }
+        public int BonusHealth { get; set; }
+        public int BonusStrength { get; set; }
+        public int BonusMana { get; set; }
+        public int BonusDefense { get; set; }
+        public int BonusWeight { get; set; }
+        public int BonusMagic { get; set; }
+        public int LichHealth { get; set; }
+        public int LichMana { get; set; }
+        public float LichHealthMod { get; set; }
+        public bool NewBossBeaten { get; set; }
+        public bool EyeballBossBeaten { get; set; }
+        public bool FairyBossBeaten { get; set; }
+        public bool FireballBossBeaten { get; set; }
+        public bool BlobBossBeaten { get; set; }
+        public bool LastbossBeaten { get; set; }
+        public int TimesCastleBeaten { get; set; }
+        public int NumEnemiesBeaten { get; set; }
+        public bool TutorialComplete { get; set; }
+        public bool CharacterFound { get; set; }
+        public bool LoadStartingRoom { get; set; }
+        public bool LockCastle { get; set; }
+        public bool SpokeToBlacksmith { get; set; }
+        public bool SpokeToEnchantress { get; set; }
+        public bool SpokeToArchitect { get; set; }
+        public bool SpokeToTollCollector { get; set; }
+        public bool IsDead { get; set; }
+        public bool FinalDoorOpened { get; set; }
+        public bool RerolledChildren { get; set; }
+        public bool IsFemale { get; set; }
+        public int TimesDead { get; set; }
+        public bool HasArchitectFee { get; set; }
+        public bool ReadLastDiary { get; set; }
+        public bool SpokenToLastBoss { get; set; }
+        public bool HardcoreMode { get; set; }
+        public float TotalHoursPlayed { get; set; }
+        public Vector3 WizardSpellList { get; set; }
+        public bool ChallengeEyeballUnlocked { get; set; }
+        public bool ChallengeFireballUnlocked { get; set; }
+        public bool ChallengeBlobUnlocked { get; set; }
+        public bool ChallengeSkullUnlocked { get; set; }
+        public bool ChallengeLastBossUnlocked { get; set; }
+        public bool ChallengeEyeballBeaten { get; set; }
+        public bool ChallengeFireballBeaten { get; set; }
+        public bool ChallengeBlobBeaten { get; set; }
+        public bool ChallengeSkullBeaten { get; set; }
+        public bool ChallengeLastBossBeaten { get; set; }
+        public List<byte[]> GetBlueprintArray { get; private set; }
+        public sbyte[] GetEquippedArray { get; private set; }
+        public ChestTracker OpenedChests { get; set; }
 
         public byte TotalBlueprintsPurchased
         {
@@ -174,6 +183,7 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 return b;
             }
         }
@@ -195,6 +205,7 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 return b;
             }
         }
@@ -216,6 +227,7 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 return b;
             }
         }
@@ -237,6 +249,7 @@ namespace RogueCastle
                         }
                     }
                 }
+
                 return b;
             }
         }
@@ -283,6 +296,7 @@ namespace RogueCastle
             {
                 return 5;
             }
+
             var equippedRuneArray = GetEquippedRuneArray;
             for (var i = 0; i < equippedRuneArray.Length; i++)
             {
@@ -292,6 +306,7 @@ namespace RogueCastle
                     b += 1;
                 }
             }
+
             return b;
         }
     }

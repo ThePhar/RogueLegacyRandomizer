@@ -84,6 +84,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Chicken";
                     MaxHealth = 1;
@@ -111,6 +112,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Expert_KnockBack;
                     break;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Delicious";
                     MaxHealth = 1;
@@ -138,10 +140,12 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Chicken_Miniboss_KnockBack;
                     break;
+
                 default:
                     Scale = new Vector2(2f, 2f);
                     break;
             }
+
             IsWeighted = true;
         }
 
@@ -194,6 +198,7 @@ namespace RogueCastle
             {
                 Kill();
             }
+
             base.Update(gameTime);
         }
 

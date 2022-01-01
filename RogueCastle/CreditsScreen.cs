@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - CreditsScreen.cs
 // Last Modified 2021-12-28
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -84,27 +84,27 @@ namespace RogueCastle
             m_bgOutside = new SpriteObj("TraitsBG_Sprite");
             m_bgOutside.ForceDraw = true;
             m_bgOutside.Visible = false;
-            m_bgOutside.Scale = new Vector2(1320f/m_bgOutside.Width, 1320f/m_bgOutside.Width);
+            m_bgOutside.Scale = new Vector2(1320f / m_bgOutside.Width, 1320f / m_bgOutside.Width);
             m_bg1 = new SpriteObj("CastleBG1_Sprite");
             m_bg1.Position = new Vector2(660f, 200f);
             m_bg1.Scale = new Vector2(2f, 2f);
-            m_bg2 = (m_bg1.Clone() as SpriteObj);
+            m_bg2 = m_bg1.Clone() as SpriteObj;
             m_bg2.X -= m_bg1.Width;
-            m_bg3 = (m_bg2.Clone() as SpriteObj);
+            m_bg3 = m_bg2.Clone() as SpriteObj;
             m_bg3.X -= m_bg2.Width;
             m_ground1 = new SpriteObj("CastleFG1_Sprite");
             m_ground1.Position = new Vector2(660f, 440f);
             m_ground1.Scale = new Vector2(2f, 2f);
-            m_ground2 = (m_ground1.Clone() as SpriteObj);
+            m_ground2 = m_ground1.Clone() as SpriteObj;
             m_ground2.X -= m_ground1.Width;
-            m_ground3 = (m_ground2.Clone() as SpriteObj);
+            m_ground3 = m_ground2.Clone() as SpriteObj;
             m_ground3.X -= m_ground2.Width;
             m_border1 = new SpriteObj("CastleBorder_Sprite");
             m_border1.Position = new Vector2(660f, 440f);
             m_border1.Scale = new Vector2(2f, 2f);
-            m_border2 = (m_border1.Clone() as SpriteObj);
+            m_border2 = m_border1.Clone() as SpriteObj;
             m_border2.X -= m_border1.Width;
-            m_border3 = (m_border2.Clone() as SpriteObj);
+            m_border3 = m_border2.Clone() as SpriteObj;
             m_border3.X -= m_border2.Width;
             m_prop1 = new SpriteObj("CastleAssetWindow1_Sprite");
             m_prop1.Position = new Vector2(0f, 220f);
@@ -158,27 +158,24 @@ namespace RogueCastle
             m_childSprite2.GetChildAt(8).TextureColor = Color.Red;
             m_childSprite2.GetChildAt(11).TextureColor = new Color(11, 172, 239);
             m_sideBorderLeft = new SpriteObj("Blank_Sprite");
-            m_sideBorderLeft.Scale = new Vector2(900f/m_sideBorderLeft.Width, 500f/m_sideBorderLeft.Height);
+            m_sideBorderLeft.Scale = new Vector2(900f / m_sideBorderLeft.Width, 500f / m_sideBorderLeft.Height);
             m_sideBorderLeft.Position = new Vector2(-450f, 0f);
             m_sideBorderLeft.TextureColor = Color.Black;
             m_sideBorderLeft.ForceDraw = true;
-            m_sideBorderRight = (m_sideBorderLeft.Clone() as SpriteObj);
+            m_sideBorderRight = m_sideBorderLeft.Clone() as SpriteObj;
             m_sideBorderRight.Position = new Vector2(850f, 0f);
-            m_sideBorderTop = (m_sideBorderLeft.Clone() as SpriteObj);
+            m_sideBorderTop = m_sideBorderLeft.Clone() as SpriteObj;
             m_sideBorderTop.Scale = new Vector2(1f, 1f);
-            m_sideBorderTop.Scale = new Vector2(1320f/m_sideBorderTop.Width, 240/m_sideBorderTop.Height);
+            m_sideBorderTop.Scale = new Vector2(1320f / m_sideBorderTop.Width, 240 / m_sideBorderTop.Height);
             m_sideBorderTop.Position = Vector2.Zero;
-            m_sideBorderBottom = (m_sideBorderLeft.Clone() as SpriteObj);
+            m_sideBorderBottom = m_sideBorderLeft.Clone() as SpriteObj;
             m_sideBorderBottom.Scale = new Vector2(1f, 1f);
-            m_sideBorderBottom.Scale = new Vector2(1340f/m_sideBorderBottom.Width, 720f/m_sideBorderBottom.Height);
+            m_sideBorderBottom.Scale = new Vector2(1340f / m_sideBorderBottom.Width, 720f / m_sideBorderBottom.Height);
             m_sideBorderBottom.Position = new Vector2(0f, 460f);
             m_manor = new ObjContainer("TraitsCastle_Character");
             m_manor.Scale = new Vector2(2f, 2f);
             m_manor.Visible = false;
-            for (var i = 0; i < m_manor.NumChildren; i++)
-            {
-                m_manor.GetChildAt(i).Visible = false;
-            }
+            for (var i = 0; i < m_manor.NumChildren; i++) m_manor.GetChildAt(i).Visible = false;
 
             m_thanksForPlayingText = new TextObj(Game.JunicodeLargeFont);
             m_thanksForPlayingText.FontSize = 32f;
@@ -187,12 +184,12 @@ namespace RogueCastle
             m_thanksForPlayingText.DropShadow = new Vector2(2f, 2f);
             m_thanksForPlayingText.Position = new Vector2(660f, 480f);
             m_thanksForPlayingText.Opacity = 0f;
-            m_totalDeaths = (m_thanksForPlayingText.Clone() as TextObj);
+            m_totalDeaths = m_thanksForPlayingText.Clone() as TextObj;
             m_totalDeaths.FontSize = 20f;
             m_totalDeaths.Position = m_thanksForPlayingText.Position;
             m_totalDeaths.Y += 90f;
             m_totalDeaths.Opacity = 0f;
-            m_totalPlayTime = (m_thanksForPlayingText.Clone() as TextObj);
+            m_totalPlayTime = m_thanksForPlayingText.Clone() as TextObj;
             m_totalPlayTime.FontSize = 20f;
             m_totalPlayTime.Position = m_totalDeaths.Position;
             m_totalPlayTime.Y += 50f;
@@ -341,6 +338,7 @@ namespace RogueCastle
                 {
                     num += 40;
                 }
+
                 var textObj2 = textObj.Clone() as TextObj;
                 textObj2.Text = array[i];
                 textObj2.FontSize = 16f;
@@ -357,24 +355,28 @@ namespace RogueCastle
                 m_teddy.Position = position;
                 return;
             }
+
             if (name.Contains("Kenny"))
             {
                 m_kenny.Position = position;
                 m_kenny.X -= 50f;
                 return;
             }
+
             if (name.Contains("Glauber"))
             {
                 m_glauber.Position = position;
                 m_glauber.X -= 20f;
                 return;
             }
+
             if (name.Contains("Gordon"))
             {
                 m_gordon.Position = position;
                 m_gordon.X += 75f;
                 return;
             }
+
             if (name.Contains("Judson"))
             {
                 m_judson.Position = position;
@@ -386,7 +388,7 @@ namespace RogueCastle
         {
             m_allowExit = false;
             var num = Game.PlayerStats.TotalHoursPlayed + Game.GetTotalGameTimeHours();
-            var num2 = (int) ((num - (int) num)*60f);
+            var num2 = (int) ((num - (int) num) * 60f);
             Console.WriteLine(string.Concat("Hours played: ", num, " minutes: ", num2));
             m_totalDeaths.Text = "Total Children: " + Game.PlayerStats.TimesDead;
             if (num2 < 10)
@@ -397,6 +399,7 @@ namespace RogueCastle
             {
                 m_totalPlayTime.Text = string.Concat("Time Played - ", (int) num, ":", num2);
             }
+
             Camera.Position = Vector2.Zero;
             m_displayingContinueText = false;
             m_continueText.Text = "Press [Input:" + 0 + "] to exit";
@@ -407,20 +410,18 @@ namespace RogueCastle
                 m_sky.LoadContent(Camera);
                 m_backgroundRenderTarget = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
             }
+
             SetPlayerStyle("Walking");
             if (!IsEnding)
             {
                 SoundManager.PlayMusic("CreditsSong", true, 1f);
             }
+
             m_scrollDistance = -(m_creditsNameList[m_creditsNameList.Count - 1].Y + 100f);
             foreach (var current in m_creditsTitleList)
-            {
                 Tween.By(current, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
-            }
             foreach (var current2 in m_creditsNameList)
-            {
                 Tween.By(current2, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
-            }
             Tween.By(m_teddy, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             Tween.By(m_kenny, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             Tween.By(m_glauber, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
@@ -432,6 +433,7 @@ namespace RogueCastle
                 m_sideBorderRight.X -= 200f;
                 Tween.RunFunction(76f, this, "ResetScroll");
             }
+
             base.OnEnter();
         }
 
@@ -444,17 +446,20 @@ namespace RogueCastle
                 m_playerSprite.GetChildAt(i).TextureColor = player.GetChildAt(i).TextureColor;
                 m_playerSprite.GetChildAt(i).Visible = player.GetChildAt(i).Visible;
             }
+
             m_playerSprite.GetChildAt(16).Visible = false;
             m_playerSprite.Scale = player.Scale;
             if (Game.PlayerStats.Traits.X == 8f || Game.PlayerStats.Traits.Y == 8f)
             {
                 m_playerSprite.GetChildAt(7).Visible = false;
             }
+
             m_playerSprite.GetChildAt(14).Visible = false;
             if (Game.PlayerStats.SpecialItem == 8)
             {
                 m_playerSprite.GetChildAt(14).Visible = true;
             }
+
             if (Game.PlayerStats.Class == 0 || Game.PlayerStats.Class == 8)
             {
                 m_playerSprite.GetChildAt(15).Visible = true;
@@ -484,16 +489,21 @@ namespace RogueCastle
             {
                 m_playerSprite.GetChildAt(15).Visible = false;
             }
+
             m_playerSprite.GetChildAt(0).Visible = false;
             if (Game.PlayerStats.Class == 16)
             {
                 m_playerSprite.GetChildAt(0).Visible = true;
-                m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat("Player", animationType, "Head", 6, "_Sprite"));
+                m_playerSprite.GetChildAt(12)
+                    .ChangeSprite(string.Concat("Player", animationType, "Head", 6, "_Sprite"));
             }
+
             if (Game.PlayerStats.Class == 17)
             {
-                m_playerSprite.GetChildAt(12).ChangeSprite(string.Concat("Player", animationType, "Head", 7, "_Sprite"));
+                m_playerSprite.GetChildAt(12)
+                    .ChangeSprite(string.Concat("Player", animationType, "Head", 7, "_Sprite"));
             }
+
             if (!Game.PlayerStats.IsFemale)
             {
                 m_playerSprite.GetChildAt(5).Visible = false;
@@ -504,24 +514,29 @@ namespace RogueCastle
                 m_playerSprite.GetChildAt(5).Visible = true;
                 m_playerSprite.GetChildAt(13).Visible = true;
             }
+
             if (Game.PlayerStats.Traits.X == 6f || Game.PlayerStats.Traits.Y == 6f)
             {
                 m_playerSprite.Scale = new Vector2(3f, 3f);
             }
+
             if (Game.PlayerStats.Traits.X == 7f || Game.PlayerStats.Traits.Y == 7f)
             {
                 m_playerSprite.Scale = new Vector2(1.35f, 1.35f);
             }
+
             if (Game.PlayerStats.Traits.X == 10f || Game.PlayerStats.Traits.Y == 10f)
             {
                 m_playerSprite.ScaleX *= 0.825f;
                 m_playerSprite.ScaleY *= 1.25f;
             }
+
             if (Game.PlayerStats.Traits.X == 9f || Game.PlayerStats.Traits.Y == 9f)
             {
                 m_playerSprite.ScaleX *= 1.25f;
                 m_playerSprite.ScaleY *= 1.175f;
             }
+
             if (Game.PlayerStats.Class == 6 || Game.PlayerStats.Class == 14)
             {
                 m_playerSprite.OutlineColour = Color.White;
@@ -534,6 +549,7 @@ namespace RogueCastle
                 m_playerSprite.GetChildAt(10).Visible = true;
                 m_playerSprite.GetChildAt(11).Visible = true;
             }
+
             var text = (m_playerSprite.GetChildAt(12) as IAnimateableObj).SpriteName;
             var startIndex = text.IndexOf("_") - 1;
             text = text.Remove(startIndex, 1);
@@ -549,6 +565,7 @@ namespace RogueCastle
             {
                 text = text.Replace("_", Game.PlayerStats.HeadPiece + "_");
             }
+
             m_playerSprite.GetChildAt(12).ChangeSprite(text);
             var text2 = (m_playerSprite.GetChildAt(4) as IAnimateableObj).SpriteName;
             startIndex = text2.IndexOf("_") - 1;
@@ -586,7 +603,7 @@ namespace RogueCastle
                 if (m_backgroundIndex < m_backgroundStrings.Length)
                 {
                     m_backgroundSwapTimer += num;
-                    if (m_backgroundSwapTimer >= 75f/m_backgroundStrings.Length)
+                    if (m_backgroundSwapTimer >= 75f / m_backgroundStrings.Length)
                     {
                         SwapBackground(m_backgroundStrings[m_backgroundIndex]);
                         m_backgroundIndex++;
@@ -594,6 +611,7 @@ namespace RogueCastle
                     }
                 }
             }
+
             base.Update(gameTime);
         }
 
@@ -604,12 +622,14 @@ namespace RogueCastle
                 current.Y += -m_scrollDistance;
                 Tween.By(current, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             }
+
             foreach (var current2 in m_creditsNameList)
             {
                 current2.Y += -m_scrollDistance;
                 Tween.By(current2, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
                 PositionTeam(current2.Text, new Vector2(current2.Bounds.Left - 50, current2.Y));
             }
+
             Tween.By(m_teddy, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             Tween.By(m_kenny, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
             Tween.By(m_glauber, 75f, Tween.EaseNone, "Y", m_scrollDistance.ToString());
@@ -620,8 +640,9 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            if ((!IsEnding || (IsEnding && m_allowExit)) &&
-                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) || Game.GlobalInput.JustPressed(2) ||
+            if ((!IsEnding || IsEnding && m_allowExit) &&
+                (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) ||
+                 Game.GlobalInput.JustPressed(2) ||
                  Game.GlobalInput.JustPressed(3)))
             {
                 if (m_displayingContinueText)
@@ -637,6 +658,7 @@ namespace RogueCastle
                     Tween.RunFunction(4f, this, "HideContinueText");
                 }
             }
+
             base.HandleInput();
         }
 
@@ -649,62 +671,73 @@ namespace RogueCastle
         private void UpdateBackground(float elapsedTime)
         {
             var num = 200;
-            m_bg1.X += num*elapsedTime;
-            m_bg2.X += num*elapsedTime;
-            m_bg3.X += num*elapsedTime;
+            m_bg1.X += num * elapsedTime;
+            m_bg2.X += num * elapsedTime;
+            m_bg3.X += num * elapsedTime;
             if (m_bg1.X > 930f)
             {
                 m_bg1.X = m_bg3.X - m_bg3.Width;
             }
+
             if (m_bg2.X > 930f)
             {
                 m_bg2.X = m_bg1.X - m_bg1.Width;
             }
+
             if (m_bg3.X > 930f)
             {
                 m_bg3.X = m_bg2.X - m_bg2.Width;
             }
-            m_ground1.X += num*elapsedTime;
-            m_ground2.X += num*elapsedTime;
-            m_ground3.X += num*elapsedTime;
+
+            m_ground1.X += num * elapsedTime;
+            m_ground2.X += num * elapsedTime;
+            m_ground3.X += num * elapsedTime;
             if (m_ground1.X > 930f)
             {
                 m_ground1.X = m_ground3.X - m_ground3.Width;
             }
+
             if (m_ground2.X > 930f)
             {
                 m_ground2.X = m_ground1.X - m_ground1.Width;
             }
+
             if (m_ground3.X > 930f)
             {
                 m_ground3.X = m_ground2.X - m_ground2.Width;
             }
-            m_border1.X += num*elapsedTime;
-            m_border2.X += num*elapsedTime;
-            m_border3.X += num*elapsedTime;
+
+            m_border1.X += num * elapsedTime;
+            m_border2.X += num * elapsedTime;
+            m_border3.X += num * elapsedTime;
             if (m_border1.X > 930f)
             {
                 m_border1.X = m_border3.X - m_border3.Width;
             }
+
             if (m_border2.X > 930f)
             {
                 m_border2.X = m_border1.X - m_border1.Width;
             }
+
             if (m_border3.X > 930f)
             {
                 m_border3.X = m_border2.X - m_border2.Width;
             }
-            m_prop1.X += num*elapsedTime;
-            m_prop2.X += num*elapsedTime;
-            m_prop3.X += num*elapsedTime;
+
+            m_prop1.X += num * elapsedTime;
+            m_prop2.X += num * elapsedTime;
+            m_prop3.X += num * elapsedTime;
             if (m_prop1.X > 930f)
             {
                 m_prop1.X -= CDGMath.RandomInt(1000, 3000);
             }
+
             if (m_prop2.X > 930f)
             {
                 m_prop2.X -= CDGMath.RandomInt(1000, 3000);
             }
+
             if (m_prop3.X > 930f)
             {
                 m_prop3.X -= CDGMath.RandomInt(1000, 3000);
@@ -724,9 +757,9 @@ namespace RogueCastle
             m_bgOutside.Y = 0f;
             m_bgOutside.Visible = false;
             m_manor.Visible = false;
-            m_ground1.Visible = (m_ground2.Visible = (m_ground3.Visible = true));
-            m_border1.Visible = (m_border2.Visible = (m_border3.Visible = true));
-            m_prop1.Visible = (m_prop2.Visible = (m_prop3.Visible = true));
+            m_ground1.Visible = m_ground2.Visible = m_ground3.Visible = true;
+            m_border1.Visible = m_border2.Visible = m_border3.Visible = true;
+            m_prop1.Visible = m_prop2.Visible = m_prop3.Visible = true;
             if (levelType != null)
             {
                 if (!(levelType == "Castle"))
@@ -743,8 +776,8 @@ namespace RogueCastle
                                     {
                                         m_bgOutside.Visible = true;
                                         m_manor.Visible = true;
-                                        m_ground1.Visible = (m_ground2.Visible = (m_ground3.Visible = false));
-                                        m_border1.Visible = (m_border2.Visible = (m_border3.Visible = false));
+                                        m_ground1.Visible = m_ground2.Visible = m_ground3.Visible = false;
+                                        m_border1.Visible = m_border2.Visible = m_border3.Visible = false;
                                         m_manor.Y = -260f;
                                         m_bgOutside.Y = -260f;
                                         m_manor.X -= 300f;
@@ -846,12 +879,14 @@ namespace RogueCastle
                     m_prop3.ChangeSprite("CastleAssetCandle1_Character");
                 }
             }
+
             if (levelType != "Manor")
             {
                 Tween.By(m_sideBorderLeft, 0.5f, Tween.EaseNone, "X", "-200");
                 Tween.By(m_sideBorderRight, 0.5f, Tween.EaseNone, "X", "200");
                 return;
             }
+
             Tween.By(m_sideBorderLeft, 3f, Tween.EaseNone, "X", "-800");
             Tween.By(m_sideBorderRight, 3f, Tween.EaseNone, "X", "800");
         }
@@ -882,8 +917,8 @@ namespace RogueCastle
             m_wifeSprite.GetChildAt(12).ChangeSprite("PlayerWalkingHead" + m_wifeHead + "_Sprite");
             m_wifeSprite.GetChildAt(9).ChangeSprite("PlayerWalkingShoulderA" + m_wifeShoulders + "_Sprite");
             m_wifeSprite.GetChildAt(3).ChangeSprite("PlayerWalkingShoulderB" + m_wifeShoulders + "_Sprite");
-            if ((!Game.PlayerStats.IsFemale && Game.PlayerStats.Traits.X != 2f && Game.PlayerStats.Traits.Y != 2f) ||
-                (Game.PlayerStats.IsFemale && (Game.PlayerStats.Traits.X == 2f || Game.PlayerStats.Traits.Y == 2f)))
+            if (!Game.PlayerStats.IsFemale && Game.PlayerStats.Traits.X != 2f && Game.PlayerStats.Traits.Y != 2f ||
+                Game.PlayerStats.IsFemale && (Game.PlayerStats.Traits.X == 2f || Game.PlayerStats.Traits.Y == 2f))
             {
                 m_wifeSprite.GetChildAt(13).Visible = true;
                 m_wifeSprite.GetChildAt(5).Visible = true;
@@ -893,6 +928,7 @@ namespace RogueCastle
                 m_wifeSprite.GetChildAt(13).Visible = false;
                 m_wifeSprite.GetChildAt(5).Visible = false;
             }
+
             m_wifeSprite.PlayAnimation();
             Tween.By(m_wifeSprite, 3f, Tween.EaseNone, "X", "600");
             Tween.AddEndHandlerToLastTween(this, "LevelUpWife");
@@ -905,8 +941,8 @@ namespace RogueCastle
             m_wifeSprite.GetChildAt(15).Visible = false;
             m_wifeSprite.GetChildAt(16).Visible = false;
             m_wifeSprite.GetChildAt(0).Visible = false;
-            if ((!Game.PlayerStats.IsFemale && Game.PlayerStats.Traits.X != 2f && Game.PlayerStats.Traits.Y != 2f) ||
-                (Game.PlayerStats.IsFemale && (Game.PlayerStats.Traits.X == 2f || Game.PlayerStats.Traits.Y == 2f)))
+            if (!Game.PlayerStats.IsFemale && Game.PlayerStats.Traits.X != 2f && Game.PlayerStats.Traits.Y != 2f ||
+                Game.PlayerStats.IsFemale && (Game.PlayerStats.Traits.X == 2f || Game.PlayerStats.Traits.Y == 2f))
             {
                 m_wifeSprite.GetChildAt(13).Visible = true;
                 m_wifeSprite.GetChildAt(5).Visible = true;
@@ -916,6 +952,7 @@ namespace RogueCastle
                 m_wifeSprite.GetChildAt(13).Visible = false;
                 m_wifeSprite.GetChildAt(5).Visible = false;
             }
+
             m_wifeSprite.GetChildAt(4).ChangeSprite("PlayerLevelUpChest" + m_wifeChest + "_Sprite");
             m_wifeSprite.GetChildAt(12).ChangeSprite("PlayerLevelUpHead" + m_wifeHead + "_Sprite");
             m_wifeSprite.GetChildAt(9).ChangeSprite("PlayerLevelUpShoulderA" + m_wifeShoulders + "_Sprite");
@@ -937,6 +974,7 @@ namespace RogueCastle
             {
                 flag = true;
             }
+
             if (flag)
             {
                 m_childSprite1.GetChildAt(13).Visible = true;
@@ -947,6 +985,7 @@ namespace RogueCastle
                 m_childSprite1.GetChildAt(13).Visible = false;
                 m_childSprite1.GetChildAt(5).Visible = false;
             }
+
             m_childSprite1.GetChildAt(4).ChangeSprite("PlayerWalkingChest" + m_child1Chest + "_Sprite");
             m_childSprite1.GetChildAt(12).ChangeSprite("PlayerWalkingHead" + m_child1Head + "_Sprite");
             m_childSprite1.GetChildAt(9).ChangeSprite("PlayerWalkingShoulderA" + m_child1Shoulders + "_Sprite");
@@ -973,6 +1012,7 @@ namespace RogueCastle
                 m_childSprite1.GetChildAt(13).Visible = false;
                 m_childSprite1.GetChildAt(5).Visible = false;
             }
+
             m_childSprite1.GetChildAt(4).ChangeSprite("PlayerLevelUpChest" + m_child1Chest + "_Sprite");
             m_childSprite1.GetChildAt(12).ChangeSprite("PlayerLevelUpHead" + m_child1Head + "_Sprite");
             m_childSprite1.GetChildAt(9).ChangeSprite("PlayerLevelUpShoulderA" + m_child1Shoulders + "_Sprite");
@@ -991,6 +1031,7 @@ namespace RogueCastle
             {
                 flag = true;
             }
+
             if (flag)
             {
                 m_childSprite2.GetChildAt(13).Visible = true;
@@ -1001,6 +1042,7 @@ namespace RogueCastle
                 m_childSprite2.GetChildAt(13).Visible = false;
                 m_childSprite2.GetChildAt(5).Visible = false;
             }
+
             m_child2Chest = CDGMath.RandomInt(1, 5);
             m_child2Head = CDGMath.RandomInt(1, 5);
             m_child2Shoulders = CDGMath.RandomInt(1, 5);
@@ -1030,6 +1072,7 @@ namespace RogueCastle
                 m_childSprite2.GetChildAt(13).Visible = false;
                 m_childSprite2.GetChildAt(5).Visible = false;
             }
+
             m_childSprite2.GetChildAt(4).ChangeSprite("PlayerLevelUpChest" + m_child2Chest + "_Sprite");
             m_childSprite2.GetChildAt(12).ChangeSprite("PlayerLevelUpHead" + m_child2Head + "_Sprite");
             m_childSprite2.GetChildAt(9).ChangeSprite("PlayerLevelUpShoulderA" + m_child2Shoulders + "_Sprite");
@@ -1038,36 +1081,6 @@ namespace RogueCastle
             m_displayingContinueText = true;
             Tween.StopAllContaining(m_continueText, false);
             Tween.To(m_continueText, 0.5f, Tween.EaseNone, "Opacity", "1");
-            Tween.AddEndHandlerToLastTween(this, "OpenForfeitDialogue");
-        }
-
-        public void OpenForfeitDialogue()
-        {
-            if (Program.Game.ArchipelagoManager.CanForfeit)
-            {
-                var rCScreenManager = Game.ScreenManager;
-                DialogueManager.AddText("Forfeit", new []{"Congrats!"}, new []{"Would you like to forfeit your remaining items?"});
-                rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
-                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
-                rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
-                rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "NoForfeit");
-                rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
-            }
-            else
-            {
-                m_allowExit = true;
-            }
-        }
-
-        public void Forfeit()
-        {
-            Program.Game.ArchipelagoManager.Forfeit();
-            m_allowExit = true;
-        }
-
-        public void NoForfeit()
-        {
-            m_allowExit = true;
         }
 
         public override void Draw(GameTime gametime)
@@ -1121,6 +1134,7 @@ namespace RogueCastle
                 Game.ColourSwapShader.Parameters["ColourSwappedOut2"].SetValue(m_skinColour2.ToVector4());
                 Game.ColourSwapShader.Parameters["ColourSwappedIn2"].SetValue(m_skinColour2.ToVector4());
             }
+
             Camera.End();
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null,
                 Game.ColourSwapShader);
@@ -1131,6 +1145,7 @@ namespace RogueCastle
             {
                 m_playerSprite.GetChildAt(13).Draw(Camera);
             }
+
             m_playerSprite.GetChildAt(15).Draw(Camera);
             m_wifeSprite.Draw(Camera);
             m_childSprite1.Draw(Camera);
@@ -1157,19 +1172,17 @@ namespace RogueCastle
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             var b = new Rectangle(0, 0, 1320, 720);
             foreach (var current in m_creditsTitleList)
-            {
                 if (CollisionMath.Intersects(current.Bounds, b))
                 {
                     current.Draw(Camera);
                 }
-            }
+
             foreach (var current2 in m_creditsNameList)
-            {
                 if (CollisionMath.Intersects(current2.Bounds, b))
                 {
                     current2.Draw(Camera);
                 }
-            }
+
             m_thanksForPlayingText.Draw(Camera);
             m_totalDeaths.Draw(Camera);
             m_totalPlayTime.Draw(Camera);
@@ -1213,16 +1226,10 @@ namespace RogueCastle
                 m_skyRenderTarget = null;
                 m_backgroundRenderTarget.Dispose();
                 m_backgroundRenderTarget = null;
-                foreach (var current in m_creditsTitleList)
-                {
-                    current.Dispose();
-                }
+                foreach (var current in m_creditsTitleList) current.Dispose();
                 m_creditsTitleList.Clear();
                 m_creditsTitleList = null;
-                foreach (var current2 in m_creditsNameList)
-                {
-                    current2.Dispose();
-                }
+                foreach (var current2 in m_creditsNameList) current2.Dispose();
                 m_creditsNameList.Clear();
                 m_creditsNameList = null;
                 m_bg1.Dispose();

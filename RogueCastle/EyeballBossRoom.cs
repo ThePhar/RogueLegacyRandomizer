@@ -31,7 +31,7 @@ namespace RogueCastle
 
         public override void Initialize()
         {
-            m_boss = (EnemyList[0] as EnemyObj_Eyeball);
+            m_boss = EnemyList[0] as EnemyObj_Eyeball;
             base.Initialize();
         }
 
@@ -43,7 +43,7 @@ namespace RogueCastle
             m_boss.ChangeToBossPupil();
             var scale = m_boss.Scale;
             m_boss.Scale = new Vector2(0.3f, 0.3f);
-            Player.AttachedLevel.Camera.X = (int) (Bounds.Left + Player.AttachedLevel.Camera.Width*0.5f);
+            Player.AttachedLevel.Camera.X = (int) (Bounds.Left + Player.AttachedLevel.Camera.Width * 0.5f);
             Player.AttachedLevel.Camera.Y = Player.Y;
             var arg_CA_0 = Player.AttachedLevel.Camera.Position;
             m_boss.AnimationDelay = 0.1f;
@@ -59,14 +59,14 @@ namespace RogueCastle
             Tween.To(m_boss, 2f, Bounce.EaseOut, "delay", "2", "ScaleX", scale.X.ToString(), "ScaleY",
                 scale.Y.ToString());
             Tween.RunFunction(3.2f, this, "DisplayBossTitle", "The Gatekeeper", m_boss.Name, "Intro2");
-            Tween.RunFunction(0.8f, typeof (SoundManager), "PlaySound", "Boss_Eyeball_Build");
+            Tween.RunFunction(0.8f, typeof(SoundManager), "PlaySound", "Boss_Eyeball_Build");
             base.OnEnter();
         }
 
         public void Intro2()
         {
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y",
-                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height*0.5f)).ToString());
+                ((int) (Bounds.Bottom - Player.AttachedLevel.Camera.Height * 0.5f)).ToString());
             Tween.AddEndHandlerToLastTween(this, "EndCutscene");
         }
 
@@ -85,6 +85,7 @@ namespace RogueCastle
             {
                 SoundManager.PlayMusic("CastleBossSong", true);
             }
+
             base.Update(gameTime);
         }
 

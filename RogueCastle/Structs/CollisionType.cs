@@ -13,16 +13,16 @@ namespace RogueCastle.Structs
 {
     public static class CollisionType
     {
-        public const int Null             = 0;
-        public const int Wall             = 1;
-        public const int Player           = 2;
-        public const int Enemy            = 3;
-        public const int EnemyWall        = 4;
-        public const int WallForPlayer    = 5;
-        public const int WallForEnemy     = 6;
-        public const int PlayerTrigger    = 7;
-        public const int EnemyTrigger     = 8;
-        public const int GlobalTrigger    = 9;
+        public const int Null = 0;
+        public const int Wall = 1;
+        public const int Player = 2;
+        public const int Enemy = 3;
+        public const int EnemyWall = 4;
+        public const int WallForPlayer = 5;
+        public const int WallForEnemy = 6;
+        public const int PlayerTrigger = 7;
+        public const int EnemyTrigger = 8;
+        public const int GlobalTrigger = 9;
         public const int GlobalDamageWall = 10;
     }
 }

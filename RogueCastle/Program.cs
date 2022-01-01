@@ -11,18 +11,18 @@
 
 using System;
 using System.IO;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RogueCastle
 {
     internal static class Program
     {
+        public static Game Game { get; private set; }
+
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool AllocConsole();
-
-        public static Game Game { get; private set; }
 
         private static void Main()
         {
@@ -47,7 +47,9 @@ namespace RogueCastle
                     var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                     var path = Path.Combine(folderPath, LevelENV.GameName);
                     if (!Directory.Exists(path))
+                    {
                         Directory.CreateDirectory(path);
+                    }
 
                     var path2 = Path.Combine(folderPath, LevelENV.GameName, "CrashLog_" + str + ".log");
                     using (var sw = new StreamWriter(path2, false))

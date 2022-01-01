@@ -41,7 +41,7 @@ namespace RogueCastle
             m_shield.Opacity = 0.5f;
             m_shield.Scale = new Vector2(1.2f, 1.2f);
             m_projectilePool = new DS2DPool<EnergonProjectileObj>();
-            for (var i = 0; i < (int) m_poolSize; i++)
+            for (var i = 0; i < m_poolSize; i++)
             {
                 var energonProjectileObj = new EnergonProjectileObj("EnergonSwordProjectile_Sprite",
                     this);
@@ -84,6 +84,7 @@ namespace RogueCastle
             {
                 case EnemyDifficulty.Basic:
                     break;
+
                 case EnemyDifficulty.Advanced:
                     Name = "Mastertron";
                     MaxHealth = 38;
@@ -111,6 +112,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Energon_Advanced_KnockBack;
                     break;
+
                 case EnemyDifficulty.Expert:
                     Name = "Voltron";
                     MaxHealth = 61;
@@ -138,6 +140,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Energon_Expert_KnockBack;
                     return;
+
                 case EnemyDifficulty.MiniBoss:
                     Name = "Prime";
                     MaxHealth = 300;
@@ -165,6 +168,7 @@ namespace RogueCastle
                     ProjectileDamage = Damage;
                     KnockBack = EnemyEV.Energon_Miniboss_KnockBack;
                     return;
+
                 default:
                     return;
             }
@@ -218,10 +222,12 @@ namespace RogueCastle
                 case 0:
                 case 1:
                     break;
+
                 case 2:
                 case 3:
                     RunLogicBlock(true, m_generalBasicLB, 0, 0, 30, 60, 10);
                     break;
+
                 default:
                     return;
             }
@@ -310,9 +316,8 @@ namespace RogueCastle
         public void SwitchRandomType()
         {
             byte b;
-            for (b = m_currentAttackType; b == m_currentAttackType; b = (byte) CDGMath.RandomInt(0, 2))
-            {
-            }
+            for (b = m_currentAttackType; b == m_currentAttackType; b = (byte) CDGMath.RandomInt(0, 2)) { }
+
             SwitchType(b);
         }
 
@@ -324,22 +329,22 @@ namespace RogueCastle
                 case 0:
                     m_shield.ChangeSprite("EnergonSwordShield_Sprite");
                     break;
+
                 case 1:
                     m_shield.ChangeSprite("EnergonShieldShield_Sprite");
                     break;
+
                 case 2:
                     m_shield.ChangeSprite("EnergonDownSwordShield_Sprite");
                     break;
             }
+
             m_shield.PlayAnimation();
         }
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var current in m_projectilePool.ActiveObjsList)
-            {
-                current.Update(gameTime);
-            }
+            foreach (var current in m_projectilePool.ActiveObjsList) current.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -349,17 +354,14 @@ namespace RogueCastle
             m_shield.Position = Position;
             m_shield.Flip = Flip;
             m_shield.Draw(camera);
-            foreach (ProjectileObj current in m_projectilePool.ActiveObjsList)
-            {
-                current.Draw(camera);
-            }
+            foreach (ProjectileObj current in m_projectilePool.ActiveObjsList) current.Draw(camera);
         }
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
             if (collisionResponseType == 2 && m_invincibleCounter <= 0f && otherBox.AbsParent is PlayerObj)
             {
-                if (m_target.Bounds.Left + m_target.Bounds.Width/2 < X)
+                if (m_target.Bounds.Left + m_target.Bounds.Width / 2 < X)
                 {
                     m_target.AccelerationX = -m_target.EnemyKnockBack.X;
                 }
@@ -367,6 +369,7 @@ namespace RogueCastle
                 {
                     m_target.AccelerationX = m_target.EnemyKnockBack.X;
                 }
+
                 m_target.AccelerationY = -m_target.EnemyKnockBack.Y;
                 var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
                 var position = new Vector2(center.X, center.Y);
@@ -393,6 +396,7 @@ namespace RogueCastle
                         HitEnemy(energonProjectileObj.Damage, vector, true);
                         return;
                     }
+
                     m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(vector, Vector2.One);
                 }
             }
