@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Archipelago.MultiClient.Net.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
 using RogueCastle.Structs;
@@ -939,6 +940,19 @@ namespace RogueCastle
                         }
                     }
 
+                    // Store the count as well.
+                    binaryWriter.Write(Game.PlayerStats.ReceivedItems.Count);
+                    foreach (var item in Game.PlayerStats.ReceivedItems)
+                    {
+                        binaryWriter.Write(item.Item);
+                        binaryWriter.Write(item.Location);
+                        binaryWriter.Write(item.Player);
+                        if (LevelENV.ShowSaveLoadDebugText)
+                        {
+                            Console.Write(" " + item.Item + ":" + item.Location + ":" + item.Player);
+                        }
+                    }
+
                     if (saveBackup)
                     {
                         var fileStream = stream as FileStream;
@@ -1728,6 +1742,27 @@ namespace RogueCastle
                             Console.Write(" " + skill.CurrentLevel);
                         }
                     }
+
+                    var list = new List<NetworkItem>();
+                    var count = binaryReader.ReadInt32();
+                    for (var i = 0; i < count; i++)
+                    {
+                        var item = new NetworkItem
+                        {
+                            Item = binaryReader.ReadInt32(),
+                            Location = binaryReader.ReadInt32(),
+                            Player = binaryReader.ReadInt32()
+                        };
+
+                        if (LevelENV.ShowSaveLoadDebugText)
+                        {
+                            Console.Write(" " + item.Item + ":" + item.Location + ":" + item.Player);
+                        }
+
+                        list.Add(item);
+                    }
+
+                    Game.PlayerStats.ReceivedItems = list;
 
                     binaryReader.Close();
                     Game.ScreenManager.Player.UpdateEquipmentColours();

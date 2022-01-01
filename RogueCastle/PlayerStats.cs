@@ -10,6 +10,7 @@
 //
 
 using System.Collections.Generic;
+using Archipelago.MultiClient.Net.Models;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 
@@ -86,6 +87,7 @@ namespace RogueCastle
             }
 
             OpenedChests = new ChestTracker();
+            ReceivedItems = new List<NetworkItem>();
         }
 
         public int CurrentLevel { get; set; }
@@ -165,6 +167,24 @@ namespace RogueCastle
         public List<byte[]> GetBlueprintArray { get; private set; }
         public sbyte[] GetEquippedArray { get; private set; }
         public ChestTracker OpenedChests { get; set; }
+        public List<NetworkItem> ReceivedItems { get; set; }
+
+        public bool CheckReceived(NetworkItem item)
+        {
+            var nItem = item;
+
+            foreach (var rItem in ReceivedItems)
+            {
+                if (rItem.Item == nItem.Item && rItem.Location == nItem.Location && rItem.Player == nItem.Player)
+                {
+                    // We already received this item.
+                    return false;
+                }
+            }
+
+            ReceivedItems.Add(nItem);
+            return true;
+        }
 
         public byte TotalBlueprintsPurchased
         {
