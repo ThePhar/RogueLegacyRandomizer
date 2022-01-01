@@ -521,7 +521,7 @@ namespace RogueCastle
                     if (newGame)
                     {
                         PlayerStats.CharacterFound = true;
-                        PlayerStats.Gold = 99999999; // TODO: Remove debug moneys
+                        PlayerStats.Gold = 0;
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
                         PlayerStats.EnemiesKilledInRun.Clear();
 
@@ -854,7 +854,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.RandomizeChildren.Code)
             {
-                skill = SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp);
+                skill = SkillSystem.GetSkill(SkillType.RandomizeChildren);
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.VaultRunes.Code)

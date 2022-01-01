@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - LineageScreen.cs
 // Last Modified 2021-12-27
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -233,16 +233,35 @@ namespace RogueCastle
 
             m_currentPoint = position;
             m_currentBranchArray.Clear();
-            int[] array =
+            int[] childrenFive =
+            {
+                -900,
+                -450,
+                0,
+                450,
+                900
+            };
+            int[] childrenFour =
+            {
+                -900,
+                -450,
+                0,
+                450,
+            };
+            int[] childrenThree =
             {
                 -450,
                 0,
                 450
             };
-            int[] array2 =
+            int[] childrenTwo =
             {
-                -200,
-                200
+                -450,
+                0
+            };
+            int[] childrenOne =
+            {
+                0
             };
             for (var i = 0; i < numLineages; i++)
             {
@@ -254,13 +273,26 @@ namespace RogueCastle
 
                 lineageObj.ForceDraw = true;
                 lineageObj.X = position.X + m_xPosOffset;
-                var array3 = array;
-                if (numLineages == 2)
+                var children = childrenThree;
+                switch (numLineages)
                 {
-                    array3 = array2;
+                    case 1:
+                        children = childrenOne;
+                        break;
+                    case 2:
+                        children = childrenTwo;
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        children = childrenFour;
+                        break;
+                    case 5:
+                        children = childrenFive;
+                        break;
                 }
 
-                lineageObj.Y = array3[i];
+                lineageObj.Y = children[i];
                 m_currentBranchArray.Add(lineageObj);
                 if (lineageObj.Traits.X == 20f || lineageObj.Traits.Y == 20f)
                 {
@@ -268,10 +300,10 @@ namespace RogueCastle
                 }
             }
 
-            m_currentPoint = m_currentBranchArray[1].Position;
+            m_currentPoint = m_currentBranchArray[(int) Math.Floor(numLineages / 2.0)].Position;
             Camera.Position = m_currentPoint;
-            m_selectedLineageObj = m_currentBranchArray[1];
-            m_selectedLineageIndex = 1;
+            m_selectedLineageObj = m_currentBranchArray[(int) Math.Floor(numLineages / 2.0)];
+            m_selectedLineageIndex = (int) Math.Floor(numLineages / 2.0);
         }
 
         public override void OnEnter()
@@ -392,7 +424,7 @@ namespace RogueCastle
         {
             if (Game.PlayerStats.CurrentBranches == null || Game.PlayerStats.CurrentBranches.Count < 1)
             {
-                AddLineageRow(3, m_masterArray[m_masterArray.Count - 1].Position, false, true);
+                AddLineageRow(Program.Game.ArchipelagoManager.Data.NumberOfChildren, m_masterArray[m_masterArray.Count - 1].Position, false, true);
                 var list = new List<PlayerLineageData>();
                 for (var i = 0; i < m_currentBranchArray.Count; i++)
                     list.Add(new PlayerLineageData
@@ -414,7 +446,7 @@ namespace RogueCastle
                 return;
             }
 
-            AddLineageRow(3, m_masterArray[m_masterArray.Count - 1].Position, true, true);
+            AddLineageRow(Program.Game.ArchipelagoManager.Data.NumberOfChildren, m_masterArray[m_masterArray.Count - 1].Position, true, true);
             var currentBranches = Game.PlayerStats.CurrentBranches;
             for (var j = 0; j < m_currentBranchArray.Count; j++)
             {
@@ -569,9 +601,14 @@ namespace RogueCastle
                         if (m_selectedLineageIndex != selectedLineageIndex)
                         {
                             UpdateDescriptionPlate();
-                            m_selectTween = Tween.By(m_currentBranchArray[0], 0.3f, Quad.EaseOut, "Y", "450");
-                            Tween.By(m_currentBranchArray[1], 0.3f, Quad.EaseOut, "Y", "450");
-                            Tween.By(m_currentBranchArray[2], 0.3f, Quad.EaseOut, "Y", "450");
+
+                            for (var i = 0; i < m_currentBranchArray.Count; i++)
+                            {
+                                if (i == m_selectedLineageIndex)
+                                    m_selectTween = Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "450");
+                                else
+                                    Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "450");
+                            }
                         }
                     }
                     else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
@@ -590,9 +627,14 @@ namespace RogueCastle
                         if (m_selectedLineageIndex != selectedLineageIndex)
                         {
                             UpdateDescriptionPlate();
-                            m_selectTween = Tween.By(m_currentBranchArray[0], 0.3f, Quad.EaseOut, "Y", "-450");
-                            Tween.By(m_currentBranchArray[1], 0.3f, Quad.EaseOut, "Y", "-450");
-                            Tween.By(m_currentBranchArray[2], 0.3f, Quad.EaseOut, "Y", "-450");
+
+                            for (var i = 0; i < m_currentBranchArray.Count; i++)
+                            {
+                                if (i == m_selectedLineageIndex)
+                                    m_selectTween = Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "-450");
+                                else
+                                    Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "-450");
+                            }
                         }
                     }
                 }

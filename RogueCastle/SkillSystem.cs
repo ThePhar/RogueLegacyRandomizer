@@ -365,6 +365,11 @@ namespace RogueCastle
                 current.Visible = false;
             }
 
+            foreach (var current in SkillStatArray)
+            {
+                current.CurrentLevel = 0;
+            }
+
             GetSkill(StartingTrait).Visible = true;
             Game.PlayerStats.CurrentLevel = 0;
         }
@@ -493,6 +498,11 @@ namespace RogueCastle
         public static SkillObj[] GetSkillArray()
         {
             return SkillManorArray.ToArray();
+        }
+
+        public static SkillObj[] GetStatArray()
+        {
+            return SkillStatArray.ToArray();
         }
 
         public static int GetManorPiece(SkillObj trait)

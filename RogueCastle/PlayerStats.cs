@@ -1,13 +1,13 @@
-// 
+//
 //  RogueLegacyArchipelago - PlayerStats.cs
 //  Last Modified 2021-12-29
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -67,11 +67,23 @@ namespace RogueCastle
             ShoulderPiece = (byte) CDGMath.RandomInt(1, 5);
             ChestPiece = (byte) CDGMath.RandomInt(1, 5);
             CDGMath.RandomInt(0, 14);
-            GetBlueprintArray[1][0] = 1;
-            GetBlueprintArray[3][0] = 1;
-            GetBlueprintArray[0][0] = 1;
-            GetRuneArray[1][0] = 1;
-            GetRuneArray[0][1] = 1;
+
+            if (Program.Game == null || Program.Game.ArchipelagoManager.Data.RequirePurchasing)
+            {
+                GetBlueprintArray[1][0] = 1;
+                GetBlueprintArray[3][0] = 1;
+                GetBlueprintArray[0][0] = 1;
+                GetRuneArray[1][0] = 1;
+                GetRuneArray[0][1] = 1;
+            }
+            else
+            {
+                GetBlueprintArray[1][0] = 3;
+                GetBlueprintArray[3][0] = 3;
+                GetBlueprintArray[0][0] = 3;
+                GetRuneArray[1][0] = 3;
+                GetRuneArray[0][1] = 3;
+            }
 
             OpenedChests = new ChestTracker();
         }

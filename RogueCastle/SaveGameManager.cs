@@ -920,9 +920,18 @@ namespace RogueCastle
                     }
 
                     var array5 = skillArray;
-                    for (var m = 0; m < array5.Length; m++)
+                    foreach (var skillObj in array5)
                     {
-                        var skillObj = array5[m];
+                        binaryWriter.Write(skillObj.CurrentLevel);
+                        if (LevelENV.ShowSaveLoadDebugText)
+                        {
+                            Console.Write(" " + skillObj.CurrentLevel);
+                        }
+                    }
+
+                    var statArray = SkillSystem.GetStatArray();
+                    foreach (var skillObj in statArray)
+                    {
                         binaryWriter.Write(skillObj.CurrentLevel);
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
@@ -1692,6 +1701,7 @@ namespace RogueCastle
                     }
 
                     var skillArray = SkillSystem.GetSkillArray();
+                    var skillArray2 = SkillSystem.GetStatArray();
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Traits");
@@ -1703,6 +1713,16 @@ namespace RogueCastle
                     {
                         var level = binaryReader.ReadInt32();
                         for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false, false);
+                        if (LevelENV.ShowSaveLoadDebugText)
+                        {
+                            Console.Write(" " + skill.CurrentLevel);
+                        }
+                    }
+
+                    foreach (var skill in skillArray2)
+                    {
+                        var level = binaryReader.ReadInt32();
+                        for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false);
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + skill.CurrentLevel);
