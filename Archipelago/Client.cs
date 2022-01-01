@@ -46,6 +46,7 @@ namespace Archipelago
         public SlotData Data { get; private set; }
         public Queue<NetworkItem> ItemQueue { get; private set; }
         public ConnectionInfo CachedConnectionInfo { get; private set; }
+        public List<NetworkItem> ReceivedItems { get; set; }
 
         public bool CanForfeit
         {

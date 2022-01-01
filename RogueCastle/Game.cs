@@ -563,37 +563,41 @@ namespace RogueCastle
                 {
                     var item = ArchipelagoManager.ItemQueue.Dequeue();
 
-                    var randomGold = 0;
-                    if (item.Item == (int) ItemDefinitions.Gold1000.Code)
+                    // Only give item if we haven't received it before!
+                    if (PlayerStats.CheckReceived(item))
                     {
-                        randomGold = 1000;
-                    }
-                    else if (item.Item == (int) ItemDefinitions.Gold3000.Code)
-                    {
-                        randomGold = 3000;
-                    }
-                    else if (item.Item == (int) ItemDefinitions.Gold5000.Code)
-                    {
-                        randomGold = 5000;
-                    }
+                        var randomGold = 0;
+                        if (item.Item == (int) ItemDefinitions.Gold1000.Code)
+                        {
+                            randomGold = 1000;
+                        }
+                        else if (item.Item == (int) ItemDefinitions.Gold3000.Code)
+                        {
+                            randomGold = 3000;
+                        }
+                        else if (item.Item == (int) ItemDefinitions.Gold5000.Code)
+                        {
+                            randomGold = 5000;
+                        }
 
-                    var stat1 = CDGMath.RandomInt(4, 9);
-                    var stat2 = CDGMath.RandomInt(4, 9);
-                    var stat3 = CDGMath.RandomInt(4, 9);
+                        var stat1 = CDGMath.RandomInt(4, 9);
+                        var stat2 = CDGMath.RandomInt(4, 9);
+                        var stat3 = CDGMath.RandomInt(4, 9);
 
-                    var data = new List<object>
-                    {
-                        new Vector2(ScreenManager.Player.X, ScreenManager.Player.Y),
-                        GetItemType.ReceiveNetworkItem,
-                        new Vector2(stat1, randomGold),
-                        new Vector2(stat2, stat3),
-                        ArchipelagoManager.GetPlayerName(item.Player),
-                        item.Item
-                    };
+                        var data = new List<object>
+                        {
+                            new Vector2(ScreenManager.Player.X, ScreenManager.Player.Y),
+                            GetItemType.ReceiveNetworkItem,
+                            new Vector2(stat1, randomGold),
+                            new Vector2(stat2, stat3),
+                            ArchipelagoManager.GetPlayerName(item.Player),
+                            item.Item
+                        };
 
-                    DisgustingGetItemLogic(item, randomGold, stat1, stat2, stat3);
-                    ScreenManager.DisplayScreen(ScreenType.GetItem, true, data);
-                    ScreenManager.Player.RunGetItemAnimation();
+                        DisgustingGetItemLogic(item, randomGold, stat1, stat2, stat3);
+                        ScreenManager.DisplayScreen(ScreenType.GetItem, true, data);
+                        ScreenManager.Player.RunGetItemAnimation();
+                    }
                 }
             }
 
