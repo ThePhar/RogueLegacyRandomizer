@@ -735,7 +735,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ManaUp.Code)
             {
-                var maxMp = ScreenManager.Player.MaxHealth;
+                var maxMp = ScreenManager.Player.MaxMana;
                 skill = SkillSystem.GetSkill(SkillType.ManaUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
