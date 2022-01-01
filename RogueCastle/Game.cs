@@ -852,6 +852,15 @@ namespace RogueCastle
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
             }
+            else if (item.Item == ItemDefinitions.Haggling.Code)
+            {
+                skill = SkillSystem.GetSkill(SkillType.PricesDown);
+                SkillSystem.LevelUpTrait(skill, false);
+                SkillSystem.LevelUpTrait(skill, false);
+                SkillSystem.LevelUpTrait(skill, false);
+                SkillSystem.LevelUpTrait(skill, false);
+                SkillSystem.LevelUpTrait(skill, false);
+            }
             else if (item.Item == ItemDefinitions.RandomizeChildren.Code)
             {
                 skill = SkillSystem.GetSkill(SkillType.RandomizeChildren);
