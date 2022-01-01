@@ -103,15 +103,6 @@ namespace RogueCastle
 
         public void ExitTransition()
         {
-            // Unlock all diary screens at once.
-            for (var i = Game.PlayerStats.DiaryEntry; i < 25; i++)
-            {
-                var location = string.Format("Diary {0}", i + 1);
-                Program.Game.ArchipelagoManager.CheckLocations(LocationDefinitions
-                    .GetLocation(Program.Game.ArchipelagoManager.Data, location).Code);
-                Game.PlayerStats.DiaryEntry += 1;
-            }
-
             SoundManager.PlaySound("Cutsc_Picture_Break");
             Tween.To(this, 0.05f, Tween.EaseNone, "BackBufferOpacity", "1");
             Tween.RunFunction(0.1f, ScreenManager, "HideCurrentScreen");

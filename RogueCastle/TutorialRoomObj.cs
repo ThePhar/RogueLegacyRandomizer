@@ -1,16 +1,17 @@
-// 
+//
 // RogueLegacyArchipelago - TutorialRoomObj.cs
 // Last Modified 2021-12-27
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
+using Archipelago;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -322,6 +323,15 @@ namespace RogueCastle
             m_door.Locked = false;
             Game.PlayerStats.ReadLastDiary = true;
             Game.PlayerStats.DiaryEntry = 25;
+
+            // Unlock all diary screens at once.
+            for (var i = 0; i < 25; i++)
+            {
+                var location = string.Format("Diary {0}", i + 1);
+                Program.Game.ArchipelagoManager.CheckLocations(LocationDefinitions
+                    .GetLocation(Program.Game.ArchipelagoManager.Data, location).Code);
+            }
+
             (Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
         }
 
