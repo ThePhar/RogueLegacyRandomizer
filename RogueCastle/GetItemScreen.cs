@@ -348,107 +348,161 @@ namespace RogueCastle
 
         private string GetSkillPlateIcon(int item)
         {
-            switch (item)
+            if (item == ItemDefinitions.Blacksmith.Code)
             {
-                case 4444000:
-                    return SkillSystem.GetSkill(SkillType.Smithy).IconName.Replace("Locked", "");
-
-                case 4444001:
-                    return SkillSystem.GetSkill(SkillType.Architect).IconName.Replace("Locked", "");
-
-                case 4444002:
-                    return SkillSystem.GetSkill(SkillType.Enchanter).IconName.Replace("Locked", "");
-
-                case 4444003:
-                    return SkillSystem.GetSkill(SkillType.KnightUp).IconName.Replace("Locked", "");
-
-                case 4444004:
-                    return SkillSystem.GetSkill(SkillType.MageUp).IconName.Replace("Locked", "");
-
-                case 4444005:
-                    return SkillSystem.GetSkill(SkillType.BarbarianUp).IconName.Replace("Locked", "");
-
-                case 4444006:
-                    return SkillSystem.GetSkill(SkillType.AssassinUp).IconName.Replace("Locked", "");
-
-                case 4444007:
-                    return SkillSystem.GetSkill(SkillType.NinjaUp).CurrentLevel > 0
-                        ? SkillSystem.GetSkill(SkillType.NinjaUp).IconName.Replace("Locked", "")
-                        : SkillSystem.GetSkill(SkillType.NinjaUnlock).IconName.Replace("Locked", "");
-
-                case 4444008:
-                    return SkillSystem.GetSkill(SkillType.BankerUp).CurrentLevel > 0
-                        ? SkillSystem.GetSkill(SkillType.BankerUp).IconName.Replace("Locked", "")
-                        : SkillSystem.GetSkill(SkillType.BankerUnlock).IconName.Replace("Locked", "");
-
-                case 4444009:
-                    return SkillSystem.GetSkill(SkillType.LichUp).CurrentLevel > 0
-                        ? SkillSystem.GetSkill(SkillType.LichUp).IconName.Replace("Locked", "")
-                        : SkillSystem.GetSkill(SkillType.LichUnlock).IconName.Replace("Locked", "");
-
-                case 4444010:
-                    return SkillSystem.GetSkill(SkillType.SpellSwordUp).CurrentLevel > 0
-                        ? SkillSystem.GetSkill(SkillType.SpellSwordUp).IconName.Replace("Locked", "")
-                        : SkillSystem.GetSkill(SkillType.SpellswordUnlock).IconName.Replace("Locked", "");
-
-                case 4444011:
-                    return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
-
-                case 4444012:
-                    // TODO: Make Traitor icon
-                    return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
-
-                case 4444013:
-                    return SkillSystem.GetSkill(SkillType.HealthUp).IconName.Replace("Locked", "");
-
-                case 4444014:
-                    return SkillSystem.GetSkill(SkillType.ManaUp).IconName.Replace("Locked", "");
-
-                case 4444015:
-                    return SkillSystem.GetSkill(SkillType.AttackUp).IconName.Replace("Locked", "");
-
-                case 4444016:
-                    return SkillSystem.GetSkill(SkillType.MagicDamageUp).IconName.Replace("Locked", "");
-
-                case 4444017:
-                    return SkillSystem.GetSkill(SkillType.ArmorUp).IconName.Replace("Locked", "");
-
-                case 4444018:
-                    return SkillSystem.GetSkill(SkillType.EquipUp).IconName.Replace("Locked", "");
-
-                case 4444019:
-                    return SkillSystem.GetSkill(SkillType.CritChanceUp).IconName.Replace("Locked", "");
-
-                case 4444020:
-                    return SkillSystem.GetSkill(SkillType.CritDamageUp).IconName.Replace("Locked", "");
-
-                case 4444021:
-                    return SkillSystem.GetSkill(SkillType.DownStrikeUp).IconName.Replace("Locked", "");
-
-                case 4444022:
-                    return SkillSystem.GetSkill(SkillType.GoldGainUp).IconName.Replace("Locked", "");
-
-                case 4444023:
-                    return SkillSystem.GetSkill(SkillType.PotionUp).IconName.Replace("Locked", "");
-
-                case 4444024:
-                    return SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).IconName.Replace("Locked", "");
-
-                case 4444025:
-                    return SkillSystem.GetSkill(SkillType.ManaCostDown).IconName.Replace("Locked", "");
-
-                case 4444026:
-                    return SkillSystem.GetSkill(SkillType.DeathDodge).IconName.Replace("Locked", "");
-
-                case 4444027:
-                    return SkillSystem.GetSkill(SkillType.PricesDown).IconName.Replace("Locked", "");
-
-                case 4444028:
-                    return SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName.Replace("Locked", "");
-
-                default:
-                    return "BlueprintIcon_Sprite";
+                return SkillSystem.GetSkill(SkillType.Smithy).IconName.Replace("Locked", "");
             }
+
+            if (item == ItemDefinitions.Architect.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.Architect).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Enchantress.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.Enchanter).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Paladin.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.KnightUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Archmage.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.MageUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.BarbarianKing.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.BarbarianUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Assassin.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.AssassinUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ProgressiveShinobi.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.NinjaUp).CurrentLevel > 0
+                    ? SkillSystem.GetSkill(SkillType.NinjaUp).IconName.Replace("Locked", "")
+                    : SkillSystem.GetSkill(SkillType.NinjaUnlock).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ProgressiveMiner.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.BankerUp).CurrentLevel > 0
+                    ? SkillSystem.GetSkill(SkillType.BankerUp).IconName.Replace("Locked", "")
+                    : SkillSystem.GetSkill(SkillType.BankerUnlock).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ProgressiveLich.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.LichUp).CurrentLevel > 0
+                    ? SkillSystem.GetSkill(SkillType.LichUp).IconName.Replace("Locked", "")
+                    : SkillSystem.GetSkill(SkillType.LichUnlock).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ProgressiveSpellthief.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.SpellSwordUp).CurrentLevel > 0
+                    ? SkillSystem.GetSkill(SkillType.SpellSwordUp).IconName.Replace("Locked", "")
+                    : SkillSystem.GetSkill(SkillType.SpellswordUnlock).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Dragon.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Dragon.Code)
+            {
+                // TODO: Make Traitor icon
+                return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.HealthUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.HealthUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ManaUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.ManaUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.AttackUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.AttackUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.MagicDamageUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.MagicDamageUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ArmorUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.ArmorUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.EquipUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.EquipUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.CritChanceUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.CritChanceUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.CritDamageUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.CritDamageUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.DownStrikeUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.DownStrikeUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.GoldGainUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.GoldGainUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.PotionEfficiencyUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.PotionUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.InvulnTimeUp.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.ManaCostDown.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.ManaCostDown).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.DeathDefiance.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.DeathDodge).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.Haggling.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.PricesDown).IconName.Replace("Locked", "");
+            }
+
+            if (item == ItemDefinitions.RandomizeChildren.Code)
+            {
+                return SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName.Replace("Locked", "");
+            }
+
+            return "BlueprintIcon_Sprite";
         }
 
         private void ItemSpinAnimation()

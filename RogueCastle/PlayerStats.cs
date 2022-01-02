@@ -88,6 +88,7 @@ namespace RogueCastle
 
             OpenedChests = new ChestTracker();
             ReceivedItems = new List<NetworkItem>();
+            CheckedLocationsCount = 0;
         }
 
         public int CurrentLevel { get; set; }
@@ -168,6 +169,7 @@ namespace RogueCastle
         public sbyte[] GetEquippedArray { get; private set; }
         public ChestTracker OpenedChests { get; set; }
         public List<NetworkItem> ReceivedItems { get; set; }
+        public int CheckedLocationsCount { get; set; }
 
         public bool CheckReceived(NetworkItem item)
         {

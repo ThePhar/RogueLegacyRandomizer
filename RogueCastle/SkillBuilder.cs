@@ -819,7 +819,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 250;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -831,7 +832,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 50;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -843,7 +845,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 250;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -855,7 +858,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -867,7 +871,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -879,7 +884,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -891,7 +897,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 800;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -903,7 +910,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 800;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -915,7 +923,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -927,7 +936,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1250;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -939,7 +949,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -951,6 +962,7 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.PerLevelModifier = 1f;
                     skillObj.BaseCost = 2000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
@@ -963,7 +975,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 2500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -975,7 +988,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1750;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -987,6 +1001,7 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.PerLevelModifier = 1f;
                     skillObj.BaseCost = 2000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
@@ -999,7 +1014,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 2500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1011,7 +1027,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1023,7 +1040,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1035,7 +1053,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1047,7 +1066,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 800;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1059,7 +1079,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 800;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1071,7 +1092,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1083,7 +1105,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1250;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1095,7 +1118,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1107,6 +1131,7 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.PerLevelModifier = 1f;
                     skillObj.BaseCost = 2000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
@@ -1119,7 +1144,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 2500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1131,7 +1157,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 3000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1143,6 +1170,7 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.PerLevelModifier = 1f;
                     skillObj.BaseCost = 2000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
@@ -1155,7 +1183,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 1500;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
@@ -1167,6 +1196,7 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
+                    skillObj.PerLevelModifier = 1f;
                     skillObj.BaseCost = 2000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
@@ -1179,7 +1209,8 @@ namespace RogueCastle
                     skillObj.Name = "Manor Renovation";
                     skillObj.Description =
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nEach level unlocks additional items.";
-                    skillObj.BaseCost = 2000;
+                    skillObj.PerLevelModifier = 1f;
+                    skillObj.BaseCost = 3000;
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;

@@ -398,9 +398,10 @@ namespace RogueCastle
                         throw new ArgumentOutOfRangeException();
                 }
 
+                GiveGold(manager);
+
                 if (total > arch.Data.ChestsPerZone)
                 {
-                    GiveGold(manager);
                     return;
                 }
             }

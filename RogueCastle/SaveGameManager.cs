@@ -640,6 +640,7 @@ namespace RogueCastle
                     binaryWriter.Write(Game.PlayerStats.ReadLastDiary);
                     binaryWriter.Write(Game.PlayerStats.SpokenToLastBoss);
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
+                    binaryWriter.Write(Game.PlayerStats.CheckedLocationsCount);
                     binaryWriter.Write(Game.PlayerStats.OpenedChests.CastleChests);
                     binaryWriter.Write(Game.PlayerStats.OpenedChests.GardenChests);
                     binaryWriter.Write(Game.PlayerStats.OpenedChests.TowerChests);
@@ -1456,6 +1457,7 @@ namespace RogueCastle
                     Game.PlayerStats.ReadLastDiary = binaryReader.ReadBoolean();
                     Game.PlayerStats.SpokenToLastBoss = binaryReader.ReadBoolean();
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
+                    Game.PlayerStats.CheckedLocationsCount = binaryReader.ReadInt32();
                     Game.PlayerStats.OpenedChests.CastleChests = binaryReader.ReadInt32();
                     Game.PlayerStats.OpenedChests.GardenChests = binaryReader.ReadInt32();
                     Game.PlayerStats.OpenedChests.TowerChests = binaryReader.ReadInt32();
