@@ -33,6 +33,7 @@ namespace Archipelago
         private string m_seed;
         private ArchipelagoSession m_session;
         private List<string> m_tags;
+        private List<int> m_checkedLocations;
 
         public Client()
         {
@@ -46,7 +47,14 @@ namespace Archipelago
         public SlotData Data { get; private set; }
         public Queue<NetworkItem> ItemQueue { get; private set; }
         public ConnectionInfo CachedConnectionInfo { get; private set; }
-        public List<NetworkItem> ReceivedItems { get; set; }
+
+        public IReadOnlyList<int> CheckedLocations
+        {
+            get
+            {
+                return m_checkedLocations;
+            }
+        }
 
         public bool CanForfeit
         {
@@ -130,6 +138,7 @@ namespace Archipelago
 
             m_session = null;
             m_deathLink = null;
+            m_checkedLocations = new List<int>();
             m_tags = new List<string> { "AP" };
             m_seed = "0";
         }
@@ -253,7 +262,11 @@ namespace Archipelago
                 Console.WriteLine("{0}: {1}", property.Name, property.GetValue(packet));
             Console.WriteLine();
 
-            if (packet is RoomInfoPacket)
+            if (packet is RoomUpdatePacket)
+            {
+                OnRoomUpdate((RoomUpdatePacket) packet);
+            }
+            else if (packet is RoomInfoPacket)
             {
                 OnRoomInfo((RoomInfoPacket) packet);
             }
@@ -274,6 +287,14 @@ namespace Archipelago
 
             // Send this so we have a cache of item/location names.
             m_session.Socket.SendPacket(new GetDataPackagePacket());
+        }
+
+        private void OnRoomUpdate(RoomUpdatePacket packet)
+        {
+            if (packet.CheckedLocations != null)
+            {
+                m_checkedLocations = packet.CheckedLocations;
+            }
         }
 
         private void OnConnected(ConnectedPacket packet)

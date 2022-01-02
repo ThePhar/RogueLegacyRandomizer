@@ -556,6 +556,147 @@ namespace RogueCastle
                 }
             }
 
+            // This function will ensure our locations are synced. Only really used in Co-Op scenarios.
+            if (ArchipelagoManager.CheckedLocations.Count != PlayerStats.CheckedLocationsCount)
+            {
+                foreach (var location in ArchipelagoManager.CheckedLocations)
+                {
+                    // Chests
+                    if (location >= 91600 && location <= 91629 && PlayerStats.OpenedChests.CastleChests < location - 91600 + 1)
+                        PlayerStats.OpenedChests.CastleChests = location - 91600 + 1;
+                    else if (location >= 91700 && location <= 91729 && PlayerStats.OpenedChests.GardenChests < location - 91700 + 1)
+                        PlayerStats.OpenedChests.GardenChests = location - 91700 + 1;
+                    else if (location >= 91800 && location <= 91829 && PlayerStats.OpenedChests.TowerChests < location - 91800 + 1)
+                        PlayerStats.OpenedChests.TowerChests = location - 91800 + 1;
+                    else if (location >= 91900 && location <= 91929 && PlayerStats.OpenedChests.DungeonChests < location - 91900 + 1)
+                        PlayerStats.OpenedChests.DungeonChests = location - 91900 + 1;
+
+                    // Fairy Chests
+                    else if (location >= 91400 && location <= 91414 && PlayerStats.OpenedChests.CastleFairyChests < location - 91400 + 1)
+                        PlayerStats.OpenedChests.CastleFairyChests = location - 91400 + 1;
+                    else if (location >= 91450 && location <= 91464 && PlayerStats.OpenedChests.GardenFairyChests < location - 91450 + 1)
+                        PlayerStats.OpenedChests.GardenFairyChests = location - 91450 + 1;
+                    else if (location >= 91500 && location <= 91514 && PlayerStats.OpenedChests.TowerFairyChests < location - 91500 + 1)
+                        PlayerStats.OpenedChests.TowerFairyChests = location - 91500 + 1;
+                    else if (location >= 91550 && location <= 91564 && PlayerStats.OpenedChests.DungeonFairyChests < location - 91550 + 1)
+                        PlayerStats.OpenedChests.DungeonFairyChests = location - 91550 + 1;
+
+                    // Diaries
+                    else if (location >= 91300 && location <= 91324 && PlayerStats.DiaryEntry < location - 91300 + 1)
+                        PlayerStats.DiaryEntry = (byte) (location - 91300 + 1);
+
+                    // Bosses
+                    else if (location == LocationDefinitions.BossKhindr.Code)
+                        PlayerStats.EyeballBossBeaten = true;
+                    else if (location == LocationDefinitions.BossAlexander.Code)
+                        PlayerStats.FairyBossBeaten = true;
+                    else if (location == LocationDefinitions.BossLeon.Code)
+                        PlayerStats.FireballBossBeaten = true;
+                    else if (location == LocationDefinitions.BossHerodotus.Code)
+                        PlayerStats.BlobBossBeaten = true;
+
+                    // Manor
+                    switch (location)
+                    {
+                        case 91000: // Manor Renovation - Ground Road
+                            SkillSystem.GetSkill(SkillType.ManorGroundRoad).CurrentLevel = 1;
+                            break;
+                        case 91001: // Manor Renovation - Main Base
+                            SkillSystem.GetSkill(SkillType.ManorMainBase).CurrentLevel = 1;
+                            break;
+                        case 91002: // Manor Renovation - Main Bottom Window
+                            SkillSystem.GetSkill(SkillType.ManorMainWindowBottom).CurrentLevel = 1;
+                            break;
+                        case 91003: // Manor Renovation - Main Top Window
+                            SkillSystem.GetSkill(SkillType.ManorMainWindowTop).CurrentLevel = 1;
+                            break;
+                        case 91004: // Manor Renovation - Main Rooftop
+                            SkillSystem.GetSkill(SkillType.ManorMainRoof).CurrentLevel = 1;
+                            break;
+                        case 91005: // Manor Renovation - Left Wing Base
+                            SkillSystem.GetSkill(SkillType.ManorLeftWingBase).CurrentLevel = 1;
+                            break;
+                        case 91006: // Manor Renovation - Left Wing Window
+                            SkillSystem.GetSkill(SkillType.ManorLeftWingWindow).CurrentLevel = 1;
+                            break;
+                        case 91007: // Manor Renovation - Left Wing Rooftop
+                            SkillSystem.GetSkill(SkillType.ManorLeftWingRoof).CurrentLevel = 1;
+                            break;
+                        case 91008: // Manor Renovation - Left Big Base
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigBase).CurrentLevel = 1;
+                            break;
+                        case 91009: // Manor Renovation - Left Big Upper 1
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigUpper1).CurrentLevel = 1;
+                            break;
+                        case 91010: // Manor Renovation - Left Big Upper 2
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigUpper2).CurrentLevel = 1;
+                            break;
+                        case 91011: // Manor Renovation - Left Big Windows
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigWindows).CurrentLevel = 1;
+                            break;
+                        case 91012: // Manor Renovation - Left Big Rooftop
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigRoof).CurrentLevel = 1;
+                            break;
+                        case 91013: // Manor Renovation - Left Far Base
+                            SkillSystem.GetSkill(SkillType.ManorLeftFarBase).CurrentLevel = 1;
+                            break;
+                        case 91014: // Manor Renovation - Left Far Roof
+                            SkillSystem.GetSkill(SkillType.ManorLeftFarRoof).CurrentLevel = 1;
+                            break;
+                        case 91015: // Manor Renovation - Left Extension
+                            SkillSystem.GetSkill(SkillType.ManorLeftExtension).CurrentLevel = 1;
+                            break;
+                        case 91016: // Manor Renovation - Left Tree 1
+                            SkillSystem.GetSkill(SkillType.ManorLeftTree1).CurrentLevel = 1;
+                            break;
+                        case 91017: // Manor Renovation - Left Tree 2
+                            SkillSystem.GetSkill(SkillType.ManorLeftTree2).CurrentLevel = 1;
+                            break;
+                        case 91018: // Manor Renovation - Right Wing Base
+                            SkillSystem.GetSkill(SkillType.ManorRightWingBase).CurrentLevel = 1;
+                            break;
+                        case 91019: // Manor Renovation - Right Wing Window
+                            SkillSystem.GetSkill(SkillType.ManorRightWingWindow).CurrentLevel = 1;
+                            break;
+                        case 91020: // Manor Renovation - Right Wing Rooftop
+                            SkillSystem.GetSkill(SkillType.ManorRightWingRoof).CurrentLevel = 1;
+                            break;
+                        case 91021: // Manor Renovation - Right Big Base
+                            SkillSystem.GetSkill(SkillType.ManorRightBigBase).CurrentLevel = 1;
+                            break;
+                        case 91022: // Manor Renovation - Right Big Upper
+                            SkillSystem.GetSkill(SkillType.ManorRightBigUpper).CurrentLevel = 1;
+                            break;
+                        case 91023: // Manor Renovation - Right Big Rooftop
+                            SkillSystem.GetSkill(SkillType.ManorRightBigRoof).CurrentLevel = 1;
+                            break;
+                        case 91024: // Manor Renovation - Right High Base
+                            SkillSystem.GetSkill(SkillType.ManorRightHighBase).CurrentLevel = 1;
+                            break;
+                        case 91025: // Manor Renovation - Right High Upper
+                            SkillSystem.GetSkill(SkillType.ManorRightHighUpper).CurrentLevel = 1;
+                            break;
+                        case 91026: // Manor Renovation - Right High Tower
+                            SkillSystem.GetSkill(SkillType.ManorRightHighTower).CurrentLevel = 1;
+                            break;
+                        case 91027: // Manor Renovation - Right Extension
+                            SkillSystem.GetSkill(SkillType.ManorRightExtension).CurrentLevel = 1;
+                            break;
+                        case 91028: // Manor Renovation - Right Tree
+                            SkillSystem.GetSkill(SkillType.ManorRightTree).CurrentLevel = 1;
+                            break;
+                        case 91029: // Manor Renovation - Observatory Base
+                            SkillSystem.GetSkill(SkillType.ManorObservatoryBase).CurrentLevel = 1;
+                            break;
+                        case 91030: // Manor Renovation - Observatory Telescope
+                            SkillSystem.GetSkill(SkillType.ManorObservatoryTelescope).CurrentLevel = 1;
+                            break;
+                    }
+                }
+
+                PlayerStats.CheckedLocationsCount = ArchipelagoManager.CheckedLocations.Count;
+            }
+
             // Check for received items and send to player.
             if (ArchipelagoManager.ItemQueue.Count > 0)
             {
