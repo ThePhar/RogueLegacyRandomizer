@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using RogueCastle.Structs;
 
 namespace Archipelago
 {
@@ -104,6 +105,14 @@ namespace Archipelago
         public bool DisableCharon
         {
             get { return Convert.ToInt32(this["disable_charon"]) == 1; }
+        }
+
+        public byte StartingClass
+        {
+            get
+            {
+                return Convert.ToByte(this["starting_class"]);
+            }
         }
     }
 }
