@@ -266,6 +266,30 @@ namespace RogueCastle
                     m_itemFoundPlayerText.Visible = true;
                     m_itemFoundPlayerText.Text = string.Format("You found {0}'s", m_network_player);
                     m_itemFoundText.TextureColor = Color.Yellow;
+
+                    switch (m_network_item.GetItemType())
+                    {
+                        case ItemType.Rune:
+                            m_itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
+                            m_itemSprite.ChangeSprite("RuneIcon_Sprite");
+                            break;
+
+                        case ItemType.Skill:
+                            m_itemSpinning = false;
+                            m_itemSprite.ChangeSprite(GetSkillPlateIcon(m_network_item));
+                            break;
+
+                        case ItemType.Stats:
+                            m_itemSpinning = false;
+                            m_itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
+                            break;
+
+                        case ItemType.Gold:
+                            m_itemSpinning = false;
+                            m_itemSprite.ChangeSprite("MoneyBag_Sprite");
+                            break;
+                    }
+
                     break;
 
                 case GetItemType.ReceiveNetworkItem:

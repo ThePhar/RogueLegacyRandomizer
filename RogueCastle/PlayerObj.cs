@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - PlayerObj.cs
 // Last Modified 2021-12-27
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -2493,6 +2493,32 @@ namespace RogueCastle
             }
         }
 
+        public void Forfeit()
+        {
+            Program.Game.ArchipelagoManager.Forfeit();
+            LoadEnding();
+        }
+
+        public void ForfeitPrompt()
+        {
+            if (Program.Game.ArchipelagoManager.CanForfeit)
+            {
+                var rCScreenManager = Game.ScreenManager;
+                DialogueManager.AddText("Forfeit", new[] { "Congrats!" },
+                    new[] { "Would you like to forfeit your remaining items?" });
+                rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
+                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
+                rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "LoadEnding");
+                rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+            }
+        }
+
+        public void LoadEnding()
+        {
+            Game.ScreenManager.DisplayScreen(24, true);
+        }
+
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
             var physicsObj = otherBox.AbsParent as IPhysicsObj;
@@ -2512,7 +2538,14 @@ namespace RogueCastle
             {
                 if (doorObj.Name == "FinalBossDoor")
                 {
-                    Game.ScreenManager.DisplayScreen(24, true);
+                    if (Program.Game.ArchipelagoManager.CanForfeit)
+                    {
+                        ForfeitPrompt();
+                    }
+                    else
+                    {
+                        LoadEnding();
+                    }
                 }
                 else
                 {

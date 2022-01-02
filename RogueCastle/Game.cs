@@ -64,7 +64,7 @@ namespace RogueCastle
             Window.Title = "Rogue Legacy Randomizer";
             IsFixedTimeStep = false;
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = !LevelENV.ShowFps;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
 
             if (!LevelENV.EnableOffscreenControl)
             {

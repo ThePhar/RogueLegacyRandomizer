@@ -322,7 +322,6 @@ namespace RogueCastle
             m_doorSprite.ChangeSprite("CastleDoorOpen_Sprite");
             m_door.Locked = false;
             Game.PlayerStats.ReadLastDiary = true;
-            Game.PlayerStats.DiaryEntry = 25;
 
             Program.Game.ArchipelagoManager.CheckLocations(
                 LocationDefinitions.Diary1.Code,
@@ -352,6 +351,7 @@ namespace RogueCastle
                 LocationDefinitions.Diary25.Code
             );
 
+            Game.PlayerStats.DiaryEntry = 25;
             (Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
         }
 
