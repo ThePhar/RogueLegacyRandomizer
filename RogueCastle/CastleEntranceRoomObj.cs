@@ -10,6 +10,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Archipelago;
 using DS2DEngine;
 using InputSystem;
@@ -369,8 +370,26 @@ namespace RogueCastle
                     Game.PlayerStats.DiaryEntry += 1;
 
                     // Check location.
-                    Program.Game.ArchipelagoManager.CheckLocations(LocationDefinitions.GetLocation(
-                        Program.Game.ArchipelagoManager.Data, "Diary 1").Code);
+                    var location = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, "Diary 1").Code;
+                    var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
+                    Program.Game.ArchipelagoManager.CheckLocations(location);
+
+                    // If we're sending someone else something, let's show what we're sending.
+                    if (networkItem.Player != Program.Game.ArchipelagoManager.Data.Slot)
+                    {
+                        var item = new List<object>
+                        {
+                            new Vector2(X, Y - Height / 2f),
+                            GetItemType.GiveNetworkItem,
+                            new Vector2(-1f, -1f),
+                            new Vector2(-1f, -1f),
+                            Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
+                            Program.Game.ArchipelagoManager.GetItemName(networkItem.Item)
+                        };
+
+                        Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, item);
+                        Game.ScreenManager.Player.RunGetItemAnimation();
+                    }
                 }
                 else
                 {
