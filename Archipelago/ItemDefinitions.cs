@@ -9,6 +9,7 @@
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -109,7 +110,14 @@ namespace Archipelago
 
         public static ItemType GetItemType(this int code)
         {
-            return GetItem(code).Type;
+            try
+            {
+                return GetItem(code).Type;
+            }
+            catch
+            {
+                return ItemType.NetworkItem;
+            }
         }
     }
 }
