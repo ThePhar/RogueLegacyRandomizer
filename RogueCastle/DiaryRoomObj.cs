@@ -121,10 +121,9 @@ namespace RogueCastle
                                 GetItemType.GiveNetworkItem,
                                 new Vector2(-1f, -1f),
                                 new Vector2(-1f, -1f),
-                                Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
-                                Program.Game.ArchipelagoManager.GetItemName(networkItem.Item)
+                                networkItem.Player,
+                                networkItem.Item
                             };
-
                             Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, item);
                             Game.ScreenManager.Player.RunGetItemAnimation();
                         }
