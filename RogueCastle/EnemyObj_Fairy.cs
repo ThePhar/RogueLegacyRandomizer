@@ -750,11 +750,11 @@ namespace RogueCastle
                 {
                     var item = new List<object>
                     {
-                        new Vector2(X, Y - Height / 2f),
+                        new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
                         GetItemType.GiveNetworkItem,
                         new Vector2(-1f, -1f),
                         new Vector2(-1f, -1f),
-                        networkItem.Player,
+                        Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
                         networkItem.Item
                     };
 
