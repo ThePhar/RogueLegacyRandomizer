@@ -289,22 +289,22 @@ namespace RogueCastle
             TestRoomReverse = false;
             RunTestRoom = false;
             ShowDebugText = false;
-            LoadSplashScreen = false;
+            LoadSplashScreen = true;
             ShowSaveLoadDebugText = false;
             DeleteSaveFile = false;
             CloseTestRoomDoors = false;
             RunTutorial = false;
             RunDemoVersion = false;
             DisableSaving = false;
-            RunCrashLogs = false;
-            WeakenBosses = true;
+            RunCrashLogs = true;
+            WeakenBosses = false;
             EnableOffscreenControl = true;
             EnableBackupSaving = false;
             CreateRetailVersion = true;
             ShowFps = false;
             SaveFrames = false;
-            ShowArchipelagoStatus = true;
-            RunConsole = true;
+            ShowArchipelagoStatus = false;
+            RunConsole = false;
         }
 
         public static LevelType TestRoomLevelType { get; set; }
