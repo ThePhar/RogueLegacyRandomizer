@@ -265,6 +265,7 @@ namespace RogueCastle.Screens
                 if (m_selectedOption.IsActive)
                 {
                     m_selectedOption.HandleInput();
+                    return;
                 }
                 else
                 {

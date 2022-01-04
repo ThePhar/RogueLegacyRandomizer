@@ -105,7 +105,6 @@ namespace RogueCastle.Options
 
                         // Exit option.
                         case Keys.Enter:
-                        case Keys.Escape:
                             IsActive = false;
                             m_parentScreen.LockControls = false;
                             break;
@@ -117,7 +116,7 @@ namespace RogueCastle.Options
                                 if (Clipboard.ContainsText())
                                 {
                                     m_currentValue = Clipboard.GetText(TextDataFormat.Text)
-                                        .Substring(0, Math.Min(128, Clipboard.GetText().Length - 1)).Trim();
+                                        .Substring(0, Math.Min(128, Clipboard.GetText().Length)).Trim();
                                 }
 
                                 break;
@@ -133,9 +132,12 @@ namespace RogueCastle.Options
                                     Clipboard.SetText(m_currentValue);
                                     m_currentValue = "";
                                 }
-                                finally
+                                catch
                                 {
+                                    Clipboard.Clear();
                                 }
+
+                                break;
                             }
 
                             goto normalKey;
@@ -148,8 +150,9 @@ namespace RogueCastle.Options
                                     Clipboard.SetText(m_currentValue);
                                     m_currentValue = "";
                                 }
-                                finally
+                                catch
                                 {
+                                    Clipboard.Clear();
                                 }
 
                                 break;
