@@ -16,6 +16,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.GameObjects;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;

@@ -304,7 +304,7 @@ namespace RogueCastle
             ShowFps = false;
             SaveFrames = false;
             ShowArchipelagoStatus = false;
-            RunConsole = false;
+            RunConsole = true;
         }
 
         public static LevelType TestRoomLevelType { get; set; }

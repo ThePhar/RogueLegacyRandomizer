@@ -1,20 +1,20 @@
-// 
-// RogueLegacyArchipelago - SkyObj.cs
-// Last Modified 2021-12-27
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
+//  Rogue Legacy Randomizer - SkyObj.cs
+//  Last Modified 2022-01-03
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Tweener;
 
-namespace RogueCastle
+namespace RogueCastle.GameObjects
 {
     public class SkyObj : GameObj
     {
@@ -38,8 +38,7 @@ namespace RogueCastle
         public void LoadContent(Camera2D camera)
         {
             var one = new Vector2(2f, 2f);
-            m_moon = new SpriteObj("ParallaxMoon_Sprite");
-            m_moon.Position = new Vector2(900f, 200f);
+            m_moon = new SpriteObj("ParallaxMoon_Sprite") { Position = new Vector2(900f, 200f) };
             if (LevelENV.SaveFrames)
             {
                 m_moon.Position /= 2f;
@@ -68,10 +67,12 @@ namespace RogueCastle
             m_differenceCloud3.TextureColor = Color.White;
             m_differenceCloud3.X -= 500f;
             m_differenceCloud3.ParallaxSpeed = new Vector2(0.4f, 0f);
-            m_silhouette = new SpriteObj("GardenBat_Sprite");
-            m_silhouette.ForceDraw = true;
-            m_silhouette.AnimationDelay = 0.05f;
-            m_silhouette.Scale = one;
+            m_silhouette = new SpriteObj("GardenBat_Sprite")
+            {
+                ForceDraw = true,
+                AnimationDelay = 0.05f,
+                Scale = one
+            };
         }
 
         public void ReinitializeRT(Camera2D camera)
@@ -121,18 +122,18 @@ namespace RogueCastle
 
         public void Update(GameTime gameTime)
         {
-            var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var seconds = (float) gameTime.ElapsedGameTime.TotalSeconds;
             if (!m_silhouetteFlying && m_silhouetteTimer > 0f)
             {
                 m_silhouetteTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_silhouetteTimer <= 0f)
                 {
-                    var num2 = CDGMath.RandomInt(1, 100);
-                    if (num2 > 95)
+                    var chance = CDGMath.RandomInt(1, 100);
+                    if (chance > 95)
                     {
                         ShowSilhouette(true);
                     }
-                    else if (num2 > 65)
+                    else if (chance > 65)
                     {
                         ShowSilhouette(false);
                     }
@@ -150,63 +151,54 @@ namespace RogueCastle
 
             if (m_silhouette.SpriteName == "GardenPerson_Sprite")
             {
-                m_silhouette.Rotation += 120f * num;
+                m_silhouette.Rotation += 120f * seconds;
             }
         }
 
         private void ShowSilhouette(bool showSanta)
         {
-            if (m_levelScreen != null)
+            if (m_levelScreen == null)
             {
-                m_silhouetteFlying = true;
-                m_silhouette.Rotation = 0f;
-                m_silhouette.Flip = SpriteEffects.None;
-                var flag = false;
-                if (CDGMath.RandomInt(0, 1) > 0)
-                {
-                    flag = true;
-                }
-
-                string[] array =
-                {
-                    "GardenBat_Sprite",
-                    "GardenCrow_Sprite",
-                    "GardenBat_Sprite",
-                    "GardenCrow_Sprite",
-                    "GardenPerson_Sprite"
-                };
-                if (!showSanta)
-                {
-                    m_silhouette.ChangeSprite(array[CDGMath.RandomInt(0, 4)]);
-                }
-                else
-                {
-                    m_silhouette.ChangeSprite("GardenSanta_Sprite");
-                }
-
-                m_silhouette.PlayAnimation();
-                var arg_A7_0 = Vector2.Zero;
-                if (flag)
-                {
-                    m_silhouette.X = -(float) m_silhouette.Width;
-                }
-                else
-                {
-                    m_silhouette.Flip = SpriteEffects.FlipHorizontally;
-                    m_silhouette.X = m_levelScreen.CurrentRoom.Width + m_silhouette.Width;
-                }
-
-                m_silhouette.Y = CDGMath.RandomFloat(100f, 500f);
-                var num = m_levelScreen.CurrentRoom.Bounds.Width + m_silhouette.Width * 2;
-                if (!flag)
-                {
-                    num = -num;
-                }
-
-                Tween.By(m_silhouette, CDGMath.RandomFloat(10f, 15f), Tween.EaseNone, "X", num.ToString(), "Y",
-                    CDGMath.RandomInt(-200, 200).ToString());
-                Tween.AddEndHandlerToLastTween(this, "SilhouetteComplete");
+                return;
             }
+
+            m_silhouetteFlying = true;
+            m_silhouette.Rotation = 0f;
+            m_silhouette.Flip = SpriteEffects.None;
+
+            var flag = CDGMath.RandomInt(0, 1) > 0;
+            string[] array =
+            {
+                "GardenBat_Sprite",
+                "GardenCrow_Sprite",
+                "GardenBat_Sprite",
+                "GardenCrow_Sprite",
+                "GardenPerson_Sprite"
+            };
+
+            m_silhouette.ChangeSprite(!showSanta ? array[CDGMath.RandomInt(0, 4)] : "GardenSanta_Sprite");
+
+            m_silhouette.PlayAnimation();
+            if (flag)
+            {
+                m_silhouette.X = -(float) m_silhouette.Width;
+            }
+            else
+            {
+                m_silhouette.Flip = SpriteEffects.FlipHorizontally;
+                m_silhouette.X = m_levelScreen.CurrentRoom.Width + m_silhouette.Width;
+            }
+
+            m_silhouette.Y = CDGMath.RandomFloat(100f, 500f);
+            var num = m_levelScreen.CurrentRoom.Bounds.Width + m_silhouette.Width * 2;
+            if (!flag)
+            {
+                num = -num;
+            }
+
+            Tween.By(m_silhouette, CDGMath.RandomFloat(10f, 15f), Tween.EaseNone, "X", num.ToString(), "Y",
+                CDGMath.RandomInt(-200, 200).ToString());
+            Tween.AddEndHandlerToLastTween(this, "SilhouetteComplete");
         }
 
         public void SilhouetteComplete()
@@ -240,21 +232,24 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                m_differenceCloud.Dispose();
-                m_differenceCloud = null;
-                m_differenceCloud2.Dispose();
-                m_differenceCloud2 = null;
-                m_differenceCloud3.Dispose();
-                m_differenceCloud3 = null;
-                m_moon.Dispose();
-                m_moon = null;
-                m_silhouette.Dispose();
-                m_silhouette = null;
-                m_levelScreen = null;
-                base.Dispose();
+                return;
             }
+
+            m_differenceCloud.Dispose();
+            m_differenceCloud = null;
+            m_differenceCloud2.Dispose();
+            m_differenceCloud2 = null;
+            m_differenceCloud3.Dispose();
+            m_differenceCloud3 = null;
+            m_moon.Dispose();
+            m_moon = null;
+            m_silhouette.Dispose();
+            m_silhouette = null;
+            m_levelScreen = null;
+
+            base.Dispose();
         }
     }
 }

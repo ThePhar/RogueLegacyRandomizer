@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.Enums;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
@@ -57,20 +58,20 @@ namespace RogueCastle
                 var isOpen = IsOpen;
                 switch (m_chestType)
                 {
-                    case Structs.ChestType.Boss:
+                    case (byte) Chest.Boss:
                         ForcedItemType = 14;
                         ChangeSprite("BossChest_Sprite");
                         break;
 
-                    case Structs.ChestType.Fairy:
+                    case (byte) Chest.Fairy:
                         ChangeSprite("Chest4_Sprite");
                         break;
 
-                    case Structs.ChestType.Gold:
+                    case (byte) Chest.Gold:
                         ChangeSprite("Chest3_Sprite");
                         break;
 
-                    case Structs.ChestType.Silver:
+                    case (byte) Chest.Silver:
                         ChangeSprite("Chest2_Sprite");
                         break;
 
@@ -114,11 +115,11 @@ namespace RogueCastle
 
             switch (ChestType)
             {
-                case Structs.ChestType.Brown:
+                case (byte) Chest.Brown:
                     chances = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
                     break;
 
-                case Structs.ChestType.Silver:
+                case (byte) Chest.Silver:
                     chances = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
                     break;
 
@@ -138,7 +139,7 @@ namespace RogueCastle
                 }
             }
 
-            if (ChestType == Structs.ChestType.Boss)
+            if (ChestType ==(byte)  Chest.Boss)
             {
                 GiveStatDrop(itemDropManager, player, 3, 0);
                 return;
