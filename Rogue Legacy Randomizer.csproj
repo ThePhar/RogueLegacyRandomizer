@@ -296,7 +296,7 @@
     <Compile Include="RogueCastle\Structs\EquipmentSecondaryDataType.cs" />
     <Compile Include="RogueCastle\Structs\LogicSetType.cs" />
     <Compile Include="RogueCastle\Structs\GetItemType.cs" />
-    <Compile Include="RogueCastle\Structs\InputMapType.cs" />
+    <Compile Include="RogueCastle\Structs\InputType.cs" />
     <Compile Include="RogueCastle\Structs\ItemDropType.cs" />
     <Compile Include="RogueCastle\Structs\OrbType.cs" />
     <Compile Include="RogueCastle\Structs\RoomType.cs" />

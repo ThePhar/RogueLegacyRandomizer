@@ -205,17 +205,17 @@ namespace RogueCastle.Structs
             switch (type)
             {
                 case Vault:
-                    return string.Format("Press [Input:{0}] while in air.", InputMapType.PlayerJump1);
+                    return string.Format("Press [Input:{0}] while in air.", InputType.PlayerJump1);
 
                 case Sprint:
-                    return string.Format("[Input:{0}] or [Input:{1}] to dash.", InputMapType.PlayerDashLeft,
-                        InputMapType.PlayerDashRight);
+                    return string.Format("[Input:{0}] or [Input:{1}] to dash.", InputType.PlayerDashLeft,
+                        InputType.PlayerDashRight);
 
                 case Vampire:
                     return "Kill enemies to regain health.";
 
                 case Sky:
-                    return string.Format("Hold [Input:{0}] while in air.", InputMapType.PlayerJump1);
+                    return string.Format("Hold [Input:{0}] while in air.", InputType.PlayerJump1);
 
                 case Siphon:
                     return "Kill enemies to regain mana.";

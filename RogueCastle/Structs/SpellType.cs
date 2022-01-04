@@ -107,57 +107,57 @@ namespace RogueCastle.Structs
             {
                 case Dagger:
                     return string.Format("[Input:{0}]  Fires a dagger directly in front of you.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case Axe:
-                    return string.Format("[Input:{0}]  Throws a giant axe in an arc.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Throws a giant axe in an arc.", InputType.PlayerSpell1);
 
                 case Bomb:
                     return string.Format("[Input:{0}]  Summons a bomb that explodes after a while.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case TimeStop:
                     return string.Format("[Input:{0}]  Toggles freezing all enemies on-screen. ",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case CrowStorm:
-                    return string.Format("[Input:{0}]  Hits all enemies on screen. Costly.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Hits all enemies on screen. Costly.", InputType.PlayerSpell1);
 
                 case QuantumTranslocator:
-                    return string.Format("[Input:{0}]  Drops and teleports to your shadow.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Drops and teleports to your shadow.", InputType.PlayerSpell1);
 
                 case Displacer:
                     return string.Format("[Input:{0}]  Sends out a marker which teleports you.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case Chakram:
                     return string.Format("[Input:{0}]  Throws a chakram which comes back to you.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case Scythe:
                     return string.Format("[Input:{0}]  Send Scythes flying out from above you.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case BladeWall:
-                    return string.Format("[Input:{0}]  Summon a Grand Blade to defend you.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Summon a Grand Blade to defend you.", InputType.PlayerSpell1);
 
                 case FlameBarrier:
-                    return string.Format("[Input:{0}]  Encircles you with protective fire.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Encircles you with protective fire.", InputType.PlayerSpell1);
 
                 case Conflux:
                     return string.Format("[Input:{0}]  Launches orbs that bounce everywhere.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 case DragonFire:
                 case DragonFireNeo:
-                    return string.Format("[Input:{0}]  Shoot fireballs at your enemies.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Shoot fireballs at your enemies.", InputType.PlayerSpell1);
 
                 case RapidDagger:
-                    return string.Format("[Input:{0}]  Fire a barrage of daggers.", InputMapType.PlayerSpell1);
+                    return string.Format("[Input:{0}]  Fire a barrage of daggers.", InputType.PlayerSpell1);
 
                 case Laser:
                     return string.Format("[Input:{0}]  Fire a laser that blasts everyone it touches.",
-                        InputMapType.PlayerSpell1);
+                        InputType.PlayerSpell1);
 
                 default:
                     return "";
