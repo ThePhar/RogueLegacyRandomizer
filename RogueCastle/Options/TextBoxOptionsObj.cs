@@ -128,8 +128,14 @@ namespace RogueCastle.Options
                         case Keys.C:
                             if (holdingControl)
                             {
-                                Clipboard.SetText(m_currentValue);
-                                break;
+                                try
+                                {
+                                    Clipboard.SetText(m_currentValue);
+                                    m_currentValue = "";
+                                }
+                                finally
+                                {
+                                }
                             }
 
                             goto normalKey;
@@ -137,8 +143,15 @@ namespace RogueCastle.Options
                         case Keys.X:
                             if (holdingControl)
                             {
-                                Clipboard.SetText(m_currentValue);
-                                m_currentValue = "";
+                                try
+                                {
+                                    Clipboard.SetText(m_currentValue);
+                                    m_currentValue = "";
+                                }
+                                finally
+                                {
+                                }
+
                                 break;
                             }
 
