@@ -1410,7 +1410,7 @@ namespace RogueCastle
             }
             else if (xIndex == 7 && yIndex == 2)
             {
-                result.TopLink = new Vector2(7f, 1f);
+                result.TopLink = new Vector2(-1f, -1f);
                 result.BottomLink = new Vector2(8f, 2f);
                 result.LeftLink = new Vector2(-1f, -1f);
                 result.RightLink = new Vector2(-1f, -1f);
