@@ -70,7 +70,7 @@
     <Compile Include="Archipelago\ItemType.cs" />
     <Compile Include="Archipelago\LocationDefinitions.cs" />
     <Compile Include="Archipelago\LocationData.cs" />
-    <Compile Include="Archipelago\Status.cs" />
+    <Compile Include="Archipelago\ConnectionStatus.cs" />
     <Compile Include="Archipelago\ConnectionInfo.cs" />
     <Compile Include="Archipelago\ItemDefinitions.cs" />
     <Compile Include="Archipelago\SlotData.cs" />
