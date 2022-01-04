@@ -9,6 +9,8 @@
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 //
 
+using System.Linq;
+
 namespace RogueCastle.Structs
 {
     public static class InputType
@@ -41,5 +43,10 @@ namespace RogueCastle.Structs
         public const int MenuProfileSelect = 25;
         public const int MenuDeleteProfile = 26;
         public const int Total = 27;
+
+        public static bool PressedAny(params int[] input)
+        {
+            return input.Any(button => Game.GlobalInput.JustPressed(button));
+        }
     }
 }

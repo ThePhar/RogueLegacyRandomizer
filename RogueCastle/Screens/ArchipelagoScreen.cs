@@ -271,7 +271,7 @@ namespace RogueCastle.Screens
                     if (!m_selectedOption.IsActive)
                     {
                         var selectedOptionIndex = m_selectedOptionIndex;
-                        if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
+                        if (InputType.PressedAny(InputType.PlayerUp1, InputType.PlayerUp2))
                         {
                             if (m_selectedOptionIndex > 0)
                             {
@@ -280,7 +280,7 @@ namespace RogueCastle.Screens
 
                             m_selectedOptionIndex--;
                         }
-                        else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
+                        else if (InputType.PressedAny(InputType.PlayerDown1, InputType.PlayerDown2))
                         {
                             if (m_selectedOptionIndex < m_archipelagoArray.Count - 1)
                             {
@@ -312,14 +312,13 @@ namespace RogueCastle.Screens
                         }
                     }
 
-                    if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
+                    if (InputType.PressedAny(InputType.MenuConfirm1, InputType.MenuConfirm2))
                     {
                         SoundManager.PlaySound("Option_Menu_Select");
                         m_selectedOption.IsActive = true;
                     }
 
-                    if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3) ||
-                        Game.GlobalInput.JustPressed(4))
+                    if (InputType.PressedAny(InputType.MenuCancel1, InputType.MenuCancel1, InputType.MenuOptions))
                     {
                         ExitTransition();
                     }
