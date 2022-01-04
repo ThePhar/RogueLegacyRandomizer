@@ -1,19 +1,22 @@
-﻿// 
-// RogueLegacyArchipelago - TextBoxOptionsObj.cs
-// Last Modified 2021-12-27
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+﻿//
+//  Rogue Legacy Randomizer - TextBoxOptionsObj.cs
+//  Last Modified 2022-01-03
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
 
+using System;
 using System.Linq;
+using System.Windows.Forms;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using RogueCastle.Screens;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace RogueCastle.Options
 {
@@ -24,8 +27,8 @@ namespace RogueCastle.Options
         private KeyboardState m_keyboardState;
         private TextObj m_toggleText;
 
-        public TextBoxOptionsObj(ArchipelagoScreen parentScreen, string name, string placeholder) : base(parentScreen,
-            name)
+        public TextBoxOptionsObj(ArchipelagoScreen parentScreen, string name, string placeholder) :
+            base(parentScreen, name)
         {
             m_placeholder = placeholder;
 
@@ -75,10 +78,15 @@ namespace RogueCastle.Options
         {
             var currentKeyboardState = Keyboard.GetState();
             var pressedKeys = currentKeyboardState.GetPressedKeys();
+            var holdingControl = currentKeyboardState.IsKeyDown(Keys.LeftControl) ||
+                                 currentKeyboardState.IsKeyDown(Keys.RightControl);
 
             foreach (var key in pressedKeys)
+            {
                 if (m_keyboardState.IsKeyUp(key))
                 {
+                    SoundManager.PlaySound("Option_Menu_Select");
+
                     switch (key)
                     {
                         // Backspace key, obviously.
@@ -98,14 +106,46 @@ namespace RogueCastle.Options
                         // Exit option.
                         case Keys.Enter:
                         case Keys.Escape:
-                        case Keys.Up:
-                        case Keys.Down:
                             IsActive = false;
+                            m_parentScreen.LockControls = false;
                             break;
+
+                        // We handle V differently so I can paste. ;)
+                        case Keys.V:
+                            if (holdingControl)
+                            {
+                                if (Clipboard.ContainsText())
+                                {
+                                    m_currentValue = Clipboard.GetText(TextDataFormat.Text)
+                                        .Substring(0, Math.Min(128, Clipboard.GetText().Length - 1)).Trim();
+                                }
+
+                                break;
+                            }
+
+                            goto normalKey;
+
+                        case Keys.C:
+                            if (holdingControl)
+                            {
+                                Clipboard.SetText(m_currentValue);
+                                break;
+                            }
+
+                            goto normalKey;
+
+                        case Keys.X:
+                            if (holdingControl)
+                            {
+                                Clipboard.SetText(m_currentValue);
+                                m_currentValue = "";
+                                break;
+                            }
+
+                            goto normalKey;
 
                         case Keys.A:
                         case Keys.B:
-                        case Keys.C:
                         case Keys.D:
                         case Keys.E:
                         case Keys.F:
@@ -124,11 +164,10 @@ namespace RogueCastle.Options
                         case Keys.S:
                         case Keys.T:
                         case Keys.U:
-                        case Keys.V:
                         case Keys.W:
-                        case Keys.X:
                         case Keys.Y:
                         case Keys.Z:
+                            normalKey:
                             m_currentValue += HandleShift(pressedKeys, key.ToString(), key.ToString().ToLower());
                             break;
 
@@ -230,6 +269,7 @@ namespace RogueCastle.Options
                             break;
                     }
                 }
+            }
 
             // Update keyboard state.
             m_keyboardState = currentKeyboardState;

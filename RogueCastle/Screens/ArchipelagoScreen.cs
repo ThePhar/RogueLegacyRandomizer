@@ -315,6 +315,7 @@ namespace RogueCastle.Screens
                     if (InputType.PressedAny(InputType.MenuConfirm1, InputType.MenuConfirm2))
                     {
                         SoundManager.PlaySound("Option_Menu_Select");
+                        LockControls = true;
                         m_selectedOption.IsActive = true;
                     }
 
