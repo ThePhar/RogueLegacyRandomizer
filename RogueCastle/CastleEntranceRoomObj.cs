@@ -359,8 +359,8 @@ namespace RogueCastle
             }
 
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround &&
-                (Game.GlobalInput.JustPressed(InputMapType.PlayerUp1) ||
-                 Game.GlobalInput.JustPressed(InputMapType.PlayerUp2)))
+                (Game.GlobalInput.JustPressed(InputType.PlayerUp1) ||
+                 Game.GlobalInput.JustPressed(InputType.PlayerUp2)))
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {

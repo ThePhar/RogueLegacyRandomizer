@@ -166,7 +166,7 @@ namespace RogueCastle
             m_songName = SoundManager.GetCurrentMusicName();
             m_lockControls = true;
             m_continueText.Opacity = 0f;
-            m_continueText.Text = string.Format("[Input:{0}]  to continue", InputMapType.MenuConfirm1);
+            m_continueText.Text = string.Format("[Input:{0}]  to continue", InputType.MenuConfirm1);
 
             // Item Found Text
             m_itemFoundText.Position = m_itemEndPos;

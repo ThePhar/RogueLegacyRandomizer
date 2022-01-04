@@ -24,6 +24,7 @@ namespace RogueCastle
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool AllocConsole();
 
+        [STAThread]
         private static void Main()
         {
             // Start our console window.
