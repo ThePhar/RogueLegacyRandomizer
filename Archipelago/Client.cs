@@ -20,6 +20,7 @@ using Archipelago.MultiClient.Net.Exceptions;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
+using RogueCastle;
 using WebSocketSharp;
 
 namespace Archipelago
