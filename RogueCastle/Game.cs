@@ -487,10 +487,10 @@ namespace RogueCastle
             SoundManager.Update3DSounds();
 
             // Wait for Arch to say its ready.
-            switch (ArchipelagoManager.Status)
+            switch (ArchipelagoManager.ConnectionStatus)
             {
                 // We're ready!
-                case Status.Connected:
+                case ConnectionStatus.Connected:
                 {
                     if (!(ScreenManager.CurrentScreen is ArchipelagoScreen))
                     {
@@ -551,7 +551,6 @@ namespace RogueCastle
                         }
                     }
 
-                    ArchipelagoManager.StartPlaying();
                     SoundManager.StopMusic(0.2f);
                     break;
                 }

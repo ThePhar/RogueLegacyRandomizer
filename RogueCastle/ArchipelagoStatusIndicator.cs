@@ -1,13 +1,13 @@
-// 
-// RogueLegacyArchipelago - ArchipelagoStatusIndicator.cs
-// Last Modified 2021-12-27
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
+//  Rogue Legacy Randomizer - ArchipelagoStatusIndicator.cs
+//  Last Modified 2022-01-03
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
 
 using Archipelago;
 using Microsoft.Xna.Framework;
@@ -41,42 +41,26 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            switch (Program.Game.ArchipelagoManager.Status)
+            switch (Program.Game.ArchipelagoManager.ConnectionStatus)
             {
-                case Status.Disconnected:
+                case ConnectionStatus.Disconnected:
                     m_status = "Disconnected";
                     break;
 
-                case Status.Disconnecting:
+                case ConnectionStatus.Disconnecting:
                     m_status = "Disconnecting";
                     break;
 
-                case Status.Connecting:
+                case ConnectionStatus.Connecting:
                     m_status = "Connecting";
                     break;
 
-                case Status.Initialized:
-                    m_status = "Initialized";
-                    break;
-
-                case Status.FetchingLocations:
-                    m_status = "Fetching Locations";
-                    break;
-
-                case Status.Connected:
+                case ConnectionStatus.Connected:
                     m_status = "Connected";
                     break;
 
-                case Status.Playing:
-                    m_status = "Playing";
-                    break;
-
-                case Status.Reconnecting:
-                    m_status = "Reconnecting";
-                    break;
-
                 default:
-                    m_status = "Unknown Status " + (int) Program.Game.ArchipelagoManager.Status;
+                    m_status = "Unknown Status " + (int) Program.Game.ArchipelagoManager.ConnectionStatus;
                     break;
             }
         }
