@@ -18,12 +18,12 @@ namespace Archipelago
         public const int MAXIMUM_RECONNECTION_ATTEMPTS = 3;
         public const string MINIMUM_AP_VERSION = "0.2.2";
 
-        private bool _allowReconnect = false;
-        private DeathLinkService _deathLinkService = null;
+        private bool _allowReconnect;
+        private DeathLinkService _deathLinkService;
         private Dictionary<string, Permissions> _permissions = new();
-        private int _reconnectionAttempt = 0;
+        private int _reconnectionAttempt;
         private string _seed = "0";
-        private ArchipelagoSession _session = null;
+        private ArchipelagoSession _session;
         private List<string> _tags = new() { "AP" };
 
         public Client()
@@ -34,9 +34,9 @@ namespace Archipelago
         public ConnectionStatus ConnectionStatus { get; private set; } = ConnectionStatus.Disconnected;
         public DateTime LastDeath { get; private set; } = DateTime.MinValue;
         public ConnectionInfo CachedConnectionInfo { get; private set; } = new();
-        public DeathLink DeathLink { get; private set; } = null;
+        public DeathLink DeathLink { get; private set; }
         public Dictionary<int, NetworkItem> LocationCache { get; private set; } = new();
-        public SlotData Data { get; private set; } = null;
+        public SlotData Data { get; private set; }
         public Queue<NetworkItem> ItemQueue { get; private set; } = new();
         public List<int> CheckedLocations { get; private set; } = new();
         public bool CanForfeit => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
@@ -68,7 +68,6 @@ namespace Archipelago
 
                 if (result.Successful)
                 {
-                    ConnectionStatus = ConnectionStatus.Connected;
                     _reconnectionAttempt = 0;
                     return;
                 }
@@ -233,7 +232,7 @@ namespace Archipelago
             Console.WriteLine("==========================================");
             foreach (var property in packet.GetType().GetProperties())
             {
-                Console.WriteLine($"{property.Name}: {property.GetValue(packet)}");
+                Console.WriteLine($"{property.Name}: {property.GetValue(packet, null)}");
             }
 
             Console.WriteLine();
@@ -301,6 +300,9 @@ namespace Archipelago
             // Build our location cache.
             var locations = LocationDefinitions.GetAllLocations(Data).Select(location => location.Code);
             _session.Locations.ScoutLocationsAsync(OnReceiveLocationCache, locations.ToArray());
+
+            // Set ourselves to connected.
+            ConnectionStatus = ConnectionStatus.Connected;
         }
 
         private void OnReceiveLocationCache(LocationInfoPacket packet)
