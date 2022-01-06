@@ -16,6 +16,8 @@ using Microsoft.Xna.Framework;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using LogicSet = DS2DEngine.LogicSet;
+using Screen = RogueCastle.Structs.Screen;
 
 namespace RogueCastle
 {
@@ -773,14 +775,14 @@ namespace RogueCastle
                         var item = new List<object>
                         {
                             new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
-                            GetItemType.GiveNetworkItem,
+                            ItemCategory.GiveNetworkItem,
                             new Vector2(-1f, -1f),
                             new Vector2(-1f, -1f),
                             Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
 

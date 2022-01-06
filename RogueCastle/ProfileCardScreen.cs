@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
@@ -227,7 +228,7 @@ namespace RogueCastle
             {
                 var textObj7 = textObj.Clone() as TextObj;
                 textObj7.X = 60f;
-                textObj7.Text = EquipmentAbilityType.ToString(k);
+                textObj7.Text = EquipmentAbility.ToString(k);
                 textObj7.FontSize = 7f;
                 m_runeBackTitleList.Add(textObj7);
                 m_backCard.AddChild(textObj7);
@@ -240,7 +241,7 @@ namespace RogueCastle
 
             var textObj9 = textObj.Clone() as TextObj;
             textObj9.X = 60f;
-            textObj9.Text = EquipmentAbilityType.ToString(20);
+            textObj9.Text = EquipmentAbility.ToString(20);
             textObj9.FontSize = 7f;
             m_runeBackTitleList.Add(textObj9);
             m_backCard.AddChild(textObj9);
@@ -251,7 +252,7 @@ namespace RogueCastle
             m_backCard.AddChild(textObj10);
             var textObj11 = textObj.Clone() as TextObj;
             textObj11.X = 60f;
-            textObj11.Text = EquipmentAbilityType.ToString(21);
+            textObj11.Text = EquipmentAbility.ToString(21);
             textObj11.FontSize = 7f;
             m_runeBackTitleList.Add(textObj11);
             m_backCard.AddChild(textObj11);
@@ -659,7 +660,7 @@ namespace RogueCastle
                 m_equipmentList[j].Y = num2;
                 if (getEquippedArray[j] != -1)
                 {
-                    m_equipmentList[j].Text = EquipmentBaseType.ToString(getEquippedArray[j]) + " " +
+                    m_equipmentList[j].Text = EquipmentBase.ToString(getEquippedArray[j]) + " " +
                                               EquipmentCategoryType.ToString2(j);
                     m_equipmentList[j].Visible = true;
                     num2 += 20;
@@ -719,7 +720,7 @@ namespace RogueCastle
 
                 if (num3 > 0f)
                 {
-                    m_runeBackDescriptionList[k].Text = "(" + EquipmentAbilityType.ShortDescription(k, num3) + ")";
+                    m_runeBackDescriptionList[k].Text = "(" + EquipmentAbility.ShortDescription(k, num3) + ")";
                     m_runeBackTitleList[k].Visible = true;
                     m_runeBackDescriptionList[k].Visible = true;
                     num2 += 20;
@@ -729,7 +730,7 @@ namespace RogueCastle
             if (Game.PlayerStats.HasArchitectFee)
             {
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 2].Text = "(" +
-                    EquipmentAbilityType
+                    EquipmentAbility
                         .ShortDescription(20, 0f) +
                     ")";
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 2].Visible = true;
@@ -740,7 +741,7 @@ namespace RogueCastle
             if (Game.PlayerStats.TimesCastleBeaten > 0)
             {
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 1].Text = "(" +
-                    EquipmentAbilityType
+                    EquipmentAbility
                         .ShortDescription(21,
                             50 *
                             Game.PlayerStats

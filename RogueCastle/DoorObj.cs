@@ -20,14 +20,14 @@ namespace RogueCastle
 {
     public class DoorObj : TerrainObj
     {
-        private readonly DoorType m_doorType = DoorType.Open;
+        private readonly Door m_doorType = Door.Open;
         public bool Attached;
         public string DoorPosition = "NONE";
         public bool IsBossDoor;
         public bool Locked;
         private SpriteObj m_arrowIcon;
 
-        public DoorObj(RoomObj roomRef, int width, int height, DoorType doorType) : base(width, height)
+        public DoorObj(RoomObj roomRef, int width, int height, Door doorType) : base(width, height)
         {
             m_doorType = doorType;
             Room = roomRef;
@@ -40,7 +40,7 @@ namespace RogueCastle
 
         public RoomObj Room { get; set; }
 
-        public DoorType DoorType
+        public Door DoorType
         {
             get { return m_doorType; }
         }

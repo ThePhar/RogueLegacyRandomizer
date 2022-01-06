@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Structs;
 using Tweener;
+using LogicSet = DS2DEngine.LogicSet;
 
 namespace RogueCastle
 {

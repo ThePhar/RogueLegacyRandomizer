@@ -79,7 +79,7 @@ namespace RogueCastle
                                 break;
 
                             case "DoorObj":
-                                gameObj = new DoorObj(roomObj, 0, 0, DoorType.Open);
+                                gameObj = new DoorObj(roomObj, 0, 0, Door.Open);
                                 break;
 
                             case "ChestObj":
@@ -227,33 +227,33 @@ namespace RogueCastle
                         }
 
                         ParseGenericXML(xmlReader, gameObj);
-                        var levelType = LevelType.None;
+                        var levelType = Zone.None;
                         if (xmlReader.MoveToAttribute("LevelType"))
                         {
-                            levelType = (LevelType) int.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
+                            levelType = (Zone) int.Parse(xmlReader.Value, NumberStyles.Any, cultureInfo);
                         }
 
-                        if (levelType == LevelType.Castle)
+                        if (levelType == Zone.Castle)
                         {
                             StoreObj(gameObj, roomObj2);
-                            StoreSwappedObj(gameObj, LevelType.Dungeon, roomObj3);
-                            StoreSwappedObj(gameObj, LevelType.Tower, roomObj5);
-                            StoreSwappedObj(gameObj, LevelType.Garden, roomObj4);
+                            StoreSwappedObj(gameObj, Zone.Dungeon, roomObj3);
+                            StoreSwappedObj(gameObj, Zone.Tower, roomObj5);
+                            StoreSwappedObj(gameObj, Zone.Garden, roomObj4);
                             var spriteObj = gameObj as SpriteObj;
                             if (spriteObj != null && spriteObj.SpriteName == "CastleAssetFrame_Sprite")
                             {
                                 spriteObj.ChangeSprite("FramePicture" + CDGMath.RandomInt(1, 16) + "_Sprite");
                             }
                         }
-                        else if (levelType == LevelType.Dungeon)
+                        else if (levelType == Zone.Dungeon)
                         {
                             StoreObj(gameObj, roomObj3);
                         }
-                        else if (levelType == LevelType.Tower)
+                        else if (levelType == Zone.Tower)
                         {
                             StoreObj(gameObj, roomObj5);
                         }
-                        else if (levelType == LevelType.Garden)
+                        else if (levelType == Zone.Garden)
                         {
                             StoreObj(gameObj, roomObj4);
                         }
@@ -267,15 +267,15 @@ namespace RogueCastle
                         }
 
                         if (LevelENV.RunTestRoom &&
-                            (levelType == LevelENV.TestRoomLevelType || levelType == LevelType.Castle))
+                            (levelType == LevelENV.TestRoomZone || levelType == Zone.Castle))
                         {
-                            if (levelType == LevelENV.TestRoomLevelType)
+                            if (levelType == LevelENV.TestRoomZone)
                             {
                                 StoreObj(gameObj, roomObj);
                             }
-                            else if (levelType == LevelType.Castle)
+                            else if (levelType == Zone.Castle)
                             {
-                                StoreSwappedObj(gameObj, LevelENV.TestRoomLevelType, roomObj);
+                                StoreSwappedObj(gameObj, LevelENV.TestRoomZone, roomObj);
                             }
                         }
 
@@ -294,44 +294,44 @@ namespace RogueCastle
                         {
                             if (roomObj.AddToCastlePool)
                             {
-                                LevelBuilder2.StoreRoom(roomObj2, LevelType.Castle);
-                                LevelBuilder2.StoreSpecialRoom(roomObj2, LevelType.Castle);
+                                LevelBuilder2.StoreRoom(roomObj2, Zone.Castle);
+                                LevelBuilder2.StoreSpecialRoom(roomObj2, Zone.Castle);
                             }
 
                             if (roomObj.AddToDungeonPool)
                             {
-                                LevelBuilder2.StoreRoom(roomObj3, LevelType.Dungeon);
-                                LevelBuilder2.StoreSpecialRoom(roomObj3, LevelType.Dungeon);
+                                LevelBuilder2.StoreRoom(roomObj3, Zone.Dungeon);
+                                LevelBuilder2.StoreSpecialRoom(roomObj3, Zone.Dungeon);
                             }
 
                             if (roomObj.AddToGardenPool)
                             {
-                                LevelBuilder2.StoreRoom(roomObj4, LevelType.Garden);
-                                LevelBuilder2.StoreSpecialRoom(roomObj4, LevelType.Garden);
+                                LevelBuilder2.StoreRoom(roomObj4, Zone.Garden);
+                                LevelBuilder2.StoreSpecialRoom(roomObj4, Zone.Garden);
                             }
 
                             if (roomObj.AddToTowerPool)
                             {
-                                LevelBuilder2.StoreRoom(roomObj5, LevelType.Tower);
-                                LevelBuilder2.StoreSpecialRoom(roomObj5, LevelType.Tower);
+                                LevelBuilder2.StoreRoom(roomObj5, Zone.Tower);
+                                LevelBuilder2.StoreSpecialRoom(roomObj5, Zone.Tower);
                             }
                         }
 
                         if (roomObj.Name.Contains("DEBUG_ROOM"))
                         {
                             roomObj.Name = roomObj.Name.Replace("DEBUG_ROOM", "");
-                            if (LevelENV.TestRoomLevelType != LevelType.Castle)
+                            if (LevelENV.TestRoomZone != Zone.Castle)
                             {
-                                LevelBuilder2.StoreSpecialRoom(roomObj, LevelType.Castle, true);
+                                LevelBuilder2.StoreSpecialRoom(roomObj, Zone.Castle, true);
                             }
 
-                            LevelBuilder2.StoreSpecialRoom(roomObj, LevelENV.TestRoomLevelType, true);
+                            LevelBuilder2.StoreSpecialRoom(roomObj, LevelENV.TestRoomZone, true);
                         }
                     }
 
                     if (roomObj.X < 10000f && (roomObj.Name == "Boss" || roomObj.Name == "ChallengeBoss"))
                     {
-                        LevelBuilder2.StoreSpecialRoom(roomObj, LevelType.Castle);
+                        LevelBuilder2.StoreSpecialRoom(roomObj, Zone.Castle);
                     }
                 }
         }
@@ -359,25 +359,25 @@ namespace RogueCastle
             }
         }
 
-        public static void StoreSwappedObj(GameObj obj, LevelType levelType, RoomObj currentRoom)
+        public static void StoreSwappedObj(GameObj obj, Zone zone, RoomObj currentRoom)
         {
             string[] array;
-            switch (levelType)
+            switch (zone)
             {
-                case LevelType.Garden:
+                case Zone.Garden:
                     array = LevelENV.GardenAssetSwapList;
                     break;
 
-                case LevelType.Dungeon:
+                case Zone.Dungeon:
                     array = LevelENV.DungeonAssetSwapList;
                     break;
 
-                case LevelType.Tower:
+                case Zone.Tower:
                     array = LevelENV.TowerAssetSwapList;
                     break;
 
                 default:
-                    throw new Exception("Cannot find asset swaplist for leveltype " + levelType);
+                    throw new Exception("Cannot find asset swaplist for leveltype " + zone);
             }
 
             var breakableObj = obj as BreakableObj;

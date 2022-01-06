@@ -20,10 +20,11 @@ using RogueCastle.GameObjects;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using Screen = RogueCastle.Structs.Screen;
 
 namespace RogueCastle
 {
-    public class GameOverScreen : Screen
+    public class GameOverScreen : DS2DEngine.Screen
     {
         private int m_bagsCollected;
         private int m_coinsCollected;
@@ -389,7 +390,7 @@ namespace RogueCastle
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
                     Game.PlayerStats.OpenedChests = chests;
                     Game.PlayerStats.ReceivedItems = received;
-                    (ScreenManager as RCScreenManager).DisplayScreen(ScreenType.Lineage, true);
+                    (ScreenManager as RCScreenManager).DisplayScreen(Screen.Lineage, true);
                     m_lockControls = true;
                 }
             }

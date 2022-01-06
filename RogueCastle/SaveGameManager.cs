@@ -1013,7 +1013,7 @@ namespace RogueCastle
                                 current.Name != "Compass" && current.Name != "ChallengeBoss")
                             {
                                 binaryWriter.Write(current.PoolIndex);
-                                binaryWriter.Write((byte) current.LevelType);
+                                binaryWriter.Write((byte) current.Zone);
                                 binaryWriter.Write((int) current.X);
                                 binaryWriter.Write((int) current.Y);
                                 binaryWriter.Write(current.TextureColor.R);
@@ -1021,7 +1021,7 @@ namespace RogueCastle
                                 binaryWriter.Write(current.TextureColor.B);
                                 if (LevelENV.ShowSaveLoadDebugText)
                                 {
-                                    Console.Write(string.Concat("I:", current.PoolIndex, " T:", (int) current.LevelType,
+                                    Console.Write(string.Concat("I:", current.PoolIndex, " T:", (int) current.Zone,
                                         ", "));
                                 }
 

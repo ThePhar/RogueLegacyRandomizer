@@ -63,98 +63,98 @@ namespace RogueCastle
             // Enemy Lists
             CastleEnemyList = new[]
             {
-                EnemyType.Skeleton,
-                EnemyType.Knight,
-                EnemyType.FireWizard,
-                EnemyType.IceWizard,
-                EnemyType.Eyeball,
-                EnemyType.BouncySpike,
-                EnemyType.SwordKnight,
-                EnemyType.Zombie,
-                EnemyType.Fireball,
-                EnemyType.Portrait,
-                EnemyType.Starburst,
-                EnemyType.HomingTurret
+                Enemy.Skeleton,
+                Enemy.Knight,
+                Enemy.FireWizard,
+                Enemy.IceWizard,
+                Enemy.Eyeball,
+                Enemy.BouncySpike,
+                Enemy.SwordKnight,
+                Enemy.Zombie,
+                Enemy.Fireball,
+                Enemy.Portrait,
+                Enemy.Starburst,
+                Enemy.HomingTurret
             };
             GardenEnemyList = new[]
             {
-                EnemyType.Skeleton,
-                EnemyType.Blob,
-                EnemyType.BallAndChain,
-                EnemyType.EarthWizard,
-                EnemyType.FireWizard,
-                EnemyType.Eyeball,
-                EnemyType.Fairy,
-                EnemyType.ShieldKnight,
-                EnemyType.BouncySpike,
-                EnemyType.Wolf,
-                EnemyType.Plant,
-                EnemyType.SkeletonArcher,
-                EnemyType.Starburst,
-                EnemyType.Horse
+                Enemy.Skeleton,
+                Enemy.Blob,
+                Enemy.BallAndChain,
+                Enemy.EarthWizard,
+                Enemy.FireWizard,
+                Enemy.Eyeball,
+                Enemy.Fairy,
+                Enemy.ShieldKnight,
+                Enemy.BouncySpike,
+                Enemy.Wolf,
+                Enemy.Plant,
+                Enemy.SkeletonArcher,
+                Enemy.Starburst,
+                Enemy.Horse
             };
             TowerEnemyList = new[]
             {
-                EnemyType.Knight,
-                EnemyType.BallAndChain,
-                EnemyType.IceWizard,
-                EnemyType.Eyeball,
-                EnemyType.Fairy,
-                EnemyType.ShieldKnight,
-                EnemyType.BouncySpike,
-                EnemyType.Wolf,
-                EnemyType.Ninja,
-                EnemyType.Plant,
-                EnemyType.Fireball,
-                EnemyType.SkeletonArcher,
-                EnemyType.Portrait,
-                EnemyType.Starburst,
-                EnemyType.HomingTurret,
-                EnemyType.Mimic
+                Enemy.Knight,
+                Enemy.BallAndChain,
+                Enemy.IceWizard,
+                Enemy.Eyeball,
+                Enemy.Fairy,
+                Enemy.ShieldKnight,
+                Enemy.BouncySpike,
+                Enemy.Wolf,
+                Enemy.Ninja,
+                Enemy.Plant,
+                Enemy.Fireball,
+                Enemy.SkeletonArcher,
+                Enemy.Portrait,
+                Enemy.Starburst,
+                Enemy.HomingTurret,
+                Enemy.Mimic
             };
             DungeonEnemyList = new[]
             {
-                EnemyType.Skeleton,
-                EnemyType.Knight,
-                EnemyType.Blob,
-                EnemyType.BallAndChain,
-                EnemyType.EarthWizard,
-                EnemyType.FireWizard,
-                EnemyType.IceWizard,
-                EnemyType.Eyeball,
-                EnemyType.Fairy,
-                EnemyType.BouncySpike,
-                EnemyType.SwordKnight,
-                EnemyType.Zombie,
-                EnemyType.Ninja,
-                EnemyType.Plant,
-                EnemyType.Fireball,
-                EnemyType.Starburst,
-                EnemyType.HomingTurret,
-                EnemyType.Horse
+                Enemy.Skeleton,
+                Enemy.Knight,
+                Enemy.Blob,
+                Enemy.BallAndChain,
+                Enemy.EarthWizard,
+                Enemy.FireWizard,
+                Enemy.IceWizard,
+                Enemy.Eyeball,
+                Enemy.Fairy,
+                Enemy.BouncySpike,
+                Enemy.SwordKnight,
+                Enemy.Zombie,
+                Enemy.Ninja,
+                Enemy.Plant,
+                Enemy.Fireball,
+                Enemy.Starburst,
+                Enemy.HomingTurret,
+                Enemy.Horse
             };
             DementiaFlightList = new[]
             {
-                EnemyType.FireWizard,
-                EnemyType.IceWizard,
-                EnemyType.Eyeball,
-                EnemyType.Fairy,
-                EnemyType.BouncySpike,
-                EnemyType.Fireball,
-                EnemyType.Starburst
+                Enemy.FireWizard,
+                Enemy.IceWizard,
+                Enemy.Eyeball,
+                Enemy.Fairy,
+                Enemy.BouncySpike,
+                Enemy.Fireball,
+                Enemy.Starburst
             };
             DementiaGroundList = new[]
             {
-                EnemyType.Skeleton,
-                EnemyType.Knight,
-                EnemyType.Blob,
-                EnemyType.BallAndChain,
-                EnemyType.SwordKnight,
-                EnemyType.Zombie,
-                EnemyType.Ninja,
-                EnemyType.Plant,
-                EnemyType.HomingTurret,
-                EnemyType.Horse
+                Enemy.Skeleton,
+                Enemy.Knight,
+                Enemy.Blob,
+                Enemy.BallAndChain,
+                Enemy.SwordKnight,
+                Enemy.Zombie,
+                Enemy.Ninja,
+                Enemy.Plant,
+                Enemy.HomingTurret,
+                Enemy.Horse
             };
 
             // Enemy Difficulty Lists
@@ -282,7 +282,7 @@ namespace RogueCastle
             };
 
             // Default Environment Variables
-            TestRoomLevelType = LevelType.Castle;
+            TestRoomZone = Zone.Castle;
             ShowEnemyRadii = false;
             EnablePlayerDebug = false;
             UnlockAllAbilities = false;
@@ -307,7 +307,7 @@ namespace RogueCastle
             RunConsole = true;
         }
 
-        public static LevelType TestRoomLevelType { get; set; }
+        public static Zone TestRoomZone { get; set; }
         public static byte[] DementiaFlightList { get; set; }
         public static byte[] DementiaGroundList { get; set; }
         public static byte[] CastleEnemyList { get; set; }

@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Structs;
 using Tweener;
+using LogicSet = DS2DEngine.LogicSet;
 
 namespace RogueCastle
 {
@@ -1084,8 +1085,8 @@ namespace RogueCastle
                     (int)
                     Math.Round(
                         (m_target.BaseHealth + m_target.GetEquipmentHealth() + Game.PlayerStats.BonusHealth * 5 +
-                         SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
-                         SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount) * 1f,
+                         SkillSystem.GetSkill(Skill.HealthUp).ModifierAmount +
+                         SkillSystem.GetSkill(Skill.HealthUpFinal).ModifierAmount) * 1f,
                         MidpointRounding.AwayFromZero);
                 if (m_target.MaxHealth + num5 < num7)
                 {

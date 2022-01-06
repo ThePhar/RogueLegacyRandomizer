@@ -15,6 +15,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Structs;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {

@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Audio;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
@@ -946,7 +947,7 @@ namespace RogueCastle
                             var expr_4FE = m_addPropertiesText;
                             var text = expr_4FE.Text;
                             expr_4FE.Text = string.Concat(text, "+", (vector.Y * 100f).ToString(), "% ",
-                                EquipmentSecondaryDataType.ToString((int) vector.X), "\n");
+                                EquipmentBonus.ToString((int) vector.X), "\n");
                         }
                         else
                         {
@@ -960,7 +961,7 @@ namespace RogueCastle
                             var y = vector.Y;
                             arg_5A0_0[arg_5A0_1] = y.ToString();
                             array2[3] = " ";
-                            array2[4] = EquipmentSecondaryDataType.ToString((int) vector.X);
+                            array2[4] = EquipmentBonus.ToString((int) vector.X);
                             array2[5] = "\n";
                             expr_56E.Text = string.Concat(array2);
                         }
@@ -977,7 +978,7 @@ namespace RogueCastle
                 m_addPropertiesText.Text = "None";
             }
 
-            m_equipmentTitleText.Text = EquipmentBaseType.ToString(m_currentEquipmentIndex) + " " +
+            m_equipmentTitleText.Text = EquipmentBase.ToString(m_currentEquipmentIndex) + " " +
                                         EquipmentCategoryType.ToString(num);
         }
 

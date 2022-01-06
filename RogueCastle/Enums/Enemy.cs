@@ -1,0 +1,40 @@
+namespace RogueCastle.Enums
+{
+    public enum Enemy
+    {
+        None,
+        BallAndChain,
+        Blob,
+        BouncySpike,
+        Eagle,
+        EarthWizard,
+        Eyeball,
+        Fairy,
+        Fireball,
+        FireWizard,
+        Horse,
+        IceWizard,
+        Knight,
+        Ninja,
+        ShieldKnight,
+        Skeleton,
+        SwordKnight,
+        Turret,
+        Wall,
+        Wolf,
+        Zombie,
+        SpikeTrap,
+        Plant,
+        Energon,
+        Spark,
+        SkeletonArcher,
+        Chicken,
+        Platform,
+        HomingTurret,
+        LastBoss,
+        Dummy,
+        Starburst,
+        Portrait,
+        Mimic
+    }
+}

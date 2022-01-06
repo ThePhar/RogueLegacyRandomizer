@@ -20,10 +20,11 @@ using RogueCastle.Options;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using Screen = RogueCastle.Structs.Screen;
 
 namespace RogueCastle.Screens
 {
-    public class ArchipelagoScreen : Screen
+    public class ArchipelagoScreen : DS2DEngine.Screen
     {
         private List<ArchipelagoOptionsObj> m_archipelagoArray;
         private SpriteObj m_archipelagoBar;
@@ -147,7 +148,7 @@ namespace RogueCastle.Screens
                 Console.WriteLine(ex);
                 DialogueManager.AddText(errorUuid, new[] { "Invalid Port" }, new[] { ex.Message });
                 screenManager.DialogueScreen.SetDialogue(errorUuid);
-                screenManager.DisplayScreen(ScreenType.Dialogue, true);
+                screenManager.DisplayScreen(Screen.Dialogue, true);
             }
             catch (Exception ex)
             {
@@ -158,7 +159,7 @@ namespace RogueCastle.Screens
                 Console.WriteLine(ex);
                 DialogueManager.AddText(errorUuid, new[] { "An Exception Occurred" }, new[] { ex.Message });
                 screenManager.DialogueScreen.SetDialogue(errorUuid);
-                screenManager.DisplayScreen(ScreenType.Dialogue, true);
+                screenManager.DisplayScreen(Screen.Dialogue, true);
             }
             finally
             {
@@ -272,7 +273,7 @@ namespace RogueCastle.Screens
                     if (!m_selectedOption.IsActive)
                     {
                         var selectedOptionIndex = m_selectedOptionIndex;
-                        if (InputType.PressedAny(InputType.PlayerUp1, InputType.PlayerUp2))
+                        if (Button.PressedAny(Button.PlayerUp1, Button.PlayerUp2))
                         {
                             if (m_selectedOptionIndex > 0)
                             {
@@ -281,7 +282,7 @@ namespace RogueCastle.Screens
 
                             m_selectedOptionIndex--;
                         }
-                        else if (InputType.PressedAny(InputType.PlayerDown1, InputType.PlayerDown2))
+                        else if (Button.PressedAny(Button.PlayerDown1, Button.PlayerDown2))
                         {
                             if (m_selectedOptionIndex < m_archipelagoArray.Count - 1)
                             {
@@ -313,14 +314,14 @@ namespace RogueCastle.Screens
                         }
                     }
 
-                    if (InputType.PressedAny(InputType.MenuConfirm1, InputType.MenuConfirm2))
+                    if (Button.PressedAny(Button.MenuConfirm1, Button.MenuConfirm2))
                     {
                         SoundManager.PlaySound("Option_Menu_Select");
                         LockControls = true;
                         m_selectedOption.IsActive = true;
                     }
 
-                    if (InputType.PressedAny(InputType.MenuCancel1, InputType.MenuCancel1, InputType.MenuOptions))
+                    if (Button.PressedAny(Button.MenuCancel1, Button.MenuCancel1, Button.MenuOptions))
                     {
                         ExitTransition();
                     }

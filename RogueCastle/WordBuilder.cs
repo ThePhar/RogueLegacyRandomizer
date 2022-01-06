@@ -31,20 +31,20 @@ namespace RogueCastle
             "Dextrocardia - HP/MP pools are swapped\n"
         };
 
-        public static string BuildDungeonName(LevelType levelType)
+        public static string BuildDungeonName(Zone zone)
         {
-            switch (levelType)
+            switch (zone)
             {
-                case LevelType.Castle:
+                case Zone.Castle:
                     return "Castle Hamson";
 
-                case LevelType.Garden:
+                case Zone.Garden:
                     return "Forest Abkhazia";
 
-                case LevelType.Dungeon:
+                case Zone.Dungeon:
                     return "The Land of Darkness";
 
-                case LevelType.Tower:
+                case Zone.Tower:
                     return "The Maya";
 
                 default:

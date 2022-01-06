@@ -19,6 +19,7 @@ using Randomchaos2DGodRays;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
@@ -201,7 +202,7 @@ namespace RogueCastle
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + InputType.MenuProfileCard + "]"
+                Text = "[Input:" + Button.MenuProfileCard + "]"
             };
             m_profileCardKey.Position =
                 new Vector2(m_profileCard.X, m_profileCard.Bounds.Top - m_profileCardKey.Height - 10);
@@ -211,7 +212,7 @@ namespace RogueCastle
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + InputType.MenuOptions + "]",
+                Text = "[Input:" + Button.MenuOptions + "]",
                 ForceDraw = true
             };
             m_optionsKey.Position = new Vector2(m_optionsIcon.X, m_optionsIcon.Bounds.Top - m_optionsKey.Height - 10);
@@ -221,7 +222,7 @@ namespace RogueCastle
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + InputType.MenuCredits + "]",
+                Text = "[Input:" + Button.MenuCredits + "]",
                 ForceDraw = true
             };
             m_creditsKey.Position = new Vector2(m_creditsIcon.X, m_creditsIcon.Bounds.Top - m_creditsKey.Height - 10);
@@ -257,7 +258,7 @@ namespace RogueCastle
             Tween.To(m_dlcIcon, 2f, Linear.EaseNone, "Opacity", "1");
             Tween.By(m_dlcIcon, 3f, Quad.EaseInOut, "Y", "50");
             Camera.Position = new Vector2(660f, 360f);
-            m_pressStartText.Text = "[Input:" + InputType.MenuConfirm1 + "]";
+            m_pressStartText.Text = "[Input:" + Button.MenuConfirm1 + "]";
 
             // Reload the defaults.
             Game.ProfileName = "DEFAULT";
@@ -330,8 +331,8 @@ namespace RogueCastle
             if (m_optionsEntered && Game.ScreenManager.CurrentScreen == this)
             {
                 m_optionsEntered = false;
-                m_optionsKey.Text = "[Input:" + InputType.MenuOptions + "]";
-                m_creditsKey.Text = "[Input:" + InputType.MenuCredits + "]";
+                m_optionsKey.Text = "[Input:" + Button.MenuOptions + "]";
+                m_creditsKey.Text = "[Input:" + Button.MenuCredits + "]";
             }
 
             base.Update(gameTime);
@@ -339,21 +340,21 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            if (Game.GlobalInput.JustPressed(InputType.MenuConfirm1) ||
-                Game.GlobalInput.JustPressed(InputType.MenuConfirm2))
+            if (Game.GlobalInput.JustPressed(Button.MenuConfirm1) ||
+                Game.GlobalInput.JustPressed(Button.MenuConfirm2))
             {
                 var list = new List<object> { this };
                 (ScreenManager as RCScreenManager).DisplayScreen(80, false, list);
             }
 
-            if (Game.GlobalInput.JustPressed(InputType.MenuOptions))
+            if (Game.GlobalInput.JustPressed(Button.MenuOptions))
             {
                 m_optionsEntered = true;
                 var list = new List<object> { true };
                 (ScreenManager as RCScreenManager).DisplayScreen(4, false, list);
             }
 
-            if (Game.GlobalInput.JustPressed(InputType.MenuCredits))
+            if (Game.GlobalInput.JustPressed(Button.MenuCredits))
             {
                 (ScreenManager as RCScreenManager).DisplayScreen(18, false);
             }

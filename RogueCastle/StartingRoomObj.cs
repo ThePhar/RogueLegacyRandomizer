@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using LogicSet = DS2DEngine.LogicSet;
 
 namespace RogueCastle
 {
@@ -205,17 +206,17 @@ namespace RogueCastle
 
         private bool SmithyAvailable
         {
-            get { return SkillSystem.GetSkill(SkillType.Smithy).ModifierAmount > 0f; }
+            get { return SkillSystem.GetSkill(Skill.Smithy).ModifierAmount > 0f; }
         }
 
         private bool EnchantressAvailable
         {
-            get { return SkillSystem.GetSkill(SkillType.Enchanter).ModifierAmount > 0f; }
+            get { return SkillSystem.GetSkill(Skill.Enchanter).ModifierAmount > 0f; }
         }
 
         private bool ArchitectAvailable
         {
-            get { return SkillSystem.GetSkill(SkillType.Architect).ModifierAmount > 0f; }
+            get { return SkillSystem.GetSkill(Skill.Architect).ModifierAmount > 0f; }
         }
 
         private bool TollCollectorAvailable
@@ -709,7 +710,7 @@ namespace RogueCastle
                     }
                     else
                     {
-                        var num = SkillSystem.GetSkill(SkillType.PricesDown).ModifierAmount * 100f;
+                        var num = SkillSystem.GetSkill(Skill.PricesDown).ModifierAmount * 100f;
                         rCScreenManager2.DialogueScreen.SetDialogue("Meet Toll Collector Skip" +
                                                                     (int) Math.Round(num,
                                                                         MidpointRounding.AwayFromZero));
@@ -820,7 +821,7 @@ namespace RogueCastle
 
             if (chargeFee)
             {
-                var num = Game.PlayerStats.Gold * (1f - SkillSystem.GetSkill(SkillType.PricesDown).ModifierAmount);
+                var num = Game.PlayerStats.Gold * (1f - SkillSystem.GetSkill(Skill.PricesDown).ModifierAmount);
                 Game.PlayerStats.Gold -= (int) num;
                 if (num > 0f)
                 {

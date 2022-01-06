@@ -25,7 +25,7 @@ namespace RogueCastle
         public bool BorderLeft;
         public bool BorderRight;
         public bool BorderTop;
-        public LevelType LevelType = LevelType.Castle;
+        public Zone Zone = Zone.Castle;
 
         public BorderObj()
         {
@@ -277,7 +277,7 @@ namespace RogueCastle
         {
             base.FillCloneInstance(obj);
             var borderObj = obj as BorderObj;
-            borderObj.LevelType = LevelType;
+            borderObj.Zone = Zone;
             borderObj.BorderTop = BorderTop;
             borderObj.BorderBottom = BorderBottom;
             borderObj.BorderLeft = BorderLeft;

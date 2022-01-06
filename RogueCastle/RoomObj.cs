@@ -45,7 +45,7 @@ namespace RogueCastle
             EnemyList = new List<EnemyObj>();
             BorderList = new List<BorderObj>();
             TempEnemyList = new List<EnemyObj>();
-            LevelType = LevelType.None;
+            Zone = Zone.None;
             m_indexText = new TextObj(Game.PixelArtFontBold);
             m_indexText.FontSize = 150f;
             m_indexText.Align = Types.TextAlign.Centre;
@@ -68,7 +68,7 @@ namespace RogueCastle
         public bool AddToTowerPool { get; set; }
         public bool AddToDungeonPool { get; set; }
         public bool IsDLCMap { get; set; }
-        public LevelType LevelType { get; set; }
+        public Zone Zone { get; set; }
         public int Level { get; set; }
         public List<DoorObj> DoorList { get; internal set; }
         public List<EnemyObj> EnemyList { get; internal set; }
@@ -817,7 +817,7 @@ namespace RogueCastle
             roomObj.LinkedRoom = LinkedRoom;
             roomObj.IsReversed = IsReversed;
             roomObj.DebugRoomPosition = DebugRoomPosition;
-            roomObj.LevelType = LevelType;
+            roomObj.Zone = Zone;
             roomObj.Level = Level;
             roomObj.IsDLCMap = IsDLCMap;
         }
@@ -950,7 +950,7 @@ namespace RogueCastle
             IsReversed = room.IsReversed;
             DebugRoomPosition = room.DebugRoomPosition;
             Tag = room.Tag;
-            LevelType = room.LevelType;
+            Zone = room.Zone;
             IsDLCMap = room.IsDLCMap;
             TextureColor = room.TextureColor;
         }

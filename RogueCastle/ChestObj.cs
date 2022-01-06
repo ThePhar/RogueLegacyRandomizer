@@ -14,10 +14,10 @@ using System.Collections.Generic;
 using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Enums;
 using RogueCastle.Structs;
 using Tweener;
 using Tweener.Ease;
+using Screen = RogueCastle.Structs.Screen;
 
 namespace RogueCastle
 {
@@ -335,25 +335,25 @@ namespace RogueCastle
             {
                 var total = 0;
 
-                switch (room.LevelType)
+                switch (room.Zone)
                 {
-                    case LevelType.None:
-                    case LevelType.Castle:
+                    case Zone.None:
+                    case Zone.Castle:
                         total = ++Game.PlayerStats.OpenedChests.CastleFairyChests;
                         location = string.Format("Castle Hamson - Fairy Chest {0}", total);
                         break;
 
-                    case LevelType.Garden:
+                    case Zone.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenFairyChests;
                         location = string.Format("Forest Abkhazia - Fairy Chest {0}", total);
                         break;
 
-                    case LevelType.Dungeon:
+                    case Zone.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonFairyChests;
                         location = string.Format("The Land of Darkness - Fairy Chest {0}", total);
                         break;
 
-                    case LevelType.Tower:
+                    case Zone.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerFairyChests;
                         location = string.Format("The Maya - Fairy Chest {0}", total);
                         break;
@@ -372,25 +372,25 @@ namespace RogueCastle
             {
                 var total = 0;
 
-                switch (room.LevelType)
+                switch (room.Zone)
                 {
-                    case LevelType.None:
-                    case LevelType.Castle:
+                    case Zone.None:
+                    case Zone.Castle:
                         total = ++Game.PlayerStats.OpenedChests.CastleChests;
                         location = string.Format("Castle Hamson - Chest {0}", total);
                         break;
 
-                    case LevelType.Garden:
+                    case Zone.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenChests;
                         location = string.Format("Forest Abkhazia - Chest {0}", total);
                         break;
 
-                    case LevelType.Dungeon:
+                    case Zone.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonChests;
                         location = string.Format("The Land of Darkness - Chest {0}", total);
                         break;
 
-                    case LevelType.Tower:
+                    case Zone.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerChests;
                         location = string.Format("The Maya - Chest {0}", total);
                         break;
@@ -414,7 +414,7 @@ namespace RogueCastle
             var networkItem = new List<object>
             {
                 new Vector2(X, Y - Height / 2f),
-                GetItemType.GiveNetworkItem,
+                ItemCategory.GiveNetworkItem,
                 new Vector2(-1f, -1f),
                 new Vector2(-1f, -1f),
                 name,
@@ -426,7 +426,7 @@ namespace RogueCastle
             // If we're sending someone else something, let's show what we're sending.
             if (arch.LocationCache[code].Player != arch.Data.Slot)
             {
-                Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, networkItem);
+                Game.ScreenManager.DisplayScreen(Screen.GetItem, true, networkItem);
                 player.RunGetItemAnimation();
             }
         }

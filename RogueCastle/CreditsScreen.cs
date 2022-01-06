@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.GameObjects;
 using RogueCastle.Structs;
 using Tweener;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {

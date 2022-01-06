@@ -251,7 +251,7 @@ namespace RogueCastle
                 var b = getEquippedRuneArray[j];
                 if (b != -1)
                 {
-                    m_abilitiesSpriteArray[num].ChangeSprite(EquipmentAbilityType.Icon(b));
+                    m_abilitiesSpriteArray[num].ChangeSprite(EquipmentAbility.Icon(b));
                     num++;
                 }
             }
@@ -282,7 +282,7 @@ namespace RogueCastle
                 m_spellCost.Text =
                     (int)
                     (SpellEV.GetManaCost(Game.PlayerStats.Spell) *
-                     (1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount)) + " mp";
+                     (1f - SkillSystem.GetSkill(Skill.ManaCostDown).ModifierAmount)) + " mp";
                 m_spellCost.Visible = true;
             }
         }

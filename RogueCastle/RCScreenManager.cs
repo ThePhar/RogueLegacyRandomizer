@@ -81,7 +81,7 @@ namespace RogueCastle
             var proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
             if (proceduralLevelScreen != null && !(proceduralLevelScreen.CurrentRoom is EndingRoomObj))
             {
-                DisplayScreen(ScreenType.Pause, true);
+                DisplayScreen(Structs.Screen.Pause, true);
             }
         }
 
@@ -208,22 +208,22 @@ namespace RogueCastle
 
             switch (screenType)
             {
-                case ScreenType.CDGSplash:
-                case ScreenType.Title:
-                case ScreenType.Lineage:
-                case ScreenType.StartingRoom:
-                case ScreenType.TitleWhite:
-                case ScreenType.DemoStart:
-                case ScreenType.DemoEnd:
+                case Structs.Screen.CDGSplash:
+                case Structs.Screen.Title:
+                case Structs.Screen.Lineage:
+                case Structs.Screen.StartingRoom:
+                case Structs.Screen.TitleWhite:
+                case Structs.Screen.DemoStart:
+                case Structs.Screen.DemoEnd:
                     LoadScreen((byte) screenType, true);
                     break;
 
-                case ScreenType.Options:
+                case Structs.Screen.Options:
                     m_optionsScreen.PassInData(objList);
                     AddScreen(m_optionsScreen, null);
                     break;
 
-                case ScreenType.Level:
+                case Structs.Screen.Level:
                     if (RogueCastle.Game.PlayerStats.LockCastle || !(CurrentScreen is ProceduralLevelScreen))
                     {
                         LoadScreen((byte) screenType, true);
@@ -235,91 +235,91 @@ namespace RogueCastle
 
                     break;
 
-                case ScreenType.Skill:
+                case Structs.Screen.Skill:
                     AddScreen(SkillScreen, null);
                     break;
 
-                case ScreenType.GameOver:
+                case Structs.Screen.GameOver:
                     m_gameOverScreen.PassInData(objList);
                     AddScreen(m_gameOverScreen, null);
                     break;
 
-                case ScreenType.Blacksmith:
+                case Structs.Screen.Blacksmith:
                     AddScreen(m_blacksmithScreen, null);
                     m_blacksmithScreen.Player = Player;
                     break;
 
-                case ScreenType.Enchantress:
+                case Structs.Screen.Enchantress:
                     AddScreen(m_enchantressScreen, null);
                     m_enchantressScreen.Player = Player;
                     break;
 
-                case ScreenType.GetItem:
+                case Structs.Screen.GetItem:
                     m_getItemScreen.PassInData(objList);
                     AddScreen(m_getItemScreen, null);
                     break;
 
-                case ScreenType.Dialogue:
+                case Structs.Screen.Dialogue:
                     AddScreen(DialogueScreen, null);
                     break;
 
-                case ScreenType.Map:
+                case Structs.Screen.Map:
                     m_mapScreen.SetPlayer(Player);
                     AddScreen(m_mapScreen, null);
                     break;
 
-                case ScreenType.Pause:
+                case Structs.Screen.Pause:
                     GetLevelScreen().CurrentRoom.DarkenRoom();
                     AddScreen(m_pauseScreen, null);
                     break;
 
-                case ScreenType.ProfileCard:
+                case Structs.Screen.ProfileCard:
                     AddScreen(m_profileCardScreen, null);
                     break;
 
-                case ScreenType.Credits:
-                    LoadScreen(ScreenType.Credits, true);
+                case Structs.Screen.Credits:
+                    LoadScreen(Structs.Screen.Credits, true);
                     break;
 
-                case ScreenType.SkillUnlock:
+                case Structs.Screen.SkillUnlock:
                     m_skillUnlockScreen.PassInData(objList);
                     AddScreen(m_skillUnlockScreen, null);
                     break;
 
-                case ScreenType.DiaryEntry:
+                case Structs.Screen.DiaryEntry:
                     AddScreen(m_diaryEntryScreen, null);
                     break;
 
-                case ScreenType.DeathDefy:
+                case Structs.Screen.DeathDefy:
                     AddScreen(m_deathDefyScreen, null);
                     break;
 
-                case ScreenType.Text:
+                case Structs.Screen.Text:
                     m_textScreen.PassInData(objList);
                     AddScreen(m_textScreen, null);
                     break;
 
-                case ScreenType.TutorialRoom:
-                    LoadScreen(ScreenType.TutorialRoom, true);
+                case Structs.Screen.TutorialRoom:
+                    LoadScreen(Structs.Screen.TutorialRoom, true);
                     break;
 
-                case ScreenType.Ending:
+                case Structs.Screen.Ending:
                     GetLevelScreen().CameraLockedToPlayer = false;
                     GetLevelScreen().DisableRoomTransitioning = true;
                     Player.Position = new Vector2(100f, 100f);
-                    LoadScreen(ScreenType.Ending, true);
+                    LoadScreen(Structs.Screen.Ending, true);
                     break;
 
-                case ScreenType.DiaryFlashback:
+                case Structs.Screen.DiaryFlashback:
                     AddScreen(m_flashbackScreen, null);
                     break;
 
-                case ScreenType.GameOverBoss:
+                case Structs.Screen.GameOverBoss:
                     m_gameOverBossScreen.PassInData(objList);
                     AddScreen(m_gameOverBossScreen, null);
                     break;
 
-                case ScreenType.Archipelago:
+                case Structs.Screen.Archipelago:
                     m_archipelagoScreen.PassInData(objList);
                     AddScreen(m_archipelagoScreen, null);
                     break;

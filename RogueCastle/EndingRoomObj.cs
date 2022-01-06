@@ -397,8 +397,8 @@ namespace RogueCastle
 
         public void ChangeLevelType()
         {
-            LevelType = LevelType.Dungeon;
-            Player.AttachedLevel.UpdateLevel(LevelType);
+            Zone = Zone.Dungeon;
+            Player.AttachedLevel.UpdateLevel(Zone);
         }
 
         public override void Update(GameTime gameTime)

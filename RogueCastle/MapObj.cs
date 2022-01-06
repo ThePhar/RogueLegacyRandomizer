@@ -359,10 +359,10 @@ namespace RogueCastle
                 }
         }
 
-        public void AddLinkerRoom(LevelType levelType, List<RoomObj> roomList)
+        public void AddLinkerRoom(Zone zone, List<RoomObj> roomList)
         {
             foreach (var current in roomList)
-                if (current.Name == "Linker" && current.LevelType == levelType)
+                if (current.Name == "Linker" && current.Zone == zone)
                 {
                     AddRoom(current);
                 }

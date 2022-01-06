@@ -18,7 +18,7 @@ namespace RogueCastle
     {
         public Color Color;
         public Color MapColor;
-        public LevelType LevelType;
+        public Zone Zone;
         public Vector2 BonusRooms;
         public Vector2 EnemyLevel;
         public Vector2 SecretRooms;
