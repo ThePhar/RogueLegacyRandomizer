@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - ProceduralLevelScreen.cs
 // Last Modified 2021-12-27
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -712,7 +712,7 @@ namespace RogueCastle
             foreach (var current2 in current.GameObjList)
             {
                 var chestObj = current2 as ChestObj;
-                if (chestObj != null && chestObj.ChestType != 4)
+                if (chestObj != null && chestObj.ChestType != Chest.Fairy)
                 {
                     chestObj.Level =
                         (int) (current.Level / (4f + Game.PlayerStats.GetNumberOfEquippedRunes(9) * 0.75f));
@@ -733,17 +733,17 @@ namespace RogueCastle
                             {
                                 if (i == 0)
                                 {
-                                    chestObj.ChestType = 1;
+                                    chestObj.ChestType = Chest.Brown;
                                     break;
                                 }
 
                                 if (i == 1)
                                 {
-                                    chestObj.ChestType = 2;
+                                    chestObj.ChestType = Chest.Silver;
                                     break;
                                 }
 
-                                chestObj.ChestType = 3;
+                                chestObj.ChestType = Chest.Gold;
                                 break;
                             }
 
@@ -753,7 +753,7 @@ namespace RogueCastle
 
                     ChestList.Add(chestObj);
                 }
-                else if (chestObj != null && chestObj.ChestType == 4)
+                else if (chestObj != null && chestObj.ChestType == Chest.Fairy)
                 {
                     var fairyChestObj = chestObj as FairyChestObj;
                     if (fairyChestObj != null)

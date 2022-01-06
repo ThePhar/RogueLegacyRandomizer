@@ -294,7 +294,7 @@
     <Compile Include="RogueCastle\TextManager.cs" />
     <Compile Include="RogueCastle\TextScreen.cs" />
     <Compile Include="RogueCastle\ThroneRoomObj.cs" />
-    <Compile Include="RogueCastle\TitleScreen.cs" />
+    <Compile Include="RogueCastle\Screens\TitleScreen.cs" />
     <Compile Include="RogueCastle\ToggleDirectInputOptionsObj.cs" />
     <Compile Include="RogueCastle\TraitState.cs" />
     <Compile Include="RogueCastle\TutorialRoomObj.cs" />

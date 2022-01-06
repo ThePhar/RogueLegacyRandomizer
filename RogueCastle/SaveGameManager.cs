@@ -1162,7 +1162,7 @@ namespace RogueCastle
                                     var chestObj = current3 as ChestObj;
                                     if (chestObj != null)
                                     {
-                                        list5.Add(chestObj.ChestType);
+                                        list5.Add((byte) chestObj.ChestType);
                                         if (chestObj.IsOpen)
                                         {
                                             list4.Add(true);
@@ -1922,7 +1922,7 @@ namespace RogueCastle
                                     chestObj.IsProcedural = false;
                                     var chestType = list4[num9];
                                     num9++;
-                                    chestObj.ChestType = chestType;
+                                    chestObj.ChestType = (Chest) chestType;
                                     var flag4 = list5[num10];
                                     num10++;
                                     if (flag4)

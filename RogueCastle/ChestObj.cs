@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -13,13 +14,14 @@ namespace RogueCastle
 {
     public class ChestObj : PhysicsObj
     {
-        private readonly float GoldIncreasePerLevel = 1.425f;
-        private readonly Vector2 BronzeChestGoldRange = new Vector2(9f, 14f);
-        private readonly Vector2 GoldChestGoldRange = new Vector2(47f, 57f);
         public int Level;
-        private SpriteObj m_arrowIcon;
-        private byte m_chestType;
-        private readonly Vector2 SilverChestGoldRange = new Vector2(20f, 28f);
+
+        private readonly float _goldIncreasePerLevel = 1.425f;
+        private readonly Vector2 _bronzeChestGoldRange = new(9f, 14f);
+        private readonly Vector2 _goldChestGoldRange = new(47f, 57f);
+        private SpriteObj _arrowIcon;
+        private Chest _chestType;
+        private readonly Vector2 _silverChestGoldRange = new(20f, 28f);
 
         public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
         {
@@ -28,40 +30,38 @@ namespace RogueCastle
             Layer = 1f;
             OutlineWidth = 2;
             IsProcedural = true;
-            m_arrowIcon = new SpriteObj("UpArrowSquare_Sprite");
-            m_arrowIcon.OutlineWidth = 2;
-            m_arrowIcon.Visible = false;
+            _arrowIcon = new SpriteObj("UpArrowSquare_Sprite") { OutlineWidth = 2, Visible = false };
         }
 
         public bool IsEmpty { get; set; }
         public bool IsLocked { get; set; }
-        public int ForcedItemType { get; set; }
+        public ItemDrop ForcedItemType { get; set; }
         public float ForcedAmount { get; set; }
         public bool IsProcedural { get; set; }
 
-        public byte ChestType
+        public Chest ChestType
         {
-            get { return m_chestType; }
+            get => _chestType;
             set
             {
-                m_chestType = value;
+                _chestType = value;
                 var isOpen = IsOpen;
-                switch (m_chestType)
+                switch (_chestType)
                 {
-                    case (byte) Chest.Boss:
-                        ForcedItemType = 14;
+                    case Chest.Boss:
+                        ForcedItemType = ItemDrop.TripStatDrop;
                         ChangeSprite("BossChest_Sprite");
                         break;
 
-                    case (byte) Chest.Fairy:
+                    case Chest.Fairy:
                         ChangeSprite("Chest4_Sprite");
                         break;
 
-                    case (byte) Chest.Gold:
+                    case Chest.Gold:
                         ChangeSprite("Chest3_Sprite");
                         break;
 
-                    case (byte) Chest.Silver:
+                    case Chest.Silver:
                         ChangeSprite("Chest2_Sprite");
                         break;
 
@@ -77,10 +77,7 @@ namespace RogueCastle
             }
         }
 
-        public bool IsOpen
-        {
-            get { return CurrentFrame == 2; }
-        }
+        public bool IsOpen => CurrentFrame == 2;
 
         public virtual void OpenChest(ItemDropManager itemDropManager, PlayerObj player)
         {
@@ -101,35 +98,27 @@ namespace RogueCastle
 
             var randomInt = CDGMath.RandomInt(1, 100);
             var dropType = 0;
-            int[] chances;
-
-            switch (ChestType)
+            var chances = ChestType switch
             {
-                case (byte) Chest.Brown:
-                    chances = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
-                    break;
-
-                case (byte) Chest.Silver:
-                    chances = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
-                    break;
-
-                default:
-                    chances = GameEV.GOLDCHEST_ITEMDROP_CHANCE;
-                    break;
-            }
+                Chest.Brown  => GameEV.BRONZECHEST_ITEMDROP_CHANCE,
+                Chest.Silver => GameEV.SILVERCHEST_ITEMDROP_CHANCE,
+                _            => GameEV.GOLDCHEST_ITEMDROP_CHANCE
+            };
 
             var threshold = 0;
             for (var i = 0; i < chances.Length; i++)
             {
                 threshold += chances[i];
-                if (randomInt <= threshold)
-                {
-                    dropType = i;
-                    break;
-                }
+
+                // Skip if we rolled higher.
+                if (randomInt > threshold) continue;
+
+                dropType = i;
+                break;
             }
 
-            if (ChestType ==(byte)  Chest.Boss)
+            // Extra boss stuff!
+            if (ChestType == Chest.Boss)
             {
                 GiveStatDrop(itemDropManager, player, 3, 0);
                 return;
@@ -141,21 +130,14 @@ namespace RogueCastle
 
         public void GiveGold(ItemDropManager itemDropManager, int amount = 0)
         {
-            int num;
-            if (ChestType == 1)
+            int num = ChestType switch
             {
-                num = CDGMath.RandomInt((int) BronzeChestGoldRange.X, (int) BronzeChestGoldRange.Y) * 10;
-            }
-            else if (ChestType == 2 || ChestType == 4)
-            {
-                num = CDGMath.RandomInt((int) SilverChestGoldRange.X, (int) SilverChestGoldRange.Y) * 10;
-            }
-            else
-            {
-                num = CDGMath.RandomInt((int) GoldChestGoldRange.X, (int) GoldChestGoldRange.Y) * 10;
-            }
+                Chest.Brown                 => CDGMath.RandomInt((int) _bronzeChestGoldRange.X, (int) _bronzeChestGoldRange.Y) * 10,
+                Chest.Silver or Chest.Fairy => CDGMath.RandomInt((int) _silverChestGoldRange.X, (int) _silverChestGoldRange.Y) * 10,
+                _                           => CDGMath.RandomInt((int) _goldChestGoldRange.X, (int) _goldChestGoldRange.Y) * 10
+            };
 
-            num += (int) Math.Floor(GoldIncreasePerLevel * Level * 10f);
+            num += (int) Math.Floor(_goldIncreasePerLevel * Level * 10f);
             if (amount != 0)
             {
                 num = amount;
@@ -311,113 +293,88 @@ namespace RogueCastle
 
         protected void GiveNetworkItem(ItemDropManager manager, PlayerObj player, bool isFairy = false)
         {
-            var arch = Program.Game.ArchipelagoManager;
             var room = Game.ScreenManager.GetLevelScreen().CurrentRoom;
-            var location = "";
 
-            if (ForcedItemType == 1)
+            if (ForcedItemType == ItemDrop.Coin)
             {
                 GiveGold(manager);
                 return;
             }
 
-            if (isFairy)
+            while (true)
             {
-                var total = 0;
+                var location = 0;
 
+                // Grab our current index and offset it by the starting number we have the location defined.
                 switch (room.Zone)
                 {
                     case Zone.None:
                     case Zone.Castle:
-                        total = ++Game.PlayerStats.OpenedChests.CastleFairyChests;
-                        location = string.Format("Castle Hamson - Fairy Chest {0}", total);
+                        location = isFairy
+                            ? Game.PlayerStats.OpenedChests.CastleFairyChests++ + LocationDefinitions.FairyCastle1.Code
+                            : Game.PlayerStats.OpenedChests.CastleChests++      + LocationDefinitions.ChestCastle1.Code;
                         break;
 
                     case Zone.Garden:
-                        total = ++Game.PlayerStats.OpenedChests.GardenFairyChests;
-                        location = string.Format("Forest Abkhazia - Fairy Chest {0}", total);
-                        break;
-
-                    case Zone.Dungeon:
-                        total = ++Game.PlayerStats.OpenedChests.DungeonFairyChests;
-                        location = string.Format("The Land of Darkness - Fairy Chest {0}", total);
+                        location = isFairy
+                            ? Game.PlayerStats.OpenedChests.GardenFairyChests++ + LocationDefinitions.FairyGarden1.Code
+                            : Game.PlayerStats.OpenedChests.GardenChests++      + LocationDefinitions.ChestGarden1.Code;
                         break;
 
                     case Zone.Tower:
-                        total = ++Game.PlayerStats.OpenedChests.TowerFairyChests;
-                        location = string.Format("The Maya - Fairy Chest {0}", total);
+                        location = isFairy
+                            ? Game.PlayerStats.OpenedChests.TowerFairyChests++ + LocationDefinitions.FairyTower1.Code
+                            : Game.PlayerStats.OpenedChests.TowerChests++      + LocationDefinitions.ChestTower1.Code;
                         break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    case Zone.Dungeon:
+                        location = isFairy
+                            ? Game.PlayerStats.OpenedChests.DungeonFairyChests++ + LocationDefinitions.FairyDungeon1.Code
+                            : Game.PlayerStats.OpenedChests.DungeonChests++      + LocationDefinitions.ChestDungeon1.Code;
+                        break;
                 }
 
-                if (total > arch.Data.FairyChestsPerZone)
+                Console.WriteLine($"Attempted to open location {location}");
+
+                // If our location cache does not contain this location, then we have run out of locations to check.
+                if (!Program.Game.ArchipelagoManager.LocationCache.ContainsKey(location))
                 {
-                    GiveStatDrop(manager, player, 1, 0);
+                    GiveGold(manager);
                     return;
                 }
-            }
-            else
-            {
-                var total = 0;
 
-                switch (room.Zone)
+                // Check if we already checked this location and try to get the next item in the sequence if so.
+                if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
                 {
-                    case Zone.None:
-                    case Zone.Castle:
-                        total = ++Game.PlayerStats.OpenedChests.CastleChests;
-                        location = string.Format("Castle Hamson - Chest {0}", total);
-                        break;
-
-                    case Zone.Garden:
-                        total = ++Game.PlayerStats.OpenedChests.GardenChests;
-                        location = string.Format("Forest Abkhazia - Chest {0}", total);
-                        break;
-
-                    case Zone.Dungeon:
-                        total = ++Game.PlayerStats.OpenedChests.DungeonChests;
-                        location = string.Format("The Land of Darkness - Chest {0}", total);
-                        break;
-
-                    case Zone.Tower:
-                        total = ++Game.PlayerStats.OpenedChests.TowerChests;
-                        location = string.Format("The Maya - Chest {0}", total);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    continue;
                 }
 
+                // If we've gotten this far, then this is a new item.
+                var code = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, location).Code;
+                var name = Program.Game.ArchipelagoManager.GetPlayerName(Program.Game.ArchipelagoManager.LocationCache[code].Player);
+                var item = Program.Game.ArchipelagoManager.LocationCache[code].Item;
+                var networkItem = new List<object>
+                {
+                    new Vector2(X, Y - Height / 2f),
+                    ItemCategory.GiveNetworkItem,
+                    new Vector2(-1f, -1f),
+                    new Vector2(-1f, -1f),
+                    name,
+                    item
+                };
+
+                Program.Game.ArchipelagoManager.CheckLocations(code);
+
+                // If we're sending someone else something, let's show what we're sending.
+                if (Program.Game.ArchipelagoManager.LocationCache[code].Player != Program.Game.ArchipelagoManager.Data.Slot)
+                {
+                    Game.ScreenManager.DisplayScreen(Screen.GetItem, true, networkItem);
+                    player.RunGetItemAnimation();
+                }
+
+                // Break loop.
                 GiveGold(manager);
-
-                if (total > arch.Data.ChestsPerZone)
-                {
-                    return;
-                }
-            }
-
-            var code = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, location).Code;
-            var name = arch.GetPlayerName(arch.LocationCache[code].Player);
-            var item = arch.LocationCache[code].Item;
-
-            var networkItem = new List<object>
-            {
-                new Vector2(X, Y - Height / 2f),
-                ItemCategory.GiveNetworkItem,
-                new Vector2(-1f, -1f),
-                new Vector2(-1f, -1f),
-                name,
-                item
-            };
-
-            Program.Game.ArchipelagoManager.CheckLocations(code);
-
-            // If we're sending someone else something, let's show what we're sending.
-            if (arch.LocationCache[code].Player != arch.Data.Slot)
-            {
-                Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, networkItem);
-                player.RunGetItemAnimation();
+                return;
             }
         }
 
@@ -426,7 +383,7 @@ namespace RogueCastle
             var playerObj = otherBox.AbsParent as PlayerObj;
             if (!IsLocked && !IsOpen && playerObj != null && playerObj.IsTouchingGround)
             {
-                m_arrowIcon.Visible = true;
+                _arrowIcon.Visible = true;
             }
 
             base.CollisionResponse(thisBox, otherBox, collisionResponseType);
@@ -434,12 +391,12 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            if (m_arrowIcon.Visible)
+            if (_arrowIcon.Visible)
             {
-                m_arrowIcon.Position = new Vector2(Bounds.Center.X,
+                _arrowIcon.Position = new Vector2(Bounds.Center.X,
                     Bounds.Top - 50 + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 3f);
-                m_arrowIcon.Draw(camera);
-                m_arrowIcon.Visible = false;
+                _arrowIcon.Draw(camera);
+                _arrowIcon.Visible = false;
             }
 
             base.Draw(camera);
@@ -473,8 +430,8 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                m_arrowIcon.Dispose();
-                m_arrowIcon = null;
+                _arrowIcon.Dispose();
+                _arrowIcon = null;
                 base.Dispose();
             }
         }
