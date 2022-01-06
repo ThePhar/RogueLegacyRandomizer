@@ -521,7 +521,7 @@ namespace RogueCastle
                     if (newGame)
                     {
                         PlayerStats.CharacterFound = true;
-                        PlayerStats.Gold = 0;
+                        PlayerStats.Gold = 999999;
                         PlayerStats.Class = ArchipelagoManager.Data.StartingClass;
 
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
@@ -655,6 +655,16 @@ namespace RogueCastle
                         case 91030: // Manor Renovation - Observatory Telescope
                             SkillSystem.GetSkill(Skill.ManorObservatoryTelescope).CurrentLevel = 1;
                             break;
+                    }
+
+                    // Diary
+                    PlayerStats.DiaryEntry = 0;
+                    for (var i = LocationDefinitions.Diary1.Code; i <= LocationDefinitions.Diary25.Code; i++)
+                    {
+                        if (ArchipelagoManager.CheckedLocations.Contains(i))
+                        {
+                            PlayerStats.DiaryEntry++;
+                        }
                     }
                 }
 

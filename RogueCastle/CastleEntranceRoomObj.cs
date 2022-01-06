@@ -354,9 +354,10 @@ namespace RogueCastle
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {
-                    var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
-                    rCScreenManager.DisplayScreen((int) Screen.Dialogue, true);
+                    // Disable diary.
+                    // var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                    // rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
+                    // rCScreenManager.DisplayScreen((int) Screen.Dialogue, true);
                     Game.PlayerStats.DiaryEntry += 1;
 
                     // Check location.
@@ -369,7 +370,7 @@ namespace RogueCastle
                     {
                         var item = new List<object>
                         {
-                            new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
+                            new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Game.ScreenManager.Player.Height / 2f),
                             ItemCategory.GiveNetworkItem,
                             new Vector2(-1f, -1f),
                             new Vector2(-1f, -1f),
@@ -377,7 +378,7 @@ namespace RogueCastle
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
                 }

@@ -104,33 +104,47 @@ namespace RogueCastle
                 {
                     if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 24)
                     {
-                        var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                        rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
-                        rCScreenManager.DisplayScreen(13, true);
+                        // var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
+                        // rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
+                        // rCScreenManager.DisplayScreen(13, true);
 
-                        // Check location.
-                        var location = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, string.Format("Diary {0}", m_diaryIndex + 1)).Code;
-                        var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
-                        Program.Game.ArchipelagoManager.CheckLocations(location);
-
-                        // If we're sending someone else something, let's show what we're sending.
-                        if (networkItem.Player != Program.Game.ArchipelagoManager.Data.Slot)
+                        while (true)
                         {
-                            var item = new List<object>
-                            {
-                                new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
-                                ItemCategory.GiveNetworkItem,
-                                new Vector2(-1f, -1f),
-                                new Vector2(-1f, -1f),
-                                Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
-                                networkItem.Item
-                            };
-                            Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
-                            Game.ScreenManager.Player.RunGetItemAnimation();
-                        }
+                            var location = LocationDefinitions.Diary1.Code + Game.PlayerStats.DiaryEntry++;
 
-                        Game.PlayerStats.DiaryEntry += 1;
-                        RoomCompleted = true;
+                            // If our location cache does not contain this location, then we have run out of locations to check.
+                            if (!Program.Game.ArchipelagoManager.LocationCache.ContainsKey(location))
+                            {
+                                return;
+                            }
+
+                            // Check if we already checked this location and try to get the next item in the sequence if so.
+                            if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
+                            {
+                                continue;
+                            }
+
+                            // If we've gotten this far, then this is a new item.
+                            var item = Program.Game.ArchipelagoManager.LocationCache[location];
+                            if (item.Player != Program.Game.ArchipelagoManager.Data.Slot)
+                            {
+                                var networkItem = new List<object>
+                                {
+                                    new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Game.ScreenManager.Player.Height / 2f),
+                                    ItemCategory.GiveNetworkItem,
+                                    new Vector2(-1f, -1f),
+                                    new Vector2(-1f, -1f),
+                                    Program.Game.ArchipelagoManager.GetPlayerName(item.Player),
+                                    item.Item
+                                };
+                                Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, networkItem);
+                                Game.ScreenManager.Player.RunGetItemAnimation();
+                            }
+
+                            Program.Game.ArchipelagoManager.CheckLocations(location);
+                            RoomCompleted = true;
+                            break;
+                        }
                     }
                     else
                     {

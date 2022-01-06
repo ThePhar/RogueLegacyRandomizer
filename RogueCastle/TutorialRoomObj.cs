@@ -323,6 +323,7 @@ namespace RogueCastle
             m_door.Locked = false;
             Game.PlayerStats.ReadLastDiary = true;
 
+            // Complete the diary.
             Program.Game.ArchipelagoManager.CheckLocations(
                 LocationDefinitions.Diary1.Code,
                 LocationDefinitions.Diary2.Code,
