@@ -11,12 +11,12 @@ namespace RogueCastle.Enums
         SpikeImmunity,
         GoldPerKill,
         Compass,
-        Glasses,
-        EyeballToken,
-        SkullToken,
-        FireballToken,
-        BlobToken,
-        LastBossToken
+        Glasses = 8,
+        EyeballToken = 9,
+        SkullToken = 10,
+        FireballToken = 11,
+        BlobToken = 12,
+        LastBossToken = 13
     }
 
     public static class SpecialItemExtensions
