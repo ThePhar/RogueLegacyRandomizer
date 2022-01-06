@@ -107,14 +107,14 @@ namespace RogueCastle.Enums
         {
             return @class switch
             {
-                Class.Knight     => SkillSystem.GetSkill(SkillType.KnightUp).ModifierAmount > 0f,
-                Class.Mage       => SkillSystem.GetSkill(SkillType.MageUp).ModifierAmount > 0f,
-                Class.Barbarian  => SkillSystem.GetSkill(SkillType.BarbarianUp).ModifierAmount > 0f,
-                Class.Knave      => SkillSystem.GetSkill(SkillType.AssassinUp).ModifierAmount > 0f,
-                Class.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUp).ModifierAmount > 0f,
-                Class.Miner      => SkillSystem.GetSkill(SkillType.BankerUp).ModifierAmount > 0f,
-                Class.Spellthief => SkillSystem.GetSkill(SkillType.SpellSwordUp).ModifierAmount > 0f,
-                Class.Lich       => SkillSystem.GetSkill(SkillType.LichUp).ModifierAmount > 0f,
+                Class.Knight     => SkillSystem.GetSkill(Skill.KnightUp).ModifierAmount > 0f,
+                Class.Mage       => SkillSystem.GetSkill(Skill.MageUp).ModifierAmount > 0f,
+                Class.Barbarian  => SkillSystem.GetSkill(Skill.BarbarianUp).ModifierAmount > 0f,
+                Class.Knave      => SkillSystem.GetSkill(Skill.AssassinUp).ModifierAmount > 0f,
+                Class.Shinobi    => SkillSystem.GetSkill(Skill.NinjaUp).ModifierAmount > 0f,
+                Class.Miner      => SkillSystem.GetSkill(Skill.BankerUp).ModifierAmount > 0f,
+                Class.Spellthief => SkillSystem.GetSkill(Skill.SpellSwordUp).ModifierAmount > 0f,
+                Class.Lich       => SkillSystem.GetSkill(Skill.LichUp).ModifierAmount > 0f,
                 _                => false
             };
         }
@@ -245,32 +245,32 @@ namespace RogueCastle.Enums
                 Class.Knave
             };
 
-            if (SkillSystem.GetSkill(SkillType.NinjaUnlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(Skill.NinjaUnlock).ModifierAmount > 0f)
             {
                 list.Add(Class.Shinobi);
             }
 
-            if (SkillSystem.GetSkill(SkillType.BankerUnlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(Skill.BankerUnlock).ModifierAmount > 0f)
             {
                 list.Add(Class.Miner);
             }
 
-            if (SkillSystem.GetSkill(SkillType.SpellswordUnlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(Skill.SpellswordUnlock).ModifierAmount > 0f)
             {
                 list.Add(Class.Spellthief);
             }
 
-            if (SkillSystem.GetSkill(SkillType.LichUnlock).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(Skill.LichUnlock).ModifierAmount > 0f)
             {
                 list.Add(Class.Lich);
             }
 
-            if (SkillSystem.GetSkill(SkillType.SuperSecret).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(Skill.SuperSecret).ModifierAmount > 0f)
             {
                 list.Add(Class.Dragon);
             }
 
-            if (SkillSystem.GetSkill(SkillType.Traitorous).ModifierAmount > 0f)
+            if (SkillSystem.GetSkill(Skill.Traitorous).ModifierAmount > 0f)
             {
                 list.Add(Class.Traitor);
             }
