@@ -521,7 +521,7 @@ namespace RogueCastle
                     if (newGame)
                     {
                         PlayerStats.CharacterFound = true;
-                        PlayerStats.Gold = 999999;
+                        PlayerStats.Gold = 0;
                         PlayerStats.Class = ArchipelagoManager.Data.StartingClass;
 
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
