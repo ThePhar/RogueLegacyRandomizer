@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
@@ -217,7 +218,7 @@ namespace RogueCastle
             }
 
             m_rewardChest = new ChestObj(null);
-            m_rewardChest.ChestType = 3;
+            m_rewardChest.ChestType = Chest.Gold;
             if (!IsReversed)
             {
                 m_rewardChest.Flip = SpriteEffects.FlipHorizontally;
@@ -235,7 +236,7 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            m_rewardChest.ChestType = 3;
+            m_rewardChest.ChestType = Chest.Gold;
             if (!IsReversed)
             {
                 m_axeIcons.Position = new Vector2(Bounds.Right - 200 - m_axeIcons.Width, Bounds.Bottom - 60);

@@ -39,6 +39,7 @@ namespace Archipelago
         public SlotData Data { get; private set; }
         public Queue<NetworkItem> ItemQueue { get; private set; } = new();
         public List<int> CheckedLocations { get; private set; } = new();
+        public bool CheckedLocationsUpdated { get; set; } = false;
         public bool CanForfeit => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
 
         public void Connect(ConnectionInfo info)
@@ -268,9 +269,13 @@ namespace Archipelago
 
         private void OnRoomUpdate(RoomUpdatePacket packet)
         {
-            if (packet.CheckedLocations != null)
+            foreach (var location in packet.CheckedLocations)
             {
-                CheckedLocations = packet.CheckedLocations;
+                if (!CheckedLocations.Contains(location))
+                {
+                    CheckedLocations.Add(location);
+                    CheckedLocationsUpdated = true;
+                }
             }
         }
 

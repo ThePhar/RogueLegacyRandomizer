@@ -2,7 +2,7 @@
   Rogue Legacy Enhanced
 
   This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
+  Therefore, former creators copyright notice applies to original disassembly.
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
   Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
@@ -11,6 +11,7 @@
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
@@ -147,7 +148,7 @@ namespace RogueCastle
             Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
                 "Intro2");
             base.OnEnter();
-            m_bossChest.ForcedItemType = 18;
+            m_bossChest.ForcedItemType = ItemDrop.TripStatDrop;
         }
 
         public void Intro2()

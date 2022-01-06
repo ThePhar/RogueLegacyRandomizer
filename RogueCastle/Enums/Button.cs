@@ -33,6 +33,14 @@ namespace RogueCastle.Enums
         MenuDeleteProfile
     }
 
+    public static class ButtonExtensions
+    {
+        public static string ToString(this Button button)
+        {
+            return ((int) button).ToString();
+        }
+    }
+
     public static class ButtonHelper
     {
         public static bool PressedConfirm => PressedAny(Button.MenuConfirm1, Button.MenuConfirm2);

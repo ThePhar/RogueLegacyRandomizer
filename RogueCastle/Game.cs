@@ -1,14 +1,3 @@
-//
-//  RogueLegacyArchipelago - Game.cs
-//  Last Modified 2021-12-30
-//
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,6 +17,7 @@ using RogueCastle.Screens;
 using RogueCastle.Enums;
 using SpriteSystem;
 using Tweener;
+
 using Button = RogueCastle.Enums.Button;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Screen = RogueCastle.Enums.Screen;
@@ -38,11 +28,11 @@ namespace RogueCastle
     {
         public static AreaStruct[] Area1List;
         public static SettingStruct GameConfig;
-        private bool m_contentLoaded;
-        private GameTime m_forcedGameTime1;
-        private GameTime m_forcedGameTime2;
-        private bool m_frameLimitSwap;
-        private bool m_gameLoaded;
+        private bool _contentLoaded;
+        private GameTime _forcedGameTime1;
+        private GameTime _forcedGameTime2;
+        private bool _frameLimitSwap;
+        private bool _gameLoaded;
 
         public Game()
         {
@@ -70,15 +60,14 @@ namespace RogueCastle
 
             if (!LevelENV.EnableOffscreenControl)
             {
-                InactiveSleepTime = default(TimeSpan);
+                InactiveSleepTime = default;
             }
 
             EquipmentSystem.InitializeEquipmentData();
             EquipmentSystem.InitializeAbilityCosts();
-            GameConfig = default(SettingStruct);
+            GameConfig = default;
 
-            var form = Control.FromHandle(Window.Handle) as Form;
-            if (form != null)
+            if (Control.FromHandle(Window.Handle) is Form form)
             {
                 form.FormClosing += FormClosing;
             }
@@ -154,11 +143,11 @@ namespace RogueCastle
             SpriteLibrary.Init();
 
             DialogueManager.Initialize();
-            DialogueManager.LoadLanguageBinFile("Content\\Languages\\Text_En.bin");
-            DialogueManager.LoadLanguageBinFile("Content\\Languages\\Diary_En.bin");
+            DialogueManager.LoadLanguageBinFile(@"Content\Languages\Text_En.bin");
+            DialogueManager.LoadLanguageBinFile(@"Content\Languages\Diary_En.bin");
             DialogueManager.SetLanguage("English");
 
-            ProfileName = "DEFAULT";
+            ProfileName = "DEFAULT-0";
             SaveManager.Initialize();
             PhysicsManager.Initialize(ScreenManager.Camera);
             PhysicsManager.TerminalVelocity = 2000;
@@ -183,10 +172,8 @@ namespace RogueCastle
                 statusIndicator.Initialize();
             }
 
-            m_forcedGameTime1 = new GameTime(default(TimeSpan),
-                new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
-            m_forcedGameTime2 = new GameTime(default(TimeSpan),
-                new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1050f)));
+            _forcedGameTime1 = new GameTime(default, new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
+            _forcedGameTime2 = new GameTime(default, new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1050f)));
             base.Initialize();
         }
 
@@ -272,27 +259,37 @@ namespace RogueCastle
             GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
         }
 
-        public static void ChangeProfile(string seed, int slot)
+        public void ChangeProfile(string seed, int slot)
         {
-            ProfileName = string.Format("AP_{0}-{1}", seed, slot);
+            // Load Default Save Profile
+            ProfileName = "DEFAULT";
+            SaveManager.CreateSaveDirectory();
+            SaveManager.LoadAllFileTypes(null);
+
+            // Change Profile Name
+            ProfileName = $"AP_{seed}-{slot}";
+
+            // Load AP Save Files
+            SaveManager.CreateSaveDirectory();
+            SaveManager.LoadAllFileTypes(null);
         }
 
         protected override void LoadContent()
         {
-            if (m_contentLoaded)
+            if (_contentLoaded)
             {
                 return;
             }
 
-            m_contentLoaded = true;
+            _contentLoaded = true;
             LoadAllSpriteFonts();
             LoadAllEffects();
             LoadAllSpritesheets();
-            SoundManager.Initialize("Content\\Audio\\RogueCastleXACTProj.xgs");
-            SoundManager.LoadWaveBank("Content\\Audio\\SFXWaveBank.xwb");
-            SoundManager.LoadWaveBank("Content\\Audio\\MusicWaveBank.xwb", true);
-            SoundManager.LoadSoundBank("Content\\Audio\\SFXSoundBank.xsb");
-            SoundManager.LoadSoundBank("Content\\Audio\\MusicSoundBank.xsb", true);
+            SoundManager.Initialize(@"Content\Audio\RogueCastleXACTProj.xgs");
+            SoundManager.LoadWaveBank(@"Content\Audio\SFXWaveBank.xwb");
+            SoundManager.LoadWaveBank(@"Content\Audio\MusicWaveBank.xwb", true);
+            SoundManager.LoadSoundBank(@"Content\Audio\SFXSoundBank.xsb");
+            SoundManager.LoadSoundBank(@"Content\Audio\MusicSoundBank.xsb", true);
             SoundManager.GlobalMusicVolume = GameConfig.MusicVolume;
             SoundManager.GlobalSFXVolume = GameConfig.SFXVolume;
 
@@ -376,89 +373,91 @@ namespace RogueCastle
         public void LoadAllSpriteFonts()
         {
             SpriteFontArray.SpriteFontList.Clear();
-            PixelArtFont = Content.Load<SpriteFont>("Fonts\\Arial12");
+
+            PixelArtFont = Content.Load<SpriteFont>(@"Fonts\Arial12");
+            PixelArtFontBold = Content.Load<SpriteFont>(@"Fonts\PixelArtFontBold");
+            EnemyLevelFont = Content.Load<SpriteFont>(@"Fonts\EnemyLevelFont");
+            PlayerLevelFont = Content.Load<SpriteFont>(@"Fonts\PlayerLevelFont");
+            GoldFont = Content.Load<SpriteFont>(@"Fonts\GoldFont");
+            JunicodeFont = Content.Load<SpriteFont>(@"Fonts\Junicode");
+            JunicodeLargeFont = Content.Load<SpriteFont>(@"Fonts\JunicodeLarge");
+            HerzogFont = Content.Load<SpriteFont>(@"Fonts\HerzogVonGraf24");
+            CinzelFont = Content.Load<SpriteFont>(@"Fonts\CinzelFont");
+            BitFont = Content.Load<SpriteFont>(@"Fonts\BitFont");
+
             SpriteFontArray.SpriteFontList.Add(PixelArtFont);
-            PixelArtFontBold = Content.Load<SpriteFont>("Fonts\\PixelArtFontBold");
             SpriteFontArray.SpriteFontList.Add(PixelArtFontBold);
-            EnemyLevelFont = Content.Load<SpriteFont>("Fonts\\EnemyLevelFont");
             SpriteFontArray.SpriteFontList.Add(EnemyLevelFont);
-            EnemyLevelFont.Spacing = -5f;
-            PlayerLevelFont = Content.Load<SpriteFont>("Fonts\\PlayerLevelFont");
             SpriteFontArray.SpriteFontList.Add(PlayerLevelFont);
-            PlayerLevelFont.Spacing = -7f;
-            GoldFont = Content.Load<SpriteFont>("Fonts\\GoldFont");
             SpriteFontArray.SpriteFontList.Add(GoldFont);
-            GoldFont.Spacing = -5f;
-            JunicodeFont = Content.Load<SpriteFont>("Fonts\\Junicode");
             SpriteFontArray.SpriteFontList.Add(JunicodeFont);
-            JunicodeLargeFont = Content.Load<SpriteFont>("Fonts\\JunicodeLarge");
             SpriteFontArray.SpriteFontList.Add(JunicodeLargeFont);
-            JunicodeLargeFont.Spacing = -1f;
-            HerzogFont = Content.Load<SpriteFont>("Fonts\\HerzogVonGraf24");
             SpriteFontArray.SpriteFontList.Add(HerzogFont);
-            CinzelFont = Content.Load<SpriteFont>("Fonts\\CinzelFont");
             SpriteFontArray.SpriteFontList.Add(CinzelFont);
-            BitFont = Content.Load<SpriteFont>("Fonts\\BitFont");
             SpriteFontArray.SpriteFontList.Add(BitFont);
+
+            EnemyLevelFont.Spacing = -5f;
+            PlayerLevelFont.Spacing = -7f;
+            GoldFont.Spacing = -5f;
+            JunicodeLargeFont.Spacing = -1f;
         }
 
         public void LoadAllSpritesheets()
         {
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\blacksmithUISpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\enemyFinal2Spritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\enemyFinalSpritesheetBig", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\miscSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\traitsCastleSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\castleTerrainSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\playerSpritesheetBig", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\titleScreen3Spritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\mapSpritesheetBig", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\startingRoomSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\towerTerrainSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\dungeonTerrainSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\profileCardSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\portraitSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\gardenTerrainSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\parallaxBGSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\getItemScreenSpritesheet", false);
-            SpriteLibrary.LoadSpritesheet(Content, "GameSpritesheets\\neoTerrainSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\blacksmithUISpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\enemyFinal2Spritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\enemyFinalSpritesheetBig", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\miscSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\traitsCastleSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\castleTerrainSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\playerSpritesheetBig", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\titleScreen3Spritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\mapSpritesheetBig", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\startingRoomSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\towerTerrainSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\dungeonTerrainSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\profileCardSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\portraitSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\gardenTerrainSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\parallaxBGSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\getItemScreenSpritesheet", false);
+            SpriteLibrary.LoadSpritesheet(Content, @"GameSpritesheets\neoTerrainSpritesheet", false);
         }
 
         public void LoadAllEffects()
         {
-            MaskEffect = Content.Load<Effect>("Shaders\\AlphaMaskShader");
-            ShadowEffect = Content.Load<Effect>("Shaders\\ShadowFX");
-            ParallaxEffect = Content.Load<Effect>("Shaders\\ParallaxFX");
-            HSVEffect = Content.Load<Effect>("Shaders\\HSVShader");
-            InvertShader = Content.Load<Effect>("Shaders\\InvertShader");
-            ColourSwapShader = Content.Load<Effect>("Shaders\\ColourSwapShader");
-            RippleEffect = Content.Load<Effect>("Shaders\\Shockwave");
+            MaskEffect = Content.Load<Effect>(@"Shaders\AlphaMaskShader");
+            ShadowEffect = Content.Load<Effect>(@"Shaders\ShadowFX");
+            ParallaxEffect = Content.Load<Effect>(@"Shaders\ParallaxFX");
+            HSVEffect = Content.Load<Effect>(@"Shaders\HSVShader");
+            InvertShader = Content.Load<Effect>(@"Shaders\InvertShader");
+            ColourSwapShader = Content.Load<Effect>(@"Shaders\ColourSwapShader");
+            RippleEffect = Content.Load<Effect>(@"Shaders\Shockwave");
             RippleEffect.Parameters["mag"].SetValue(2);
             GaussianBlur = new GaussianBlur(this, 1320, 720)
             {
                 Amount = 2f,
                 Radius = 7
             };
+
             GaussianBlur.ComputeKernel();
             GaussianBlur.ComputeOffsets();
             GaussianBlur.InvertMask = true;
-            BWMaskEffect = Content.Load<Effect>("Shaders\\BWMaskShader");
+            BWMaskEffect = Content.Load<Effect>(@"Shaders\BWMaskShader");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (!m_gameLoaded)
+            if (!_gameLoaded)
             {
-                m_gameLoaded = true;
+                _gameLoaded = true;
                 if (LevelENV.DeleteSaveFile)
                 {
                     SaveManager.ClearAllFileTypes(true);
                     SaveManager.ClearAllFileTypes(false);
                 }
 
-                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen
-                    ? (int) Screen.CDGSplash
-                    : (int) Screen.Title, true);
+                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? Screen.CDGSplash : Screen.Title, true);
             }
 
             TotalGameTimeSeconds = (float) gameTime.TotalGameTime.TotalSeconds;
@@ -466,15 +465,15 @@ namespace RogueCastle
 
             if (gameTime.ElapsedGameTime.TotalSeconds > LevelENV.FrameLimit)
             {
-                if (!m_frameLimitSwap)
+                if (!_frameLimitSwap)
                 {
-                    m_frameLimitSwap = true;
-                    gameTime = m_forcedGameTime1;
+                    _frameLimitSwap = true;
+                    gameTime = _forcedGameTime1;
                 }
                 else
                 {
-                    m_frameLimitSwap = false;
-                    gameTime = m_forcedGameTime2;
+                    _frameLimitSwap = false;
+                    gameTime = _forcedGameTime2;
                 }
             }
 
@@ -494,36 +493,35 @@ namespace RogueCastle
                 // We're ready!
                 case ConnectionStatus.Connected:
                 {
-                    if (!(ScreenManager.CurrentScreen is ArchipelagoScreen))
+                    // Do not attempt to start the game if we connect off the Arch screen. Most likely means we lost connection in gameplay and reconnected.
+                    if (ScreenManager.CurrentScreen is not ArchipelagoScreen)
                     {
                         break;
                     }
 
                     // Initialize Save Data
-                    ProfileName = string.Format("{0}-{1}", ArchipelagoManager.Data.Seed, ArchipelagoManager.Data.Slot);
-                    SaveManager.CreateSaveDirectory();
-
-                    // Load save file.
-                    SaveManager.LoadAllFileTypes(null);
+                    ChangeProfile(ArchipelagoManager.Data.Seed, ArchipelagoManager.Data.Slot);
 
                     SoundManager.PlaySound("Game_Start");
                     var newGame = !PlayerStats.CharacterFound;
                     var heroIsDead = PlayerStats.IsDead;
                     var startingRoom = PlayerStats.LoadStartingRoom;
 
-                    if (ArchipelagoManager.Data.IsFemale && !FemaleNameArray.Contains(ArchipelagoManager.Data.Name))
+                    switch (ArchipelagoManager.Data.IsFemale)
                     {
-                        FemaleNameArray.Add(ArchipelagoManager.Data.Name);
-                    }
-                    else if (!ArchipelagoManager.Data.IsFemale && !NameArray.Contains(ArchipelagoManager.Data.Name))
-                    {
-                        NameArray.Add(ArchipelagoManager.Data.Name);
+                        case true when !FemaleNameArray.Contains(ArchipelagoManager.Data.Name):
+                            FemaleNameArray.Add(ArchipelagoManager.Data.Name);
+                            break;
+
+                        case false when !NameArray.Contains(ArchipelagoManager.Data.Name):
+                            NameArray.Add(ArchipelagoManager.Data.Name);
+                            break;
                     }
 
                     if (newGame)
                     {
                         PlayerStats.CharacterFound = true;
-                        PlayerStats.Gold = 9999999; // TODO REMOVE
+                        PlayerStats.Gold = 0;
                         PlayerStats.Class = ArchipelagoManager.Data.StartingClass;
 
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
@@ -534,22 +532,20 @@ namespace RogueCastle
 
                         // Rename Sir Lee to the player's name and initial gender.
                         PlayerStats.IsFemale = ArchipelagoManager.Data.IsFemale;
-                        PlayerStats.PlayerName = string.Format("{1} {0}", ArchipelagoManager.Data.Name,
-                            PlayerStats.IsFemale ? "Lady" : "Sir");
+                        PlayerStats.PlayerName = $"{(PlayerStats.IsFemale ? "Lady" : "Sir")} {ArchipelagoManager.Data.Name}";
 
-                        Program.Game.SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
-                        ScreenManager.DisplayScreen((int) Screen.StartingRoom, true);
+                        SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
+                        ScreenManager.DisplayScreen(Screen.StartingRoom, true);
                     }
                     else
                     {
                         if (heroIsDead)
                         {
-                            ScreenManager.DisplayScreen((int) Screen.Lineage, true);
+                            ScreenManager.DisplayScreen(Screen.Lineage, true);
                         }
                         else
                         {
-                            ScreenManager.DisplayScreen(startingRoom ? (int) Screen.StartingRoom : (int) Screen.Level,
-                                true);
+                            ScreenManager.DisplayScreen(startingRoom ? Screen.StartingRoom : Screen.Level, true);
                         }
                     }
 
@@ -559,44 +555,10 @@ namespace RogueCastle
             }
 
             // This function will ensure our locations are synced. Only really used in Co-Op scenarios.
-            if (ArchipelagoManager.CheckedLocations.Count != PlayerStats.CheckedLocationsCount)
+            if (ArchipelagoManager.CheckedLocationsUpdated)
             {
                 foreach (var location in ArchipelagoManager.CheckedLocations)
                 {
-                    // Chests
-                    if (location >= 91600 && location <= 91629 && PlayerStats.OpenedChests.CastleChests < location - 91600 + 1)
-                        PlayerStats.OpenedChests.CastleChests = location - 91600 + 1;
-                    else if (location >= 91700 && location <= 91729 && PlayerStats.OpenedChests.GardenChests < location - 91700 + 1)
-                        PlayerStats.OpenedChests.GardenChests = location - 91700 + 1;
-                    else if (location >= 91800 && location <= 91829 && PlayerStats.OpenedChests.TowerChests < location - 91800 + 1)
-                        PlayerStats.OpenedChests.TowerChests = location - 91800 + 1;
-                    else if (location >= 91900 && location <= 91929 && PlayerStats.OpenedChests.DungeonChests < location - 91900 + 1)
-                        PlayerStats.OpenedChests.DungeonChests = location - 91900 + 1;
-
-                    // Fairy Chests
-                    else if (location >= 91400 && location <= 91414 && PlayerStats.OpenedChests.CastleFairyChests < location - 91400 + 1)
-                        PlayerStats.OpenedChests.CastleFairyChests = location - 91400 + 1;
-                    else if (location >= 91450 && location <= 91464 && PlayerStats.OpenedChests.GardenFairyChests < location - 91450 + 1)
-                        PlayerStats.OpenedChests.GardenFairyChests = location - 91450 + 1;
-                    else if (location >= 91500 && location <= 91514 && PlayerStats.OpenedChests.TowerFairyChests < location - 91500 + 1)
-                        PlayerStats.OpenedChests.TowerFairyChests = location - 91500 + 1;
-                    else if (location >= 91550 && location <= 91564 && PlayerStats.OpenedChests.DungeonFairyChests < location - 91550 + 1)
-                        PlayerStats.OpenedChests.DungeonFairyChests = location - 91550 + 1;
-
-                    // Diaries
-                    else if (location >= 91300 && location <= 91324 && PlayerStats.DiaryEntry < location - 91300 + 1)
-                        PlayerStats.DiaryEntry = (byte) (location - 91300 + 1);
-
-                    // Bosses
-                    else if (location == LocationDefinitions.BossKhindr.Code)
-                        PlayerStats.EyeballBossBeaten = true;
-                    else if (location == LocationDefinitions.BossAlexander.Code)
-                        PlayerStats.FairyBossBeaten = true;
-                    else if (location == LocationDefinitions.BossLeon.Code)
-                        PlayerStats.FireballBossBeaten = true;
-                    else if (location == LocationDefinitions.BossHerodotus.Code)
-                        PlayerStats.BlobBossBeaten = true;
-
                     // Manor
                     switch (location)
                     {
@@ -696,14 +658,14 @@ namespace RogueCastle
                     }
                 }
 
-                PlayerStats.CheckedLocationsCount = ArchipelagoManager.CheckedLocations.Count;
+                // Mark that we finished updating our locations.
+                ArchipelagoManager.CheckedLocationsUpdated = false;
             }
 
             // Check for received items and send to player.
             if (ArchipelagoManager.ItemQueue.Count > 0)
             {
-                if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked
-                                                 && ScreenManager.CurrentScreen is ProceduralLevelScreen)
+                if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen)
                 {
                     var item = ArchipelagoManager.ItemQueue.Dequeue();
 
@@ -711,15 +673,15 @@ namespace RogueCastle
                     if (PlayerStats.CheckReceived(item))
                     {
                         var randomGold = 0;
-                        if (item.Item == (int) ItemDefinitions.Gold1000.Code)
+                        if (item.Item == ItemDefinitions.Gold1000.Code)
                         {
                             randomGold = 1000;
                         }
-                        else if (item.Item == (int) ItemDefinitions.Gold3000.Code)
+                        else if (item.Item == ItemDefinitions.Gold3000.Code)
                         {
                             randomGold = 3000;
                         }
-                        else if (item.Item == (int) ItemDefinitions.Gold5000.Code)
+                        else if (item.Item == ItemDefinitions.Gold5000.Code)
                         {
                             randomGold = 5000;
                         }
@@ -1564,85 +1526,83 @@ namespace RogueCastle
         private void InitializeNameArray()
         {
             NameArray = new List<string>();
-            using (var streamReader = new StreamReader("Content\\HeroNames.txt"))
+            using var streamReader = new StreamReader(@"Content\HeroNames.txt");
+            var spriteFont = Content.Load<SpriteFont>(@"Fonts\Junicode");
+            SpriteFontArray.SpriteFontList.Add(spriteFont);
+            var textObj = new TextObj(spriteFont);
+
+            while (!streamReader.EndOfStream)
             {
-                var spriteFont = Content.Load<SpriteFont>("Fonts\\Junicode");
-                SpriteFontArray.SpriteFontList.Add(spriteFont);
-                var textObj = new TextObj(spriteFont);
-                while (!streamReader.EndOfStream)
+                var text = streamReader.ReadLine();
+                var error = false;
+                try
                 {
-                    var text = streamReader.ReadLine();
-                    var error = false;
-                    try
-                    {
-                        textObj.Text = text;
-                    }
-                    catch
-                    {
-                        error = true;
-                    }
-
-                    if (!text.Contains("//") && !error)
-                    {
-                        NameArray.Add(text);
-                    }
+                    textObj.Text = text;
+                }
+                catch
+                {
+                    error = true;
                 }
 
-                if (NameArray.Count < 1)
+                if (text != null && !text.Contains("//") && !error)
                 {
-                    NameArray.Add("Lee");
-                    NameArray.Add("Charles");
-                    NameArray.Add("Lancelot");
+                    NameArray.Add(text);
                 }
-
-                textObj.Dispose();
-                SpriteFontArray.SpriteFontList.Clear();
             }
+
+            if (NameArray.Count < 1)
+            {
+                NameArray.Add("Lee");
+                NameArray.Add("Charles");
+                NameArray.Add("Lancelot");
+            }
+
+            textObj.Dispose();
+            SpriteFontArray.SpriteFontList.Clear();
         }
 
         private void InitializeFemaleNameArray()
         {
             FemaleNameArray = new List<string>();
-            using (var streamReader = new StreamReader("Content\\HeroineNames.txt"))
+            using var streamReader = new StreamReader(@"Content\HeroineNames.txt");
+            var spriteFont = Content.Load<SpriteFont>(@"Fonts\Junicode");
+            SpriteFontArray.SpriteFontList.Add(spriteFont);
+            var textObj = new TextObj(spriteFont);
+
+            while (!streamReader.EndOfStream)
             {
-                var spriteFont = Content.Load<SpriteFont>("Fonts\\Junicode");
-                SpriteFontArray.SpriteFontList.Add(spriteFont);
-                var textObj = new TextObj(spriteFont);
-                while (!streamReader.EndOfStream)
+                var text = streamReader.ReadLine();
+                var error = false;
+                try
                 {
-                    var text = streamReader.ReadLine();
-                    var error = false;
-                    try
-                    {
-                        textObj.Text = text;
-                    }
-                    catch
-                    {
-                        error = true;
-                    }
-
-                    if (!text.Contains("//") && !error)
-                    {
-                        FemaleNameArray.Add(text);
-                    }
+                    textObj.Text = text;
+                }
+                catch
+                {
+                    error = true;
                 }
 
-                if (FemaleNameArray.Count < 1)
+                if (text != null && !text.Contains("//") && !error)
                 {
-                    FemaleNameArray.Add("Jenny");
-                    FemaleNameArray.Add("Shanoa");
-                    FemaleNameArray.Add("Chun Li");
+                    FemaleNameArray.Add(text);
                 }
-
-                textObj.Dispose();
-                SpriteFontArray.SpriteFontList.Clear();
             }
+
+            if (FemaleNameArray.Count < 1)
+            {
+                FemaleNameArray.Add("Jenny");
+                FemaleNameArray.Add("Shanoa");
+                FemaleNameArray.Add("Chun Li");
+            }
+
+            textObj.Dispose();
+            SpriteFontArray.SpriteFontList.Clear();
         }
 
         public void SaveOnExit()
         {
             // No point in saving if we're on the Splash or Demo screens.
-            if (ScreenManager.CurrentScreen is CDGSplashScreen || ScreenManager.CurrentScreen is DemoStartScreen)
+            if (ScreenManager.CurrentScreen is CDGSplashScreen or DemoStartScreen)
             {
                 return;
             }
@@ -1652,24 +1612,20 @@ namespace RogueCastle
             if (screen != null)
             {
                 var currentRoom = screen.CurrentRoom;
-                if (currentRoom != null
-                    && (currentRoom is CarnivalShoot1BonusRoom || currentRoom is CarnivalShoot2BonusRoom))
+                if (currentRoom is CarnivalShoot1BonusRoom or CarnivalShoot2BonusRoom)
                 {
-                    var bonusRoom1 = currentRoom as CarnivalShoot1BonusRoom;
-                    if (bonusRoom1 != null)
+                    if (currentRoom is CarnivalShoot1BonusRoom bonusRoom1)
                     {
                         bonusRoom1.UnequipPlayer();
                     }
 
-                    var bonusRoom2 = currentRoom as CarnivalShoot2BonusRoom;
-                    if (bonusRoom2 != null)
+                    if (currentRoom is CarnivalShoot2BonusRoom bonusRoom2)
                     {
                         bonusRoom2.UnequipPlayer();
                     }
                 }
 
-                var challengeBossRoom = currentRoom as ChallengeBossRoomObj;
-                if (challengeBossRoom != null)
+                if (currentRoom is ChallengeBossRoomObj challengeBossRoom)
                 {
                     challengeBossRoom.LoadPlayerData();
                     SaveManager.LoadFiles(ScreenManager.GetLevelScreen(), SaveType.UpgradeData);
@@ -1686,13 +1642,12 @@ namespace RogueCastle
             if (SaveManager.FileExists(SaveType.PlayerData))
             {
                 SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
-                if (screen.CurrentRoom == null)
+                if (screen is { CurrentRoom: null })
                 {
                     return;
                 }
 
-                if (screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending"
-                                                       && screen.CurrentRoom.Name != "Tutorial")
+                if (screen != null && screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending" && screen.CurrentRoom.Name != "Tutorial")
                 {
                     SaveManager.SaveFiles(SaveType.MapData);
                 }
@@ -1716,14 +1671,18 @@ namespace RogueCastle
         {
             var list = new List<Vector2>();
             foreach (var current in GraphicsDevice.Adapter.SupportedDisplayModes)
-                if (current.Width < 2000 && current.Height < 2000)
+            {
+                if (current.Width >= 2000 || current.Height >= 2000)
                 {
-                    var item = new Vector2(current.Width, current.Height);
-                    if (!list.Contains(item))
-                    {
-                        list.Add(new Vector2(current.Width, current.Height));
-                    }
+                    continue;
                 }
+
+                var item = new Vector2(current.Width, current.Height);
+                if (!list.Contains(item))
+                {
+                    list.Add(new Vector2(current.Width, current.Height));
+                }
+            }
 
             return list;
         }
@@ -1739,59 +1698,58 @@ namespace RogueCastle
             }
 
             var iniPath = Path.Combine(folderPath, LevelENV.GameName, "GameConfig.ini");
-            using (var streamWriter = new StreamWriter(iniPath, false))
-            {
-                streamWriter.WriteLine("[Screen Resolution]");
-                streamWriter.WriteLine("ScreenWidth=" + GameConfig.ScreenWidth);
-                streamWriter.WriteLine("ScreenHeight=" + GameConfig.ScreenHeight);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Fullscreen]");
-                streamWriter.WriteLine("Fullscreen=" + GameConfig.FullScreen);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[QuickDrop]");
-                streamWriter.WriteLine("QuickDrop=" + GameConfig.QuickDrop);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Game Volume]");
-                streamWriter.WriteLine("MusicVol=" + string.Format("{0:F2}", GameConfig.MusicVolume));
-                streamWriter.WriteLine("SFXVol=" + string.Format("{0:F2}", GameConfig.SFXVolume));
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Joystick Dead Zone]");
-                streamWriter.WriteLine("DeadZone=" + InputManager.Deadzone);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Enable DirectInput Gamepads]");
-                streamWriter.WriteLine("EnableDirectInput=" + GameConfig.EnableDirectInput);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Reduce Shader Quality]");
-                streamWriter.WriteLine("ReduceQuality=" + GameConfig.ReduceQuality);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Profile]");
-                streamWriter.WriteLine("Profile=DEFAULT");
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Keyboard Config]");
-                streamWriter.WriteLine("KeyUP=" + GlobalInput.KeyList[16]);
-                streamWriter.WriteLine("KeyDOWN=" + GlobalInput.KeyList[18]);
-                streamWriter.WriteLine("KeyLEFT=" + GlobalInput.KeyList[20]);
-                streamWriter.WriteLine("KeyRIGHT=" + GlobalInput.KeyList[22]);
-                streamWriter.WriteLine("KeyATTACK=" + GlobalInput.KeyList[12]);
-                streamWriter.WriteLine("KeyJUMP=" + GlobalInput.KeyList[10]);
-                streamWriter.WriteLine("KeySPECIAL=" + GlobalInput.KeyList[13]);
-                streamWriter.WriteLine("KeyDASHLEFT=" + GlobalInput.KeyList[14]);
-                streamWriter.WriteLine("KeyDASHRIGHT=" + GlobalInput.KeyList[15]);
-                streamWriter.WriteLine("KeySPELL1=" + GlobalInput.KeyList[24]);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("[Gamepad Config]");
-                streamWriter.WriteLine("ButtonUP=" + GlobalInput.ButtonList[16]);
-                streamWriter.WriteLine("ButtonDOWN=" + GlobalInput.ButtonList[18]);
-                streamWriter.WriteLine("ButtonLEFT=" + GlobalInput.ButtonList[20]);
-                streamWriter.WriteLine("ButtonRIGHT=" + GlobalInput.ButtonList[22]);
-                streamWriter.WriteLine("ButtonATTACK=" + GlobalInput.ButtonList[12]);
-                streamWriter.WriteLine("ButtonJUMP=" + GlobalInput.ButtonList[10]);
-                streamWriter.WriteLine("ButtonSPECIAL=" + GlobalInput.ButtonList[13]);
-                streamWriter.WriteLine("ButtonDASHLEFT=" + GlobalInput.ButtonList[14]);
-                streamWriter.WriteLine("ButtonDASHRIGHT=" + GlobalInput.ButtonList[15]);
-                streamWriter.WriteLine("ButtonSPELL1=" + GlobalInput.ButtonList[24]);
-                streamWriter.Close();
-            }
+            using var streamWriter = new StreamWriter(iniPath, false);
+
+            streamWriter.WriteLine("[Screen Resolution]");
+            streamWriter.WriteLine("ScreenWidth=" + GameConfig.ScreenWidth);
+            streamWriter.WriteLine("ScreenHeight=" + GameConfig.ScreenHeight);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Fullscreen]");
+            streamWriter.WriteLine("Fullscreen=" + GameConfig.FullScreen);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[QuickDrop]");
+            streamWriter.WriteLine("QuickDrop=" + GameConfig.QuickDrop);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Game Volume]");
+            streamWriter.WriteLine("MusicVol=" + $"{GameConfig.MusicVolume:F2}");
+            streamWriter.WriteLine("SFXVol=" + $"{GameConfig.SFXVolume:F2}");
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Joystick Dead Zone]");
+            streamWriter.WriteLine("DeadZone=" + InputManager.Deadzone);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Enable DirectInput Gamepads]");
+            streamWriter.WriteLine("EnableDirectInput=" + GameConfig.EnableDirectInput);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Reduce Shader Quality]");
+            streamWriter.WriteLine("ReduceQuality=" + GameConfig.ReduceQuality);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Profile]");
+            streamWriter.WriteLine("Profile=DEFAULT");
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Keyboard Config]");
+            streamWriter.WriteLine("KeyUP=" + GlobalInput.KeyList[16]);
+            streamWriter.WriteLine("KeyDOWN=" + GlobalInput.KeyList[18]);
+            streamWriter.WriteLine("KeyLEFT=" + GlobalInput.KeyList[20]);
+            streamWriter.WriteLine("KeyRIGHT=" + GlobalInput.KeyList[22]);
+            streamWriter.WriteLine("KeyATTACK=" + GlobalInput.KeyList[12]);
+            streamWriter.WriteLine("KeyJUMP=" + GlobalInput.KeyList[10]);
+            streamWriter.WriteLine("KeySPECIAL=" + GlobalInput.KeyList[13]);
+            streamWriter.WriteLine("KeyDASHLEFT=" + GlobalInput.KeyList[14]);
+            streamWriter.WriteLine("KeyDASHRIGHT=" + GlobalInput.KeyList[15]);
+            streamWriter.WriteLine("KeySPELL1=" + GlobalInput.KeyList[24]);
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("[Gamepad Config]");
+            streamWriter.WriteLine("ButtonUP=" + GlobalInput.ButtonList[16]);
+            streamWriter.WriteLine("ButtonDOWN=" + GlobalInput.ButtonList[18]);
+            streamWriter.WriteLine("ButtonLEFT=" + GlobalInput.ButtonList[20]);
+            streamWriter.WriteLine("ButtonRIGHT=" + GlobalInput.ButtonList[22]);
+            streamWriter.WriteLine("ButtonATTACK=" + GlobalInput.ButtonList[12]);
+            streamWriter.WriteLine("ButtonJUMP=" + GlobalInput.ButtonList[10]);
+            streamWriter.WriteLine("ButtonSPECIAL=" + GlobalInput.ButtonList[13]);
+            streamWriter.WriteLine("ButtonDASHLEFT=" + GlobalInput.ButtonList[14]);
+            streamWriter.WriteLine("ButtonDASHRIGHT=" + GlobalInput.ButtonList[15]);
+            streamWriter.WriteLine("ButtonSPELL1=" + GlobalInput.ButtonList[24]);
+            streamWriter.Close();
         }
 
         public void LoadConfig()
@@ -1802,151 +1760,150 @@ namespace RogueCastle
             {
                 var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 var path = Path.Combine(folderPath, LevelENV.GameName, "GameConfig.ini");
-                using (var streamReader = new StreamReader(path))
+                using var streamReader = new StreamReader(path);
+                var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+                cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+                string text;
+
+                while ((text = streamReader.ReadLine()) != null)
                 {
-                    var cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
-                    cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
-                    string text;
-                    while ((text = streamReader.ReadLine()) != null)
+                    var separatorIndex = text.IndexOf("=", StringComparison.Ordinal);
+                    if (separatorIndex != -1)
                     {
-                        var separatorIndex = text.IndexOf("=", StringComparison.Ordinal);
-                        if (separatorIndex != -1)
+                        var option = text.Substring(0, separatorIndex);
+                        var setting = text.Substring(separatorIndex + 1);
+                        switch (option)
                         {
-                            var option = text.Substring(0, separatorIndex);
-                            var setting = text.Substring(separatorIndex + 1);
-                            switch (option)
-                            {
-                                case "ScreenWidth":
-                                    GameConfig.ScreenWidth = int.Parse(setting, NumberStyles.Any, cultureInfo);
-                                    break;
+                            case "ScreenWidth":
+                                GameConfig.ScreenWidth = int.Parse(setting, NumberStyles.Any, cultureInfo);
+                                break;
 
-                                case "ScreenHeight":
-                                    GameConfig.ScreenHeight = int.Parse(setting, NumberStyles.Any, cultureInfo);
-                                    break;
+                            case "ScreenHeight":
+                                GameConfig.ScreenHeight = int.Parse(setting, NumberStyles.Any, cultureInfo);
+                                break;
 
-                                case "Fullscreen":
-                                    GameConfig.FullScreen = bool.Parse(setting);
-                                    break;
+                            case "Fullscreen":
+                                GameConfig.FullScreen = bool.Parse(setting);
+                                break;
 
-                                case "QuickDrop":
-                                    GameConfig.QuickDrop = bool.Parse(setting);
-                                    break;
+                            case "QuickDrop":
+                                GameConfig.QuickDrop = bool.Parse(setting);
+                                break;
 
-                                case "MusicVol":
-                                    GameConfig.MusicVolume = float.Parse(setting);
-                                    break;
+                            case "MusicVol":
+                                GameConfig.MusicVolume = float.Parse(setting);
+                                break;
 
-                                case "SFXVol":
-                                    GameConfig.SFXVolume = float.Parse(setting);
-                                    break;
+                            case "SFXVol":
+                                GameConfig.SFXVolume = float.Parse(setting);
+                                break;
 
-                                case "DeadZone":
-                                    InputManager.Deadzone = int.Parse(setting, NumberStyles.Any, cultureInfo);
-                                    break;
+                            case "DeadZone":
+                                InputManager.Deadzone = int.Parse(setting, NumberStyles.Any, cultureInfo);
+                                break;
 
-                                case "EnableDirectInput":
-                                    GameConfig.EnableDirectInput = bool.Parse(setting);
-                                    break;
+                            case "EnableDirectInput":
+                                GameConfig.EnableDirectInput = bool.Parse(setting);
+                                break;
 
-                                case "ReduceQuality":
-                                    GameConfig.ReduceQuality = bool.Parse(setting);
-                                    LevelENV.SaveFrames = GameConfig.ReduceQuality;
-                                    break;
+                            case "ReduceQuality":
+                                GameConfig.ReduceQuality = bool.Parse(setting);
+                                LevelENV.SaveFrames = GameConfig.ReduceQuality;
+                                break;
 
-                                case "EnableSteamCloud":
-                                    GameConfig.EnableSteamCloud = bool.Parse(setting);
-                                    break;
+                            case "EnableSteamCloud":
+                                GameConfig.EnableSteamCloud = bool.Parse(setting);
+                                break;
 
-                                case "KeyUP":
-                                    GlobalInput.KeyList[16] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyUP":
+                                GlobalInput.KeyList[16] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyDOWN":
-                                    GlobalInput.KeyList[18] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyDOWN":
+                                GlobalInput.KeyList[18] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyLEFT":
-                                    GlobalInput.KeyList[20] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyLEFT":
+                                GlobalInput.KeyList[20] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyRIGHT":
-                                    GlobalInput.KeyList[22] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyRIGHT":
+                                GlobalInput.KeyList[22] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyATTACK":
-                                    GlobalInput.KeyList[12] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyATTACK":
+                                GlobalInput.KeyList[12] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyJUMP":
-                                    GlobalInput.KeyList[10] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyJUMP":
+                                GlobalInput.KeyList[10] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeySPECIAL":
-                                    GlobalInput.KeyList[13] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeySPECIAL":
+                                GlobalInput.KeyList[13] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyDASHLEFT":
-                                    GlobalInput.KeyList[14] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyDASHLEFT":
+                                GlobalInput.KeyList[14] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeyDASHRIGHT":
-                                    GlobalInput.KeyList[15] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeyDASHRIGHT":
+                                GlobalInput.KeyList[15] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "KeySPELL1":
-                                    GlobalInput.KeyList[24] = (Keys) Enum.Parse(typeof(Keys), setting);
-                                    break;
+                            case "KeySPELL1":
+                                GlobalInput.KeyList[24] = (Keys) Enum.Parse(typeof(Keys), setting);
+                                break;
 
-                                case "ButtonUP":
-                                    GlobalInput.ButtonList[16] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonUP":
+                                GlobalInput.ButtonList[16] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonDOWN":
-                                    GlobalInput.ButtonList[18] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonDOWN":
+                                GlobalInput.ButtonList[18] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonLEFT":
-                                    GlobalInput.ButtonList[20] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonLEFT":
+                                GlobalInput.ButtonList[20] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonRIGHT":
-                                    GlobalInput.ButtonList[22] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonRIGHT":
+                                GlobalInput.ButtonList[22] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonATTACK":
-                                    GlobalInput.ButtonList[12] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonATTACK":
+                                GlobalInput.ButtonList[12] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonJUMP":
-                                    GlobalInput.ButtonList[10] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonJUMP":
+                                GlobalInput.ButtonList[10] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonSPECIAL":
-                                    GlobalInput.ButtonList[13] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonSPECIAL":
+                                GlobalInput.ButtonList[13] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonDASHLEFT":
-                                    GlobalInput.ButtonList[14] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonDASHLEFT":
+                                GlobalInput.ButtonList[14] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonDASHRIGHT":
-                                    GlobalInput.ButtonList[15] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
+                            case "ButtonDASHRIGHT":
+                                GlobalInput.ButtonList[15] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
 
-                                case "ButtonSPELL1":
-                                    GlobalInput.ButtonList[24] = (Buttons) Enum.Parse(typeof(Buttons), setting);
-                                    break;
-                            }
+                            case "ButtonSPELL1":
+                                GlobalInput.ButtonList[24] = (Buttons) Enum.Parse(typeof(Buttons), setting);
+                                break;
                         }
                     }
+                }
 
-                    GlobalInput.KeyList[1] = GlobalInput.KeyList[12];
-                    GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
-                    streamReader.Close();
-                    if (GameConfig.ScreenHeight <= 0 || GameConfig.ScreenWidth <= 0)
-                    {
-                        throw new Exception("Blank Config File");
-                    }
+                GlobalInput.KeyList[1] = GlobalInput.KeyList[12];
+                GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
+                streamReader.Close();
+                if (GameConfig.ScreenHeight <= 0 || GameConfig.ScreenWidth <= 0)
+                {
+                    throw new Exception("Blank Config File");
                 }
             }
             catch
@@ -1961,8 +1918,7 @@ namespace RogueCastle
         {
             GraphicsDeviceManager.PreferredBackBufferWidth = GameConfig.ScreenWidth;
             GraphicsDeviceManager.PreferredBackBufferHeight = GameConfig.ScreenHeight;
-            if (GraphicsDeviceManager.IsFullScreen && !GameConfig.FullScreen
-                || !GraphicsDeviceManager.IsFullScreen && GameConfig.FullScreen)
+            if (GraphicsDeviceManager.IsFullScreen && !GameConfig.FullScreen || !GraphicsDeviceManager.IsFullScreen && GameConfig.FullScreen)
             {
                 GraphicsDeviceManager.ToggleFullScreen();
             }

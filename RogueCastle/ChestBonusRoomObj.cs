@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
@@ -97,7 +98,7 @@ namespace RogueCastle
                 var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
-                    chestObj.ChestType = 2;
+                    chestObj.ChestType = Chest.Silver;
                     chestObj.IsEmpty = true;
                     chestObj.IsLocked = true;
                 }
@@ -122,7 +123,7 @@ namespace RogueCastle
                 var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
-                    chestObj.ForcedItemType = 1;
+                    chestObj.ForcedItemType = ItemDrop.Coin;
                     var num2 = array[num];
                     if (num2 == 1)
                     {
