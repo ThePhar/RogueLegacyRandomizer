@@ -1,13 +1,13 @@
-// 
+//
 // RogueLegacyArchipelago - SpecialItemRoomObj.cs
 // Last Modified 2021-12-27
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -84,45 +84,6 @@ namespace RogueCastle
         {
             var list = new List<byte>();
             for (var i = 1; i < 7; i++) list.Add((byte) i);
-            if ((Game.PlayerStats.EyeballBossBeaten || Game.PlayerStats.TimesCastleBeaten > 0) &&
-                !Game.PlayerStats.ChallengeEyeballUnlocked && !Game.PlayerStats.ChallengeEyeballBeaten)
-            {
-                list.Add(9);
-                list.Add(9);
-            }
-
-            if ((Game.PlayerStats.FairyBossBeaten || Game.PlayerStats.TimesCastleBeaten > 0) &&
-                !Game.PlayerStats.ChallengeSkullUnlocked && !Game.PlayerStats.ChallengeSkullBeaten)
-            {
-                list.Add(10);
-                list.Add(10);
-            }
-
-            if ((Game.PlayerStats.FireballBossBeaten || Game.PlayerStats.TimesCastleBeaten > 0) &&
-                !Game.PlayerStats.ChallengeFireballUnlocked && !Game.PlayerStats.ChallengeFireballBeaten)
-            {
-                list.Add(11);
-                list.Add(11);
-            }
-
-            if ((Game.PlayerStats.BlobBossBeaten || Game.PlayerStats.TimesCastleBeaten > 0) &&
-                !Game.PlayerStats.ChallengeBlobUnlocked && !Game.PlayerStats.ChallengeBlobBeaten)
-            {
-                list.Add(12);
-                list.Add(12);
-                list.Add(12);
-            }
-
-            if (!Game.PlayerStats.ChallengeLastBossUnlocked && !Game.PlayerStats.ChallengeLastBossBeaten &&
-                Game.PlayerStats.ChallengeEyeballBeaten && Game.PlayerStats.ChallengeSkullBeaten &&
-                Game.PlayerStats.ChallengeFireballBeaten && Game.PlayerStats.ChallengeBlobBeaten)
-            {
-                list.Add(13);
-                list.Add(13);
-                list.Add(13);
-                list.Add(13);
-                list.Add(13);
-            }
 
             return list[CDGMath.RandomInt(0, list.Count - 1)];
         }
