@@ -13,7 +13,7 @@ using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -81,7 +81,7 @@ namespace RogueCastle
             m_specialItemIcon.OutlineWidth = 1;
             m_specialItemIcon.Scale = new Vector2(1.7f, 1.7f);
             m_specialItemIcon.Visible = false;
-            m_spellIcon = new SpriteObj(SpellType.Icon(0));
+            m_spellIcon = new SpriteObj(((Spell) 0).Icon());
             m_spellIcon.ForceDraw = true;
             m_spellIcon.OutlineWidth = 1;
             m_spellIcon.Visible = false;
@@ -251,7 +251,7 @@ namespace RogueCastle
                 var b = getEquippedRuneArray[j];
                 if (b != -1)
                 {
-                    m_abilitiesSpriteArray[num].ChangeSprite(EquipmentAbilityType.Icon(b));
+                    m_abilitiesSpriteArray[num].ChangeSprite(((EquipmentAbility) b).Icon());
                     num++;
                 }
             }
@@ -264,7 +264,7 @@ namespace RogueCastle
             if (Game.PlayerStats.SpecialItem != 0)
             {
                 m_specialItemIcon.Visible = true;
-                m_specialItemIcon.ChangeSprite(SpecialItemType.SpriteName(Game.PlayerStats.SpecialItem));
+                m_specialItemIcon.ChangeSprite(((SpecialItem) Game.PlayerStats.SpecialItem).SpriteName());
                 m_iconHolder2.Opacity = 1f;
             }
         }
@@ -276,13 +276,13 @@ namespace RogueCastle
             m_spellCost.Visible = false;
             if (Game.PlayerStats.Spell != 0)
             {
-                m_spellIcon.ChangeSprite(SpellType.Icon(Game.PlayerStats.Spell));
+                m_spellIcon.ChangeSprite(((Spell) Game.PlayerStats.Spell).Icon());
                 m_spellIcon.Visible = true;
                 m_iconHolder1.Opacity = 1f;
                 m_spellCost.Text =
                     (int)
                     (SpellEV.GetManaCost(Game.PlayerStats.Spell) *
-                     (1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount)) + " mp";
+                     (1f - SkillSystem.GetSkill(Skill.ManaCostDown).ModifierAmount)) + " mp";
                 m_spellCost.Visible = true;
             }
         }

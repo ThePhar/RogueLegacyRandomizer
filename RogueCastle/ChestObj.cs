@@ -1,22 +1,13 @@
-//
-//  RogueLegacyArchipelago - ChestObj.cs
-//  Last Modified 2021-12-30
-//
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
+
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -57,20 +48,20 @@ namespace RogueCastle
                 var isOpen = IsOpen;
                 switch (m_chestType)
                 {
-                    case Structs.ChestType.Boss:
+                    case (byte) Chest.Boss:
                         ForcedItemType = 14;
                         ChangeSprite("BossChest_Sprite");
                         break;
 
-                    case Structs.ChestType.Fairy:
+                    case (byte) Chest.Fairy:
                         ChangeSprite("Chest4_Sprite");
                         break;
 
-                    case Structs.ChestType.Gold:
+                    case (byte) Chest.Gold:
                         ChangeSprite("Chest3_Sprite");
                         break;
 
-                    case Structs.ChestType.Silver:
+                    case (byte) Chest.Silver:
                         ChangeSprite("Chest2_Sprite");
                         break;
 
@@ -114,11 +105,11 @@ namespace RogueCastle
 
             switch (ChestType)
             {
-                case Structs.ChestType.Brown:
+                case (byte) Chest.Brown:
                     chances = GameEV.BRONZECHEST_ITEMDROP_CHANCE;
                     break;
 
-                case Structs.ChestType.Silver:
+                case (byte) Chest.Silver:
                     chances = GameEV.SILVERCHEST_ITEMDROP_CHANCE;
                     break;
 
@@ -138,7 +129,7 @@ namespace RogueCastle
                 }
             }
 
-            if (ChestType == Structs.ChestType.Boss)
+            if (ChestType ==(byte)  Chest.Boss)
             {
                 GiveStatDrop(itemDropManager, player, 3, 0);
                 return;
@@ -334,25 +325,25 @@ namespace RogueCastle
             {
                 var total = 0;
 
-                switch (room.LevelType)
+                switch (room.Zone)
                 {
-                    case LevelType.None:
-                    case LevelType.Castle:
+                    case Zone.None:
+                    case Zone.Castle:
                         total = ++Game.PlayerStats.OpenedChests.CastleFairyChests;
                         location = string.Format("Castle Hamson - Fairy Chest {0}", total);
                         break;
 
-                    case LevelType.Garden:
+                    case Zone.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenFairyChests;
                         location = string.Format("Forest Abkhazia - Fairy Chest {0}", total);
                         break;
 
-                    case LevelType.Dungeon:
+                    case Zone.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonFairyChests;
                         location = string.Format("The Land of Darkness - Fairy Chest {0}", total);
                         break;
 
-                    case LevelType.Tower:
+                    case Zone.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerFairyChests;
                         location = string.Format("The Maya - Fairy Chest {0}", total);
                         break;
@@ -371,25 +362,25 @@ namespace RogueCastle
             {
                 var total = 0;
 
-                switch (room.LevelType)
+                switch (room.Zone)
                 {
-                    case LevelType.None:
-                    case LevelType.Castle:
+                    case Zone.None:
+                    case Zone.Castle:
                         total = ++Game.PlayerStats.OpenedChests.CastleChests;
                         location = string.Format("Castle Hamson - Chest {0}", total);
                         break;
 
-                    case LevelType.Garden:
+                    case Zone.Garden:
                         total = ++Game.PlayerStats.OpenedChests.GardenChests;
                         location = string.Format("Forest Abkhazia - Chest {0}", total);
                         break;
 
-                    case LevelType.Dungeon:
+                    case Zone.Dungeon:
                         total = ++Game.PlayerStats.OpenedChests.DungeonChests;
                         location = string.Format("The Land of Darkness - Chest {0}", total);
                         break;
 
-                    case LevelType.Tower:
+                    case Zone.Tower:
                         total = ++Game.PlayerStats.OpenedChests.TowerChests;
                         location = string.Format("The Maya - Chest {0}", total);
                         break;
@@ -413,7 +404,7 @@ namespace RogueCastle
             var networkItem = new List<object>
             {
                 new Vector2(X, Y - Height / 2f),
-                GetItemType.GiveNetworkItem,
+                ItemCategory.GiveNetworkItem,
                 new Vector2(-1f, -1f),
                 new Vector2(-1f, -1f),
                 name,
@@ -425,7 +416,7 @@ namespace RogueCastle
             // If we're sending someone else something, let's show what we're sending.
             if (arch.LocationCache[code].Player != arch.Data.Slot)
             {
-                Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, networkItem);
+                Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, networkItem);
                 player.RunGetItemAnimation();
             }
         }

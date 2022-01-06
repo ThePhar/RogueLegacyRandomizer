@@ -14,8 +14,10 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.GameObjects;
+using RogueCastle.Enums;
 using Tweener;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {

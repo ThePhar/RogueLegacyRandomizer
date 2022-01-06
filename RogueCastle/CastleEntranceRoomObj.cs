@@ -1,14 +1,3 @@
-//
-//  RogueLegacyArchipelago - CastleEntranceRoomObj.cs
-//  Last Modified 2021-12-29
-//
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using Archipelago;
@@ -16,9 +5,12 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
+
+using LogicSet = DS2DEngine.LogicSet;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -111,13 +103,13 @@ namespace RogueCastle
             base.Initialize();
         }
 
-        public void RevealSymbol(LevelType levelType, bool tween)
+        public void RevealSymbol(Zone zone, bool tween)
         {
             var flag = false;
             int index;
-            switch (levelType)
+            switch (zone)
             {
-                case LevelType.Castle:
+                case Zone.Castle:
                     index = 1;
                     if (Game.PlayerStats.ChallengeEyeballBeaten)
                     {
@@ -126,7 +118,7 @@ namespace RogueCastle
 
                     break;
 
-                case LevelType.Garden:
+                case Zone.Garden:
                     index = 3;
                     if (Game.PlayerStats.ChallengeSkullBeaten)
                     {
@@ -135,7 +127,7 @@ namespace RogueCastle
 
                     break;
 
-                case LevelType.Dungeon:
+                case Zone.Dungeon:
                     index = 4;
                     if (Game.PlayerStats.ChallengeBlobBeaten)
                     {
@@ -144,7 +136,7 @@ namespace RogueCastle
 
                     break;
 
-                case LevelType.Tower:
+                case Zone.Tower:
                     index = 2;
                     if (Game.PlayerStats.ChallengeFireballBeaten)
                     {
@@ -219,22 +211,22 @@ namespace RogueCastle
 
             if (Game.PlayerStats.EyeballBossBeaten)
             {
-                RevealSymbol(LevelType.Castle, false);
+                RevealSymbol(Zone.Castle, false);
             }
 
             if (Game.PlayerStats.FairyBossBeaten)
             {
-                RevealSymbol(LevelType.Garden, false);
+                RevealSymbol(Zone.Garden, false);
             }
 
             if (Game.PlayerStats.BlobBossBeaten)
             {
-                RevealSymbol(LevelType.Dungeon, false);
+                RevealSymbol(Zone.Dungeon, false);
             }
 
             if (Game.PlayerStats.FireballBossBeaten)
             {
-                RevealSymbol(LevelType.Tower, false);
+                RevealSymbol(Zone.Tower, false);
             }
 
             if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
@@ -272,7 +264,7 @@ namespace RogueCastle
             m_bossDoorOpening = true;
             m_bossDoor.Locked = false;
             Player.AttachedLevel.UpdateCamera();
-            RevealSymbol(LevelType.None, true);
+            RevealSymbol(Zone.None, true);
             Player.CurrentSpeed = 0f;
             Player.LockControls();
             Player.AttachedLevel.CameraLockedToPlayer = false;
@@ -358,15 +350,13 @@ namespace RogueCastle
                 m_speechBubble.Visible = false;
             }
 
-            if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround &&
-                (Game.GlobalInput.JustPressed(InputType.PlayerUp1) ||
-                 Game.GlobalInput.JustPressed(InputType.PlayerUp2)))
+            if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround && ButtonHelper.PressedUp)
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {
                     var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
-                    rCScreenManager.DisplayScreen(ScreenType.Dialogue, true);
+                    rCScreenManager.DisplayScreen((int) Screen.Dialogue, true);
                     Game.PlayerStats.DiaryEntry += 1;
 
                     // Check location.
@@ -380,21 +370,21 @@ namespace RogueCastle
                         var item = new List<object>
                         {
                             new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
-                            GetItemType.GiveNetworkItem,
+                            ItemCategory.GiveNetworkItem,
                             new Vector2(-1f, -1f),
                             new Vector2(-1f, -1f),
                             Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen(ScreenType.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
                 }
                 else
                 {
                     var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    rCScreenManager2.DisplayScreen(ScreenType.DiaryEntry, true);
+                    rCScreenManager2.DisplayScreen((int) Screen.DiaryEntry, true);
                 }
             }
 

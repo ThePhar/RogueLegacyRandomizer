@@ -11,7 +11,7 @@
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using RogueCastle.Systems;
 
 namespace RogueCastle
@@ -44,7 +44,7 @@ namespace RogueCastle
         public int BaseCost { get; set; }
         public int Appreciation { get; set; }
         public int MaxLevel { get; set; }
-        public SkillType TraitType { get; set; }
+        public Skill Trait { get; set; }
         public string IconName { get; set; }
         public string UnitOfMeasurement { get; set; }
         public byte StatType { get; set; }
@@ -131,7 +131,7 @@ namespace RogueCastle
             skillObj.Appreciation = Appreciation;
             skillObj.MaxLevel = MaxLevel;
             skillObj.CurrentLevel = CurrentLevel;
-            skillObj.TraitType = TraitType;
+            skillObj.Trait = Trait;
             skillObj.InputDescription = InputDescription;
             skillObj.UnitOfMeasurement = UnitOfMeasurement;
             skillObj.StatType = StatType;

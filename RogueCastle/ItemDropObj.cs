@@ -12,7 +12,7 @@
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -129,7 +129,7 @@ namespace RogueCastle
                 case 2:
                 {
                     var num3 =
-                        (int) (player.MaxHealth * (m_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
+                        (int) (player.MaxHealth * (m_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
                     player.CurrentHealth += num3;
                     textManager.DisplayNumberStringText(num3, "hp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));
@@ -140,7 +140,7 @@ namespace RogueCastle
                 case 3:
                 {
                     var num4 =
-                        (int) (player.MaxMana * (m_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
+                        (int) (player.MaxMana * (m_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
                     player.CurrentMana += num4;
                     textManager.DisplayNumberStringText(num4, "mp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));

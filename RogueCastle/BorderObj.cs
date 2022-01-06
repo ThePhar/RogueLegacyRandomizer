@@ -1,21 +1,10 @@
-// 
-// RogueLegacyArchipelago - BorderObj.cs
-// Last Modified 2021-12-27
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-// 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
-
 using System;
 using System.Globalization;
 using System.Xml;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -25,7 +14,7 @@ namespace RogueCastle
         public bool BorderLeft;
         public bool BorderRight;
         public bool BorderTop;
-        public LevelType LevelType = LevelType.Castle;
+        public Zone Zone = Zone.Castle;
 
         public BorderObj()
         {
@@ -277,7 +266,7 @@ namespace RogueCastle
         {
             base.FillCloneInstance(obj);
             var borderObj = obj as BorderObj;
-            borderObj.LevelType = LevelType;
+            borderObj.Zone = Zone;
             borderObj.BorderTop = BorderTop;
             borderObj.BorderBottom = BorderBottom;
             borderObj.BorderLeft = BorderLeft;

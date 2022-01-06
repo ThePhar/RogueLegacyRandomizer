@@ -10,7 +10,7 @@
 // 
 
 using RogueCastle.Screens;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle.Options
 {
@@ -39,7 +39,7 @@ namespace RogueCastle.Options
                     rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                     rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "StartGame");
                     rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CancelCommand");
-                    rCScreenManager.DisplayScreen(ScreenType.Dialogue, false);
+                    rCScreenManager.DisplayScreen((int) Screen.Dialogue, false);
                 }
             }
         }

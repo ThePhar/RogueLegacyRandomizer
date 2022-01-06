@@ -15,7 +15,8 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
@@ -63,7 +64,7 @@ namespace RogueCastle
             }
         }
 
-        private void FindRoomTitlePos(List<RoomObj> roomList, LevelType levelType, out Vector2 pos)
+        private void FindRoomTitlePos(List<RoomObj> roomList, Zone zone, out Vector2 pos)
         {
             var num = 3.40282347E+38f;
             var num2 = -3.40282347E+38f;
@@ -71,8 +72,8 @@ namespace RogueCastle
             var num4 = -3.40282347E+38f;
             foreach (var current in roomList)
                 if (current.Name != "Boss" &&
-                    (current.LevelType == levelType ||
-                     current.LevelType == LevelType.Castle &&
+                    (current.Zone == zone ||
+                     current.Zone == Zone.Castle &&
                      (current.Name == "Start" || current.Name == "CastleEntrance")))
                 {
                     if (current.X < num)

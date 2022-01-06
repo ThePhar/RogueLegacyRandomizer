@@ -167,7 +167,7 @@ namespace RogueCastle
             Game.PlayerStats.NewBossBeaten = true;
             if (LinkedRoom != null)
             {
-                Player.AttachedLevel.CloseBossDoor(LinkedRoom, LevelType);
+                Player.AttachedLevel.CloseBossDoor(LinkedRoom, Zone);
             }
         }
 
@@ -200,7 +200,7 @@ namespace RogueCastle
                 logicSet.AddAction(new DelayLogicAction(0.05f));
                 logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
                 logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.RoomList[1], "RevealSymbol",
-                    LevelType, true));
+                    Zone, true));
                 logicSet.AddAction(new DelayLogicAction(3.5f));
                 logicSet.AddAction(
                     new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));

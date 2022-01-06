@@ -13,9 +13,10 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
+using LogicSet = DS2DEngine.LogicSet;
 
 namespace RogueCastle
 {
@@ -142,7 +143,7 @@ namespace RogueCastle
             Game.PlayerStats.NewBossBeaten = true;
             if (LinkedRoom != null)
             {
-                Player.AttachedLevel.CloseBossDoor(LinkedRoom, LevelType);
+                Player.AttachedLevel.CloseBossDoor(LinkedRoom, Zone);
             }
 
             (Game.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);

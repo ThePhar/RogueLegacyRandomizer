@@ -1,14 +1,3 @@
-//
-// RogueLegacyArchipelago - Program.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -24,22 +13,20 @@ namespace RogueCastle
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool AllocConsole();
 
-        [STAThread]
         private static void Main()
         {
-            // Start our console window.
             if (LevelENV.RunConsole)
+            {
                 AllocConsole();
+            }
 
+            using var game = new Game();
             if (LevelENV.RunCrashLogs)
             {
                 try
                 {
-                    using (var game = new Game())
-                    {
-                        Game = game;
-                        game.Run();
-                    }
+                    Game = game;
+                    game.Run();
 
                     return;
                 }
@@ -60,18 +47,18 @@ namespace RogueCastle
                     }
 
                     MessageBox.Show(
-                        "Rogue Legacy has run into a situation it cannot recover from and needs to close. If you are not a Randomizer developer, please reach out to Phar#4444 and include the crash logs so they can fix this issue.\n\nIf you're Phar, stop breaking things and fix it.",
+                        "Rogue Legacy has run into a situation it cannot recover from and needs to close. If you are" +
+                        " not a Randomizer developer, please reach out to Phar#4444 and include the crash logs so " +
+                        "they can fix this issue.\n\nIf you're Phar, stop breaking things and fix it.",
                         "Unexpected Exception Occurred", MessageBoxButtons.OK, MessageBoxIcon.Hand);
 
                     return;
                 }
             }
 
-            using (var game = new Game())
-            {
-                Game = game;
-                game.Run();
-            }
+            // Run without crash logger.
+            Game = game;
+            game.Run();
         }
     }
 }

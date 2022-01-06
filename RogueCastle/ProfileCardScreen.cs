@@ -15,9 +15,10 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
@@ -84,7 +85,7 @@ namespace RogueCastle
             m_tombStoneSprite.ForceDraw = true;
             m_tombStoneSprite.Scale = new Vector2(3f, 3f);
             m_tombStoneSprite.OutlineWidth = 2;
-            m_spellIcon = new SpriteObj(SpellType.Icon(12));
+            m_spellIcon = new SpriteObj(((Spell) 12).Icon());
             m_spellIcon.Position = new Vector2(350f, 295f);
             m_spellIcon.OutlineWidth = 2;
             m_spellIcon.ForceDraw = true;
@@ -227,7 +228,7 @@ namespace RogueCastle
             {
                 var textObj7 = textObj.Clone() as TextObj;
                 textObj7.X = 60f;
-                textObj7.Text = EquipmentAbilityType.ToString(k);
+                textObj7.Text = ((EquipmentAbility) k).ToString();
                 textObj7.FontSize = 7f;
                 m_runeBackTitleList.Add(textObj7);
                 m_backCard.AddChild(textObj7);
@@ -240,7 +241,7 @@ namespace RogueCastle
 
             var textObj9 = textObj.Clone() as TextObj;
             textObj9.X = 60f;
-            textObj9.Text = EquipmentAbilityType.ToString(20);
+            textObj9.Text = ((EquipmentAbility) 20).ToString();
             textObj9.FontSize = 7f;
             m_runeBackTitleList.Add(textObj9);
             m_backCard.AddChild(textObj9);
@@ -251,7 +252,7 @@ namespace RogueCastle
             m_backCard.AddChild(textObj10);
             var textObj11 = textObj.Clone() as TextObj;
             textObj11.X = 60f;
-            textObj11.Text = EquipmentAbilityType.ToString(21);
+            textObj11.Text = ((EquipmentAbility) 21).ToString();
             textObj11.FontSize = 7f;
             m_runeBackTitleList.Add(textObj11);
             m_backCard.AddChild(textObj11);
@@ -266,7 +267,7 @@ namespace RogueCastle
         {
             SoundManager.PlaySound("StatCard_In");
             LoadCardColour();
-            m_spellIcon.ChangeSprite(SpellType.Icon(Game.PlayerStats.Spell));
+            m_spellIcon.ChangeSprite(((Spell) Game.PlayerStats.Spell).Icon());
             string[] array =
             {
                 "CardCastleBG_Sprite",
@@ -596,7 +597,7 @@ namespace RogueCastle
             var b = (byte) Game.PlayerStats.Traits.X;
             if (b != 0)
             {
-                m_frontTrait1.Text = TraitType.ToString(b) + ": " + TraitType.ProfileCardDescription(b);
+                m_frontTrait1.Text = ((Trait) b).ToString() + ": " + ((Trait) b).ProfileCardDescription();
                 m_frontTrait1.Visible = true;
             }
 
@@ -609,16 +610,16 @@ namespace RogueCastle
                     m_frontTrait2.Y -= 20f;
                 }
 
-                m_frontTrait2.Text = TraitType.ToString(b2) + ": " + TraitType.ProfileCardDescription(b2);
+                m_frontTrait2.Text = ((Trait) b2).ToString() + ": " + ((Trait) b2).ProfileCardDescription();
                 m_frontTrait2.Visible = true;
             }
 
             m_playerName.Text = Game.PlayerStats.PlayerName;
             m_playerStats.Text = (int) (player.Damage / 20f) + "/" + (int) (player.MaxHealth / 50f);
             m_levelClass.Text = string.Concat("Lv. ", Game.PlayerStats.CurrentLevel, " - ",
-                ClassType.ToString(Game.PlayerStats.Class, Game.PlayerStats.IsFemale));
+                ((Class) Game.PlayerStats.Class).ToString(Game.PlayerStats.IsFemale));
             m_money.Text = Game.PlayerStats.Gold.ToString();
-            m_classDescription.Text = ClassType.ProfileCardDescription(Game.PlayerStats.Class);
+            m_classDescription.Text = ((Class) Game.PlayerStats.Class).ProfileCardDescription();
         }
 
         private void LoadBackCardStats(PlayerObj player)
@@ -659,8 +660,8 @@ namespace RogueCastle
                 m_equipmentList[j].Y = num2;
                 if (getEquippedArray[j] != -1)
                 {
-                    m_equipmentList[j].Text = EquipmentBaseType.ToString(getEquippedArray[j]) + " " +
-                                              EquipmentCategoryType.ToString2(j);
+                    m_equipmentList[j].Text = ((EquipmentBase) getEquippedArray[j]) + " " +
+                                              ((EquipmentCategory) j).ToString2();
                     m_equipmentList[j].Visible = true;
                     num2 += 20;
                 }
@@ -719,7 +720,7 @@ namespace RogueCastle
 
                 if (num3 > 0f)
                 {
-                    m_runeBackDescriptionList[k].Text = "(" + EquipmentAbilityType.ShortDescription(k, num3) + ")";
+                    m_runeBackDescriptionList[k].Text = "(" + ((EquipmentAbility) k).ShortDescription(num3) + ")";
                     m_runeBackTitleList[k].Visible = true;
                     m_runeBackDescriptionList[k].Visible = true;
                     num2 += 20;
@@ -729,9 +730,7 @@ namespace RogueCastle
             if (Game.PlayerStats.HasArchitectFee)
             {
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 2].Text = "(" +
-                    EquipmentAbilityType
-                        .ShortDescription(20, 0f) +
-                    ")";
+                    ((EquipmentAbility) 20).ShortDescription(0f) + ")";
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 2].Visible = true;
                 m_runeBackTitleList[m_runeBackDescriptionList.Count - 2].Visible = true;
                 num2 += 20;
@@ -740,11 +739,7 @@ namespace RogueCastle
             if (Game.PlayerStats.TimesCastleBeaten > 0)
             {
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 1].Text = "(" +
-                    EquipmentAbilityType
-                        .ShortDescription(21,
-                            50 *
-                            Game.PlayerStats
-                                .TimesCastleBeaten) +
+                    ((EquipmentAbility) 21).ShortDescription(50 * Game.PlayerStats.TimesCastleBeaten) +
                     ")";
                 m_runeBackDescriptionList[m_runeBackDescriptionList.Count - 1].Visible = true;
                 m_runeBackTitleList[m_runeBackDescriptionList.Count - 1].Visible = true;

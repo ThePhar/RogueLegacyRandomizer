@@ -17,7 +17,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Screens;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using Screen = DS2DEngine.Screen;
@@ -81,7 +81,7 @@ namespace RogueCastle
             var proceduralLevelScreen = CurrentScreen as ProceduralLevelScreen;
             if (proceduralLevelScreen != null && !(proceduralLevelScreen.CurrentRoom is EndingRoomObj))
             {
-                DisplayScreen(ScreenType.Pause, true);
+                DisplayScreen((int) Enums.Screen.Pause, true);
             }
         }
 
@@ -208,22 +208,22 @@ namespace RogueCastle
 
             switch (screenType)
             {
-                case ScreenType.CDGSplash:
-                case ScreenType.Title:
-                case ScreenType.Lineage:
-                case ScreenType.StartingRoom:
-                case ScreenType.TitleWhite:
-                case ScreenType.DemoStart:
-                case ScreenType.DemoEnd:
+                case (int) Enums.Screen.CDGSplash:
+                case (int) Enums.Screen.Title:
+                case (int) Enums.Screen.Lineage:
+                case (int) Enums.Screen.StartingRoom:
+                case (int) Enums.Screen.TitleWhite:
+                case (int) Enums.Screen.DemoStart:
+                case (int) Enums.Screen.DemoEnd:
                     LoadScreen((byte) screenType, true);
                     break;
 
-                case ScreenType.Options:
+                case (int) Enums.Screen.Options:
                     m_optionsScreen.PassInData(objList);
                     AddScreen(m_optionsScreen, null);
                     break;
 
-                case ScreenType.Level:
+                case (int) Enums.Screen.Level:
                     if (RogueCastle.Game.PlayerStats.LockCastle || !(CurrentScreen is ProceduralLevelScreen))
                     {
                         LoadScreen((byte) screenType, true);
@@ -235,91 +235,91 @@ namespace RogueCastle
 
                     break;
 
-                case ScreenType.Skill:
+                case (int) Enums.Screen.Skill:
                     AddScreen(SkillScreen, null);
                     break;
 
-                case ScreenType.GameOver:
+                case (int) Enums.Screen.GameOver:
                     m_gameOverScreen.PassInData(objList);
                     AddScreen(m_gameOverScreen, null);
                     break;
 
-                case ScreenType.Blacksmith:
+                case (int) Enums.Screen.Blacksmith:
                     AddScreen(m_blacksmithScreen, null);
                     m_blacksmithScreen.Player = Player;
                     break;
 
-                case ScreenType.Enchantress:
+                case (int) Enums.Screen.Enchantress:
                     AddScreen(m_enchantressScreen, null);
                     m_enchantressScreen.Player = Player;
                     break;
 
-                case ScreenType.GetItem:
+                case (int) Enums.Screen.GetItem:
                     m_getItemScreen.PassInData(objList);
                     AddScreen(m_getItemScreen, null);
                     break;
 
-                case ScreenType.Dialogue:
+                case (int) Enums.Screen.Dialogue:
                     AddScreen(DialogueScreen, null);
                     break;
 
-                case ScreenType.Map:
+                case (int) Enums.Screen.Map:
                     m_mapScreen.SetPlayer(Player);
                     AddScreen(m_mapScreen, null);
                     break;
 
-                case ScreenType.Pause:
+                case (int) Enums.Screen.Pause:
                     GetLevelScreen().CurrentRoom.DarkenRoom();
                     AddScreen(m_pauseScreen, null);
                     break;
 
-                case ScreenType.ProfileCard:
+                case (int) Enums.Screen.ProfileCard:
                     AddScreen(m_profileCardScreen, null);
                     break;
 
-                case ScreenType.Credits:
-                    LoadScreen(ScreenType.Credits, true);
+                case (int) Enums.Screen.Credits:
+                    LoadScreen((int) Enums.Screen.Credits, true);
                     break;
 
-                case ScreenType.SkillUnlock:
+                case (int) Enums.Screen.SkillUnlock:
                     m_skillUnlockScreen.PassInData(objList);
                     AddScreen(m_skillUnlockScreen, null);
                     break;
 
-                case ScreenType.DiaryEntry:
+                case (int) Enums.Screen.DiaryEntry:
                     AddScreen(m_diaryEntryScreen, null);
                     break;
 
-                case ScreenType.DeathDefy:
+                case (int) Enums.Screen.DeathDefy:
                     AddScreen(m_deathDefyScreen, null);
                     break;
 
-                case ScreenType.Text:
+                case (int) Enums.Screen.Text:
                     m_textScreen.PassInData(objList);
                     AddScreen(m_textScreen, null);
                     break;
 
-                case ScreenType.TutorialRoom:
-                    LoadScreen(ScreenType.TutorialRoom, true);
+                case (int) Enums.Screen.TutorialRoom:
+                    LoadScreen((int) Enums.Screen.TutorialRoom, true);
                     break;
 
-                case ScreenType.Ending:
+                case (int) Enums.Screen.Ending:
                     GetLevelScreen().CameraLockedToPlayer = false;
                     GetLevelScreen().DisableRoomTransitioning = true;
                     Player.Position = new Vector2(100f, 100f);
-                    LoadScreen(ScreenType.Ending, true);
+                    LoadScreen((int) Enums.Screen.Ending, true);
                     break;
 
-                case ScreenType.DiaryFlashback:
+                case (int) Enums.Screen.DiaryFlashback:
                     AddScreen(m_flashbackScreen, null);
                     break;
 
-                case ScreenType.GameOverBoss:
+                case (int) Enums.Screen.GameOverBoss:
                     m_gameOverBossScreen.PassInData(objList);
                     AddScreen(m_gameOverBossScreen, null);
                     break;
 
-                case ScreenType.Archipelago:
+                case (int) Enums.Screen.Archipelago:
                     m_archipelagoScreen.PassInData(objList);
                     AddScreen(m_archipelagoScreen, null);
                     break;

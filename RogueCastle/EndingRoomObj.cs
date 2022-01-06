@@ -14,7 +14,7 @@ using System.Globalization;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
@@ -397,8 +397,8 @@ namespace RogueCastle
 
         public void ChangeLevelType()
         {
-            LevelType = LevelType.Dungeon;
-            Player.AttachedLevel.UpdateLevel(LevelType);
+            Zone = Zone.Dungeon;
+            Player.AttachedLevel.UpdateLevel(Zone);
         }
 
         public override void Update(GameTime gameTime)

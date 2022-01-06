@@ -1,0 +1,38 @@
+namespace RogueCastle.Enums
+{
+    public enum Screen
+    {
+        Null,
+        CDGSplash,
+        MiscSplash,
+        Title,
+        Options,
+        Level,
+        Skill,
+        GameOver,
+        LevelUp,
+        Lineage,
+        Blacksmith,
+        Enchantress,
+        GetItem,
+        Dialogue,
+        Map,
+        StartingRoom,
+        Pause,
+        ProfileCard,
+        Credits,
+        SkillUnlock,
+        DiaryEntry,
+        DeathDefy,
+        Text,
+        TutorialRoom,
+        Ending,
+        DiaryFlashback,
+        GameOverBoss,
+        TitleWhite,
+        DemoStart,
+        DemoEnd,
+        ProfileSelect,
+        Archipelago = 80,
+    }
+}

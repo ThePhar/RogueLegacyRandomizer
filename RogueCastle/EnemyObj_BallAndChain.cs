@@ -13,7 +13,8 @@ using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
+using LogicSet = DS2DEngine.LogicSet;
 
 namespace RogueCastle
 {

@@ -6,11 +6,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AssemblyName>Rogue Legacy Randomizer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
+    <LangVersion>latestmajor</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -29,6 +28,16 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>RogueCastle.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Archipelago.MultiClient.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -165,6 +174,12 @@
     <Compile Include="RogueCastle\EnemyTagObj.cs" />
     <Compile Include="RogueCastle\EnemyTemplate.cs" />
     <Compile Include="RogueCastle\EnergonProjectileObj.cs" />
+    <Compile Include="RogueCastle\Enums\Armor.cs" />
+    <Compile Include="RogueCastle\Enums\BonusRoom.cs" />
+    <Compile Include="RogueCastle\Enums\BossRoom.cs" />
+    <Compile Include="RogueCastle\Enums\Chest.cs" />
+    <Compile Include="RogueCastle\Enums\ChestCondition.cs" />
+    <Compile Include="RogueCastle\Enums\TraitRarity.cs" />
     <Compile Include="RogueCastle\EquipmentData.cs" />
     <Compile Include="RogueCastle\EquipmentState.cs" />
     <Compile Include="RogueCastle\EquipmentSystem.cs" />
@@ -183,6 +198,7 @@
     <Compile Include="RogueCastle\Game.cs" />
     <Compile Include="RogueCastle\GameEV.cs" />
     <Compile Include="RogueCastle\GameObjects\DeathLinkObj.cs" />
+    <Compile Include="RogueCastle\GameObjects\SkyObj.cs" />
     <Compile Include="RogueCastle\GameOverBossScreen.cs" />
     <Compile Include="RogueCastle\GameOverScreen.cs" />
     <Compile Include="RogueCastle\GameUtil.cs" />
@@ -260,20 +276,18 @@
     <Compile Include="RogueCastle\SkillScreen.cs" />
     <Compile Include="RogueCastle\SkillSystem.cs" />
     <Compile Include="RogueCastle\SkillUnlockScreen.cs" />
-    <Compile Include="RogueCastle\SkyObj.cs" />
     <Compile Include="RogueCastle\SleepUtil.cs" />
     <Compile Include="RogueCastle\SpecialItemRoomObj.cs" />
     <Compile Include="RogueCastle\SpellEV.cs" />
     <Compile Include="RogueCastle\SpellSwapRoomObj.cs" />
     <Compile Include="RogueCastle\StartingRoomObj.cs" />
     <Compile Include="RogueCastle\SteamCloudOptionsObj.cs" />
-    <Compile Include="RogueCastle\Structs\ArmorType.cs" />
-    <Compile Include="RogueCastle\Structs\CollisionType.cs" />
-    <Compile Include="RogueCastle\Structs\DoorType.cs" />
-    <Compile Include="RogueCastle\Structs\EnemyDifficulty.cs" />
-    <Compile Include="RogueCastle\Structs\EquipmentType.cs" />
-    <Compile Include="RogueCastle\Structs\LevelType.cs" />
-    <Compile Include="RogueCastle\Structs\ManorPieces.cs" />
+    <Compile Include="RogueCastle\Enums\Collision.cs" />
+    <Compile Include="RogueCastle\Enums\Door.cs" />
+    <Compile Include="RogueCastle\Enums\EnemyDifficulty.cs" />
+    <Compile Include="RogueCastle\Enums\Equipment.cs" />
+    <Compile Include="RogueCastle\Enums\Zone.cs" />
+    <Compile Include="RogueCastle\Enums\ManorPieces.cs" />
     <Compile Include="RogueCastle\Systems\ManorContainer.cs" />
     <Compile Include="RogueCastle\TeleporterObj.cs" />
     <Compile Include="RogueCastle\TerrainObj.cs" />
@@ -284,30 +298,25 @@
     <Compile Include="RogueCastle\ToggleDirectInputOptionsObj.cs" />
     <Compile Include="RogueCastle\TraitState.cs" />
     <Compile Include="RogueCastle\TutorialRoomObj.cs" />
-    <Compile Include="RogueCastle\Structs\BonusRoomType.cs" />
-    <Compile Include="RogueCastle\Structs\BossRoomType.cs" />
-    <Compile Include="RogueCastle\Structs\ChestConditionType.cs" />
-    <Compile Include="RogueCastle\Structs\ChestType.cs" />
-    <Compile Include="RogueCastle\Structs\ClassType.cs" />
-    <Compile Include="RogueCastle\Structs\EnemyType.cs" />
-    <Compile Include="RogueCastle\Structs\EquipmentAbilityType.cs" />
-    <Compile Include="RogueCastle\Structs\EquipmentBaseType.cs" />
-    <Compile Include="RogueCastle\Structs\EquipmentCategoryType.cs" />
-    <Compile Include="RogueCastle\Structs\EquipmentSecondaryDataType.cs" />
-    <Compile Include="RogueCastle\Structs\LogicSetType.cs" />
-    <Compile Include="RogueCastle\Structs\GetItemType.cs" />
-    <Compile Include="RogueCastle\Structs\InputType.cs" />
-    <Compile Include="RogueCastle\Structs\ItemDropType.cs" />
-    <Compile Include="RogueCastle\Structs\OrbType.cs" />
-    <Compile Include="RogueCastle\Structs\RoomType.cs" />
-    <Compile Include="RogueCastle\Structs\SaveType.cs" />
-    <Compile Include="RogueCastle\Structs\ScreenType.cs" />
-    <Compile Include="RogueCastle\Structs\SkillType.cs" />
-    <Compile Include="RogueCastle\Structs\SkillUnlockType.cs" />
-    <Compile Include="RogueCastle\Structs\SpecialItemType.cs" />
-    <Compile Include="RogueCastle\Structs\SpellType.cs" />
-    <Compile Include="RogueCastle\Structs\SkillStatType.cs" />
-    <Compile Include="RogueCastle\Structs\TraitType.cs" />
+    <Compile Include="RogueCastle\Enums\Class.cs" />
+    <Compile Include="RogueCastle\Enums\Enemy.cs" />
+    <Compile Include="RogueCastle\Enums\EquipmentAbility.cs" />
+    <Compile Include="RogueCastle\Enums\EquipmentBase.cs" />
+    <Compile Include="RogueCastle\Enums\EquipmentCategory.cs" />
+    <Compile Include="RogueCastle\Enums\EquipmentBonus.cs" />
+    <Compile Include="RogueCastle\Enums\LogicSet.cs" />
+    <Compile Include="RogueCastle\Enums\ItemCategory.cs" />
+    <Compile Include="RogueCastle\Enums\Button.cs" />
+    <Compile Include="RogueCastle\Enums\ItemDrop.cs" />
+    <Compile Include="RogueCastle\Enums\OrbType.cs" />
+    <Compile Include="RogueCastle\Enums\Room.cs" />
+    <Compile Include="RogueCastle\Enums\SaveType.cs" />
+    <Compile Include="RogueCastle\Enums\Screen.cs" />
+    <Compile Include="RogueCastle\Enums\Skill.cs" />
+    <Compile Include="RogueCastle\Enums\SkillUnlock.cs" />
+    <Compile Include="RogueCastle\Enums\SpecialItem.cs" />
+    <Compile Include="RogueCastle\Enums\Spell.cs" />
+    <Compile Include="RogueCastle\Enums\Trait.cs" />
     <Compile Include="RogueCastle\VirtualScreen.cs" />
     <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
     <Compile Include="RogueCastle\WaypointObj.cs" />
@@ -315,9 +324,16 @@
     <Compile Include="RogueCastle\XMLCompiler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="RogueCastle\Constants" />
-    <Folder Include="RogueCastle\GameObjects\Enemies" />
-    <Folder Include="RogueCastle\Rooms" />
+    <Folder Include="RogueCastle\Constants\" />
+    <Folder Include="RogueCastle\GameObjects\Enemies\" />
+    <Folder Include="RogueCastle\Rooms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

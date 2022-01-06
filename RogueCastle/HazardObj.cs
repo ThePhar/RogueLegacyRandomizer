@@ -15,7 +15,7 @@ using System.Xml;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -64,8 +64,8 @@ namespace RogueCastle
                     (int)
                     Math.Round(
                         player.BaseHealth + player.GetEquipmentHealth() + Game.PlayerStats.BonusHealth * 5 +
-                        SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
-                        SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount,
+                        SkillSystem.GetSkill(Skill.HealthUp).ModifierAmount +
+                        SkillSystem.GetSkill(Skill.HealthUpFinal).ModifierAmount,
                         MidpointRounding.AwayFromZero);
                 var num2 = (int) (num * 0.2f);
                 if (num2 < 1)
