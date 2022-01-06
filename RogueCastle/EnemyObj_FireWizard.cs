@@ -12,7 +12,7 @@
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using LogicSet = DS2DEngine.LogicSet;

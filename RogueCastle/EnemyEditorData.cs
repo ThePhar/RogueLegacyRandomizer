@@ -10,7 +10,7 @@
 //
 
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {

@@ -2,7 +2,7 @@ using System;
 
 namespace RogueCastle.Enums
 {
-    public enum SkillUnlock
+    public enum SkillUnlock : byte
     {
         None,
         Blacksmith,
@@ -48,7 +48,7 @@ namespace RogueCastle.Enums
                 SkillUnlock.LichUp       => "Raise your Liches into Lich Kings, and grant yourself the power of both mind AND matter! With a single press, convert your permanent health, into permanent mana.",
                 SkillUnlock.Dragon       => "You have discovered the lost art of the dragons. Though you cannot jump, you have unlimited flight, and can cast forth powerful fireballs at your foes.",
                 SkillUnlock.Traitor      => "You have discovered the hidden arts known only by Johannes the Traitor. All shall bow before your might!",
-                _                        => throw new ArgumentException($"Unsupported SkillUnlock Type in Description(): {nameof(unlockType)}")
+                _                        => ""
             };
         }
     }

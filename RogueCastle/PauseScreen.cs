@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
@@ -88,7 +88,7 @@ namespace RogueCastle
             var player = (ScreenManager as RCScreenManager).Player;
             var pauseInfoObj = m_infoObjList[0];
             pauseInfoObj.Visible = true;
-            pauseInfoObj.AddItem("Class: ", ClassType.ToString(Game.PlayerStats.Class, Game.PlayerStats.IsFemale));
+            pauseInfoObj.AddItem("Class: ", ((Class) Game.PlayerStats.Class).ToString(Game.PlayerStats.IsFemale));
             pauseInfoObj.AddItem("Strength: ", player.Damage.ToString());
             pauseInfoObj.AddItem("Magic: ", player.TotalMagicDamage.ToString());
             pauseInfoObj.AddItem("Armor: ", player.TotalArmor.ToString());

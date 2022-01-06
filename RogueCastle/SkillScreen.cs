@@ -16,11 +16,11 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using RogueCastle.Systems;
 using Tweener;
 using Tweener.Ease;
-using Screen = RogueCastle.Structs.Screen;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -637,11 +637,11 @@ namespace RogueCastle
                     break;
 
                 default:
-                    b = SkillUnlock.NetworkItem;
+                    b = (byte) SkillUnlock.NetworkItem;
                     break;
             }
 
-            if (b == SkillUnlock.NetworkItem && displayScreen)
+            if (b == (byte) SkillUnlock.NetworkItem && displayScreen)
             {
                 var list = new List<object>
                 {
@@ -649,12 +649,12 @@ namespace RogueCastle
                     manorPiece.Item2
                 };
 
-                (ScreenManager as RCScreenManager).DisplayScreen(Screen.SkillUnlock, true, list);
+                (ScreenManager as RCScreenManager).DisplayScreen((int) Screen.SkillUnlock, true, list);
             }
             else if (b != 0 && displayScreen)
             {
                 var list = new List<object> { b };
-                (ScreenManager as RCScreenManager).DisplayScreen(Screen.SkillUnlock, true, list);
+                (ScreenManager as RCScreenManager).DisplayScreen((int) Screen.SkillUnlock, true, list);
             }
         }
 
@@ -923,7 +923,7 @@ namespace RogueCastle
             m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
 
             // Update stats and modifier texts.
-            var stat = SkillStatType.GetSkillStat(skill.Trait);
+            var stat = skill.Trait.GetSkillStat();
             if (stat > -1f)
             {
                 if (stat < 1f)

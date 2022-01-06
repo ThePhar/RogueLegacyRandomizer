@@ -16,11 +16,11 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using LogicSet = DS2DEngine.LogicSet;
-using Screen = RogueCastle.Structs.Screen;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -2512,7 +2512,7 @@ namespace RogueCastle
                 rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                 rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
                 rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "LoadEnding");
-                rCScreenManager.DisplayScreen(Screen.Dialogue, true);
+                rCScreenManager.DisplayScreen((int) Screen.Dialogue, true);
             }
         }
 
@@ -3355,10 +3355,10 @@ namespace RogueCastle
                     (Game.PlayerStats.Traits.X == 31f || Game.PlayerStats.Traits.Y == 31f) &&
                     Game.PlayerStats.Class != 16 && Game.PlayerStats.Class != 17)
                 {
-                    var spellList = ClassType.GetSpellList(Game.PlayerStats.Class);
+                    var spellList = ((Class) Game.PlayerStats.Class).GetSpellList();
                     do
                     {
-                        Game.PlayerStats.Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
+                        Game.PlayerStats.Spell = (byte) spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
                     } while (Game.PlayerStats.Spell == 6 || Game.PlayerStats.Spell == 4 ||
                              Game.PlayerStats.Spell == 11);
 

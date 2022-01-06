@@ -15,7 +15,7 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using Screen = DS2DEngine.Screen;
@@ -320,7 +320,7 @@ namespace RogueCastle
                 }
                 else
                 {
-                    m_masterIconArray[i][j].ChangeSprite("BlacksmithUI_" + EquipmentCategoryType.ToString(i) +
+                    m_masterIconArray[i][j].ChangeSprite("BlacksmithUI_" + (EquipmentCategory) i +
                                                          (j % 5 + 1) + "Icon_Character");
                     for (var k = 1; k < m_masterIconArray[i][j].NumChildren; k++)
                         m_masterIconArray[i][j].GetChildAt(k).Opacity = 0.2f;
@@ -642,7 +642,7 @@ namespace RogueCastle
                         Game.PlayerStats.Gold -= equipmentData.Cost;
                         Game.PlayerStats.GetBlueprintArray[num][m_currentEquipmentIndex] = 3;
                         var objContainer = m_masterIconArray[num][m_currentEquipmentIndex];
-                        objContainer.ChangeSprite("BlacksmithUI_" + EquipmentCategoryType.ToString(num) +
+                        objContainer.ChangeSprite("BlacksmithUI_" + (EquipmentCategory) num +
                                                   (m_currentEquipmentIndex % 5 + 1) + "Icon_Character");
                         for (var i = 1; i < objContainer.NumChildren; i++) objContainer.GetChildAt(i).Opacity = 1f;
                         var num4 = 1;
@@ -947,7 +947,7 @@ namespace RogueCastle
                             var expr_4FE = m_addPropertiesText;
                             var text = expr_4FE.Text;
                             expr_4FE.Text = string.Concat(text, "+", (vector.Y * 100f).ToString(), "% ",
-                                EquipmentBonus.ToString((int) vector.X), "\n");
+                                (EquipmentBonus) vector.X, "\n");
                         }
                         else
                         {
@@ -961,7 +961,7 @@ namespace RogueCastle
                             var y = vector.Y;
                             arg_5A0_0[arg_5A0_1] = y.ToString();
                             array2[3] = " ";
-                            array2[4] = EquipmentBonus.ToString((int) vector.X);
+                            array2[4] = ((EquipmentBonus) vector.X).ToString();
                             array2[5] = "\n";
                             expr_56E.Text = string.Concat(array2);
                         }
@@ -978,8 +978,8 @@ namespace RogueCastle
                 m_addPropertiesText.Text = "None";
             }
 
-            m_equipmentTitleText.Text = EquipmentBase.ToString(m_currentEquipmentIndex) + " " +
-                                        EquipmentCategoryType.ToString(num);
+            m_equipmentTitleText.Text = (EquipmentBase) m_currentEquipmentIndex + " " +
+                                        (EquipmentCategory) num;
         }
 
         private void UpdateMoneyText()

@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 
 namespace RogueCastle
@@ -76,7 +76,7 @@ namespace RogueCastle
                 ItemType = GetRandomItem();
             }
 
-            m_icon.ChangeSprite(SpecialItemType.SpriteName(ItemType));
+            m_icon.ChangeSprite(((SpecialItem) ItemType).SpriteName());
             ID = ItemType;
         }
 
@@ -140,7 +140,7 @@ namespace RogueCastle
             else if (ID != -1)
             {
                 ItemType = (byte) ID;
-                m_icon.ChangeSprite(SpecialItemType.SpriteName(ItemType));
+                m_icon.ChangeSprite(((SpecialItem) ItemType).SpriteName());
                 if (RoomCompleted)
                 {
                     m_icon.Visible = false;

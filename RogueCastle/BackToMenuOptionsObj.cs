@@ -9,7 +9,7 @@
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 //
 
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {

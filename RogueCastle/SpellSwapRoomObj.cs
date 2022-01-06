@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 
 namespace RogueCastle
@@ -56,10 +56,10 @@ namespace RogueCastle
         {
             if (Game.PlayerStats.Class != 16 && Game.PlayerStats.Class != 17)
             {
-                var spellList = ClassType.GetSpellList(Game.PlayerStats.Class);
+                var spellList = ((Class) Game.PlayerStats.Class).GetSpellList();
                 do
                 {
-                    Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
+                    Spell = (byte) spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
                 } while ((Game.PlayerStats.Traits.X == 31f || Game.PlayerStats.Traits.Y == 31f) &&
                          (Spell == 6 || Spell == 4 || Spell == 11));
 
@@ -77,7 +77,7 @@ namespace RogueCastle
                 Spell = 14;
             }
 
-            m_icon.ChangeSprite(SpellType.Icon(Spell));
+            m_icon.ChangeSprite(((Spell) Spell).Icon());
         }
 
         public override void OnEnter()
@@ -106,7 +106,7 @@ namespace RogueCastle
             else if (ID != -1)
             {
                 Spell = (byte) ID;
-                m_icon.ChangeSprite(SpellType.Icon(Spell));
+                m_icon.ChangeSprite(((Spell) Spell).Icon());
                 if (RoomCompleted)
                 {
                     m_icon.Visible = false;
@@ -151,7 +151,7 @@ namespace RogueCastle
             Game.PlayerStats.Spell = Spell;
             if (Game.PlayerStats.Class == 9)
             {
-                Game.PlayerStats.WizardSpellList = SpellType.GetNext3Spells();
+                Game.PlayerStats.WizardSpellList = SpellExtensions.GetNext3Spells();
             }
 
             Spell = 0;

@@ -1,4 +1,4 @@
-﻿namespace RogueCastle.Structs
+﻿namespace RogueCastle.Enums
 {
     public enum Collision
     {

@@ -16,7 +16,7 @@ using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using RogueCastle.Systems;
 using Tweener;
 using Tweener.Ease;
@@ -72,7 +72,7 @@ namespace RogueCastle
         {
             m_skillUnlockType = (byte) objList[0];
 
-            if (m_skillUnlockType == SkillUnlock.NetworkItem)
+            if (m_skillUnlockType == (byte) SkillUnlock.NetworkItem)
             {
                 m_locationId = (int) objList[1];
             }
@@ -106,7 +106,7 @@ namespace RogueCastle
 
         private void SetData()
         {
-            m_text.Text = SkillUnlock.Description(m_skillUnlockType);
+            m_text.Text = ((SkillUnlock) m_skillUnlockType).Description();
 
             switch (m_skillUnlockType)
             {
@@ -195,7 +195,7 @@ namespace RogueCastle
                     m_title.ChangeSprite("ClassUnlockedText_Sprite");
                     break;
 
-                case SkillUnlock.NetworkItem:
+                case (byte) SkillUnlock.NetworkItem:
                     var item = Program.Game.ArchipelagoManager.LocationCache[m_locationId];
 
                     var location = ManorContainer.ArchipelagoLocationTable.First(kp => kp.Value == m_locationId).Key;

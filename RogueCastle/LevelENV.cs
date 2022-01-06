@@ -10,7 +10,7 @@
 //
 
 using System;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -63,98 +63,98 @@ namespace RogueCastle
             // Enemy Lists
             CastleEnemyList = new[]
             {
-                Enemy.Skeleton,
-                Enemy.Knight,
-                Enemy.FireWizard,
-                Enemy.IceWizard,
-                Enemy.Eyeball,
-                Enemy.BouncySpike,
-                Enemy.SwordKnight,
-                Enemy.Zombie,
-                Enemy.Fireball,
-                Enemy.Portrait,
-                Enemy.Starburst,
-                Enemy.HomingTurret
+                (byte) Enemy.Skeleton,
+                (byte) Enemy.Knight,
+                (byte) Enemy.FireWizard,
+                (byte) Enemy.IceWizard,
+                (byte) Enemy.Eyeball,
+                (byte) Enemy.BouncySpike,
+                (byte) Enemy.SwordKnight,
+                (byte) Enemy.Zombie,
+                (byte) Enemy.Fireball,
+                (byte) Enemy.Portrait,
+                (byte) Enemy.Starburst,
+                (byte) Enemy.HomingTurret
             };
             GardenEnemyList = new[]
             {
-                Enemy.Skeleton,
-                Enemy.Blob,
-                Enemy.BallAndChain,
-                Enemy.EarthWizard,
-                Enemy.FireWizard,
-                Enemy.Eyeball,
-                Enemy.Fairy,
-                Enemy.ShieldKnight,
-                Enemy.BouncySpike,
-                Enemy.Wolf,
-                Enemy.Plant,
-                Enemy.SkeletonArcher,
-                Enemy.Starburst,
-                Enemy.Horse
+                (byte) Enemy.Skeleton,
+                (byte) Enemy.Blob,
+                (byte) Enemy.BallAndChain,
+                (byte) Enemy.EarthWizard,
+                (byte) Enemy.FireWizard,
+                (byte) Enemy.Eyeball,
+                (byte) Enemy.Fairy,
+                (byte) Enemy.ShieldKnight,
+                (byte) Enemy.BouncySpike,
+                (byte) Enemy.Wolf,
+                (byte) Enemy.Plant,
+                (byte) Enemy.SkeletonArcher,
+                (byte) Enemy.Starburst,
+                (byte) Enemy.Horse
             };
             TowerEnemyList = new[]
             {
-                Enemy.Knight,
-                Enemy.BallAndChain,
-                Enemy.IceWizard,
-                Enemy.Eyeball,
-                Enemy.Fairy,
-                Enemy.ShieldKnight,
-                Enemy.BouncySpike,
-                Enemy.Wolf,
-                Enemy.Ninja,
-                Enemy.Plant,
-                Enemy.Fireball,
-                Enemy.SkeletonArcher,
-                Enemy.Portrait,
-                Enemy.Starburst,
-                Enemy.HomingTurret,
-                Enemy.Mimic
+                (byte) Enemy.Knight,
+                (byte) Enemy.BallAndChain,
+                (byte) Enemy.IceWizard,
+                (byte) Enemy.Eyeball,
+                (byte) Enemy.Fairy,
+                (byte) Enemy.ShieldKnight,
+                (byte) Enemy.BouncySpike,
+                (byte) Enemy.Wolf,
+                (byte) Enemy.Ninja,
+                (byte) Enemy.Plant,
+                (byte) Enemy.Fireball,
+                (byte) Enemy.SkeletonArcher,
+                (byte) Enemy.Portrait,
+                (byte) Enemy.Starburst,
+                (byte) Enemy.HomingTurret,
+                (byte) Enemy.Mimic
             };
             DungeonEnemyList = new[]
             {
-                Enemy.Skeleton,
-                Enemy.Knight,
-                Enemy.Blob,
-                Enemy.BallAndChain,
-                Enemy.EarthWizard,
-                Enemy.FireWizard,
-                Enemy.IceWizard,
-                Enemy.Eyeball,
-                Enemy.Fairy,
-                Enemy.BouncySpike,
-                Enemy.SwordKnight,
-                Enemy.Zombie,
-                Enemy.Ninja,
-                Enemy.Plant,
-                Enemy.Fireball,
-                Enemy.Starburst,
-                Enemy.HomingTurret,
-                Enemy.Horse
+                (byte) Enemy.Skeleton,
+                (byte) Enemy.Knight,
+                (byte) Enemy.Blob,
+                (byte) Enemy.BallAndChain,
+                (byte) Enemy.EarthWizard,
+                (byte) Enemy.FireWizard,
+                (byte) Enemy.IceWizard,
+                (byte) Enemy.Eyeball,
+                (byte) Enemy.Fairy,
+                (byte) Enemy.BouncySpike,
+                (byte) Enemy.SwordKnight,
+                (byte) Enemy.Zombie,
+                (byte) Enemy.Ninja,
+                (byte) Enemy.Plant,
+                (byte) Enemy.Fireball,
+                (byte) Enemy.Starburst,
+                (byte) Enemy.HomingTurret,
+                (byte) Enemy.Horse
             };
             DementiaFlightList = new[]
             {
-                Enemy.FireWizard,
-                Enemy.IceWizard,
-                Enemy.Eyeball,
-                Enemy.Fairy,
-                Enemy.BouncySpike,
-                Enemy.Fireball,
-                Enemy.Starburst
+                (byte) Enemy.FireWizard,
+                (byte) Enemy.IceWizard,
+                (byte) Enemy.Eyeball,
+                (byte) Enemy.Fairy,
+                (byte) Enemy.BouncySpike,
+                (byte) Enemy.Fireball,
+                (byte) Enemy.Starburst
             };
             DementiaGroundList = new[]
             {
-                Enemy.Skeleton,
-                Enemy.Knight,
-                Enemy.Blob,
-                Enemy.BallAndChain,
-                Enemy.SwordKnight,
-                Enemy.Zombie,
-                Enemy.Ninja,
-                Enemy.Plant,
-                Enemy.HomingTurret,
-                Enemy.Horse
+                (byte) Enemy.Skeleton,
+                (byte) Enemy.Knight,
+                (byte) Enemy.Blob,
+                (byte) Enemy.BallAndChain,
+                (byte) Enemy.SwordKnight,
+                (byte) Enemy.Zombie,
+                (byte) Enemy.Ninja,
+                (byte) Enemy.Plant,
+                (byte) Enemy.HomingTurret,
+                (byte) Enemy.Horse
             };
 
             // Enemy Difficulty Lists
@@ -284,12 +284,12 @@ namespace RogueCastle
             // Default Environment Variables
             TestRoomZone = Zone.Castle;
             ShowEnemyRadii = false;
-            EnablePlayerDebug = false;
+            EnablePlayerDebug = true;
             UnlockAllAbilities = false;
             TestRoomReverse = false;
             RunTestRoom = false;
             ShowDebugText = false;
-            LoadSplashScreen = true;
+            LoadSplashScreen = false;
             ShowSaveLoadDebugText = false;
             DeleteSaveFile = false;
             CloseTestRoomDoors = false;
@@ -297,7 +297,7 @@ namespace RogueCastle
             RunDemoVersion = false;
             DisableSaving = false;
             RunCrashLogs = false;
-            WeakenBosses = false;
+            WeakenBosses = true;
             EnableOffscreenControl = true;
             EnableBackupSaving = false;
             CreateRetailVersion = true;

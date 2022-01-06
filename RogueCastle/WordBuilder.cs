@@ -10,7 +10,7 @@
 // 
 
 using DS2DEngine;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {

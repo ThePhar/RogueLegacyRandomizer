@@ -16,7 +16,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using Screen = DS2DEngine.Screen;
@@ -130,12 +130,12 @@ namespace RogueCastle
 
             switch (m_itemType)
             {
-                case ItemCategory.TripStatDrop:
+                case (int) ItemCategory.TripStatDrop:
                     m_tripStatData = (Vector2) objList[3];
                     break;
 
-                case ItemCategory.ReceiveNetworkItem:
-                case ItemCategory.GiveNetworkItem:
+                case (int) ItemCategory.ReceiveNetworkItem:
+                case (int) ItemCategory.GiveNetworkItem:
                     m_tripStatData = (Vector2) objList[3];
                     m_network_player = (string) objList[4];
                     m_network_item = (int) objList[5];
@@ -152,7 +152,7 @@ namespace RogueCastle
             m_tripStat1.Scale = Vector2.One;
             m_tripStat2.Scale = Vector2.One;
 
-            if (m_itemType != ItemCategory.FountainPiece)
+            if (m_itemType != (int) ItemCategory.FountainPiece)
             {
                 (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
             }
@@ -167,12 +167,12 @@ namespace RogueCastle
             m_songName = SoundManager.GetCurrentMusicName();
             m_lockControls = true;
             m_continueText.Opacity = 0f;
-            m_continueText.Text = string.Format("[Input:{0}]  to continue", Button.MenuConfirm1);
+            m_continueText.Text = string.Format("[Input:{0}]  to continue", (int) Button.MenuConfirm1);
 
             // Item Found Text
             m_itemFoundText.Position = m_itemEndPos;
 
-            if (m_itemType != ItemCategory.GiveNetworkItem)
+            if (m_itemType != (int) ItemCategory.GiveNetworkItem)
             {
                 m_itemFoundText.Y += ItemFoundYOffset;
             }
@@ -195,26 +195,23 @@ namespace RogueCastle
             m_tripStat2FoundText.Visible = false;
             switch (m_itemType)
             {
-                case ItemCategory.Blueprint:
+                case (int) ItemCategory.Blueprint:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    m_itemFoundText.Text = string.Format("{0} {1}", EquipmentBase.ToString((int) m_itemInfo.Y),
-                        EquipmentCategoryType.ToString2((int) m_itemInfo.X));
+                    m_itemFoundText.Text = $"{((EquipmentBase) m_itemInfo.Y)} {((EquipmentCategory) m_itemInfo.X).ToString2()}";
                     break;
 
-                case ItemCategory.Rune:
+                case (int) ItemCategory.Rune:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("RuneIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
-                    m_itemFoundText.Text = string.Format("{0} Rune ({1})",
-                        EquipmentAbility.ToString((int) m_itemInfo.Y),
-                        EquipmentCategoryType.ToString2((int) m_itemInfo.X));
+                    m_itemFoundText.Text = $"{((EquipmentAbility) m_itemInfo.Y)} Rune ({((EquipmentCategory) m_itemInfo.X).ToString2()})";
                     m_itemSprite.AnimationDelay = 0.05f;
                     break;
 
-                case ItemCategory.StatDrop:
-                case ItemCategory.TripStatDrop:
+                case (int) ItemCategory.StatDrop:
+                case (int) ItemCategory.TripStatDrop:
                     m_itemSprite.ChangeSprite(GetStatSpriteName((int) m_itemInfo.X));
                     m_itemFoundText.Text = GetStatText((int) m_itemInfo.X);
                     m_itemSprite.AnimationDelay = 0.05f;
@@ -239,16 +236,16 @@ namespace RogueCastle
 
                     break;
 
-                case ItemCategory.Spell:
-                    m_itemSprite.ChangeSprite(SpellType.Icon((byte) m_itemInfo.X));
+                case (int) ItemCategory.Spell:
+                    m_itemSprite.ChangeSprite(((Spell) m_itemInfo.X).Icon());
                     m_itemFoundSprite.ChangeSprite("SpellFoundText_Sprite");
-                    m_itemFoundText.Text = SpellType.ToString((byte) m_itemInfo.X);
+                    m_itemFoundText.Text = ((Spell) m_itemInfo.X).ToString();
                     break;
 
-                case ItemCategory.SpecialItem:
-                    m_itemSprite.ChangeSprite(SpecialItemType.SpriteName((byte) m_itemInfo.X));
+                case (int) ItemCategory.SpecialItem:
+                    m_itemSprite.ChangeSprite(((SpecialItem) m_itemInfo.X).SpriteName());
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    m_itemFoundText.Text = SpecialItemType.ToString((byte) m_itemInfo.X);
+                    m_itemFoundText.Text = ((SpecialItem) m_itemInfo.X).ToString();
                     break;
 
                 case 7:
@@ -259,7 +256,7 @@ namespace RogueCastle
                         : "You've collected a medallion piece!";
                     break;
 
-                case ItemCategory.GiveNetworkItem:
+                case (int) ItemCategory.GiveNetworkItem:
                     m_itemSpinning = true;
                     m_itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                     m_itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
@@ -293,7 +290,7 @@ namespace RogueCastle
 
                     break;
 
-                case ItemCategory.ReceiveNetworkItem:
+                case (int) ItemCategory.ReceiveNetworkItem:
                     m_itemFoundPlayerText.Visible = true;
                     switch (m_network_item.GetItemType())
                     {
@@ -737,50 +734,23 @@ namespace RogueCastle
         {
             switch (type)
             {
-                case ItemDrop.StatStrength:
+                case (int) ItemDrop.StatStrength:
                     return "Strength Increased: +" + 1;
 
-                case ItemDrop.StatMagic:
+                case (int) ItemDrop.StatMagic:
                     return "Magic Damage Increased: +" + 1;
 
-                case ItemDrop.StatDefense:
+                case (int) ItemDrop.StatDefense:
                     return "Armor Increased: +" + 2;
 
-                case ItemDrop.StatMaxHealth:
+                case (int) ItemDrop.StatMaxHealth:
                     return "HP Increased: +" + 5;
 
-                case ItemDrop.StatMaxMana:
+                case (int) ItemDrop.StatMaxMana:
                     return "MP Increased: +" + 5;
 
-                case ItemDrop.StatWeight:
+                case (int) ItemDrop.StatWeight:
                     return "Max Weight Load Increased: +" + 5;
-
-                default:
-                    return "";
-            }
-        }
-
-        private string GetSkillText(int type)
-        {
-            switch (type)
-            {
-                case ItemDrop.StatStrength:
-                    return "Attack Up +1 Level";
-
-                case ItemDrop.StatMagic:
-                    return "Magic Damage Up +1 Level";
-
-                case ItemDrop.StatDefense:
-                    return "Armor Up +1 Level";
-
-                case ItemDrop.StatMaxHealth:
-                    return "Health Up +1 Level";
-
-                case ItemDrop.StatMaxMana:
-                    return "Mana Up +1 Level";
-
-                case ItemDrop.StatWeight:
-                    return "Equip Up +1 Level";
 
                 default:
                     return "";

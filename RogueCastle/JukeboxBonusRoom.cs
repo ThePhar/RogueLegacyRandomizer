@@ -15,10 +15,10 @@ using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
-using Screen = RogueCastle.Structs.Screen;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -171,7 +171,7 @@ namespace RogueCastle
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
                 }

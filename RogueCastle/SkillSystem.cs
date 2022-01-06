@@ -1,34 +1,23 @@
-//
-//  RogueLegacyArchipelago - SkillSystem.cs
-//  Last Modified 2021-12-29
-//
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using RogueCastle.Systems;
 
 namespace RogueCastle
 {
     public class SkillSystem
     {
-        private const Skill StartingTrait = Skill.ManorMainBase;
-        private static SkillObj m_blankTrait;
-        private static readonly Skill[,] m_skillTypeArray;
-        private static readonly Vector2[,] m_skillPositionArray;
-        private static readonly int[,] m_manorPieceArray;
-        private static SkillLinker[,] m_skillLinkerArray;
+        private const Skill STARTING_TRAIT = Skill.ManorMainBase;
+
+        private static SkillObj _blankTrait;
+        private static readonly Skill[,] _skillTypeArray;
+        private static readonly Vector2[,] _skillPositionArray;
+        private static readonly int[,] _manorPieceArray;
+        private static SkillLinker[,] _skillLinkerArray;
 
         static SkillSystem()
         {
-            // // Note: this type is marked as 'beforefieldinit'.
             var array = new Skill[10, 10];
             array[0, 8] = Skill.ManorObservatoryTelescope;
             array[1, 7] = Skill.SuperSecret;
@@ -62,7 +51,7 @@ namespace RogueCastle
             array[8, 5] = Skill.ManorMainWindowBottom;
             array[9, 5] = Skill.ManorMainBase;
             array[9, 6] = Skill.ManorGroundRoad;
-            m_skillTypeArray = array;
+            _skillTypeArray = array;
 
             var array2 = new Vector2[10, 10];
             array2[0, 0] = new Vector2(0f, 0f);
@@ -166,8 +155,8 @@ namespace RogueCastle
             array2[9, 8] = new Vector2(0f, 0f);
             array2[9, 9] = new Vector2(0f, 0f);
 
-            m_skillPositionArray = array2;
-            m_manorPieceArray = new[,]
+            _skillPositionArray = array2;
+            _manorPieceArray = new[,]
             {
                 {
                     -1,
@@ -308,8 +297,8 @@ namespace RogueCastle
 
         public static void Initialize()
         {
-            m_blankTrait = new SkillObj("Icon_Sword_Sprite");
-            if (m_skillTypeArray.Length != m_skillPositionArray.Length)
+            _blankTrait = new SkillObj("Icon_Sword_Sprite");
+            if (_skillTypeArray.Length != _skillPositionArray.Length)
             {
                 throw new Exception(
                     "Cannot create Trait System. The type array is not the same length as the position array.");
@@ -331,13 +320,13 @@ namespace RogueCastle
                 SkillStatArray.Add(skillObj);
             }
 
-            GetSkill(StartingTrait).Visible = true;
-            m_skillLinkerArray = new SkillLinker[10, 10];
+            GetSkill(STARTING_TRAIT).Visible = true;
+            _skillLinkerArray = new SkillLinker[10, 10];
             for (var j = 0; j < 10; j++)
             {
                 for (var k = 0; k < 10; k++)
                 {
-                    m_skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
+                    _skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
                 }
             }
         }
@@ -370,7 +359,7 @@ namespace RogueCastle
                 current.CurrentLevel = 0;
             }
 
-            GetSkill(StartingTrait).Visible = true;
+            GetSkill(STARTING_TRAIT).Visible = true;
             Game.PlayerStats.CurrentLevel = 0;
         }
 
@@ -453,23 +442,23 @@ namespace RogueCastle
                 }
             }
 
-            return m_blankTrait;
+            return _blankTrait;
         }
 
         public static SkillObj GetSkill(int indexX, int indexY)
         {
-            return GetSkill(m_skillTypeArray[indexY, indexX]);
+            return GetSkill(_skillTypeArray[indexY, indexX]);
         }
 
         public static Vector2 GetTraitTypeIndex(SkillObj trait)
         {
             var result = new Vector2(-1f, -1f);
             var traitType = trait.Trait;
-            for (var i = 0; i < m_skillTypeArray.GetLength(1); i++)
+            for (var i = 0; i < _skillTypeArray.GetLength(1); i++)
             {
-                for (var j = 0; j < m_skillTypeArray.GetLength(0); j++)
+                for (var j = 0; j < _skillTypeArray.GetLength(0); j++)
                 {
-                    if (m_skillTypeArray[j, i] == traitType)
+                    if (_skillTypeArray[j, i] == traitType)
                     {
                         result = new Vector2(i, j);
                     }
@@ -482,17 +471,17 @@ namespace RogueCastle
         public static Vector2 GetSkillPosition(SkillObj skill)
         {
             var traitTypeIndex = GetTraitTypeIndex(skill);
-            return m_skillPositionArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            return _skillPositionArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
         }
 
         public static int GetTypeArrayRows()
         {
-            return m_skillTypeArray.GetLength(0);
+            return _skillTypeArray.GetLength(0);
         }
 
         public static int GetTypeArrayColumns()
         {
-            return m_skillTypeArray.GetLength(1);
+            return _skillTypeArray.GetLength(1);
         }
 
         public static SkillObj[] GetSkillArray()
@@ -508,12 +497,12 @@ namespace RogueCastle
         public static int GetManorPiece(SkillObj trait)
         {
             var traitTypeIndex = GetTraitTypeIndex(trait);
-            return m_manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            return _manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
         }
 
         public static SkillLinker GetSkillLink(int x, int y)
         {
-            return m_skillLinkerArray[x, y];
+            return _skillLinkerArray[x, y];
         }
 
         public static void HideAllIcons()

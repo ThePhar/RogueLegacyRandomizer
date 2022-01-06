@@ -1,14 +1,3 @@
-//
-//  RogueLegacyArchipelago - CastleEntranceRoomObj.cs
-//  Last Modified 2021-12-29
-//
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using Archipelago;
@@ -16,11 +5,12 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
+
 using LogicSet = DS2DEngine.LogicSet;
-using Screen = RogueCastle.Structs.Screen;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -360,15 +350,13 @@ namespace RogueCastle
                 m_speechBubble.Visible = false;
             }
 
-            if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround &&
-                (Game.GlobalInput.JustPressed(Button.PlayerUp1) ||
-                 Game.GlobalInput.JustPressed(Button.PlayerUp2)))
+            if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround && ButtonHelper.PressedUp)
             {
                 if (Game.PlayerStats.DiaryEntry < 1)
                 {
                     var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                     rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
-                    rCScreenManager.DisplayScreen(Screen.Dialogue, true);
+                    rCScreenManager.DisplayScreen((int) Screen.Dialogue, true);
                     Game.PlayerStats.DiaryEntry += 1;
 
                     // Check location.
@@ -389,14 +377,14 @@ namespace RogueCastle
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
                 }
                 else
                 {
                     var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    rCScreenManager2.DisplayScreen(Screen.DiaryEntry, true);
+                    rCScreenManager2.DisplayScreen((int) Screen.DiaryEntry, true);
                 }
             }
 

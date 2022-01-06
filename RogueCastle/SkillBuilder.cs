@@ -1,16 +1,5 @@
-//
-//  Rogue Legacy Randomizer - SkillBuilder.cs
-//  Last Modified 2021-12-31
-//
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
-
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -273,7 +262,7 @@ namespace RogueCastle
 
                 case Skill.PotionUp:
                     skillObj.Name = "Potion Up";
-                    skillObj.Description = "Gut cleansing leads to noticable improvements from both potions and meat.";
+                    skillObj.Description = "Gut cleansing leads to noticeable improvements from both potions and meat.";
                     skillObj.PerLevelModifier = 0.01f;
                     skillObj.BaseCost = 750;
                     skillObj.Appreciation = 1750;
@@ -621,7 +610,7 @@ namespace RogueCastle
                 case Skill.PeaceOfMind:
                     skillObj.Name = "Peace of Mind";
                     skillObj.Description =
-                        "Clearing a room is like clearing your mind.  I don't know how. \nRegain helath for every room fully cleared.";
+                        "Clearing a room is like clearing your mind.  I don't know how. \nRegain health for every room fully cleared.";
                     skillObj.Position = new Vector2(50f, 250f);
                     skillObj.PerLevelModifier = 10f;
                     skillObj.BaseCost = 1000;
@@ -701,7 +690,7 @@ namespace RogueCastle
                 case Skill.OneTimeOnly:
                     skillObj.Name = "One Time Only";
                     skillObj.Description =
-                        "Like a pheonix you are reborn from your crappy ashes. \n Regain all HP and MP.";
+                        "Like a phoenix you are reborn from your crappy ashes. \n Regain all HP and MP.";
                     skillObj.Position = new Vector2(150f, 100f);
                     skillObj.PerLevelModifier = 1f;
                     skillObj.BaseCost = 100;
@@ -748,7 +737,7 @@ namespace RogueCastle
                 case Skill.Sorcerer:
                     skillObj.Name = "Sorcerer";
                     skillObj.Description =
-                        "You were born with arcane energy coarsing through your veins.  Ow. \nSpells cost less to cast.";
+                        "You were born with arcane energy coursing through your veins.  Ow. \nSpells cost less to cast.";
                     skillObj.Position = new Vector2(100f, 250f);
                     skillObj.PerLevelModifier = 5f;
                     skillObj.BaseCost = 700;

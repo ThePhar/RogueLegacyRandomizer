@@ -15,7 +15,7 @@ using System.IO;
 using Archipelago.MultiClient.Net.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 
 namespace RogueCastle

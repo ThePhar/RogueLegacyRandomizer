@@ -87,7 +87,7 @@ namespace RogueCastle.Enums
                 Trait.Clumsy         => TraitRarity.Uncommon,
                 Trait.EHS            => TraitRarity.Uncommon,
                 Trait.Glaucoma       => TraitRarity.Uncommon,
-                _                    => throw new ArgumentException($"Unsupported Trait Type in Rarity(): {nameof(trait)}")
+                _                    => TraitRarity.NoRarity
             };
         }
         public static string ToString(this Trait trait)
@@ -259,7 +259,7 @@ namespace RogueCastle.Enums
                         rarity += 1;
                         continue;
                     }
-                    
+
                     break;
                 }
 

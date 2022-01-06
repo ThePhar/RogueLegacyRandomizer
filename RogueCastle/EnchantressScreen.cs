@@ -15,7 +15,7 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using Screen = DS2DEngine.Screen;
@@ -284,7 +284,7 @@ namespace RogueCastle
                 }
                 else
                 {
-                    m_masterIconArray[i][j].ChangeSprite(EquipmentAbility.Icon(j));
+                    m_masterIconArray[i][j].ChangeSprite(((EquipmentAbility) j).Icon());
                     m_masterIconArray[i][j].Opacity = 0.2f;
                 }
 
@@ -634,14 +634,14 @@ namespace RogueCastle
 
         private void UpdateEquipmentDataText()
         {
-            m_equipmentTitleText.Text = EquipmentAbility.ToString(m_currentEquipmentIndex) + " Rune\n(" +
-                                        EquipmentCategoryType.ToString2(m_currentCategoryIndex - 6) + ")";
-            m_descriptionText.Text = EquipmentAbility.Description(m_currentEquipmentIndex);
+            m_equipmentTitleText.Text = (EquipmentAbility) m_currentEquipmentIndex + " Rune\n(" +
+                                        ((EquipmentCategory) m_currentCategoryIndex - 6).ToString2() + ")";
+            m_descriptionText.Text = ((EquipmentAbility) m_currentEquipmentIndex).Description();
             m_descriptionText.WordWrap(195);
             m_descriptionText.Y = m_equipmentTitleText.Y + 60f;
             m_instructionsTitleText.Position = new Vector2(m_enchantressUI.X + 140f,
                 m_descriptionText.Bounds.Bottom + 20);
-            m_instructionsText.Text = EquipmentAbility.Instructions(m_currentEquipmentIndex);
+            m_instructionsText.Text = ((EquipmentAbility) m_currentEquipmentIndex).Instructions();
             m_instructionsText.WordWrap(200);
             m_instructionsText.Position = new Vector2(m_instructionsTitleText.X, m_instructionsTitleText.Bounds.Bottom);
         }

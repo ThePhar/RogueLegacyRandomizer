@@ -16,7 +16,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using Screen = DS2DEngine.Screen;
@@ -175,9 +175,9 @@ namespace RogueCastle
             var textObj = m_descriptionPlate.GetChildAt(1) as TextObj;
             textObj.Text = lineageObj.PlayerName;
             var textObj2 = m_descriptionPlate.GetChildAt(2) as TextObj;
-            textObj2.Text = "Class - " + ClassType.ToString(lineageObj.Class, lineageObj.IsFemale);
+            textObj2.Text = "Class - " + ((Class) lineageObj.Class).ToString(lineageObj.IsFemale);
             var keyIconTextObj = m_descriptionPlate.GetChildAt(3) as KeyIconTextObj;
-            keyIconTextObj.Text = ClassType.Description(lineageObj.Class);
+            keyIconTextObj.Text = ((Class) lineageObj.Class).Description();
             keyIconTextObj.WordWrap(340);
             var textObj3 = m_descriptionPlate.GetChildAt(4) as TextObj;
             textObj3.Y = keyIconTextObj.Y + keyIconTextObj.Height + 5f;
@@ -186,8 +186,8 @@ namespace RogueCastle
             var num = (int) textObj3.Y;
             if (lineageObj.Traits.X > 0f)
             {
-                textObj3.Text = "Trait - " + TraitType.ToString((byte) lineageObj.Traits.X);
-                textObj4.Text = TraitType.Description((byte) lineageObj.Traits.X, lineageObj.IsFemale);
+                textObj3.Text = "Trait - " + (Trait) lineageObj.Traits.X;
+                textObj4.Text = ((Trait) lineageObj.Traits.X).Description(lineageObj.IsFemale);
                 textObj4.WordWrap(340);
                 num = (int) textObj4.Y + textObj4.Height + 5;
             }
@@ -204,8 +204,8 @@ namespace RogueCastle
             textObj6.Y = textObj5.Y + 30f;
             if (lineageObj.Traits.Y > 0f)
             {
-                textObj5.Text = "Trait - " + TraitType.ToString((byte) lineageObj.Traits.Y);
-                textObj6.Text = TraitType.Description((byte) lineageObj.Traits.Y, lineageObj.IsFemale);
+                textObj5.Text = "Trait - " + (Trait) lineageObj.Traits.Y;
+                textObj6.Text = ((Trait) lineageObj.Traits.Y).Description(lineageObj.IsFemale);
                 textObj6.WordWrap(340);
                 num = (int) textObj6.Y + textObj6.Height + 5;
             }
@@ -216,10 +216,10 @@ namespace RogueCastle
             }
 
             var textObj7 = m_descriptionPlate.GetChildAt(8) as TextObj;
-            textObj7.Text = "Spell - " + SpellType.ToString(lineageObj.Spell);
+            textObj7.Text = "Spell - " + (Spell) lineageObj.Spell;
             textObj7.Y = num;
             var keyIconTextObj2 = m_descriptionPlate.GetChildAt(9) as KeyIconTextObj;
-            keyIconTextObj2.Text = SpellType.Description(lineageObj.Spell);
+            keyIconTextObj2.Text = ((Spell) lineageObj.Spell).Description();
             keyIconTextObj2.Y = textObj7.Y + 30f;
             keyIconTextObj2.WordWrap(340);
         }
@@ -696,7 +696,7 @@ namespace RogueCastle
             Game.PlayerStats.ChildAge = m_selectedLineageObj.ChildAge;
             if (Game.PlayerStats.Class == 1 || Game.PlayerStats.Class == 9)
             {
-                Game.PlayerStats.WizardSpellList = SpellType.GetNext3Spells();
+                Game.PlayerStats.WizardSpellList = SpellExtensions.GetNext3Spells();
             }
 
             Game.PlayerStats.CurrentBranches.Clear();

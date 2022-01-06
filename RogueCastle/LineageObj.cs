@@ -13,7 +13,7 @@ using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
@@ -124,9 +124,10 @@ namespace RogueCastle
                     CreateMaleName(screen);
                 }
 
-                Traits = TraitType.CreateRandomTraits();
-                Class = ClassType.GetRandomClass();
-                m_classTextObj.Text = "the " + ClassType.ToString(Class, IsFemale);
+                var t = TraitExtensions.CreateRandomTraits();
+                Traits = new Vector2((float) t[0], (float) t[1]);
+                Class = (byte) ClassExtensions.GetRandomClass();
+                m_classTextObj.Text = "the " + ((Class) Class).ToString(IsFemale);
                 while (Class == 7 || Class == 15)
                 {
                     if (Traits.X != 12f && Traits.Y != 12f)
@@ -134,15 +135,19 @@ namespace RogueCastle
                         break;
                     }
 
-                    Traits = TraitType.CreateRandomTraits();
+                    var t2 = TraitExtensions.CreateRandomTraits();
+                    Traits = new Vector2((float) t2[0], (float) t2[1]);
                 }
 
                 while ((Class == 1 || Class == 9 || Class == 16) && (Traits.X == 31f || Traits.Y == 31f))
-                    Traits = TraitType.CreateRandomTraits();
-                var spellList = ClassType.GetSpellList(Class);
+                {
+                    var t2 = TraitExtensions.CreateRandomTraits();
+                    Traits = new Vector2((float) t2[0], (float) t2[1]);
+                }
+                var spellList = ((Class) Class).GetSpellList();
                 do
                 {
-                    Spell = spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
+                    Spell = (byte) spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
                 } while ((Spell == 11 || Spell == 4 || Spell == 6) && (Traits.X == 31f || Traits.Y == 31f));
 
                 Array.Clear(spellList, 0, spellList.Length);
@@ -356,8 +361,8 @@ namespace RogueCastle
                 FlipPortrait = true;
             }
 
-            m_classTextObj.Text = "the " + ClassType.ToString(Class, IsFemale);
-            m_spellIcon.ChangeSprite(SpellType.Icon(Spell));
+            m_classTextObj.Text = "the " + ((Class) Class).ToString(IsFemale);
+            m_spellIcon.ChangeSprite(((Spell) Spell).Icon());
             if (Class == 0 || Class == 8)
             {
                 m_playerSprite.GetChildAt(15).Visible = true;
@@ -574,7 +579,7 @@ namespace RogueCastle
             var text = "";
             if (Traits.X != 0f)
             {
-                text += TraitType.ToString((byte) Traits.X);
+                text += ((Trait) Traits.X).ToString();
             }
             else
             {
@@ -583,7 +588,7 @@ namespace RogueCastle
 
             if (Traits.Y != 0f)
             {
-                text = text + ", " + TraitType.ToString((byte) Traits.Y);
+                text = text + ", " + ((Trait) Traits.Y);
             }
 
             m_trait1Title.Text = text;
@@ -644,7 +649,7 @@ namespace RogueCastle
                 text += "Divine ";
             }
 
-            text += ClassType.ToString(Class, IsFemale);
+            text += ((Class) Class).ToString(IsFemale);
             m_classTextObj.Text = text;
         }
 

@@ -48,30 +48,30 @@ namespace RogueCastle.Enums
                 Spell.DragonFireNeo       => "Dragon Fire",
                 Spell.RapidDagger         => "Rapid Dagger",
                 Spell.Laser               => "B.E.A.M.",
-                _                         => throw new ArgumentException($"Unsupported Spell Type in ToString(): {nameof(spell)}")
+                _                         => ""
             };
         }
         public static string Description(this Spell spell)
         {
             return spell switch
             {
-                Spell.Dagger              => $"[Input:{Button.PlayerSpell}]  Fires a dagger directly in front of you.",
-                Spell.Axe                 => $"[Input:{Button.PlayerSpell}]  Throws a giant axe in an arc.",
-                Spell.Bomb                => $"[Input:{Button.PlayerSpell}]  Summons a bomb that explodes after a while.",
-                Spell.TimeStop            => $"[Input:{Button.PlayerSpell}]  Toggles freezing all enemies on-screen. ",
-                Spell.CrowStorm           => $"[Input:{Button.PlayerSpell}]  Hits all enemies on screen. Costly.",
-                Spell.QuantumTranslocator => $"[Input:{Button.PlayerSpell}]  Drops and teleports to your shadow.",
-                Spell.Displacer           => $"[Input:{Button.PlayerSpell}]  Sends out a marker which teleports you.",
-                Spell.Chakram             => $"[Input:{Button.PlayerSpell}]  Throws a chakram which comes back to you.",
-                Spell.Scythe              => $"[Input:{Button.PlayerSpell}]  Send Scythes flying out from above you.",
-                Spell.BladeWall           => $"[Input:{Button.PlayerSpell}]  Summon a Grand Blade to defend you.",
-                Spell.FlameBarrier        => $"[Input:{Button.PlayerSpell}]  Encircles you with protective fire.",
-                Spell.Conflux             => $"[Input:{Button.PlayerSpell}]  Launches orbs that bounce everywhere.",
-                Spell.DragonFire          => $"[Input:{Button.PlayerSpell}]  Shoot fireballs at your enemies.",
-                Spell.DragonFireNeo       => $"[Input:{Button.PlayerSpell}]  Shoot fireballs at your enemies.",
-                Spell.RapidDagger         => $"[Input:{Button.PlayerSpell}]  Fire a barrage of daggers.",
-                Spell.Laser               => $"[Input:{Button.PlayerSpell}]  Fire a laser that blasts everyone it touches.",
-                _                         => throw new ArgumentException($"Unsupported Spell Type in Description(): {nameof(spell)}")
+                Spell.Dagger              => $"[Input:{(int) Button.PlayerSpell}]  Fires a dagger directly in front of you.",
+                Spell.Axe                 => $"[Input:{(int) Button.PlayerSpell}]  Throws a giant axe in an arc.",
+                Spell.Bomb                => $"[Input:{(int) Button.PlayerSpell}]  Summons a bomb that explodes after a while.",
+                Spell.TimeStop            => $"[Input:{(int) Button.PlayerSpell}]  Toggles freezing all enemies on-screen. ",
+                Spell.CrowStorm           => $"[Input:{(int) Button.PlayerSpell}]  Hits all enemies on screen. Costly.",
+                Spell.QuantumTranslocator => $"[Input:{(int) Button.PlayerSpell}]  Drops and teleports to your shadow.",
+                Spell.Displacer           => $"[Input:{(int) Button.PlayerSpell}]  Sends out a marker which teleports you.",
+                Spell.Chakram             => $"[Input:{(int) Button.PlayerSpell}]  Throws a chakram which comes back to you.",
+                Spell.Scythe              => $"[Input:{(int) Button.PlayerSpell}]  Send Scythes flying out from above you.",
+                Spell.BladeWall           => $"[Input:{(int) Button.PlayerSpell}]  Summon a Grand Blade to defend you.",
+                Spell.FlameBarrier        => $"[Input:{(int) Button.PlayerSpell}]  Encircles you with protective fire.",
+                Spell.Conflux             => $"[Input:{(int) Button.PlayerSpell}]  Launches orbs that bounce everywhere.",
+                Spell.DragonFire          => $"[Input:{(int) Button.PlayerSpell}]  Shoot fireballs at your enemies.",
+                Spell.DragonFireNeo       => $"[Input:{(int) Button.PlayerSpell}]  Shoot fireballs at your enemies.",
+                Spell.RapidDagger         => $"[Input:{(int) Button.PlayerSpell}]  Fire a barrage of daggers.",
+                Spell.Laser               => $"[Input:{(int) Button.PlayerSpell}]  Fire a laser that blasts everyone it touches.",
+                _                         => ""
             };
         }
         public static string Icon(this Spell spell)
@@ -93,7 +93,7 @@ namespace RogueCastle.Enums
                 Spell.DragonFire          => "DragonFireIcon_Sprite",
                 Spell.DragonFireNeo       => "DragonFireIcon_Sprite",
                 Spell.RapidDagger         => "RapidDaggerIcon_Sprite",
-                _                         => throw new ArgumentException($"Unsupported Spell Type in Description(): {nameof(spell)}")
+                _                         => "DaggerIcon_Sprite"
             };
         }
 
@@ -101,14 +101,14 @@ namespace RogueCastle.Enums
         {
             var spellList = Class.Archmage.GetSpellList();
             var list = spellList.ToList();
-            var index = list.IndexOf(Game.PlayerStats.Spell);
+            var index = list.IndexOf((Spell) Game.PlayerStats.Spell);
 
             list.Clear();
 
             var spells = new byte[3];
             for (var i = 0; i < 3; i++)
             {
-                spells[i] = spellList[index];
+                spells[i] = (byte) spellList[index];
                 index++;
 
                 // Don't overflow.

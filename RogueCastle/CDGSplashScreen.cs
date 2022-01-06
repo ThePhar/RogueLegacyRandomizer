@@ -13,7 +13,7 @@ using System;
 using System.Threading;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using Screen = DS2DEngine.Screen;

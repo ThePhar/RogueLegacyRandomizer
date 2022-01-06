@@ -118,7 +118,7 @@ namespace RogueCastle.Enums
                 _                => false
             };
         }
-        public static byte[] GetSpellList(this Class @class)
+        public static Spell[] GetSpellList(this Class @class)
 
         // TODO: Move this somewhere else?
         {
@@ -128,107 +128,107 @@ namespace RogueCastle.Enums
                 case Class.Paladin:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.BladeWall,
-                        SpellType.Conflux
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.BladeWall,
+                        Spell.Conflux
                     };
 
                 case Class.Mage:
                 case Class.Archmage:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.TimeStop,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.BladeWall,
-                        SpellType.FlameBarrier,
-                        SpellType.Conflux
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.TimeStop,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.BladeWall,
+                        Spell.FlameBarrier,
+                        Spell.Conflux
                     };
 
                 case Class.Barbarian:
                 case Class.BarbarianKing:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.BladeWall
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.BladeWall
                     };
 
                 case Class.Knave:
                 case Class.Assassin:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.QuantumTranslocator,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.Conflux
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.QuantumTranslocator,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.Conflux
                     };
 
                 case Class.Shinobi:
                 case Class.Hokage:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.QuantumTranslocator,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.BladeWall,
-                        SpellType.Conflux
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.QuantumTranslocator,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.BladeWall,
+                        Spell.Conflux
                     };
 
                 case Class.Miner:
                 case Class.Spelunker:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.FlameBarrier,
-                        SpellType.Conflux
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.FlameBarrier,
+                        Spell.Conflux
                     };
 
                 case Class.Spellthief:
                 case Class.Spellsword:
                     return new[]
                     {
-                        SpellType.Axe,
-                        SpellType.Dagger,
-                        SpellType.Chakram,
-                        SpellType.Scythe,
-                        SpellType.BladeWall,
-                        SpellType.FlameBarrier
+                        Spell.Axe,
+                        Spell.Dagger,
+                        Spell.Chakram,
+                        Spell.Scythe,
+                        Spell.BladeWall,
+                        Spell.FlameBarrier
                     };
 
                 case Class.Lich:
                 case Class.LichKing:
                     return new[]
                     {
-                        SpellType.CrowStorm,
-                        SpellType.FlameBarrier,
-                        SpellType.Conflux
+                        Spell.CrowStorm,
+                        Spell.FlameBarrier,
+                        Spell.Conflux
                     };
 
                 case Class.Dragon:
                     return new[]
                     {
-                        SpellType.DragonFire
+                        Spell.DragonFire
                     };
 
                 case Class.Traitor:
                     return new[]
                     {
-                        SpellType.RapidDagger
+                        Spell.RapidDagger
                     };
 
                 default:

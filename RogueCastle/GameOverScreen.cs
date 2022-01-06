@@ -17,10 +17,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueCastle.GameObjects;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
-using Screen = RogueCastle.Structs.Screen;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -390,7 +390,7 @@ namespace RogueCastle
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
                     Game.PlayerStats.OpenedChests = chests;
                     Game.PlayerStats.ReceivedItems = received;
-                    (ScreenManager as RCScreenManager).DisplayScreen(Screen.Lineage, true);
+                    (ScreenManager as RCScreenManager).DisplayScreen((int) Screen.Lineage, true);
                     m_lockControls = true;
                 }
             }

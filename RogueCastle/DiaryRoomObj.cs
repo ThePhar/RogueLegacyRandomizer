@@ -15,8 +15,8 @@ using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Structs;
-using Screen = RogueCastle.Structs.Screen;
+using RogueCastle.Enums;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -125,7 +125,7 @@ namespace RogueCastle
                                 Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
                                 networkItem.Item
                             };
-                            Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
+                            Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
                             Game.ScreenManager.Player.RunGetItemAnimation();
                         }
 

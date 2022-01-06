@@ -13,11 +13,11 @@ using System.Collections.Generic;
 using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using RogueCastle.Structs;
+using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using LogicSet = DS2DEngine.LogicSet;
-using Screen = RogueCastle.Structs.Screen;
+using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -782,7 +782,7 @@ namespace RogueCastle
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
 
