@@ -368,7 +368,7 @@ namespace RogueCastle
                 // If we're sending someone else something, let's show what we're sending.
                 if (Program.Game.ArchipelagoManager.LocationCache[code].Player != Program.Game.ArchipelagoManager.Data.Slot)
                 {
-                    Game.ScreenManager.DisplayScreen(Screen.GetItem, true, networkItem);
+                    Game.ScreenManager.DisplayScreen((int)Screen.GetItem, true, networkItem);
                     player.RunGetItemAnimation();
                 }
 

@@ -335,19 +335,19 @@ namespace RogueCastle.Screens
             if (ButtonHelper.PressedConfirm)
             {
                 var list = new List<object> { this };
-                Game.ScreenManager.DisplayScreen(Screen.Archipelago, false, list);
+                Game.ScreenManager.DisplayScreen((int)Screen.Archipelago, false, list);
             }
 
             if (Game.GlobalInput.JustPressed((int) Button.MenuOptions))
             {
                 _optionsEntered = true;
                 var list = new List<object> { true };
-                Game.ScreenManager.DisplayScreen(Screen.Options, false, list);
+                Game.ScreenManager.DisplayScreen((int)Screen.Options, false, list);
             }
 
             if (Game.GlobalInput.JustPressed((int) Button.MenuCredits))
             {
-                Game.ScreenManager.DisplayScreen(Screen.Credits, false);
+                Game.ScreenManager.DisplayScreen((int)Screen.Credits, false);
             }
 
             base.HandleInput();

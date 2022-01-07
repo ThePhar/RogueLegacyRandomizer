@@ -457,7 +457,7 @@ namespace RogueCastle
                     SaveManager.ClearAllFileTypes(false);
                 }
 
-                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? Screen.CDGSplash : Screen.Title, true);
+                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? (int)Screen.CDGSplash : (int)Screen.Title, true);
             }
 
             TotalGameTimeSeconds = (float) gameTime.TotalGameTime.TotalSeconds;
@@ -535,17 +535,17 @@ namespace RogueCastle
                         PlayerStats.PlayerName = $"{(PlayerStats.IsFemale ? "Lady" : "Sir")} {ArchipelagoManager.Data.Name}";
 
                         SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
-                        ScreenManager.DisplayScreen(Screen.StartingRoom, true);
+                        ScreenManager.DisplayScreen((int)Screen.StartingRoom, true);
                     }
                     else
                     {
                         if (heroIsDead)
                         {
-                            ScreenManager.DisplayScreen(Screen.Lineage, true);
+                            ScreenManager.DisplayScreen((int)Screen.Lineage, true);
                         }
                         else
                         {
-                            ScreenManager.DisplayScreen(startingRoom ? Screen.StartingRoom : Screen.Level, true);
+                            ScreenManager.DisplayScreen(startingRoom ? (int)Screen.StartingRoom :(int) Screen.Level, true);
                         }
                     }
 

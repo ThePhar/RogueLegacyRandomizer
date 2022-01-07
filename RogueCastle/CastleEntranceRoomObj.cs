@@ -378,7 +378,7 @@ namespace RogueCastle
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen(Screen.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen((int)Screen.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
                 }

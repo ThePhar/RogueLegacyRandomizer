@@ -712,7 +712,7 @@ namespace RogueCastle
                             new[] { "Charon" },
                             new[] { "I'm in a good mood today, so I'll let you in for free this time. Besides, you look like you could use the extra money anyway." });
                         rCScreenManager2.DialogueScreen.SetDialogue("Disabled Toll Collector");
-                        rCScreenManager2.DisplayScreen(Enums.Screen.Dialogue, true);
+                        rCScreenManager2.DisplayScreen((int)Enums.Screen.Dialogue, true);
                         return;
                     }
 
