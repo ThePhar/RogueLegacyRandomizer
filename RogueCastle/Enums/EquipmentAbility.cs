@@ -83,10 +83,10 @@ namespace RogueCastle.Enums
         {
             return ability switch
             {
-                EquipmentAbility.Vault       => $"Press [Input:{Button.PlayerJump1}] while in air.",
-                EquipmentAbility.Sprint      => $"[Input:{Button.PlayerDashLeft}] or [Input:{Button.PlayerDashRight}] to dash.",
+                EquipmentAbility.Vault       => $"Press [Input:{(int) Button.PlayerJump1}] while in air.",
+                EquipmentAbility.Sprint      => $"[Input:{(int) Button.PlayerDashLeft}] or [Input:{(int) Button.PlayerDashRight}] to dash.",
                 EquipmentAbility.Vampire     => "Kill enemies to regain health.",
-                EquipmentAbility.Sky         => $"Hold [Input:{Button.PlayerJump1}] while in air.",
+                EquipmentAbility.Sky         => $"Hold [Input:{(int) Button.PlayerJump1}] while in air.",
                 EquipmentAbility.Siphon      => "Kill enemies to regain mana.",
                 EquipmentAbility.Retaliation => "Damage returned to enemies.",
                 EquipmentAbility.Bounty      => "Coins give more gold.",
