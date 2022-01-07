@@ -56,7 +56,7 @@ namespace RogueCastle
         public const int LevelDungeonTopDoor = 45;
         public const int LevelDungeonBottomDoor = 100;
         public const string GameName = "Rogue Legacy Randomizer";
-        public static readonly Version GameVersion = Version.Parse("0.6.3");
+        public static readonly Version GameVersion = Version.Parse("0.7.0");
 
         static LevelENV()
         {
@@ -284,12 +284,12 @@ namespace RogueCastle
             // Default Environment Variables
             TestRoomZone = Zone.Castle;
             ShowEnemyRadii = false;
-            EnablePlayerDebug = true;
+            EnablePlayerDebug = false;
             UnlockAllAbilities = false;
             TestRoomReverse = false;
             RunTestRoom = false;
             ShowDebugText = false;
-            LoadSplashScreen = false;
+            LoadSplashScreen = true;
             ShowSaveLoadDebugText = false;
             DeleteSaveFile = false;
             CloseTestRoomDoors = false;
@@ -297,14 +297,14 @@ namespace RogueCastle
             RunDemoVersion = false;
             DisableSaving = false;
             RunCrashLogs = false;
-            WeakenBosses = true;
+            WeakenBosses = false;
             EnableOffscreenControl = true;
             EnableBackupSaving = false;
             CreateRetailVersion = true;
             ShowFps = false;
             SaveFrames = false;
             ShowArchipelagoStatus = false;
-            RunConsole = true;
+            RunConsole = false;
         }
 
         public static Zone TestRoomZone { get; set; }
