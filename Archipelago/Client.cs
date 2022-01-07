@@ -218,7 +218,7 @@ namespace Archipelago
         private void OnDeathLink(DeathLink deathLink)
         {
             var newDeathLink = deathLink.Timestamp.ToString(CultureInfo.InvariantCulture);
-            var oldDeathLink = deathLink.Timestamp.ToString(CultureInfo.InvariantCulture);
+            var oldDeathLink = LastDeath.ToString(CultureInfo.InvariantCulture);
 
             // Ignore deaths that died at the same time as us. Should also prevent the player from dying to themselves.
             if (newDeathLink != oldDeathLink)
