@@ -155,6 +155,11 @@ namespace RogueCastle
 
                     // Check location.
                     var location = LocationDefinitions.SpecialJukebox.Code;
+                    if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
+                    {
+                        return;
+                    }
+
                     var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
                     Program.Game.ArchipelagoManager.CheckLocations(location);
 
