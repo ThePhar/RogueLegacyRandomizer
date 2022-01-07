@@ -704,6 +704,15 @@ namespace RogueCastle
                         return;
                     }
 
+                    if (!Program.Game.ArchipelagoManager.Data.DisableCharon)
+                    {
+                        DialogueManager.AddText("Disabled Toll Collector",
+                            new[] { "Charon" },
+                            new[] { "I'm in a good mood today, so I'll let you in for free this time. Besides, you look like you could use the extra money anyway." });
+                        rCScreenManager2.DialogueScreen.SetDialogue("Disabled Toll Collector");
+                        return;
+                    }
+
                     if (!Game.PlayerStats.SpokeToTollCollector)
                     {
                         rCScreenManager2.DialogueScreen.SetDialogue("Meet Toll Collector 1");
