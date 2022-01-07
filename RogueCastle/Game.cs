@@ -522,6 +522,10 @@ namespace RogueCastle
                     {
                         PlayerStats.CharacterFound = true;
                         PlayerStats.Gold = 0;
+                        PlayerStats.BlobBossBeaten = true;
+                        PlayerStats.FireballBossBeaten = true;
+                        PlayerStats.FairyBossBeaten = true;
+                        PlayerStats.EyeballBossBeaten = true;
                         PlayerStats.Class = ArchipelagoManager.Data.StartingClass;
 
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);

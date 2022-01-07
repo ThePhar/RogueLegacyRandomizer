@@ -174,10 +174,24 @@ namespace RogueCastle
             m_sideBorderBottom.Scale = new Vector2(1f, 1f);
             m_sideBorderBottom.Scale = new Vector2(1340f / m_sideBorderBottom.Width, 720f / m_sideBorderBottom.Height);
             m_sideBorderBottom.Position = new Vector2(0f, 460f);
+
+            // Manor?
             m_manor = new ObjContainer("TraitsCastle_Character");
             m_manor.Scale = new Vector2(2f, 2f);
             m_manor.Visible = false;
-            for (var i = 0; i < m_manor.NumChildren; i++) m_manor.GetChildAt(i).Visible = false;
+            for (var i = 0; i < m_manor.NumChildren; i++)
+            {
+                m_manor.GetChildAt(i).Visible = false;
+            }
+
+            for (var i = 0; i < SkillSystem.GetSkillArray().Length; i++)
+            {
+                if (SkillSystem.GetSkillArray()[i].CurrentLevel > 0)
+                {
+                    m_manor.GetChildAt(SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i])).Visible = true;
+                    m_manor.GetChildAt(SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i])).Opacity = 1f;
+                }
+            }
 
             m_thanksForPlayingText = new TextObj(Game.JunicodeLargeFont);
             m_thanksForPlayingText.FontSize = 32f;
