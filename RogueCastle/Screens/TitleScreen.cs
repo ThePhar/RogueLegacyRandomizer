@@ -249,6 +249,12 @@ namespace RogueCastle.Screens
             // Load the default profile.
             Program.Game.ArchipelagoManager.Disconnect();
             Program.Game.ChangeProfile("DEFAULT", 0);
+            SkillSystem.ResetAllTraits();
+            Game.PlayerStats.Dispose();
+            Game.PlayerStats = new PlayerStats();
+            Game.ScreenManager.Player.Reset();
+            Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
+            Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
 
             InitializeStartingText();
 

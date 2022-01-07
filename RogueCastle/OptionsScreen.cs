@@ -2,7 +2,7 @@
   Rogue Legacy Enhanced
 
   This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
+  Therefore, former creators copyright notice applies to original disassembly.
 
   Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
   Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
@@ -71,8 +71,8 @@ namespace RogueCastle
             m_optionsArray.Add(new ToggleDirectInputOptionsObj(this));
             m_optionsArray.Add(new ChangeControlsOptionsObj(this));
             m_optionsArray.Add(new ExitProgramOptionsObj(this));
-            m_backToMenuObj = new BackToMenuOptionsObj(this);
-            m_backToMenuObj.X = 420f;
+            // m_backToMenuObj = new BackToMenuOptionsObj(this);
+            // m_backToMenuObj.X = 420f;
             for (var i = 0; i < m_optionsArray.Count; i++)
             {
                 m_optionsArray[i].X = 420f;
@@ -144,10 +144,10 @@ namespace RogueCastle
             Tween.To(m_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.To(m_navigationText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogueMenuOpen");
-            if (!m_optionsArray.Contains(m_backToMenuObj))
-            {
-                m_optionsArray.Insert(m_optionsArray.Count - 1, m_backToMenuObj);
-            }
+            // if (!m_optionsArray.Contains(m_backToMenuObj))
+            // {
+            //     m_optionsArray.Insert(m_optionsArray.Count - 1, m_backToMenuObj);
+            // }
 
             if (m_titleScreenOptions)
             {
