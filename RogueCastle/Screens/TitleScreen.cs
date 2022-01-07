@@ -317,8 +317,8 @@ namespace RogueCastle.Screens
             if (_optionsEntered && Game.ScreenManager.CurrentScreen == this)
             {
                 _optionsEntered = false;
-                _optionsKey.Text = "[Input:" + Button.MenuOptions + "]";
-                _creditsKey.Text = "[Input:" + Button.MenuCredits + "]";
+                _optionsKey.Text = "[Input:" + (int) Button.MenuOptions + "]";
+                _creditsKey.Text = "[Input:" + (int) Button.MenuCredits + "]";
             }
 
             base.Update(gameTime);

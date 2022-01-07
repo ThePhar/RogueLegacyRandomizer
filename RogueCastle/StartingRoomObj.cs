@@ -19,6 +19,7 @@ using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 using LogicSet = DS2DEngine.LogicSet;
+using Screen = DS2DEngine.Screen;
 
 namespace RogueCastle
 {
@@ -704,12 +705,14 @@ namespace RogueCastle
                         return;
                     }
 
-                    if (!Program.Game.ArchipelagoManager.Data.DisableCharon)
+                    if (Program.Game.ArchipelagoManager.Data.DisableCharon)
                     {
+                        Tween.RunFunction(0.1f, this, "TollPaid", false);
                         DialogueManager.AddText("Disabled Toll Collector",
                             new[] { "Charon" },
                             new[] { "I'm in a good mood today, so I'll let you in for free this time. Besides, you look like you could use the extra money anyway." });
                         rCScreenManager2.DialogueScreen.SetDialogue("Disabled Toll Collector");
+                        rCScreenManager2.DisplayScreen(Enums.Screen.Dialogue, true);
                         return;
                     }
 
