@@ -664,7 +664,8 @@ namespace RogueCastle
                 if (m_displayingContinueText)
                 {
                     Tween.StopAll(false);
-                    (ScreenManager as RCScreenManager).DisplayScreen(3, true);
+                    Program.Game.SaveOnExit();
+                    Program.Game.Exit();
                 }
                 else
                 {
@@ -1034,6 +1035,10 @@ namespace RogueCastle
             m_childSprite1.GetChildAt(9).ChangeSprite("PlayerLevelUpShoulderA" + m_child1Shoulders + "_Sprite");
             m_childSprite1.GetChildAt(3).ChangeSprite("PlayerLevelUpShoulderB" + m_child1Shoulders + "_Sprite");
             m_childSprite1.PlayAnimation(false);
+            m_allowExit = true;
+            m_displayingContinueText = true;
+            Tween.StopAllContaining(m_continueText, false);
+            Tween.To(m_continueText, 0.5f, Tween.EaseNone, "Opacity", "1");
         }
 
         public void BringChild2()
