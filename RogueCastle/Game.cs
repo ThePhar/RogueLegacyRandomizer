@@ -327,37 +327,37 @@ namespace RogueCastle
             {
                 Name = "The Grand Entrance",
                 Zone = Zone.Castle,
-                TotalRooms = new Vector2(24f, 28f),
+                TotalRooms = new Vector2(30f, 35f),
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(2f, 3f),
+                BonusRooms = new Vector2(4f, 5f),
                 Color = Color.White
             };
             var gardenArea = new AreaStruct
             {
                 Zone = Zone.Garden,
-                TotalRooms = new Vector2(23f, 27f),
+                TotalRooms = new Vector2(28f, 30f),
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(2f, 3f),
+                BonusRooms = new Vector2(4f, 5f),
                 Color = Color.Green
             };
             var towerArea = new AreaStruct
             {
                 Zone = Zone.Tower,
-                TotalRooms = new Vector2(23f, 27f),
+                TotalRooms = new Vector2(28f, 30f),
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(2f, 3f),
+                BonusRooms = new Vector2(4f, 5f),
                 Color = Color.DarkBlue
             };
             var dungeonArea = new AreaStruct
             {
                 Zone = Zone.Dungeon,
-                TotalRooms = new Vector2(23f, 27f),
+                TotalRooms = new Vector2(28f, 30f),
                 BossInArea = true,
                 SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(2f, 3f),
+                BonusRooms = new Vector2(4f, 5f),
                 Color = Color.Red
             };
 
