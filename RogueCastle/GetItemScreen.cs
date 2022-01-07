@@ -638,7 +638,7 @@ namespace RogueCastle
             }
 
             m_lockControls = true;
-            Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", m_storedMusicVolume.ToString());
+            Tween.To(typeof(SoundManager), 1f, Tween.EaseNone, "GlobalMusicVolume", Game.GameConfig.MusicVolume.ToString());
             Tween.To(m_itemSprite, 0.4f, Back.EaseIn, "ScaleX", "0", "ScaleY", "0");
             Tween.To(m_itemFoundText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
             Tween.To(m_itemFoundPlayerText, 0.4f, Back.EaseIn, "delay", "0.1", "ScaleX", "0", "ScaleY", "0");
