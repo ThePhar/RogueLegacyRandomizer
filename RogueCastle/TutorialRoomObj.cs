@@ -136,6 +136,15 @@ namespace RogueCastle
 
         public override void LoadContent(GraphicsDevice graphics)
         {
+            var randomText = new string[]
+            {
+                "Down Attack this",
+                "Phar says hello",
+                "When is Hollow Knight AP?",
+                "Bugs guaranteed",
+                "The Game"
+            };
+
             m_tutorialText = new KeyIconTextObj(Game.JunicodeLargeFont);
             m_tutorialText.FontSize = 28f;
             m_tutorialText.Text = "[Input:" + 10 + "] to Jump";
@@ -150,7 +159,7 @@ namespace RogueCastle
             m_creditsTitleText.FontSize = 14f;
             var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
-            textObj.Text = "Down Attack this";
+            textObj.Text = randomText[CDGMath.RandomInt(0, randomText.Length - 1)];
             textObj.OutlineWidth = 2;
             textObj.Align = Types.TextAlign.Centre;
             textObj.Position = m_waypointList[m_waypointList.Count - 1].Position;
