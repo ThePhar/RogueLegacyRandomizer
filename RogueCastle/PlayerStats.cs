@@ -69,23 +69,6 @@ namespace RogueCastle
             ChestPiece = (byte) CDGMath.RandomInt(1, 5);
             CDGMath.RandomInt(0, 14);
 
-            if (Program.Game == null || Program.Game.ArchipelagoManager.Data.RequirePurchasing)
-            {
-                GetBlueprintArray[1][0] = 1;
-                GetBlueprintArray[3][0] = 1;
-                GetBlueprintArray[0][0] = 1;
-                GetRuneArray[1][0] = 1;
-                GetRuneArray[0][1] = 1;
-            }
-            else
-            {
-                GetBlueprintArray[1][0] = 3;
-                GetBlueprintArray[3][0] = 3;
-                GetBlueprintArray[0][0] = 3;
-                GetRuneArray[1][0] = 3;
-                GetRuneArray[0][1] = 3;
-            }
-
             OpenedChests = new ChestTracker();
             ReceivedItems = new List<NetworkItem>();
             CheckedLocationsCount = 0;
