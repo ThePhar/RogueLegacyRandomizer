@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly.
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+//  Rogue Legacy Randomizer - LastBossChallengeRoom.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -101,7 +102,6 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            StorePlayerData();
             SetRoomData();
             m_cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
@@ -118,7 +118,7 @@ namespace RogueCastle
             Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
                 "Intro2");
             base.OnEnter();
-            m_bossChest.ForcedItemType = ItemDrop.FountainPiece5;
+            _bossChest.ForcedItemType = ItemDrop.FountainPiece5;
         }
 
         public override void OnExit()

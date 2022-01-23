@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly.
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+//  Rogue Legacy Randomizer - EyeballChallengeRoom.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -45,26 +46,6 @@ namespace RogueCastle
             m_boss.Damage = 57;
             m_boss.IsNeo = true;
             m_boss.Name = "Neo Khidr";
-            Game.PlayerStats.PlayerName = "Lady McSwordy";
-            Game.PlayerStats.Class = 14;
-            Game.PlayerStats.Spell = 10;
-            Game.PlayerStats.IsFemale = true;
-            Game.PlayerStats.BonusHealth = 39;
-            Game.PlayerStats.BonusMana = 0;
-            Game.PlayerStats.BonusStrength = 5;
-            Game.PlayerStats.BonusMagic = 190;
-            Game.PlayerStats.Traits = new Vector2(20f, 14f);
-            Game.PlayerStats.SpecialItem = 8;
-            Game.PlayerStats.GetEquippedArray[1] = 1;
-            Game.PlayerStats.GetEquippedArray[2] = 1;
-            Game.PlayerStats.GetEquippedArray[4] = 1;
-            Game.PlayerStats.GetEquippedArray[3] = 1;
-            Game.PlayerStats.GetEquippedArray[0] = 1;
-            Game.PlayerStats.GetEquippedRuneArray[1] = 0;
-            Game.PlayerStats.GetEquippedRuneArray[2] = 0;
-            Game.PlayerStats.GetEquippedRuneArray[4] = 1;
-            Game.PlayerStats.GetEquippedRuneArray[3] = 1;
-            Game.PlayerStats.GetEquippedRuneArray[0] = 7;
             if (m_boss != null)
             {
                 m_boss.CurrentHealth = m_boss.MaxHealth;
@@ -73,7 +54,6 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            StorePlayerData();
             SetRoomData();
             m_cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
@@ -88,10 +68,9 @@ namespace RogueCastle
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Keymaster", m_boss.Name,
                 "Intro2");
             base.OnEnter();
-            m_bossChest.ForcedItemType = ItemDrop.FountainPiece1;
         }
 
         public void Intro2()
@@ -123,7 +102,7 @@ namespace RogueCastle
 
         protected override void SaveCompletionData()
         {
-            Game.PlayerStats.ChallengeEyeballBeaten = true;
+            Game.PlayerStats.EyeballBossBeaten = true;
             GameUtil.UnlockAchievement("FEAR_OF_BLINDNESS");
         }
 

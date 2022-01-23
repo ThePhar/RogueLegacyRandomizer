@@ -1,13 +1,13 @@
-//
-//  RogueLegacyArchipelago - LevelENV.cs
-//  Last Modified 2021-12-30
-//
+// 
+//  Rogue Legacy Randomizer - LevelENV.cs
+//  Last Modified 2022-01-23
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using RogueCastle.Enums;
@@ -284,12 +284,12 @@ namespace RogueCastle
             // Default Environment Variables
             TestRoomZone = Zone.Castle;
             ShowEnemyRadii = false;
-            EnablePlayerDebug = false;
+            EnablePlayerDebug = true;
             UnlockAllAbilities = false;
             TestRoomReverse = false;
             RunTestRoom = false;
             ShowDebugText = false;
-            LoadSplashScreen = true;
+            LoadSplashScreen = false;
             ShowSaveLoadDebugText = false;
             DeleteSaveFile = false;
             CloseTestRoomDoors = false;
@@ -297,14 +297,14 @@ namespace RogueCastle
             RunDemoVersion = false;
             DisableSaving = false;
             RunCrashLogs = false;
-            WeakenBosses = false;
+            WeakenBosses = true;
             EnableOffscreenControl = true;
             EnableBackupSaving = false;
             CreateRetailVersion = true;
             ShowFps = false;
             SaveFrames = false;
             ShowArchipelagoStatus = false;
-            RunConsole = false;
+            RunConsole = true;
         }
 
         public static Zone TestRoomZone { get; set; }

@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - ProceduralLevelScreen.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - ProceduralLevelScreen.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -975,7 +975,7 @@ namespace RogueCastle
             switch (zone)
             {
                 case Zone.Castle:
-                    if (Game.PlayerStats.EyeballBossBeaten)
+                    if (Game.PlayerStats.EyeballBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -983,7 +983,7 @@ namespace RogueCastle
                     break;
 
                 case Zone.Garden:
-                    if (Game.PlayerStats.FairyBossBeaten)
+                    if (Game.PlayerStats.FairyBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -991,7 +991,7 @@ namespace RogueCastle
                     break;
 
                 case Zone.Dungeon:
-                    if (Game.PlayerStats.BlobBossBeaten)
+                    if (Game.PlayerStats.BlobBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -999,7 +999,7 @@ namespace RogueCastle
                     break;
 
                 case Zone.Tower:
-                    if (Game.PlayerStats.FireballBossBeaten)
+                    if (Game.PlayerStats.FireballBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeLeon)
                     {
                         flag = true;
                     }
@@ -1010,6 +1010,7 @@ namespace RogueCastle
             if (flag)
             {
                 foreach (var current in linkedRoom.DoorList)
+                {
                     if (current.IsBossDoor)
                     {
                         foreach (var current2 in linkedRoom.GameObjList)
@@ -1025,12 +1026,13 @@ namespace RogueCastle
                         current.Locked = true;
                         break;
                     }
+                }
             }
 
             OpenChallengeBossDoor(linkedRoom, zone);
             if (Game.PlayerStats.ChallengeLastBossUnlocked)
             {
-                OpenLastBossChallengeDoors();
+                // OpenLastBossChallengeDoors();
             }
         }
 
@@ -1111,8 +1113,7 @@ namespace RogueCastle
             switch (zone)
             {
                 case Zone.Castle:
-                    if (Game.PlayerStats.EyeballBossBeaten && !Game.PlayerStats.ChallengeEyeballBeaten &&
-                        Game.PlayerStats.ChallengeEyeballUnlocked)
+                    if (!Game.PlayerStats.EyeballBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -1120,8 +1121,7 @@ namespace RogueCastle
                     break;
 
                 case Zone.Garden:
-                    if (Game.PlayerStats.FairyBossBeaten && !Game.PlayerStats.ChallengeSkullBeaten &&
-                        Game.PlayerStats.ChallengeSkullUnlocked)
+                    if (!Game.PlayerStats.FairyBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -1129,8 +1129,7 @@ namespace RogueCastle
                     break;
 
                 case Zone.Dungeon:
-                    if (Game.PlayerStats.BlobBossBeaten && !Game.PlayerStats.ChallengeBlobBeaten &&
-                        Game.PlayerStats.ChallengeBlobUnlocked)
+                    if (!Game.PlayerStats.BlobBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -1138,8 +1137,7 @@ namespace RogueCastle
                     break;
 
                 case Zone.Tower:
-                    if (Game.PlayerStats.FireballBossBeaten && !Game.PlayerStats.ChallengeFireballBeaten &&
-                        Game.PlayerStats.ChallengeFireballUnlocked)
+                    if (!Game.PlayerStats.FireballBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeLeon)
                     {
                         flag = true;
                     }

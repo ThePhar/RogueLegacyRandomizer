@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - PlayerObj.cs
 //  Last Modified 2022-01-23
-//
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -2990,17 +2990,8 @@ namespace RogueCastle
                         }
                         else
                         {
-                            var challengeBossRoomObj =
-                                AttachedLevel.CurrentRoom as ChallengeBossRoomObj;
-                            if (challengeBossRoomObj != null)
-                            {
-                                challengeBossRoomObj.KickPlayerOut();
-                            }
-                            else
-                            {
-                                AttachedLevel.SetObjectKilledPlayer(obj);
-                                Kill();
-                            }
+                            AttachedLevel.SetObjectKilledPlayer(obj);
+                            Kill();
                         }
                     }
                 }
@@ -3069,14 +3060,6 @@ namespace RogueCastle
 
         public override void Kill(bool giveXP = true)
         {
-            var challengeBossRoomObj = AttachedLevel.CurrentRoom as ChallengeBossRoomObj;
-            if (challengeBossRoomObj != null)
-            {
-                challengeBossRoomObj.LoadPlayerData();
-                Game.SaveManager.LoadFiles(AttachedLevel, SaveType.UpgradeData);
-                CurrentHealth = 0;
-            }
-
             m_translocatorSprite.Visible = false;
             m_swearBubble.Visible = false;
             m_swearBubbleCounter = 0f;
