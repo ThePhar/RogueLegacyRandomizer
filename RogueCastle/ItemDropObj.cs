@@ -1,13 +1,13 @@
-// 
-//  RogueLegacyArchipelago - ItemDropObj.cs
-//  Last Modified 2021-12-29
-// 
+//
+//  Rogue Legacy Randomizer - ItemDropObj.cs
+//  Last Modified 2022-01-23
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using DS2DEngine;
@@ -18,8 +18,8 @@ namespace RogueCastle
 {
     public class ItemDropObj : PhysicsObj
     {
-        public int DropType;
-        private float m_amount;
+        public  int   DropType;
+        private float _amount;
 
         public ItemDropObj(string spriteName) : base(spriteName)
         {
@@ -32,10 +32,7 @@ namespace RogueCastle
 
         public float CollectionCounter { get; set; }
 
-        public bool IsCollectable
-        {
-            get { return CollectionCounter <= 0f; }
-        }
+        public bool IsCollectable => CollectionCounter <= 0f;
 
         public void ConvertDrop(int dropType, float amount)
         {
@@ -92,7 +89,7 @@ namespace RogueCastle
             PlayAnimation();
             IL_11A:
             DropType = dropType;
-            m_amount = amount;
+            _amount = amount;
             ClearCollisionBoxes();
             AddCollisionBox(0, 0, Width, Height, 0);
         }
@@ -106,15 +103,16 @@ namespace RogueCastle
                 case 11:
                 {
                     player.AttachedLevel.ItemDropCollected(DropType);
-                    var num = 1f;
+                    var feeFactor = 1f;
                     if (Game.PlayerStats.HasArchitectFee)
                     {
-                        num = 0.6f;
+                        feeFactor = (100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage) / 100f;
+                        ;
                     }
 
                     var num2 =
                         (int) Math.Round(
-                            m_amount * (1f + player.TotalGoldBonus) * num *
+                            _amount * (1f + player.TotalGoldBonus) * feeFactor *
                             Program.Game.ArchipelagoManager.Data.GoldGainMultiplier, MidpointRounding.AwayFromZero);
                     Game.PlayerStats.Gold += num2;
                     textManager.DisplayNumberStringText(num2, "gold", Color.Yellow, new Vector2(X, Bounds.Top));
@@ -129,7 +127,7 @@ namespace RogueCastle
                 case 2:
                 {
                     var num3 =
-                        (int) (player.MaxHealth * (m_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
+                        (int) (player.MaxHealth * (_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
                     player.CurrentHealth += num3;
                     textManager.DisplayNumberStringText(num3, "hp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));
@@ -140,7 +138,7 @@ namespace RogueCastle
                 case 3:
                 {
                     var num4 =
-                        (int) (player.MaxMana * (m_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
+                        (int) (player.MaxMana * (_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
                     player.CurrentMana += num4;
                     textManager.DisplayNumberStringText(num4, "mp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));
@@ -194,7 +192,7 @@ namespace RogueCastle
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
             if (collisionResponseType == 1 && (otherBox.AbsParent is TerrainObj || otherBox.AbsParent is HazardObj) &&
-                !(otherBox.AbsParent is DoorObj))
+                otherBox.AbsParent is not DoorObj)
             {
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                 AccelerationX = 0f;
