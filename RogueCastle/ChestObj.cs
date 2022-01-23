@@ -1,7 +1,16 @@
+//
+//  Rogue Legacy Randomizer - ChestObj.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Archipelago;
 using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -15,14 +24,13 @@ namespace RogueCastle
 {
     public class ChestObj : PhysicsObj
     {
-        public int Level;
-
-        private readonly float _goldIncreasePerLevel = 1.425f;
-        private readonly Vector2 _bronzeChestGoldRange = new(9f, 14f);
-        private readonly Vector2 _goldChestGoldRange = new(47f, 57f);
-        private SpriteObj _arrowIcon;
-        private Chest _chestType;
-        private readonly Vector2 _silverChestGoldRange = new(20f, 28f);
+        private readonly Vector2   _bronzeChestGoldRange = new(9f, 14f);
+        private readonly Vector2   _goldChestGoldRange   = new(47f, 57f);
+        private readonly float     _goldIncreasePerLevel = 1.425f;
+        private readonly Vector2   _silverChestGoldRange = new(20f, 28f);
+        private          SpriteObj _arrowIcon;
+        private          Chest     _chestType;
+        public           int       Level;
 
         public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
         {
@@ -34,11 +42,11 @@ namespace RogueCastle
             _arrowIcon = new SpriteObj("UpArrowSquare_Sprite") { OutlineWidth = 2, Visible = false };
         }
 
-        public bool IsEmpty { get; set; }
-        public bool IsLocked { get; set; }
+        public bool     IsEmpty        { get; set; }
+        public bool     IsLocked       { get; set; }
         public ItemDrop ForcedItemType { get; set; }
-        public float ForcedAmount { get; set; }
-        public bool IsProcedural { get; set; }
+        public float    ForcedAmount   { get; set; }
+        public bool     IsProcedural   { get; set; }
 
         public Chest ChestType
         {
@@ -112,7 +120,10 @@ namespace RogueCastle
                 threshold += chances[i];
 
                 // Skip if we rolled higher.
-                if (randomInt > threshold) continue;
+                if (randomInt > threshold)
+                {
+                    continue;
+                }
 
                 dropType = i;
                 break;
@@ -131,11 +142,12 @@ namespace RogueCastle
 
         public void GiveGold(ItemDropManager itemDropManager, int amount = 0)
         {
-            int num = ChestType switch
+            var num = ChestType switch
             {
-                Chest.Brown                 => CDGMath.RandomInt((int) _bronzeChestGoldRange.X, (int) _bronzeChestGoldRange.Y) * 10,
-                Chest.Silver or Chest.Fairy => CDGMath.RandomInt((int) _silverChestGoldRange.X, (int) _silverChestGoldRange.Y) * 10,
-                _                           => CDGMath.RandomInt((int) _goldChestGoldRange.X, (int) _goldChestGoldRange.Y) * 10
+                Chest.Brown => CDGMath.RandomInt((int) _bronzeChestGoldRange.X, (int) _bronzeChestGoldRange.Y) * 10,
+                Chest.Silver or Chest.Fairy => CDGMath.RandomInt((int) _silverChestGoldRange.X,
+                    (int) _silverChestGoldRange.Y) * 10,
+                _ => CDGMath.RandomInt((int) _goldChestGoldRange.X, (int) _goldChestGoldRange.Y) * 10
             };
 
             num += (int) Math.Floor(_goldIncreasePerLevel * Level * 10f);
@@ -306,33 +318,50 @@ namespace RogueCastle
             {
                 var location = 0;
 
-                // Grab our current index and offset it by the starting number we have the location defined.
-                switch (room.Zone)
+                if (isFairy && Program.Game.ArchipelagoManager.Data.UniversalFairyChests)
                 {
-                    case Zone.None:
-                    case Zone.Castle:
-                        location = isFairy
-                            ? Game.PlayerStats.OpenedChests.CastleFairyChests++ + LocationDefinitions.FairyCastle1.Code
-                            : Game.PlayerStats.OpenedChests.CastleChests++      + LocationDefinitions.ChestCastle1.Code;
-                        break;
+                    location = Game.PlayerStats.OpenedChests.CastleFairyChests++ +
+                               LocationDefinitions.FairyUniversal1.Code;
+                }
+                else if (Program.Game.ArchipelagoManager.Data.UniversalChests)
+                {
+                    location = Game.PlayerStats.OpenedChests.CastleChests++ + LocationDefinitions.ChestUniversal1.Code;
+                }
+                else
+                {
+                    // Grab our current index and offset it by the starting number we have the location defined.
+                    switch (room.Zone)
+                    {
+                        case Zone.None:
+                        case Zone.Castle:
+                            location = isFairy
+                                ? Game.PlayerStats.OpenedChests.CastleFairyChests++ +
+                                  LocationDefinitions.FairyCastle1.Code
+                                : Game.PlayerStats.OpenedChests.CastleChests++ + LocationDefinitions.ChestCastle1.Code;
+                            break;
 
-                    case Zone.Garden:
-                        location = isFairy
-                            ? Game.PlayerStats.OpenedChests.GardenFairyChests++ + LocationDefinitions.FairyGarden1.Code
-                            : Game.PlayerStats.OpenedChests.GardenChests++      + LocationDefinitions.ChestGarden1.Code;
-                        break;
+                        case Zone.Garden:
+                            location = isFairy
+                                ? Game.PlayerStats.OpenedChests.GardenFairyChests++ +
+                                  LocationDefinitions.FairyGarden1.Code
+                                : Game.PlayerStats.OpenedChests.GardenChests++ + LocationDefinitions.ChestGarden1.Code;
+                            break;
 
-                    case Zone.Tower:
-                        location = isFairy
-                            ? Game.PlayerStats.OpenedChests.TowerFairyChests++ + LocationDefinitions.FairyTower1.Code
-                            : Game.PlayerStats.OpenedChests.TowerChests++      + LocationDefinitions.ChestTower1.Code;
-                        break;
+                        case Zone.Tower:
+                            location = isFairy
+                                ? Game.PlayerStats.OpenedChests.TowerFairyChests++ +
+                                  LocationDefinitions.FairyTower1.Code
+                                : Game.PlayerStats.OpenedChests.TowerChests++ + LocationDefinitions.ChestTower1.Code;
+                            break;
 
-                    case Zone.Dungeon:
-                        location = isFairy
-                            ? Game.PlayerStats.OpenedChests.DungeonFairyChests++ + LocationDefinitions.FairyDungeon1.Code
-                            : Game.PlayerStats.OpenedChests.DungeonChests++      + LocationDefinitions.ChestDungeon1.Code;
-                        break;
+                        case Zone.Dungeon:
+                            location = isFairy
+                                ? Game.PlayerStats.OpenedChests.DungeonFairyChests++ +
+                                  LocationDefinitions.FairyDungeon1.Code
+                                : Game.PlayerStats.OpenedChests.DungeonChests++ +
+                                  LocationDefinitions.ChestDungeon1.Code;
+                            break;
+                    }
                 }
 
                 Console.WriteLine($"Attempted to open location {location}");
@@ -352,7 +381,8 @@ namespace RogueCastle
 
                 // If we've gotten this far, then this is a new item.
                 var code = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, location).Code;
-                var name = Program.Game.ArchipelagoManager.GetPlayerName(Program.Game.ArchipelagoManager.LocationCache[code].Player);
+                var name = Program.Game.ArchipelagoManager.GetPlayerName(Program.Game.ArchipelagoManager
+                    .LocationCache[code].Player);
                 var item = Program.Game.ArchipelagoManager.LocationCache[code].Item;
                 var networkItem = new List<object>
                 {
@@ -367,9 +397,10 @@ namespace RogueCastle
                 Program.Game.ArchipelagoManager.CheckLocations(code);
 
                 // If we're sending someone else something, let's show what we're sending.
-                if (Program.Game.ArchipelagoManager.LocationCache[code].Player != Program.Game.ArchipelagoManager.Data.Slot)
+                if (Program.Game.ArchipelagoManager.LocationCache[code].Player !=
+                    Program.Game.ArchipelagoManager.Data.Slot)
                 {
-                    Game.ScreenManager.DisplayScreen((int)Screen.GetItem, true, networkItem);
+                    Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, networkItem);
                     player.RunGetItemAnimation();
                 }
 
@@ -381,8 +412,7 @@ namespace RogueCastle
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)
         {
-            var playerObj = otherBox.AbsParent as PlayerObj;
-            if (!IsLocked && !IsOpen && playerObj != null && playerObj.IsTouchingGround)
+            if (!IsLocked && !IsOpen && otherBox.AbsParent is PlayerObj { IsTouchingGround: true })
             {
                 _arrowIcon.Visible = true;
             }
@@ -429,12 +459,14 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                _arrowIcon.Dispose();
-                _arrowIcon = null;
-                base.Dispose();
+                return;
             }
+
+            _arrowIcon.Dispose();
+            _arrowIcon = null;
+            base.Dispose();
         }
     }
 }

@@ -26,18 +26,20 @@ namespace Archipelago
             };
         }
 
-        public string Seed               => (string) _slotData["seed"];
-        public int    Slot               => (int) _slotData["slot"];
-        public string Name               => (string) _slotData["name"];
-        public bool   DeathLink          => Convert.ToInt32(_slotData["death_link"]) == 1;
-        public bool   IsFemale           => Convert.ToInt32(_slotData["starting_gender"]) == 1;
-        public byte   StartingClass      => Convert.ToByte(_slotData["starting_class"]);
-        public int    Difficulty         => Convert.ToInt32(_slotData["new_game_plus"]);
-        public int    FairyChestsPerZone => Convert.ToInt32(_slotData["fairy_chests_per_zone"]);
-        public int    ChestsPerZone      => Convert.ToInt32(_slotData["chests_per_zone"]);
-        public bool   RequirePurchasing  => Convert.ToInt32(_slotData["require_purchasing"]) == 1;
-        public int    NumberOfChildren   => Convert.ToInt32(_slotData["number_of_children"]);
-        public bool   DisableCharon      => Convert.ToInt32(_slotData["disable_charon"]) == 1;
+        public string Seed                 => (string) _slotData["seed"];
+        public int    Slot                 => (int) _slotData["slot"];
+        public string Name                 => (string) _slotData["name"];
+        public bool   DeathLink            => Convert.ToInt32(_slotData["death_link"]) == 1;
+        public bool   IsFemale             => Convert.ToInt32(_slotData["starting_gender"]) == 1;
+        public byte   StartingClass        => Convert.ToByte(_slotData["starting_class"]);
+        public int    Difficulty           => Convert.ToInt32(_slotData["new_game_plus"]);
+        public int    FairyChestsPerZone   => Convert.ToInt32(_slotData["fairy_chests_per_zone"]);
+        public int    ChestsPerZone        => Convert.ToInt32(_slotData["chests_per_zone"]);
+        public bool   RequirePurchasing    => Convert.ToInt32(_slotData["require_purchasing"]) == 1;
+        public int    NumberOfChildren     => Convert.ToInt32(_slotData["number_of_children"]);
+        public bool   DisableCharon        => Convert.ToInt32(_slotData["disable_charon"]) == 1;
+        public bool   UniversalChests      => Convert.ToInt32(_slotData["universal_chests"]) == 1;
+        public bool   UniversalFairyChests => Convert.ToInt32(_slotData["universal_fairy_chests"]) == 1;
 
         public float GoldGainMultiplier => Convert.ToInt32(_slotData["gold_gain_multiplier"]) switch
         {
