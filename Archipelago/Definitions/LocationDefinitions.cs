@@ -1,8 +1,19 @@
-﻿using System.Collections.Generic;
+﻿//
+//  Rogue Legacy Randomizer - LocationDefinitions.cs
+//  Last Modified 2022-01-22
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Archipelago
+namespace Archipelago.Definitions
 {
     public static class LocationDefinitions
     {
@@ -40,10 +51,10 @@ namespace Archipelago
         public static readonly LocationData ManorObservatoryScope = new(91030, "Manor Renovation - Observatory Telescope");
 
         // Boss Rewards
-        public static readonly LocationData BossKhindr            = new(91100, "Khindr's Boss Chest");
-        public static readonly LocationData BossAlexander         = new(91102, "Alexander's Boss Chest");
-        public static readonly LocationData BossLeon              = new(91104, "Ponce de Leon's Boss Chest");
-        public static readonly LocationData BossHerodotus         = new(91106, "Herodotus's Boss Chest");
+        public static readonly LocationData BossCastle            = new(91100, "Castle Hamson - Boss");
+        public static readonly LocationData BossForest            = new(91102, "Forest Abkhazia - Boss");
+        public static readonly LocationData BossTower             = new(91104, "The Maya - Boss");
+        public static readonly LocationData BossDungeon           = new(91106, "The Land of Darkness - Boss");
 
         // Special Locations
         public static readonly LocationData SpecialJukebox        = new(91200, "Jukebox");
@@ -200,6 +211,127 @@ namespace Archipelago
         public static readonly LocationData ChestDungeon29        = new(91928, "The Land of Darkness - Chest 29");
         public static readonly LocationData ChestDungeon30        = new(91929, "The Land of Darkness - Chest 30");
 
+        public static readonly LocationData ChestUniversal1       = new(92000, "Chest 1");
+        public static readonly LocationData ChestUniversal2       = new(92001, "Chest 2");
+        public static readonly LocationData ChestUniversal3       = new(92002, "Chest 3");
+        public static readonly LocationData ChestUniversal4       = new(92003, "Chest 4");
+        public static readonly LocationData ChestUniversal5       = new(92004, "Chest 5");
+        public static readonly LocationData ChestUniversal6       = new(92005, "Chest 6");
+        public static readonly LocationData ChestUniversal7       = new(92006, "Chest 7");
+        public static readonly LocationData ChestUniversal8       = new(92007, "Chest 8");
+        public static readonly LocationData ChestUniversal9       = new(92008, "Chest 9");
+        public static readonly LocationData ChestUniversal10      = new(92009, "Chest 10");
+        public static readonly LocationData ChestUniversal11      = new(92010, "Chest 11");
+        public static readonly LocationData ChestUniversal12      = new(92011, "Chest 12");
+        public static readonly LocationData ChestUniversal13      = new(92012, "Chest 13");
+        public static readonly LocationData ChestUniversal14      = new(92013, "Chest 14");
+        public static readonly LocationData ChestUniversal15      = new(92014, "Chest 15");
+        public static readonly LocationData ChestUniversal16      = new(92015, "Chest 16");
+        public static readonly LocationData ChestUniversal17      = new(92016, "Chest 17");
+        public static readonly LocationData ChestUniversal18      = new(92017, "Chest 18");
+        public static readonly LocationData ChestUniversal19      = new(92018, "Chest 19");
+        public static readonly LocationData ChestUniversal20      = new(92019, "Chest 20");
+        public static readonly LocationData ChestUniversal21      = new(92020, "Chest 21");
+        public static readonly LocationData ChestUniversal22      = new(92021, "Chest 22");
+        public static readonly LocationData ChestUniversal23      = new(92022, "Chest 23");
+        public static readonly LocationData ChestUniversal24      = new(92023, "Chest 24");
+        public static readonly LocationData ChestUniversal25      = new(92024, "Chest 25");
+        public static readonly LocationData ChestUniversal26      = new(92025, "Chest 26");
+        public static readonly LocationData ChestUniversal27      = new(92026, "Chest 27");
+        public static readonly LocationData ChestUniversal28      = new(92027, "Chest 28");
+        public static readonly LocationData ChestUniversal29      = new(92028, "Chest 29");
+        public static readonly LocationData ChestUniversal30      = new(92029, "Chest 30");
+        public static readonly LocationData ChestUniversal31      = new(92030, "Chest 31");
+        public static readonly LocationData ChestUniversal32      = new(92031, "Chest 32");
+        public static readonly LocationData ChestUniversal33      = new(92032, "Chest 33");
+        public static readonly LocationData ChestUniversal34      = new(92033, "Chest 34");
+        public static readonly LocationData ChestUniversal35      = new(92034, "Chest 35");
+        public static readonly LocationData ChestUniversal36      = new(92035, "Chest 36");
+        public static readonly LocationData ChestUniversal37      = new(92036, "Chest 37");
+        public static readonly LocationData ChestUniversal38      = new(92037, "Chest 38");
+        public static readonly LocationData ChestUniversal39      = new(92038, "Chest 39");
+        public static readonly LocationData ChestUniversal40      = new(92039, "Chest 40");
+        public static readonly LocationData ChestUniversal41      = new(92040, "Chest 41");
+        public static readonly LocationData ChestUniversal42      = new(92041, "Chest 42");
+        public static readonly LocationData ChestUniversal43      = new(92042, "Chest 43");
+        public static readonly LocationData ChestUniversal44      = new(92043, "Chest 44");
+        public static readonly LocationData ChestUniversal45      = new(92044, "Chest 45");
+        public static readonly LocationData ChestUniversal46      = new(92045, "Chest 46");
+        public static readonly LocationData ChestUniversal47      = new(92046, "Chest 47");
+        public static readonly LocationData ChestUniversal48      = new(92047, "Chest 48");
+        public static readonly LocationData ChestUniversal49      = new(92048, "Chest 49");
+        public static readonly LocationData ChestUniversal50      = new(92049, "Chest 50");
+        public static readonly LocationData ChestUniversal51      = new(92050, "Chest 51");
+        public static readonly LocationData ChestUniversal52      = new(92051, "Chest 52");
+        public static readonly LocationData ChestUniversal53      = new(92052, "Chest 53");
+        public static readonly LocationData ChestUniversal54      = new(92053, "Chest 54");
+        public static readonly LocationData ChestUniversal55      = new(92054, "Chest 55");
+        public static readonly LocationData ChestUniversal56      = new(92055, "Chest 56");
+        public static readonly LocationData ChestUniversal57      = new(92056, "Chest 57");
+        public static readonly LocationData ChestUniversal58      = new(92057, "Chest 58");
+        public static readonly LocationData ChestUniversal59      = new(92058, "Chest 59");
+        public static readonly LocationData ChestUniversal60      = new(92059, "Chest 60");
+        public static readonly LocationData ChestUniversal61      = new(92060, "Chest 61");
+        public static readonly LocationData ChestUniversal62      = new(92061, "Chest 62");
+        public static readonly LocationData ChestUniversal63      = new(92062, "Chest 63");
+        public static readonly LocationData ChestUniversal64      = new(92063, "Chest 64");
+        public static readonly LocationData ChestUniversal65      = new(92064, "Chest 65");
+        public static readonly LocationData ChestUniversal66      = new(92065, "Chest 66");
+        public static readonly LocationData ChestUniversal67      = new(92066, "Chest 67");
+        public static readonly LocationData ChestUniversal68      = new(92067, "Chest 68");
+        public static readonly LocationData ChestUniversal69      = new(92068, "Chest 69");
+        public static readonly LocationData ChestUniversal70      = new(92069, "Chest 70");
+        public static readonly LocationData ChestUniversal71      = new(92070, "Chest 71");
+        public static readonly LocationData ChestUniversal72      = new(92071, "Chest 72");
+        public static readonly LocationData ChestUniversal73      = new(92072, "Chest 73");
+        public static readonly LocationData ChestUniversal74      = new(92073, "Chest 74");
+        public static readonly LocationData ChestUniversal75      = new(92074, "Chest 75");
+        public static readonly LocationData ChestUniversal76      = new(92075, "Chest 76");
+        public static readonly LocationData ChestUniversal77      = new(92076, "Chest 77");
+        public static readonly LocationData ChestUniversal78      = new(92077, "Chest 78");
+        public static readonly LocationData ChestUniversal79      = new(92078, "Chest 79");
+        public static readonly LocationData ChestUniversal80      = new(92079, "Chest 80");
+        public static readonly LocationData ChestUniversal81      = new(92080, "Chest 81");
+        public static readonly LocationData ChestUniversal82      = new(92081, "Chest 82");
+        public static readonly LocationData ChestUniversal83      = new(92082, "Chest 83");
+        public static readonly LocationData ChestUniversal84      = new(92083, "Chest 84");
+        public static readonly LocationData ChestUniversal85      = new(92084, "Chest 85");
+        public static readonly LocationData ChestUniversal86      = new(92085, "Chest 86");
+        public static readonly LocationData ChestUniversal87      = new(92086, "Chest 87");
+        public static readonly LocationData ChestUniversal88      = new(92087, "Chest 88");
+        public static readonly LocationData ChestUniversal89      = new(92088, "Chest 89");
+        public static readonly LocationData ChestUniversal90      = new(92089, "Chest 90");
+        public static readonly LocationData ChestUniversal91      = new(92090, "Chest 91");
+        public static readonly LocationData ChestUniversal92      = new(92091, "Chest 92");
+        public static readonly LocationData ChestUniversal93      = new(92092, "Chest 93");
+        public static readonly LocationData ChestUniversal94      = new(92093, "Chest 94");
+        public static readonly LocationData ChestUniversal95      = new(92094, "Chest 95");
+        public static readonly LocationData ChestUniversal96      = new(92095, "Chest 96");
+        public static readonly LocationData ChestUniversal97      = new(92096, "Chest 97");
+        public static readonly LocationData ChestUniversal98      = new(92097, "Chest 98");
+        public static readonly LocationData ChestUniversal99      = new(92098, "Chest 99");
+        public static readonly LocationData ChestUniversal100     = new(92099, "Chest 100");
+        public static readonly LocationData ChestUniversal101     = new(92100, "Chest 101");
+        public static readonly LocationData ChestUniversal102     = new(92101, "Chest 102");
+        public static readonly LocationData ChestUniversal103     = new(92102, "Chest 103");
+        public static readonly LocationData ChestUniversal104     = new(92103, "Chest 104");
+        public static readonly LocationData ChestUniversal105     = new(92104, "Chest 105");
+        public static readonly LocationData ChestUniversal106     = new(92105, "Chest 106");
+        public static readonly LocationData ChestUniversal107     = new(92106, "Chest 107");
+        public static readonly LocationData ChestUniversal108     = new(92107, "Chest 108");
+        public static readonly LocationData ChestUniversal109     = new(92108, "Chest 109");
+        public static readonly LocationData ChestUniversal110     = new(92109, "Chest 110");
+        public static readonly LocationData ChestUniversal111     = new(92110, "Chest 111");
+        public static readonly LocationData ChestUniversal112     = new(92111, "Chest 112");
+        public static readonly LocationData ChestUniversal113     = new(92112, "Chest 113");
+        public static readonly LocationData ChestUniversal114     = new(92113, "Chest 114");
+        public static readonly LocationData ChestUniversal115     = new(92114, "Chest 115");
+        public static readonly LocationData ChestUniversal116     = new(92115, "Chest 116");
+        public static readonly LocationData ChestUniversal117     = new(92116, "Chest 117");
+        public static readonly LocationData ChestUniversal118     = new(92117, "Chest 118");
+        public static readonly LocationData ChestUniversal119     = new(92118, "Chest 119");
+        public static readonly LocationData ChestUniversal120     = new(92119, "Chest 120");
+
         // Fairy Chests
         public static readonly LocationData FairyCastle1          = new(91400, "Castle Hamson - Fairy Chest 1");
         public static readonly LocationData FairyCastle2          = new(91401, "Castle Hamson - Fairy Chest 2");
@@ -264,6 +396,69 @@ namespace Archipelago
         public static readonly LocationData FairyDungeon13        = new(91562, "The Land of Darkness - Fairy Chest 13");
         public static readonly LocationData FairyDungeon14        = new(91563, "The Land of Darkness - Fairy Chest 14");
         public static readonly LocationData FairyDungeon15        = new(91564, "The Land of Darkness - Fairy Chest 15");
+
+        public static readonly LocationData FairyUniversal1       = new(92200, "Fairy Chest 1");
+        public static readonly LocationData FairyUniversal2       = new(92201, "Fairy Chest 2");
+        public static readonly LocationData FairyUniversal3       = new(92202, "Fairy Chest 3");
+        public static readonly LocationData FairyUniversal4       = new(92203, "Fairy Chest 4");
+        public static readonly LocationData FairyUniversal5       = new(92204, "Fairy Chest 5");
+        public static readonly LocationData FairyUniversal6       = new(92205, "Fairy Chest 6");
+        public static readonly LocationData FairyUniversal7       = new(92206, "Fairy Chest 7");
+        public static readonly LocationData FairyUniversal8       = new(92207, "Fairy Chest 8");
+        public static readonly LocationData FairyUniversal9       = new(92208, "Fairy Chest 9");
+        public static readonly LocationData FairyUniversal10      = new(92209, "Fairy Chest 10");
+        public static readonly LocationData FairyUniversal11      = new(92210, "Fairy Chest 11");
+        public static readonly LocationData FairyUniversal12      = new(92211, "Fairy Chest 12");
+        public static readonly LocationData FairyUniversal13      = new(92212, "Fairy Chest 13");
+        public static readonly LocationData FairyUniversal14      = new(92213, "Fairy Chest 14");
+        public static readonly LocationData FairyUniversal15      = new(92214, "Fairy Chest 15");
+        public static readonly LocationData FairyUniversal16      = new(92215, "Fairy Chest 16");
+        public static readonly LocationData FairyUniversal17      = new(92216, "Fairy Chest 17");
+        public static readonly LocationData FairyUniversal18      = new(92217, "Fairy Chest 18");
+        public static readonly LocationData FairyUniversal19      = new(92218, "Fairy Chest 19");
+        public static readonly LocationData FairyUniversal20      = new(92219, "Fairy Chest 20");
+        public static readonly LocationData FairyUniversal21      = new(92220, "Fairy Chest 21");
+        public static readonly LocationData FairyUniversal22      = new(92221, "Fairy Chest 22");
+        public static readonly LocationData FairyUniversal23      = new(92222, "Fairy Chest 23");
+        public static readonly LocationData FairyUniversal24      = new(92223, "Fairy Chest 24");
+        public static readonly LocationData FairyUniversal25      = new(92224, "Fairy Chest 25");
+        public static readonly LocationData FairyUniversal26      = new(92225, "Fairy Chest 26");
+        public static readonly LocationData FairyUniversal27      = new(92226, "Fairy Chest 27");
+        public static readonly LocationData FairyUniversal28      = new(92227, "Fairy Chest 28");
+        public static readonly LocationData FairyUniversal29      = new(92228, "Fairy Chest 29");
+        public static readonly LocationData FairyUniversal30      = new(92229, "Fairy Chest 30");
+        public static readonly LocationData FairyUniversal31      = new(92230, "Fairy Chest 31");
+        public static readonly LocationData FairyUniversal32      = new(92231, "Fairy Chest 32");
+        public static readonly LocationData FairyUniversal33      = new(92232, "Fairy Chest 33");
+        public static readonly LocationData FairyUniversal34      = new(92233, "Fairy Chest 34");
+        public static readonly LocationData FairyUniversal35      = new(92234, "Fairy Chest 35");
+        public static readonly LocationData FairyUniversal36      = new(92235, "Fairy Chest 36");
+        public static readonly LocationData FairyUniversal37      = new(92236, "Fairy Chest 37");
+        public static readonly LocationData FairyUniversal38      = new(92237, "Fairy Chest 38");
+        public static readonly LocationData FairyUniversal39      = new(92238, "Fairy Chest 39");
+        public static readonly LocationData FairyUniversal40      = new(92239, "Fairy Chest 40");
+        public static readonly LocationData FairyUniversal41      = new(92240, "Fairy Chest 41");
+        public static readonly LocationData FairyUniversal42      = new(92241, "Fairy Chest 42");
+        public static readonly LocationData FairyUniversal43      = new(92242, "Fairy Chest 43");
+        public static readonly LocationData FairyUniversal44      = new(92243, "Fairy Chest 44");
+        public static readonly LocationData FairyUniversal45      = new(92244, "Fairy Chest 45");
+        public static readonly LocationData FairyUniversal46      = new(92245, "Fairy Chest 46");
+        public static readonly LocationData FairyUniversal47      = new(92246, "Fairy Chest 47");
+        public static readonly LocationData FairyUniversal48      = new(92247, "Fairy Chest 48");
+        public static readonly LocationData FairyUniversal49      = new(92248, "Fairy Chest 49");
+        public static readonly LocationData FairyUniversal50      = new(92249, "Fairy Chest 50");
+        public static readonly LocationData FairyUniversal51      = new(92250, "Fairy Chest 51");
+        public static readonly LocationData FairyUniversal52      = new(92251, "Fairy Chest 52");
+        public static readonly LocationData FairyUniversal53      = new(92252, "Fairy Chest 53");
+        public static readonly LocationData FairyUniversal54      = new(92253, "Fairy Chest 54");
+        public static readonly LocationData FairyUniversal55      = new(92254, "Fairy Chest 55");
+        public static readonly LocationData FairyUniversal56      = new(92255, "Fairy Chest 56");
+        public static readonly LocationData FairyUniversal57      = new(92256, "Fairy Chest 57");
+        public static readonly LocationData FairyUniversal58      = new(92257, "Fairy Chest 58");
+        public static readonly LocationData FairyUniversal59      = new(92258, "Fairy Chest 59");
+        public static readonly LocationData FairyUniversal60      = new(92259, "Fairy Chest 60");
+
+
 
         public static IEnumerable<LocationData> GetAllLocations(SlotData data)
         {

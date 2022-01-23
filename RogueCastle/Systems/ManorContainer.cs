@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using Archipelago;
+using Archipelago.Definitions;
 
 namespace RogueCastle.Systems
 {

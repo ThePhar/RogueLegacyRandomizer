@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Archipelago;
+using Archipelago.Definitions;
 using Archipelago.MultiClient.Net.Models;
 using DS2DEngine;
 using InputSystem;

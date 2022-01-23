@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using Archipelago;
+using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -743,7 +744,7 @@ namespace RogueCastle
                 GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
 
                 // Check location.
-                var location = LocationDefinitions.BossAlexander.Code;
+                var location = LocationDefinitions.BossForest.Code;
                 var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
                 Program.Game.ArchipelagoManager.CheckLocations(location);
 

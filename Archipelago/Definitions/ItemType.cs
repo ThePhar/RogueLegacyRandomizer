@@ -1,6 +1,6 @@
 ﻿//
-//  Rogue Legacy Randomizer - ConnectionInfo.cs
-//  Last Modified 2022-01-23
+//  Rogue Legacy Randomizer - ItemType.cs
+//  Last Modified 2022-01-22
 //
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,13 +9,16 @@
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 //
 
-namespace Archipelago
+namespace Archipelago.Definitions
 {
-    public class ConnectionInfo
+    public enum ItemType
     {
-        public string Hostname { get; set; }
-        public int    Port     { get; set; }
-        public string Name     { get; set; }
-        public string Password { get; set; }
+        Blueprint,
+        Rune,
+        Skill,
+        Stats,
+        Gold,
+        NetworkItem,
+        Trap
     }
 }

@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using Archipelago;
+using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using RogueCastle.Enums;
@@ -633,7 +634,7 @@ namespace RogueCastle
                 GameUtil.UnlockAchievement("FEAR_OF_FIRE");
 
                 // Check location.
-                var location = LocationDefinitions.BossLeon.Code;
+                var location = LocationDefinitions.BossTower.Code;
                 var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
                 Program.Game.ArchipelagoManager.CheckLocations(location);
 

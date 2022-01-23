@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using Archipelago;
+using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -764,7 +765,7 @@ namespace RogueCastle
                 GameUtil.UnlockAchievement("FEAR_OF_EYES");
 
                 // Check location.
-                var location = LocationDefinitions.BossKhindr.Code;
+                var location = LocationDefinitions.BossCastle.Code;
                 var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
                 Program.Game.ArchipelagoManager.CheckLocations(location);
 

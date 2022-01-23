@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Archipelago;
+using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using RogueCastle.Enums;

@@ -1,7 +1,9 @@
-# Rogue Legacy Randomizer for Archipelago
+# Rogue Legacy: Randomizer
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/thephar/roguelegacyrandomizer?label=latest&style=flat-square)
+![GitHub](https://img.shields.io/github/license/thephar/roguelegacyrandomizer?style=flat-square)
+![GitHub commits since latest release (by date) for a branch](https://img.shields.io/github/commits-since/thephar/roguelegacyrandomizer/latest/master?color=8df702&style=flat-square)
 
-This project is based of the decompiled and cleaned source code by Cellar Door Games. This project makes some quality of life improvements and adds randomization via the Archipelago service
-by the [Archipelago Community](https://archipelago.gg).
+This project is based of the decompiled and cleaned source code by Cellar Door Games. This project makes some quality of life improvements and adds a spin to the core game mechanics by adding randomization via the Archipelago service by the [Archipelago Community](https://archipelago.gg).
 
 ## Installation
 
@@ -21,11 +23,11 @@ Then copy the contents of the CustomContent directory in your Rogue Legacy Rando
 
 **BE SURE YOU ARE REPLACING THE COPIED FILES IN YOUR ROGUE LEGACY RANDOMIZER DIRECTORY AND NOT REPLACING YOUR ROGUE LEGACY FILES!**
 
-You should be good to run RogueLegacyRandomizer.exe! You will also need to generate a game at https://archipelago.gg to create a new game.
+You should be good to run RogueLegacyRandomizer.exe! You will also need to generate a game at [archipelago.gg](https://archipelago.gg) to create a new game.
 
 ## Building from Source
 
-TODO: Write me.
+TODO: Write this!
 
 ## License & Copyright
 

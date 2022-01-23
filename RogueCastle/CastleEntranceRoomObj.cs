@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Archipelago;
+using Archipelago.Definitions;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;

@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using Archipelago;
+using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using RogueCastle.Enums;
@@ -765,7 +766,7 @@ namespace RogueCastle
                     GameUtil.UnlockAchievement("FEAR_OF_SLIME");
 
                     // Check location.
-                    var location = LocationDefinitions.BossHerodotus.Code;
+                    var location = LocationDefinitions.BossDungeon.Code;
                     var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
                     Program.Game.ArchipelagoManager.CheckLocations(location);
 

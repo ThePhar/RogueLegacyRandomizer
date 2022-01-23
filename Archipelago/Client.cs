@@ -1,7 +1,19 @@
-﻿using System;
+﻿//
+//  Rogue Legacy Randomizer - Client.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Archipelago.Definitions;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
@@ -15,16 +27,16 @@ namespace Archipelago
 {
     public class Client
     {
-        public const int MAXIMUM_RECONNECTION_ATTEMPTS = 3;
-        public const string MINIMUM_AP_VERSION = "0.2.2";
+        public const int    MAXIMUM_RECONNECTION_ATTEMPTS = 3;
+        public const string MINIMUM_AP_VERSION            = "0.2.3";
 
-        private bool _allowReconnect;
-        private DeathLinkService _deathLinkService;
+        private bool                            _allowReconnect;
+        private DeathLinkService                _deathLinkService;
         private Dictionary<string, Permissions> _permissions = new();
-        private int _reconnectionAttempt;
-        private string _seed = "0";
-        private ArchipelagoSession _session;
-        private List<string> _tags = new() { "AP" };
+        private int                             _reconnectionAttempt;
+        private string                          _seed = "0";
+        private ArchipelagoSession              _session;
+        private List<string>                    _tags = new() { "AP" };
 
         public Client()
         {
@@ -39,7 +51,7 @@ namespace Archipelago
         public SlotData Data { get; private set; }
         public Queue<NetworkItem> ItemQueue { get; private set; } = new();
         public List<int> CheckedLocations { get; private set; } = new();
-        public bool CheckedLocationsUpdated { get; set; } = false;
+        public bool CheckedLocationsUpdated { get; set; }
         public bool CanForfeit => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
 
         public void Connect(ConnectionInfo info)
@@ -65,7 +77,8 @@ namespace Archipelago
                 _session.Socket.PacketReceived += OnPacketReceived;
 
                 // Attempt to connect to the AP server.
-                var result = _session.TryConnectAndLogin("Rogue Legacy", info.Name, new Version(MINIMUM_AP_VERSION), _tags, password: info.Password);
+                var result = _session.TryConnectAndLogin("Rogue Legacy", info.Name, new Version(MINIMUM_AP_VERSION),
+                    _tags, password: info.Password);
 
                 if (result.Successful)
                 {
@@ -111,19 +124,19 @@ namespace Archipelago
         {
             _session = null;
             _deathLinkService = null;
-            _permissions = new();
-            _tags = new() { "AP" };
+            _permissions = new Dictionary<string, Permissions>();
+            _tags = new List<string> { "AP" };
             _allowReconnect = false;
             _reconnectionAttempt = 0;
             _seed = "0";
 
             ConnectionStatus = ConnectionStatus.Disconnected;
-            CheckedLocations = new();
+            CheckedLocations = new List<int>();
             LastDeath = DateTime.MinValue;
             DeathLink = null;
-            LocationCache = new();
+            LocationCache = new Dictionary<int, NetworkItem>();
             Data = null;
-            ItemQueue = new();
+            ItemQueue = new Queue<NetworkItem>();
         }
 
         public void Forfeit()
@@ -156,7 +169,9 @@ namespace Archipelago
             }
 
             var causeWithPlayerName = $"{_session.Players.GetPlayerAlias(Data.Slot)}'s {cause}.";
-            _deathLinkService.SendDeathLink(new DeathLink(_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName) { Timestamp = LastDeath });
+            _deathLinkService.SendDeathLink(
+                new DeathLink(_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName)
+                    { Timestamp = LastDeath });
         }
 
         public void CheckLocations(params int[] locations)
@@ -232,9 +247,7 @@ namespace Archipelago
             Console.WriteLine($"Received a {packet.GetType().Name} packet");
             Console.WriteLine("==========================================");
             foreach (var property in packet.GetType().GetProperties())
-            {
                 Console.WriteLine($"{property.Name}: {property.GetValue(packet, null)}");
-            }
 
             Console.WriteLine();
 
@@ -270,13 +283,11 @@ namespace Archipelago
         private void OnRoomUpdate(RoomUpdatePacket packet)
         {
             foreach (var location in packet.CheckedLocations)
-            {
                 if (!CheckedLocations.Contains(location))
                 {
                     CheckedLocations.Add(location);
                     CheckedLocationsUpdated = true;
                 }
-            }
         }
 
         private void OnConnected(ConnectedPacket packet)
@@ -312,10 +323,7 @@ namespace Archipelago
 
         private void OnReceiveLocationCache(LocationInfoPacket packet)
         {
-            foreach (var item in packet.Locations)
-            {
-                LocationCache.Add(item.Location, item);
-            }
+            foreach (var item in packet.Locations) LocationCache.Add(item.Location, item);
         }
 
         private static void OnError(Exception exception, string message)
