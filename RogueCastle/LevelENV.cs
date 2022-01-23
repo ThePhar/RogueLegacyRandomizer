@@ -284,27 +284,27 @@ namespace RogueCastle
             // Default Environment Variables
             TestRoomZone = Zone.Castle;
             ShowEnemyRadii = false;
-            EnablePlayerDebug = true;
+            EnablePlayerDebug = false;
             UnlockAllAbilities = false;
             TestRoomReverse = false;
             RunTestRoom = false;
             ShowDebugText = false;
-            LoadSplashScreen = false;
+            LoadSplashScreen = true;
             ShowSaveLoadDebugText = false;
             DeleteSaveFile = false;
             CloseTestRoomDoors = false;
             RunTutorial = false;
             RunDemoVersion = false;
             DisableSaving = false;
-            RunCrashLogs = false;
-            WeakenBosses = true;
+            RunCrashLogs = true;
+            WeakenBosses = false;
             EnableOffscreenControl = true;
             EnableBackupSaving = false;
             CreateRetailVersion = true;
             ShowFps = false;
             SaveFrames = false;
             ShowArchipelagoStatus = false;
-            RunConsole = true;
+            RunConsole = false;
         }
 
         public static Zone TestRoomZone { get; set; }
