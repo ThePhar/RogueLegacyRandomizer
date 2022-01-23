@@ -1,12 +1,12 @@
 //
-// RogueLegacyArchipelago - PlayerObj.cs
-// Last Modified 2021-12-27
+//  Rogue Legacy Randomizer - PlayerObj.cs
+//  Last Modified 2022-01-23
 //
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 //
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 //
 
 using System;
@@ -26,105 +26,105 @@ namespace RogueCastle
 {
     public class PlayerObj : CharacterObj, IDealsDamageObj
     {
-        private const int DEBUG_INPUT_SWAPWEAPON = 0;
-        private const int DEBUG_INPUT_GIVEMANA = 1;
-        private const int DEBUG_INPUT_GIVEHEALTH = 2;
-        private const int DEBUG_INPUT_LEVELUP_STRENGTH = 3;
-        private const int DEBUG_INPUT_LEVELUP_HEALTH = 4;
-        private const int DEBUG_INPUT_LEVELUP_ENDURANCE = 5;
-        private const int DEBUG_INPUT_LEVELUP_EQUIPLOAD = 6;
-        private const int DEBUG_INPUT_TRAITSCREEN = 7;
-        private const int DEBUG_UNLOCK_ALL_BLUEPRINTS = 8;
-        private const int DEBUG_PURCHASE_ALL_BLUEPRINTS = 9;
-        public const int STATE_IDLE = 0;
-        public const int STATE_WALKING = 1;
-        public const int STATE_JUMPING = 2;
-        public const int STATE_HURT = 3;
-        public const int STATE_DASHING = 4;
-        public const int STATE_LEVELUP = 5;
-        public const int STATE_BLOCKING = 6;
-        public const int STATE_FLYING = 7;
-        public const int STATE_TANOOKI = 8;
-        public const int STATE_DRAGON = 9;
-        private readonly float AxeProjectileSpeed = 1100f;
-        private readonly Vector2 AxeSpellScale = new Vector2(3f, 3f);
-        private readonly float DaggerProjectileSpeed = 900f;
-        private readonly Vector2 DaggerSpellScale = new Vector2(3.5f, 3.5f);
+        private const    int            DEBUG_INPUT_SWAPWEAPON        = 0;
+        private const    int            DEBUG_INPUT_GIVEMANA          = 1;
+        private const    int            DEBUG_INPUT_GIVEHEALTH        = 2;
+        private const    int            DEBUG_INPUT_LEVELUP_STRENGTH  = 3;
+        private const    int            DEBUG_INPUT_LEVELUP_HEALTH    = 4;
+        private const    int            DEBUG_INPUT_LEVELUP_ENDURANCE = 5;
+        private const    int            DEBUG_INPUT_LEVELUP_EQUIPLOAD = 6;
+        private const    int            DEBUG_INPUT_TRAITSCREEN       = 7;
+        private const    int            DEBUG_UNLOCK_ALL_BLUEPRINTS   = 8;
+        private const    int            DEBUG_PURCHASE_ALL_BLUEPRINTS = 9;
+        public const     int            STATE_IDLE                    = 0;
+        public const     int            STATE_WALKING                 = 1;
+        public const     int            STATE_JUMPING                 = 2;
+        public const     int            STATE_HURT                    = 3;
+        public const     int            STATE_DASHING                 = 4;
+        public const     int            STATE_LEVELUP                 = 5;
+        public const     int            STATE_BLOCKING                = 6;
+        public const     int            STATE_FLYING                  = 7;
+        public const     int            STATE_TANOOKI                 = 8;
+        public const     int            STATE_DRAGON                  = 9;
+        private readonly float          AxeProjectileSpeed            = 1100f;
+        private readonly Vector2        AxeSpellScale                 = new(3f, 3f);
+        private readonly float          DaggerProjectileSpeed         = 900f;
+        private readonly Vector2        DaggerSpellScale              = new(3.5f, 3.5f);
         private readonly ProjectileData m_axeProjData;
-        private readonly float m_dropThroughGroundDuration = 0.1f;
+        private readonly float          m_dropThroughGroundDuration = 0.1f;
         private readonly ProjectileData m_rapidDaggerProjData;
-        private readonly float m_Spell_Close_Lifespan = 6f;
-        private readonly float m_Spell_Close_Scale = 3.5f;
-        private int ArmorReductionMod;
-        private float BaseStatDropChance;
-        private float ComboDelay = 1f;
-        private int DamageGainPerLevel;
-        private float DashCoolDown;
-        private float DashSpeed;
-        private float DashTime;
-        private int HealthGainPerLevel;
-        private float JumpDeceleration;
-        private LogicSet m_airAttackLS;
-        private byte m_airDashCount;
-        private float m_ambilevousTimer = 0.5f;
-        private float m_assassinDrainCounter;
-        private float m_assassinSmokeTimer = 0.5f;
-        private bool m_assassinSpecialActive;
-        private float m_attackCounter;
-        private int m_attackNumber;
-        private float m_blockInvincibleCounter;
-        private float m_blockManaDrain;
-        private IPhysicsObj m_closestGround;
-        private bool m_collidingLeft;
-        private bool m_collidingLeftOnly;
-        private bool m_collidingRight;
-        private bool m_collidingRightOnly;
-        private LogicSet m_currentLogicSet;
-        private float m_currentMana;
-        private float m_damageShieldDrainCounter;
-        private int m_dashCooldownCounter;
-        private int m_dashCounter;
-        private InputMap m_debugInputMap;
-        private byte m_doubleJumpCount;
-        private float m_dragonManaRechargeCounter;
-        private float m_dropThroughGroundTimer;
-        private Vector2 m_enemyKnockBack = Vector2.Zero;
-        private LogicSet m_externalLS;
-        private float m_flightCounter;
-        private TextObj m_flightDurationText;
-        private TweenObject m_flipTween;
-        private int m_invincibleCounter;
-        private TeleporterObj m_lastTouchedTeleporter;
-        private Color m_lichColour1 = new Color(255, 255, 255, 255);
-        private Color m_lichColour2 = new Color(198, 198, 198, 255);
-        private float m_lightDrainCounter;
-        private float m_manaGain;
-        private bool m_megaDamageShieldCast;
-        private float m_ninjaTeleportDelay;
-        private SpriteObj m_playerHead;
-        private SpriteObj m_playerLegs;
-        private bool m_previousIsTouchingGround;
-        private float m_rapidSpellCastDelay;
-        private Color m_skinColour1 = new Color(231, 175, 131, 255);
-        private Color m_skinColour2 = new Color(199, 109, 112, 255);
-        private LogicSet m_standingAttack3LogicSet;
-        private float m_startingAnimationDelay;
-        private SpriteObj m_swearBubble;
-        private float m_swearBubbleCounter;
-        private float m_tanookiDrainCounter;
-        private bool m_timeStopCast;
-        private float m_timeStopDrainCounter;
-        private ObjContainer m_translocatorSprite;
-        private FrameSoundObj m_walkDownSound;
-        private FrameSoundObj m_walkDownSoundHigh;
-        private FrameSoundObj m_walkDownSoundLow;
-        private FrameSoundObj m_walkUpSound;
-        private FrameSoundObj m_walkUpSoundHigh;
-        private FrameSoundObj m_walkUpSoundLow;
-        private float m_wizardSparkleCounter = 0.2f;
-        private List<byte> m_wizardSpellList;
-        private int ManaGainPerLevel;
-        private float RunSpeedMultiplier;
+        private readonly float          m_Spell_Close_Lifespan = 6f;
+        private readonly float          m_Spell_Close_Scale    = 3.5f;
+        private          int            ArmorReductionMod;
+        private          float          BaseStatDropChance;
+        private          float          ComboDelay = 1f;
+        private          int            DamageGainPerLevel;
+        private          float          DashCoolDown;
+        private          float          DashSpeed;
+        private          float          DashTime;
+        private          int            HealthGainPerLevel;
+        private          float          JumpDeceleration;
+        private          LogicSet       m_airAttackLS;
+        private          byte           m_airDashCount;
+        private          float          m_ambilevousTimer = 0.5f;
+        private          float          m_assassinDrainCounter;
+        private          float          m_assassinSmokeTimer = 0.5f;
+        private          bool           m_assassinSpecialActive;
+        private          float          m_attackCounter;
+        private          int            m_attackNumber;
+        private          float          m_blockInvincibleCounter;
+        private          float          m_blockManaDrain;
+        private          IPhysicsObj    m_closestGround;
+        private          bool           m_collidingLeft;
+        private          bool           m_collidingLeftOnly;
+        private          bool           m_collidingRight;
+        private          bool           m_collidingRightOnly;
+        private          LogicSet       m_currentLogicSet;
+        private          float          m_currentMana;
+        private          float          m_damageShieldDrainCounter;
+        private          int            m_dashCooldownCounter;
+        private          int            m_dashCounter;
+        private          InputMap       m_debugInputMap;
+        private          byte           m_doubleJumpCount;
+        private          float          m_dragonManaRechargeCounter;
+        private          float          m_dropThroughGroundTimer;
+        private          Vector2        m_enemyKnockBack = Vector2.Zero;
+        private          LogicSet       m_externalLS;
+        private          float          m_flightCounter;
+        private          TextObj        m_flightDurationText;
+        private          TweenObject    m_flipTween;
+        private          int            m_invincibleCounter;
+        private          TeleporterObj  m_lastTouchedTeleporter;
+        private          Color          m_lichColour1 = new(255, 255, 255, 255);
+        private          Color          m_lichColour2 = new(198, 198, 198, 255);
+        private          float          m_lightDrainCounter;
+        private          float          m_manaGain;
+        private          bool           m_megaDamageShieldCast;
+        private          float          m_ninjaTeleportDelay;
+        private          SpriteObj      m_playerHead;
+        private          SpriteObj      m_playerLegs;
+        private          bool           m_previousIsTouchingGround;
+        private          float          m_rapidSpellCastDelay;
+        private          Color          m_skinColour1 = new(231, 175, 131, 255);
+        private          Color          m_skinColour2 = new(199, 109, 112, 255);
+        private          LogicSet       m_standingAttack3LogicSet;
+        private          float          m_startingAnimationDelay;
+        private          SpriteObj      m_swearBubble;
+        private          float          m_swearBubbleCounter;
+        private          float          m_tanookiDrainCounter;
+        private          bool           m_timeStopCast;
+        private          float          m_timeStopDrainCounter;
+        private          ObjContainer   m_translocatorSprite;
+        private          FrameSoundObj  m_walkDownSound;
+        private          FrameSoundObj  m_walkDownSoundHigh;
+        private          FrameSoundObj  m_walkDownSoundLow;
+        private          FrameSoundObj  m_walkUpSound;
+        private          FrameSoundObj  m_walkUpSoundHigh;
+        private          FrameSoundObj  m_walkUpSoundLow;
+        private          float          m_wizardSparkleCounter = 0.2f;
+        private          List<byte>     m_wizardSpellList;
+        private          int            ManaGainPerLevel;
+        private          float          RunSpeedMultiplier;
 
         public PlayerObj(string spriteName, PlayerIndex playerIndex, PhysicsManager physicsManager,
             ProceduralLevelScreen levelToAttachTo, Game game) : base(spriteName, physicsManager, levelToAttachTo)
@@ -190,12 +190,12 @@ namespace RogueCastle
             };
         }
 
-        private int BaseDamage { get; set; }
-        public float BaseMana { get; internal set; }
+        private int   BaseDamage { get; set; }
+        public  float BaseMana   { get; internal set; }
 
         public float CurrentMana
         {
-            get { return m_currentMana; }
+            get => m_currentMana;
             internal set
             {
                 m_currentMana = value;
@@ -211,47 +211,40 @@ namespace RogueCastle
             }
         }
 
-        public int BaseHealth { get; internal set; }
-        public float ProjectileLifeSpan { get; internal set; }
-        public float AttackDelay { get; internal set; }
-        public float BaseInvincibilityTime { get; internal set; }
-        public float BaseCriticalChance { get; internal set; }
-        public float BaseCriticalDamageMod { get; internal set; }
-        public int MaxDamage { get; internal set; }
-        public int MinDamage { get; internal set; }
-        public int LevelModifier { get; internal set; }
-        private float AttackAnimationDelay { get; set; }
-        private int StrongDamage { get; set; }
-        private Vector2 StrongEnemyKnockBack { get; set; }
-        public float AirAttackKnockBack { get; internal set; }
-        public bool IsAirAttacking { get; set; }
-        private float AirAttackDamageMod { get; set; }
-        public float StatDropIncrease { get; set; }
-        public float FlightSpeedMod { get; internal set; }
-        public int BaseWeight { get; internal set; }
-        public float BaseMagicDamage { get; set; }
-        public float FlightTime { get; internal set; }
-        private float BlockInvincibleTime { get; set; }
-        public bool ForceInvincible { get; set; }
-        public bool InvincibleToSpikes { get; set; }
-        public int NumAirBounces { get; set; }
+        public  int     BaseHealth            { get; internal set; }
+        public  float   ProjectileLifeSpan    { get; internal set; }
+        public  float   AttackDelay           { get; internal set; }
+        public  float   BaseInvincibilityTime { get; internal set; }
+        public  float   BaseCriticalChance    { get; internal set; }
+        public  float   BaseCriticalDamageMod { get; internal set; }
+        public  int     MaxDamage             { get; internal set; }
+        public  int     MinDamage             { get; internal set; }
+        public  int     LevelModifier         { get; internal set; }
+        private float   AttackAnimationDelay  { get; set; }
+        private int     StrongDamage          { get; set; }
+        private Vector2 StrongEnemyKnockBack  { get; set; }
+        public  float   AirAttackKnockBack    { get; internal set; }
+        public  bool    IsAirAttacking        { get; set; }
+        private float   AirAttackDamageMod    { get; set; }
+        public  float   StatDropIncrease      { get; set; }
+        public  float   FlightSpeedMod        { get; internal set; }
+        public  int     BaseWeight            { get; internal set; }
+        public  float   BaseMagicDamage       { get; set; }
+        public  float   FlightTime            { get; internal set; }
+        private float   BlockInvincibleTime   { get; set; }
+        public  bool    ForceInvincible       { get; set; }
+        public  bool    InvincibleToSpikes    { get; set; }
+        public  int     NumAirBounces         { get; set; }
 
-        private Rectangle GroundCollisionRect
-        {
-            get { return new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + StepUp); }
-        }
+        private Rectangle GroundCollisionRect =>
+            new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + StepUp);
 
-        private Rectangle RotatedGroundCollisionRect
-        {
-            get { return new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + 40); }
-        }
+        private Rectangle RotatedGroundCollisionRect =>
+            new Rectangle(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + 40);
 
-        public PlayerIndex PlayerIndex { get; private set; }
+        public PlayerIndex PlayerIndex { get; }
 
-        public ProceduralLevelScreen AttachedLevel
-        {
-            get { return m_levelScreen; }
-        }
+        public ProceduralLevelScreen AttachedLevel => m_levelScreen;
 
         public float TotalAirAttackDamageMod
         {
@@ -285,17 +278,11 @@ namespace RogueCastle
             }
         }
 
-        public int InvulnDamage
-        {
-            get
-            {
-                return
-                    (int)
-                    (RandomDamage * (1f + SkillSystem.GetSkill(Skill.InvulnerabilityAttackUp).ModifierAmount) +
-                     SkillSystem.GetSkill(Skill.AttackUp).ModifierAmount +
-                     SkillSystem.GetSkill(Skill.DamageUpFinal).ModifierAmount);
-            }
-        }
+        public int InvulnDamage =>
+            (int)
+            (RandomDamage * (1f + SkillSystem.GetSkill(Skill.InvulnerabilityAttackUp).ModifierAmount) +
+             SkillSystem.GetSkill(Skill.AttackUp).ModifierAmount +
+             SkillSystem.GetSkill(Skill.DamageUpFinal).ModifierAmount);
 
         public Vector2 EnemyKnockBack
         {
@@ -308,17 +295,12 @@ namespace RogueCastle
 
                 return m_enemyKnockBack;
             }
-            set { m_enemyKnockBack = value; }
+            set => m_enemyKnockBack = value;
         }
 
-        public int RandomDamage
-        {
-            get
-            {
-                return CDGMath.RandomInt(MinDamage + GetEquipmentDamage(), MaxDamage + GetEquipmentDamage()) +
-                       Game.PlayerStats.BonusStrength + DamageGainPerLevel * Game.PlayerStats.CurrentLevel;
-            }
-        }
+        public int RandomDamage =>
+            CDGMath.RandomInt(MinDamage + GetEquipmentDamage(), MaxDamage + GetEquipmentDamage()) +
+            Game.PlayerStats.BonusStrength + DamageGainPerLevel * Game.PlayerStats.CurrentLevel;
 
         public float MaxMana
         {
@@ -394,58 +376,29 @@ namespace RogueCastle
             }
         }
 
-        public float InvincibilityTime
-        {
-            get { return BaseInvincibilityTime + SkillSystem.GetSkill(Skill.InvulnerabilityTimeUp).ModifierAmount; }
-        }
+        public float InvincibilityTime =>
+            BaseInvincibilityTime + SkillSystem.GetSkill(Skill.InvulnerabilityTimeUp).ModifierAmount;
 
-        public override Rectangle Bounds
-        {
-            get { return TerrainBounds; }
-        }
+        public override Rectangle Bounds => TerrainBounds;
 
-        public int CurrentWeight
-        {
-            get { return GetEquipmentWeight(); }
-        }
+        public int CurrentWeight => GetEquipmentWeight();
 
-        public int MaxWeight
-        {
-            get
-            {
-                return
-                    (int)
-                    (BaseWeight + SkillSystem.GetSkill(Skill.EquipUp).ModifierAmount +
-                     SkillSystem.GetSkill(Skill.EquipUpFinal).ModifierAmount) + Game.PlayerStats.BonusWeight * 5;
-            }
-        }
+        public int MaxWeight =>
+            (int)
+            (BaseWeight + SkillSystem.GetSkill(Skill.EquipUp).ModifierAmount +
+             SkillSystem.GetSkill(Skill.EquipUpFinal).ModifierAmount) + Game.PlayerStats.BonusWeight * 5;
 
-        public bool CanFly
-        {
-            get { return Game.PlayerStats.Class == 16 || TotalFlightTime > 0f; }
-        }
+        public bool CanFly => Game.PlayerStats.Class == 16 || TotalFlightTime > 0f;
 
-        public bool CanAirDash
-        {
-            get { return TotalAirDashes > 0; }
-        }
+        public bool CanAirDash => TotalAirDashes > 0;
 
-        public bool CanBlock
-        {
-            get { return Game.PlayerStats.Class == 8; }
-        }
+        public bool CanBlock => Game.PlayerStats.Class == 8;
 
-        public bool CanRun
-        {
-            get { return true; }
-        }
+        public bool CanRun => true;
 
-        public bool CanAirAttackDownward
-        {
-            get { return true; }
-        }
+        public bool CanAirAttackDownward => true;
 
-        public bool IsJumping { get; private set; }
+        public bool IsJumping            { get; private set; }
         public byte NumSequentialAttacks { get; set; }
         public byte AttacksNeededForMana { get; set; }
 
@@ -466,23 +419,18 @@ namespace RogueCastle
                       Game.PlayerStats.GetNumberOfEquippedRunes(10)) *
                      (1f + Game.PlayerStats.TimesCastleBeaten * 0.5f));
             }
-            set { m_manaGain = value; }
+            set => m_manaGain = value;
         }
 
         public float BlockManaDrain
         {
-            get
-            {
-                return m_blockManaDrain - (int) GetEquipmentSecondaryAttrib(8) -
-                       (int) SkillSystem.GetSkill(Skill.Block).ModifierAmount;
-            }
-            set { m_blockManaDrain = value; }
+            get =>
+                m_blockManaDrain - (int) GetEquipmentSecondaryAttrib(8) -
+                (int) SkillSystem.GetSkill(Skill.Block).ModifierAmount;
+            set => m_blockManaDrain = value;
         }
 
-        public float TotalStatDropChance
-        {
-            get { return StatDropIncrease + BaseStatDropChance; }
-        }
+        public float TotalStatDropChance => StatDropIncrease + BaseStatDropChance;
 
         public float TotalCritChance
         {
@@ -537,10 +485,8 @@ namespace RogueCastle
             }
         }
 
-        public float TotalXPBonus
-        {
-            get { return SkillSystem.GetSkill(Skill.XpGainUp).ModifierAmount + GetEquipmentSecondaryAttrib(5); }
-        }
+        public float TotalXPBonus =>
+            SkillSystem.GetSkill(Skill.XpGainUp).ModifierAmount + GetEquipmentSecondaryAttrib(5);
 
         public float TotalGoldBonus
         {
@@ -559,50 +505,27 @@ namespace RogueCastle
             }
         }
 
-        public int TotalVampBonus
-        {
-            get
-            {
-                return
-                    (int)
-                    ((Game.PlayerStats.GetNumberOfEquippedRunes(2) * 2 + (int) GetEquipmentSecondaryAttrib(7) * 2 +
-                      Game.PlayerStats.GetNumberOfEquippedRunes(10)) *
-                     (1f + Game.PlayerStats.TimesCastleBeaten * 0.5f));
-            }
-        }
+        public int TotalVampBonus =>
+            (int)
+            ((Game.PlayerStats.GetNumberOfEquippedRunes(2) * 2 + (int) GetEquipmentSecondaryAttrib(7) * 2 +
+              Game.PlayerStats.GetNumberOfEquippedRunes(10)) *
+             (1f + Game.PlayerStats.TimesCastleBeaten * 0.5f));
 
-        public int TotalAirDashes
-        {
-            get { return Game.PlayerStats.GetNumberOfEquippedRunes(1) + (int) GetEquipmentSecondaryAttrib(11); }
-        }
+        public int TotalAirDashes =>
+            Game.PlayerStats.GetNumberOfEquippedRunes(1) + (int) GetEquipmentSecondaryAttrib(11);
 
-        public int TotalDoubleJumps
-        {
-            get { return Game.PlayerStats.GetNumberOfEquippedRunes(0) + (int) GetEquipmentSecondaryAttrib(9); }
-        }
+        public int TotalDoubleJumps =>
+            Game.PlayerStats.GetNumberOfEquippedRunes(0) + (int) GetEquipmentSecondaryAttrib(9);
 
-        public float TotalFlightTime
-        {
-            get
-            {
-                return FlightTime * (Game.PlayerStats.GetNumberOfEquippedRunes(3) +
-                                     (int) GetEquipmentSecondaryAttrib(15));
-            }
-        }
+        public float TotalFlightTime =>
+            FlightTime * (Game.PlayerStats.GetNumberOfEquippedRunes(3) +
+                          (int) GetEquipmentSecondaryAttrib(15));
 
-        public float TotalArmor
-        {
-            get
-            {
-                return SkillSystem.GetSkill(Skill.ArmorUp).ModifierAmount + Game.PlayerStats.BonusDefense * 2 +
-                       GetEquipmentArmor();
-            }
-        }
+        public float TotalArmor =>
+            SkillSystem.GetSkill(Skill.ArmorUp).ModifierAmount + Game.PlayerStats.BonusDefense * 2 +
+            GetEquipmentArmor();
 
-        public float TotalDamageReduc
-        {
-            get { return TotalArmor / (ArmorReductionMod + TotalArmor); }
-        }
+        public float TotalDamageReduc => TotalArmor / (ArmorReductionMod + TotalArmor);
 
         public float TotalMovementSpeed
         {
@@ -634,19 +557,14 @@ namespace RogueCastle
             }
         }
 
-        public float TotalDamageReturn
-        {
-            get { return GetEquipmentSecondaryAttrib(4) + Game.PlayerStats.GetNumberOfEquippedRunes(5) * 0.5f; }
-        }
+        public float TotalDamageReturn =>
+            GetEquipmentSecondaryAttrib(4) + Game.PlayerStats.GetNumberOfEquippedRunes(5) * 0.5f;
 
         public bool ControlsLocked { get; private set; }
-        public bool IsFlying { get; private set; }
-        public Game Game { get; private set; }
+        public bool IsFlying       { get; private set; }
+        public Game Game           { get; private set; }
 
-        public bool IsInvincible
-        {
-            get { return m_invincibleCounter > 0; }
-        }
+        public bool IsInvincible => m_invincibleCounter > 0;
 
         public float ClassDamageGivenMultiplier
         {
@@ -848,11 +766,11 @@ namespace RogueCastle
         }
 
         public float SpellCastDelay { get; private set; }
-        public bool LightOn { get; private set; }
+        public bool  LightOn        { get; private set; }
 
         public override SpriteEffects Flip
         {
-            get { return base.Flip; }
+            get => base.Flip;
             set
             {
                 if ((Game.PlayerStats.Traits.X == 18f || Game.PlayerStats.Traits.Y == 18f) && Flip != value)
@@ -3110,13 +3028,13 @@ namespace RogueCastle
 
                     if (num7 > 0 && AttachedLevel.ItemDropManager.AvailableItems > num7)
                     {
-                        var num8 = 1f;
+                        var feeFactor = 1f;
                         if (Game.PlayerStats.HasArchitectFee)
                         {
-                            num8 = 0.6f;
+                            feeFactor = (100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage) / 100f;
                         }
 
-                        var num9 = (int) (num7 * 10 * (1f + TotalGoldBonus) * num8);
+                        var num9 = (int) (num7 * 10 * (1f + TotalGoldBonus) * feeFactor);
                         Game.PlayerStats.Gold -= num9;
                         for (var i = 0; i < num7; i++) m_levelScreen.ItemDropManager.DropItemWide(Position, 1, 10f);
                         if (num9 > 0)

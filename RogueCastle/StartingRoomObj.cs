@@ -636,7 +636,8 @@ namespace RogueCastle
                                 }
                                 else
                                 {
-                                    rCScreenManager.DialogueScreen.SetDialogue("Meet Architect 2");
+                                    DialogueManager.AddText("Meet Architect AP", new []{""}, new []{$"Do you want to lock the castle and get only {100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage}% gold?"});
+                                    rCScreenManager.DialogueScreen.SetDialogue("Meet Architect AP");
                                 }
 
                                 rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");

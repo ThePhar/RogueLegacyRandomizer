@@ -1,3 +1,14 @@
+//
+//  Rogue Legacy Randomizer - EquipmentAbility.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
 using System;
 
 namespace RogueCastle.Enums
@@ -21,7 +32,7 @@ namespace RogueCastle.Enums
 
     public static class EquipmentAbilityExtensions
     {
-        public static string ToString(this EquipmentAbility ability)
+        public static string Name(this EquipmentAbility ability)
         {
             return ability switch
             {
@@ -41,6 +52,7 @@ namespace RogueCastle.Enums
                 _                                     => throw new ArgumentException($"Unsupported EquipmentAbility Type in ToString(): {nameof(ability)}")
             };
         }
+
         public static string Description(this EquipmentAbility ability)
         {
             return ability switch
@@ -59,6 +71,7 @@ namespace RogueCastle.Enums
                 _                            => throw new ArgumentException($"Unsupported EquipmentAbility Type in Description(): {nameof(ability)}")
             };
         }
+
         public static string ShortDescription(this EquipmentAbility ability, float amount)
         {
             return ability switch
@@ -74,11 +87,12 @@ namespace RogueCastle.Enums
                 EquipmentAbility.Curse                => $"Enemies start {(int) (amount / 4f * 2.75f)} levels higher.",
                 EquipmentAbility.Grace                => amount > 1f ? $"Enemies scale {amount} units slower." : $"Enemies scale {amount} unit slower.",
                 EquipmentAbility.Balance              => $"Gain back {amount} HP and MP for every kill.",
-                EquipmentAbility.ArchitectFee         => "Earn 60% total gold in the castle.",
+                EquipmentAbility.ArchitectFee         => $"Earn {100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage}% total gold in the castle.",
                 EquipmentAbility.NewGamePlusGoldBonus => $"Bounty increased by {amount}%.",
                 _                                     => throw new ArgumentException($"Unsupported EquipmentAbility Type in ShortDescription(): {nameof(ability)}")
             };
         }
+
         public static string Instructions(this EquipmentAbility ability)
         {
             return ability switch
@@ -97,6 +111,7 @@ namespace RogueCastle.Enums
                 _                            => throw new ArgumentException($"Unsupported EquipmentAbility Type in Instructions(): {nameof(ability)}")
             };
         }
+
         public static string Icon(this EquipmentAbility ability)
         {
             return ability switch
