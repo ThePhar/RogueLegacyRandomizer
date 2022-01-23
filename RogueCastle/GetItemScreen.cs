@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - GetItemScreen.cs
 //  Last Modified 2022-01-23
-//
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -303,7 +303,7 @@ namespace RogueCastle
                             _itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                             _itemSpinning = true;
                             _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                            _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
+                            _itemFoundText.Text = GetBlueprintName(_network_item);
                             _itemFoundPlayerText.Text = $"You received from {_network_player}";
                             _itemFoundText.TextureColor = Color.Yellow;
                             break;
@@ -370,6 +370,23 @@ namespace RogueCastle
             _itemSprite.PlayAnimation();
             ItemSpinAnimation();
             base.OnEnter();
+        }
+
+        private string GetBlueprintName(int item)
+        {
+            var text = Program.Game.ArchipelagoManager.GetItemName(item);
+            if (text != ItemDefinitions.ProgressiveArmor.Name)
+            {
+                return text;
+            }
+
+            var index = -1;
+            while (index <= 15 && Game.PlayerStats.GetBlueprintArray[0][index + 1] > 0)
+            {
+                index++;
+            }
+
+            return Program.Game.ArchipelagoManager.GetItemName(ItemDefinitions.SquireArmor.Code + index);
         }
 
         private string GetSkillPlateIcon(int item, out string itemName)
