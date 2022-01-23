@@ -1288,6 +1288,31 @@ namespace RogueCastle
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Balance] = 3;
                 }
             }
+            else if (item.Item == ItemDefinitions.ProgressiveArmor.Code)
+            {
+                var index = 0;
+                while (index <= 15 && PlayerStats.GetBlueprintArray[0][index] > 0)
+                {
+                    index++;
+                }
+
+                if (ArchipelagoManager.Data.RequirePurchasing)
+                {
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][index] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][index] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][index] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][index] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][index] = 1;
+                }
+                else
+                {
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][index] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][index] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][index] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][index] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][index] = 3;
+                }
+            }
             else if (item.Item == ItemDefinitions.SquireArmor.Code)
             {
                 if (ArchipelagoManager.Data.RequirePurchasing)
