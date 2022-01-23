@@ -1,3 +1,14 @@
+//
+//  Rogue Legacy Randomizer - Class.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -53,6 +64,7 @@ namespace RogueCastle.Enums
                 _                   => throw new ArgumentException($"Unsupported Class Type in ToString(): {nameof(@class)}")
             };
         }
+
         public static string Description(this Class @class)
         {
             return @class switch
@@ -78,6 +90,7 @@ namespace RogueCastle.Enums
                 _                   => throw new ArgumentException($"Unsupported Class Type in Description(): {nameof(@class)}")
             };
         }
+
         public static string ProfileCardDescription(this Class @class)
         {
             return @class switch
@@ -103,6 +116,7 @@ namespace RogueCastle.Enums
                 _                   => throw new ArgumentException($"Unsupported Class Type in ProfileCardDescription(): {nameof(@class)}")
             };
         }
+
         public static bool Upgraded(this Class @class)
         {
             return @class switch
@@ -118,9 +132,9 @@ namespace RogueCastle.Enums
                 _                => false
             };
         }
-        public static Spell[] GetSpellList(this Class @class)
 
         // TODO: Move this somewhere else?
+        public static Spell[] GetSpellList(this Class @class)
         {
             switch (@class)
             {
@@ -235,15 +249,30 @@ namespace RogueCastle.Enums
                     return null;
             }
         }
+
         public static Class GetRandomClass()
         {
-            var list = new List<Class>
+            var list = new List<Class>();
+
+            if (SkillSystem.GetSkill(Skill.KnightUnlock).ModifierAmount > 0f)
             {
-                Class.Knight,
-                Class.Mage,
-                Class.Barbarian,
-                Class.Knave
-            };
+                list.Add(Class.Knight);
+            }
+
+            if (SkillSystem.GetSkill(Skill.MageUnlock).ModifierAmount > 0f)
+            {
+                list.Add(Class.Mage);
+            }
+
+            if (SkillSystem.GetSkill(Skill.AssassinUnlock).ModifierAmount > 0f)
+            {
+                list.Add(Class.Knave);
+            }
+
+            if (SkillSystem.GetSkill(Skill.BarbarianUnlock).ModifierAmount > 0f)
+            {
+                list.Add(Class.Barbarian);
+            }
 
             if (SkillSystem.GetSkill(Skill.NinjaUnlock).ModifierAmount > 0f)
             {

@@ -1,3 +1,14 @@
+//
+//  Rogue Legacy Randomizer - Game.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,9 +24,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueCastle.Enums;
 using RogueCastle.GameObjects;
 using RogueCastle.Screens;
-using RogueCastle.Enums;
 using SpriteSystem;
 using Tweener;
 
@@ -27,13 +38,13 @@ namespace RogueCastle
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        public static AreaStruct[] Area1List;
+        public static AreaStruct[]  Area1List;
         public static SettingStruct GameConfig;
-        private bool _contentLoaded;
-        private GameTime _forcedGameTime1;
-        private GameTime _forcedGameTime2;
-        private bool _frameLimitSwap;
-        private bool _gameLoaded;
+        private       bool          _contentLoaded;
+        private       GameTime      _forcedGameTime1;
+        private       GameTime      _forcedGameTime2;
+        private       bool          _frameLimitSwap;
+        private       bool          _gameLoaded;
 
         public Game()
         {
@@ -77,42 +88,42 @@ namespace RogueCastle
             SleepUtil.DisableScreensaver();
         }
 
-        public static Cue LineageSongCue { get; set; }
-        public static RCScreenManager ScreenManager { get; set; }
-        public static Effect BWMaskEffect { get; set; }
-        public static Effect ColourSwapShader { get; set; }
-        public static Effect HSVEffect { get; set; }
-        public static Effect InvertShader { get; set; }
-        public static Effect MaskEffect { get; set; }
-        public static Effect ParallaxEffect { get; set; }
-        public static Effect RippleEffect { get; set; }
-        public static Effect ShadowEffect { get; set; }
-        public static EquipmentSystem EquipmentSystem { get; set; }
-        public static GaussianBlur GaussianBlur { get; set; }
-        public static PlayerStats PlayerStats { get; set; }
-        public static InputMap GlobalInput { get; set; }
-        public static List<string> NameArray { get; set; }
-        public static List<string> FemaleNameArray { get; set; }
-        public static SpriteFont PixelArtFont { get; set; }
-        public static SpriteFont PixelArtFontBold { get; set; }
-        public static SpriteFont JunicodeFont { get; set; }
-        public static SpriteFont EnemyLevelFont { get; set; }
-        public static SpriteFont PlayerLevelFont { get; set; }
-        public static SpriteFont GoldFont { get; set; }
-        public static SpriteFont HerzogFont { get; set; }
-        public static SpriteFont JunicodeLargeFont { get; set; }
-        public static SpriteFont CinzelFont { get; set; }
-        public static SpriteFont BitFont { get; set; }
-        public static Texture2D GenericTexture { get; set; }
-        public static float PlaySessionLength { get; set; }
-        public static float TotalGameTimeSeconds { get; set; }
-        public static float TotalGameTimeHours { get; set; }
-        public static string ProfileName { get; set; }
+        public static Cue             LineageSongCue       { get; set; }
+        public static RCScreenManager ScreenManager        { get; set; }
+        public static Effect          BWMaskEffect         { get; set; }
+        public static Effect          ColourSwapShader     { get; set; }
+        public static Effect          HSVEffect            { get; set; }
+        public static Effect          InvertShader         { get; set; }
+        public static Effect          MaskEffect           { get; set; }
+        public static Effect          ParallaxEffect       { get; set; }
+        public static Effect          RippleEffect         { get; set; }
+        public static Effect          ShadowEffect         { get; set; }
+        public static EquipmentSystem EquipmentSystem      { get; set; }
+        public static GaussianBlur    GaussianBlur         { get; set; }
+        public static PlayerStats     PlayerStats          { get; set; }
+        public static InputMap        GlobalInput          { get; set; }
+        public static List<string>    NameArray            { get; set; }
+        public static List<string>    FemaleNameArray      { get; set; }
+        public static SpriteFont      PixelArtFont         { get; set; }
+        public static SpriteFont      PixelArtFontBold     { get; set; }
+        public static SpriteFont      JunicodeFont         { get; set; }
+        public static SpriteFont      EnemyLevelFont       { get; set; }
+        public static SpriteFont      PlayerLevelFont      { get; set; }
+        public static SpriteFont      GoldFont             { get; set; }
+        public static SpriteFont      HerzogFont           { get; set; }
+        public static SpriteFont      JunicodeLargeFont    { get; set; }
+        public static SpriteFont      CinzelFont           { get; set; }
+        public static SpriteFont      BitFont              { get; set; }
+        public static Texture2D       GenericTexture       { get; set; }
+        public static float           PlaySessionLength    { get; set; }
+        public static float           TotalGameTimeSeconds { get; set; }
+        public static float           TotalGameTimeHours   { get; set; }
+        public static string          ProfileName          { get; set; }
 
-        public Client ArchipelagoManager { get; private set; }
-        public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
-        public PhysicsManager PhysicsManager { get; private set; }
-        public SaveGameManager SaveManager { get; private set; }
+        public Client                ArchipelagoManager    { get; }
+        public GraphicsDeviceManager GraphicsDeviceManager { get; }
+        public PhysicsManager        PhysicsManager        { get; }
+        public SaveGameManager       SaveManager           { get; }
 
         protected void ChangeGraphicsSettings(object sender, PreparingDeviceSettingsEventArgs e)
         {
@@ -458,7 +469,8 @@ namespace RogueCastle
                     SaveManager.ClearAllFileTypes(false);
                 }
 
-                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? (int)Screen.CDGSplash : (int)Screen.Title, true);
+                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? (int) Screen.CDGSplash : (int) Screen.Title,
+                    true);
             }
 
             TotalGameTimeSeconds = (float) gameTime.TotalGameTime.TotalSeconds;
@@ -525,6 +537,22 @@ namespace RogueCastle
                         PlayerStats.Gold = 0;
                         PlayerStats.Class = ArchipelagoManager.Data.StartingClass;
 
+                        // Unlock the player's starting class.
+                        var skill = (Class) ArchipelagoManager.Data.StartingClass switch
+                        {
+                            Class.Knight     => SkillSystem.GetSkill(Skill.KnightUnlock),
+                            Class.Mage       => SkillSystem.GetSkill(Skill.MageUnlock),
+                            Class.Barbarian  => SkillSystem.GetSkill(Skill.BarbarianUnlock),
+                            Class.Knave      => SkillSystem.GetSkill(Skill.AssassinUnlock),
+                            Class.Miner      => SkillSystem.GetSkill(Skill.BankerUnlock),
+                            Class.Shinobi    => SkillSystem.GetSkill(Skill.NinjaUnlock),
+                            Class.Lich       => SkillSystem.GetSkill(Skill.LichUnlock),
+                            Class.Spellthief => SkillSystem.GetSkill(Skill.SpellswordUnlock),
+                            _                => throw new ArgumentException("Unsupported Starting Class")
+                        };
+
+                        SkillSystem.LevelUpTrait(skill, false, false);
+
                         PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
                         PlayerStats.EnemiesKilledInRun.Clear();
 
@@ -533,20 +561,22 @@ namespace RogueCastle
 
                         // Rename Sir Lee to the player's name and initial gender.
                         PlayerStats.IsFemale = ArchipelagoManager.Data.IsFemale;
-                        PlayerStats.PlayerName = $"{(PlayerStats.IsFemale ? "Lady" : "Sir")} {ArchipelagoManager.Data.Name}";
+                        PlayerStats.PlayerName =
+                            $"{(PlayerStats.IsFemale ? "Lady" : "Sir")} {ArchipelagoManager.Data.Name}";
 
                         SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
-                        ScreenManager.DisplayScreen((int)Screen.StartingRoom, true);
+                        ScreenManager.DisplayScreen((int) Screen.StartingRoom, true);
                     }
                     else
                     {
                         if (heroIsDead)
                         {
-                            ScreenManager.DisplayScreen((int)Screen.Lineage, true);
+                            ScreenManager.DisplayScreen((int) Screen.Lineage, true);
                         }
                         else
                         {
-                            ScreenManager.DisplayScreen(startingRoom ? (int)Screen.StartingRoom :(int) Screen.Level, true);
+                            ScreenManager.DisplayScreen(startingRoom ? (int) Screen.StartingRoom : (int) Screen.Level,
+                                true);
                         }
                     }
 
@@ -566,93 +596,123 @@ namespace RogueCastle
                         case 91000: // Manor Renovation - Ground Road
                             SkillSystem.GetSkill(Skill.ManorGroundRoad).CurrentLevel = 1;
                             break;
+
                         case 91001: // Manor Renovation - Main Base
                             SkillSystem.GetSkill(Skill.ManorMainBase).CurrentLevel = 1;
                             break;
+
                         case 91002: // Manor Renovation - Main Bottom Window
                             SkillSystem.GetSkill(Skill.ManorMainWindowBottom).CurrentLevel = 1;
                             break;
+
                         case 91003: // Manor Renovation - Main Top Window
                             SkillSystem.GetSkill(Skill.ManorMainWindowTop).CurrentLevel = 1;
                             break;
+
                         case 91004: // Manor Renovation - Main Rooftop
                             SkillSystem.GetSkill(Skill.ManorMainRoof).CurrentLevel = 1;
                             break;
+
                         case 91005: // Manor Renovation - Left Wing Base
                             SkillSystem.GetSkill(Skill.ManorLeftWingBase).CurrentLevel = 1;
                             break;
+
                         case 91006: // Manor Renovation - Left Wing Window
                             SkillSystem.GetSkill(Skill.ManorLeftWingWindow).CurrentLevel = 1;
                             break;
+
                         case 91007: // Manor Renovation - Left Wing Rooftop
                             SkillSystem.GetSkill(Skill.ManorLeftWingRoof).CurrentLevel = 1;
                             break;
+
                         case 91008: // Manor Renovation - Left Big Base
                             SkillSystem.GetSkill(Skill.ManorLeftBigBase).CurrentLevel = 1;
                             break;
+
                         case 91009: // Manor Renovation - Left Big Upper 1
                             SkillSystem.GetSkill(Skill.ManorLeftBigUpper1).CurrentLevel = 1;
                             break;
+
                         case 91010: // Manor Renovation - Left Big Upper 2
                             SkillSystem.GetSkill(Skill.ManorLeftBigUpper2).CurrentLevel = 1;
                             break;
+
                         case 91011: // Manor Renovation - Left Big Windows
                             SkillSystem.GetSkill(Skill.ManorLeftBigWindows).CurrentLevel = 1;
                             break;
+
                         case 91012: // Manor Renovation - Left Big Rooftop
                             SkillSystem.GetSkill(Skill.ManorLeftBigRoof).CurrentLevel = 1;
                             break;
+
                         case 91013: // Manor Renovation - Left Far Base
                             SkillSystem.GetSkill(Skill.ManorLeftFarBase).CurrentLevel = 1;
                             break;
+
                         case 91014: // Manor Renovation - Left Far Roof
                             SkillSystem.GetSkill(Skill.ManorLeftFarRoof).CurrentLevel = 1;
                             break;
+
                         case 91015: // Manor Renovation - Left Extension
                             SkillSystem.GetSkill(Skill.ManorLeftExtension).CurrentLevel = 1;
                             break;
+
                         case 91016: // Manor Renovation - Left Tree 1
                             SkillSystem.GetSkill(Skill.ManorLeftTree1).CurrentLevel = 1;
                             break;
+
                         case 91017: // Manor Renovation - Left Tree 2
                             SkillSystem.GetSkill(Skill.ManorLeftTree2).CurrentLevel = 1;
                             break;
+
                         case 91018: // Manor Renovation - Right Wing Base
                             SkillSystem.GetSkill(Skill.ManorRightWingBase).CurrentLevel = 1;
                             break;
+
                         case 91019: // Manor Renovation - Right Wing Window
                             SkillSystem.GetSkill(Skill.ManorRightWingWindow).CurrentLevel = 1;
                             break;
+
                         case 91020: // Manor Renovation - Right Wing Rooftop
                             SkillSystem.GetSkill(Skill.ManorRightWingRoof).CurrentLevel = 1;
                             break;
+
                         case 91021: // Manor Renovation - Right Big Base
                             SkillSystem.GetSkill(Skill.ManorRightBigBase).CurrentLevel = 1;
                             break;
+
                         case 91022: // Manor Renovation - Right Big Upper
                             SkillSystem.GetSkill(Skill.ManorRightBigUpper).CurrentLevel = 1;
                             break;
+
                         case 91023: // Manor Renovation - Right Big Rooftop
                             SkillSystem.GetSkill(Skill.ManorRightBigRoof).CurrentLevel = 1;
                             break;
+
                         case 91024: // Manor Renovation - Right High Base
                             SkillSystem.GetSkill(Skill.ManorRightHighBase).CurrentLevel = 1;
                             break;
+
                         case 91025: // Manor Renovation - Right High Upper
                             SkillSystem.GetSkill(Skill.ManorRightHighUpper).CurrentLevel = 1;
                             break;
+
                         case 91026: // Manor Renovation - Right High Tower
                             SkillSystem.GetSkill(Skill.ManorRightHighTower).CurrentLevel = 1;
                             break;
+
                         case 91027: // Manor Renovation - Right Extension
                             SkillSystem.GetSkill(Skill.ManorRightExtension).CurrentLevel = 1;
                             break;
+
                         case 91028: // Manor Renovation - Right Tree
                             SkillSystem.GetSkill(Skill.ManorRightTree).CurrentLevel = 1;
                             break;
+
                         case 91029: // Manor Renovation - Observatory Base
                             SkillSystem.GetSkill(Skill.ManorObservatoryBase).CurrentLevel = 1;
                             break;
+
                         case 91030: // Manor Renovation - Observatory Telescope
                             SkillSystem.GetSkill(Skill.ManorObservatoryTelescope).CurrentLevel = 1;
                             break;
@@ -756,29 +816,61 @@ namespace RogueCastle
                 skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
-            else if (item.Item == ItemDefinitions.Paladin.Code)
+            else if (item.Item == ItemDefinitions.ProgressiveKnight.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.KnightUp);
-                skill.CanPurchase = true;
-                SkillSystem.LevelUpTrait(skill, false, false);
+                skill = SkillSystem.GetSkill(Skill.KnightUnlock);
+                if (skill.CurrentLevel > 0)
+                {
+                    skill = SkillSystem.GetSkill(Skill.KnightUp);
+                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
+                else
+                {
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
             }
-            else if (item.Item == ItemDefinitions.Archmage.Code)
+            else if (item.Item == ItemDefinitions.ProgressiveMage.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.MageUp);
-                skill.CanPurchase = true;
-                SkillSystem.LevelUpTrait(skill, false, false);
+                skill = SkillSystem.GetSkill(Skill.MageUnlock);
+                if (skill.CurrentLevel > 0)
+                {
+                    skill = SkillSystem.GetSkill(Skill.MageUp);
+                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
+                else
+                {
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
             }
-            else if (item.Item == ItemDefinitions.BarbarianKing.Code)
+            else if (item.Item == ItemDefinitions.ProgressiveBarbarian.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.BarbarianUp);
-                skill.CanPurchase = true;
-                SkillSystem.LevelUpTrait(skill, false, false);
+                skill = SkillSystem.GetSkill(Skill.BarbarianUnlock);
+                if (skill.CurrentLevel > 0)
+                {
+                    skill = SkillSystem.GetSkill(Skill.BarbarianUp);
+                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
+                else
+                {
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
             }
-            else if (item.Item == ItemDefinitions.Assassin.Code)
+            else if (item.Item == ItemDefinitions.ProgressiveKnave.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.AssassinUp);
-                skill.CanPurchase = true;
-                SkillSystem.LevelUpTrait(skill, false, false);
+                skill = SkillSystem.GetSkill(Skill.AssassinUnlock);
+                if (skill.CurrentLevel > 0)
+                {
+                    skill = SkillSystem.GetSkill(Skill.AssassinUp);
+                    skill.CanPurchase = true;
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
+                else
+                {
+                    SkillSystem.LevelUpTrait(skill, false, false);
+                }
             }
             else if (item.Item == ItemDefinitions.ProgressiveShinobi.Code)
             {
@@ -1011,18 +1103,18 @@ namespace RogueCastle
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Sprint] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Sprint] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Sprint] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Sprint] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Sprint] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Sprint] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Sprint] = 1;
                 }
                 else
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Sprint] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Sprint] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Sprint] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Sprint] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Sprint] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Sprint] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Sprint] = 3;
                 }
             }
             else if (item.Item == ItemDefinitions.VampireRunes.Code)
@@ -1030,18 +1122,18 @@ namespace RogueCastle
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Vampire] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Vampire] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Vampire] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Vampire] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Vampire] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Vampire] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Vampire] = 1;
                 }
                 else
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Vampire] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Vampire] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Vampire] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Vampire] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Vampire] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Vampire] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Vampire] = 3;
                 }
             }
             else if (item.Item == ItemDefinitions.SkyRunes.Code)
@@ -1049,18 +1141,18 @@ namespace RogueCastle
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Sky] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Sky] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Sky] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Sky] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Sky] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Sky] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Sky] = 1;
                 }
                 else
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Sky] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Sky] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Sky] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Sky] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Sky] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Sky] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Sky] = 3;
                 }
             }
             else if (item.Item == ItemDefinitions.SiphonRunes.Code)
@@ -1068,18 +1160,18 @@ namespace RogueCastle
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Siphon] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Siphon] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Siphon] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Siphon] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Siphon] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Siphon] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Siphon] = 1;
                 }
                 else
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Siphon] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Siphon] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Siphon] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Siphon] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Siphon] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Siphon] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Siphon] = 3;
                 }
             }
             else if (item.Item == ItemDefinitions.RetaliationRunes.Code)
@@ -1087,18 +1179,18 @@ namespace RogueCastle
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Retaliation] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Retaliation] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Retaliation] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Retaliation] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Retaliation] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Retaliation] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Retaliation] = 1;
                 }
                 else
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Retaliation] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Retaliation] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Retaliation] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Retaliation] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Retaliation] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][ (int) EquipmentAbility.Retaliation] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Retaliation] = 3;
                 }
             }
             else if (item.Item == ItemDefinitions.BountyRunes.Code)
@@ -1106,7 +1198,7 @@ namespace RogueCastle
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Bounty] = 1;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Bounty] = 1;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Bounty] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Bounty] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Bounty] = 1;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Bounty] = 1;
@@ -1114,7 +1206,7 @@ namespace RogueCastle
                 else
                 {
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Bounty] = 3;
-                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][ (int) EquipmentAbility.Bounty] = 3;
+                    PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Bounty] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Bounty] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Limbs][(int) EquipmentAbility.Bounty] = 3;
                     PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) EquipmentAbility.Bounty] = 3;
@@ -1658,7 +1750,8 @@ namespace RogueCastle
                     return;
                 }
 
-                if (screen != null && screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending" && screen.CurrentRoom.Name != "Tutorial")
+                if (screen != null && screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending" &&
+                    screen.CurrentRoom.Name != "Tutorial")
                 {
                     SaveManager.SaveFiles(SaveType.MapData);
                 }
@@ -1929,7 +2022,8 @@ namespace RogueCastle
         {
             GraphicsDeviceManager.PreferredBackBufferWidth = GameConfig.ScreenWidth;
             GraphicsDeviceManager.PreferredBackBufferHeight = GameConfig.ScreenHeight;
-            if (GraphicsDeviceManager.IsFullScreen && !GameConfig.FullScreen || !GraphicsDeviceManager.IsFullScreen && GameConfig.FullScreen)
+            if (GraphicsDeviceManager.IsFullScreen && !GameConfig.FullScreen ||
+                !GraphicsDeviceManager.IsFullScreen && GameConfig.FullScreen)
             {
                 GraphicsDeviceManager.ToggleFullScreen();
             }
@@ -1948,14 +2042,14 @@ namespace RogueCastle
 
         public struct SettingStruct
         {
-            public bool EnableDirectInput;
-            public bool EnableSteamCloud;
-            public bool FullScreen;
+            public bool  EnableDirectInput;
+            public bool  EnableSteamCloud;
+            public bool  FullScreen;
             public float MusicVolume;
-            public bool QuickDrop;
-            public bool ReduceQuality;
-            public int ScreenHeight;
-            public int ScreenWidth;
+            public bool  QuickDrop;
+            public bool  ReduceQuality;
+            public int   ScreenHeight;
+            public int   ScreenWidth;
             public float SFXVolume;
         }
     }

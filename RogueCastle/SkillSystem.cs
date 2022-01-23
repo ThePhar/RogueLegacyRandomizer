@@ -1,5 +1,17 @@
+//
+//  Rogue Legacy Randomizer - SkillSystem.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using RogueCastle.Enums;
 using RogueCastle.Systems;
@@ -10,11 +22,11 @@ namespace RogueCastle
     {
         private const Skill STARTING_TRAIT = Skill.ManorMainBase;
 
-        private static SkillObj _blankTrait;
-        private static readonly Skill[,] _skillTypeArray;
-        private static readonly Vector2[,] _skillPositionArray;
-        private static readonly int[,] _manorPieceArray;
-        private static SkillLinker[,] _skillLinkerArray;
+        private static          SkillObj       _blankTrait;
+        private static readonly Skill[,]       _skillTypeArray;
+        private static readonly Vector2[,]     _skillPositionArray;
+        private static readonly int[,]         _manorPieceArray;
+        private static          SkillLinker[,] _skillLinkerArray;
 
         static SkillSystem()
         {
@@ -292,8 +304,8 @@ namespace RogueCastle
         }
 
         public static List<SkillObj> SkillManorArray { get; private set; }
-        public static List<SkillObj> SkillStatArray { get; private set; }
-        public static bool IconsVisible { get; private set; }
+        public static List<SkillObj> SkillStatArray  { get; private set; }
+        public static bool           IconsVisible    { get; private set; }
 
         public static void Initialize()
         {
@@ -305,7 +317,7 @@ namespace RogueCastle
             }
 
             SkillManorArray = new List<SkillObj>();
-            for (var i = 81; i < 112; i++)
+            for (var i = (int) Skill.ManorGroundRoad; i <= (int) Skill.ManorObservatoryTelescope; i++)
             {
                 var skillObj = SkillBuilder.BuildSkill((Skill) i);
                 skillObj.Position = GetSkillPosition(skillObj);
@@ -314,7 +326,7 @@ namespace RogueCastle
             }
 
             SkillStatArray = new List<SkillObj>();
-            for (var i = 2; i < 35; i++)
+            for (var i = (int) Skill.HealthUp; i <= (int) Skill.Traitorous; i++)
             {
                 var skillObj = SkillBuilder.BuildSkill((Skill) i);
                 SkillStatArray.Add(skillObj);
@@ -323,11 +335,9 @@ namespace RogueCastle
             GetSkill(STARTING_TRAIT).Visible = true;
             _skillLinkerArray = new SkillLinker[10, 10];
             for (var j = 0; j < 10; j++)
+            for (var k = 0; k < 10; k++)
             {
-                for (var k = 0; k < 10; k++)
-                {
-                    _skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
-                }
+                _skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
             }
         }
 
@@ -354,10 +364,7 @@ namespace RogueCastle
                 current.Visible = false;
             }
 
-            foreach (var current in SkillStatArray)
-            {
-                current.CurrentLevel = 0;
-            }
+            foreach (var current in SkillStatArray) current.CurrentLevel = 0;
 
             GetSkill(STARTING_TRAIT).Visible = true;
             Game.PlayerStats.CurrentLevel = 0;
@@ -426,20 +433,14 @@ namespace RogueCastle
 
         public static SkillObj GetSkill(Skill skill)
         {
-            foreach (var current in SkillManorArray)
+            foreach (var current in SkillManorArray.Where(current => current.Trait == skill))
             {
-                if (current.Trait == skill)
-                {
-                    return current;
-                }
+                return current;
             }
 
-            foreach (var current in SkillStatArray)
+            foreach (var current in SkillStatArray.Where(current => current.Trait == skill))
             {
-                if (current.Trait == skill)
-                {
-                    return current;
-                }
+                return current;
             }
 
             return _blankTrait;
@@ -454,14 +455,13 @@ namespace RogueCastle
         {
             var result = new Vector2(-1f, -1f);
             var traitType = trait.Trait;
+
             for (var i = 0; i < _skillTypeArray.GetLength(1); i++)
+            for (var j = 0; j < _skillTypeArray.GetLength(0); j++)
             {
-                for (var j = 0; j < _skillTypeArray.GetLength(0); j++)
+                if (_skillTypeArray[j, i] == traitType)
                 {
-                    if (_skillTypeArray[j, i] == traitType)
-                    {
-                        result = new Vector2(i, j);
-                    }
+                    result = new Vector2(i, j);
                 }
             }
 
