@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+//
+//  Rogue Legacy Randomizer - LastBossRoom.cs
+//  Last Modified 2022-01-23
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -89,7 +90,7 @@ namespace RogueCastle
 
         public void StartCutscene()
         {
-            m_cutsceneRunning = true;
+            _cutsceneRunning = true;
             Player.LockControls();
             Player.AccelerationY = 0f;
             Player.AttachedLevel.RunCinematicBorders(8f);
@@ -149,7 +150,7 @@ namespace RogueCastle
             SoundManager.PlayMusic("TitleScreenSong", true, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = true;
             Player.UnlockControls();
-            m_cutsceneRunning = false;
+            _cutsceneRunning = false;
         }
 
         public void RunFountainCutscene()
@@ -232,7 +233,7 @@ namespace RogueCastle
                 }
             }
 
-            if (!m_cutsceneRunning)
+            if (!_cutsceneRunning)
             {
                 foreach (var current in EnemyList)
                     if (!current.IsKilled)

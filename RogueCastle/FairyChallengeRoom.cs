@@ -1,12 +1,13 @@
-/*
-  Rogue Legacy Enhanced
-
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly.
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+// 
+//  Rogue Legacy Randomizer - FairyChallengeRoom.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -50,23 +51,6 @@ namespace RogueCastle
             m_boss.Damage = 200;
             m_boss.Speed = 400f;
             m_boss.IsNeo = true;
-            Game.PlayerStats.PlayerName = "Sir Wagner";
-            Game.PlayerStats.Class = 12;
-            Game.PlayerStats.Spell = 6;
-            Game.PlayerStats.IsFemale = false;
-            Game.PlayerStats.BonusHealth = 30;
-            Game.PlayerStats.BonusMana = 10;
-            Game.PlayerStats.BonusStrength = 150;
-            Game.PlayerStats.BonusMagic = 40;
-            Game.PlayerStats.BonusDefense = 230;
-            Game.PlayerStats.Traits = new Vector2(13f, 15f);
-            Game.PlayerStats.GetEquippedArray[1] = 14;
-            Game.PlayerStats.GetEquippedArray[2] = 12;
-            Game.PlayerStats.GetEquippedArray[4] = 7;
-            Game.PlayerStats.GetEquippedArray[3] = 12;
-            Game.PlayerStats.GetEquippedArray[0] = 14;
-            Game.PlayerStats.GetEquippedRuneArray[2] = 0;
-            Game.PlayerStats.GetEquippedRuneArray[4] = 0;
             if (m_boss != null)
             {
                 m_boss.CurrentHealth = m_boss.MaxHealth;
@@ -77,7 +61,6 @@ namespace RogueCastle
         {
             m_teleportingOut = false;
             //Player.Flip = SpriteEffects.None;
-            StorePlayerData();
             Player.Flip = SpriteEffects.None;
             SetRoomData();
             m_cutsceneRunning = true;
@@ -91,11 +74,10 @@ namespace RogueCastle
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X",
                 m_boss.X.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Lost", m_boss.Name,
                 "Intro2");
             base.OnEnter();
             Player.GetChildAt(10).TextureColor = Color.White;
-            m_bossChest.ForcedItemType = ItemDrop.FountainPiece2;
         }
 
         public void Intro2()
@@ -161,7 +143,7 @@ namespace RogueCastle
 
         protected override void SaveCompletionData()
         {
-            Game.PlayerStats.ChallengeSkullBeaten = true;
+            Game.PlayerStats.FairyBossBeaten = true;
             GameUtil.UnlockAchievement("FEAR_OF_BONES");
         }
 

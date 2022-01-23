@@ -1,13 +1,15 @@
-/*
-  Rogue Legacy Enhanced
+// 
+//  Rogue Legacy Randomizer - BlobChallengeRoom.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly.
-
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
-
+using System.Linq;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,136 +21,98 @@ namespace RogueCastle
 {
     public class BlobChallengeRoom : ChallengeBossRoomObj
     {
-        private EnemyObj_Blob m_boss;
-        private EnemyObj_Blob m_boss2;
-        private Vector2 m_startingCamPos;
+        private EnemyObj_Blob _boss;
+        private EnemyObj_Blob _boss2;
+        private Vector2       _startingCamPos;
 
         public BlobChallengeRoom()
         {
             m_roomActivityDelay = 0.5f;
         }
 
-        public override bool BossKilled
-        {
-            get { return NumActiveBlobs == 0; }
-        }
+        public override bool BossKilled => NumActiveBlobs == 0;
 
-        public int NumActiveBlobs
-        {
-            get
-            {
-                var num = 0;
-                foreach (var current in EnemyList)
-                    if (current.Type == 2 && !current.IsKilled)
-                    {
-                        num++;
-                    }
-
-                foreach (var current2 in TempEnemyList)
-                    if (current2.Type == 2 && !current2.IsKilled)
-                    {
-                        num++;
-                    }
-
-                return num;
-            }
-        }
+        public int NumActiveBlobs =>
+            EnemyList.Count(current => current.Type == 2 && !current.IsKilled) +
+            TempEnemyList.Count(current2 => current2.Type == 2 && !current2.IsKilled);
 
         public override void Initialize()
         {
-            m_boss = EnemyList[0] as EnemyObj_Blob;
-            m_boss.SaveToFile = false;
-            m_boss2 = EnemyList[1] as EnemyObj_Blob;
-            m_boss2.SaveToFile = false;
+            _boss = EnemyList[0] as EnemyObj_Blob;
+            _boss.SaveToFile = false;
+            _boss2 = EnemyList[1] as EnemyObj_Blob;
+            _boss2.SaveToFile = false;
             base.Initialize();
         }
 
         private void SetRoomData()
         {
-            m_boss.Name = "Astrodotus";
-            m_boss.GetChildAt(0).TextureColor = Color.Green;
-            m_boss.GetChildAt(2).TextureColor = Color.LightGreen;
-            m_boss.GetChildAt(2).Opacity = 0.8f;
-            (m_boss.GetChildAt(1) as SpriteObj).OutlineColour = Color.Red;
-            m_boss.GetChildAt(1).TextureColor = Color.Red;
-            m_boss2.GetChildAt(0).TextureColor = Color.Red;
-            m_boss2.GetChildAt(2).TextureColor = Color.LightPink;
-            m_boss2.GetChildAt(2).Opacity = 0.8f;
-            (m_boss2.GetChildAt(1) as SpriteObj).OutlineColour = Color.Black;
-            m_boss2.GetChildAt(1).TextureColor = Color.DarkGray;
-            m_boss.Level = 100;
-            m_boss.MaxHealth = 100;
-            m_boss.Damage = 370;
-            m_boss.IsWeighted = false;
-            m_boss.TurnSpeed = 0.015f;
-            m_boss.Speed = 400f;
-            m_boss.IsNeo = true;
-            m_boss.ChangeNeoStats(0.8f, 1.06f, 6);
-            m_boss.Scale = new Vector2(2f, 2f);
-            m_boss2.Level = m_boss.Level;
-            m_boss2.MaxHealth = m_boss.MaxHealth;
-            m_boss2.Damage = m_boss.Damage;
-            m_boss2.IsWeighted = m_boss.IsWeighted;
-            m_boss2.TurnSpeed = 0.01f;
-            m_boss2.Speed = 625f;
-            m_boss2.IsNeo = m_boss.IsNeo;
-            m_boss2.ChangeNeoStats(0.75f, 1.16f, 5);
-            m_boss2.Scale = m_boss.Scale;
-            Game.PlayerStats.PlayerName = "Lady Echidna";
-            Game.PlayerStats.Class = 16;
-            Game.PlayerStats.Spell = 15;
-            Game.PlayerStats.IsFemale = true;
-            Game.PlayerStats.BonusHealth = 90;
-            Game.PlayerStats.BonusMana = 8;
-            Game.PlayerStats.BonusStrength = 50;
-            Game.PlayerStats.BonusMagic = 33;
-            Game.PlayerStats.BonusDefense = 230;
-            Game.PlayerStats.Traits = new Vector2(2f, 17f);
-            Player.CanBeKnockedBack = false;
-            Game.PlayerStats.GetEquippedArray[0] = 8;
-            Game.PlayerStats.GetEquippedArray[1] = 8;
-            Game.PlayerStats.GetEquippedArray[3] = 8;
-            Game.PlayerStats.GetEquippedArray[2] = 8;
-            Game.PlayerStats.GetEquippedRuneArray[1] = 7;
-            Game.PlayerStats.GetEquippedRuneArray[2] = 7;
-            Player.IsWeighted = false;
-            if (m_boss != null)
+            _boss.Name = "Astrodotus";
+            _boss.GetChildAt(0).TextureColor = Color.Green;
+            _boss.GetChildAt(2).TextureColor = Color.LightGreen;
+            _boss.GetChildAt(2).Opacity = 0.8f;
+            (_boss.GetChildAt(1) as SpriteObj).OutlineColour = Color.Red;
+            _boss.GetChildAt(1).TextureColor = Color.Red;
+            _boss2.GetChildAt(0).TextureColor = Color.Red;
+            _boss2.GetChildAt(2).TextureColor = Color.LightPink;
+            _boss2.GetChildAt(2).Opacity = 0.8f;
+            (_boss2.GetChildAt(1) as SpriteObj).OutlineColour = Color.Black;
+            _boss2.GetChildAt(1).TextureColor = Color.DarkGray;
+            _boss.Level = 100;
+            _boss.MaxHealth = 100;
+            _boss.Damage = 370;
+            _boss.IsWeighted = false;
+            _boss.TurnSpeed = 0.015f;
+            _boss.Speed = 400f;
+            _boss.IsNeo = true;
+            _boss.ChangeNeoStats(0.8f, 1.06f, 6);
+            _boss.Scale = new Vector2(2f, 2f);
+            _boss2.Level = _boss.Level;
+            _boss2.MaxHealth = _boss.MaxHealth;
+            _boss2.Damage = _boss.Damage;
+            _boss2.IsWeighted = _boss.IsWeighted;
+            _boss2.TurnSpeed = 0.01f;
+            _boss2.Speed = 625f;
+            _boss2.IsNeo = _boss.IsNeo;
+            _boss2.ChangeNeoStats(0.75f, 1.16f, 5);
+            _boss2.Scale = _boss.Scale;
+
+            if (_boss != null)
             {
-                m_boss.CurrentHealth = m_boss.MaxHealth;
+                _boss.CurrentHealth = _boss.MaxHealth;
             }
 
-            if (m_boss2 != null)
+            if (_boss2 != null)
             {
-                m_boss2.CurrentHealth = m_boss2.MaxHealth;
+                _boss2.CurrentHealth = _boss2.MaxHealth;
             }
         }
 
         public override void OnEnter()
         {
             //Player.Flip = SpriteEffects.FlipHorizontally;
-            StorePlayerData();
             Player.Flip = SpriteEffects.FlipHorizontally;
             SetRoomData();
             m_cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
-            m_boss.AnimationDelay = 0.1f;
-            m_boss.ChangeSprite("EnemyBlobBossAir_Character");
-            m_boss.PlayAnimation();
-            m_boss2.AnimationDelay = 0.1f;
-            m_boss2.ChangeSprite("EnemyBlobBossAir_Character");
-            m_boss2.PlayAnimation();
+            _boss.AnimationDelay = 0.1f;
+            _boss.ChangeSprite("EnemyBlobBossAir_Character");
+            _boss.PlayAnimation();
+            _boss2.AnimationDelay = 0.1f;
+            _boss2.ChangeSprite("EnemyBlobBossAir_Character");
+            _boss2.PlayAnimation();
             Player.AttachedLevel.UpdateCamera();
-            m_startingCamPos = Player.AttachedLevel.Camera.Position;
+            _startingCamPos = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X",
-                m_boss.X.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", Game.PlayerStats.PlayerName + " VS", m_boss.Name,
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", _boss.Y.ToString(), "X",
+                _boss.X.ToString());
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Infinite and Beyond", _boss.Name,
                 "Intro2");
             base.OnEnter();
-            m_bossChest.ForcedItemType = ItemDrop.TripStatDrop;
+            _bossChest.ForcedItemType = ItemDrop.TripStatDrop;
         }
 
         public void Intro2()
@@ -177,7 +141,7 @@ namespace RogueCastle
 
         public void EndCutscene()
         {
-            m_boss.Rotation = 0f;
+            _boss.Rotation = 0f;
             Player.IsWeighted = true;
             SoundManager.PlayMusic("DungeonBoss", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
@@ -360,8 +324,7 @@ namespace RogueCastle
 
         protected override void SaveCompletionData()
         {
-            Game.PlayerStats.ChallengeBlobBeaten = true;
-            GameUtil.UnlockAchievement("FEAR_OF_SPACE");
+            Game.PlayerStats.BlobBossBeaten = true;
         }
 
         protected override GameObj CreateCloneInstance()
@@ -376,12 +339,14 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                m_boss = null;
-                m_boss2 = null;
-                base.Dispose();
+                return;
             }
+
+            _boss = null;
+            _boss2 = null;
+            base.Dispose();
         }
     }
 }
