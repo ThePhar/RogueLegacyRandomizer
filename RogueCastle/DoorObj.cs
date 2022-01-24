@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - DoorObj.cs
-// Last Modified 2021-12-27
+//  Rogue Legacy Randomizer - DoorObj.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -20,16 +20,16 @@ namespace RogueCastle
 {
     public class DoorObj : TerrainObj
     {
-        private readonly Door m_doorType = Door.Open;
+        private readonly DoorState _mDoorStateType = DoorState.Open;
         public bool Attached;
         public string DoorPosition = "NONE";
         public bool IsBossDoor;
         public bool Locked;
         private SpriteObj m_arrowIcon;
 
-        public DoorObj(RoomObj roomRef, int width, int height, Door doorType) : base(width, height)
+        public DoorObj(RoomObj roomRef, int width, int height, DoorState doorStateType) : base(width, height)
         {
-            m_doorType = doorType;
+            _mDoorStateType = doorStateType;
             Room = roomRef;
             CollisionTypeTag = 0;
             DisableHitboxUpdating = true;
@@ -40,9 +40,9 @@ namespace RogueCastle
 
         public RoomObj Room { get; set; }
 
-        public Door DoorType
+        public DoorState DoorStateType
         {
-            get { return m_doorType; }
+            get { return _mDoorStateType; }
         }
 
         public override void Draw(Camera2D camera)
@@ -69,7 +69,7 @@ namespace RogueCastle
 
         protected override GameObj CreateCloneInstance()
         {
-            return new DoorObj(Room, _width, _height, m_doorType);
+            return new DoorObj(Room, _width, _height, _mDoorStateType);
         }
 
         protected override void FillCloneInstance(object obj)

@@ -1,13 +1,13 @@
-//
-//  RogueLegacyArchipelago - SkillScreen.cs
-//  Last Modified 2021-12-29
-//
+// 
+//  Rogue Legacy Randomizer - SkillScreen.cs
+//  Last Modified 2022-01-24
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,6 @@ using RogueCastle.Enums;
 using RogueCastle.Systems;
 using Tweener;
 using Tweener.Ease;
-using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -241,7 +240,7 @@ namespace RogueCastle
                     SetVisible(skillArray[i], false);
                 }
 
-                if (skillArray[i].Trait >= Skill.ManorGroundRoad)
+                if (skillArray[i].Trait >= SkillType.ManorGroundRoad)
                 {
                     var networkItem = Program.Game.ArchipelagoManager.LocationCache[ManorContainer.ArchipelagoLocationTable[skillArray[i].ManorPiece]];
                     skillArray[i].Description = string.Format(
@@ -532,35 +531,35 @@ namespace RogueCastle
             byte b = 0;
             switch (skill.Trait)
             {
-                case Skill.Smithy:
+                case SkillType.Smithy:
                     b = 1;
                     break;
 
-                case Skill.Enchanter:
+                case SkillType.Enchanter:
                     b = 2;
                     break;
 
-                case Skill.Architect:
+                case SkillType.Architect:
                     b = 3;
                     break;
 
-                case Skill.LichUnlock:
+                case SkillType.LichUnlock:
                     b = 7;
                     break;
 
-                case Skill.BankerUnlock:
+                case SkillType.BankerUnlock:
                     b = 5;
                     break;
 
-                case Skill.SpellswordUnlock:
+                case SkillType.SpellswordUnlock:
                     b = 6;
                     break;
 
-                case Skill.NinjaUnlock:
+                case SkillType.NinjaUnlock:
                     b = 4;
                     break;
 
-                case Skill.KnightUp:
+                case SkillType.KnightUp:
                     b = 8;
                     if (Game.PlayerStats.Class == 0)
                     {
@@ -569,7 +568,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.MageUp:
+                case SkillType.MageUp:
                     b = 9;
                     if (Game.PlayerStats.Class == 1)
                     {
@@ -578,7 +577,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.AssassinUp:
+                case SkillType.AssassinUp:
                     b = 12;
                     if (Game.PlayerStats.Class == 3)
                     {
@@ -587,7 +586,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.BankerUp:
+                case SkillType.BankerUp:
                     b = 13;
                     if (Game.PlayerStats.Class == 5)
                     {
@@ -596,7 +595,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.BarbarianUp:
+                case SkillType.BarbarianUp:
                     b = 10;
                     if (Game.PlayerStats.Class == 2)
                     {
@@ -605,7 +604,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.LichUp:
+                case SkillType.LichUp:
                     b = 15;
                     if (Game.PlayerStats.Class == 7)
                     {
@@ -614,7 +613,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.NinjaUp:
+                case SkillType.NinjaUp:
                     b = 11;
                     if (Game.PlayerStats.Class == 4)
                     {
@@ -623,7 +622,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.SpellSwordUp:
+                case SkillType.SpellSwordUp:
                     b = 14;
                     if (Game.PlayerStats.Class == 6)
                     {
@@ -632,7 +631,7 @@ namespace RogueCastle
 
                     break;
 
-                case Skill.SuperSecret:
+                case SkillType.SuperSecret:
                     b = 16;
                     break;
 
@@ -649,12 +648,12 @@ namespace RogueCastle
                     manorPiece.Item2
                 };
 
-                (ScreenManager as RCScreenManager).DisplayScreen((int) Screen.SkillUnlock, true, list);
+                (ScreenManager as RCScreenManager).DisplayScreen((int) ScreenType.SkillUnlock, true, list);
             }
             else if (b != 0 && displayScreen)
             {
                 var list = new List<object> { b };
-                (ScreenManager as RCScreenManager).DisplayScreen((int) Screen.SkillUnlock, true, list);
+                (ScreenManager as RCScreenManager).DisplayScreen((int) ScreenType.SkillUnlock, true, list);
             }
         }
 
@@ -806,7 +805,7 @@ namespace RogueCastle
                         vector =
                             SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
                                 .TopLink;
-                        var skill = SkillSystem.GetSkill(Skill.SuperSecret);
+                        var skill = SkillSystem.GetSkill(SkillType.SuperSecret);
                         if (!m_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
                         {
                             m_cameraTweening = true;
@@ -837,7 +836,7 @@ namespace RogueCastle
                     if (vector.X != -1f && vector.Y != -1f)
                     {
                         var skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
-                        if (skill2.Trait != Skill.Null && skill2.Visible)
+                        if (skill2.Trait != SkillType.Null && skill2.Visible)
                         {
                             m_selectedTraitIndex = vector;
                         }
@@ -923,7 +922,7 @@ namespace RogueCastle
             m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
 
             // Update stats and modifier texts.
-            var stat = skill.Trait.GetSkillStat();
+            var stat = skill.Trait.SkillStat();
             if (stat > -1f)
             {
                 if (stat < 1f)
@@ -935,7 +934,7 @@ namespace RogueCastle
                 if (stat == 0f)
                 {
                     stat = skill.ModifierAmount;
-                    if (skill.Trait == Skill.CritChanceUp)
+                    if (skill.Trait == SkillType.CritChanceUp)
                     {
                         stat *= 100f;
                         stat = (int) Math.Round(stat, MidpointRounding.AwayFromZero);
@@ -946,10 +945,10 @@ namespace RogueCastle
                 if (skill.CurrentLevel < skill.MaxLevel)
                 {
                     var mod = skill.PerLevelModifier;
-                    if (mod < 1f && skill.Trait != Skill.InvulnerabilityTimeUp)
+                    if (mod < 1f && skill.Trait != SkillType.InvulnerabilityTimeUp)
                     {
                         mod *= 100f;
-                        if (skill.Trait != Skill.DeathDodge)
+                        if (skill.Trait != SkillType.DeathDodge)
                         {
                             mod = (int) Math.Round(mod, MidpointRounding.AwayFromZero);
                         }
@@ -1056,7 +1055,7 @@ namespace RogueCastle
             for (var i = 0; i < skillArray.Length; i++)
             {
                 var skillObj = skillArray[i];
-                if (skillObj.Trait != Skill.Filler && skillObj.Trait != Skill.Null && skillObj.Visible)
+                if (skillObj.Trait != SkillType.Filler && skillObj.Trait != SkillType.Null && skillObj.Visible)
                 {
                     skillObj.Draw(Camera);
                 }

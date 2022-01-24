@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - CarnivalShoot1BonusRoom.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -175,7 +175,7 @@ namespace RogueCastle
             }
 
             m_rewardChest = new ChestObj(null);
-            m_rewardChest.ChestType = Chest.Gold;
+            m_rewardChest.ChestType = ChestType.Gold;
             if (!IsReversed)
             {
                 m_rewardChest.Flip = SpriteEffects.FlipHorizontally;
@@ -193,7 +193,7 @@ namespace RogueCastle
 
         public override void OnEnter()
         {
-            m_rewardChest.ChestType = Chest.Gold;
+            m_rewardChest.ChestType = ChestType.Gold;
             if (m_rewardChest.PhysicsMngr == null)
             {
                 Player.PhysicsMngr.AddObject(m_rewardChest);

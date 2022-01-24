@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - BlobChallengeRoom.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -112,7 +112,7 @@ namespace RogueCastle
             Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Infinite and Beyond", _boss.Name,
                 "Intro2");
             base.OnEnter();
-            _bossChest.ForcedItemType = ItemDrop.TripStatDrop;
+            _bossChest.ForcedItemType = ItemDropType.TripStatDrop;
         }
 
         public void Intro2()

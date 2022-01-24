@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - DiaryRoomObj.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - DiaryRoomObj.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,6 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
-using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -138,7 +137,7 @@ namespace RogueCastle
                                     Program.Game.ArchipelagoManager.GetPlayerName(item.Player),
                                     item.Item
                                 };
-                                Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, networkItem);
+                                Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, networkItem);
                                 Game.ScreenManager.Player.RunGetItemAnimation();
                             }
 

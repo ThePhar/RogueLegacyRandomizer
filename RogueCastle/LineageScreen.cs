@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - LineageScreen.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - LineageScreen.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -175,9 +175,9 @@ namespace RogueCastle
             var textObj = m_descriptionPlate.GetChildAt(1) as TextObj;
             textObj.Text = lineageObj.PlayerName;
             var textObj2 = m_descriptionPlate.GetChildAt(2) as TextObj;
-            textObj2.Text = "Class - " + ((Class) lineageObj.Class).ToString(lineageObj.IsFemale);
+            textObj2.Text = "Class - " + ((ClassType) lineageObj.Class).Name(lineageObj.IsFemale);
             var keyIconTextObj = m_descriptionPlate.GetChildAt(3) as KeyIconTextObj;
-            keyIconTextObj.Text = ((Class) lineageObj.Class).Description();
+            keyIconTextObj.Text = ((ClassType) lineageObj.Class).Description();
             keyIconTextObj.WordWrap(340);
             var textObj3 = m_descriptionPlate.GetChildAt(4) as TextObj;
             textObj3.Y = keyIconTextObj.Y + keyIconTextObj.Height + 5f;
@@ -216,10 +216,10 @@ namespace RogueCastle
             }
 
             var textObj7 = m_descriptionPlate.GetChildAt(8) as TextObj;
-            textObj7.Text = "Spell - " + (Spell) lineageObj.Spell;
+            textObj7.Text = "Spell - " + (SpellType) lineageObj.Spell;
             textObj7.Y = num;
             var keyIconTextObj2 = m_descriptionPlate.GetChildAt(9) as KeyIconTextObj;
-            keyIconTextObj2.Text = ((Spell) lineageObj.Spell).Description();
+            keyIconTextObj2.Text = ((SpellType) lineageObj.Spell).Description();
             keyIconTextObj2.Y = textObj7.Y + 30f;
             keyIconTextObj2.WordWrap(340);
         }
@@ -345,7 +345,7 @@ namespace RogueCastle
             }
 
             m_rerollText.Text = "[Input:" + 9 + "] to re-roll your children once";
-            if (SkillSystem.GetSkill(Skill.RandomizeChildren).ModifierAmount > 0f &&
+            if (SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                 !Game.PlayerStats.RerolledChildren)
             {
                 m_rerollText.Visible = true;
@@ -542,7 +542,7 @@ namespace RogueCastle
                 var selectedLineageObj = m_selectedLineageObj;
                 var selectedLineageIndex = m_selectedLineageIndex;
                 if (Game.GlobalInput.JustPressed(9) &&
-                    SkillSystem.GetSkill(Skill.RandomizeChildren).ModifierAmount > 0f &&
+                    SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                     !Game.PlayerStats.RerolledChildren)
                 {
                     m_lockControls = true;
@@ -696,7 +696,7 @@ namespace RogueCastle
             Game.PlayerStats.ChildAge = m_selectedLineageObj.ChildAge;
             if (Game.PlayerStats.Class == 1 || Game.PlayerStats.Class == 9)
             {
-                Game.PlayerStats.WizardSpellList = SpellExtensions.GetNext3Spells();
+                Game.PlayerStats.WizardSpellList = SpellExtensions.ArchmageSpellList();
             }
 
             Game.PlayerStats.CurrentBranches.Clear();

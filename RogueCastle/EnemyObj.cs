@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - EnemyObj.cs
-// Last Modified 2021-12-27
+//  Rogue Legacy Randomizer - EnemyObj.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -1085,8 +1085,8 @@ namespace RogueCastle
                     (int)
                     Math.Round(
                         (m_target.BaseHealth + m_target.GetEquipmentHealth() + Game.PlayerStats.BonusHealth * 5 +
-                         SkillSystem.GetSkill(Skill.HealthUp).ModifierAmount +
-                         SkillSystem.GetSkill(Skill.HealthUpFinal).ModifierAmount) * 1f,
+                         SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
+                         SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount) * 1f,
                         MidpointRounding.AwayFromZero);
                 if (m_target.MaxHealth + num5 < num7)
                 {

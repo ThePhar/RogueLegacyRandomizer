@@ -1,13 +1,13 @@
-//
-//  RogueLegacyArchipelago - JukeboxBonusRoom.cs
-//  Last Modified 2021-12-29
-//
+// 
+//  Rogue Legacy Randomizer - JukeboxBonusRoom.cs
+//  Last Modified 2022-01-24
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,6 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
-using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -177,7 +176,7 @@ namespace RogueCastle
                             networkItem.Item
                         };
 
-                        Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, item);
+                        Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, item);
                         Game.ScreenManager.Player.RunGetItemAnimation();
                     }
                 }

@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - GetItemScreen.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -169,7 +169,7 @@ namespace RogueCastle
             _songName = SoundManager.GetCurrentMusicName();
             _lockControls = true;
             _continueText.Opacity = 0f;
-            _continueText.Text = $"[Input:{(int) Button.MenuConfirm1}]  to continue";
+            _continueText.Text = $"[Input:{(int) InputType.MenuConfirm1}]  to continue";
 
             // Item Found Text
             _itemFoundText.Position = _itemEndPos;
@@ -202,7 +202,7 @@ namespace RogueCastle
                     _itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                     _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                     _itemFoundText.Text =
-                        $"{(EquipmentBase) _itemInfo.Y} {((EquipmentCategory) _itemInfo.X).ToString2()}";
+                        $"{(EquipmentBase) _itemInfo.Y} {((EquipmentCategory) _itemInfo.X).AltName()}";
                     break;
 
                 case (int) ItemCategory.Rune:
@@ -210,7 +210,7 @@ namespace RogueCastle
                     _itemSprite.ChangeSprite("RuneIcon_Sprite");
                     _itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
                     _itemFoundText.Text =
-                        $"{(EquipmentAbility) _itemInfo.Y} Rune ({((EquipmentCategory) _itemInfo.X).ToString2()})";
+                        $"{(EquipmentAbility) _itemInfo.Y} Rune ({((EquipmentCategory) _itemInfo.X).AltName()})";
                     _itemSprite.AnimationDelay = 0.05f;
                     break;
 
@@ -241,15 +241,15 @@ namespace RogueCastle
                     break;
 
                 case (int) ItemCategory.Spell:
-                    _itemSprite.ChangeSprite(((Spell) _itemInfo.X).Icon());
+                    _itemSprite.ChangeSprite(((SpellType) _itemInfo.X).Icon());
                     _itemFoundSprite.ChangeSprite("SpellFoundText_Sprite");
-                    _itemFoundText.Text = ((Spell) _itemInfo.X).Name();
+                    _itemFoundText.Text = ((SpellType) _itemInfo.X).Name();
                     break;
 
                 case (int) ItemCategory.SpecialItem:
-                    _itemSprite.ChangeSprite(((SpecialItem) _itemInfo.X).SpriteName());
+                    _itemSprite.ChangeSprite(((SpecialItemType) _itemInfo.X).SpriteName());
                     _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    _itemFoundText.Text = ((SpecialItem) _itemInfo.X).Name();
+                    _itemFoundText.Text = ((SpecialItemType) _itemInfo.X).Name();
                     break;
 
                 case 7:
@@ -395,204 +395,204 @@ namespace RogueCastle
 
             if (item == ItemDefinitions.Blacksmith.Code)
             {
-                return SkillSystem.GetSkill(Skill.Smithy).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.Smithy).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.Architect.Code)
             {
-                return SkillSystem.GetSkill(Skill.Architect).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.Architect).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.Enchantress.Code)
             {
-                return SkillSystem.GetSkill(Skill.Enchanter).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.Enchanter).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveKnight.Code)
             {
-                if (SkillSystem.GetSkill(Skill.KnightUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.KnightUp).CurrentLevel > 0)
                 {
                     itemName = "Paladins";
-                    return SkillSystem.GetSkill(Skill.KnightUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.KnightUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Knights";
-                return SkillSystem.GetSkill(Skill.KnightUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.KnightUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveMage.Code)
             {
-                if (SkillSystem.GetSkill(Skill.MageUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.MageUp).CurrentLevel > 0)
                 {
                     itemName = "Archmages";
-                    return SkillSystem.GetSkill(Skill.MageUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.MageUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Mages";
-                return SkillSystem.GetSkill(Skill.MageUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.MageUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveBarbarian.Code)
             {
-                if (SkillSystem.GetSkill(Skill.BarbarianUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.BarbarianUp).CurrentLevel > 0)
                 {
                     itemName = "Barbarian Kings and Queens";
-                    return SkillSystem.GetSkill(Skill.BarbarianUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.BarbarianUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Barbarians";
-                return SkillSystem.GetSkill(Skill.BarbarianUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.BarbarianUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveKnave.Code)
             {
-                if (SkillSystem.GetSkill(Skill.AssassinUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.AssassinUp).CurrentLevel > 0)
                 {
                     itemName = "Assassins";
-                    return SkillSystem.GetSkill(Skill.AssassinUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.AssassinUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Knaves";
-                return SkillSystem.GetSkill(Skill.AssassinUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.AssassinUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveShinobi.Code)
             {
-                if (SkillSystem.GetSkill(Skill.NinjaUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.NinjaUp).CurrentLevel > 0)
                 {
                     itemName = "Hokages";
-                    return SkillSystem.GetSkill(Skill.NinjaUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.NinjaUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Shinobis";
-                return SkillSystem.GetSkill(Skill.NinjaUnlock).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.NinjaUnlock).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveMiner.Code)
             {
-                if (SkillSystem.GetSkill(Skill.BankerUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.BankerUp).CurrentLevel > 0)
                 {
                     itemName = "Spelunkers and Spelunkettes";
-                    return SkillSystem.GetSkill(Skill.BankerUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.BankerUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Miners";
-                return SkillSystem.GetSkill(Skill.BankerUnlock).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.BankerUnlock).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveLich.Code)
             {
-                if (SkillSystem.GetSkill(Skill.LichUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.LichUp).CurrentLevel > 0)
                 {
                     itemName = "Lich Kings and Queens";
-                    return SkillSystem.GetSkill(Skill.LichUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.LichUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Liches";
-                return SkillSystem.GetSkill(Skill.LichUnlock).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.LichUnlock).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ProgressiveSpellthief.Code)
             {
-                if (SkillSystem.GetSkill(Skill.SpellSwordUp).CurrentLevel > 0)
+                if (SkillSystem.GetSkill(SkillType.SpellSwordUp).CurrentLevel > 0)
                 {
                     itemName = "Spellswords";
-                    return SkillSystem.GetSkill(Skill.SpellSwordUp).IconName.Replace("Locked", "");
+                    return SkillSystem.GetSkill(SkillType.SpellSwordUp).IconName.Replace("Locked", "");
                 }
 
                 itemName = "Spellthieves";
-                return SkillSystem.GetSkill(Skill.SpellswordUnlock).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.SpellswordUnlock).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.Dragon.Code)
             {
-                return SkillSystem.GetSkill(Skill.SuperSecret).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.Dragon.Code)
             {
                 // TODO: Make Traitor icon
-                return SkillSystem.GetSkill(Skill.SuperSecret).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.HealthUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.HealthUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.HealthUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ManaUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.ManaUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.ManaUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.AttackUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.AttackUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.AttackUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.MagicDamageUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.MagicDamageUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.MagicDamageUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ArmorUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.ArmorUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.ArmorUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.EquipUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.EquipUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.EquipUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.CritChanceUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.CritChanceUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.CritChanceUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.CritDamageUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.CritDamageUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.CritDamageUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.DownStrikeUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.DownStrikeUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.DownStrikeUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.GoldGainUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.GoldGainUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.GoldGainUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.PotionEfficiencyUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.PotionUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.PotionUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.InvulnTimeUp.Code)
             {
-                return SkillSystem.GetSkill(Skill.InvulnerabilityTimeUp).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.ManaCostDown.Code)
             {
-                return SkillSystem.GetSkill(Skill.ManaCostDown).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.ManaCostDown).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.DeathDefiance.Code)
             {
-                return SkillSystem.GetSkill(Skill.DeathDodge).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.DeathDodge).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.Haggling.Code)
             {
-                return SkillSystem.GetSkill(Skill.PricesDown).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.PricesDown).IconName.Replace("Locked", "");
             }
 
             if (item == ItemDefinitions.RandomizeChildren.Code)
             {
-                return SkillSystem.GetSkill(Skill.RandomizeChildren).IconName.Replace("Locked", "");
+                return SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName.Replace("Locked", "");
             }
 
             return "BlueprintIcon_Sprite";
@@ -791,12 +791,12 @@ namespace RogueCastle
         {
             return type switch
             {
-                (int) ItemDrop.StatStrength  => "Strength Increased: +" + 1,
-                (int) ItemDrop.StatMagic     => "Magic Damage Increased: +" + 1,
-                (int) ItemDrop.StatDefense   => "Armor Increased: +" + 2,
-                (int) ItemDrop.StatMaxHealth => "HP Increased: +" + 5,
-                (int) ItemDrop.StatMaxMana   => "MP Increased: +" + 5,
-                (int) ItemDrop.StatWeight    => "Max Weight Load Increased: +" + 5,
+                (int) ItemDropType.StatStrength  => "Strength Increased: +" + 1,
+                (int) ItemDropType.StatMagic     => "Magic Damage Increased: +" + 1,
+                (int) ItemDropType.StatDefense   => "Armor Increased: +" + 2,
+                (int) ItemDropType.StatMaxHealth => "HP Increased: +" + 5,
+                (int) ItemDropType.StatMaxMana   => "MP Increased: +" + 5,
+                (int) ItemDropType.StatWeight    => "Max Weight Load Increased: +" + 5,
                 _                            => ""
             };
         }

@@ -1,5 +1,5 @@
 // 
-//  Rogue Legacy Randomizer - SaveType.cs
+//  Rogue Legacy Randomizer - ItemDropType.cs
 //  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
@@ -11,13 +11,28 @@
 
 namespace RogueCastle.Enums
 {
-    public enum SaveType
+    public enum ItemDropType
     {
         None,
-        PlayerData,
-        UpgradeData,
-        Map,
-        MapData,
-        Lineage
+        Coin,
+        Health,
+        Mana,
+        StatStrength,
+        StatMagic,
+        StatDefense,
+        StatMaxHealth,
+        StatMaxMana,
+        StatWeight,
+        MoneyBag,
+        Diamond,
+        Blueprint,
+        Rune,
+        TripStatDrop,
+        FountainPiece1,
+        FountainPiece2,
+        FountainPiece3,
+        FountainPiece4,
+        FountainPiece5,
+        NetworkItem,
     }
 }

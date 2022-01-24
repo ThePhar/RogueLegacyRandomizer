@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - GameEV.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -12,7 +12,7 @@
 using DS2DEngine;
 using RogueCastle.Enums;
 
-using static RogueCastle.Enums.Button;
+using static RogueCastle.Enums.InputType;
 
 namespace RogueCastle
 {
@@ -131,17 +131,17 @@ namespace RogueCastle
             "The Darkness is always at the bottom of the Castle.",
             "This death was Phar's fault anyway.",
             "If you're having trouble with a boss, try using different runes.",
-            $"Vault runes let you to jump in the air with {PlayerJump1.GetInput()}",
-            $"Sprint runes let you dash with {PlayerDashLeft.GetInput()} or {PlayerDashRight.GetInput()}",
+            $"Vault runes let you to jump in the air with {PlayerJump1.Input()}",
+            $"Sprint runes let you dash with {PlayerDashLeft.Input()} or {PlayerDashRight.Input()}",
             "Each class has pros and cons. Make sure to change your play-style accordingly.",
             "Exploring and finding chests is the best way to earn gold.",
             "Harder areas offer greater rewards.",
-            $"Sky runes let you fly by pressing {PlayerJump1.GetInput()} while in the air.",
+            $"Sky runes let you fly by pressing {PlayerJump1.Input()} while in the air.",
             "Vampirism and Siphon runes are very powerful when stacked.",
             "Mastering mobility runes makes you awesome.",
             "Make sure to expand your manor. You never know what new unlocks can be revealed.",
             "All classes can be upgraded with unique class abilities.",
-            $"Unlocked class abilities can be activated with {PlayerBlock.GetInput()}",
+            $"Unlocked class abilities can be activated with {PlayerBlock.Input()}",
             "Upgrade your classes early to obtain powerful class abilities.",
             "If you are having trouble with a room, see if you can bypass it instead.",
             "Buying equipment is the fastest way to raise your stats.",
@@ -156,13 +156,13 @@ namespace RogueCastle
             "Better to use mana to kill enemies than to take unnecessary damage.",
             "Learning enemy 'tells' is integral to surviving the castle.",
             "Spike traps check for a pulse to tell the dead from the living.",
-            $"Press {MenuMap.GetInput()} to open the map.",
+            $"Press {MenuMap.Input()} to open the map.",
             "If you fail a Fairy chest room, the Architect can give you a second chance.",
             "The Architect has a hefty fee for those who use his service.",
             "Bosses drop large amounts of gold on their death.",
             "Bury me with my money.",
             "If you are having trouble, try equipping Grace runes.",
-            $"In options you can enable Quick Drop to down-strike and drop with {PlayerDown1.GetInput()}",
+            $"In options you can enable Quick Drop to down-strike and drop with {PlayerDown1.Input()}",
             "The architect is very useful for practicing against bosses.",
             "The third row of equipment usually has major tradeoffs. Be careful.",
             "Certain runes work better with certain bosses.",

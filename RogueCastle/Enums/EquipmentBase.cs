@@ -1,3 +1,14 @@
+// 
+//  Rogue Legacy Randomizer - EquipmentBase.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
+
 using System;
 
 namespace RogueCastle.Enums
@@ -23,7 +34,7 @@ namespace RogueCastle.Enums
 
     public static class EquipmentBaseExtensions
     {
-        public static string ToString(this EquipmentBase equipment)
+        public static string Name(this EquipmentBase equipment)
         {
             return equipment switch
             {
@@ -42,7 +53,7 @@ namespace RogueCastle.Enums
                 EquipmentBase.Retribution => "Retribution",
                 EquipmentBase.Holy        => "Holy",
                 EquipmentBase.Dark        => "Dark",
-                _                         => throw new ArgumentException($"Unsupported EquipmentBase Type in ToString(): {nameof(equipment)}")
+                _                         => throw new ArgumentException($"Unsupported EquipmentBase Type in Name(): {nameof(equipment)}")
             };
         }
     }

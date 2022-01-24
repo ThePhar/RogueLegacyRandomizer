@@ -1,17 +1,17 @@
-//
-//  Rogue Legacy Randomizer - Skill.cs
-//  Last Modified 2022-01-23
-//
+// 
+//  Rogue Legacy Randomizer - SkillType.cs
+//  Last Modified 2022-01-24
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 namespace RogueCastle.Enums
 {
-    public enum Skill
+    public enum SkillType
     {
         Null,
         Filler,
@@ -135,33 +135,34 @@ namespace RogueCastle.Enums
 
     public static class SkillExtensions
     {
-        public static float GetSkillStat(this Skill skill)
+        public static float SkillStat(this SkillType skill)
         {
+            // TODO: Remove magic values.
             return skill switch
             {
-                Skill.HealthUp              => Game.ScreenManager.Player.MaxHealth,
-                Skill.HealthUpFinal         => Game.ScreenManager.Player.MaxHealth,
-                Skill.InvulnerabilityTimeUp => Game.ScreenManager.Player.InvincibilityTime,
-                Skill.DeathDodge            => SkillSystem.GetSkill(Skill.DeathDodge).ModifierAmount * 100f,
-                Skill.AttackUp              => Game.ScreenManager.Player.Damage,
-                Skill.DamageUpFinal         => Game.ScreenManager.Player.Damage,
-                Skill.DownStrikeUp          => SkillSystem.GetSkill(Skill.DownStrikeUp).ModifierAmount * 100f,
-                Skill.CritChanceUp          => Game.ScreenManager.Player.TotalCritChance,
-                Skill.CritDamageUp          => Game.ScreenManager.Player.TotalCriticalDamage * 100f,
-                Skill.MagicDamageUp         => Game.ScreenManager.Player.TotalMagicDamage,
-                Skill.ManaUp                => Game.ScreenManager.Player.MaxMana,
-                Skill.ManaUpFinal           => Game.ScreenManager.Player.MaxMana,
-                Skill.ManaCostDown          => SkillSystem.GetSkill(Skill.ManaCostDown).ModifierAmount * 100f,
-                Skill.EquipUp               => Game.ScreenManager.Player.MaxWeight,
-                Skill.EquipUpFinal          => Game.ScreenManager.Player.MaxWeight,
-                Skill.ArmorUp               => Game.ScreenManager.Player.TotalArmor,
-                Skill.GoldGainUp            => Game.ScreenManager.Player.TotalGoldBonus,
-                Skill.PricesDown            => SkillSystem.GetSkill(Skill.PricesDown).ModifierAmount * 100f,
-                Skill.PotionUp              => (0.1f + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount) * 100f,
-                Skill.AttackSpeedUp         => SkillSystem.GetSkill(Skill.AttackSpeedUp).ModifierAmount * 10f,
-                Skill.XpGainUp              => Game.ScreenManager.Player.TotalXPBonus,
-                Skill.ManaRegenUp           => Game.ScreenManager.Player.ManaGain,
-                _                           => -1f
+                SkillType.HealthUp              => Game.ScreenManager.Player.MaxHealth,
+                SkillType.HealthUpFinal         => Game.ScreenManager.Player.MaxHealth,
+                SkillType.InvulnerabilityTimeUp => Game.ScreenManager.Player.InvincibilityTime,
+                SkillType.DeathDodge            => SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount * 100f,
+                SkillType.AttackUp              => Game.ScreenManager.Player.Damage,
+                SkillType.DamageUpFinal         => Game.ScreenManager.Player.Damage,
+                SkillType.DownStrikeUp          => SkillSystem.GetSkill(SkillType.DownStrikeUp).ModifierAmount * 100f,
+                SkillType.CritChanceUp          => Game.ScreenManager.Player.TotalCritChance,
+                SkillType.CritDamageUp          => Game.ScreenManager.Player.TotalCriticalDamage * 100f,
+                SkillType.MagicDamageUp         => Game.ScreenManager.Player.TotalMagicDamage,
+                SkillType.ManaUp                => Game.ScreenManager.Player.MaxMana,
+                SkillType.ManaUpFinal           => Game.ScreenManager.Player.MaxMana,
+                SkillType.ManaCostDown          => SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount * 100f,
+                SkillType.EquipUp               => Game.ScreenManager.Player.MaxWeight,
+                SkillType.EquipUpFinal          => Game.ScreenManager.Player.MaxWeight,
+                SkillType.ArmorUp               => Game.ScreenManager.Player.TotalArmor,
+                SkillType.GoldGainUp            => Game.ScreenManager.Player.TotalGoldBonus,
+                SkillType.PricesDown            => SkillSystem.GetSkill(SkillType.PricesDown).ModifierAmount * 100f,
+                SkillType.PotionUp              => (0.1f + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount) * 100f,
+                SkillType.AttackSpeedUp         => SkillSystem.GetSkill(SkillType.AttackSpeedUp).ModifierAmount * 10f,
+                SkillType.XpGainUp              => Game.ScreenManager.Player.TotalXPBonus,
+                SkillType.ManaRegenUp           => Game.ScreenManager.Player.ManaGain,
+                _                               => -1f
             };
         }
     }

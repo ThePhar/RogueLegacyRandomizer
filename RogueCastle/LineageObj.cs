@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - LineageObj.cs
-// Last Modified 2021-12-24
+//  Rogue Legacy Randomizer - LineageObj.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -124,10 +124,10 @@ namespace RogueCastle
                     CreateMaleName(screen);
                 }
 
-                var t = TraitExtensions.CreateRandomTraits();
+                var t = TraitHelper.CreateRandomTraits();
                 Traits = new Vector2((float) t[0], (float) t[1]);
-                Class = (byte) ClassExtensions.GetRandomClass();
-                m_classTextObj.Text = "the " + ((Class) Class).ToString(IsFemale);
+                Class = (byte) ClassExtensions.RandomClass();
+                m_classTextObj.Text = "the " + ((ClassType) Class).Name(IsFemale);
                 while (Class == 7 || Class == 15)
                 {
                     if (Traits.X != 12f && Traits.Y != 12f)
@@ -135,16 +135,16 @@ namespace RogueCastle
                         break;
                     }
 
-                    var t2 = TraitExtensions.CreateRandomTraits();
+                    var t2 = TraitHelper.CreateRandomTraits();
                     Traits = new Vector2((float) t2[0], (float) t2[1]);
                 }
 
                 while ((Class == 1 || Class == 9 || Class == 16) && (Traits.X == 31f || Traits.Y == 31f))
                 {
-                    var t2 = TraitExtensions.CreateRandomTraits();
+                    var t2 = TraitHelper.CreateRandomTraits();
                     Traits = new Vector2((float) t2[0], (float) t2[1]);
                 }
-                var spellList = ((Class) Class).GetSpellList();
+                var spellList = ((ClassType) Class).SpellList();
                 do
                 {
                     Spell = (byte) spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
@@ -361,8 +361,8 @@ namespace RogueCastle
                 FlipPortrait = true;
             }
 
-            m_classTextObj.Text = "the " + ((Class) Class).ToString(IsFemale);
-            m_spellIcon.ChangeSprite(((Spell) Spell).Icon());
+            m_classTextObj.Text = "the " + ((ClassType) Class).Name(IsFemale);
+            m_spellIcon.ChangeSprite(((SpellType) Spell).Icon());
             if (Class == 0 || Class == 8)
             {
                 m_playerSprite.GetChildAt(15).Visible = true;
@@ -649,7 +649,7 @@ namespace RogueCastle
                 text += "Divine ";
             }
 
-            text += ((Class) Class).ToString(IsFemale);
+            text += ((ClassType) Class).Name(IsFemale);
             m_classTextObj.Text = text;
         }
 

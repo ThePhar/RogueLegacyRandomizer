@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - ProfileCardScreen.cs
-// Last Modified 2021-12-24
+//  Rogue Legacy Randomizer - ProfileCardScreen.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -85,7 +85,7 @@ namespace RogueCastle
             m_tombStoneSprite.ForceDraw = true;
             m_tombStoneSprite.Scale = new Vector2(3f, 3f);
             m_tombStoneSprite.OutlineWidth = 2;
-            m_spellIcon = new SpriteObj(((Spell) 12).Icon());
+            m_spellIcon = new SpriteObj(((SpellType) 12).Icon());
             m_spellIcon.Position = new Vector2(350f, 295f);
             m_spellIcon.OutlineWidth = 2;
             m_spellIcon.ForceDraw = true;
@@ -267,7 +267,7 @@ namespace RogueCastle
         {
             SoundManager.PlaySound("StatCard_In");
             LoadCardColour();
-            m_spellIcon.ChangeSprite(((Spell) Game.PlayerStats.Spell).Icon());
+            m_spellIcon.ChangeSprite(((SpellType) Game.PlayerStats.Spell).Icon());
             string[] array =
             {
                 "CardCastleBG_Sprite",
@@ -617,9 +617,9 @@ namespace RogueCastle
             m_playerName.Text = Game.PlayerStats.PlayerName;
             m_playerStats.Text = (int) (player.Damage / 20f) + "/" + (int) (player.MaxHealth / 50f);
             m_levelClass.Text = string.Concat("Lv. ", Game.PlayerStats.CurrentLevel, " - ",
-                ((Class) Game.PlayerStats.Class).ToString(Game.PlayerStats.IsFemale));
+                ((ClassType) Game.PlayerStats.Class).Name(Game.PlayerStats.IsFemale));
             m_money.Text = Game.PlayerStats.Gold.ToString();
-            m_classDescription.Text = ((Class) Game.PlayerStats.Class).ProfileCardDescription();
+            m_classDescription.Text = ((ClassType) Game.PlayerStats.Class).ProfileCardDescription();
         }
 
         private void LoadBackCardStats(PlayerObj player)
@@ -661,7 +661,7 @@ namespace RogueCastle
                 if (getEquippedArray[j] != -1)
                 {
                     m_equipmentList[j].Text = ((EquipmentBase) getEquippedArray[j]) + " " +
-                                              ((EquipmentCategory) j).ToString2();
+                                              ((EquipmentCategory) j).AltName();
                     m_equipmentList[j].Visible = true;
                     num2 += 20;
                 }

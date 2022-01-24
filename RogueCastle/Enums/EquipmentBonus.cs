@@ -1,3 +1,14 @@
+// 
+//  Rogue Legacy Randomizer - EquipmentBonus.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
+
 using System;
 
 namespace RogueCastle.Enums
@@ -24,7 +35,7 @@ namespace RogueCastle.Enums
 
     public static class EquipmentBonusExtensions
     {
-        public static string ToString(this EquipmentBonus bonus)
+        public static string Name(this EquipmentBonus bonus)
         {
             return bonus switch
             {
@@ -43,7 +54,7 @@ namespace RogueCastle.Enums
                 EquipmentBonus.Float             => "Float",
                 EquipmentBonus.AttackProjectiles => "Can Attack Projectiles",
                 EquipmentBonus.Flight            => "Flight",
-                _                                => throw new ArgumentException($"Unsupported EquipmentBonus Type in ToString(): {nameof(bonus)}")
+                _                                => throw new ArgumentException($"Unsupported EquipmentBonus Type in Name(): {nameof(bonus)}")
             };
         }
     }

@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - SpellSwapRoomObj.cs
-// Last Modified 2021-12-27
+//  Rogue Legacy Randomizer - SpellSwapRoomObj.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -56,7 +56,7 @@ namespace RogueCastle
         {
             if (Game.PlayerStats.Class != 16 && Game.PlayerStats.Class != 17)
             {
-                var spellList = ((Class) Game.PlayerStats.Class).GetSpellList();
+                var spellList = ((ClassType) Game.PlayerStats.Class).SpellList();
                 do
                 {
                     Spell = (byte) spellList[CDGMath.RandomInt(0, spellList.Length - 1)];
@@ -77,7 +77,7 @@ namespace RogueCastle
                 Spell = 14;
             }
 
-            m_icon.ChangeSprite(((Spell) Spell).Icon());
+            m_icon.ChangeSprite(((SpellType) Spell).Icon());
         }
 
         public override void OnEnter()
@@ -106,7 +106,7 @@ namespace RogueCastle
             else if (ID != -1)
             {
                 Spell = (byte) ID;
-                m_icon.ChangeSprite(((Spell) Spell).Icon());
+                m_icon.ChangeSprite(((SpellType) Spell).Icon());
                 if (RoomCompleted)
                 {
                     m_icon.Visible = false;
@@ -151,7 +151,7 @@ namespace RogueCastle
             Game.PlayerStats.Spell = Spell;
             if (Game.PlayerStats.Class == 9)
             {
-                Game.PlayerStats.WizardSpellList = SpellExtensions.GetNext3Spells();
+                Game.PlayerStats.WizardSpellList = SpellExtensions.ArchmageSpellList();
             }
 
             Spell = 0;

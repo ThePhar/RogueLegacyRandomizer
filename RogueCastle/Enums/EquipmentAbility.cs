@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - EquipmentAbility.cs
-//  Last Modified 2022-01-23
-//
+//  Last Modified 2022-01-24
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 
@@ -26,7 +26,7 @@ namespace RogueCastle.Enums
         Curse,
         Grace,
         Balance,
-        ArchitectFee = 20,
+        ArchitectFee         = 20,
         NewGamePlusGoldBonus = 21
     }
 
@@ -49,7 +49,7 @@ namespace RogueCastle.Enums
                 EquipmentAbility.Balance              => "Balance",
                 EquipmentAbility.ArchitectFee         => "Architect's Fee",
                 EquipmentAbility.NewGamePlusGoldBonus => "NG+ Bonus",
-                _                                     => throw new ArgumentException($"Unsupported EquipmentAbility Type in ToString(): {nameof(ability)}")
+                _                                     => throw new ArgumentException($"Unsupported EquipmentAbility Type in Name(): {nameof(ability)}")
             };
         }
 
@@ -97,16 +97,16 @@ namespace RogueCastle.Enums
         {
             return ability switch
             {
-                EquipmentAbility.Vault       => $"Press [Input:{(int) Button.PlayerJump1}] while in air.",
-                EquipmentAbility.Sprint      => $"[Input:{(int) Button.PlayerDashLeft}] or [Input:{(int) Button.PlayerDashRight}] to dash.",
+                EquipmentAbility.Vault       => $"Press {InputType.PlayerJump1.Input()} while in air.",
+                EquipmentAbility.Sprint      => $"{InputType.PlayerDashLeft.Input()} or {InputType.PlayerDashRight.Input()} to dash.",
                 EquipmentAbility.Vampire     => "Kill enemies to regain health.",
-                EquipmentAbility.Sky         => $"Hold [Input:{(int) Button.PlayerJump1}] while in air.",
+                EquipmentAbility.Sky         => $"Hold {InputType.PlayerJump1.Input()} while in air.",
                 EquipmentAbility.Siphon      => "Kill enemies to regain mana.",
                 EquipmentAbility.Retaliation => "Damage returned to enemies.",
                 EquipmentAbility.Bounty      => "Coins give more gold.",
                 EquipmentAbility.Haste       => "Move faster.",
                 EquipmentAbility.Curse       => "Enemies are harder.",
-                EquipmentAbility.Grace       => "Enemies scale slower.",
+                EquipmentAbility.Grace       => "Enemies are easier.",
                 EquipmentAbility.Balance     => "Kill enemies to regain health and mana.",
                 _                            => throw new ArgumentException($"Unsupported EquipmentAbility Type in Instructions(): {nameof(ability)}")
             };

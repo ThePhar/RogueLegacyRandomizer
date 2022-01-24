@@ -1,5 +1,5 @@
 // 
-//  Rogue Legacy Randomizer - SaveType.cs
+//  Rogue Legacy Randomizer - RoomType.cs
 //  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
@@ -11,13 +11,18 @@
 
 namespace RogueCastle.Enums
 {
-    public enum SaveType
+    public enum RoomType
     {
-        None,
-        PlayerData,
-        UpgradeData,
-        Map,
-        MapData,
-        Lineage
+        Normal,
+        Boss,
+        Secret,
+        Bonus,
+        Linker,
+        Starting,
+        BossEntrance,
+        Test,
+        CastleEntrance,
+        Tutorial,
+        Compass
     }
 }

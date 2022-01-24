@@ -1,5 +1,5 @@
 // 
-//  Rogue Legacy Randomizer - SaveType.cs
+//  Rogue Legacy Randomizer - ChestConditionType.cs
 //  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
@@ -11,13 +11,18 @@
 
 namespace RogueCastle.Enums
 {
-    public enum SaveType
+    public enum ChestConditionType
     {
         None,
-        PlayerData,
-        UpgradeData,
-        Map,
-        MapData,
-        Lineage
+        KillAllEnemies,
+        HealthBelow15,
+        DoNotLook,
+        NoJumping,
+        NoSound,
+        NoFloor,
+        NoAttackingEnemies,
+        ReachIn5Seconds,
+        TakeNoDamage,
+        InvisibleChest
     }
 }

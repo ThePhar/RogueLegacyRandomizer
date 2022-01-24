@@ -1,3 +1,14 @@
+// 
+//  Rogue Legacy Randomizer - TitleScreen.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
+
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -9,44 +20,42 @@ using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
-using Screen = RogueCastle.Enums.Screen;
-
 namespace RogueCastle.Screens
 {
-    public class TitleScreen : DS2DEngine.Screen
+    public class TitleScreen : Screen
     {
-        private SpriteObj _bg;
-        private SpriteObj _castle;
-        private TextObj _copyrightText;
-        private SpriteObj _creditsIcon;
-        private KeyIconTextObj _creditsKey;
-        private SpriteObj _dlcIcon;
-        private CrepuscularRays _godRay;
-        private RenderTarget2D _godRayTexture;
-        private float _hardCoreModeOpacity;
-        private SpriteObj _largeCloud1;
-        private SpriteObj _largeCloud2;
-        private SpriteObj _largeCloud3;
-        private SpriteObj _largeCloud4;
-        private SpriteObj _logo;
-        private bool _optionsEntered;
-        private SpriteObj _optionsIcon;
-        private KeyIconTextObj _optionsKey;
+        private SpriteObj             _bg;
+        private SpriteObj             _castle;
+        private TextObj               _copyrightText;
+        private SpriteObj             _creditsIcon;
+        private KeyIconTextObj        _creditsKey;
+        private SpriteObj             _dlcIcon;
+        private CrepuscularRays       _godRay;
+        private RenderTarget2D        _godRayTexture;
+        private float                 _hardCoreModeOpacity;
+        private SpriteObj             _largeCloud1;
+        private SpriteObj             _largeCloud2;
+        private SpriteObj             _largeCloud3;
+        private SpriteObj             _largeCloud4;
+        private SpriteObj             _logo;
+        private bool                  _optionsEntered;
+        private SpriteObj             _optionsIcon;
+        private KeyIconTextObj        _optionsKey;
         private PostProcessingManager _ppm;
-        private KeyIconTextObj _pressStartText;
-        private TextObj _pressStartText2;
-        private SpriteObj _profileCard;
-        private KeyIconTextObj _profileCardKey;
-        private float _randomSeagullSfx;
-        private Cue _seagullCue;
-        private SpriteObj _smallCloud1;
-        private SpriteObj _smallCloud2;
-        private SpriteObj _smallCloud3;
-        private SpriteObj _smallCloud4;
-        private SpriteObj _smallCloud5;
-        private bool _startPressed;
-        private TextObj _titleText;
-        private TextObj _versionNumber;
+        private KeyIconTextObj        _pressStartText;
+        private TextObj               _pressStartText2;
+        private SpriteObj             _profileCard;
+        private KeyIconTextObj        _profileCardKey;
+        private float                 _randomSeagullSfx;
+        private Cue                   _seagullCue;
+        private SpriteObj             _smallCloud1;
+        private SpriteObj             _smallCloud2;
+        private SpriteObj             _smallCloud3;
+        private SpriteObj             _smallCloud4;
+        private SpriteObj             _smallCloud5;
+        private bool                  _startPressed;
+        private TextObj               _titleText;
+        private TextObj               _versionNumber;
 
         public override void LoadContent()
         {
@@ -189,7 +198,7 @@ namespace RogueCastle.Screens
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + (int) Button.MenuProfileCard + "]"
+                Text = InputType.MenuProfileCard.Input()
             };
             _profileCardKey.Position = new Vector2(_profileCard.X, _profileCard.Bounds.Top - _profileCardKey.Height - 10);
 
@@ -198,7 +207,7 @@ namespace RogueCastle.Screens
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + (int) Button.MenuOptions + "]",
+                Text = InputType.MenuOptions.Input(),
                 ForceDraw = true
             };
             _optionsKey.Position = new Vector2(_optionsIcon.X, _optionsIcon.Bounds.Top - _optionsKey.Height - 10);
@@ -208,7 +217,7 @@ namespace RogueCastle.Screens
             {
                 Align = Types.TextAlign.Centre,
                 FontSize = 12f,
-                Text = "[Input:" + (int) Button.MenuCredits + "]",
+                Text = InputType.MenuCredits.Input(),
                 ForceDraw = true
             };
             _creditsKey.Position = new Vector2(_creditsIcon.X, _creditsIcon.Bounds.Top - _creditsKey.Height - 10);
@@ -244,7 +253,7 @@ namespace RogueCastle.Screens
             Tween.To(_dlcIcon, 2f, Linear.EaseNone, "Opacity", "1");
             Tween.By(_dlcIcon, 3f, Quad.EaseInOut, "Y", "50");
             Camera.Position = new Vector2(660f, 360f);
-            _pressStartText.Text = "[Input:" + (int) Button.MenuConfirm1 + "]";
+            _pressStartText.Text = "[Input:" + (int) InputType.MenuConfirm1 + "]";
 
             // Load the default profile.
             Program.Game.ArchipelagoManager.Disconnect();
@@ -323,8 +332,8 @@ namespace RogueCastle.Screens
             if (_optionsEntered && Game.ScreenManager.CurrentScreen == this)
             {
                 _optionsEntered = false;
-                _optionsKey.Text = "[Input:" + (int) Button.MenuOptions + "]";
-                _creditsKey.Text = "[Input:" + (int) Button.MenuCredits + "]";
+                _optionsKey.Text = InputType.MenuOptions.Input();
+                _creditsKey.Text = InputType.MenuCredits.Input();
             }
 
             base.Update(gameTime);
@@ -332,22 +341,22 @@ namespace RogueCastle.Screens
 
         public override void HandleInput()
         {
-            if (ButtonHelper.PressedConfirm)
+            if (InputTypeHelper.PressedConfirm)
             {
                 var list = new List<object> { this };
-                Game.ScreenManager.DisplayScreen((int)Screen.Archipelago, false, list);
+                Game.ScreenManager.DisplayScreen((int) ScreenType.Archipelago, false, list);
             }
 
-            if (Game.GlobalInput.JustPressed((int) Button.MenuOptions))
+            if (Game.GlobalInput.JustPressed((int) InputType.MenuOptions))
             {
                 _optionsEntered = true;
                 var list = new List<object> { true };
-                Game.ScreenManager.DisplayScreen((int)Screen.Options, false, list);
+                Game.ScreenManager.DisplayScreen((int) ScreenType.Options, false, list);
             }
 
-            if (Game.GlobalInput.JustPressed((int) Button.MenuCredits))
+            if (Game.GlobalInput.JustPressed((int) InputType.MenuCredits))
             {
-                Game.ScreenManager.DisplayScreen((int)Screen.Credits, false);
+                Game.ScreenManager.DisplayScreen((int) ScreenType.Credits, false);
             }
 
             base.HandleInput();

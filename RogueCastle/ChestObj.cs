@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - ChestObj.cs
-//  Last Modified 2022-01-23
-//
+//  Last Modified 2022-01-24
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,6 @@ using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
-using Screen = RogueCastle.Enums.Screen;
-
 namespace RogueCastle
 {
     public class ChestObj : PhysicsObj
@@ -29,7 +27,7 @@ namespace RogueCastle
         private readonly float     _goldIncreasePerLevel = 1.425f;
         private readonly Vector2   _silverChestGoldRange = new(20f, 28f);
         private          SpriteObj _arrowIcon;
-        private          Chest     _chestType;
+        private          ChestType     _chestTypeType;
         public           int       Level;
 
         public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
@@ -44,33 +42,33 @@ namespace RogueCastle
 
         public bool     IsEmpty        { get; set; }
         public bool     IsLocked       { get; set; }
-        public ItemDrop ForcedItemType { get; set; }
+        public ItemDropType ForcedItemType { get; set; }
         public float    ForcedAmount   { get; set; }
         public bool     IsProcedural   { get; set; }
 
-        public Chest ChestType
+        public ChestType ChestType
         {
-            get => _chestType;
+            get => _chestTypeType;
             set
             {
-                _chestType = value;
+                _chestTypeType = value;
                 var isOpen = IsOpen;
-                switch (_chestType)
+                switch (_chestTypeType)
                 {
-                    case Chest.Boss:
-                        ForcedItemType = ItemDrop.TripStatDrop;
+                    case ChestType.Boss:
+                        ForcedItemType = ItemDropType.TripStatDrop;
                         ChangeSprite("BossChest_Sprite");
                         break;
 
-                    case Chest.Fairy:
+                    case ChestType.Fairy:
                         ChangeSprite("Chest4_Sprite");
                         break;
 
-                    case Chest.Gold:
+                    case ChestType.Gold:
                         ChangeSprite("Chest3_Sprite");
                         break;
 
-                    case Chest.Silver:
+                    case ChestType.Silver:
                         ChangeSprite("Chest2_Sprite");
                         break;
 
@@ -109,8 +107,8 @@ namespace RogueCastle
             var dropType = 0;
             var chances = ChestType switch
             {
-                Chest.Brown  => GameEV.BRONZECHEST_ITEMDROP_CHANCE,
-                Chest.Silver => GameEV.SILVERCHEST_ITEMDROP_CHANCE,
+                ChestType.Brown  => GameEV.BRONZECHEST_ITEMDROP_CHANCE,
+                ChestType.Silver => GameEV.SILVERCHEST_ITEMDROP_CHANCE,
                 _            => GameEV.GOLDCHEST_ITEMDROP_CHANCE
             };
 
@@ -130,7 +128,7 @@ namespace RogueCastle
             }
 
             // Extra boss stuff!
-            if (ChestType == Chest.Boss)
+            if (ChestType == ChestType.Boss)
             {
                 GiveStatDrop(itemDropManager, player, 3, 0);
                 return;
@@ -144,8 +142,8 @@ namespace RogueCastle
         {
             var num = ChestType switch
             {
-                Chest.Brown => CDGMath.RandomInt((int) _bronzeChestGoldRange.X, (int) _bronzeChestGoldRange.Y) * 10,
-                Chest.Silver or Chest.Fairy => CDGMath.RandomInt((int) _silverChestGoldRange.X,
+                ChestType.Brown => CDGMath.RandomInt((int) _bronzeChestGoldRange.X, (int) _bronzeChestGoldRange.Y) * 10,
+                ChestType.Silver or ChestType.Fairy => CDGMath.RandomInt((int) _silverChestGoldRange.X,
                     (int) _silverChestGoldRange.Y) * 10,
                 _ => CDGMath.RandomInt((int) _goldChestGoldRange.X, (int) _goldChestGoldRange.Y) * 10
             };
@@ -308,7 +306,7 @@ namespace RogueCastle
         {
             var room = Game.ScreenManager.GetLevelScreen().CurrentRoom;
 
-            if (ForcedItemType == ItemDrop.Coin)
+            if (ForcedItemType == ItemDropType.Coin)
             {
                 GiveGold(manager);
                 return;
@@ -400,7 +398,7 @@ namespace RogueCastle
                 if (Program.Game.ArchipelagoManager.LocationCache[code].Player !=
                     Program.Game.ArchipelagoManager.Data.Slot)
                 {
-                    Game.ScreenManager.DisplayScreen((int) Screen.GetItem, true, networkItem);
+                    Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, networkItem);
                     player.RunGetItemAnimation();
                 }
 

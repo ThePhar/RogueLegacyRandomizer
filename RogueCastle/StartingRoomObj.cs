@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - StartingRoomObj.cs
-// Last Modified 2021-12-28
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - StartingRoomObj.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -207,17 +207,17 @@ namespace RogueCastle
 
         private bool SmithyAvailable
         {
-            get { return SkillSystem.GetSkill(Skill.Smithy).ModifierAmount > 0f; }
+            get { return SkillSystem.GetSkill(SkillType.Smithy).ModifierAmount > 0f; }
         }
 
         private bool EnchantressAvailable
         {
-            get { return SkillSystem.GetSkill(Skill.Enchanter).ModifierAmount > 0f; }
+            get { return SkillSystem.GetSkill(SkillType.Enchanter).ModifierAmount > 0f; }
         }
 
         private bool ArchitectAvailable
         {
-            get { return SkillSystem.GetSkill(Skill.Architect).ModifierAmount > 0f; }
+            get { return SkillSystem.GetSkill(SkillType.Architect).ModifierAmount > 0f; }
         }
 
         private bool TollCollectorAvailable
@@ -713,7 +713,7 @@ namespace RogueCastle
                             new[] { "Charon" },
                             new[] { "I'm in a good mood today, so I'll let you in for free this time. Besides, you look like you could use the extra money anyway." });
                         rCScreenManager2.DialogueScreen.SetDialogue("Disabled Toll Collector");
-                        rCScreenManager2.DisplayScreen((int)Enums.Screen.Dialogue, true);
+                        rCScreenManager2.DisplayScreen((int)Enums.ScreenType.Dialogue, true);
                         return;
                     }
 
@@ -723,7 +723,7 @@ namespace RogueCastle
                     }
                     else
                     {
-                        var num = SkillSystem.GetSkill(Skill.PricesDown).ModifierAmount * 100f;
+                        var num = SkillSystem.GetSkill(SkillType.PricesDown).ModifierAmount * 100f;
                         rCScreenManager2.DialogueScreen.SetDialogue("Meet Toll Collector Skip" +
                                                                     (int) Math.Round(num,
                                                                         MidpointRounding.AwayFromZero));
@@ -834,7 +834,7 @@ namespace RogueCastle
 
             if (chargeFee)
             {
-                var num = Game.PlayerStats.Gold * (1f - SkillSystem.GetSkill(Skill.PricesDown).ModifierAmount);
+                var num = Game.PlayerStats.Gold * (1f - SkillSystem.GetSkill(SkillType.PricesDown).ModifierAmount);
                 Game.PlayerStats.Gold -= (int) num;
                 if (num > 0f)
                 {

@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - HazardObj.cs
-// Last Modified 2021-12-24
+//  Rogue Legacy Randomizer - HazardObj.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -64,8 +64,8 @@ namespace RogueCastle
                     (int)
                     Math.Round(
                         player.BaseHealth + player.GetEquipmentHealth() + Game.PlayerStats.BonusHealth * 5 +
-                        SkillSystem.GetSkill(Skill.HealthUp).ModifierAmount +
-                        SkillSystem.GetSkill(Skill.HealthUpFinal).ModifierAmount,
+                        SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
+                        SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount,
                         MidpointRounding.AwayFromZero);
                 var num2 = (int) (num * 0.2f);
                 if (num2 < 1)

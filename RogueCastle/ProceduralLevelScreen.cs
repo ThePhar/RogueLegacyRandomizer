@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ProceduralLevelScreen.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -712,7 +712,7 @@ namespace RogueCastle
             foreach (var current2 in current.GameObjList)
             {
                 var chestObj = current2 as ChestObj;
-                if (chestObj != null && chestObj.ChestType != Chest.Fairy)
+                if (chestObj != null && chestObj.ChestType != ChestType.Fairy)
                 {
                     chestObj.Level =
                         (int) (current.Level / (4f + Game.PlayerStats.GetNumberOfEquippedRunes(9) * 0.75f));
@@ -733,17 +733,17 @@ namespace RogueCastle
                             {
                                 if (i == 0)
                                 {
-                                    chestObj.ChestType = Chest.Brown;
+                                    chestObj.ChestType = ChestType.Brown;
                                     break;
                                 }
 
                                 if (i == 1)
                                 {
-                                    chestObj.ChestType = Chest.Silver;
+                                    chestObj.ChestType = ChestType.Silver;
                                     break;
                                 }
 
-                                chestObj.ChestType = Chest.Gold;
+                                chestObj.ChestType = ChestType.Gold;
                                 break;
                             }
 
@@ -753,7 +753,7 @@ namespace RogueCastle
 
                     ChestList.Add(chestObj);
                 }
-                else if (chestObj != null && chestObj.ChestType == Chest.Fairy)
+                else if (chestObj != null && chestObj.ChestType == ChestType.Fairy)
                 {
                     var fairyChestObj = chestObj as FairyChestObj;
                     if (fairyChestObj != null)
@@ -1781,7 +1781,7 @@ namespace RogueCastle
                         num++;
                     }
 
-                    var doorObj = new DoorObj(roomObj, 120, 180, Door.Open);
+                    var doorObj = new DoorObj(roomObj, 120, 180, DoorState.Open);
                     doorObj.Position = enemyObj.Position;
                     doorObj.IsBossDoor = true;
                     doorObj.DoorPosition = "None";

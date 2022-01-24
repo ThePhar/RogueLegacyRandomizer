@@ -1,3 +1,14 @@
+// 
+//  Rogue Legacy Randomizer - Trait.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +54,7 @@ namespace RogueCastle.Enums
         Clumsy,
         EHS,
         Glaucoma,
-        Adopted = 100  // Hilarious that this is a trait in the game.
+        Adopted = 100 // Hilarious that this is a trait in the game.
     }
 
     public static class TraitExtensions
@@ -90,7 +101,8 @@ namespace RogueCastle.Enums
                 _                    => TraitRarity.NoRarity
             };
         }
-        public static string ToString(this Trait trait)
+
+        public static string Name(this Trait trait)
         {
             return trait switch
             {
@@ -129,9 +141,10 @@ namespace RogueCastle.Enums
                 Trait.Clumsy         => "Clumsy",
                 Trait.EHS            => "EHS",
                 Trait.Glaucoma       => "Glaucoma",
-                _                    => throw new ArgumentException($"Unsupported Trait Type in ToString(): {nameof(trait)}")
+                _                    => throw new ArgumentException($"Unsupported Trait Type in Name(): {nameof(trait)}")
             };
         }
+
         public static string Description(this Trait trait, bool isFemale = false)
         {
             return trait switch
@@ -174,6 +187,7 @@ namespace RogueCastle.Enums
                 _                    => throw new ArgumentException($"Unsupported Trait Type in Description(): {nameof(trait)}")
             };
         }
+
         public static string ProfileCardDescription(this Trait trait, bool isFemale = false)
         {
             return trait switch
@@ -216,6 +230,7 @@ namespace RogueCastle.Enums
                 _                    => throw new ArgumentException($"Unsupported Trait Type in ProfileCardDescription(): {nameof(trait)}")
             };
         }
+
         public static bool ConflictsWith(this Trait a, Trait b)
         {
             return a switch
@@ -233,7 +248,10 @@ namespace RogueCastle.Enums
                 _                                                => false
             };
         }
+    }
 
+    public static class TraitHelper
+    {
         public static Trait[] CreateRandomTraits()
         {
             var traits = new[] { Trait.None, Trait.None };
@@ -266,7 +284,7 @@ namespace RogueCastle.Enums
                 // Add traits of our determined rarity to possible traits pool.
                 foreach (Trait trait in Enum.GetValues(typeof(Trait)))
                 {
-                    if (rarity == Rarity(trait))
+                    if (rarity == trait.Rarity())
                     {
                         possibleTraits.Add(trait);
                     }

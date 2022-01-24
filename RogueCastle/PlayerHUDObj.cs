@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - PlayerHUDObj.cs
-// Last Modified 2021-12-24
+//  Rogue Legacy Randomizer - PlayerHUDObj.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -81,7 +81,7 @@ namespace RogueCastle
             m_specialItemIcon.OutlineWidth = 1;
             m_specialItemIcon.Scale = new Vector2(1.7f, 1.7f);
             m_specialItemIcon.Visible = false;
-            m_spellIcon = new SpriteObj(((Spell) 0).Icon());
+            m_spellIcon = new SpriteObj(((SpellType) 0).Icon());
             m_spellIcon.ForceDraw = true;
             m_spellIcon.OutlineWidth = 1;
             m_spellIcon.Visible = false;
@@ -264,7 +264,7 @@ namespace RogueCastle
             if (Game.PlayerStats.SpecialItem != 0)
             {
                 m_specialItemIcon.Visible = true;
-                m_specialItemIcon.ChangeSprite(((SpecialItem) Game.PlayerStats.SpecialItem).SpriteName());
+                m_specialItemIcon.ChangeSprite(((SpecialItemType) Game.PlayerStats.SpecialItem).SpriteName());
                 m_iconHolder2.Opacity = 1f;
             }
         }
@@ -276,13 +276,13 @@ namespace RogueCastle
             m_spellCost.Visible = false;
             if (Game.PlayerStats.Spell != 0)
             {
-                m_spellIcon.ChangeSprite(((Spell) Game.PlayerStats.Spell).Icon());
+                m_spellIcon.ChangeSprite(((SpellType) Game.PlayerStats.Spell).Icon());
                 m_spellIcon.Visible = true;
                 m_iconHolder1.Opacity = 1f;
                 m_spellCost.Text =
                     (int)
                     (SpellEV.GetManaCost(Game.PlayerStats.Spell) *
-                     (1f - SkillSystem.GetSkill(Skill.ManaCostDown).ModifierAmount)) + " mp";
+                     (1f - SkillSystem.GetSkill(SkillType.ManaCostDown).ModifierAmount)) + " mp";
                 m_spellCost.Visible = true;
             }
         }

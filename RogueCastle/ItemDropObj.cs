@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - ItemDropObj.cs
-//  Last Modified 2022-01-23
-//
+//  Last Modified 2022-01-24
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using DS2DEngine;
@@ -127,7 +127,7 @@ namespace RogueCastle
                 case 2:
                 {
                     var num3 =
-                        (int) (player.MaxHealth * (_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
+                        (int) (player.MaxHealth * (_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
                     player.CurrentHealth += num3;
                     textManager.DisplayNumberStringText(num3, "hp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));
@@ -138,7 +138,7 @@ namespace RogueCastle
                 case 3:
                 {
                     var num4 =
-                        (int) (player.MaxMana * (_amount + SkillSystem.GetSkill(Skill.PotionUp).ModifierAmount));
+                        (int) (player.MaxMana * (_amount + SkillSystem.GetSkill(SkillType.PotionUp).ModifierAmount));
                     player.CurrentMana += num4;
                     textManager.DisplayNumberStringText(num4, "mp recovered", Color.LawnGreen,
                         new Vector2(X, Bounds.Top));

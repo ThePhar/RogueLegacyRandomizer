@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ChestBonusRoomObj.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -99,7 +99,7 @@ namespace RogueCastle
                 var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
-                    chestObj.ChestType = Chest.Silver;
+                    chestObj.ChestType = ChestType.Silver;
                     chestObj.IsEmpty = true;
                     chestObj.IsLocked = true;
                 }
@@ -124,7 +124,7 @@ namespace RogueCastle
                 var chestObj = current as ChestObj;
                 if (chestObj != null)
                 {
-                    chestObj.ForcedItemType = ItemDrop.Coin;
+                    chestObj.ForcedItemType = ItemDropType.Coin;
                     var num2 = array[num];
                     if (num2 == 1)
                     {

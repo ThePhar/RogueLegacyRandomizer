@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - LevelENV.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -63,98 +63,98 @@ namespace RogueCastle
             // Enemy Lists
             CastleEnemyList = new[]
             {
-                (byte) Enemy.Skeleton,
-                (byte) Enemy.Knight,
-                (byte) Enemy.FireWizard,
-                (byte) Enemy.IceWizard,
-                (byte) Enemy.Eyeball,
-                (byte) Enemy.BouncySpike,
-                (byte) Enemy.SwordKnight,
-                (byte) Enemy.Zombie,
-                (byte) Enemy.Fireball,
-                (byte) Enemy.Portrait,
-                (byte) Enemy.Starburst,
-                (byte) Enemy.HomingTurret
+                (byte) EnemyType.Skeleton,
+                (byte) EnemyType.Knight,
+                (byte) EnemyType.FireWizard,
+                (byte) EnemyType.IceWizard,
+                (byte) EnemyType.Eyeball,
+                (byte) EnemyType.BouncySpike,
+                (byte) EnemyType.SwordKnight,
+                (byte) EnemyType.Zombie,
+                (byte) EnemyType.Fireball,
+                (byte) EnemyType.Portrait,
+                (byte) EnemyType.Starburst,
+                (byte) EnemyType.HomingTurret
             };
             GardenEnemyList = new[]
             {
-                (byte) Enemy.Skeleton,
-                (byte) Enemy.Blob,
-                (byte) Enemy.BallAndChain,
-                (byte) Enemy.EarthWizard,
-                (byte) Enemy.FireWizard,
-                (byte) Enemy.Eyeball,
-                (byte) Enemy.Fairy,
-                (byte) Enemy.ShieldKnight,
-                (byte) Enemy.BouncySpike,
-                (byte) Enemy.Wolf,
-                (byte) Enemy.Plant,
-                (byte) Enemy.SkeletonArcher,
-                (byte) Enemy.Starburst,
-                (byte) Enemy.Horse
+                (byte) EnemyType.Skeleton,
+                (byte) EnemyType.Blob,
+                (byte) EnemyType.BallAndChain,
+                (byte) EnemyType.EarthWizard,
+                (byte) EnemyType.FireWizard,
+                (byte) EnemyType.Eyeball,
+                (byte) EnemyType.Fairy,
+                (byte) EnemyType.ShieldKnight,
+                (byte) EnemyType.BouncySpike,
+                (byte) EnemyType.Wolf,
+                (byte) EnemyType.Plant,
+                (byte) EnemyType.SkeletonArcher,
+                (byte) EnemyType.Starburst,
+                (byte) EnemyType.Horse
             };
             TowerEnemyList = new[]
             {
-                (byte) Enemy.Knight,
-                (byte) Enemy.BallAndChain,
-                (byte) Enemy.IceWizard,
-                (byte) Enemy.Eyeball,
-                (byte) Enemy.Fairy,
-                (byte) Enemy.ShieldKnight,
-                (byte) Enemy.BouncySpike,
-                (byte) Enemy.Wolf,
-                (byte) Enemy.Ninja,
-                (byte) Enemy.Plant,
-                (byte) Enemy.Fireball,
-                (byte) Enemy.SkeletonArcher,
-                (byte) Enemy.Portrait,
-                (byte) Enemy.Starburst,
-                (byte) Enemy.HomingTurret,
-                (byte) Enemy.Mimic
+                (byte) EnemyType.Knight,
+                (byte) EnemyType.BallAndChain,
+                (byte) EnemyType.IceWizard,
+                (byte) EnemyType.Eyeball,
+                (byte) EnemyType.Fairy,
+                (byte) EnemyType.ShieldKnight,
+                (byte) EnemyType.BouncySpike,
+                (byte) EnemyType.Wolf,
+                (byte) EnemyType.Ninja,
+                (byte) EnemyType.Plant,
+                (byte) EnemyType.Fireball,
+                (byte) EnemyType.SkeletonArcher,
+                (byte) EnemyType.Portrait,
+                (byte) EnemyType.Starburst,
+                (byte) EnemyType.HomingTurret,
+                (byte) EnemyType.Mimic
             };
             DungeonEnemyList = new[]
             {
-                (byte) Enemy.Skeleton,
-                (byte) Enemy.Knight,
-                (byte) Enemy.Blob,
-                (byte) Enemy.BallAndChain,
-                (byte) Enemy.EarthWizard,
-                (byte) Enemy.FireWizard,
-                (byte) Enemy.IceWizard,
-                (byte) Enemy.Eyeball,
-                (byte) Enemy.Fairy,
-                (byte) Enemy.BouncySpike,
-                (byte) Enemy.SwordKnight,
-                (byte) Enemy.Zombie,
-                (byte) Enemy.Ninja,
-                (byte) Enemy.Plant,
-                (byte) Enemy.Fireball,
-                (byte) Enemy.Starburst,
-                (byte) Enemy.HomingTurret,
-                (byte) Enemy.Horse
+                (byte) EnemyType.Skeleton,
+                (byte) EnemyType.Knight,
+                (byte) EnemyType.Blob,
+                (byte) EnemyType.BallAndChain,
+                (byte) EnemyType.EarthWizard,
+                (byte) EnemyType.FireWizard,
+                (byte) EnemyType.IceWizard,
+                (byte) EnemyType.Eyeball,
+                (byte) EnemyType.Fairy,
+                (byte) EnemyType.BouncySpike,
+                (byte) EnemyType.SwordKnight,
+                (byte) EnemyType.Zombie,
+                (byte) EnemyType.Ninja,
+                (byte) EnemyType.Plant,
+                (byte) EnemyType.Fireball,
+                (byte) EnemyType.Starburst,
+                (byte) EnemyType.HomingTurret,
+                (byte) EnemyType.Horse
             };
             DementiaFlightList = new[]
             {
-                (byte) Enemy.FireWizard,
-                (byte) Enemy.IceWizard,
-                (byte) Enemy.Eyeball,
-                (byte) Enemy.Fairy,
-                (byte) Enemy.BouncySpike,
-                (byte) Enemy.Fireball,
-                (byte) Enemy.Starburst
+                (byte) EnemyType.FireWizard,
+                (byte) EnemyType.IceWizard,
+                (byte) EnemyType.Eyeball,
+                (byte) EnemyType.Fairy,
+                (byte) EnemyType.BouncySpike,
+                (byte) EnemyType.Fireball,
+                (byte) EnemyType.Starburst
             };
             DementiaGroundList = new[]
             {
-                (byte) Enemy.Skeleton,
-                (byte) Enemy.Knight,
-                (byte) Enemy.Blob,
-                (byte) Enemy.BallAndChain,
-                (byte) Enemy.SwordKnight,
-                (byte) Enemy.Zombie,
-                (byte) Enemy.Ninja,
-                (byte) Enemy.Plant,
-                (byte) Enemy.HomingTurret,
-                (byte) Enemy.Horse
+                (byte) EnemyType.Skeleton,
+                (byte) EnemyType.Knight,
+                (byte) EnemyType.Blob,
+                (byte) EnemyType.BallAndChain,
+                (byte) EnemyType.SwordKnight,
+                (byte) EnemyType.Zombie,
+                (byte) EnemyType.Ninja,
+                (byte) EnemyType.Plant,
+                (byte) EnemyType.HomingTurret,
+                (byte) EnemyType.Horse
             };
 
             // Enemy Difficulty Lists

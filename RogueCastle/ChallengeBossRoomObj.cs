@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ChallengeBossRoomObj.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -75,7 +75,7 @@ namespace RogueCastle
         public override void OnEnter()
         {
             Game.ScreenManager.GetLevelScreen().JukeboxEnabled = false;
-            _bossChest.ChestType = Chest.Boss;
+            _bossChest.ChestType = ChestType.Boss;
             _bossChest.Visible = false;
             _bossChest.IsLocked = true;
             _bossChest.X = Player.X;

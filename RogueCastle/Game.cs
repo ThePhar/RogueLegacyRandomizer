@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-24
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -29,10 +29,7 @@ using RogueCastle.GameObjects;
 using RogueCastle.Screens;
 using SpriteSystem;
 using Tweener;
-
-using Button = RogueCastle.Enums.Button;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using Screen = RogueCastle.Enums.Screen;
 
 namespace RogueCastle
 {
@@ -215,57 +212,57 @@ namespace RogueCastle
                 GlobalInput = new InputMap(PlayerIndex.One, true);
             }
 
-            GlobalInput.AddInput((int) Button.MenuConfirm1, Keys.Enter);
-            GlobalInput.AddInput((int) Button.MenuCancel1, Keys.Escape);
-            GlobalInput.AddInput((int) Button.MenuCredits, Keys.LeftControl);
-            GlobalInput.AddInput((int) Button.MenuOptions, Keys.Tab);
-            GlobalInput.AddInput((int) Button.MenuProfileCard, Keys.LeftShift);
-            GlobalInput.AddInput((int) Button.MenuRogueMode, Keys.Back);
-            GlobalInput.AddInput((int) Button.MenuPause, Keys.Escape);
-            GlobalInput.AddInput((int) Button.MenuMap, Keys.Tab);
-            GlobalInput.AddInput((int) Button.PlayerJump1, Keys.S);
-            GlobalInput.AddInput((int) Button.PlayerJump2, Keys.Space);
-            GlobalInput.AddInput((int) Button.PlayerSpell, Keys.W);
-            GlobalInput.AddInput((int) Button.PlayerAttack, Keys.D);
-            GlobalInput.AddInput((int) Button.PlayerBlock, Keys.A);
-            GlobalInput.AddInput((int) Button.PlayerDashLeft, Keys.Q);
-            GlobalInput.AddInput((int) Button.PlayerDashRight, Keys.E);
-            GlobalInput.AddInput((int) Button.PlayerUp1, Keys.I);
-            GlobalInput.AddInput((int) Button.PlayerUp2, Keys.Up);
-            GlobalInput.AddInput((int) Button.PlayerDown1, Keys.K);
-            GlobalInput.AddInput((int) Button.PlayerDown2, Keys.Down);
-            GlobalInput.AddInput((int) Button.PlayerLeft1, Keys.J);
-            GlobalInput.AddInput((int) Button.PlayerLeft2, Keys.Left);
-            GlobalInput.AddInput((int) Button.PlayerRight1, Keys.L);
-            GlobalInput.AddInput((int) Button.PlayerRight2, Keys.Right);
-            GlobalInput.AddInput((int) Button.MenuConfirm1, Buttons.A);
-            GlobalInput.AddInput((int) Button.MenuConfirm2, Buttons.Start);
-            GlobalInput.AddInput((int) Button.MenuCancel1, Buttons.B);
-            GlobalInput.AddInput((int) Button.MenuCancel2, Buttons.Back);
-            GlobalInput.AddInput((int) Button.MenuCredits, Buttons.RightTrigger);
-            GlobalInput.AddInput((int) Button.MenuOptions, Buttons.Y);
-            GlobalInput.AddInput((int) Button.MenuProfileCard, Buttons.X);
-            GlobalInput.AddInput((int) Button.MenuRogueMode, Buttons.Back);
-            GlobalInput.AddInput((int) Button.MenuPause, Buttons.Start);
-            GlobalInput.AddInput((int) Button.MenuMap, Buttons.Back);
-            GlobalInput.AddInput((int) Button.PlayerJump1, Buttons.A);
-            GlobalInput.AddInput((int) Button.PlayerAttack, Buttons.X);
-            GlobalInput.AddInput((int) Button.PlayerBlock, Buttons.Y);
-            GlobalInput.AddInput((int) Button.PlayerDashLeft, Buttons.LeftTrigger);
-            GlobalInput.AddInput((int) Button.PlayerDashRight, Buttons.RightTrigger);
-            GlobalInput.AddInput((int) Button.PlayerUp1, Buttons.DPadUp);
-            GlobalInput.AddInput((int) Button.PlayerUp2, ThumbStick.LeftStick, -90f, 30f);
-            GlobalInput.AddInput((int) Button.PlayerDown1, Buttons.DPadDown);
-            GlobalInput.AddInput((int) Button.PlayerDown2, ThumbStick.LeftStick, 90f, 37f);
-            GlobalInput.AddInput((int) Button.PlayerLeft1, Buttons.DPadLeft);
-            GlobalInput.AddInput((int) Button.PlayerLeft2, Buttons.LeftThumbstickLeft);
-            GlobalInput.AddInput((int) Button.PlayerRight1, Buttons.DPadRight);
-            GlobalInput.AddInput((int) Button.PlayerRight2, Buttons.LeftThumbstickRight);
-            GlobalInput.AddInput((int) Button.PlayerSpell, Buttons.B);
-            GlobalInput.AddInput((int) Button.MenuProfileSelect, Keys.Escape);
-            GlobalInput.AddInput((int) Button.MenuProfileSelect, Buttons.Back);
-            GlobalInput.AddInput((int) Button.MenuDeleteProfile, Keys.Back);
-            GlobalInput.AddInput((int) Button.MenuDeleteProfile, Buttons.Y);
+            GlobalInput.AddInput((int) InputType.MenuConfirm1, Keys.Enter);
+            GlobalInput.AddInput((int) InputType.MenuCancel1, Keys.Escape);
+            GlobalInput.AddInput((int) InputType.MenuCredits, Keys.LeftControl);
+            GlobalInput.AddInput((int) InputType.MenuOptions, Keys.Tab);
+            GlobalInput.AddInput((int) InputType.MenuProfileCard, Keys.LeftShift);
+            GlobalInput.AddInput((int) InputType.MenuRogueMode, Keys.Back);
+            GlobalInput.AddInput((int) InputType.MenuPause, Keys.Escape);
+            GlobalInput.AddInput((int) InputType.MenuMap, Keys.Tab);
+            GlobalInput.AddInput((int) InputType.PlayerJump1, Keys.S);
+            GlobalInput.AddInput((int) InputType.PlayerJump2, Keys.Space);
+            GlobalInput.AddInput((int) InputType.PlayerSpell, Keys.W);
+            GlobalInput.AddInput((int) InputType.PlayerAttack, Keys.D);
+            GlobalInput.AddInput((int) InputType.PlayerBlock, Keys.A);
+            GlobalInput.AddInput((int) InputType.PlayerDashLeft, Keys.Q);
+            GlobalInput.AddInput((int) InputType.PlayerDashRight, Keys.E);
+            GlobalInput.AddInput((int) InputType.PlayerUp1, Keys.I);
+            GlobalInput.AddInput((int) InputType.PlayerUp2, Keys.Up);
+            GlobalInput.AddInput((int) InputType.PlayerDown1, Keys.K);
+            GlobalInput.AddInput((int) InputType.PlayerDown2, Keys.Down);
+            GlobalInput.AddInput((int) InputType.PlayerLeft1, Keys.J);
+            GlobalInput.AddInput((int) InputType.PlayerLeft2, Keys.Left);
+            GlobalInput.AddInput((int) InputType.PlayerRight1, Keys.L);
+            GlobalInput.AddInput((int) InputType.PlayerRight2, Keys.Right);
+            GlobalInput.AddInput((int) InputType.MenuConfirm1, Buttons.A);
+            GlobalInput.AddInput((int) InputType.MenuConfirm2, Buttons.Start);
+            GlobalInput.AddInput((int) InputType.MenuCancel1, Buttons.B);
+            GlobalInput.AddInput((int) InputType.MenuCancel2, Buttons.Back);
+            GlobalInput.AddInput((int) InputType.MenuCredits, Buttons.RightTrigger);
+            GlobalInput.AddInput((int) InputType.MenuOptions, Buttons.Y);
+            GlobalInput.AddInput((int) InputType.MenuProfileCard, Buttons.X);
+            GlobalInput.AddInput((int) InputType.MenuRogueMode, Buttons.Back);
+            GlobalInput.AddInput((int) InputType.MenuPause, Buttons.Start);
+            GlobalInput.AddInput((int) InputType.MenuMap, Buttons.Back);
+            GlobalInput.AddInput((int) InputType.PlayerJump1, Buttons.A);
+            GlobalInput.AddInput((int) InputType.PlayerAttack, Buttons.X);
+            GlobalInput.AddInput((int) InputType.PlayerBlock, Buttons.Y);
+            GlobalInput.AddInput((int) InputType.PlayerDashLeft, Buttons.LeftTrigger);
+            GlobalInput.AddInput((int) InputType.PlayerDashRight, Buttons.RightTrigger);
+            GlobalInput.AddInput((int) InputType.PlayerUp1, Buttons.DPadUp);
+            GlobalInput.AddInput((int) InputType.PlayerUp2, ThumbStick.LeftStick, -90f, 30f);
+            GlobalInput.AddInput((int) InputType.PlayerDown1, Buttons.DPadDown);
+            GlobalInput.AddInput((int) InputType.PlayerDown2, ThumbStick.LeftStick, 90f, 37f);
+            GlobalInput.AddInput((int) InputType.PlayerLeft1, Buttons.DPadLeft);
+            GlobalInput.AddInput((int) InputType.PlayerLeft2, Buttons.LeftThumbstickLeft);
+            GlobalInput.AddInput((int) InputType.PlayerRight1, Buttons.DPadRight);
+            GlobalInput.AddInput((int) InputType.PlayerRight2, Buttons.LeftThumbstickRight);
+            GlobalInput.AddInput((int) InputType.PlayerSpell, Buttons.B);
+            GlobalInput.AddInput((int) InputType.MenuProfileSelect, Keys.Escape);
+            GlobalInput.AddInput((int) InputType.MenuProfileSelect, Buttons.Back);
+            GlobalInput.AddInput((int) InputType.MenuDeleteProfile, Keys.Back);
+            GlobalInput.AddInput((int) InputType.MenuDeleteProfile, Buttons.Y);
 
             GlobalInput.KeyList[1] = GlobalInput.KeyList[12];
             GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
@@ -469,7 +466,7 @@ namespace RogueCastle
                     SaveManager.ClearAllFileTypes(false);
                 }
 
-                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? (int) Screen.CDGSplash : (int) Screen.Title,
+                ScreenManager.DisplayScreen(LevelENV.LoadSplashScreen ? (int) ScreenType.CDGSplash : (int) ScreenType.Title,
                     true);
             }
 
@@ -538,16 +535,16 @@ namespace RogueCastle
                         PlayerStats.Class = ArchipelagoManager.Data.StartingClass;
 
                         // Unlock the player's starting class.
-                        var skill = (Class) ArchipelagoManager.Data.StartingClass switch
+                        var skill = (ClassType) ArchipelagoManager.Data.StartingClass switch
                         {
-                            Class.Knight     => SkillSystem.GetSkill(Skill.KnightUnlock),
-                            Class.Mage       => SkillSystem.GetSkill(Skill.MageUnlock),
-                            Class.Barbarian  => SkillSystem.GetSkill(Skill.BarbarianUnlock),
-                            Class.Knave      => SkillSystem.GetSkill(Skill.AssassinUnlock),
-                            Class.Miner      => SkillSystem.GetSkill(Skill.BankerUnlock),
-                            Class.Shinobi    => SkillSystem.GetSkill(Skill.NinjaUnlock),
-                            Class.Lich       => SkillSystem.GetSkill(Skill.LichUnlock),
-                            Class.Spellthief => SkillSystem.GetSkill(Skill.SpellswordUnlock),
+                            ClassType.Knight     => SkillSystem.GetSkill(SkillType.KnightUnlock),
+                            ClassType.Mage       => SkillSystem.GetSkill(SkillType.MageUnlock),
+                            ClassType.Barbarian  => SkillSystem.GetSkill(SkillType.BarbarianUnlock),
+                            ClassType.Knave      => SkillSystem.GetSkill(SkillType.AssassinUnlock),
+                            ClassType.Miner      => SkillSystem.GetSkill(SkillType.BankerUnlock),
+                            ClassType.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUnlock),
+                            ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUnlock),
+                            ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
                             _                => throw new ArgumentException("Unsupported Starting Class")
                         };
 
@@ -565,17 +562,17 @@ namespace RogueCastle
                             $"{(PlayerStats.IsFemale ? "Lady" : "Sir")} {ArchipelagoManager.Data.Name}";
 
                         SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
-                        ScreenManager.DisplayScreen((int) Screen.StartingRoom, true);
+                        ScreenManager.DisplayScreen((int) ScreenType.StartingRoom, true);
                     }
                     else
                     {
                         if (heroIsDead)
                         {
-                            ScreenManager.DisplayScreen((int) Screen.Lineage, true);
+                            ScreenManager.DisplayScreen((int) ScreenType.Lineage, true);
                         }
                         else
                         {
-                            ScreenManager.DisplayScreen(startingRoom ? (int) Screen.StartingRoom : (int) Screen.Level,
+                            ScreenManager.DisplayScreen(startingRoom ? (int) ScreenType.StartingRoom : (int) ScreenType.Level,
                                 true);
                         }
                     }
@@ -594,127 +591,127 @@ namespace RogueCastle
                     switch (location)
                     {
                         case 91000: // Manor Renovation - Ground Road
-                            SkillSystem.GetSkill(Skill.ManorGroundRoad).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorGroundRoad).CurrentLevel = 1;
                             break;
 
                         case 91001: // Manor Renovation - Main Base
-                            SkillSystem.GetSkill(Skill.ManorMainBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorMainBase).CurrentLevel = 1;
                             break;
 
                         case 91002: // Manor Renovation - Main Bottom Window
-                            SkillSystem.GetSkill(Skill.ManorMainWindowBottom).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorMainWindowBottom).CurrentLevel = 1;
                             break;
 
                         case 91003: // Manor Renovation - Main Top Window
-                            SkillSystem.GetSkill(Skill.ManorMainWindowTop).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorMainWindowTop).CurrentLevel = 1;
                             break;
 
                         case 91004: // Manor Renovation - Main Rooftop
-                            SkillSystem.GetSkill(Skill.ManorMainRoof).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorMainRoof).CurrentLevel = 1;
                             break;
 
                         case 91005: // Manor Renovation - Left Wing Base
-                            SkillSystem.GetSkill(Skill.ManorLeftWingBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftWingBase).CurrentLevel = 1;
                             break;
 
                         case 91006: // Manor Renovation - Left Wing Window
-                            SkillSystem.GetSkill(Skill.ManorLeftWingWindow).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftWingWindow).CurrentLevel = 1;
                             break;
 
                         case 91007: // Manor Renovation - Left Wing Rooftop
-                            SkillSystem.GetSkill(Skill.ManorLeftWingRoof).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftWingRoof).CurrentLevel = 1;
                             break;
 
                         case 91008: // Manor Renovation - Left Big Base
-                            SkillSystem.GetSkill(Skill.ManorLeftBigBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigBase).CurrentLevel = 1;
                             break;
 
                         case 91009: // Manor Renovation - Left Big Upper 1
-                            SkillSystem.GetSkill(Skill.ManorLeftBigUpper1).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigUpper1).CurrentLevel = 1;
                             break;
 
                         case 91010: // Manor Renovation - Left Big Upper 2
-                            SkillSystem.GetSkill(Skill.ManorLeftBigUpper2).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigUpper2).CurrentLevel = 1;
                             break;
 
                         case 91011: // Manor Renovation - Left Big Windows
-                            SkillSystem.GetSkill(Skill.ManorLeftBigWindows).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigWindows).CurrentLevel = 1;
                             break;
 
                         case 91012: // Manor Renovation - Left Big Rooftop
-                            SkillSystem.GetSkill(Skill.ManorLeftBigRoof).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftBigRoof).CurrentLevel = 1;
                             break;
 
                         case 91013: // Manor Renovation - Left Far Base
-                            SkillSystem.GetSkill(Skill.ManorLeftFarBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftFarBase).CurrentLevel = 1;
                             break;
 
                         case 91014: // Manor Renovation - Left Far Roof
-                            SkillSystem.GetSkill(Skill.ManorLeftFarRoof).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftFarRoof).CurrentLevel = 1;
                             break;
 
                         case 91015: // Manor Renovation - Left Extension
-                            SkillSystem.GetSkill(Skill.ManorLeftExtension).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftExtension).CurrentLevel = 1;
                             break;
 
                         case 91016: // Manor Renovation - Left Tree 1
-                            SkillSystem.GetSkill(Skill.ManorLeftTree1).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftTree1).CurrentLevel = 1;
                             break;
 
                         case 91017: // Manor Renovation - Left Tree 2
-                            SkillSystem.GetSkill(Skill.ManorLeftTree2).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorLeftTree2).CurrentLevel = 1;
                             break;
 
                         case 91018: // Manor Renovation - Right Wing Base
-                            SkillSystem.GetSkill(Skill.ManorRightWingBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightWingBase).CurrentLevel = 1;
                             break;
 
                         case 91019: // Manor Renovation - Right Wing Window
-                            SkillSystem.GetSkill(Skill.ManorRightWingWindow).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightWingWindow).CurrentLevel = 1;
                             break;
 
                         case 91020: // Manor Renovation - Right Wing Rooftop
-                            SkillSystem.GetSkill(Skill.ManorRightWingRoof).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightWingRoof).CurrentLevel = 1;
                             break;
 
                         case 91021: // Manor Renovation - Right Big Base
-                            SkillSystem.GetSkill(Skill.ManorRightBigBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightBigBase).CurrentLevel = 1;
                             break;
 
                         case 91022: // Manor Renovation - Right Big Upper
-                            SkillSystem.GetSkill(Skill.ManorRightBigUpper).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightBigUpper).CurrentLevel = 1;
                             break;
 
                         case 91023: // Manor Renovation - Right Big Rooftop
-                            SkillSystem.GetSkill(Skill.ManorRightBigRoof).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightBigRoof).CurrentLevel = 1;
                             break;
 
                         case 91024: // Manor Renovation - Right High Base
-                            SkillSystem.GetSkill(Skill.ManorRightHighBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightHighBase).CurrentLevel = 1;
                             break;
 
                         case 91025: // Manor Renovation - Right High Upper
-                            SkillSystem.GetSkill(Skill.ManorRightHighUpper).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightHighUpper).CurrentLevel = 1;
                             break;
 
                         case 91026: // Manor Renovation - Right High Tower
-                            SkillSystem.GetSkill(Skill.ManorRightHighTower).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightHighTower).CurrentLevel = 1;
                             break;
 
                         case 91027: // Manor Renovation - Right Extension
-                            SkillSystem.GetSkill(Skill.ManorRightExtension).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightExtension).CurrentLevel = 1;
                             break;
 
                         case 91028: // Manor Renovation - Right Tree
-                            SkillSystem.GetSkill(Skill.ManorRightTree).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorRightTree).CurrentLevel = 1;
                             break;
 
                         case 91029: // Manor Renovation - Observatory Base
-                            SkillSystem.GetSkill(Skill.ManorObservatoryBase).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorObservatoryBase).CurrentLevel = 1;
                             break;
 
                         case 91030: // Manor Renovation - Observatory Telescope
-                            SkillSystem.GetSkill(Skill.ManorObservatoryTelescope).CurrentLevel = 1;
+                            SkillSystem.GetSkill(SkillType.ManorObservatoryTelescope).CurrentLevel = 1;
                             break;
                     }
 
@@ -772,7 +769,7 @@ namespace RogueCastle
                         };
 
                         DisgustingGetItemLogic(item, randomGold, stat1, stat2, stat3);
-                        ScreenManager.DisplayScreen((int) Screen.GetItem, true, data);
+                        ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, data);
                         ScreenManager.Player.RunGetItemAnimation();
                     }
                 }
@@ -793,7 +790,7 @@ namespace RogueCastle
                     else
                     {
                         var num6 = CDGMath.RandomInt(1, 100);
-                        if (num6 <= SkillSystem.GetSkill(Skill.DeathDodge).ModifierAmount * 100f)
+                        if (num6 <= SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount * 100f)
                         {
                             ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
                             PlayerStats.SpecialItem = 0;
@@ -819,28 +816,28 @@ namespace RogueCastle
             SkillObj skill;
             if (item.Item == ItemDefinitions.Blacksmith.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.Smithy);
+                skill = SkillSystem.GetSkill(SkillType.Smithy);
                 skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.Enchantress.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.Enchanter);
+                skill = SkillSystem.GetSkill(SkillType.Enchanter);
                 skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.Architect.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.Architect);
+                skill = SkillSystem.GetSkill(SkillType.Architect);
                 skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.ProgressiveKnight.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.KnightUnlock);
+                skill = SkillSystem.GetSkill(SkillType.KnightUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.KnightUp);
+                    skill = SkillSystem.GetSkill(SkillType.KnightUp);
                     skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
@@ -851,10 +848,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveMage.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.MageUnlock);
+                skill = SkillSystem.GetSkill(SkillType.MageUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.MageUp);
+                    skill = SkillSystem.GetSkill(SkillType.MageUp);
                     skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
@@ -865,10 +862,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveBarbarian.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.BarbarianUnlock);
+                skill = SkillSystem.GetSkill(SkillType.BarbarianUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.BarbarianUp);
+                    skill = SkillSystem.GetSkill(SkillType.BarbarianUp);
                     skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
@@ -879,10 +876,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveKnave.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.AssassinUnlock);
+                skill = SkillSystem.GetSkill(SkillType.AssassinUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.AssassinUp);
+                    skill = SkillSystem.GetSkill(SkillType.AssassinUp);
                     skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
@@ -893,10 +890,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveShinobi.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.NinjaUnlock);
+                skill = SkillSystem.GetSkill(SkillType.NinjaUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.NinjaUp);
+                    skill = SkillSystem.GetSkill(SkillType.NinjaUp);
                     skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
@@ -907,10 +904,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveMiner.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.BankerUnlock);
+                skill = SkillSystem.GetSkill(SkillType.BankerUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.BankerUp);
+                    skill = SkillSystem.GetSkill(SkillType.BankerUp);
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
                 else
@@ -920,10 +917,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveLich.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.LichUnlock);
+                skill = SkillSystem.GetSkill(SkillType.LichUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.LichUp);
+                    skill = SkillSystem.GetSkill(SkillType.LichUp);
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
                 else
@@ -933,10 +930,10 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ProgressiveSpellthief.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.SpellswordUnlock);
+                skill = SkillSystem.GetSkill(SkillType.SpellswordUnlock);
                 if (skill.CurrentLevel > 0)
                 {
-                    skill = SkillSystem.GetSkill(Skill.SpellSwordUp);
+                    skill = SkillSystem.GetSkill(SkillType.SpellSwordUp);
                     SkillSystem.LevelUpTrait(skill, false, false);
                 }
                 else
@@ -946,18 +943,18 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.Dragon.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.SuperSecret);
+                skill = SkillSystem.GetSkill(SkillType.SuperSecret);
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.Traitors.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.Traitorous);
+                skill = SkillSystem.GetSkill(SkillType.Traitorous);
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.HealthUp.Code)
             {
                 var maxHp = ScreenManager.Player.MaxHealth;
-                skill = SkillSystem.GetSkill(Skill.HealthUp);
+                skill = SkillSystem.GetSkill(SkillType.HealthUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -968,7 +965,7 @@ namespace RogueCastle
             else if (item.Item == ItemDefinitions.ManaUp.Code)
             {
                 var maxMp = ScreenManager.Player.MaxMana;
-                skill = SkillSystem.GetSkill(Skill.ManaUp);
+                skill = SkillSystem.GetSkill(SkillType.ManaUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -978,7 +975,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.AttackUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.AttackUp);
+                skill = SkillSystem.GetSkill(SkillType.AttackUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -987,7 +984,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.MagicDamageUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.MagicDamageUp);
+                skill = SkillSystem.GetSkill(SkillType.MagicDamageUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -996,7 +993,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ArmorUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.ArmorUp);
+                skill = SkillSystem.GetSkill(SkillType.ArmorUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1005,7 +1002,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.EquipUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.EquipUp);
+                skill = SkillSystem.GetSkill(SkillType.EquipUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1014,7 +1011,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.CritChanceUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.CritChanceUp);
+                skill = SkillSystem.GetSkill(SkillType.CritChanceUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1023,7 +1020,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.CritDamageUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.CritDamageUp);
+                skill = SkillSystem.GetSkill(SkillType.CritDamageUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1032,7 +1029,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.DownStrikeUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.DownStrikeUp);
+                skill = SkillSystem.GetSkill(SkillType.DownStrikeUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1041,7 +1038,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.GoldGainUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.GoldGainUp);
+                skill = SkillSystem.GetSkill(SkillType.GoldGainUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1050,7 +1047,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.PotionEfficiencyUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.PotionUp);
+                skill = SkillSystem.GetSkill(SkillType.PotionUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1059,7 +1056,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.InvulnTimeUp.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.InvulnerabilityTimeUp);
+                skill = SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1068,7 +1065,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.ManaCostDown.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.ManaCostDown);
+                skill = SkillSystem.GetSkill(SkillType.ManaCostDown);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1077,7 +1074,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.DeathDefiance.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.DeathDodge);
+                skill = SkillSystem.GetSkill(SkillType.DeathDodge);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1086,7 +1083,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.Haggling.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.PricesDown);
+                skill = SkillSystem.GetSkill(SkillType.PricesDown);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -1095,7 +1092,7 @@ namespace RogueCastle
             }
             else if (item.Item == ItemDefinitions.RandomizeChildren.Code)
             {
-                skill = SkillSystem.GetSkill(Skill.RandomizeChildren);
+                skill = SkillSystem.GetSkill(SkillType.RandomizeChildren);
                 SkillSystem.LevelUpTrait(skill, false, false);
             }
             else if (item.Item == ItemDefinitions.VaultRunes.Code)

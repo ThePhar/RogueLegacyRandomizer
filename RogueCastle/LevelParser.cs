@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - LevelParser.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - LevelParser.cs
+//  Last Modified 2022-01-24
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Globalization;
@@ -79,7 +79,7 @@ namespace RogueCastle
                                 break;
 
                             case "DoorObj":
-                                gameObj = new DoorObj(roomObj, 0, 0, Door.Open);
+                                gameObj = new DoorObj(roomObj, 0, 0, DoorState.Open);
                                 break;
 
                             case "ChestObj":
@@ -88,7 +88,7 @@ namespace RogueCastle
                                     if (bool.Parse(xmlReader.Value))
                                     {
                                         gameObj = new FairyChestObj(null);
-                                        (gameObj as ChestObj).ChestType = Chest.Fairy;
+                                        (gameObj as ChestObj).ChestType = ChestType.Fairy;
                                     }
                                     else
                                     {
