@@ -1,13 +1,13 @@
-﻿//
+﻿// 
 //  Rogue Legacy Randomizer - LocationDefinitions.cs
-//  Last Modified 2022-01-22
-//
+//  Last Modified 2022-01-23
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +58,9 @@ namespace Archipelago.Definitions
 
         // Special Locations
         public static readonly LocationData SpecialJukebox        = new(91200, "Jukebox");
+        public static readonly LocationData SpecialPainting       = new(91201, "Painting");
+        public static readonly LocationData SpecialCheapskate     = new(91202, "Cheapskate Elf's Game");
+        public static readonly LocationData SpecialCarnival       = new(91203, "Carnival");
 
         // Diary Locations
         public static readonly LocationData Diary1                = new(91300, "Diary 1");
