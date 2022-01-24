@@ -28,7 +28,7 @@ namespace RogueCastle.Enums
 
     public static class SpellExtensions
     {
-        public static string ToString(this Spell spell)
+        public static string Name(this Spell spell)
         {
             return spell switch
             {

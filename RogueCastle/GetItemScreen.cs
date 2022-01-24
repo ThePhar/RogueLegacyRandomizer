@@ -243,13 +243,13 @@ namespace RogueCastle
                 case (int) ItemCategory.Spell:
                     _itemSprite.ChangeSprite(((Spell) _itemInfo.X).Icon());
                     _itemFoundSprite.ChangeSprite("SpellFoundText_Sprite");
-                    _itemFoundText.Text = ((Spell) _itemInfo.X).ToString();
+                    _itemFoundText.Text = ((Spell) _itemInfo.X).Name();
                     break;
 
                 case (int) ItemCategory.SpecialItem:
                     _itemSprite.ChangeSprite(((SpecialItem) _itemInfo.X).SpriteName());
                     _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    _itemFoundText.Text = ((SpecialItem) _itemInfo.X).ToString();
+                    _itemFoundText.Text = ((SpecialItem) _itemInfo.X).Name();
                     break;
 
                 case 7:
