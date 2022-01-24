@@ -781,13 +781,32 @@ namespace RogueCastle
             // Death Link handling logic.
             if (ArchipelagoManager.ItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
             {
-                if (ScreenManager.Player != null && !ScreenManager.Player.ControlsLocked
-                                                 && ScreenManager.CurrentScreen is ProceduralLevelScreen &&
-                                                 !PlayerStats.IsDead)
+                if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead)
                 {
-                    ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(
-                        new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
-                    ScreenManager.Player.Kill();
+                    if (PlayerStats.SpecialItem == 3)
+                    {
+                        ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
+                        PlayerStats.SpecialItem = 0;
+                        (ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
+                        ScreenManager.DisplayScreen(21, true);
+                    }
+                    else
+                    {
+                        var num6 = CDGMath.RandomInt(1, 100);
+                        if (num6 <= SkillSystem.GetSkill(Skill.DeathDodge).ModifierAmount * 100f)
+                        {
+                            ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
+                            PlayerStats.SpecialItem = 0;
+                            (ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
+                            ScreenManager.DisplayScreen(21, true);
+                        }
+                        else
+                        {
+                            ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
+                            ScreenManager.Player.Kill();
+                        }
+                    }
+
                     ArchipelagoManager.ClearDeathLink();
                 }
             }
