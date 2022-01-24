@@ -1,3 +1,14 @@
+// 
+//  Rogue Legacy Randomizer - Button.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
+
 using System.Linq;
 
 namespace RogueCastle.Enums
@@ -39,6 +50,9 @@ namespace RogueCastle.Enums
         {
             return ((int) button).ToString();
         }
+
+        public static int    GetValue(this Button inputButton) => (int) inputButton;
+        public static string GetInput(this Button inputButton) => $"[Input:{inputButton.GetValue()}]";
     }
 
     public static class ButtonHelper

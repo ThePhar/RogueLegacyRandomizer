@@ -1,12 +1,18 @@
-/*
-  Rogue Legacy Enhanced
+// 
+//  Rogue Legacy Randomizer - GameEV.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
-  This project is based on modified disassembly of Rogue Legacy's engine, with permission to do so by its creators.
-  Therefore, former creators copyright notice applies to original disassembly. 
+using DS2DEngine;
+using RogueCastle.Enums;
 
-  Disassembled source Copyright(C) 2011-2015, Cellar Door Games Inc.
-  Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-*/
+using static RogueCastle.Enums.Button;
 
 namespace RogueCastle
 {
@@ -86,7 +92,88 @@ namespace RogueCastle
         public static int[] SILVERCHEST_ITEMDROP_CHANCE;
         public static int[] GOLDCHEST_ITEMDROP_CHANCE;
         public static int[] STATDROP_CHANCE;
-        public static string[] GAME_HINTS;
+
+        public static string[] TutorialDownStrikeHint => new[]
+        {
+            "Down Attack this",
+            "Hello, world",
+            "When is Hollow Knight AP?",
+            "The Game",
+            "Look ma, I'm on TV!",
+            "This isn't Tourian",
+            "I'm a hint text!",
+            "Insert funny meme here",
+            "Up Attack this"
+        };
+
+        public static string[] OtherAPGames => new[]
+        {
+            "A Link to the Past",
+            "Factorio",
+            "Final Fantasy",
+            "Minecraft",
+            "Ocarina of Time",
+            "Risk of Rain 2",
+            "Secret of Evermore",
+            "Slay the Spire",
+            "Subnautica",
+            "Super Metroid",
+            "Timespinner",
+            "VVVVVV",
+            "Raft",
+            "Super Mario 64"
+        };
+
+        public static string[] GameHints => new[]
+        {
+            "The Forest is always to the right side of the Castle.",
+            "The Maya is always at the top of the Castle.",
+            "The Darkness is always at the bottom of the Castle.",
+            "This death was Phar's fault anyway.",
+            "If you're having trouble with a boss, try using different runes.",
+            $"Vault runes let you to jump in the air with {PlayerJump1.GetInput()}",
+            $"Sprint runes let you dash with {PlayerDashLeft.GetInput()} or {PlayerDashRight.GetInput()}",
+            "Each class has pros and cons. Make sure to change your play-style accordingly.",
+            "Exploring and finding chests is the best way to earn gold.",
+            "Harder areas offer greater rewards.",
+            $"Sky runes let you fly by pressing {PlayerJump1.GetInput()} while in the air.",
+            "Vampirism and Siphon runes are very powerful when stacked.",
+            "Mastering mobility runes makes you awesome.",
+            "Make sure to expand your manor. You never know what new unlocks can be revealed.",
+            "All classes can be upgraded with unique class abilities.",
+            $"Unlocked class abilities can be activated with {PlayerBlock.GetInput()}",
+            "Upgrade your classes early to obtain powerful class abilities.",
+            "If you are having trouble with a room, see if you can bypass it instead.",
+            "Buying equipment is the fastest way to raise your stats.",
+            "Purchasing equipment is cheaper and more flexible than raising your base stats.",
+            "You should have picked the other child.",
+            "Runes are very powerful. Equip runes at the Enchantress, and don't forget to use them!",
+            "Turn off Death Link if you don't want to be murdered by your fellow players.",
+            "Learn the nuances of your spell to maximize their potential.",
+            "Try to hit enemies near the apex of the axe's arc in order to hit them multiple times.",
+            "Avoid picking up the conflux orbs after casting it to maximize damage.",
+            "Dodge the chakrams return trip in order to maximize its damage.",
+            "Better to use mana to kill enemies than to take unnecessary damage.",
+            "Learning enemy 'tells' is integral to surviving the castle.",
+            "Spike traps check for a pulse to tell the dead from the living.",
+            $"Press {MenuMap.GetInput()} to open the map.",
+            "If you fail a Fairy chest room, the Architect can give you a second chance.",
+            "The Architect has a hefty fee for those who use his service.",
+            "Bosses drop large amounts of gold on their death.",
+            "Bury me with my money.",
+            "If you are having trouble, try equipping Grace runes.",
+            $"In options you can enable Quick Drop to down-strike and drop with {PlayerDown1.GetInput()}",
+            "The architect is very useful for practicing against bosses.",
+            "The third row of equipment usually has major tradeoffs. Be careful.",
+            "Certain runes work better with certain bosses.",
+            "You should practice fighting bosses using the architect.",
+            "Health is a very important stat to raise.",
+            "Retribution runes can damage invulnerable objects.",
+            "At least this isn't death link... right?",
+            "Class abilities are very powerful if used correctly.",
+            "Some classes have advantages over certain bosses.",
+            $"You should have played {OtherAPGames[CDGMath.RandomInt(0, OtherAPGames.Length - 1)]} instead."
+        };
 
         static GameEV()
         {
@@ -121,53 +208,6 @@ namespace RogueCastle
                 25,
                 25,
                 5
-            };
-            GAME_HINTS = new[]
-            {
-                "The Forest is always to the right side of the Castle.",
-                "The Maya is always at the top of the Castle.",
-                "The Darkness is always at the bottom of the Castle.",
-                "If you're having trouble with a boss, try using different runes.",
-                "Vault runes let you to jump in the air with [Input:" + 10 + "]",
-                string.Concat("Sprint runes let you dash with [Input:", 14, "] or [Input:", 15, "]"),
-                "Each class has pros and cons.  Make sure to change your playstyle accordingly.",
-                "Exploring and finding chests is the best way to earn gold.",
-                "Harder areas offer greater rewards.",
-                "Sky runes let you fly by pressing [Input:" + 10 + "] while in the air.",
-                "Vampirism and Siphon runes are very powerful when stacked.",
-                "Mastering mobility runes makes you awesome.",
-                "Make sure to expand your manor. You never know what new skills can be revealed.",
-                "All classes can be upgraded with unique class abilities.",
-                "Unlocked class abilities can be activated with [Input:" + 13 + "]",
-                "Upgrade your classes early to obtain powerful class abilities.",
-                "If you are having trouble with a room, see if you can bypass it instead.",
-                "Buying equipment is the fastest way to raise your stats.",
-                "Purchasing equipment is cheaper and more flexible than raising your base stats.",
-                "You should have picked the other child.",
-                "Runes are very powerful. Equip runes at the Enchantress, and don't forget to use them!",
-                "Learn the nuances of your spell to maximize their potential.",
-                "Try to hit enemies near the apex of the axe's arc in order to hit them multiple times.",
-                "Avoid picking up the conflux orbs after casting it to maximize damage.",
-                "Dodge the chakrams return trip in order to maximize its damage.",
-                "Better to use mana to kill enemies than to take unnecessary damage.",
-                "Learning enemy 'tells' is integral to surviving the castle.",
-                "Spike traps check for a pulse to tell the dead from the living.",
-                "Press [Input:" + 9 + "] to open the map.",
-                "Fairy chests hold all the runes in the game. Runes will help you immensely.",
-                "If you fail a Fairy chest room, the Architect can give you a second chance.",
-                "The Architect has a hefty fee for those who use his service.",
-                "Bosses drop large amounts of gold on their death.",
-                "Bury me with my money.",
-                "If you are having trouble, try equipping Grace runes.",
-                "In options you can enable Quick Drop to downstrike and drop with [Input:" + 18 + "]",
-                "The architect is very useful for practicing against bosses.",
-                "The third row of equipment usually has major tradeoffs. Be careful.",
-                "Certain runes work better with certain bosses.",
-                "You should practice fighting bosses using the architect.",
-                "Health is a very important stat to raise.",
-                "Retribution runes can damage invulnerable objects.",
-                "Class abilities are very powerful if used correctly.",
-                "Some classes have advantages over certain bosses."
             };
         }
     }

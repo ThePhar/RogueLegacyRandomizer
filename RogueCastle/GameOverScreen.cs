@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - GameOverScreen.cs
-// Last Modified 2021-12-28
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - GameOverScreen.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -226,7 +226,7 @@ namespace RogueCastle
             else
             {
                 (m_dialoguePlate.GetChildAt(2) as TextObj).Text =
-                    GameEV.GAME_HINTS[CDGMath.RandomInt(0, GameEV.GAME_HINTS.Length - 1)];
+                    GameEV.GameHints[CDGMath.RandomInt(0, GameEV.GameHints.Length - 1)];
             }
 
             (m_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + Game.PlayerStats.PlayerName + "'s Parting Words";
@@ -403,7 +403,7 @@ namespace RogueCastle
             if (InputManager.JustPressed(Keys.Space, PlayerIndex.One))
             {
                 (m_dialoguePlate.GetChildAt(2) as TextObj).Text =
-                    GameEV.GAME_HINTS[CDGMath.RandomInt(0, GameEV.GAME_HINTS.Length - 1)];
+                    GameEV.GameHints[CDGMath.RandomInt(0, GameEV.GameHints.Length - 1)];
             }
 
             if (m_player.SpriteName == "PlayerDeath_Character")

@@ -1,13 +1,13 @@
-//
-// RogueLegacyArchipelago - TutorialRoomObj.cs
-// Last Modified 2021-12-27
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
-//
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
+//  Rogue Legacy Randomizer - TutorialRoomObj.cs
+//  Last Modified 2022-01-23
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+// 
 
 using System;
 using System.Collections.Generic;
@@ -137,15 +137,6 @@ namespace RogueCastle
 
         public override void LoadContent(GraphicsDevice graphics)
         {
-            var randomText = new string[]
-            {
-                "Down Attack this",
-                "Phar says hello",
-                "When is Hollow Knight AP?",
-                "Bugs guaranteed",
-                "The Game"
-            };
-
             m_tutorialText = new KeyIconTextObj(Game.JunicodeLargeFont);
             m_tutorialText.FontSize = 28f;
             m_tutorialText.Text = "[Input:" + 10 + "] to Jump";
@@ -160,7 +151,7 @@ namespace RogueCastle
             m_creditsTitleText.FontSize = 14f;
             var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
-            textObj.Text = randomText[CDGMath.RandomInt(0, randomText.Length - 1)];
+            textObj.Text = GameEV.TutorialDownStrikeHint[CDGMath.RandomInt(0, GameEV.TutorialDownStrikeHint.Length - 1)];
             textObj.OutlineWidth = 2;
             textObj.Align = Types.TextAlign.Centre;
             textObj.Position = m_waypointList[m_waypointList.Count - 1].Position;
