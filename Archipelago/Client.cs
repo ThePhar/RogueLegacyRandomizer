@@ -1,13 +1,13 @@
-﻿//
+﻿// 
 //  Rogue Legacy Randomizer - Client.cs
-//  Last Modified 2022-01-23
-//
+//  Last Modified 2022-01-25
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -43,16 +43,17 @@ namespace Archipelago
             Initialize();
         }
 
-        public ConnectionStatus ConnectionStatus { get; private set; } = ConnectionStatus.Disconnected;
-        public DateTime LastDeath { get; private set; } = DateTime.MinValue;
-        public ConnectionInfo CachedConnectionInfo { get; private set; } = new();
-        public DeathLink DeathLink { get; private set; }
-        public Dictionary<int, NetworkItem> LocationCache { get; private set; } = new();
-        public SlotData Data { get; private set; }
-        public Queue<NetworkItem> ItemQueue { get; private set; } = new();
-        public List<int> CheckedLocations { get; private set; } = new();
-        public bool CheckedLocationsUpdated { get; set; }
-        public bool CanForfeit => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
+        public ConnectionStatus             ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
+        public DateTime                     LastDeath               { get; private set; } = DateTime.MinValue;
+        public ConnectionInfo               CachedConnectionInfo    { get; private set; } = new();
+        public DeathLink                    DeathLink               { get; private set; }
+        public Dictionary<int, NetworkItem> LocationCache           { get; private set; } = new();
+        public SlotData                     Data                    { get; private set; }
+        public Queue<NetworkItem>           ItemQueue               { get; private set; } = new();
+        public List<int>                    CheckedLocations        { get; private set; } = new();
+        public bool                         CheckedLocationsUpdated { get; set; }
+        public bool                         CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
+        public bool                         CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
 
         public void Connect(ConnectionInfo info)
         {
