@@ -5987,8 +5987,6 @@
     <GameObject Type="HazardObj" Name="Coll_Hull 4628" X="-6240" Y="-6300" Width="1020" Height="60" ScaleX="1" ScaleY="1" Rotation="270" Flip="False" Tag="" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-8040" Y="-7080" Width="480" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-8040" Y="-7080" Width="480" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
-    <!-- <GameObject Type="HazardObj" Name="Coll_Hull 4628" X="-7140" Y="-7320" Width="1020" Height="60" ScaleX="1" ScaleY="1" Rotation="90" Flip="False" Tag="" LevelType="0" />
-    <GameObject Type="HazardObj" Name="Coll_Hull 4628" X="-7260" Y="-6300" Width="1020" Height="60" ScaleX="1" ScaleY="1" Rotation="270" Flip="False" Tag="" LevelType="0" /> -->
     <GameObject Type="CollHullObj" Name="Coll_Hull 804" X="-7260" Y="-7380" Width="120" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-6840" Y="-6420" Width="480" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-6840" Y="-6420" Width="480" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
@@ -6074,6 +6072,14 @@
     <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-8040" Y="-5640" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-8040" Y="-5640" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-6720" Y="-5640" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
+
+    <!-- Testing -->
+    <GameObject Type="BorderObj" Name="Col_125" X="-7380" Y="-5140" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
+    <GameObject Type="BorderObj" Name="Col_125" X="-8040" Y="-5140" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
+    <GameObject Type="BorderObj" Name="Col_125" X="-6720" Y="-5140" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
+    <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-7380" Y="-5140" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
+    <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-8040" Y="-5140" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
+    <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-6720" Y="-5140" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-6720" Y="-5640" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
   </RoomObject>
   <RoomObject Name="ChallengeBoss" X="-8520" Y="-4560" Width="2640" Height="1440" ScaleX="1" ScaleY="1" Tag="7" SelectionMode="0" DisplayBG="False" CastlePool="True" GardenPool="True" TowerPool="True" DungeonPool="True">

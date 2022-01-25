@@ -39,9 +39,8 @@ namespace RogueCastle
         {
             _boss.GetChildAt(0).TextureColor = Color.MediumSpringGreen;
             _boss.Name = "Ponce de Freon";
-            _boss.Level = 100;
-            _boss.MaxHealth = 12000;
-            _boss.Damage = 380;
+            _boss.MaxHealth = 1000;
+            _boss.Damage = 35;
             _boss.Speed = 430f;
             _boss.IsNeo = true;
             if (_boss != null)
@@ -59,7 +58,6 @@ namespace RogueCastle
             _boss.PlayAnimation();
             Player.AttachedLevel.Camera.X = Player.X;
             Player.AttachedLevel.Camera.Y = Player.Y;
-            var arg_8E_0 = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
