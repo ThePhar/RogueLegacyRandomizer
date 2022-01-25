@@ -42,11 +42,11 @@ namespace RogueCastle
         {
             _boss.GetChildAt(0).TextureColor = Color.Yellow;
             _boss.Name = "Alexander the IV";
-            _boss.Level = 100;
-            _boss.MaxHealth = 15000;
-            _boss.Damage = 200;
-            _boss.Speed = 400f;
+            _boss.MaxHealth = 1000;
+            _boss.Damage = 35;
+            _boss.Speed = 350f;
             _boss.IsNeo = true;
+
             if (_boss != null)
             {
                 _boss.CurrentHealth = _boss.MaxHealth;

@@ -1,13 +1,13 @@
-// 
+//
 //  Rogue Legacy Randomizer - LevelENV.cs
 //  Last Modified 2022-01-25
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using RogueCastle.Enums;
@@ -302,7 +302,7 @@ namespace RogueCastle
         public static string[] GardenAssetSwapList        { get; set; }
         public static bool     ShowEnemyRadii             { get; set; } = false;
         public static bool     EnablePlayerDebug          { get; set; } = false; // TODO: Revert
-        public static bool     UnlockAllAbilities         { get; set; } = false;
+        public static bool     UnlockAllAbilities         { get; set; } = true; // TODO: Revert
         public static bool     TestRoomReverse            { get; set; } = false;
         public static bool     RunTestRoom                { get; set; } = false;
         public static bool     ShowDebugText              { get; set; } = false;
