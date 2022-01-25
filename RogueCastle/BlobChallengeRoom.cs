@@ -58,9 +58,8 @@ namespace RogueCastle
             _boss2.GetChildAt(2).Opacity = 0.8f;
             (_boss2.GetChildAt(1) as SpriteObj).OutlineColour = Color.Black;
             _boss2.GetChildAt(1).TextureColor = Color.DarkGray;
-            _boss.Level = 100;
-            _boss.MaxHealth = 100;
-            _boss.Damage = 370;
+            _boss.MaxHealth = 64;
+            _boss.Damage = 20;
             _boss.IsWeighted = false;
             _boss.TurnSpeed = 0.015f;
             _boss.Speed = 400f;
@@ -76,6 +75,9 @@ namespace RogueCastle
             _boss2.IsNeo = _boss.IsNeo;
             _boss2.ChangeNeoStats(0.75f, 1.16f, 5);
             _boss2.Scale = _boss.Scale;
+
+            // Soft-lock prevention.
+            Player.CanBeKnockedBack = false;
 
             if (_boss != null)
             {
