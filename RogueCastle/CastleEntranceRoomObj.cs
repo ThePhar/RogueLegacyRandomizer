@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - CastleEntranceRoomObj.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -11,7 +11,6 @@
 
 using System;
 using System.Collections.Generic;
-using Archipelago;
 using Archipelago.Definitions;
 using DS2DEngine;
 using InputSystem;
@@ -21,76 +20,78 @@ using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
-using LogicSet = DS2DEngine.LogicSet;
-
 namespace RogueCastle
 {
     public class CastleEntranceRoomObj : RoomObj
     {
-        private bool m_allFilesSaved;
-        private DoorObj m_bossDoor;
-        private bool m_bossDoorOpening;
-        private ObjContainer m_bossDoorSprite;
-        private PhysicsObj m_castleGate;
-        private SpriteObj m_diary;
-        private bool m_gateClosed;
-        private KeyIconObj m_mapIcon;
-        private TextObj m_mapText;
-        private SpriteObj m_speechBubble;
-        private TeleporterObj m_teleporter;
+        private bool          _allFilesSaved;
+        private DoorObj       _bossDoor;
+        private bool          _bossDoorOpening;
+        private ObjContainer  _bossDoorSprite;
+        private PhysicsObj    _castleGate;
+        private SpriteObj     _diary;
+        private bool          _gateClosed;
+        private KeyIconObj    _mapIcon;
+        private TextObj       _mapText;
+        private SpriteObj     _speechBubble;
+        private TeleporterObj _teleporter;
 
         public CastleEntranceRoomObj()
         {
-            m_castleGate = new PhysicsObj("CastleEntranceGate_Sprite");
-            m_castleGate.IsWeighted = false;
-            m_castleGate.IsCollidable = true;
-            m_castleGate.CollisionTypeTag = 1;
-            m_castleGate.Layer = -1f;
-            m_castleGate.OutlineWidth = 2;
-            GameObjList.Add(m_castleGate);
-            m_teleporter = new TeleporterObj();
-            GameObjList.Add(m_teleporter);
+            _castleGate = new PhysicsObj("CastleEntranceGate_Sprite");
+            _castleGate.IsWeighted = false;
+            _castleGate.IsCollidable = true;
+            _castleGate.CollisionTypeTag = 1;
+            _castleGate.Layer = -1f;
+            _castleGate.OutlineWidth = 2;
+            GameObjList.Add(_castleGate);
+            _teleporter = new TeleporterObj();
+            GameObjList.Add(_teleporter);
         }
+
+        public bool RoomCompleted { get; set; } = false;
 
         public override void Initialize()
         {
-            m_speechBubble = new SpriteObj("ExclamationSquare_Sprite");
-            m_speechBubble.Flip = SpriteEffects.FlipHorizontally;
-            m_speechBubble.Scale = new Vector2(1.2f, 1.2f);
-            GameObjList.Add(m_speechBubble);
-            m_mapText = new KeyIconTextObj(Game.JunicodeFont);
-            m_mapText.Text = "view map any time";
-            m_mapText.Align = Types.TextAlign.Centre;
-            m_mapText.FontSize = 12f;
-            m_mapText.OutlineWidth = 2;
-            GameObjList.Add(m_mapText);
-            m_mapIcon = new KeyIconObj();
-            m_mapIcon.Scale = new Vector2(0.5f, 0.5f);
-            GameObjList.Add(m_mapIcon);
+            _speechBubble = new SpriteObj("ExclamationSquare_Sprite");
+            _speechBubble.Flip = SpriteEffects.FlipHorizontally;
+            _speechBubble.Scale = new Vector2(1.2f, 1.2f);
+            GameObjList.Add(_speechBubble);
+            _mapText = new KeyIconTextObj(Game.JunicodeFont);
+            _mapText.Text = "view map any time";
+            _mapText.Align = Types.TextAlign.Centre;
+            _mapText.FontSize = 12f;
+            _mapText.OutlineWidth = 2;
+            GameObjList.Add(_mapText);
+            _mapIcon = new KeyIconObj();
+            _mapIcon.Scale = new Vector2(0.5f, 0.5f);
+            GameObjList.Add(_mapIcon);
             foreach (var current in GameObjList)
             {
                 if (current.Name == "diary")
                 {
-                    m_diary = current as SpriteObj;
+                    _diary = current as SpriteObj;
                 }
 
                 if (current.Name == "map")
                 {
                     (current as SpriteObj).OutlineWidth = 2;
-                    m_mapText.Position = new Vector2(current.X, current.Bounds.Top - 50);
-                    m_mapIcon.Position = new Vector2(m_mapText.X, m_mapText.Y - 20f);
+                    _mapText.Position = new Vector2(current.X, current.Bounds.Top - 50);
+                    _mapIcon.Position = new Vector2(_mapText.X, _mapText.Y - 20f);
                 }
             }
 
-            m_diary.OutlineWidth = 2;
-            m_speechBubble.Position = new Vector2(m_diary.X, m_diary.Y - m_speechBubble.Height - 20f);
+            _diary.OutlineWidth = 2;
+            _speechBubble.Position = new Vector2(_diary.X, _diary.Y - _speechBubble.Height - 20f);
             DoorObj doorObj = null;
             foreach (var current2 in GameObjList)
+            {
                 if (current2.Name == "LastDoor")
                 {
-                    m_bossDoorSprite = current2 as ObjContainer;
+                    _bossDoorSprite = current2 as ObjContainer;
                     break;
                 }
+            }
 
             foreach (var current3 in DoorList)
             {
@@ -101,16 +102,20 @@ namespace RogueCastle
 
                 if (current3.IsBossDoor)
                 {
-                    m_bossDoor = current3;
-                    m_bossDoor.Locked = true;
+                    _bossDoor = current3;
+                    _bossDoor.Locked = true;
                 }
             }
 
-            for (var i = 1; i < m_bossDoorSprite.NumChildren; i++) m_bossDoorSprite.GetChildAt(i).Opacity = 0f;
-            m_bossDoorSprite.AnimationDelay = 0.1f;
-            m_castleGate.Position = new Vector2(doorObj.Bounds.Right - m_castleGate.Width,
-                doorObj.Y - m_castleGate.Height);
-            m_teleporter.Position = new Vector2(X + Width / 2f - 600f, Y + 720f - 120f);
+            for (var i = 1; i < _bossDoorSprite.NumChildren; i++)
+            {
+                _bossDoorSprite.GetChildAt(i).Opacity = 0f;
+            }
+
+            _bossDoorSprite.AnimationDelay = 0.1f;
+            _castleGate.Position = new Vector2(doorObj.Bounds.Right - _castleGate.Width,
+                doorObj.Y - _castleGate.Height);
+            _teleporter.Position = new Vector2(X + Width / 2f - 600f, Y + 720f - 120f);
             base.Initialize();
         }
 
@@ -168,26 +173,26 @@ namespace RogueCastle
 
             if (flag)
             {
-                m_bossDoorSprite.GetChildAt(index).TextureColor = Color.Yellow;
+                _bossDoorSprite.GetChildAt(index).TextureColor = Color.Yellow;
             }
             else
             {
-                m_bossDoorSprite.GetChildAt(index).TextureColor = Color.White;
+                _bossDoorSprite.GetChildAt(index).TextureColor = Color.White;
             }
 
             if (tween)
             {
-                m_bossDoorSprite.GetChildAt(index).Opacity = 0f;
-                Tween.To(m_bossDoorSprite.GetChildAt(index), 0.5f, Quad.EaseInOut, "delay", "1.5", "Opacity", "1");
+                _bossDoorSprite.GetChildAt(index).Opacity = 0f;
+                Tween.To(_bossDoorSprite.GetChildAt(index), 0.5f, Quad.EaseInOut, "delay", "1.5", "Opacity", "1");
                 return;
             }
 
-            m_bossDoorSprite.GetChildAt(index).Opacity = 1f;
+            _bossDoorSprite.GetChildAt(index).Opacity = 1f;
         }
 
         public override void OnEnter()
         {
-            m_bossDoorOpening = false;
+            _bossDoorOpening = false;
             if (Game.PlayerStats.ReadLastDiary && LinkedRoom.LinkedRoom != null)
             {
                 LinkedRoom = LinkedRoom.LinkedRoom;
@@ -196,28 +201,28 @@ namespace RogueCastle
             Game.PlayerStats.LoadStartingRoom = false;
             if (Game.PlayerStats.DiaryEntry < 1)
             {
-                m_speechBubble.Visible = true;
+                _speechBubble.Visible = true;
             }
             else
             {
-                m_speechBubble.Visible = false;
+                _speechBubble.Visible = false;
             }
 
             if (InputManager.GamePadIsConnected(PlayerIndex.One))
             {
-                m_mapIcon.SetButton(Game.GlobalInput.ButtonList[9]);
-                m_mapIcon.Scale = new Vector2(1f, 1f);
+                _mapIcon.SetButton(Game.GlobalInput.ButtonList[9]);
+                _mapIcon.Scale = new Vector2(1f, 1f);
             }
             else
             {
-                m_mapIcon.SetKey(Game.GlobalInput.KeyList[9]);
-                m_mapIcon.Scale = new Vector2(0.5f, 0.5f);
+                _mapIcon.SetKey(Game.GlobalInput.KeyList[9]);
+                _mapIcon.Scale = new Vector2(0.5f, 0.5f);
             }
 
-            if (!m_allFilesSaved)
+            if (!_allFilesSaved)
             {
                 Player.Game.SaveManager.SaveAllFileTypes(false);
-                m_allFilesSaved = true;
+                _allFilesSaved = true;
             }
 
             if (Game.PlayerStats.EyeballBossBeaten)
@@ -248,12 +253,12 @@ namespace RogueCastle
             }
             else if (Game.PlayerStats.FinalDoorOpened)
             {
-                m_bossDoor.Locked = false;
-                m_bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
-                m_bossDoorSprite.GoToFrame(m_bossDoorSprite.TotalFrames);
+                _bossDoor.Locked = false;
+                _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
+                _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
             }
 
-            if (!m_gateClosed)
+            if (!_gateClosed)
             {
                 CloseGate(true);
             }
@@ -272,8 +277,8 @@ namespace RogueCastle
         public void PlayBossDoorAnimation()
         {
             Player.StopDash();
-            m_bossDoorOpening = true;
-            m_bossDoor.Locked = false;
+            _bossDoorOpening = true;
+            _bossDoor.Locked = false;
             Player.AttachedLevel.UpdateCamera();
             RevealSymbol(Zone.None, true);
             Player.CurrentSpeed = 0f;
@@ -295,8 +300,8 @@ namespace RogueCastle
 
         public void PlayBossDoorAnimation2(float storedX)
         {
-            m_bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
-            m_bossDoorSprite.PlayAnimation(false);
+            _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
+            _bossDoorSprite.PlayAnimation(false);
             SoundManager.PlaySound("LastDoor_Open");
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "2", "X", storedX.ToString());
             Tween.RunFunction(3.1f, this, "BossDoorAnimationComplete");
@@ -304,20 +309,20 @@ namespace RogueCastle
 
         public void BossDoorAnimationComplete()
         {
-            m_bossDoorOpening = false;
+            _bossDoorOpening = false;
             Player.UnlockControls();
             Player.AttachedLevel.CameraLockedToPlayer = true;
         }
 
         public void ForceGateClosed()
         {
-            m_castleGate.Y += m_castleGate.Height;
-            m_gateClosed = true;
+            _castleGate.Y += _castleGate.Height;
+            _gateClosed = true;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (m_bossDoorOpening && !Player.ControlsLocked)
+            if (_bossDoorOpening && !Player.ControlsLocked)
             {
                 Player.LockControls();
             }
@@ -327,76 +332,87 @@ namespace RogueCastle
                 SoundManager.PlayMusic("CastleSong", true);
             }
 
-            if (Player.X < m_castleGate.Bounds.Right)
+            if (Player.X < _castleGate.Bounds.Right)
             {
-                Player.X = m_castleGate.Bounds.Right + 20;
+                Player.X = _castleGate.Bounds.Right + 20;
                 Player.AttachedLevel.UpdateCamera();
             }
 
             // Diary Logic
-            var bounds = m_diary.Bounds;
+            var bounds = _diary.Bounds;
             bounds.X -= 50;
             bounds.Width += 100;
-            m_speechBubble.Y = m_diary.Y - m_speechBubble.Height - 20f - 30f +
+            _speechBubble.Y = _diary.Y - _speechBubble.Height - 20f - 30f +
                                (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
 
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
             {
-                if (m_speechBubble.SpriteName == "ExclamationSquare_Sprite")
+                if (_speechBubble.SpriteName == "ExclamationSquare_Sprite")
                 {
-                    m_speechBubble.ChangeSprite("UpArrowSquare_Sprite");
+                    _speechBubble.ChangeSprite("UpArrowSquare_Sprite");
                 }
             }
-            else if (m_speechBubble.SpriteName == "UpArrowSquare_Sprite")
+            else if (_speechBubble.SpriteName == "UpArrowSquare_Sprite")
             {
-                m_speechBubble.ChangeSprite("ExclamationSquare_Sprite");
+                _speechBubble.ChangeSprite("ExclamationSquare_Sprite");
             }
 
-            if (Game.PlayerStats.DiaryEntry < 1 || CollisionMath.Intersects(Player.Bounds, bounds))
+            if ((Game.PlayerStats.DiaryEntry < 25 && !RoomCompleted) || CollisionMath.Intersects(Player.Bounds, bounds))
             {
-                m_speechBubble.Visible = true;
+                _speechBubble.Visible = true;
             }
-            else if (Game.PlayerStats.DiaryEntry >= 1 && !CollisionMath.Intersects(Player.Bounds, bounds))
+            else if (Game.PlayerStats.DiaryEntry >= 25 && !CollisionMath.Intersects(Player.Bounds, bounds) || RoomCompleted)
             {
-                m_speechBubble.Visible = false;
+                _speechBubble.Visible = false;
             }
 
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround && InputTypeHelper.PressedUp)
             {
-                if (Game.PlayerStats.DiaryEntry < 1)
+                if ((!RoomCompleted && Game.PlayerStats.DiaryEntry < 25 && Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration) || Game.PlayerStats.DiaryEntry < 1)
                 {
-                    // Disable diary.
-                    // var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    // rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry0");
-                    // rCScreenManager.DisplayScreen((int) Screen.Dialogue, true);
-                    Game.PlayerStats.DiaryEntry += 1;
-
-                    // Check location.
-                    var location = LocationDefinitions.GetLocation(Program.Game.ArchipelagoManager.Data, "Diary 1").Code;
-                    var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
-                    Program.Game.ArchipelagoManager.CheckLocations(location);
-
-                    // If we're sending someone else something, let's show what we're sending.
-                    if (networkItem.Player != Program.Game.ArchipelagoManager.Data.Slot)
+                    while (true)
                     {
-                        var item = new List<object>
-                        {
-                            new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Game.ScreenManager.Player.Height / 2f),
-                            ItemCategory.GiveNetworkItem,
-                            new Vector2(-1f, -1f),
-                            new Vector2(-1f, -1f),
-                            Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
-                            networkItem.Item
-                        };
+                        var location = LocationDefinitions.Diary1.Code + Game.PlayerStats.DiaryEntry++;
 
-                        Game.ScreenManager.DisplayScreen((int)ScreenType.GetItem, true, item);
-                        Game.ScreenManager.Player.RunGetItemAnimation();
+                        // If our location cache does not contain this location, then we have run out of locations to check.
+                        if (!Program.Game.ArchipelagoManager.LocationCache.ContainsKey(location))
+                        {
+                            return;
+                        }
+
+                        // Check if we already checked this location and try to get the next item in the sequence if so.
+                        if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
+                        {
+                            continue;
+                        }
+
+                        // If we've gotten this far, then this is a new item.
+                        var item = Program.Game.ArchipelagoManager.LocationCache[location];
+                        if (item.Player != Program.Game.ArchipelagoManager.Data.Slot)
+                        {
+                            var networkItem = new List<object>
+                            {
+                                new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Game.ScreenManager.Player.Height / 2f),
+                                ItemCategory.GiveNetworkItem,
+                                new Vector2(-1f, -1f),
+                                new Vector2(-1f, -1f),
+                                Program.Game.ArchipelagoManager.GetPlayerName(item.Player),
+                                item.Item
+                            };
+                            Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, networkItem);
+                            Game.ScreenManager.Player.RunGetItemAnimation();
+                        }
+
+                        Program.Game.ArchipelagoManager.CheckLocations(location);
+                        RoomCompleted = true;
+                        break;
                     }
                 }
                 else
                 {
+                    RoomCompleted = true;
                     var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    rCScreenManager2.DisplayScreen((int) ScreenType.DiaryEntry, true);
+                    rCScreenManager2.DisplayScreen(20, true);
                 }
             }
 
@@ -419,24 +435,24 @@ namespace RogueCastle
                 logicSet.AddAction(new DelayLogicAction(0.2f));
                 logicSet.AddAction(new ChangePropertyLogicAction(Player, "CurrentSpeed", 0));
                 Player.RunExternalLogicSet(logicSet);
-                Tween.By(m_castleGate, 1.5f, Quad.EaseOut, "Y", m_castleGate.Height.ToString());
+                Tween.By(_castleGate, 1.5f, Quad.EaseOut, "Y", _castleGate.Height.ToString());
                 Tween.AddEndHandlerToLastTween(Player, "UnlockControls");
                 Player.AttachedLevel.RunCinematicBorders(1.5f);
             }
             else
             {
-                m_castleGate.Y += m_castleGate.Height;
+                _castleGate.Y += _castleGate.Height;
             }
 
-            m_gateClosed = true;
+            _gateClosed = true;
         }
 
         public override void Reset()
         {
-            if (m_gateClosed)
+            if (_gateClosed)
             {
-                m_castleGate.Y -= m_castleGate.Height;
-                m_gateClosed = false;
+                _castleGate.Y -= _castleGate.Height;
+                _gateClosed = false;
             }
 
             base.Reset();
@@ -446,14 +462,14 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                m_castleGate = null;
-                m_teleporter = null;
-                m_bossDoor = null;
-                m_bossDoorSprite = null;
-                m_diary = null;
-                m_speechBubble = null;
-                m_mapText = null;
-                m_mapIcon = null;
+                _castleGate = null;
+                _teleporter = null;
+                _bossDoor = null;
+                _bossDoorSprite = null;
+                _diary = null;
+                _speechBubble = null;
+                _mapText = null;
+                _mapIcon = null;
                 base.Dispose();
             }
         }

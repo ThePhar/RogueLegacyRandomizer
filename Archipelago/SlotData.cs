@@ -1,6 +1,6 @@
 ﻿// 
 //  Rogue Legacy Randomizer - SlotData.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -45,6 +45,7 @@ namespace Archipelago
         public bool   ChallengeAlexander     => Convert.ToInt32(_slotData["alexander"]) == 1;
         public bool   ChallengeLeon          => Convert.ToInt32(_slotData["leon"]) == 1;
         public bool   ChallengeHerodotus     => Convert.ToInt32(_slotData["herodotus"]) == 1;
+        public bool   FreeDiaryOnGeneration  => Convert.ToInt32(_slotData["free_diary_on_generation"]) == 1;
 
         public float GoldGainMultiplier => Convert.ToInt32(_slotData["gold_gain_multiplier"]) switch
         {

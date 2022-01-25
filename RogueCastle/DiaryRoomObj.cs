@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - DiaryRoomObj.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -102,7 +102,7 @@ namespace RogueCastle
 
                 if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                 {
-                    if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 24)
+                    if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 25)
                     {
                         // var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
                         // rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
