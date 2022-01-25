@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ChallengeBossRoomObj.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -17,32 +17,30 @@ using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
-using LogicSet = DS2DEngine.LogicSet;
-
 namespace RogueCastle
 {
     public abstract class ChallengeBossRoomObj : RoomObj
     {
-        protected ChestObj _bossChest;
-        private SpriteObj _bossDivider;
-        private TextObj _bossTitle1;
-        private TextObj _bossTitle2;
-        protected bool m_cutsceneRunning;
-        private List<RaindropObj> m_rainFG;
-        private float m_roomFloor;
-        private float m_sparkleTimer;
-        private PlayerStats m_storedPlayerStats;
-        private Vector2 m_storedScale;
-        private bool m_teleportingOut;
+        protected ChestObj          _bossChest;
+        private   SpriteObj         _bossDivider;
+        private   TextObj           _bossTitle1;
+        private   TextObj           _bossTitle2;
+        protected bool              _cutsceneRunning;
+        private   List<RaindropObj> _rainFG;
+        private   float             _roomFloor;
+        private   float             _sparkleTimer;
+        private   PlayerStats       _storedPlayerStats;
+        private   Vector2           _storedScale;
+        private   bool              _teleportingOut;
 
         public ChallengeBossRoomObj()
         {
-            m_storedPlayerStats = new PlayerStats();
+            _storedPlayerStats = new PlayerStats();
         }
 
-        public abstract bool BossKilled { get; }
-        public int StoredHP { get; private set; }
-        public float StoredMP { get; private set; }
+        public abstract bool  BossKilled { get; }
+        public          int   StoredHP   { get; private set; }
+        public          float StoredMP   { get; private set; }
 
         public override void Initialize()
         {
@@ -56,16 +54,20 @@ namespace RogueCastle
             _bossTitle2.FontSize = 40f;
             _bossDivider = new SpriteObj("Blank_Sprite");
             _bossDivider.OutlineWidth = 2;
-            foreach (var current in DoorList) m_roomFloor = current.Bounds.Bottom;
+            foreach (var current in DoorList)
+            {
+                _roomFloor = current.Bounds.Bottom;
+            }
+
             _bossChest = new ChestObj(null);
             _bossChest.Position = new Vector2(Bounds.Center.X - _bossChest.Width / 2f, Bounds.Center.Y);
             GameObjList.Add(_bossChest);
-            m_rainFG = new List<RaindropObj>();
+            _rainFG = new List<RaindropObj>();
             for (var i = 0; i < 50; i++)
             {
                 var raindropObj =
                     new RaindropObj(new Vector2(CDGMath.RandomFloat(X - Width, X), CDGMath.RandomFloat(Y, Y + Height)));
-                m_rainFG.Add(raindropObj);
+                _rainFG.Add(raindropObj);
                 raindropObj.ChangeToParticle();
             }
 
@@ -84,14 +86,17 @@ namespace RogueCastle
                 Player.PhysicsMngr.AddObject(_bossChest);
             }
 
-            m_teleportingOut = false;
+            _teleportingOut = false;
             _bossTitle1.Opacity = 0f;
             _bossTitle2.Opacity = 0f;
             _bossDivider.ScaleX = 0f;
             _bossDivider.Opacity = 0f;
             if (LevelENV.WeakenBosses)
             {
-                foreach (var current in EnemyList) current.CurrentHealth = 1;
+                foreach (var current in EnemyList)
+                {
+                    current.CurrentHealth = 1;
+                }
             }
 
             base.OnEnter();
@@ -167,8 +172,12 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var current in m_rainFG) current.UpdateNoCollision(gameTime);
-            if (!m_cutsceneRunning)
+            foreach (var current in _rainFG)
+            {
+                current.UpdateNoCollision(gameTime);
+            }
+
+            if (!_cutsceneRunning)
             {
                 base.Update(gameTime);
             }
@@ -180,27 +189,27 @@ namespace RogueCastle
                 _bossChest.Opacity = 0f;
                 SoundManager.PlayMusic("TitleScreenSong", true, 1f);
                 Tween.To(_bossChest, 4f, Tween.EaseNone, "Opacity", "1");
-                Tween.To(_bossChest, 4f, Quad.EaseOut, "Y", m_roomFloor.ToString());
+                Tween.To(_bossChest, 4f, Quad.EaseOut, "Y", _roomFloor.ToString());
                 Tween.AddEndHandlerToLastTween(this, "UnlockChest");
-                m_sparkleTimer = 0.5f;
+                _sparkleTimer = 0.5f;
             }
 
             if (_bossChest.Visible && !_bossChest.IsOpen && BossKilled)
             {
-                if (m_sparkleTimer > 0f)
+                if (_sparkleTimer > 0f)
                 {
-                    m_sparkleTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
-                    if (m_sparkleTimer <= 0f)
+                    _sparkleTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_sparkleTimer <= 0f)
                     {
-                        m_sparkleTimer = 0.5f;
+                        _sparkleTimer = 0.5f;
                         Tween.RunFunction(0f, Player.AttachedLevel.ImpactEffectPool, "DisplayChestSparkleEffect",
                             new Vector2(_bossChest.X, _bossChest.Y - _bossChest.Height / 2));
                     }
                 }
             }
-            else if (_bossChest.Visible && _bossChest.IsOpen && BossKilled && !m_teleportingOut)
+            else if (_bossChest.Visible && _bossChest.IsOpen && BossKilled && !_teleportingOut)
             {
-                m_teleportingOut = true;
+                _teleportingOut = true;
                 if (LevelENV.RunDemoVersion)
                 {
                     (Player.AttachedLevel.ScreenManager as RCScreenManager).DisplayScreen(29, true);
@@ -285,7 +294,7 @@ namespace RogueCastle
 
         public void TeleportScaleIn()
         {
-            Tween.To(Player, 0.05f, Tween.EaseNone, "delay", "0.15", "ScaleX", m_storedScale.X.ToString());
+            Tween.To(Player, 0.05f, Tween.EaseNone, "delay", "0.15", "ScaleX", _storedScale.X.ToString());
         }
 
         public void LockCamera()
@@ -300,7 +309,11 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            foreach (var current in m_rainFG) current.Draw(camera);
+            foreach (var current in _rainFG)
+            {
+                current.Draw(camera);
+            }
+
             base.Draw(camera);
             _bossDivider.Draw(camera);
             camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
@@ -320,9 +333,13 @@ namespace RogueCastle
                 _bossTitle1 = null;
                 _bossTitle2.Dispose();
                 _bossTitle2 = null;
-                foreach (var current in m_rainFG) current.Dispose();
-                m_rainFG.Clear();
-                m_rainFG = null;
+                foreach (var current in _rainFG)
+                {
+                    current.Dispose();
+                }
+
+                _rainFG.Clear();
+                _rainFG = null;
                 base.Dispose();
             }
         }

@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - BlobChallengeRoom.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -93,7 +93,7 @@ namespace RogueCastle
             //Player.Flip = SpriteEffects.FlipHorizontally;
             Player.Flip = SpriteEffects.FlipHorizontally;
             SetRoomData();
-            m_cutsceneRunning = true;
+            _cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
             _boss.AnimationDelay = 0.1f;
             _boss.ChangeSprite("EnemyBlobBossAir_Character");
@@ -146,7 +146,7 @@ namespace RogueCastle
             SoundManager.PlayMusic("DungeonBoss", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.UnlockControls();
-            m_cutsceneRunning = false;
+            _cutsceneRunning = false;
         }
 
         public override void Update(GameTime gameTime)
