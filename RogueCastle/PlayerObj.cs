@@ -2416,7 +2416,15 @@ namespace RogueCastle
         public void Forfeit()
         {
             Program.Game.ArchipelagoManager.Forfeit();
-            LoadEnding();
+
+            if (Program.Game.ArchipelagoManager.CanCollect)
+            {
+                CollectPrompt();
+            }
+            else
+            {
+                LoadEnding();
+            }
         }
 
         public void ForfeitPrompt()
@@ -2429,6 +2437,36 @@ namespace RogueCastle
                 rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
                 rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                 rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
+
+                if (Program.Game.ArchipelagoManager.CanCollect)
+                {
+                    rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CollectPrompt");
+                }
+                else
+                {
+                    rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "LoadEnding");
+                }
+
+                rCScreenManager.DisplayScreen((int) ScreenType.Dialogue, true);
+            }
+        }
+
+        public void Collect()
+        {
+            Program.Game.ArchipelagoManager.Collect();
+            LoadEnding();
+        }
+
+        public void CollectPrompt()
+        {
+            if (Program.Game.ArchipelagoManager.CanCollect)
+            {
+                var rCScreenManager = Game.ScreenManager;
+                DialogueManager.AddText("Collect", new[] { "Congrats!" },
+                    new[] { "Would you like to collect your remaining items?" });
+                rCScreenManager.DialogueScreen.SetDialogue("Collect");
+                rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
+                rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Collect");
                 rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "LoadEnding");
                 rCScreenManager.DisplayScreen((int) ScreenType.Dialogue, true);
             }
@@ -2461,6 +2499,10 @@ namespace RogueCastle
                     if (Program.Game.ArchipelagoManager.CanForfeit)
                     {
                         ForfeitPrompt();
+                    }
+                    else if (Program.Game.ArchipelagoManager.CanCollect)
+                    {
+                        CollectPrompt();
                     }
                     else
                     {
