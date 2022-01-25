@@ -368,12 +368,8 @@ namespace RogueCastle
 
             if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround && InputTypeHelper.PressedUp)
             {
-                if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 25)
+                if ((!RoomCompleted && Game.PlayerStats.DiaryEntry < 25 && Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration) || Game.PlayerStats.DiaryEntry < 1)
                 {
-                    // var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                    // rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
-                    // rCScreenManager.DisplayScreen(13, true);
-
                     while (true)
                     {
                         var location = LocationDefinitions.Diary1.Code + Game.PlayerStats.DiaryEntry++;
