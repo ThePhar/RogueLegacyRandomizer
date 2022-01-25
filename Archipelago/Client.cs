@@ -146,6 +146,12 @@ namespace Archipelago
             _session.Socket.SendPacket(new SayPacket { Text = "!forfeit" });
         }
 
+        public void Collect()
+        {
+            // Not sure if there's a better way to do this, but I know this works!
+            _session.Socket.SendPacket(new SayPacket { Text = "!collect" });
+        }
+
         public void AnnounceVictory()
         {
             _session.Socket.SendPacket(new StatusUpdatePacket { Status = ArchipelagoClientState.ClientGoal });
