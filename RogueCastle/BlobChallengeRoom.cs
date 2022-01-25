@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - BlobChallengeRoom.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -58,9 +58,8 @@ namespace RogueCastle
             _boss2.GetChildAt(2).Opacity = 0.8f;
             (_boss2.GetChildAt(1) as SpriteObj).OutlineColour = Color.Black;
             _boss2.GetChildAt(1).TextureColor = Color.DarkGray;
-            _boss.Level = 100;
-            _boss.MaxHealth = 100;
-            _boss.Damage = 370;
+            _boss.MaxHealth = 64;
+            _boss.Damage = 20;
             _boss.IsWeighted = false;
             _boss.TurnSpeed = 0.015f;
             _boss.Speed = 400f;
@@ -76,6 +75,9 @@ namespace RogueCastle
             _boss2.IsNeo = _boss.IsNeo;
             _boss2.ChangeNeoStats(0.75f, 1.16f, 5);
             _boss2.Scale = _boss.Scale;
+
+            // Soft-lock prevention.
+            Player.CanBeKnockedBack = false;
 
             if (_boss != null)
             {
@@ -93,7 +95,7 @@ namespace RogueCastle
             //Player.Flip = SpriteEffects.FlipHorizontally;
             Player.Flip = SpriteEffects.FlipHorizontally;
             SetRoomData();
-            m_cutsceneRunning = true;
+            _cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
             _boss.AnimationDelay = 0.1f;
             _boss.ChangeSprite("EnemyBlobBossAir_Character");
@@ -146,7 +148,7 @@ namespace RogueCastle
             SoundManager.PlayMusic("DungeonBoss", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.UnlockControls();
-            m_cutsceneRunning = false;
+            _cutsceneRunning = false;
         }
 
         public override void Update(GameTime gameTime)

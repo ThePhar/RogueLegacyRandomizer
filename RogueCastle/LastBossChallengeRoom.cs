@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - LastBossChallengeRoom.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -103,7 +103,7 @@ namespace RogueCastle
         public override void OnEnter()
         {
             SetRoomData();
-            m_cutsceneRunning = true;
+            _cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
             m_boss.PlayAnimation();
             m_boss2.PlayAnimation();
@@ -144,7 +144,7 @@ namespace RogueCastle
             SoundManager.PlayMusic("LastBossSong", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = true;
             Player.UnlockControls();
-            m_cutsceneRunning = false;
+            _cutsceneRunning = false;
         }
 
         protected override void SaveCompletionData()

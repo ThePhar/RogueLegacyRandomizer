@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - FairyChallengeRoom.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -12,7 +12,6 @@
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
@@ -20,61 +19,58 @@ namespace RogueCastle
 {
     public class FairyChallengeRoom : ChallengeBossRoomObj
     {
-        private EnemyObj_Fairy m_boss;
-        private Vector2 m_startingCamPos;
-        private bool m_teleportingOut;
+        private EnemyObj_Fairy _boss;
+        private Vector2        _startingCamPos;
+        private bool           _teleportingOut;
 
         public FairyChallengeRoom()
         {
             m_roomActivityDelay = 0.5f;
         }
 
-        public override bool BossKilled
-        {
-            get { return m_boss.IsKilled; }
-        }
+        public override bool BossKilled => _boss.IsKilled;
 
         public override void Initialize()
         {
-            m_boss = EnemyList[0] as EnemyObj_Fairy;
-            m_boss.SaveToFile = false;
-            m_boss.Flip = SpriteEffects.FlipHorizontally;
+            _boss = EnemyList[0] as EnemyObj_Fairy;
+            _boss.SaveToFile = false;
+            _boss.Flip = SpriteEffects.FlipHorizontally;
             base.Initialize();
         }
 
         private void SetRoomData()
         {
-            m_boss.GetChildAt(0).TextureColor = Color.Yellow;
-            m_boss.Name = "Alexander the IV";
-            m_boss.Level = 100;
-            m_boss.MaxHealth = 15000;
-            m_boss.Damage = 200;
-            m_boss.Speed = 400f;
-            m_boss.IsNeo = true;
-            if (m_boss != null)
+            _boss.GetChildAt(0).TextureColor = Color.Yellow;
+            _boss.Name = "Alexander the IV";
+            _boss.MaxHealth = 1000;
+            _boss.Damage = 35;
+            _boss.Speed = 350f;
+            _boss.IsNeo = true;
+
+            if (_boss != null)
             {
-                m_boss.CurrentHealth = m_boss.MaxHealth;
+                _boss.CurrentHealth = _boss.MaxHealth;
             }
         }
 
         public override void OnEnter()
         {
-            m_teleportingOut = false;
+            _teleportingOut = false;
             //Player.Flip = SpriteEffects.None;
             Player.Flip = SpriteEffects.None;
             SetRoomData();
-            m_cutsceneRunning = true;
+            _cutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
-            m_boss.ChangeSprite("EnemyFairyGhostBossIdle_Character");
-            m_boss.PlayAnimation();
+            _boss.ChangeSprite("EnemyFairyGhostBossIdle_Character");
+            _boss.PlayAnimation();
             Player.AttachedLevel.UpdateCamera();
-            m_startingCamPos = Player.AttachedLevel.Camera.Position;
+            _startingCamPos = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", m_boss.Y.ToString(), "X",
-                m_boss.X.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Lost", m_boss.Name,
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", _boss.Y.ToString(), "X",
+                _boss.X.ToString());
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Lost", _boss.Name,
                 "Intro2");
             base.OnEnter();
             Player.GetChildAt(10).TextureColor = Color.White;
@@ -83,23 +79,23 @@ namespace RogueCastle
         public void Intro2()
         {
             Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "0.5", "Y",
-                m_startingCamPos.Y.ToString(),
-                "X", m_startingCamPos.X.ToString());
+                _startingCamPos.Y.ToString(),
+                "X", _startingCamPos.X.ToString());
             Tween.AddEndHandlerToLastTween(this, "EndCutscene");
         }
 
         public void EndCutscene()
         {
-            m_boss.Rotation = 0f;
+            _boss.Rotation = 0f;
             SoundManager.PlayMusic("GardenBossSong", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = true;
             Player.UnlockControls();
-            m_cutsceneRunning = false;
+            _cutsceneRunning = false;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (m_boss.IsKilled && !m_teleportingOut)
+            if (_boss.IsKilled && !_teleportingOut)
             {
                 Player.CurrentMana = Player.MaxMana;
             }
@@ -109,16 +105,16 @@ namespace RogueCastle
 
         public override void Draw(Camera2D camera)
         {
-            if (m_boss.IsKilled && Game.PlayerStats.Traits.X != 1f && Game.PlayerStats.Traits.Y != 1f)
+            if (_boss.IsKilled && Game.PlayerStats.Traits.X != 1f && Game.PlayerStats.Traits.Y != 1f)
             {
                 camera.End();
-                m_boss.StopAnimation();
+                _boss.StopAnimation();
                 Game.HSVEffect.Parameters["Saturation"].SetValue(0);
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null,
                     Game.HSVEffect, camera.GetTransformation());
-                m_boss.Visible = true;
-                m_boss.Draw(camera);
-                m_boss.Visible = false;
+                _boss.Visible = true;
+                _boss.Draw(camera);
+                _boss.Visible = false;
                 camera.End();
                 camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
                     camera.GetTransformation());
@@ -137,7 +133,7 @@ namespace RogueCastle
 
             TempEnemyList.Clear();
             Player.InvincibleToSpikes = false;
-            m_teleportingOut = true;
+            _teleportingOut = true;
             base.OnExit();
         }
 
@@ -161,7 +157,7 @@ namespace RogueCastle
         {
             if (!IsDisposed)
             {
-                m_boss = null;
+                _boss = null;
                 base.Dispose();
             }
         }
