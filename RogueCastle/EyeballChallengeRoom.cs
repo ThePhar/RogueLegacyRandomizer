@@ -37,11 +37,11 @@ namespace RogueCastle
         private void SetRoomData()
         {
             _boss.GetChildAt(0).TextureColor = Color.HotPink;
-            _boss.Level = 100;
-            _boss.MaxHealth = 17000;
-            _boss.Damage = 57;
+            _boss.MaxHealth = 650;
+            _boss.Damage = 25;
             _boss.IsNeo = true;
             _boss.Name = "Neo Khidr";
+
             if (_boss != null)
             {
                 _boss.CurrentHealth = _boss.MaxHealth;
@@ -58,14 +58,12 @@ namespace RogueCastle
             _boss.PlayAnimation();
             Player.AttachedLevel.Camera.X = (int) (Bounds.Left + Player.AttachedLevel.Camera.Width * 0.5f);
             Player.AttachedLevel.Camera.Y = Player.Y;
-            var arg_BC_0 = Player.AttachedLevel.Camera.Position;
             Player.LockControls();
             Player.AttachedLevel.RunCinematicBorders(6f);
             Player.AttachedLevel.CameraLockedToPlayer = false;
             Player.AttachedLevel.Camera.Y = Player.Y;
-            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", _boss.Y.ToString());
-            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Keymaster", _boss.Name,
-                "Intro2");
+            Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "Y", $"{_boss.Y}");
+            Tween.RunFunction(1.2f, this, "DisplayBossTitle", "The Keymaster", _boss.Name, "Intro2");
             base.OnEnter();
         }
 
@@ -87,8 +85,7 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (!_cutsceneRunning && !_boss.BossVersionKilled && Player.CurrentHealth > 0 &&
-                !SoundManager.IsMusicPlaying)
+            if (!_cutsceneRunning && !_boss.BossVersionKilled && Player.CurrentHealth > 0 && !SoundManager.IsMusicPlaying)
             {
                 SoundManager.PlayMusic("CastleBossSong", true);
             }
@@ -99,7 +96,6 @@ namespace RogueCastle
         protected override void SaveCompletionData()
         {
             Game.PlayerStats.EyeballBossBeaten = true;
-            GameUtil.UnlockAchievement("FEAR_OF_BLINDNESS");
         }
 
         public override void OnExit()
@@ -113,18 +109,15 @@ namespace RogueCastle
             return new EyeballChallengeRoom();
         }
 
-        protected override void FillCloneInstance(object obj)
-        {
-            base.FillCloneInstance(obj);
-        }
-
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                _boss = null;
-                base.Dispose();
+                return;
             }
+
+            _boss = null;
+            base.Dispose();
         }
     }
 }

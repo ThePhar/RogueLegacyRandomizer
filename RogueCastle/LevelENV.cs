@@ -301,7 +301,7 @@ namespace RogueCastle
         public static string[] TowerAssetSwapList         { get; set; }
         public static string[] GardenAssetSwapList        { get; set; }
         public static bool     ShowEnemyRadii             { get; set; } = false;
-        public static bool     EnablePlayerDebug          { get; set; } = true; // TODO: Revert
+        public static bool     EnablePlayerDebug          { get; set; } = false; // TODO: Revert
         public static bool     UnlockAllAbilities         { get; set; } = false;
         public static bool     TestRoomReverse            { get; set; } = false;
         public static bool     RunTestRoom                { get; set; } = false;
