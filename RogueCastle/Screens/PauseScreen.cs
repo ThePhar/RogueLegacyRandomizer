@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - PauseScreen.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -15,19 +15,18 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
-using Screen = DS2DEngine.Screen;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
     public class PauseScreen : Screen
     {
-        private List<PauseInfoObj> m_infoObjList;
-        private float m_inputDelay;
-        private SpriteObj m_optionsIcon;
-        private KeyIconTextObj m_optionsKey;
-        private SpriteObj m_profileCard;
-        private KeyIconTextObj m_profileCardKey;
-        private SpriteObj m_titleText;
+        private List<PauseInfoObj> _infoObjList;
+        private float              _inputDelay;
+        private SpriteObj          _optionsIcon;
+        private KeyIconTextObj     _optionsKey;
+        private SpriteObj          _profileCard;
+        private KeyIconTextObj     _profileCardKey;
+        private SpriteObj          _titleText;
 
         public PauseScreen()
         {
@@ -36,42 +35,42 @@ namespace RogueCastle
 
         public override void LoadContent()
         {
-            m_titleText = new SpriteObj("GamePausedTitleText_Sprite");
-            m_titleText.X = 660f;
-            m_titleText.Y = 72f;
-            m_titleText.ForceDraw = true;
-            m_infoObjList = new List<PauseInfoObj>();
-            m_infoObjList.Add(new PauseInfoObj());
-            m_profileCard = new SpriteObj("TitleProfileCard_Sprite");
-            m_profileCard.OutlineWidth = 2;
-            m_profileCard.Scale = new Vector2(2f, 2f);
-            m_profileCard.Position = new Vector2(m_profileCard.Width, 720 - m_profileCard.Height);
-            m_profileCard.ForceDraw = true;
-            m_optionsIcon = new SpriteObj("TitleOptionsIcon_Sprite");
-            m_optionsIcon.Scale = new Vector2(2f, 2f);
-            m_optionsIcon.OutlineWidth = m_profileCard.OutlineWidth;
-            m_optionsIcon.Position = new Vector2(1320 - m_optionsIcon.Width * 2 + 120, m_profileCard.Y);
-            m_optionsIcon.ForceDraw = true;
-            m_profileCardKey = new KeyIconTextObj(Game.JunicodeFont);
-            m_profileCardKey.Align = Types.TextAlign.Centre;
-            m_profileCardKey.FontSize = 12f;
-            m_profileCardKey.Text = "[Input:" + 7 + "]";
-            m_profileCardKey.Position = new Vector2(m_profileCard.X,
-                m_profileCard.Bounds.Top - m_profileCardKey.Height - 10);
-            m_profileCardKey.ForceDraw = true;
-            m_optionsKey = new KeyIconTextObj(Game.JunicodeFont);
-            m_optionsKey.Align = Types.TextAlign.Centre;
-            m_optionsKey.FontSize = 12f;
-            m_optionsKey.Text = "[Input:" + 4 + "]";
-            m_optionsKey.Position = new Vector2(m_optionsIcon.X, m_optionsIcon.Bounds.Top - m_optionsKey.Height - 10);
-            m_optionsKey.ForceDraw = true;
+            _titleText = new SpriteObj("GamePausedTitleText_Sprite");
+            _titleText.X = 660f;
+            _titleText.Y = 72f;
+            _titleText.ForceDraw = true;
+            _infoObjList = new List<PauseInfoObj>();
+            _infoObjList.Add(new PauseInfoObj());
+            _profileCard = new SpriteObj("TitleProfileCard_Sprite");
+            _profileCard.OutlineWidth = 2;
+            _profileCard.Scale = new Vector2(2f, 2f);
+            _profileCard.Position = new Vector2(_profileCard.Width, 720 - _profileCard.Height);
+            _profileCard.ForceDraw = true;
+            _optionsIcon = new SpriteObj("TitleOptionsIcon_Sprite");
+            _optionsIcon.Scale = new Vector2(2f, 2f);
+            _optionsIcon.OutlineWidth = _profileCard.OutlineWidth;
+            _optionsIcon.Position = new Vector2(1320 - _optionsIcon.Width * 2 + 120, _profileCard.Y);
+            _optionsIcon.ForceDraw = true;
+            _profileCardKey = new KeyIconTextObj(Game.JunicodeFont);
+            _profileCardKey.Align = Types.TextAlign.Centre;
+            _profileCardKey.FontSize = 12f;
+            _profileCardKey.Text = "[Input:" + 7 + "]";
+            _profileCardKey.Position = new Vector2(_profileCard.X,
+                _profileCard.Bounds.Top - _profileCardKey.Height - 10);
+            _profileCardKey.ForceDraw = true;
+            _optionsKey = new KeyIconTextObj(Game.JunicodeFont);
+            _optionsKey.Align = Types.TextAlign.Centre;
+            _optionsKey.FontSize = 12f;
+            _optionsKey.Text = "[Input:" + 4 + "]";
+            _optionsKey.Position = new Vector2(_optionsIcon.X, _optionsIcon.Bounds.Top - _optionsKey.Height - 10);
+            _optionsKey.ForceDraw = true;
             base.LoadContent();
         }
 
         public override void OnEnter()
         {
             UpdatePauseScreenIcons();
-            m_inputDelay = 0.5f;
+            _inputDelay = 0.5f;
             if (SoundManager.IsMusicPlaying)
             {
                 SoundManager.PauseMusic();
@@ -79,14 +78,14 @@ namespace RogueCastle
 
             SoundManager.PlaySound("Pause_Toggle");
             var levelScreen = (ScreenManager as RCScreenManager).GetLevelScreen();
-            foreach (var current in m_infoObjList)
+            foreach (var current in _infoObjList)
             {
                 current.Reset();
                 current.Visible = false;
             }
 
             var player = (ScreenManager as RCScreenManager).Player;
-            var pauseInfoObj = m_infoObjList[0];
+            var pauseInfoObj = _infoObjList[0];
             pauseInfoObj.Visible = true;
             pauseInfoObj.AddItem("Class: ", ((ClassType) Game.PlayerStats.Class).Name(Game.PlayerStats.IsFemale));
             pauseInfoObj.AddItem("Strength: ", player.Damage.ToString());
@@ -106,20 +105,23 @@ namespace RogueCastle
 
             pauseInfoObj.SetNamePosition(new Vector2(pauseInfoObj.X, player.Bounds.Top - Camera.TopLeftCorner.Y - 40f));
             pauseInfoObj.Visible = player.Visible;
-            var num = m_infoObjList.Count - 1;
+            var num = _infoObjList.Count - 1;
             for (var i = num;
                  i < levelScreen.CurrentRoom.EnemyList.Count + levelScreen.CurrentRoom.TempEnemyList.Count;
                  i++)
-                m_infoObjList.Add(new PauseInfoObj
+            {
+                _infoObjList.Add(new PauseInfoObj
                 {
                     Visible = false
                 });
+            }
+
             for (var j = 1; j < levelScreen.CurrentRoom.EnemyList.Count + 1; j++)
             {
                 var enemyObj = levelScreen.CurrentRoom.EnemyList[j - 1];
                 if (!enemyObj.NonKillable && !enemyObj.IsKilled && enemyObj.Visible)
                 {
-                    var pauseInfoObj2 = m_infoObjList[j];
+                    var pauseInfoObj2 = _infoObjList[j];
                     pauseInfoObj2.Visible = true;
                     if (!LevelENV.CreateRetailVersion)
                     {
@@ -147,7 +149,7 @@ namespace RogueCastle
                 var enemyObj2 = levelScreen.CurrentRoom.TempEnemyList[k];
                 if (!enemyObj2.NonKillable && !enemyObj2.IsKilled)
                 {
-                    var pauseInfoObj3 = m_infoObjList[k + 1 + count];
+                    var pauseInfoObj3 = _infoObjList[k + 1 + count];
                     pauseInfoObj3.Visible = true;
                     if (!LevelENV.CreateRetailVersion)
                     {
@@ -175,8 +177,8 @@ namespace RogueCastle
 
         public void UpdatePauseScreenIcons()
         {
-            m_profileCardKey.Text = "[Input:" + 7 + "]";
-            m_optionsKey.Text = "[Input:" + 4 + "]";
+            _profileCardKey.Text = "[Input:" + 7 + "]";
+            _optionsKey.Text = "[Input:" + 4 + "]";
         }
 
         public override void OnExit()
@@ -187,13 +189,17 @@ namespace RogueCastle
             }
 
             SoundManager.PlaySound("Resume_Toggle");
-            foreach (var current in m_infoObjList) current.Visible = false;
+            foreach (var current in _infoObjList)
+            {
+                current.Visible = false;
+            }
+
             base.OnExit();
         }
 
         public override void HandleInput()
         {
-            if (m_inputDelay <= 0f)
+            if (_inputDelay <= 0f)
             {
                 if (Game.GlobalInput.JustPressed(7) && Game.PlayerStats.TutorialComplete)
                 {
@@ -219,9 +225,9 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (m_inputDelay > 0f)
+            if (_inputDelay > 0f)
             {
-                m_inputDelay -= (float) gameTime.ElapsedGameTime.TotalSeconds;
+                _inputDelay -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             base.Update(gameTime);
@@ -230,19 +236,23 @@ namespace RogueCastle
         public override void Draw(GameTime gameTime)
         {
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null);
-            m_titleText.Draw(Camera);
-            foreach (var current in m_infoObjList) current.Draw(Camera);
-            if (Game.PlayerStats.TutorialComplete)
+            _titleText.Draw(Camera);
+            foreach (var current in _infoObjList)
             {
-                m_profileCardKey.Draw(Camera);
+                current.Draw(Camera);
             }
 
-            m_optionsKey.Draw(Camera);
-            Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            m_optionsIcon.Draw(Camera);
             if (Game.PlayerStats.TutorialComplete)
             {
-                m_profileCard.Draw(Camera);
+                _profileCardKey.Draw(Camera);
+            }
+
+            _optionsKey.Draw(Camera);
+            Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            _optionsIcon.Draw(Camera);
+            if (Game.PlayerStats.TutorialComplete)
+            {
+                _profileCard.Draw(Camera);
             }
 
             Camera.End();
@@ -251,31 +261,37 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                Console.WriteLine("Disposing Pause Screen");
-                foreach (var current in m_infoObjList) current.Dispose();
-                m_infoObjList.Clear();
-                m_infoObjList = null;
-                m_titleText.Dispose();
-                m_titleText = null;
-                m_profileCard.Dispose();
-                m_profileCard = null;
-                m_optionsIcon.Dispose();
-                m_optionsIcon = null;
-                m_profileCardKey.Dispose();
-                m_profileCardKey = null;
-                m_optionsKey.Dispose();
-                m_optionsKey = null;
-                base.Dispose();
+                return;
             }
+
+            Console.WriteLine("Disposing Pause Screen");
+            foreach (var current in _infoObjList)
+            {
+                current.Dispose();
+            }
+
+            _infoObjList.Clear();
+            _infoObjList = null;
+            _titleText.Dispose();
+            _titleText = null;
+            _profileCard.Dispose();
+            _profileCard = null;
+            _optionsIcon.Dispose();
+            _optionsIcon = null;
+            _profileCardKey.Dispose();
+            _profileCardKey = null;
+            _optionsKey.Dispose();
+            _optionsKey = null;
+            base.Dispose();
         }
 
         private class PauseInfoObj : ObjContainer
         {
-            private int m_arrayIndex;
-            private TextObj m_name;
-            private ObjContainer m_namePlate;
+            private int           m_arrayIndex;
+            private TextObj       m_name;
+            private ObjContainer  m_namePlate;
             private List<TextObj> m_textDataList;
             private List<TextObj> m_textList;
 
@@ -362,17 +378,21 @@ namespace RogueCastle
                     _objectList[1].Height * (_objectList.Count + 1) / 2 / (float) _objectList[0].Height;
                 var num = 0;
                 foreach (var current in m_textList)
+                {
                     if (current.Width > num)
                     {
                         num = current.Width;
                     }
+                }
 
                 var num2 = 0;
                 foreach (var current2 in m_textDataList)
+                {
                     if (current2.Width > num2)
                     {
                         num2 = current2.Width;
                     }
+                }
 
                 _objectList[0].ScaleX = 1f;
                 _objectList[0].ScaleX = (num + num2 + 50) / (float) _objectList[0].Width;
@@ -400,8 +420,16 @@ namespace RogueCastle
 
             public void Reset()
             {
-                foreach (var current in m_textList) current.Text = "";
-                foreach (var current2 in m_textDataList) current2.Text = "";
+                foreach (var current in m_textList)
+                {
+                    current.Text = "";
+                }
+
+                foreach (var current2 in m_textDataList)
+                {
+                    current2.Text = "";
+                }
+
                 m_arrayIndex = 0;
             }
 

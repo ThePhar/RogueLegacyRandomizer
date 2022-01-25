@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - LineageScreen.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -19,59 +19,58 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
-using Screen = DS2DEngine.Screen;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
     public class LineageScreen : Screen
     {
-        private readonly Vector2 m_startingPoint;
-        private readonly int m_xPosOffset = 400;
-        private BackgroundObj m_background;
-        private SpriteObj m_bgShadow;
-        private KeyIconTextObj m_confirmText;
-        private List<LineageObj> m_currentBranchArray;
-        private Vector2 m_currentPoint;
-        private ObjContainer m_descriptionPlate;
-        private bool m_lockControls;
-        private List<LineageObj> m_masterArray;
-        private KeyIconTextObj m_navigationText;
-        private KeyIconTextObj m_rerollText;
-        private int m_selectedLineageIndex;
-        private LineageObj m_selectedLineageObj;
-        private TweenObject m_selectTween;
-        private LineageObj m_startingLineageObj;
-        private float m_storedMusicVol;
-        private SpriteObj m_titleText;
-        private int m_xShift;
+        private readonly Vector2          _startingPoint;
+        private readonly int              _xPosOffset = 400;
+        private          BackgroundObj    _background;
+        private          SpriteObj        _bgShadow;
+        private          KeyIconTextObj   _confirmText;
+        private          List<LineageObj> _currentBranchArray;
+        private          Vector2          _currentPoint;
+        private          ObjContainer     _descriptionPlate;
+        private          bool             _lockControls;
+        private          List<LineageObj> _masterArray;
+        private          KeyIconTextObj   _navigationText;
+        private          KeyIconTextObj   _rerollText;
+        private          int              _selectedLineageIndex;
+        private          LineageObj       _selectedLineageObj;
+        private          TweenObject      _selectTween;
+        private          LineageObj       _startingLineageObj;
+        private          float            _storedMusicVol;
+        private          SpriteObj        _titleText;
+        private          int              _xShift;
 
         public LineageScreen()
         {
-            m_startingPoint = new Vector2(660f, 360f);
-            m_currentPoint = m_startingPoint;
+            _startingPoint = new Vector2(660f, 360f);
+            _currentPoint = _startingPoint;
         }
 
         public override void LoadContent()
         {
             Game.HSVEffect.Parameters["Saturation"].SetValue(0);
-            m_background = new BackgroundObj("LineageScreenBG_Sprite");
-            m_background.SetRepeated(true, true, Camera);
-            m_background.X -= 6600f;
-            m_bgShadow = new SpriteObj("LineageScreenShadow_Sprite");
-            m_bgShadow.Scale = new Vector2(11f, 11f);
-            m_bgShadow.Y -= 10f;
-            m_bgShadow.ForceDraw = true;
-            m_bgShadow.Opacity = 0.9f;
-            m_bgShadow.Position = new Vector2(660f, 360f);
-            m_titleText = new SpriteObj("LineageTitleText_Sprite");
-            m_titleText.X = 660f;
-            m_titleText.Y = 72f;
-            m_titleText.ForceDraw = true;
+            _background = new BackgroundObj("LineageScreenBG_Sprite");
+            _background.SetRepeated(true, true, Camera);
+            _background.X -= 6600f;
+            _bgShadow = new SpriteObj("LineageScreenShadow_Sprite");
+            _bgShadow.Scale = new Vector2(11f, 11f);
+            _bgShadow.Y -= 10f;
+            _bgShadow.ForceDraw = true;
+            _bgShadow.Opacity = 0.9f;
+            _bgShadow.Position = new Vector2(660f, 360f);
+            _titleText = new SpriteObj("LineageTitleText_Sprite");
+            _titleText.X = 660f;
+            _titleText.Y = 72f;
+            _titleText.ForceDraw = true;
             var num = 20;
-            m_descriptionPlate = new ObjContainer("LineageScreenPlate_Character");
-            m_descriptionPlate.ForceDraw = true;
-            m_descriptionPlate.Position = new Vector2(1320 - m_descriptionPlate.Width - 30,
-                (720 - m_descriptionPlate.Height) / 2f);
+            _descriptionPlate = new ObjContainer("LineageScreenPlate_Character");
+            _descriptionPlate.ForceDraw = true;
+            _descriptionPlate.Position = new Vector2(1320 - _descriptionPlate.Width - 30,
+                (720 - _descriptionPlate.Height) / 2f);
             var textObj = new TextObj(Game.JunicodeFont);
             textObj.FontSize = 12f;
             textObj.Align = Types.TextAlign.Centre;
@@ -79,16 +78,16 @@ namespace RogueCastle
             textObj.OutlineWidth = 2;
             textObj.Text = "Sir Skunky the IV";
             textObj.OverrideParentScale = true;
-            textObj.Position = new Vector2(m_descriptionPlate.Width / 2f, 15f);
+            textObj.Position = new Vector2(_descriptionPlate.Width / 2f, 15f);
             textObj.LimitCorners = true;
-            m_descriptionPlate.AddChild(textObj);
+            _descriptionPlate.AddChild(textObj);
             var textObj2 = textObj.Clone() as TextObj;
             textObj2.FontSize = 10f;
             textObj2.Text = "Knight";
             textObj2.Align = Types.TextAlign.Left;
             textObj2.X = num;
             textObj2.Y += 40f;
-            m_descriptionPlate.AddChild(textObj2);
+            _descriptionPlate.AddChild(textObj2);
             var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 8f;
             keyIconTextObj.OutlineColour = textObj2.OutlineColour;
@@ -100,7 +99,7 @@ namespace RogueCastle
             keyIconTextObj.Y += 30f;
             keyIconTextObj.X = num + 20;
             keyIconTextObj.LimitCorners = true;
-            m_descriptionPlate.AddChild(keyIconTextObj);
+            _descriptionPlate.AddChild(keyIconTextObj);
             for (var i = 0; i < 2; i++)
             {
                 var textObj3 = textObj2.Clone() as TextObj;
@@ -109,16 +108,16 @@ namespace RogueCastle
                 textObj3.Align = Types.TextAlign.Left;
                 if (i > 0)
                 {
-                    textObj3.Y = m_descriptionPlate.GetChildAt(m_descriptionPlate.NumChildren - 1).Y + 50f;
+                    textObj3.Y = _descriptionPlate.GetChildAt(_descriptionPlate.NumChildren - 1).Y + 50f;
                 }
 
-                m_descriptionPlate.AddChild(textObj3);
+                _descriptionPlate.AddChild(textObj3);
                 var textObj4 = textObj2.Clone() as TextObj;
                 textObj4.Text = "TraitDescription";
                 textObj4.X = num + 20;
                 textObj4.FontSize = 8f;
                 textObj4.Align = Types.TextAlign.Left;
-                m_descriptionPlate.AddChild(textObj4);
+                _descriptionPlate.AddChild(textObj4);
             }
 
             var textObj5 = textObj2.Clone() as TextObj;
@@ -126,62 +125,62 @@ namespace RogueCastle
             textObj5.FontSize = 10f;
             textObj5.X = num;
             textObj5.Align = Types.TextAlign.Left;
-            m_descriptionPlate.AddChild(textObj5);
+            _descriptionPlate.AddChild(textObj5);
             var keyIconTextObj2 = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj2.OutlineColour = new Color(181, 142, 39);
             keyIconTextObj2.OutlineWidth = 2;
             keyIconTextObj2.OverrideParentScale = true;
-            keyIconTextObj2.Position = new Vector2(m_descriptionPlate.Width / 2f, 15f);
+            keyIconTextObj2.Position = new Vector2(_descriptionPlate.Width / 2f, 15f);
             keyIconTextObj2.Y += 40f;
             keyIconTextObj2.Text = "SpellDescription";
             keyIconTextObj2.X = num + 20;
             keyIconTextObj2.FontSize = 8f;
             keyIconTextObj2.Align = Types.TextAlign.Left;
             keyIconTextObj2.LimitCorners = true;
-            m_descriptionPlate.AddChild(keyIconTextObj2);
-            m_masterArray = new List<LineageObj>();
-            m_currentBranchArray = new List<LineageObj>();
+            _descriptionPlate.AddChild(keyIconTextObj2);
+            _masterArray = new List<LineageObj>();
+            _currentBranchArray = new List<LineageObj>();
             var arg_47E_0 = Vector2.Zero;
-            m_confirmText = new KeyIconTextObj(Game.JunicodeFont);
-            m_confirmText.ForceDraw = true;
-            m_confirmText.FontSize = 12f;
-            m_confirmText.DropShadow = new Vector2(2f, 2f);
-            m_confirmText.Position = new Vector2(1280f, 630f);
-            m_confirmText.Align = Types.TextAlign.Right;
-            m_navigationText = new KeyIconTextObj(Game.JunicodeFont);
-            m_navigationText.Align = Types.TextAlign.Right;
-            m_navigationText.FontSize = 12f;
-            m_navigationText.DropShadow = new Vector2(2f, 2f);
-            m_navigationText.Position = new Vector2(m_confirmText.X, m_confirmText.Y + 40f);
-            m_navigationText.ForceDraw = true;
-            m_rerollText = new KeyIconTextObj(Game.JunicodeFont);
-            m_rerollText.Align = Types.TextAlign.Right;
-            m_rerollText.FontSize = 12f;
-            m_rerollText.DropShadow = new Vector2(2f, 2f);
-            m_rerollText.ForceDraw = true;
-            m_rerollText.Position = new Vector2(1280f, 40f);
+            _confirmText = new KeyIconTextObj(Game.JunicodeFont);
+            _confirmText.ForceDraw = true;
+            _confirmText.FontSize = 12f;
+            _confirmText.DropShadow = new Vector2(2f, 2f);
+            _confirmText.Position = new Vector2(1280f, 630f);
+            _confirmText.Align = Types.TextAlign.Right;
+            _navigationText = new KeyIconTextObj(Game.JunicodeFont);
+            _navigationText.Align = Types.TextAlign.Right;
+            _navigationText.FontSize = 12f;
+            _navigationText.DropShadow = new Vector2(2f, 2f);
+            _navigationText.Position = new Vector2(_confirmText.X, _confirmText.Y + 40f);
+            _navigationText.ForceDraw = true;
+            _rerollText = new KeyIconTextObj(Game.JunicodeFont);
+            _rerollText.Align = Types.TextAlign.Right;
+            _rerollText.FontSize = 12f;
+            _rerollText.DropShadow = new Vector2(2f, 2f);
+            _rerollText.ForceDraw = true;
+            _rerollText.Position = new Vector2(1280f, 40f);
             base.LoadContent();
         }
 
         public override void ReinitializeRTs()
         {
-            m_background.SetRepeated(true, true, Camera);
+            _background.SetRepeated(true, true, Camera);
             base.ReinitializeRTs();
         }
 
         private void UpdateDescriptionPlate()
         {
-            var lineageObj = m_currentBranchArray[m_selectedLineageIndex];
-            var textObj = m_descriptionPlate.GetChildAt(1) as TextObj;
+            var lineageObj = _currentBranchArray[_selectedLineageIndex];
+            var textObj = _descriptionPlate.GetChildAt(1) as TextObj;
             textObj.Text = lineageObj.PlayerName;
-            var textObj2 = m_descriptionPlate.GetChildAt(2) as TextObj;
+            var textObj2 = _descriptionPlate.GetChildAt(2) as TextObj;
             textObj2.Text = "Class - " + ((ClassType) lineageObj.Class).Name(lineageObj.IsFemale);
-            var keyIconTextObj = m_descriptionPlate.GetChildAt(3) as KeyIconTextObj;
+            var keyIconTextObj = _descriptionPlate.GetChildAt(3) as KeyIconTextObj;
             keyIconTextObj.Text = ((ClassType) lineageObj.Class).Description();
             keyIconTextObj.WordWrap(340);
-            var textObj3 = m_descriptionPlate.GetChildAt(4) as TextObj;
+            var textObj3 = _descriptionPlate.GetChildAt(4) as TextObj;
             textObj3.Y = keyIconTextObj.Y + keyIconTextObj.Height + 5f;
-            var textObj4 = m_descriptionPlate.GetChildAt(5) as TextObj;
+            var textObj4 = _descriptionPlate.GetChildAt(5) as TextObj;
             textObj4.Y = textObj3.Y + 30f;
             var num = (int) textObj3.Y;
             if (lineageObj.Traits.X > 0f)
@@ -198,9 +197,9 @@ namespace RogueCastle
                 textObj4.Text = "";
             }
 
-            var textObj5 = m_descriptionPlate.GetChildAt(6) as TextObj;
+            var textObj5 = _descriptionPlate.GetChildAt(6) as TextObj;
             textObj5.Y = textObj4.Y + textObj4.Height + 5f;
-            var textObj6 = m_descriptionPlate.GetChildAt(7) as TextObj;
+            var textObj6 = _descriptionPlate.GetChildAt(7) as TextObj;
             textObj6.Y = textObj5.Y + 30f;
             if (lineageObj.Traits.Y > 0f)
             {
@@ -215,10 +214,10 @@ namespace RogueCastle
                 textObj6.Text = "";
             }
 
-            var textObj7 = m_descriptionPlate.GetChildAt(8) as TextObj;
+            var textObj7 = _descriptionPlate.GetChildAt(8) as TextObj;
             textObj7.Text = "Spell - " + (SpellType) lineageObj.Spell;
             textObj7.Y = num;
-            var keyIconTextObj2 = m_descriptionPlate.GetChildAt(9) as KeyIconTextObj;
+            var keyIconTextObj2 = _descriptionPlate.GetChildAt(9) as KeyIconTextObj;
             keyIconTextObj2.Text = ((SpellType) lineageObj.Spell).Description();
             keyIconTextObj2.Y = textObj7.Y + 30f;
             keyIconTextObj2.WordWrap(340);
@@ -226,14 +225,14 @@ namespace RogueCastle
 
         private void AddLineageRow(int numLineages, Vector2 position, bool createEmpty, bool randomizePortrait)
         {
-            if (m_selectedLineageObj != null)
+            if (_selectedLineageObj != null)
             {
-                m_selectedLineageObj.ForceDraw = false;
-                m_selectedLineageObj.Y = 0f;
+                _selectedLineageObj.ForceDraw = false;
+                _selectedLineageObj.Y = 0f;
             }
 
-            m_currentPoint = position;
-            m_currentBranchArray.Clear();
+            _currentPoint = position;
+            _currentBranchArray.Clear();
             int[] childrenFive =
             {
                 -900,
@@ -247,7 +246,7 @@ namespace RogueCastle
                 -900,
                 -450,
                 0,
-                450,
+                450
             };
             int[] childrenThree =
             {
@@ -273,49 +272,53 @@ namespace RogueCastle
                 }
 
                 lineageObj.ForceDraw = true;
-                lineageObj.X = position.X + m_xPosOffset;
+                lineageObj.X = position.X + _xPosOffset;
                 var children = childrenThree;
                 switch (numLineages)
                 {
                     case 1:
                         children = childrenOne;
                         break;
+
                     case 2:
                         children = childrenTwo;
                         break;
+
                     case 3:
                         break;
+
                     case 4:
                         children = childrenFour;
                         break;
+
                     case 5:
                         children = childrenFive;
                         break;
                 }
 
                 lineageObj.Y = children[i];
-                m_currentBranchArray.Add(lineageObj);
+                _currentBranchArray.Add(lineageObj);
                 if (lineageObj.Traits.X == 20f || lineageObj.Traits.Y == 20f)
                 {
                     lineageObj.FlipPortrait = true;
                 }
             }
 
-            m_currentPoint = m_currentBranchArray[(int) Math.Floor(numLineages / 2.0)].Position;
-            Camera.Position = m_currentPoint;
-            m_selectedLineageObj = m_currentBranchArray[(int) Math.Floor(numLineages / 2.0)];
-            m_selectedLineageIndex = (int) Math.Floor(numLineages / 2.0);
+            _currentPoint = _currentBranchArray[(int) Math.Floor(numLineages / 2.0)].Position;
+            Camera.Position = _currentPoint;
+            _selectedLineageObj = _currentBranchArray[(int) Math.Floor(numLineages / 2.0)];
+            _selectedLineageIndex = (int) Math.Floor(numLineages / 2.0);
         }
 
         public override void OnEnter()
         {
-            m_lockControls = false;
+            _lockControls = false;
             SoundManager.PlayMusic("SkillTreeSong", true, 1f);
-            m_storedMusicVol = SoundManager.GlobalMusicVolume;
+            _storedMusicVol = SoundManager.GlobalMusicVolume;
             SoundManager.GlobalMusicVolume = 0f;
             if (SoundManager.AudioEngine != null)
             {
-                SoundManager.AudioEngine.GetCategory("Legacy").SetVolume(m_storedMusicVol);
+                SoundManager.AudioEngine.GetCategory("Legacy").SetVolume(_storedMusicVol);
             }
 
             if (Game.LineageSongCue != null && Game.LineageSongCue.IsPlaying)
@@ -332,27 +335,27 @@ namespace RogueCastle
 
             LoadFamilyTreeData();
             LoadCurrentBranches();
-            Camera.Position = m_selectedLineageObj.Position;
+            Camera.Position = _selectedLineageObj.Position;
             UpdateDescriptionPlate();
-            m_confirmText.Text = "[Input:" + 0 + "] to select a child";
+            _confirmText.Text = "[Input:" + 0 + "] to select a child";
             if (InputManager.GamePadIsConnected(PlayerIndex.One))
             {
-                m_navigationText.Text = "[Button:LeftStick] to view family tree";
+                _navigationText.Text = "[Button:LeftStick] to view family tree";
             }
             else
             {
-                m_navigationText.Text = "Arrow keys to view family tree";
+                _navigationText.Text = "Arrow keys to view family tree";
             }
 
-            m_rerollText.Text = "[Input:" + 9 + "] to re-roll your children once";
+            _rerollText.Text = "[Input:" + 9 + "] to re-roll your children once";
             if (SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                 !Game.PlayerStats.RerolledChildren)
             {
-                m_rerollText.Visible = true;
+                _rerollText.Visible = true;
             }
             else
             {
-                m_rerollText.Visible = false;
+                _rerollText.Visible = false;
             }
 
             base.OnEnter();
@@ -360,7 +363,7 @@ namespace RogueCastle
 
         public void LoadFamilyTreeData()
         {
-            m_masterArray.Clear();
+            _masterArray.Clear();
             var num = 700;
             if (Game.PlayerStats.FamilyTreeArray != null && Game.PlayerStats.FamilyTreeArray.Count > 0)
             {
@@ -386,8 +389,8 @@ namespace RogueCastle
                         lineageObj.UpdateClassRank();
                         num += lineageObj.Age;
                         lineageObj.X = num2;
-                        num2 += m_xPosOffset;
-                        m_masterArray.Add(lineageObj);
+                        num2 += _xPosOffset;
+                        _masterArray.Add(lineageObj);
                         if (lineageObj.Traits.X == 20f || lineageObj.Traits.Y == 20f)
                         {
                             lineageObj.FlipPortrait = true;
@@ -413,8 +416,8 @@ namespace RogueCastle
             lineageObj2.UpdateClassRank();
             num += lineageObj2.Age;
             lineageObj2.X = num3;
-            num3 += m_xPosOffset;
-            m_masterArray.Add(lineageObj2);
+            num3 += _xPosOffset;
+            _masterArray.Add(lineageObj2);
             if (lineageObj2.Traits.X == 20f || lineageObj2.Traits.Y == 20f)
             {
                 lineageObj2.FlipPortrait = true;
@@ -425,51 +428,54 @@ namespace RogueCastle
         {
             if (Game.PlayerStats.CurrentBranches == null || Game.PlayerStats.CurrentBranches.Count < 1)
             {
-                AddLineageRow(Program.Game.ArchipelagoManager.Data.NumberOfChildren, m_masterArray[m_masterArray.Count - 1].Position, false, true);
+                AddLineageRow(Program.Game.ArchipelagoManager.Data.NumberOfChildren, _masterArray[_masterArray.Count - 1].Position, false, true);
                 var list = new List<PlayerLineageData>();
-                for (var i = 0; i < m_currentBranchArray.Count; i++)
+                for (var i = 0; i < _currentBranchArray.Count; i++)
+                {
                     list.Add(new PlayerLineageData
                     {
-                        Name = m_currentBranchArray[i].PlayerName,
-                        HeadPiece = m_currentBranchArray[i].HeadPiece,
-                        ShoulderPiece = m_currentBranchArray[i].ShoulderPiece,
-                        ChestPiece = m_currentBranchArray[i].ChestPiece,
-                        IsFemale = m_currentBranchArray[i].IsFemale,
-                        Class = m_currentBranchArray[i].Class,
-                        Spell = m_currentBranchArray[i].Spell,
-                        Traits = m_currentBranchArray[i].Traits,
-                        Age = m_currentBranchArray[i].Age,
-                        ChildAge = m_currentBranchArray[i].ChildAge
+                        Name = _currentBranchArray[i].PlayerName,
+                        HeadPiece = _currentBranchArray[i].HeadPiece,
+                        ShoulderPiece = _currentBranchArray[i].ShoulderPiece,
+                        ChestPiece = _currentBranchArray[i].ChestPiece,
+                        IsFemale = _currentBranchArray[i].IsFemale,
+                        Class = _currentBranchArray[i].Class,
+                        Spell = _currentBranchArray[i].Spell,
+                        Traits = _currentBranchArray[i].Traits,
+                        Age = _currentBranchArray[i].Age,
+                        ChildAge = _currentBranchArray[i].ChildAge
                         //IsFemale = this.m_currentBranchArray[i].IsFemale
                     });
+                }
+
                 Game.PlayerStats.CurrentBranches = list;
                 (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.Lineage);
                 return;
             }
 
-            AddLineageRow(Program.Game.ArchipelagoManager.Data.NumberOfChildren, m_masterArray[m_masterArray.Count - 1].Position, true, true);
+            AddLineageRow(Program.Game.ArchipelagoManager.Data.NumberOfChildren, _masterArray[_masterArray.Count - 1].Position, true, true);
             var currentBranches = Game.PlayerStats.CurrentBranches;
-            for (var j = 0; j < m_currentBranchArray.Count; j++)
+            for (var j = 0; j < _currentBranchArray.Count; j++)
             {
-                m_currentBranchArray[j].PlayerName = currentBranches[j].Name;
-                m_currentBranchArray[j].SetPortrait(currentBranches[j].HeadPiece, currentBranches[j].ShoulderPiece,
+                _currentBranchArray[j].PlayerName = currentBranches[j].Name;
+                _currentBranchArray[j].SetPortrait(currentBranches[j].HeadPiece, currentBranches[j].ShoulderPiece,
                     currentBranches[j].ChestPiece);
-                m_currentBranchArray[j].Spell = currentBranches[j].Spell;
-                m_currentBranchArray[j].Class = currentBranches[j].Class;
-                m_currentBranchArray[j].ClearTraits();
-                m_currentBranchArray[j].Traits = currentBranches[j].Traits;
-                m_currentBranchArray[j].Age = currentBranches[j].Age;
-                m_currentBranchArray[j].ChildAge = currentBranches[j].ChildAge;
-                m_currentBranchArray[j].IsFemale = currentBranches[j].IsFemale;
-                m_currentBranchArray[j].UpdateData();
+                _currentBranchArray[j].Spell = currentBranches[j].Spell;
+                _currentBranchArray[j].Class = currentBranches[j].Class;
+                _currentBranchArray[j].ClearTraits();
+                _currentBranchArray[j].Traits = currentBranches[j].Traits;
+                _currentBranchArray[j].Age = currentBranches[j].Age;
+                _currentBranchArray[j].ChildAge = currentBranches[j].ChildAge;
+                _currentBranchArray[j].IsFemale = currentBranches[j].IsFemale;
+                _currentBranchArray[j].UpdateData();
             }
         }
 
         public override void OnExit()
         {
             var num = 0.0166666675f;
-            var num2 = m_storedMusicVol;
-            var num3 = m_storedMusicVol / 120f;
+            var num2 = _storedMusicVol;
+            var num3 = _storedMusicVol / 120f;
             for (var i = 0; i < 120; i++)
             {
                 Tween.RunFunction(num * i, this, "ReduceMusic", num2);
@@ -496,10 +502,10 @@ namespace RogueCastle
             if (SoundManager.AudioEngine != null)
             {
                 SoundManager.AudioEngine.GetCategory("Legacy").SetVolume(newVolume);
-                SoundManager.GlobalMusicVolume += m_storedMusicVol - newVolume;
-                if (SoundManager.GlobalMusicVolume > m_storedMusicVol)
+                SoundManager.GlobalMusicVolume += _storedMusicVol - newVolume;
+                if (SoundManager.GlobalMusicVolume > _storedMusicVol)
                 {
-                    SoundManager.GlobalMusicVolume = m_storedMusicVol;
+                    SoundManager.GlobalMusicVolume = _storedMusicVol;
                 }
             }
         }
@@ -517,12 +523,12 @@ namespace RogueCastle
                 Game.LineageSongCue = null;
             }
 
-            SoundManager.GlobalMusicVolume = m_storedMusicVol;
+            SoundManager.GlobalMusicVolume = _storedMusicVol;
         }
 
         public override void Update(GameTime gameTime)
         {
-            m_bgShadow.Opacity = 0.8f + 0.05f * (float) Math.Sin(Game.TotalGameTimeSeconds * 4f);
+            _bgShadow.Opacity = 0.8f + 0.05f * (float) Math.Sin(Game.TotalGameTimeSeconds * 4f);
             if (Game.LineageSongCue != null && !Game.LineageSongCue.IsPlaying)
             {
                 Game.LineageSongCue.Dispose();
@@ -537,22 +543,22 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            if (!m_lockControls && (m_selectTween == null || m_selectTween != null && !m_selectTween.Active))
+            if (!_lockControls && (_selectTween == null || _selectTween != null && !_selectTween.Active))
             {
-                var selectedLineageObj = m_selectedLineageObj;
-                var selectedLineageIndex = m_selectedLineageIndex;
+                var selectedLineageObj = _selectedLineageObj;
+                var selectedLineageIndex = _selectedLineageIndex;
                 if (Game.GlobalInput.JustPressed(9) &&
                     SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
                     !Game.PlayerStats.RerolledChildren)
                 {
-                    m_lockControls = true;
+                    _lockControls = true;
                     SoundManager.PlaySound("frame_woosh_01", "frame_woosh_02");
-                    if (m_xShift != 0)
+                    if (_xShift != 0)
                     {
-                        m_xShift = 0;
-                        Tween.By(m_descriptionPlate, 0.2f, Back.EaseOut, "delay", "0.2", "X", "-600");
-                        m_selectTween = Tween.To(Camera, 0.3f, Quad.EaseOut, "delay", "0.2", "X",
-                            (m_masterArray.Count * m_xPosOffset).ToString());
+                        _xShift = 0;
+                        Tween.By(_descriptionPlate, 0.2f, Back.EaseOut, "delay", "0.2", "X", "-600");
+                        _selectTween = Tween.To(Camera, 0.3f, Quad.EaseOut, "delay", "0.2", "X",
+                            (_masterArray.Count * _xPosOffset).ToString());
                     }
 
                     (ScreenManager as RCScreenManager).StartWipeTransition();
@@ -561,91 +567,99 @@ namespace RogueCastle
 
                 if (Game.GlobalInput.Pressed(20) || Game.GlobalInput.Pressed(21))
                 {
-                    if (Camera.X > m_masterArray[0].X + 10f)
+                    if (Camera.X > _masterArray[0].X + 10f)
                     {
                         SoundManager.PlaySound("frame_swoosh_01");
-                        m_selectTween = Tween.By(Camera, 0.3f, Quad.EaseOut, "X", (-m_xPosOffset).ToString());
-                        if (m_xShift == 0)
+                        _selectTween = Tween.By(Camera, 0.3f, Quad.EaseOut, "X", (-_xPosOffset).ToString());
+                        if (_xShift == 0)
                         {
-                            Tween.By(m_descriptionPlate, 0.2f, Back.EaseIn, "X", "600");
+                            Tween.By(_descriptionPlate, 0.2f, Back.EaseIn, "X", "600");
                         }
 
-                        m_xShift--;
+                        _xShift--;
                     }
                 }
-                else if ((Game.GlobalInput.Pressed(22) || Game.GlobalInput.Pressed(23)) && m_xShift < 0)
+                else if ((Game.GlobalInput.Pressed(22) || Game.GlobalInput.Pressed(23)) && _xShift < 0)
                 {
                     SoundManager.PlaySound("frame_swoosh_01");
-                    m_selectTween = Tween.By(Camera, 0.3f, Quad.EaseOut, "X", m_xPosOffset.ToString());
-                    m_xShift++;
-                    if (m_xShift == 0)
+                    _selectTween = Tween.By(Camera, 0.3f, Quad.EaseOut, "X", _xPosOffset.ToString());
+                    _xShift++;
+                    if (_xShift == 0)
                     {
-                        Tween.By(m_descriptionPlate, 0.2f, Back.EaseOut, "X", "-600");
+                        Tween.By(_descriptionPlate, 0.2f, Back.EaseOut, "X", "-600");
                     }
                 }
 
-                if (m_xShift == 0)
+                if (_xShift == 0)
                 {
                     if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
-                        if (m_selectedLineageIndex > 0)
+                        if (_selectedLineageIndex > 0)
                         {
                             SoundManager.PlaySound("frame_swap");
                         }
 
-                        m_selectedLineageIndex--;
-                        if (m_selectedLineageIndex < 0)
+                        _selectedLineageIndex--;
+                        if (_selectedLineageIndex < 0)
                         {
-                            m_selectedLineageIndex = 0;
+                            _selectedLineageIndex = 0;
                         }
 
-                        if (m_selectedLineageIndex != selectedLineageIndex)
+                        if (_selectedLineageIndex != selectedLineageIndex)
                         {
                             UpdateDescriptionPlate();
 
-                            for (var i = 0; i < m_currentBranchArray.Count; i++)
+                            for (var i = 0; i < _currentBranchArray.Count; i++)
                             {
-                                if (i == m_selectedLineageIndex)
-                                    m_selectTween = Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "450");
+                                if (i == _selectedLineageIndex)
+                                {
+                                    _selectTween = Tween.By(_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "450");
+                                }
                                 else
-                                    Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "450");
+                                {
+                                    Tween.By(_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "450");
+                                }
                             }
                         }
                     }
                     else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
                     {
-                        if (m_selectedLineageIndex < m_currentBranchArray.Count - 1)
+                        if (_selectedLineageIndex < _currentBranchArray.Count - 1)
                         {
                             SoundManager.PlaySound("frame_swap");
                         }
 
-                        m_selectedLineageIndex++;
-                        if (m_selectedLineageIndex > m_currentBranchArray.Count - 1)
+                        _selectedLineageIndex++;
+                        if (_selectedLineageIndex > _currentBranchArray.Count - 1)
                         {
-                            m_selectedLineageIndex = m_currentBranchArray.Count - 1;
+                            _selectedLineageIndex = _currentBranchArray.Count - 1;
                         }
 
-                        if (m_selectedLineageIndex != selectedLineageIndex)
+                        if (_selectedLineageIndex != selectedLineageIndex)
                         {
                             UpdateDescriptionPlate();
 
-                            for (var i = 0; i < m_currentBranchArray.Count; i++)
+                            for (var i = 0; i < _currentBranchArray.Count; i++)
                             {
-                                if (i == m_selectedLineageIndex)
-                                    m_selectTween = Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "-450");
+                                if (i == _selectedLineageIndex)
+                                {
+                                    _selectTween = Tween.By(_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "-450");
+                                }
                                 else
-                                    Tween.By(m_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "-450");
+                                {
+                                    Tween.By(_currentBranchArray[i], 0.3f, Quad.EaseOut, "Y", "-450");
+                                }
                             }
                         }
                     }
                 }
 
-                m_selectedLineageObj = m_currentBranchArray[m_selectedLineageIndex];
+                _selectedLineageObj = _currentBranchArray[_selectedLineageIndex];
                 if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
                 {
-                    if (m_xShift == 0)
+                    if (_xShift == 0)
                     {
-                        if (selectedLineageObj == m_selectedLineageObj)
+                        if (selectedLineageObj == _selectedLineageObj)
                         {
                             var rCScreenManager = ScreenManager as RCScreenManager;
                             rCScreenManager.DialogueScreen.SetDialogue("LineageChoiceWarning");
@@ -658,11 +672,11 @@ namespace RogueCastle
                     }
                     else
                     {
-                        m_xShift = 0;
+                        _xShift = 0;
                         SoundManager.PlaySound("frame_woosh_01", "frame_woosh_02");
-                        Tween.By(m_descriptionPlate, 0.2f, Back.EaseOut, "X", "-600");
-                        m_selectTween = Tween.To(Camera, 0.3f, Quad.EaseOut, "X",
-                            (m_masterArray.Count * m_xPosOffset).ToString());
+                        Tween.By(_descriptionPlate, 0.2f, Back.EaseOut, "X", "-600");
+                        _selectTween = Tween.To(Camera, 0.3f, Quad.EaseOut, "X",
+                            (_masterArray.Count * _xPosOffset).ToString());
                     }
                 }
 
@@ -672,28 +686,28 @@ namespace RogueCastle
 
         public void RerollCurrentBranch()
         {
-            m_rerollText.Visible = false;
+            _rerollText.Visible = false;
             Game.PlayerStats.RerolledChildren = true;
             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
             Game.PlayerStats.CurrentBranches.Clear();
             LoadCurrentBranches();
             (ScreenManager as RCScreenManager).EndWipeTransition();
             UpdateDescriptionPlate();
-            m_lockControls = false;
+            _lockControls = false;
         }
 
         public void StartGame()
         {
-            Game.PlayerStats.HeadPiece = m_selectedLineageObj.HeadPiece;
-            Game.PlayerStats.ShoulderPiece = m_selectedLineageObj.ShoulderPiece;
-            Game.PlayerStats.ChestPiece = m_selectedLineageObj.ChestPiece;
-            Game.PlayerStats.IsFemale = m_selectedLineageObj.IsFemale;
-            Game.PlayerStats.Class = m_selectedLineageObj.Class;
-            Game.PlayerStats.Traits = m_selectedLineageObj.Traits;
-            Game.PlayerStats.Spell = m_selectedLineageObj.Spell;
-            Game.PlayerStats.PlayerName = m_selectedLineageObj.PlayerName;
-            Game.PlayerStats.Age = m_selectedLineageObj.Age;
-            Game.PlayerStats.ChildAge = m_selectedLineageObj.ChildAge;
+            Game.PlayerStats.HeadPiece = _selectedLineageObj.HeadPiece;
+            Game.PlayerStats.ShoulderPiece = _selectedLineageObj.ShoulderPiece;
+            Game.PlayerStats.ChestPiece = _selectedLineageObj.ChestPiece;
+            Game.PlayerStats.IsFemale = _selectedLineageObj.IsFemale;
+            Game.PlayerStats.Class = _selectedLineageObj.Class;
+            Game.PlayerStats.Traits = _selectedLineageObj.Traits;
+            Game.PlayerStats.Spell = _selectedLineageObj.Spell;
+            Game.PlayerStats.PlayerName = _selectedLineageObj.PlayerName;
+            Game.PlayerStats.Age = _selectedLineageObj.Age;
+            Game.PlayerStats.ChildAge = _selectedLineageObj.ChildAge;
             if (Game.PlayerStats.Class == 1 || Game.PlayerStats.Class == 9)
             {
                 Game.PlayerStats.WizardSpellList = SpellExtensions.ArchmageSpellList();
@@ -705,35 +719,43 @@ namespace RogueCastle
 
         public override void Draw(GameTime gameTime)
         {
-            if (Camera.X > m_background.X + 6600f)
+            if (Camera.X > _background.X + 6600f)
             {
-                m_background.X = Camera.X;
+                _background.X = Camera.X;
             }
 
-            if (Camera.X < m_background.X)
+            if (Camera.X < _background.X)
             {
-                m_background.X = Camera.X - 1320f;
+                _background.X = Camera.X - 1320f;
             }
 
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, null,
                 Camera.GetTransformation());
-            m_background.Draw(Camera);
+            _background.Draw(Camera);
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,
                 Camera.GetTransformation());
-            foreach (var current in m_masterArray) current.Draw(Camera);
-            foreach (var current2 in m_currentBranchArray) current2.Draw(Camera);
+            foreach (var current in _masterArray)
+            {
+                current.Draw(Camera);
+            }
+
+            foreach (var current2 in _currentBranchArray)
+            {
+                current2.Draw(Camera);
+            }
+
             Camera.End();
             if (Camera.Zoom >= 1f)
             {
                 Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
                     null);
-                m_bgShadow.Draw(Camera);
-                m_titleText.Draw(Camera);
-                m_confirmText.Draw(Camera);
-                m_navigationText.Draw(Camera);
-                m_rerollText.Draw(Camera);
-                m_descriptionPlate.Draw(Camera);
+                _bgShadow.Draw(Camera);
+                _titleText.Draw(Camera);
+                _confirmText.Draw(Camera);
+                _navigationText.Draw(Camera);
+                _rerollText.Draw(Camera);
+                _descriptionPlate.Draw(Camera);
                 Camera.End();
             }
 
@@ -742,65 +764,77 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                Console.WriteLine("Disposing Lineage Screen");
-                m_titleText.Dispose();
-                m_titleText = null;
-                m_selectedLineageObj = null;
-                foreach (var current in m_currentBranchArray) current.Dispose();
-                m_currentBranchArray.Clear();
-                m_currentBranchArray = null;
-                foreach (var current2 in m_masterArray)
-                    if (!current2.IsDisposed)
-                    {
-                        current2.Dispose();
-                    }
-
-                m_masterArray.Clear();
-                m_masterArray = null;
-                if (m_startingLineageObj != null)
-                {
-                    m_startingLineageObj.Dispose();
-                }
-
-                m_startingLineageObj = null;
-                m_background.Dispose();
-                m_background = null;
-                m_bgShadow.Dispose();
-                m_bgShadow = null;
-                m_selectTween = null;
-                m_descriptionPlate.Dispose();
-                m_descriptionPlate = null;
-                m_confirmText.Dispose();
-                m_confirmText = null;
-                m_navigationText.Dispose();
-                m_navigationText = null;
-                m_rerollText.Dispose();
-                m_rerollText = null;
-                base.Dispose();
+                return;
             }
+
+            Console.WriteLine("Disposing Lineage Screen");
+            _titleText.Dispose();
+            _titleText = null;
+            _selectedLineageObj = null;
+            foreach (var current in _currentBranchArray)
+            {
+                current.Dispose();
+            }
+
+            _currentBranchArray.Clear();
+            _currentBranchArray = null;
+            foreach (var current2 in _masterArray)
+            {
+                if (!current2.IsDisposed)
+                {
+                    current2.Dispose();
+                }
+            }
+
+            _masterArray.Clear();
+            _masterArray = null;
+            if (_startingLineageObj != null)
+            {
+                _startingLineageObj.Dispose();
+            }
+
+            _startingLineageObj = null;
+            _background.Dispose();
+            _background = null;
+            _bgShadow.Dispose();
+            _bgShadow = null;
+            _selectTween = null;
+            _descriptionPlate.Dispose();
+            _descriptionPlate = null;
+            _confirmText.Dispose();
+            _confirmText = null;
+            _navigationText.Dispose();
+            _navigationText = null;
+            _rerollText.Dispose();
+            _rerollText = null;
+            base.Dispose();
         }
 
         public int NameCopies(string name)
         {
             var num = 0;
-            foreach (var current in m_masterArray)
+            foreach (var current in _masterArray)
+            {
                 if (current.PlayerName.Contains(" " + name))
                 {
                     num++;
                 }
+            }
 
             return num;
         }
 
         public bool CurrentBranchNameCopyFound(string name)
         {
-            foreach (var current in m_currentBranchArray)
+            foreach (var current in _currentBranchArray)
+            {
                 if (current.PlayerName.Contains(" " + name))
                 {
                     return true;
                 }
+            }
 
             return false;
         }

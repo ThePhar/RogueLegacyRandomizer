@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - EnemyObj.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -16,6 +16,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
+using RogueCastle.Screens;
 using Tweener;
 using LogicSet = DS2DEngine.LogicSet;
 

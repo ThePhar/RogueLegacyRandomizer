@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - GameOverScreen.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -16,36 +16,36 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueCastle.GameObjects;
 using RogueCastle.Enums;
+using RogueCastle.GameObjects;
 using Tweener;
 using Tweener.Ease;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
-    public class GameOverScreen : DS2DEngine.Screen
+    public class GameOverScreen : Screen
     {
-        private int m_bagsCollected;
-        private int m_coinsCollected;
-        private KeyIconTextObj m_continueText;
-        private ObjContainer m_dialoguePlate;
-        private int m_diamondsCollected;
-        private bool m_droppingStats;
-        private List<EnemyObj> m_enemyList;
-        private List<Vector2> m_enemyStoredPositions;
-        private bool m_lockControls;
-        private GameObj m_objKilledPlayer;
-        private PlayerObj m_player;
-        private FrameSoundObj m_playerFallSound;
-        private LineageObj m_playerFrame;
-        private SpriteObj m_playerGhost;
-        private FrameSoundObj m_playerSwordFallSound;
-        private FrameSoundObj m_playerSwordSpinSound;
-        private SpriteObj m_spotlight;
+        private int            _bagsCollected;
+        private int            _coinsCollected;
+        private KeyIconTextObj _continueText;
+        private ObjContainer   _dialoguePlate;
+        private int            _diamondsCollected;
+        private bool           _droppingStats;
+        private List<EnemyObj> _enemyList;
+        private List<Vector2>  _enemyStoredPositions;
+        private bool           _lockControls;
+        private GameObj        _objKilledPlayer;
+        private PlayerObj      _player;
+        private FrameSoundObj  _playerFallSound;
+        private LineageObj     _playerFrame;
+        private SpriteObj      _playerGhost;
+        private FrameSoundObj  _playerSwordFallSound;
+        private FrameSoundObj  _playerSwordSpinSound;
+        private SpriteObj      _spotlight;
 
         public GameOverScreen()
         {
-            m_enemyStoredPositions = new List<Vector2>();
+            _enemyStoredPositions = new List<Vector2>();
         }
 
         public float BackBufferOpacity { get; set; }
@@ -54,28 +54,28 @@ namespace RogueCastle
         {
             if (objList != null)
             {
-                m_player = objList[0] as PlayerObj;
-                if (m_playerFallSound == null)
+                _player = objList[0] as PlayerObj;
+                if (_playerFallSound == null)
                 {
-                    m_playerFallSound = new FrameSoundObj(m_player, 14, "Player_Death_BodyFall");
-                    m_playerSwordSpinSound = new FrameSoundObj(m_player, 2, "Player_Death_SwordTwirl");
-                    m_playerSwordFallSound = new FrameSoundObj(m_player, 9, "Player_Death_SwordLand");
+                    _playerFallSound = new FrameSoundObj(_player, 14, "Player_Death_BodyFall");
+                    _playerSwordSpinSound = new FrameSoundObj(_player, 2, "Player_Death_SwordTwirl");
+                    _playerSwordFallSound = new FrameSoundObj(_player, 9, "Player_Death_SwordLand");
                 }
 
-                m_enemyList = objList[1] as List<EnemyObj>;
-                m_coinsCollected = (int) objList[2];
-                m_bagsCollected = (int) objList[3];
-                m_diamondsCollected = (int) objList[4];
+                _enemyList = objList[1] as List<EnemyObj>;
+                _coinsCollected = (int) objList[2];
+                _bagsCollected = (int) objList[3];
+                _diamondsCollected = (int) objList[4];
                 if (objList[5] != null)
                 {
-                    m_objKilledPlayer = objList[5] as GameObj;
+                    _objKilledPlayer = objList[5] as GameObj;
                 }
 
                 var cause = SetObjectKilledPlayerText();
-                m_enemyStoredPositions.Clear();
+                _enemyStoredPositions.Clear();
 
                 // Do not send a death link if what is killing us is a DeathLink.
-                if (!(m_objKilledPlayer is DeathLinkObj))
+                if (!(_objKilledPlayer is DeathLinkObj))
                 {
                     Program.Game.ArchipelagoManager.SendDeathLink(cause);
                 }
@@ -86,24 +86,24 @@ namespace RogueCastle
 
         public override void LoadContent()
         {
-            m_continueText = new KeyIconTextObj(Game.JunicodeFont);
-            m_continueText.FontSize = 14f;
-            m_continueText.Align = Types.TextAlign.Right;
-            m_continueText.Opacity = 0f;
-            m_continueText.Position = new Vector2(1270f, 30f);
-            m_continueText.ForceDraw = true;
+            _continueText = new KeyIconTextObj(Game.JunicodeFont);
+            _continueText.FontSize = 14f;
+            _continueText.Align = Types.TextAlign.Right;
+            _continueText.Opacity = 0f;
+            _continueText.Position = new Vector2(1270f, 30f);
+            _continueText.ForceDraw = true;
             var dropShadow = new Vector2(2f, 2f);
             var textureColor = new Color(255, 254, 128);
-            m_dialoguePlate = new ObjContainer("DialogBox_Character");
-            m_dialoguePlate.Position = new Vector2(660f, 610f);
-            m_dialoguePlate.ForceDraw = true;
+            _dialoguePlate = new ObjContainer("DialogBox_Character");
+            _dialoguePlate.Position = new Vector2(660f, 610f);
+            _dialoguePlate.ForceDraw = true;
             var textObj = new TextObj(Game.JunicodeFont);
             textObj.Align = Types.TextAlign.Centre;
             textObj.Text = "Your valor shown in battle shall never be forgotten.";
             textObj.FontSize = 17f;
             textObj.DropShadow = dropShadow;
-            textObj.Position = new Vector2(0f, -(float) m_dialoguePlate.Height / 2 + 25);
-            m_dialoguePlate.AddChild(textObj);
+            textObj.Position = new Vector2(0f, -(float) _dialoguePlate.Height / 2 + 25);
+            _dialoguePlate.AddChild(textObj);
             var keyIconTextObj = new KeyIconTextObj(Game.JunicodeFont);
             keyIconTextObj.FontSize = 12f;
             keyIconTextObj.Align = Types.TextAlign.Centre;
@@ -111,7 +111,7 @@ namespace RogueCastle
             keyIconTextObj.DropShadow = dropShadow;
             keyIconTextObj.Y = 0f;
             keyIconTextObj.TextureColor = textureColor;
-            m_dialoguePlate.AddChild(keyIconTextObj);
+            _dialoguePlate.AddChild(keyIconTextObj);
             var textObj2 = new TextObj(Game.JunicodeFont);
             textObj2.FontSize = 8f;
             textObj2.Text = "-Player X's parting words";
@@ -119,30 +119,30 @@ namespace RogueCastle
             textObj2.Y += 40f;
             textObj2.X += 20f;
             textObj2.DropShadow = dropShadow;
-            m_dialoguePlate.AddChild(textObj2);
-            m_playerGhost = new SpriteObj("PlayerGhost_Sprite");
-            m_playerGhost.AnimationDelay = 0.1f;
-            m_spotlight = new SpriteObj("GameOverSpotlight_Sprite");
-            m_spotlight.Rotation = 90f;
-            m_spotlight.ForceDraw = true;
-            m_spotlight.Position = new Vector2(660f, 40 + m_spotlight.Height);
-            m_playerFrame = new LineageObj(null, true);
-            m_playerFrame.DisablePlaque = true;
+            _dialoguePlate.AddChild(textObj2);
+            _playerGhost = new SpriteObj("PlayerGhost_Sprite");
+            _playerGhost.AnimationDelay = 0.1f;
+            _spotlight = new SpriteObj("GameOverSpotlight_Sprite");
+            _spotlight.Rotation = 90f;
+            _spotlight.ForceDraw = true;
+            _spotlight.Position = new Vector2(660f, 40 + _spotlight.Height);
+            _playerFrame = new LineageObj(null, true);
+            _playerFrame.DisablePlaque = true;
             base.LoadContent();
         }
 
         public override void OnEnter()
         {
-            m_playerFrame.Opacity = 0f;
-            m_playerFrame.Position = m_player.Position;
-            m_playerFrame.SetTraits(Game.PlayerStats.Traits);
-            m_playerFrame.IsFemale = Game.PlayerStats.IsFemale;
-            m_playerFrame.Class = Game.PlayerStats.Class;
-            m_playerFrame.Y -= 120f;
-            m_playerFrame.SetPortrait(Game.PlayerStats.HeadPiece, Game.PlayerStats.ShoulderPiece,
+            _playerFrame.Opacity = 0f;
+            _playerFrame.Position = _player.Position;
+            _playerFrame.SetTraits(Game.PlayerStats.Traits);
+            _playerFrame.IsFemale = Game.PlayerStats.IsFemale;
+            _playerFrame.Class = Game.PlayerStats.Class;
+            _playerFrame.Y -= 120f;
+            _playerFrame.SetPortrait(Game.PlayerStats.HeadPiece, Game.PlayerStats.ShoulderPiece,
                 Game.PlayerStats.ChestPiece);
-            m_playerFrame.UpdateData();
-            Tween.To(m_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
+            _playerFrame.UpdateData();
+            Tween.To(_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
             var item = new FamilyTreeNode
             {
                 Name = Game.PlayerStats.PlayerName,
@@ -192,56 +192,56 @@ namespace RogueCastle
             }
 
             SoundManager.StopMusic(0.5f);
-            m_droppingStats = false;
-            m_lockControls = false;
+            _droppingStats = false;
+            _lockControls = false;
             SoundManager.PlaySound("Player_Death_FadeToBlack");
-            m_continueText.Text = "Press [Input:" + 0 + "] to move on";
-            m_player.Visible = true;
-            m_player.Opacity = 1f;
-            m_continueText.Opacity = 0f;
-            m_dialoguePlate.Opacity = 0f;
-            m_playerGhost.Opacity = 0f;
-            m_spotlight.Opacity = 0f;
-            m_playerGhost.Position = new Vector2(m_player.X - m_playerGhost.Width / 2, m_player.Bounds.Top - 20);
+            _continueText.Text = "Press [Input:" + 0 + "] to move on";
+            _player.Visible = true;
+            _player.Opacity = 1f;
+            _continueText.Opacity = 0f;
+            _dialoguePlate.Opacity = 0f;
+            _playerGhost.Opacity = 0f;
+            _spotlight.Opacity = 0f;
+            _playerGhost.Position = new Vector2(_player.X - _playerGhost.Width / 2, _player.Bounds.Top - 20);
             Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
-            Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
-            Tween.By(m_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
-            m_playerGhost.Opacity = 0.4f;
-            Tween.To(m_playerGhost, 0.5f, Linear.EaseNone, "delay", "4", "Opacity", "0");
-            m_playerGhost.Opacity = 0f;
-            m_playerGhost.PlayAnimation();
+            Tween.To(_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
+            Tween.By(_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
+            _playerGhost.Opacity = 0.4f;
+            Tween.To(_playerGhost, 0.5f, Linear.EaseNone, "delay", "4", "Opacity", "0");
+            _playerGhost.Opacity = 0f;
+            _playerGhost.PlayAnimation();
             Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
-            Tween.To(m_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
+            Tween.To(_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
             Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
             Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", "GameOverStinger", false, 0.5f);
-            Tween.To(Camera, 1f, Quad.EaseInOut, "X", m_player.AbsX.ToString(), "Y",
-                (m_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
-            Tween.RunFunction(2f, m_player, "RunDeathAnimation1");
+            Tween.To(Camera, 1f, Quad.EaseInOut, "X", _player.AbsX.ToString(), "Y",
+                (_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
+            Tween.RunFunction(2f, _player, "RunDeathAnimation1");
             if (Game.PlayerStats.Traits.X == 13f || Game.PlayerStats.Traits.Y == 13f)
             {
-                (m_dialoguePlate.GetChildAt(2) as TextObj).Text = "#)!(%*#@!%^";
-                (m_dialoguePlate.GetChildAt(2) as TextObj).RandomizeSentence(true);
+                (_dialoguePlate.GetChildAt(2) as TextObj).Text = "#)!(%*#@!%^";
+                (_dialoguePlate.GetChildAt(2) as TextObj).RandomizeSentence(true);
             }
             else
             {
-                (m_dialoguePlate.GetChildAt(2) as TextObj).Text =
+                (_dialoguePlate.GetChildAt(2) as TextObj).Text =
                     GameEV.GameHints[CDGMath.RandomInt(0, GameEV.GameHints.Length - 1)];
             }
 
-            (m_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + Game.PlayerStats.PlayerName + "'s Parting Words";
-            Tween.To(m_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
+            (_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + Game.PlayerStats.PlayerName + "'s Parting Words";
+            Tween.To(_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
             Tween.RunFunction(4f, this, "DropStats");
-            Tween.To(m_continueText, 0.4f, Linear.EaseNone, "delay", "4", "Opacity", "1");
+            Tween.To(_continueText, 0.4f, Linear.EaseNone, "delay", "4", "Opacity", "1");
             base.OnEnter();
         }
 
         public override void OnExit()
         {
             Tween.StopAll(false);
-            if (m_enemyList != null)
+            if (_enemyList != null)
             {
-                m_enemyList.Clear();
-                m_enemyList = null;
+                _enemyList.Clear();
+                _enemyList = null;
             }
 
             Game.PlayerStats.Traits = Vector2.Zero;
@@ -251,17 +251,17 @@ namespace RogueCastle
 
         public void DropStats()
         {
-            m_droppingStats = true;
+            _droppingStats = true;
             var arg_0C_0 = Vector2.Zero;
             var num = 0f;
             var topLeftCorner = Camera.TopLeftCorner;
             topLeftCorner.X += 200f;
             topLeftCorner.Y += 450f;
-            if (m_enemyList != null)
+            if (_enemyList != null)
             {
-                foreach (var current in m_enemyList)
+                foreach (var current in _enemyList)
                 {
-                    m_enemyStoredPositions.Add(current.Position);
+                    _enemyStoredPositions.Add(current.Position);
                     current.Position = topLeftCorner;
                     current.ChangeSprite(current.ResetSpriteName);
                     if (current.SpriteName == "EnemyZombieRise_Character")
@@ -301,12 +301,12 @@ namespace RogueCastle
 
         private string SetObjectKilledPlayerText()
         {
-            var textObj = m_dialoguePlate.GetChildAt(1) as TextObj;
-            if (m_objKilledPlayer != null)
+            var textObj = _dialoguePlate.GetChildAt(1) as TextObj;
+            if (_objKilledPlayer != null)
             {
-                var enemyObj = m_objKilledPlayer as EnemyObj;
-                var projectileObj = m_objKilledPlayer as ProjectileObj;
-                var deathLinkObj = m_objKilledPlayer as DeathLinkObj;
+                var enemyObj = _objKilledPlayer as EnemyObj;
+                var projectileObj = _objKilledPlayer as ProjectileObj;
+                var deathLinkObj = _objKilledPlayer as DeathLinkObj;
                 if (enemyObj != null)
                 {
                     if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
@@ -343,7 +343,7 @@ namespace RogueCastle
                                    "'s carelessness";
                 }
 
-                var hazardObj = m_objKilledPlayer as HazardObj;
+                var hazardObj = _objKilledPlayer as HazardObj;
                 if (hazardObj != null)
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " slipped and was impaled by spikes";
@@ -359,14 +359,14 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            if (!m_lockControls && m_droppingStats &&
+            if (!_lockControls && _droppingStats &&
                 (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1) ||
                  Game.GlobalInput.JustPressed(2) ||
                  Game.GlobalInput.JustPressed(3)))
             {
-                if (m_enemyList.Count > 0 && m_enemyList[m_enemyList.Count - 1].Opacity != 1f)
+                if (_enemyList.Count > 0 && _enemyList[_enemyList.Count - 1].Opacity != 1f)
                 {
-                    foreach (var current in m_enemyList)
+                    foreach (var current in _enemyList)
                     {
                         Tween.StopAllContaining(current, false);
                         current.Opacity = 1f;
@@ -390,7 +390,7 @@ namespace RogueCastle
                     Game.PlayerStats.OpenedChests = chests;
                     Game.PlayerStats.ReceivedItems = received;
                     (ScreenManager as RCScreenManager).DisplayScreen((int) ScreenType.Lineage, true);
-                    m_lockControls = true;
+                    _lockControls = true;
                 }
             }
 
@@ -401,15 +401,15 @@ namespace RogueCastle
         {
             if (InputManager.JustPressed(Keys.Space, PlayerIndex.One))
             {
-                (m_dialoguePlate.GetChildAt(2) as TextObj).Text =
+                (_dialoguePlate.GetChildAt(2) as TextObj).Text =
                     GameEV.GameHints[CDGMath.RandomInt(0, GameEV.GameHints.Length - 1)];
             }
 
-            if (m_player.SpriteName == "PlayerDeath_Character")
+            if (_player.SpriteName == "PlayerDeath_Character")
             {
-                m_playerFallSound.Update();
-                m_playerSwordFallSound.Update();
-                m_playerSwordSpinSound.Update();
+                _playerFallSound.Update();
+                _playerSwordFallSound.Update();
+                _playerSwordSpinSound.Update();
             }
 
             base.Update(gameTime);
@@ -422,63 +422,68 @@ namespace RogueCastle
             Camera.Draw(Game.GenericTexture,
                 new Rectangle((int) Camera.TopLeftCorner.X - 10, (int) Camera.TopLeftCorner.Y - 10, 1420, 820),
                 Color.Black * BackBufferOpacity);
-            foreach (var current in m_enemyList) current.Draw(Camera);
-
-            m_playerFrame.Draw(Camera);
-            m_player.Draw(Camera);
-            if (m_playerGhost.Opacity > 0f)
+            foreach (var current in _enemyList)
             {
-                m_playerGhost.X += (float) Math.Sin(Game.TotalGameTimeSeconds * 5f) * 60f *
+                current.Draw(Camera);
+            }
+
+            _playerFrame.Draw(Camera);
+            _player.Draw(Camera);
+            if (_playerGhost.Opacity > 0f)
+            {
+                _playerGhost.X += (float) Math.Sin(Game.TotalGameTimeSeconds * 5f) * 60f *
                                    (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            m_playerGhost.Draw(Camera);
+            _playerGhost.Draw(Camera);
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
-            m_spotlight.Draw(Camera);
-            m_dialoguePlate.Draw(Camera);
-            m_continueText.Draw(Camera);
+            _spotlight.Draw(Camera);
+            _dialoguePlate.Draw(Camera);
+            _continueText.Draw(Camera);
             Camera.End();
             base.Draw(gameTime);
         }
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                Console.WriteLine("Disposing Game Over Screen");
-                m_player = null;
-                m_dialoguePlate.Dispose();
-                m_dialoguePlate = null;
-                m_continueText.Dispose();
-                m_continueText = null;
-                m_playerGhost.Dispose();
-                m_playerGhost = null;
-                m_spotlight.Dispose();
-                m_spotlight = null;
-                m_playerFallSound.Dispose();
-                m_playerFallSound = null;
-                m_playerSwordFallSound.Dispose();
-                m_playerSwordFallSound = null;
-                m_playerSwordSpinSound.Dispose();
-                m_playerSwordSpinSound = null;
-                m_objKilledPlayer = null;
-                if (m_enemyList != null)
-                {
-                    m_enemyList.Clear();
-                }
-
-                m_enemyList = null;
-                if (m_enemyStoredPositions != null)
-                {
-                    m_enemyStoredPositions.Clear();
-                }
-
-                m_enemyStoredPositions = null;
-                m_playerFrame.Dispose();
-                m_playerFrame = null;
-                base.Dispose();
+                return;
             }
+
+            Console.WriteLine("Disposing Game Over Screen");
+            _player = null;
+            _dialoguePlate.Dispose();
+            _dialoguePlate = null;
+            _continueText.Dispose();
+            _continueText = null;
+            _playerGhost.Dispose();
+            _playerGhost = null;
+            _spotlight.Dispose();
+            _spotlight = null;
+            _playerFallSound.Dispose();
+            _playerFallSound = null;
+            _playerSwordFallSound.Dispose();
+            _playerSwordFallSound = null;
+            _playerSwordSpinSound.Dispose();
+            _playerSwordSpinSound = null;
+            _objKilledPlayer = null;
+            if (_enemyList != null)
+            {
+                _enemyList.Clear();
+            }
+
+            _enemyList = null;
+            if (_enemyStoredPositions != null)
+            {
+                _enemyStoredPositions.Clear();
+            }
+
+            _enemyStoredPositions = null;
+            _playerFrame.Dispose();
+            _playerFrame = null;
+            base.Dispose();
         }
     }
 }

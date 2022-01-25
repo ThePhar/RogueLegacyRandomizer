@@ -1,12 +1,12 @@
 // 
-// RogueLegacyArchipelago - CDGSplashScreen.cs
-// Last Modified 2021-12-24
+//  Rogue Legacy Randomizer - CDGSplashScreen.cs
+//  Last Modified 2022-01-24
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Disassembled Source - © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
 using System;
@@ -16,43 +16,42 @@ using Microsoft.Xna.Framework;
 using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
-using Screen = DS2DEngine.Screen;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
     public class CDGSplashScreen : Screen
     {
-        private bool m_fadingOut;
-        private bool m_levelDataLoaded;
-        private TextObj m_loadingText;
-        private SpriteObj m_logo;
-        private float m_totalElapsedTime;
+        private bool      _fadingOut;
+        private bool      _levelDataLoaded;
+        private TextObj   _loadingText;
+        private SpriteObj _logo;
+        private float     _totalElapsedTime;
 
         public override void LoadContent()
         {
-            m_logo = new SpriteObj("CDGLogo_Sprite");
-            m_logo.Position = new Vector2(660f, 360f);
-            m_logo.Rotation = 90f;
-            m_logo.ForceDraw = true;
-            m_loadingText = new TextObj(Game.JunicodeFont);
-            m_loadingText.FontSize = 18f;
-            m_loadingText.Align = Types.TextAlign.Right;
-            m_loadingText.Text = "...Loading";
-            m_loadingText.TextureColor = new Color(100, 100, 100);
-            m_loadingText.Position = new Vector2(1280f, 630f);
-            m_loadingText.ForceDraw = true;
-            m_loadingText.Opacity = 0f;
+            _logo = new SpriteObj("CDGLogo_Sprite");
+            _logo.Position = new Vector2(660f, 360f);
+            _logo.Rotation = 90f;
+            _logo.ForceDraw = true;
+            _loadingText = new TextObj(Game.JunicodeFont);
+            _loadingText.FontSize = 18f;
+            _loadingText.Align = Types.TextAlign.Right;
+            _loadingText.Text = "...Loading";
+            _loadingText.TextureColor = new Color(100, 100, 100);
+            _loadingText.Position = new Vector2(1280f, 630f);
+            _loadingText.ForceDraw = true;
+            _loadingText.Opacity = 0f;
             base.LoadContent();
         }
 
         public override void OnEnter()
         {
-            m_levelDataLoaded = false;
-            m_fadingOut = false;
+            _levelDataLoaded = false;
+            _fadingOut = false;
             var thread = new Thread(LoadLevelData);
             thread.Start();
-            m_logo.Opacity = 0f;
-            Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "0.5", "Opacity", "1");
+            _logo.Opacity = 0f;
+            Tween.To(_logo, 1f, Linear.EaseNone, "delay", "0.5", "Opacity", "1");
             Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "CDGSplashCreak");
             base.OnEnter();
         }
@@ -73,7 +72,7 @@ namespace RogueCastle
                 LevelParser.ParseRooms("Map_Special", ScreenManager.Game.Content);
                 LevelParser.ParseRooms("Map_DLC1", ScreenManager.Game.Content, true);
                 LevelBuilder2.IndexRoomList();
-                m_levelDataLoaded = true;
+                _levelDataLoaded = true;
             }
         }
 
@@ -111,22 +110,22 @@ namespace RogueCastle
 
         public override void Update(GameTime gameTime)
         {
-            if (!m_levelDataLoaded && m_logo.Opacity == 1f)
+            if (!_levelDataLoaded && _logo.Opacity == 1f)
             {
-                var opacity = (float) Math.Abs(Math.Sin(m_totalElapsedTime));
-                m_totalElapsedTime += (float) gameTime.ElapsedGameTime.TotalSeconds;
-                m_loadingText.Opacity = opacity;
+                var opacity = (float) Math.Abs(Math.Sin(_totalElapsedTime));
+                _totalElapsedTime += (float) gameTime.ElapsedGameTime.TotalSeconds;
+                _loadingText.Opacity = opacity;
             }
 
-            if (m_levelDataLoaded && !m_fadingOut)
+            if (_levelDataLoaded && !_fadingOut)
             {
-                m_fadingOut = true;
-                var opacity2 = m_logo.Opacity;
-                m_logo.Opacity = 1f;
-                Tween.To(m_logo, 1f, Linear.EaseNone, "delay", "1.5", "Opacity", "0");
+                _fadingOut = true;
+                var opacity2 = _logo.Opacity;
+                _logo.Opacity = 1f;
+                Tween.To(_logo, 1f, Linear.EaseNone, "delay", "1.5", "Opacity", "0");
                 Tween.AddEndHandlerToLastTween(this, "LoadNextScreen");
-                Tween.To(m_loadingText, 0.5f, Tween.EaseNone, "Opacity", "0");
-                m_logo.Opacity = opacity2;
+                Tween.To(_loadingText, 0.5f, Tween.EaseNone, "Opacity", "0");
+                _logo.Opacity = opacity2;
             }
 
             base.Update(gameTime);
@@ -136,23 +135,25 @@ namespace RogueCastle
         {
             Camera.GraphicsDevice.Clear(Color.Black);
             Camera.Begin();
-            m_logo.Draw(Camera);
-            m_loadingText.Draw(Camera);
+            _logo.Draw(Camera);
+            _loadingText.Draw(Camera);
             Camera.End();
             base.Draw(gameTime);
         }
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                Console.WriteLine("Disposing CDG Splash Screen");
-                m_logo.Dispose();
-                m_logo = null;
-                m_loadingText.Dispose();
-                m_loadingText = null;
-                base.Dispose();
+                return;
             }
+
+            Console.WriteLine("Disposing CDG Splash Screen");
+            _logo.Dispose();
+            _logo = null;
+            _loadingText.Dispose();
+            _loadingText = null;
+            base.Dispose();
         }
     }
 }

@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -1745,8 +1745,7 @@ namespace RogueCastle
 
         public void SaveOnExit()
         {
-            // No point in saving if we're on the Splash or Demo screens.
-            if (ScreenManager.CurrentScreen is CDGSplashScreen or DemoStartScreen)
+            if (ScreenManager.CurrentScreen is CDGSplashScreen)
             {
                 return;
             }

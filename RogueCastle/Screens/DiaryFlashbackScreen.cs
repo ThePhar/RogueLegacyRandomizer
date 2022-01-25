@@ -1,63 +1,62 @@
-//
-//  RogueLegacyArchipelago - DiaryFlashbackScreen.cs
-//  Last Modified 2021-12-29
-//
+// 
+//  Rogue Legacy Randomizer - DiaryFlashbackScreen.cs
+//  Last Modified 2022-01-25
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
-using Archipelago;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Tweener;
 using Tweener.Ease;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
     internal class DiaryFlashbackScreen : Screen
     {
-        private BackgroundObj m_background;
-        private SpriteObj m_filmGrain;
-        private List<LineageObj> m_lineageArray;
-        private RenderTarget2D m_sepiaRT;
-        private Vector2 m_storedCameraPos;
+        private BackgroundObj    _background;
+        private SpriteObj        _filmGrain;
+        private List<LineageObj> _lineageArray;
+        private RenderTarget2D   _sepiaRT;
+        private Vector2          _storedCameraPos;
 
         public DiaryFlashbackScreen()
         {
-            m_lineageArray = new List<LineageObj>();
+            _lineageArray = new List<LineageObj>();
         }
 
         public float BackBufferOpacity { get; set; }
 
         public override void LoadContent()
         {
-            m_filmGrain = new SpriteObj("FilmGrain_Sprite");
-            m_filmGrain.ForceDraw = true;
-            m_filmGrain.Scale = new Vector2(2.015f, 2.05f);
-            m_filmGrain.X -= 5f;
-            m_filmGrain.Y -= 5f;
-            m_filmGrain.PlayAnimation();
-            m_filmGrain.AnimationDelay = 0.0333333351f;
+            _filmGrain = new SpriteObj("FilmGrain_Sprite");
+            _filmGrain.ForceDraw = true;
+            _filmGrain.Scale = new Vector2(2.015f, 2.05f);
+            _filmGrain.X -= 5f;
+            _filmGrain.Y -= 5f;
+            _filmGrain.PlayAnimation();
+            _filmGrain.AnimationDelay = 0.0333333351f;
             base.LoadContent();
         }
 
         public override void ReinitializeRTs()
         {
-            m_sepiaRT = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
-            if (m_background != null)
+            _sepiaRT = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
+            if (_background != null)
             {
-                m_background.Dispose();
+                _background.Dispose();
             }
 
-            m_background = new BackgroundObj("LineageScreenBG_Sprite");
-            m_background.SetRepeated(true, true, Camera);
-            m_background.X -= 6600f;
+            _background = new BackgroundObj("LineageScreenBG_Sprite");
+            _background.SetRepeated(true, true, Camera);
+            _background.X -= 6600f;
             base.ReinitializeRTs();
         }
 
@@ -69,18 +68,18 @@ namespace RogueCastle
             BackBufferOpacity = 1f;
             Tween.To(this, 1f, Tween.EaseNone, "delay", "0.1", "BackBufferOpacity", "0");
             BackBufferOpacity = 0f;
-            m_storedCameraPos = Camera.Position;
+            _storedCameraPos = Camera.Position;
             Camera.Position = Vector2.Zero;
-            if (m_background == null)
+            if (_background == null)
             {
-                m_sepiaRT = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
-                m_background = new BackgroundObj("LineageScreenBG_Sprite");
-                m_background.SetRepeated(true, true, Camera);
-                m_background.X -= 6600f;
+                _sepiaRT = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720);
+                _background = new BackgroundObj("LineageScreenBG_Sprite");
+                _background.SetRepeated(true, true, Camera);
+                _background.X -= 6600f;
             }
 
             CreateLineageObjDebug();
-            Camera.X = m_lineageArray[m_lineageArray.Count - 1].X;
+            Camera.X = _lineageArray[_lineageArray.Count - 1].X;
             SoundManager.PlaySound("Cutsc_Thunder");
             Tween.RunFunction(1f, this, "Cutscene1");
             base.OnEnter();
@@ -89,13 +88,13 @@ namespace RogueCastle
         public void Cutscene1()
         {
             SoundManager.PlaySound("Cutsc_PictureMove");
-            Tween.To(Camera, m_lineageArray.Count * 0.2f, Quad.EaseInOut, "X", m_lineageArray[0].X.ToString());
+            Tween.To(Camera, _lineageArray.Count * 0.2f, Quad.EaseInOut, "X", _lineageArray[0].X.ToString());
             Tween.AddEndHandlerToLastTween(this, "Cutscene2");
         }
 
         public void Cutscene2()
         {
-            var lineageObj = m_lineageArray[0];
+            var lineageObj = _lineageArray[0];
             lineageObj.ForceDraw = true;
             Tween.RunFunction(1f, lineageObj, "DropFrame");
             Tween.RunFunction(4.5f, this, "ExitTransition");
@@ -110,9 +109,13 @@ namespace RogueCastle
 
         public override void OnExit()
         {
-            foreach (var current in m_lineageArray) current.Dispose();
-            m_lineageArray.Clear();
-            Camera.Position = m_storedCameraPos;
+            foreach (var current in _lineageArray)
+            {
+                current.Dispose();
+            }
+
+            _lineageArray.Clear();
+            Camera.Position = _storedCameraPos;
             base.OnExit();
         }
 
@@ -144,7 +147,7 @@ namespace RogueCastle
                     num += lineageObj.Age;
                     lineageObj.X = num3;
                     num3 += num2;
-                    m_lineageArray.Add(lineageObj);
+                    _lineageArray.Add(lineageObj);
                 }
 
                 return;
@@ -169,7 +172,7 @@ namespace RogueCastle
                 num += lineageObj2.Age;
                 lineageObj2.X = num3;
                 num3 += num2;
-                m_lineageArray.Add(lineageObj2);
+                _lineageArray.Add(lineageObj2);
             }
         }
 
@@ -216,28 +219,32 @@ namespace RogueCastle
                 num += lineageObj.Age;
                 lineageObj.X = num3;
                 num3 += num2;
-                m_lineageArray.Add(lineageObj);
+                _lineageArray.Add(lineageObj);
             }
         }
 
         public override void Draw(GameTime gametime)
         {
-            if (Camera.X > m_background.X + 6600f)
+            if (Camera.X > _background.X + 6600f)
             {
-                m_background.X = Camera.X;
+                _background.X = Camera.X;
             }
 
-            if (Camera.X < m_background.X)
+            if (Camera.X < _background.X)
             {
-                m_background.X = Camera.X - 1320f;
+                _background.X = Camera.X - 1320f;
             }
 
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, null,
                 Camera.GetTransformation());
-            m_background.Draw(Camera);
-            foreach (var current in m_lineageArray) current.Draw(Camera);
+            _background.Draw(Camera);
+            foreach (var current in _lineageArray)
+            {
+                current.Draw(Camera);
+            }
+
             Camera.End();
-            Camera.GraphicsDevice.SetRenderTarget(m_sepiaRT);
+            Camera.GraphicsDevice.SetRenderTarget(_sepiaRT);
             Game.HSVEffect.Parameters["Saturation"].SetValue(0.2f);
             Game.HSVEffect.Parameters["Brightness"].SetValue(0.1f);
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null,
@@ -247,8 +254,8 @@ namespace RogueCastle
             Camera.GraphicsDevice.SetRenderTarget((ScreenManager as RCScreenManager).RenderTarget);
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null);
             var color = new Color(180, 150, 80);
-            Camera.Draw(m_sepiaRT, Vector2.Zero, color);
-            m_filmGrain.Draw(Camera);
+            Camera.Draw(_sepiaRT, Vector2.Zero, color);
+            _filmGrain.Draw(Camera);
             Camera.End();
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
             Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.White * BackBufferOpacity);
@@ -258,20 +265,26 @@ namespace RogueCastle
 
         public override void Dispose()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                Console.WriteLine("Disposing Diary Flashback Screen");
-                m_background.Dispose();
-                m_background = null;
-                foreach (var current in m_lineageArray) current.Dispose();
-                m_lineageArray.Clear();
-                m_lineageArray = null;
-                m_filmGrain.Dispose();
-                m_filmGrain = null;
-                m_sepiaRT.Dispose();
-                m_sepiaRT = null;
-                base.Dispose();
+                return;
             }
+
+            Console.WriteLine("Disposing Diary Flashback Screen");
+            _background.Dispose();
+            _background = null;
+            foreach (var current in _lineageArray)
+            {
+                current.Dispose();
+            }
+
+            _lineageArray.Clear();
+            _lineageArray = null;
+            _filmGrain.Dispose();
+            _filmGrain = null;
+            _sepiaRT.Dispose();
+            _sepiaRT = null;
+            base.Dispose();
         }
     }
 }

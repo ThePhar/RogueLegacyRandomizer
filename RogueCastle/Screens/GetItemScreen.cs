@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - GetItemScreen.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -20,15 +20,13 @@ using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
 
-using Screen = DS2DEngine.Screen;
-
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
     public class GetItemScreen : Screen
     {
-        private const float ItemFoundYOffset        = 70f;
-        private const float NetworkItemFoundYOffset = 105f;
-        private const float ItemFoundPlayerYOffset  = 75f;
+        private const float ITEM_FOUND_Y_OFFSET         = 70f;
+        public const  float NETWORK_ITEM_FOUND_Y_OFFSET = 105f;
+        private const float ITEM_FOUND_PLAYER_Y_OFFSET  = 75f;
 
         private readonly Vector2        _itemEndPos;
         private          Cue            _buildUpSound;
@@ -100,11 +98,11 @@ namespace RogueCastle
                 ForceDraw = true,
                 OutlineWidth = 2
             };
-            _itemFoundText.Y += ItemFoundYOffset;
+            _itemFoundText.Y += ITEM_FOUND_Y_OFFSET;
             _tripStat1FoundText = _itemFoundText.Clone() as TextObj;
             _tripStat2FoundText = _itemFoundText.Clone() as TextObj;
             _itemFoundPlayerText = _itemFoundText.Clone() as TextObj;
-            _itemFoundPlayerText.Y += ItemFoundPlayerYOffset;
+            _itemFoundPlayerText.Y += ITEM_FOUND_PLAYER_Y_OFFSET;
             _itemFoundPlayerText.FontSize = 12f;
 
             _itemFoundSprite = new SpriteObj("BlueprintFoundText_Sprite")
@@ -176,16 +174,16 @@ namespace RogueCastle
 
             if (_itemType != (int) ItemCategory.GiveNetworkItem)
             {
-                _itemFoundText.Y += ItemFoundYOffset;
+                _itemFoundText.Y += ITEM_FOUND_Y_OFFSET;
             }
             else
             {
-                _itemFoundText.Y += NetworkItemFoundYOffset;
+                _itemFoundText.Y += NETWORK_ITEM_FOUND_Y_OFFSET;
             }
 
             _itemFoundText.Scale = Vector2.Zero;
             _itemFoundPlayerText.Position = _itemEndPos;
-            _itemFoundPlayerText.Y += ItemFoundPlayerYOffset;
+            _itemFoundPlayerText.Y += ITEM_FOUND_PLAYER_Y_OFFSET;
             _itemFoundPlayerText.Scale = Vector2.Zero;
 
             // Trip Stats
@@ -797,7 +795,7 @@ namespace RogueCastle
                 (int) ItemDropType.StatMaxHealth => "HP Increased: +" + 5,
                 (int) ItemDropType.StatMaxMana   => "MP Increased: +" + 5,
                 (int) ItemDropType.StatWeight    => "Max Weight Load Increased: +" + 5,
-                _                            => ""
+                _                                => ""
             };
         }
 

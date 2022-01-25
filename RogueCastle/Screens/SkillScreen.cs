@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - SkillScreen.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-25
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -21,216 +21,215 @@ using RogueCastle.Systems;
 using Tweener;
 using Tweener.Ease;
 
-namespace RogueCastle
+namespace RogueCastle.Screens
 {
-    public class SkillScreen : DS2DEngine.Screen
+    public class SkillScreen : Screen
     {
-        private readonly int m_shakeAmount = 2;
-        private readonly float m_shakeDelay = 0.01f;
-        private SpriteObj m_bg;
-
-        private bool m_cameraTweening;
-        private SpriteObj m_cloud1;
-        private SpriteObj m_cloud2;
-        private SpriteObj m_cloud3;
-        private SpriteObj m_cloud4;
-        private SpriteObj m_cloud5;
-        private SpriteObj m_coinIcon;
-        private KeyIconTextObj m_confirmText;
-        private KeyIconTextObj m_continueText;
-        private SpriteObj m_descriptionDivider;
-        private ObjContainer m_dialoguePlate;
-        private bool m_fadingIn;
-        private bool m_horizontalShake;
-        private ImpactEffectPool m_impactEffectPool;
-        private KeyIconTextObj m_inputDescription;
-        private bool m_lockControls;
-        private ObjContainer m_manor;
-        private KeyIconTextObj m_navigationText;
-        private TextObj m_playerMoney;
-        private float m_screenShakeMagnitude;
-        private Vector2 m_selectedTraitIndex;
-        private SpriteObj m_selectionIcon;
-        private float m_shakeDuration;
-        private GameObj m_shakeObj;
-        private bool m_shakeScreen;
-        private float m_shakeTimer;
-        private bool m_shookLeft;
-        private TextObj m_skillCost;
-        private SpriteObj m_skillCostBG;
-        private TextObj m_skillCurrent;
-        private TextObj m_skillDescription;
-        private SpriteObj m_skillIcon;
-        private TextObj m_skillLevel;
-        private TextObj m_skillTitle;
-        private TextObj m_skillUpgrade;
-        private SpriteObj m_titleText;
-        private KeyIconTextObj m_toggleIconsText;
-        private bool m_verticalShake;
+        private readonly int              _shakeAmount = 2;
+        private readonly float            _shakeDelay  = 0.01f;
+        private          SpriteObj        _bg;
+        private          bool             _cameraTweening;
+        private          SpriteObj        _cloud1;
+        private          SpriteObj        _cloud2;
+        private          SpriteObj        _cloud3;
+        private          SpriteObj        _cloud4;
+        private          SpriteObj        _cloud5;
+        private          SpriteObj        _coinIcon;
+        private          KeyIconTextObj   _confirmText;
+        private          KeyIconTextObj   _continueText;
+        private          SpriteObj        _descriptionDivider;
+        private          ObjContainer     _dialoguePlate;
+        private          bool             _fadingIn;
+        private          bool             _horizontalShake;
+        private          ImpactEffectPool _impactEffectPool;
+        private          KeyIconTextObj   _inputDescription;
+        private          bool             _lockControls;
+        private          ObjContainer     _manor;
+        private          KeyIconTextObj   _navigationText;
+        private          TextObj          _playerMoney;
+        private          float            _screenShakeMagnitude;
+        private          Vector2          _selectedTraitIndex;
+        private          SpriteObj        _selectionIcon;
+        private          float            _shakeDuration;
+        private          GameObj          _shakeObj;
+        private          bool             _shakeScreen;
+        private          float            _shakeTimer;
+        private          bool             _shookLeft;
+        private          TextObj          _skillCost;
+        private          SpriteObj        _skillCostBG;
+        private          TextObj          _skillCurrent;
+        private          TextObj          _skillDescription;
+        private          SpriteObj        _skillIcon;
+        private          TextObj          _skillLevel;
+        private          TextObj          _skillTitle;
+        private          TextObj          _skillUpgrade;
+        private          SpriteObj        _titleText;
+        private          KeyIconTextObj   _toggleIconsText;
+        private          bool             _verticalShake;
 
         public SkillScreen()
         {
-            m_selectedTraitIndex = new Vector2(5f, 9f);
-            m_impactEffectPool = new ImpactEffectPool(1000);
+            _selectedTraitIndex = new Vector2(5f, 9f);
+            _impactEffectPool = new ImpactEffectPool(1000);
             DrawIfCovered = true;
         }
 
         public override void LoadContent()
         {
-            m_impactEffectPool.Initialize();
-            m_manor = new ObjContainer("TraitsCastle_Character");
-            m_manor.Scale = new Vector2(2f, 2f);
-            m_manor.ForceDraw = true;
-            for (var i = 0; i < m_manor.NumChildren; i++)
+            _impactEffectPool.Initialize();
+            _manor = new ObjContainer("TraitsCastle_Character");
+            _manor.Scale = new Vector2(2f, 2f);
+            _manor.ForceDraw = true;
+            for (var i = 0; i < _manor.NumChildren; i++)
             {
-                m_manor.GetChildAt(i).Visible = false;
-                m_manor.GetChildAt(i).Opacity = 0f;
+                _manor.GetChildAt(i).Visible = false;
+                _manor.GetChildAt(i).Opacity = 0f;
             }
 
-            m_dialoguePlate = new ObjContainer("TraitsScreenPlate_Container");
-            m_dialoguePlate.ForceDraw = true;
-            m_dialoguePlate.Position = new Vector2(1320 - m_dialoguePlate.Width / 2, 360f);
-            m_skillIcon = new SpriteObj("Icon_Health_Up_Sprite");
-            m_skillIcon.Position = new Vector2(-110f, -200f);
-            m_dialoguePlate.AddChild(m_skillIcon);
-            m_skillTitle = new TextObj(Game.JunicodeFont);
-            m_skillTitle.Text = "Skill name";
-            m_skillTitle.DropShadow = new Vector2(2f, 2f);
-            m_skillTitle.TextureColor = new Color(236, 197, 132);
-            m_skillTitle.Position = new Vector2(m_skillIcon.Bounds.Right + 15, m_skillIcon.Y);
-            m_skillTitle.FontSize = 12f;
-            m_dialoguePlate.AddChild(m_skillTitle);
-            m_skillDescription = new TextObj(Game.JunicodeFont);
-            m_skillDescription.Text = "Description text goes here.  Let's see how well the word wrap function works.";
-            m_skillDescription.Position = new Vector2(m_dialoguePlate.GetChildAt(1).X - 30f,
-                m_dialoguePlate.GetChildAt(1).Bounds.Bottom + 20);
-            m_skillDescription.FontSize = 10f;
-            m_skillDescription.DropShadow = new Vector2(2f, 2f);
-            m_skillDescription.TextureColor = new Color(228, 218, 208);
-            m_skillDescription.WordWrap(m_dialoguePlate.Width - 50);
-            m_dialoguePlate.AddChild(m_skillDescription);
-            m_inputDescription = new KeyIconTextObj(Game.JunicodeFont);
-            m_inputDescription.Text = "Input descriptions go here..";
-            m_inputDescription.Position = new Vector2(m_skillIcon.X - 30f, m_skillDescription.Bounds.Bottom + 20);
-            m_inputDescription.FontSize = 10f;
-            m_inputDescription.DropShadow = new Vector2(2f, 2f);
-            m_inputDescription.TextureColor = new Color(228, 218, 208);
-            m_inputDescription.WordWrap(m_dialoguePlate.Width - 50);
-            m_dialoguePlate.AddChild(m_inputDescription);
-            m_descriptionDivider = new SpriteObj("Blank_Sprite");
-            m_descriptionDivider.ScaleX = 250f / m_descriptionDivider.Width;
-            m_descriptionDivider.ScaleY = 0.25f;
-            m_descriptionDivider.ForceDraw = true;
-            m_descriptionDivider.DropShadow = new Vector2(2f, 2f);
-            m_skillCurrent = new TextObj(Game.JunicodeFont);
-            m_skillCurrent.Position = new Vector2(m_inputDescription.X, m_inputDescription.Bounds.Bottom + 10);
-            m_skillCurrent.FontSize = 10f;
-            m_skillCurrent.DropShadow = new Vector2(2f, 2f);
-            m_skillCurrent.TextureColor = new Color(228, 218, 208);
-            m_skillCurrent.WordWrap(m_dialoguePlate.Width - 50);
-            m_dialoguePlate.AddChild(m_skillCurrent);
-            m_skillUpgrade = m_skillCurrent.Clone() as TextObj;
-            m_skillUpgrade.Y += 15f;
-            m_dialoguePlate.AddChild(m_skillUpgrade);
-            m_skillLevel = m_skillUpgrade.Clone() as TextObj;
-            m_skillLevel.Y += 15f;
-            m_dialoguePlate.AddChild(m_skillLevel);
-            m_skillCost = new TextObj(Game.JunicodeFont);
-            m_skillCost.X = m_skillIcon.X;
-            m_skillCost.Y = 182f;
-            m_skillCost.FontSize = 10f;
-            m_skillCost.DropShadow = new Vector2(2f, 2f);
-            m_skillCost.TextureColor = Color.Yellow;
-            m_dialoguePlate.AddChild(m_skillCost);
-            m_skillCostBG = new SpriteObj("SkillTreeGoldIcon_Sprite");
-            m_skillCostBG.Position = new Vector2(-180f, 180f);
-            m_dialoguePlate.AddChild(m_skillCostBG);
-            m_dialoguePlate.ForceDraw = true;
-            m_bg = new SpriteObj("TraitsBG_Sprite");
-            m_bg.Scale = new Vector2(1320f / m_bg.Width, 1320f / m_bg.Width);
-            m_bg.ForceDraw = true;
-            m_cloud1 = new SpriteObj("TraitsCloud1_Sprite")
+            _dialoguePlate = new ObjContainer("TraitsScreenPlate_Container");
+            _dialoguePlate.ForceDraw = true;
+            _dialoguePlate.Position = new Vector2(1320 - _dialoguePlate.Width / 2, 360f);
+            _skillIcon = new SpriteObj("Icon_Health_Up_Sprite");
+            _skillIcon.Position = new Vector2(-110f, -200f);
+            _dialoguePlate.AddChild(_skillIcon);
+            _skillTitle = new TextObj(Game.JunicodeFont);
+            _skillTitle.Text = "Skill name";
+            _skillTitle.DropShadow = new Vector2(2f, 2f);
+            _skillTitle.TextureColor = new Color(236, 197, 132);
+            _skillTitle.Position = new Vector2(_skillIcon.Bounds.Right + 15, _skillIcon.Y);
+            _skillTitle.FontSize = 12f;
+            _dialoguePlate.AddChild(_skillTitle);
+            _skillDescription = new TextObj(Game.JunicodeFont);
+            _skillDescription.Text = "Description text goes here.  Let's see how well the word wrap function works.";
+            _skillDescription.Position = new Vector2(_dialoguePlate.GetChildAt(1).X - 30f,
+                _dialoguePlate.GetChildAt(1).Bounds.Bottom + 20);
+            _skillDescription.FontSize = 10f;
+            _skillDescription.DropShadow = new Vector2(2f, 2f);
+            _skillDescription.TextureColor = new Color(228, 218, 208);
+            _skillDescription.WordWrap(_dialoguePlate.Width - 50);
+            _dialoguePlate.AddChild(_skillDescription);
+            _inputDescription = new KeyIconTextObj(Game.JunicodeFont);
+            _inputDescription.Text = "Input descriptions go here..";
+            _inputDescription.Position = new Vector2(_skillIcon.X - 30f, _skillDescription.Bounds.Bottom + 20);
+            _inputDescription.FontSize = 10f;
+            _inputDescription.DropShadow = new Vector2(2f, 2f);
+            _inputDescription.TextureColor = new Color(228, 218, 208);
+            _inputDescription.WordWrap(_dialoguePlate.Width - 50);
+            _dialoguePlate.AddChild(_inputDescription);
+            _descriptionDivider = new SpriteObj("Blank_Sprite");
+            _descriptionDivider.ScaleX = 250f / _descriptionDivider.Width;
+            _descriptionDivider.ScaleY = 0.25f;
+            _descriptionDivider.ForceDraw = true;
+            _descriptionDivider.DropShadow = new Vector2(2f, 2f);
+            _skillCurrent = new TextObj(Game.JunicodeFont);
+            _skillCurrent.Position = new Vector2(_inputDescription.X, _inputDescription.Bounds.Bottom + 10);
+            _skillCurrent.FontSize = 10f;
+            _skillCurrent.DropShadow = new Vector2(2f, 2f);
+            _skillCurrent.TextureColor = new Color(228, 218, 208);
+            _skillCurrent.WordWrap(_dialoguePlate.Width - 50);
+            _dialoguePlate.AddChild(_skillCurrent);
+            _skillUpgrade = _skillCurrent.Clone() as TextObj;
+            _skillUpgrade.Y += 15f;
+            _dialoguePlate.AddChild(_skillUpgrade);
+            _skillLevel = _skillUpgrade.Clone() as TextObj;
+            _skillLevel.Y += 15f;
+            _dialoguePlate.AddChild(_skillLevel);
+            _skillCost = new TextObj(Game.JunicodeFont);
+            _skillCost.X = _skillIcon.X;
+            _skillCost.Y = 182f;
+            _skillCost.FontSize = 10f;
+            _skillCost.DropShadow = new Vector2(2f, 2f);
+            _skillCost.TextureColor = Color.Yellow;
+            _dialoguePlate.AddChild(_skillCost);
+            _skillCostBG = new SpriteObj("SkillTreeGoldIcon_Sprite");
+            _skillCostBG.Position = new Vector2(-180f, 180f);
+            _dialoguePlate.AddChild(_skillCostBG);
+            _dialoguePlate.ForceDraw = true;
+            _bg = new SpriteObj("TraitsBG_Sprite");
+            _bg.Scale = new Vector2(1320f / _bg.Width, 1320f / _bg.Width);
+            _bg.ForceDraw = true;
+            _cloud1 = new SpriteObj("TraitsCloud1_Sprite")
             {
                 ForceDraw = true
             };
-            m_cloud2 = new SpriteObj("TraitsCloud2_Sprite")
+            _cloud2 = new SpriteObj("TraitsCloud2_Sprite")
             {
                 ForceDraw = true
             };
-            m_cloud3 = new SpriteObj("TraitsCloud3_Sprite")
+            _cloud3 = new SpriteObj("TraitsCloud3_Sprite")
             {
                 ForceDraw = true
             };
-            m_cloud4 = new SpriteObj("TraitsCloud4_Sprite")
+            _cloud4 = new SpriteObj("TraitsCloud4_Sprite")
             {
                 ForceDraw = true
             };
-            m_cloud5 = new SpriteObj("TraitsCloud5_Sprite")
+            _cloud5 = new SpriteObj("TraitsCloud5_Sprite")
             {
                 ForceDraw = true
             };
             var opacity = 1f;
-            m_cloud1.Opacity = opacity;
-            m_cloud2.Opacity = opacity;
-            m_cloud3.Opacity = opacity;
-            m_cloud4.Opacity = opacity;
-            m_cloud5.Opacity = opacity;
-            m_cloud1.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
-            m_cloud2.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
-            m_cloud3.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
-            m_cloud4.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
-            m_cloud5.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
-            m_selectionIcon = new SpriteObj("IconHalo_Sprite");
-            m_selectionIcon.ForceDraw = true;
-            m_selectionIcon.AnimationDelay = 0.1f;
-            m_selectionIcon.PlayAnimation();
-            m_selectionIcon.Scale = new Vector2(1.1f, 1.1f);
-            m_titleText = new SpriteObj("ManorTitleText_Sprite");
-            m_titleText.X = m_titleText.Width / 2f + 20f;
-            m_titleText.Y = 64.8f;
-            m_titleText.ForceDraw = true;
-            m_continueText = new KeyIconTextObj(Game.JunicodeFont);
-            m_continueText.ForceDraw = true;
-            m_continueText.FontSize = 12f;
-            m_continueText.DropShadow = new Vector2(2f, 2f);
-            m_continueText.Position = new Vector2(1300f, 630f);
-            m_continueText.Align = Types.TextAlign.Right;
-            m_toggleIconsText = new KeyIconTextObj(Game.JunicodeFont);
-            m_toggleIconsText.ForceDraw = true;
-            m_toggleIconsText.FontSize = 12f;
-            m_toggleIconsText.DropShadow = new Vector2(2f, 2f);
-            m_toggleIconsText.Position = new Vector2(m_continueText.X, m_continueText.Y + 40f);
-            m_toggleIconsText.Align = Types.TextAlign.Right;
-            m_confirmText = new KeyIconTextObj(Game.JunicodeFont);
-            m_confirmText.Align = Types.TextAlign.Right;
-            m_confirmText.FontSize = 12f;
-            m_confirmText.DropShadow = new Vector2(2f, 2f);
-            m_confirmText.Position = new Vector2(1300f, 10f);
-            m_confirmText.ForceDraw = true;
-            m_navigationText = new KeyIconTextObj(Game.JunicodeFont);
-            m_navigationText.Align = Types.TextAlign.Right;
-            m_navigationText.FontSize = 12f;
-            m_navigationText.DropShadow = new Vector2(2f, 2f);
-            m_navigationText.Position = new Vector2(m_confirmText.X, m_confirmText.Y + 40f);
-            m_navigationText.ForceDraw = true;
-            m_coinIcon = new SpriteObj("CoinIcon_Sprite");
-            m_coinIcon.Position = new Vector2(1100f, 585f);
-            m_coinIcon.Scale = new Vector2(0.9f, 0.9f);
-            m_coinIcon.ForceDraw = true;
-            m_playerMoney = new TextObj(Game.GoldFont);
-            m_playerMoney.Align = Types.TextAlign.Left;
-            m_playerMoney.Text = "1000";
-            m_playerMoney.FontSize = 30f;
-            m_playerMoney.Position = new Vector2(m_coinIcon.X + 35f, m_coinIcon.Y);
-            m_playerMoney.ForceDraw = true;
+            _cloud1.Opacity = opacity;
+            _cloud2.Opacity = opacity;
+            _cloud3.Opacity = opacity;
+            _cloud4.Opacity = opacity;
+            _cloud5.Opacity = opacity;
+            _cloud1.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
+            _cloud2.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
+            _cloud3.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
+            _cloud4.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
+            _cloud5.Position = new Vector2(CDGMath.RandomInt(0, 1520), CDGMath.RandomInt(0, 360));
+            _selectionIcon = new SpriteObj("IconHalo_Sprite");
+            _selectionIcon.ForceDraw = true;
+            _selectionIcon.AnimationDelay = 0.1f;
+            _selectionIcon.PlayAnimation();
+            _selectionIcon.Scale = new Vector2(1.1f, 1.1f);
+            _titleText = new SpriteObj("ManorTitleText_Sprite");
+            _titleText.X = _titleText.Width / 2f + 20f;
+            _titleText.Y = 64.8f;
+            _titleText.ForceDraw = true;
+            _continueText = new KeyIconTextObj(Game.JunicodeFont);
+            _continueText.ForceDraw = true;
+            _continueText.FontSize = 12f;
+            _continueText.DropShadow = new Vector2(2f, 2f);
+            _continueText.Position = new Vector2(1300f, 630f);
+            _continueText.Align = Types.TextAlign.Right;
+            _toggleIconsText = new KeyIconTextObj(Game.JunicodeFont);
+            _toggleIconsText.ForceDraw = true;
+            _toggleIconsText.FontSize = 12f;
+            _toggleIconsText.DropShadow = new Vector2(2f, 2f);
+            _toggleIconsText.Position = new Vector2(_continueText.X, _continueText.Y + 40f);
+            _toggleIconsText.Align = Types.TextAlign.Right;
+            _confirmText = new KeyIconTextObj(Game.JunicodeFont);
+            _confirmText.Align = Types.TextAlign.Right;
+            _confirmText.FontSize = 12f;
+            _confirmText.DropShadow = new Vector2(2f, 2f);
+            _confirmText.Position = new Vector2(1300f, 10f);
+            _confirmText.ForceDraw = true;
+            _navigationText = new KeyIconTextObj(Game.JunicodeFont);
+            _navigationText.Align = Types.TextAlign.Right;
+            _navigationText.FontSize = 12f;
+            _navigationText.DropShadow = new Vector2(2f, 2f);
+            _navigationText.Position = new Vector2(_confirmText.X, _confirmText.Y + 40f);
+            _navigationText.ForceDraw = true;
+            _coinIcon = new SpriteObj("CoinIcon_Sprite");
+            _coinIcon.Position = new Vector2(1100f, 585f);
+            _coinIcon.Scale = new Vector2(0.9f, 0.9f);
+            _coinIcon.ForceDraw = true;
+            _playerMoney = new TextObj(Game.GoldFont);
+            _playerMoney.Align = Types.TextAlign.Left;
+            _playerMoney.Text = "1000";
+            _playerMoney.FontSize = 30f;
+            _playerMoney.Position = new Vector2(_coinIcon.X + 35f, _coinIcon.Y);
+            _playerMoney.ForceDraw = true;
             base.LoadContent();
         }
 
         public override void OnEnter()
         {
-            m_lockControls = false;
-            m_manor.GetChildAt(23).Visible = true;
-            m_manor.GetChildAt(23).Opacity = 1f;
+            _lockControls = false;
+            _manor.GetChildAt(23).Visible = true;
+            _manor.GetChildAt(23).Opacity = 1f;
             Camera.Position = new Vector2(660f, 360f);
             var skillArray = SkillSystem.GetSkillArray();
             for (var i = 0; i < skillArray.Length; i++)
@@ -261,20 +260,20 @@ namespace RogueCastle
                 SoundManager.PlayMusic("SkillTreeSong", true, 1f);
             }
 
-            var skill = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
-            m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill);
+            var skill = SkillSystem.GetSkill((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y);
+            _selectionIcon.Position = SkillSystem.GetSkillPosition(skill);
             UpdateDescriptionPlate(skill);
-            m_dialoguePlate.Visible = true;
-            m_confirmText.Text = "[Input:" + 0 + "] to purchase/upgrade skill";
-            m_toggleIconsText.Text = "[Input:" + 9 + "] to toggle icons off";
-            m_continueText.Text = "[Input:" + 2 + "] to exit the manor";
+            _dialoguePlate.Visible = true;
+            _confirmText.Text = "[Input:" + 0 + "] to purchase/upgrade skill";
+            _toggleIconsText.Text = "[Input:" + 9 + "] to toggle icons off";
+            _continueText.Text = "[Input:" + 2 + "] to exit the manor";
             if (InputManager.GamePadIsConnected(PlayerIndex.One))
             {
-                m_navigationText.Text = "[Button:LeftStick] to navigate skills";
+                _navigationText.Text = "[Button:LeftStick] to navigate skills";
             }
             else
             {
-                m_navigationText.Text = "Arrow keys to navigate skills";
+                _navigationText.Text = "Arrow keys to navigate skills";
             }
 
             SkillSystem.UpdateAllTraitSprites();
@@ -300,7 +299,7 @@ namespace RogueCastle
                 return;
             }
 
-            var childAt = m_manor.GetChildAt(manorPiece);
+            var childAt = _manor.GetChildAt(manorPiece);
             childAt.Opacity = 1f;
             childAt.Visible = true;
             foreach (var current in SkillSystem.GetAllConnectingTraits(trait))
@@ -312,19 +311,19 @@ namespace RogueCastle
                 }
             }
 
-            if (m_manor.GetChildAt(7).Visible && m_manor.GetChildAt(16).Visible)
+            if (_manor.GetChildAt(7).Visible && _manor.GetChildAt(16).Visible)
             {
-                (m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
+                (_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
             }
 
-            if (m_manor.GetChildAt(6).Visible && m_manor.GetChildAt(16).Visible)
+            if (_manor.GetChildAt(6).Visible && _manor.GetChildAt(16).Visible)
             {
-                (m_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
+                (_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
             }
 
-            if (m_manor.GetChildAt(2).Visible)
+            if (_manor.GetChildAt(2).Visible)
             {
-                var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
+                var spriteObj = _manor.GetChildAt(32) as SpriteObj;
                 spriteObj.Visible = true;
                 spriteObj.Opacity = 1f;
                 spriteObj.PlayAnimation();
@@ -336,11 +335,11 @@ namespace RogueCastle
 
         public void SetManorPieceVisible(Tuple<int, int> manorPiece, SkillObj skillObj)
         {
-            var childAt = m_manor.GetChildAt(manorPiece.Item1);
+            var childAt = _manor.GetChildAt(manorPiece.Item1);
             var num = 0f;
             if (!childAt.Visible)
             {
-                m_lockControls = true;
+                _lockControls = true;
                 childAt.Visible = true;
                 var pos = new Vector2(childAt.AbsPosition.X, childAt.AbsBounds.Bottom);
                 switch (manorPiece.Item1)
@@ -364,7 +363,7 @@ namespace RogueCastle
                         childAt.X -= childAt.Width * 2;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
                         Tween.By(childAt, num, Quad.EaseOut, "X", (childAt.Width * 2).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
                         goto IL_A26;
 
                     case 2:
@@ -374,8 +373,8 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
-                        var spriteObj = m_manor.GetChildAt(32) as SpriteObj;
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
+                        var spriteObj = _manor.GetChildAt(32) as SpriteObj;
                         spriteObj.PlayAnimation();
                         spriteObj.OverrideParentAnimationDelay = true;
                         spriteObj.AnimationDelay = 0.0333333351f;
@@ -397,7 +396,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
                         goto IL_A26;
 
                     case 4:
@@ -407,7 +406,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
                         goto IL_A26;
 
                     case 7:
@@ -417,7 +416,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
                         goto IL_A26;
 
                     case 8:
@@ -427,7 +426,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.25f, num);
                         goto IL_A26;
 
                     case 10:
@@ -437,7 +436,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2, num);
                         goto IL_A26;
 
                     case 12:
@@ -448,7 +447,7 @@ namespace RogueCastle
                         pos.X = childAt.AbsPosition.X - 60f;
                         SoundManager.PlaySound("skill_tree_reveal_short_01", "skill_tree_reveal_short_02");
                         Tween.By(childAt, num, Quad.EaseOut, "X", (-(childAt.Width * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, false, childAt.Height * 2, num);
                         goto IL_A26;
 
                     case 16:
@@ -457,7 +456,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.5f, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.5f, num);
                         goto IL_A26;
 
                     case 18:
@@ -467,7 +466,7 @@ namespace RogueCastle
                         childAt.Y += childAt.Height * 2;
                         SoundManager.PlaySound("skill_tree_reveal_01", "skill_tree_reveal_02");
                         Tween.By(childAt, num, Quad.EaseOut, "Y", (-(childAt.Height * 2)).ToString());
-                        m_impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.2f, num);
+                        _impactEffectPool.SkillTreeDustDuration(pos, true, childAt.Width * 2 * 0.2f, num);
                         goto IL_A26;
 
                     case 23:
@@ -489,7 +488,7 @@ namespace RogueCastle
                 childAt.Opacity = 1f;
                 childAt.Y -= 720f;
                 Tween.By(childAt, num, Quad.EaseIn, "Y", "720");
-                Tween.AddEndHandlerToLastTween(m_impactEffectPool, "SkillTreeDustEffect", vector, true,
+                Tween.AddEndHandlerToLastTween(_impactEffectPool, "SkillTreeDustEffect", vector, true,
                     childAt.Width * 2);
                 Tween.RunFunction(num, this, "ShakeScreen", 5, true, true);
                 Tween.RunFunction(num + 0.2f, this, "StopScreenShake");
@@ -497,14 +496,14 @@ namespace RogueCastle
 
             IL_A26:
             Tween.RunFunction(num, this, "SetSkillIconVisible", skillObj, manorPiece);
-            if (m_manor.GetChildAt(7).Visible && m_manor.GetChildAt(16).Visible)
+            if (_manor.GetChildAt(7).Visible && _manor.GetChildAt(16).Visible)
             {
-                (m_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
+                (_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
             }
 
-            if (m_manor.GetChildAt(6).Visible && m_manor.GetChildAt(16).Visible)
+            if (_manor.GetChildAt(6).Visible && _manor.GetChildAt(16).Visible)
             {
-                (m_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
+                (_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
             }
         }
 
@@ -659,97 +658,97 @@ namespace RogueCastle
 
         public void UnlockControls()
         {
-            m_lockControls = false;
+            _lockControls = false;
         }
 
         public void StartShake(GameObj obj, float shakeDuration)
         {
-            m_shakeDuration = shakeDuration;
-            m_shakeObj = obj;
-            m_shakeTimer = m_shakeDelay;
-            m_shookLeft = false;
+            _shakeDuration = shakeDuration;
+            _shakeObj = obj;
+            _shakeTimer = _shakeDelay;
+            _shookLeft = false;
         }
 
         public void EndShake()
         {
-            if (m_shookLeft)
+            if (_shookLeft)
             {
-                m_shakeObj.X += m_shakeAmount;
+                _shakeObj.X += _shakeAmount;
             }
 
-            m_shakeObj = null;
-            m_shakeTimer = 0f;
+            _shakeObj = null;
+            _shakeTimer = 0f;
         }
 
         public void FadingComplete()
         {
-            m_fadingIn = false;
+            _fadingIn = false;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (!m_cameraTweening && Camera.Y != 360f)
+            if (!_cameraTweening && Camera.Y != 360f)
             {
-                m_cameraTweening = true;
+                _cameraTweening = true;
                 Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 360f.ToString());
                 Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
             }
 
             var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            if (m_cloud1.Bounds.Right < -100)
+            if (_cloud1.Bounds.Right < -100)
             {
-                m_cloud1.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
+                _cloud1.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
 
-            if (m_cloud2.Bounds.Right < -100)
+            if (_cloud2.Bounds.Right < -100)
             {
-                m_cloud2.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
+                _cloud2.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
 
-            if (m_cloud3.Bounds.Right < -100)
+            if (_cloud3.Bounds.Right < -100)
             {
-                m_cloud3.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
+                _cloud3.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
 
-            if (m_cloud4.Bounds.Right < -100)
+            if (_cloud4.Bounds.Right < -100)
             {
-                m_cloud4.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
+                _cloud4.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
 
-            if (m_cloud5.Bounds.Right < -100)
+            if (_cloud5.Bounds.Right < -100)
             {
-                m_cloud5.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
+                _cloud5.Position = new Vector2(CDGMath.RandomInt(1420, 1520), CDGMath.RandomInt(0, 360));
             }
 
-            m_cloud1.X -= 20f * num;
-            m_cloud2.X -= 16f * num;
-            m_cloud3.X -= 15f * num;
-            m_cloud4.X -= 5f * num;
-            m_cloud5.X -= 10f * num;
-            if (m_shakeDuration > 0f)
+            _cloud1.X -= 20f * num;
+            _cloud2.X -= 16f * num;
+            _cloud3.X -= 15f * num;
+            _cloud4.X -= 5f * num;
+            _cloud5.X -= 10f * num;
+            if (_shakeDuration > 0f)
             {
-                m_shakeDuration -= num;
-                if (m_shakeTimer > 0f && m_shakeObj != null)
+                _shakeDuration -= num;
+                if (_shakeTimer > 0f && _shakeObj != null)
                 {
-                    m_shakeTimer -= num;
-                    if (m_shakeTimer <= 0f)
+                    _shakeTimer -= num;
+                    if (_shakeTimer <= 0f)
                     {
-                        m_shakeTimer = m_shakeDelay;
-                        if (m_shookLeft)
+                        _shakeTimer = _shakeDelay;
+                        if (_shookLeft)
                         {
-                            m_shookLeft = false;
-                            m_shakeObj.X += m_shakeAmount;
+                            _shookLeft = false;
+                            _shakeObj.X += _shakeAmount;
                         }
                         else
                         {
-                            m_shakeObj.X -= m_shakeAmount;
-                            m_shookLeft = true;
+                            _shakeObj.X -= _shakeAmount;
+                            _shookLeft = true;
                         }
                     }
                 }
             }
 
-            if (m_shakeScreen)
+            if (_shakeScreen)
             {
                 UpdateShake();
             }
@@ -759,38 +758,38 @@ namespace RogueCastle
 
         public override void HandleInput()
         {
-            if (!m_cameraTweening && !m_lockControls)
+            if (!_cameraTweening && !_lockControls)
             {
                 var flag = false;
                 if (Game.GlobalInput.JustPressed(9))
                 {
                     if (SkillSystem.IconsVisible)
                     {
-                        m_toggleIconsText.Text = "[Input:" + 9 + "] to toggle icons on";
-                        m_confirmText.Visible = false;
-                        m_continueText.Visible = false;
-                        m_navigationText.Visible = false;
+                        _toggleIconsText.Text = "[Input:" + 9 + "] to toggle icons on";
+                        _confirmText.Visible = false;
+                        _continueText.Visible = false;
+                        _navigationText.Visible = false;
                         SkillSystem.HideAllIcons();
-                        m_selectionIcon.Opacity = 0f;
-                        m_dialoguePlate.Opacity = 0f;
-                        m_descriptionDivider.Opacity = 0f;
-                        m_coinIcon.Opacity = 0f;
-                        m_playerMoney.Opacity = 0f;
-                        m_titleText.Opacity = 0f;
+                        _selectionIcon.Opacity = 0f;
+                        _dialoguePlate.Opacity = 0f;
+                        _descriptionDivider.Opacity = 0f;
+                        _coinIcon.Opacity = 0f;
+                        _playerMoney.Opacity = 0f;
+                        _titleText.Opacity = 0f;
                     }
                     else
                     {
-                        m_toggleIconsText.Text = "[Input:" + 9 + "] to toggle icons off";
-                        m_confirmText.Visible = true;
-                        m_continueText.Visible = true;
-                        m_navigationText.Visible = true;
+                        _toggleIconsText.Text = "[Input:" + 9 + "] to toggle icons off";
+                        _confirmText.Visible = true;
+                        _continueText.Visible = true;
+                        _navigationText.Visible = true;
                         SkillSystem.ShowAllIcons();
-                        m_selectionIcon.Opacity = 1f;
-                        m_dialoguePlate.Opacity = 1f;
-                        m_descriptionDivider.Opacity = 1f;
-                        m_coinIcon.Opacity = 1f;
-                        m_playerMoney.Opacity = 1f;
-                        m_titleText.Opacity = 1f;
+                        _selectionIcon.Opacity = 1f;
+                        _dialoguePlate.Opacity = 1f;
+                        _descriptionDivider.Opacity = 1f;
+                        _coinIcon.Opacity = 1f;
+                        _playerMoney.Opacity = 1f;
+                        _titleText.Opacity = 1f;
                     }
 
                     flag = true;
@@ -798,17 +797,17 @@ namespace RogueCastle
 
                 if (SkillSystem.IconsVisible)
                 {
-                    var selectedTraitIndex = m_selectedTraitIndex;
+                    var selectedTraitIndex = _selectedTraitIndex;
                     var vector = new Vector2(-1f, -1f);
                     if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
                     {
                         vector =
-                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                            SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
                                 .TopLink;
                         var skill = SkillSystem.GetSkill(SkillType.SuperSecret);
-                        if (!m_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
+                        if (!_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
                         {
-                            m_cameraTweening = true;
+                            _cameraTweening = true;
                             Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 60f.ToString());
                             Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
                         }
@@ -816,20 +815,20 @@ namespace RogueCastle
                     else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
                     {
                         vector =
-                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                            SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
                                 .BottomLink;
                     }
 
                     if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
                     {
                         vector =
-                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                            SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
                                 .LeftLink;
                     }
                     else if (Game.GlobalInput.JustPressed(22) || Game.GlobalInput.JustPressed(23))
                     {
                         vector =
-                            SkillSystem.GetSkillLink((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y)
+                            SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
                                 .RightLink;
                     }
 
@@ -838,28 +837,28 @@ namespace RogueCastle
                         var skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
                         if (skill2.Trait != SkillType.Null && skill2.Visible)
                         {
-                            m_selectedTraitIndex = vector;
+                            _selectedTraitIndex = vector;
                         }
                     }
 
-                    if (selectedTraitIndex != m_selectedTraitIndex)
+                    if (selectedTraitIndex != _selectedTraitIndex)
                     {
-                        var skill3 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X,
-                            (int) m_selectedTraitIndex.Y);
-                        m_selectionIcon.Position = SkillSystem.GetSkillPosition(skill3);
+                        var skill3 = SkillSystem.GetSkill((int) _selectedTraitIndex.X,
+                            (int) _selectedTraitIndex.Y);
+                        _selectionIcon.Position = SkillSystem.GetSkillPosition(skill3);
                         UpdateDescriptionPlate(skill3);
                         SoundManager.PlaySound("ShopMenuMove");
                         skill3.Scale = new Vector2(1.1f, 1.1f);
                         Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
-                        m_dialoguePlate.Visible = true;
+                        _dialoguePlate.Visible = true;
                     }
 
-                    var skill4 = SkillSystem.GetSkill((int) m_selectedTraitIndex.X, (int) m_selectedTraitIndex.Y);
+                    var skill4 = SkillSystem.GetSkill((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y);
                     if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
                         Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
                     {
                         SoundManager.PlaySound("TraitUpgrade");
-                        if (!m_fadingIn)
+                        if (!_fadingIn)
                         {
                             Game.PlayerStats.Gold -= skill4.TotalCost;
                             SetVisible(skill4, true);
@@ -878,9 +877,9 @@ namespace RogueCastle
                         SoundManager.PlaySound("TraitPurchaseFail");
                     }
 
-                    if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
+                    if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3) && !flag)
                     {
-                        m_lockControls = true;
+                        _lockControls = true;
                         var rCScreenManager = ScreenManager as RCScreenManager;
                         var levelScreen = rCScreenManager.GetLevelScreen();
                         levelScreen.Reset();
@@ -903,7 +902,7 @@ namespace RogueCastle
 
         public void EndCameraTween()
         {
-            m_cameraTweening = false;
+            _cameraTweening = false;
         }
 
         public void UpdateDescriptionPlate(SkillObj skill)
@@ -913,13 +912,13 @@ namespace RogueCastle
             Console.WriteLine(text);
             text = text.Replace("Locked", "");
             text = text.Replace("Max", "");
-            m_skillIcon.ChangeSprite(text);
-            m_skillTitle.Text = skill.Name;
-            m_skillDescription.Text = skill.Description;
-            m_skillDescription.WordWrap(280);
-            m_inputDescription.Text = skill.InputDescription;
-            m_inputDescription.WordWrap(280);
-            m_inputDescription.Y = m_skillDescription.Bounds.Bottom + 10;
+            _skillIcon.ChangeSprite(text);
+            _skillTitle.Text = skill.Name;
+            _skillDescription.Text = skill.Description;
+            _skillDescription.WordWrap(280);
+            _inputDescription.Text = skill.InputDescription;
+            _inputDescription.WordWrap(280);
+            _inputDescription.Y = _skillDescription.Bounds.Bottom + 10;
 
             // Update stats and modifier texts.
             var stat = skill.Trait.SkillStat();
@@ -941,7 +940,7 @@ namespace RogueCastle
                     }
                 }
 
-                m_skillCurrent.Text = "Current: " + stat + skill.UnitOfMeasurement;
+                _skillCurrent.Text = "Current: " + stat + skill.UnitOfMeasurement;
                 if (skill.CurrentLevel < skill.MaxLevel)
                 {
                     var mod = skill.PerLevelModifier;
@@ -954,14 +953,14 @@ namespace RogueCastle
                         }
                     }
 
-                    m_skillUpgrade.Text = "Upgrade: +" + mod + skill.UnitOfMeasurement;
+                    _skillUpgrade.Text = "Upgrade: +" + mod + skill.UnitOfMeasurement;
                 }
                 else
                 {
-                    m_skillUpgrade.Text = "Upgrade: --";
+                    _skillUpgrade.Text = "Upgrade: --";
                 }
 
-                m_skillLevel.Text = string.Concat("Level: ", skill.CurrentLevel, "/", skill.MaxLevel);
+                _skillLevel.Text = string.Concat("Level: ", skill.CurrentLevel, "/", skill.MaxLevel);
 
                 var upText = "unlock";
                 if (skill.CurrentLevel > 0)
@@ -971,34 +970,34 @@ namespace RogueCastle
 
                 if (skill.CanPurchase)
                 {
-                    m_skillCost.TextureColor = Color.Yellow;
-                    m_skillCost.Text = string.Format("{0} gold to {1}.", skill.TotalCost, upText);
+                    _skillCost.TextureColor = Color.Yellow;
+                    _skillCost.Text = string.Format("{0} gold to {1}.", skill.TotalCost, upText);
                 }
                 else
                 {
-                    m_skillCost.TextureColor = Color.Red;
-                    m_skillCost.Text = string.Format("Cannot purchase {0}.", upText);
+                    _skillCost.TextureColor = Color.Red;
+                    _skillCost.Text = string.Format("Cannot purchase {0}.", upText);
                 }
 
-                if (m_inputDescription.Text != " " && m_inputDescription.Text != "")
+                if (_inputDescription.Text != " " && _inputDescription.Text != "")
                 {
-                    m_skillCurrent.Y = m_inputDescription.Bounds.Bottom + 40;
+                    _skillCurrent.Y = _inputDescription.Bounds.Bottom + 40;
                 }
                 else
                 {
-                    m_skillCurrent.Y = m_skillDescription.Bounds.Bottom + 40;
+                    _skillCurrent.Y = _skillDescription.Bounds.Bottom + 40;
                 }
 
-                m_skillUpgrade.Y = m_skillCurrent.Y + 30f;
-                m_skillLevel.Y = m_skillUpgrade.Y + 30f;
-                m_descriptionDivider.Visible = true;
+                _skillUpgrade.Y = _skillCurrent.Y + 30f;
+                _skillLevel.Y = _skillUpgrade.Y + 30f;
+                _descriptionDivider.Visible = true;
             }
             else
             {
-                m_skillCurrent.Text = "";
-                m_skillUpgrade.Text = "";
-                m_skillLevel.Text = "";
-                m_descriptionDivider.Visible = false;
+                _skillCurrent.Text = "";
+                _skillUpgrade.Text = "";
+                _skillLevel.Text = "";
+                _descriptionDivider.Visible = false;
                 var upText = "unlock";
                 if (skill.CurrentLevel > 0)
                 {
@@ -1007,50 +1006,50 @@ namespace RogueCastle
 
                 if (skill.CanPurchase)
                 {
-                    m_skillCost.TextureColor = Color.Yellow;
-                    m_skillCost.Text = string.Format("{0} gold to {1}.", skill.TotalCost, upText);
+                    _skillCost.TextureColor = Color.Yellow;
+                    _skillCost.Text = string.Format("{0} gold to {1}.", skill.TotalCost, upText);
                 }
                 else
                 {
-                    m_skillCost.TextureColor = Color.Red;
-                    m_skillCost.Text = string.Format("Cannot purchase {0}.", upText);
+                    _skillCost.TextureColor = Color.Red;
+                    _skillCost.Text = string.Format("Cannot purchase {0}.", upText);
                 }
             }
 
             // Update visibility.
-            m_descriptionDivider.Position = new Vector2(m_skillCurrent.AbsX, m_skillCurrent.AbsY - 20f);
+            _descriptionDivider.Position = new Vector2(_skillCurrent.AbsX, _skillCurrent.AbsY - 20f);
             if (skill.CurrentLevel >= skill.MaxLevel)
             {
-                m_skillCost.Visible = false;
-                m_skillCostBG.Visible = false;
+                _skillCost.Visible = false;
+                _skillCostBG.Visible = false;
             }
             else
             {
-                m_skillCost.Visible = true;
-                m_skillCostBG.Visible = true;
+                _skillCost.Visible = true;
+                _skillCostBG.Visible = true;
             }
 
             // Money money money.
-            m_playerMoney.Text = Game.PlayerStats.Gold.ToString();
+            _playerMoney.Text = Game.PlayerStats.Gold.ToString();
         }
 
         public override void Draw(GameTime gameTime)
         {
-            m_cloud1.Y = m_cloud2.Y = m_cloud3.Y = m_cloud4.Y = m_cloud5.Y = Camera.TopLeftCorner.Y * 0.2f;
-            m_bg.Y = Camera.TopLeftCorner.Y * 0.2f;
+            _cloud1.Y = _cloud2.Y = _cloud3.Y = _cloud4.Y = _cloud5.Y = Camera.TopLeftCorner.Y * 0.2f;
+            _bg.Y = Camera.TopLeftCorner.Y * 0.2f;
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, null,
                 Camera.GetTransformation());
-            m_bg.Draw(Camera);
-            m_cloud1.Draw(Camera);
-            m_cloud2.Draw(Camera);
-            m_cloud3.Draw(Camera);
-            m_cloud4.Draw(Camera);
-            m_cloud5.Draw(Camera);
+            _bg.Draw(Camera);
+            _cloud1.Draw(Camera);
+            _cloud2.Draw(Camera);
+            _cloud3.Draw(Camera);
+            _cloud4.Draw(Camera);
+            _cloud5.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            m_manor.Draw(Camera);
-            m_impactEffectPool.Draw(Camera);
+            _manor.Draw(Camera);
+            _impactEffectPool.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
-            m_selectionIcon.Draw(Camera);
+            _selectionIcon.Draw(Camera);
             var skillArray = SkillSystem.GetSkillArray();
             for (var i = 0; i < skillArray.Length; i++)
             {
@@ -1063,15 +1062,15 @@ namespace RogueCastle
 
             Camera.End();
             Camera.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null);
-            m_dialoguePlate.Draw(Camera);
-            m_continueText.Draw(Camera);
-            m_toggleIconsText.Draw(Camera);
-            m_confirmText.Draw(Camera);
-            m_navigationText.Draw(Camera);
-            m_playerMoney.Draw(Camera);
+            _dialoguePlate.Draw(Camera);
+            _continueText.Draw(Camera);
+            _toggleIconsText.Draw(Camera);
+            _confirmText.Draw(Camera);
+            _navigationText.Draw(Camera);
+            _playerMoney.Draw(Camera);
             Camera.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            m_descriptionDivider.Draw(Camera);
-            m_coinIcon.Draw(Camera);
+            _descriptionDivider.Draw(Camera);
+            _coinIcon.Draw(Camera);
             Camera.End();
             base.Draw(gameTime);
         }
@@ -1081,52 +1080,52 @@ namespace RogueCastle
             if (!IsDisposed)
             {
                 Console.WriteLine("Disposing Skill Screen");
-                m_titleText.Dispose();
-                m_titleText = null;
-                m_bg.Dispose();
-                m_bg = null;
-                m_cloud1.Dispose();
-                m_cloud1 = null;
-                m_cloud2.Dispose();
-                m_cloud2 = null;
-                m_cloud3.Dispose();
-                m_cloud3 = null;
-                m_cloud4.Dispose();
-                m_cloud4 = null;
-                m_cloud5.Dispose();
-                m_cloud5 = null;
-                m_continueText.Dispose();
-                m_continueText = null;
-                m_toggleIconsText.Dispose();
-                m_toggleIconsText = null;
-                m_confirmText.Dispose();
-                m_confirmText = null;
-                m_navigationText.Dispose();
-                m_navigationText = null;
-                m_dialoguePlate.Dispose();
-                m_dialoguePlate = null;
-                m_selectionIcon.Dispose();
-                m_selectionIcon = null;
-                m_impactEffectPool.Dispose();
-                m_impactEffectPool = null;
-                m_manor.Dispose();
-                m_manor = null;
-                m_shakeObj = null;
-                m_playerMoney.Dispose();
-                m_playerMoney = null;
-                m_coinIcon.Dispose();
-                m_coinIcon = null;
-                m_skillCurrent = null;
-                m_skillCost = null;
-                m_skillCostBG = null;
-                m_skillDescription = null;
-                m_inputDescription = null;
-                m_skillUpgrade = null;
-                m_skillLevel = null;
-                m_skillIcon = null;
-                m_skillTitle = null;
-                m_descriptionDivider.Dispose();
-                m_descriptionDivider = null;
+                _titleText.Dispose();
+                _titleText = null;
+                _bg.Dispose();
+                _bg = null;
+                _cloud1.Dispose();
+                _cloud1 = null;
+                _cloud2.Dispose();
+                _cloud2 = null;
+                _cloud3.Dispose();
+                _cloud3 = null;
+                _cloud4.Dispose();
+                _cloud4 = null;
+                _cloud5.Dispose();
+                _cloud5 = null;
+                _continueText.Dispose();
+                _continueText = null;
+                _toggleIconsText.Dispose();
+                _toggleIconsText = null;
+                _confirmText.Dispose();
+                _confirmText = null;
+                _navigationText.Dispose();
+                _navigationText = null;
+                _dialoguePlate.Dispose();
+                _dialoguePlate = null;
+                _selectionIcon.Dispose();
+                _selectionIcon = null;
+                _impactEffectPool.Dispose();
+                _impactEffectPool = null;
+                _manor.Dispose();
+                _manor = null;
+                _shakeObj = null;
+                _playerMoney.Dispose();
+                _playerMoney = null;
+                _coinIcon.Dispose();
+                _coinIcon = null;
+                _skillCurrent = null;
+                _skillCost = null;
+                _skillCostBG = null;
+                _skillDescription = null;
+                _inputDescription = null;
+                _skillUpgrade = null;
+                _skillLevel = null;
+                _skillIcon = null;
+                _skillTitle = null;
+                _descriptionDivider.Dispose();
+                _descriptionDivider = null;
                 base.Dispose();
             }
         }
@@ -1134,34 +1133,34 @@ namespace RogueCastle
         public void ShakeScreen(float magnitude, bool horizontalShake = true, bool verticalShake = true)
         {
             SoundManager.PlaySound("TowerLand");
-            m_screenShakeMagnitude = magnitude;
-            m_horizontalShake = horizontalShake;
-            m_verticalShake = verticalShake;
-            m_shakeScreen = true;
+            _screenShakeMagnitude = magnitude;
+            _horizontalShake = horizontalShake;
+            _verticalShake = verticalShake;
+            _shakeScreen = true;
         }
 
         public void UpdateShake()
         {
-            if (m_horizontalShake)
+            if (_horizontalShake)
             {
-                m_bg.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
-                m_manor.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
+                _bg.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * _screenShakeMagnitude);
+                _manor.X = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * _screenShakeMagnitude);
             }
 
-            if (m_verticalShake)
+            if (_verticalShake)
             {
-                m_bg.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
-                m_manor.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * m_screenShakeMagnitude);
+                _bg.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * _screenShakeMagnitude);
+                _manor.Y = CDGMath.RandomPlusMinus() * (CDGMath.RandomFloat(0f, 1f) * _screenShakeMagnitude);
             }
         }
 
         public void StopScreenShake()
         {
-            m_shakeScreen = false;
-            m_bg.X = 0f;
-            m_bg.Y = 0f;
-            m_manor.X = 0f;
-            m_manor.Y = 0f;
+            _shakeScreen = false;
+            _bg.X = 0f;
+            _bg.Y = 0f;
+            _manor.X = 0f;
+            _manor.Y = 0f;
         }
 
         private static string AddSpacesToString(string text)
