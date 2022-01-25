@@ -37,7 +37,7 @@ namespace RogueCastle
         private void SetRoomData()
         {
             _boss.GetChildAt(0).TextureColor = Color.HotPink;
-            _boss.MaxHealth = 650;
+            _boss.MaxHealth = 800;
             _boss.Damage = 25;
             _boss.IsNeo = true;
             _boss.Name = "Neo Khidr";
