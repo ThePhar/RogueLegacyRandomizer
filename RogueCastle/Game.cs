@@ -1307,26 +1307,46 @@ namespace RogueCastle
             else if (item.Item == ItemDefinitions.ProgressiveArmor.Code)
             {
                 var index = 0;
-                while (index <= 15 && PlayerStats.GetBlueprintArray[0][index] > 0)
+
+                var progressiveArmorOrder = new[]
+                {
+                    (int) EquipmentBase.Squire,
+                    (int) EquipmentBase.Knight,
+                    (int) EquipmentBase.Blood,
+                    (int) EquipmentBase.Silver,
+                    (int) EquipmentBase.Ranger,
+                    (int) EquipmentBase.Sage,
+                    (int) EquipmentBase.Guardian,
+                    (int) EquipmentBase.Sky,
+                    (int) EquipmentBase.Retribution,
+                    (int) EquipmentBase.Imperial,
+                    (int) EquipmentBase.Dragon,
+                    (int) EquipmentBase.Holy,
+                    (int) EquipmentBase.Royal,
+                    (int) EquipmentBase.Slayer,
+                    (int) EquipmentBase.Dark,
+                };
+
+                while (index <= 15 && PlayerStats.GetBlueprintArray[0][progressiveArmorOrder[index]] > 0)
                 {
                     index++;
                 }
 
                 if (ArchipelagoManager.Data.RequirePurchasing)
                 {
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][index] = 1;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][index] = 1;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][index] = 1;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][index] = 1;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][index] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][progressiveArmorOrder[index]] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][progressiveArmorOrder[index]] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][progressiveArmorOrder[index]] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][progressiveArmorOrder[index]] = 1;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][progressiveArmorOrder[index]] = 1;
                 }
                 else
                 {
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][index] = 3;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][index] = 3;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][index] = 3;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][index] = 3;
-                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][index] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][progressiveArmorOrder[index]] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][progressiveArmorOrder[index]] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][progressiveArmorOrder[index]] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][progressiveArmorOrder[index]] = 3;
+                    PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][progressiveArmorOrder[index]] = 3;
                 }
             }
             else if (item.Item == ItemDefinitions.SquireArmor.Code)
