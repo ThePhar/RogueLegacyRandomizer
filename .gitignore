@@ -503,5 +503,8 @@ FodyWeavers.xsd
 /lib/Tweener.dll
 /Content/
 
+### Inno Output ###
+/inno/Output
+
 ### Utility Files ###
 /util/

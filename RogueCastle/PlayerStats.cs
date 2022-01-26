@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - PlayerStats.cs
-//  Last Modified 2022-01-23
-//
+//  Last Modified 2022-01-26
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System.Collections.Generic;
 using Archipelago.MultiClient.Net.Models;
@@ -69,9 +69,7 @@ namespace RogueCastle
             ChestPiece = (byte) CDGMath.RandomInt(1, 5);
             CDGMath.RandomInt(0, 14);
 
-            OpenedChests = new ChestTracker();
             ReceivedItems = new List<NetworkItem>();
-            CheckedLocationsCount = 0;
         }
 
         public int CurrentLevel { get; set; }
@@ -150,9 +148,7 @@ namespace RogueCastle
         public bool              ChallengeLastBossBeaten   { get; set; }
         public List<byte[]>      GetBlueprintArray         { get; private set; }
         public sbyte[]           GetEquippedArray          { get; private set; }
-        public ChestTracker      OpenedChests              { get; set; }
         public List<NetworkItem> ReceivedItems             { get; set; }
-        public int               CheckedLocationsCount     { get; set; }
 
         public bool CheckReceived(NetworkItem item)
         {
