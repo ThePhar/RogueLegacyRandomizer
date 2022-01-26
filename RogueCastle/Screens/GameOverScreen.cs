@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - GameOverScreen.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-01-26
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -378,7 +378,6 @@ namespace RogueCastle.Screens
                 else
                 {
                     SkillSystem.ResetAllTraits();
-                    var chests = Game.PlayerStats.OpenedChests;
                     var received = Game.PlayerStats.ReceivedItems;
                     Game.PlayerStats.Dispose();
                     Game.PlayerStats = new PlayerStats();
@@ -387,7 +386,6 @@ namespace RogueCastle.Screens
                         SaveType.UpgradeData);
                     Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
-                    Game.PlayerStats.OpenedChests = chests;
                     Game.PlayerStats.ReceivedItems = received;
                     (ScreenManager as RCScreenManager).DisplayScreen((int) ScreenType.Lineage, true);
                     _lockControls = true;
