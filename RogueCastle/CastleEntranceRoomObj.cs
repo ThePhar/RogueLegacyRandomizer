@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - CastleEntranceRoomObj.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-01-26
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -357,11 +357,20 @@ namespace RogueCastle
                 _speechBubble.ChangeSprite("ExclamationSquare_Sprite");
             }
 
-            if ((Game.PlayerStats.DiaryEntry < 25 && !RoomCompleted) || CollisionMath.Intersects(Player.Bounds, bounds))
+            if (
+                   !RoomCompleted && Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration
+                || Game.PlayerStats.DiaryEntry < 1 && !Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration
+                || CollisionMath.Intersects(Player.Bounds, bounds)
+            )
             {
                 _speechBubble.Visible = true;
             }
-            else if (Game.PlayerStats.DiaryEntry >= 25 && !CollisionMath.Intersects(Player.Bounds, bounds) || RoomCompleted)
+            else if ((RoomCompleted && Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration) && !CollisionMath.Intersects(Player.Bounds, bounds))
+            {
+                _speechBubble.Visible = false;
+            }
+
+            if (Game.PlayerStats.DiaryEntry >= 25)
             {
                 _speechBubble.Visible = false;
             }
@@ -370,19 +379,13 @@ namespace RogueCastle
             {
                 if ((!RoomCompleted && Game.PlayerStats.DiaryEntry < 25 && Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration) || Game.PlayerStats.DiaryEntry < 1)
                 {
-                    while (true)
+                    var location = LocationDefinitions.Diary1.Code;
+                    while (location <= LocationDefinitions.Diary25.Code)
                     {
-                        var location = LocationDefinitions.Diary1.Code + Game.PlayerStats.DiaryEntry++;
-
-                        // If our location cache does not contain this location, then we have run out of locations to check.
-                        if (!Program.Game.ArchipelagoManager.LocationCache.ContainsKey(location))
-                        {
-                            return;
-                        }
-
                         // Check if we already checked this location and try to get the next item in the sequence if so.
                         if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
                         {
+                            location++;
                             continue;
                         }
 

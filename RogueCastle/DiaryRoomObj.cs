@@ -1,13 +1,13 @@
-// 
+//
 //  Rogue Legacy Randomizer - DiaryRoomObj.cs
-//  Last Modified 2022-01-25
-// 
+//  Last Modified 2022-01-26
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -88,7 +88,7 @@ namespace RogueCastle
                 m_speechBubble.Visible = false;
             }
 
-            if (m_diaryIndex >= 24)
+            if (m_diaryIndex >= 25)
             {
                 m_speechBubble.Visible = false;
             }
@@ -104,23 +104,13 @@ namespace RogueCastle
                 {
                     if (!RoomCompleted && Game.PlayerStats.DiaryEntry < 25)
                     {
-                        // var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                        // rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + m_diaryIndex);
-                        // rCScreenManager.DisplayScreen(13, true);
-
-                        while (true)
+                        var location = LocationDefinitions.Diary1.Code;
+                        while (location <= LocationDefinitions.Diary25.Code)
                         {
-                            var location = LocationDefinitions.Diary1.Code + Game.PlayerStats.DiaryEntry++;
-
-                            // If our location cache does not contain this location, then we have run out of locations to check.
-                            if (!Program.Game.ArchipelagoManager.LocationCache.ContainsKey(location))
-                            {
-                                return;
-                            }
-
                             // Check if we already checked this location and try to get the next item in the sequence if so.
                             if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
                             {
+                                location++;
                                 continue;
                             }
 
