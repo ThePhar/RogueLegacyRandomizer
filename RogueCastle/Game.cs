@@ -561,10 +561,21 @@ namespace RogueCastle
                         // Set AP Settings
                         PlayerStats.TimesCastleBeaten = ArchipelagoManager.Data.Difficulty;
 
-                        // Rename Sir Lee to the player's name and initial gender.
+                        // Set the player's initial gender.
                         PlayerStats.IsFemale = ArchipelagoManager.Data.IsFemale;
-                        PlayerStats.PlayerName =
-                            $"{(PlayerStats.IsFemale ? "Lady" : "Sir")} {ArchipelagoManager.Data.Name}";
+
+                        if (PlayerStats.IsFemale)
+                        {
+                            PlayerStats.PlayerName = ArchipelagoManager.Data.AdditionalLadyNames.Count > 0
+                                ? $"Lady {ArchipelagoManager.Data.AdditionalLadyNames[0]}"
+                                : "Lady Jenny";
+                        }
+                        else
+                        {
+                            PlayerStats.PlayerName = ArchipelagoManager.Data.AdditionalSirNames.Count > 0
+                                ? $"Sir {ArchipelagoManager.Data.AdditionalSirNames[0]}"
+                                : "Sir Lee";
+                        }
 
                         SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
                         ScreenManager.DisplayScreen((int) ScreenType.StartingRoom, true);
