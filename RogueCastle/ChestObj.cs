@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ChestObj.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-01-26
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -308,72 +308,78 @@ namespace RogueCastle
 
             if (ForcedItemType == ItemDropType.Coin)
             {
-                GiveGold(manager);
+                GiveGold(manager, (int) ForcedAmount);
                 return;
             }
 
-            while (true)
+            var location = 0;
+            var maximum = 0;
+            if (isFairy && Program.Game.ArchipelagoManager.Data.UniversalFairyChests)
             {
-                var location = 0;
-
-                if (isFairy && Program.Game.ArchipelagoManager.Data.UniversalFairyChests)
+                location = LocationDefinitions.FairyUniversal1.Code;
+                maximum = LocationDefinitions.FairyUniversal60.Code;
+            }
+            else if (!isFairy && Program.Game.ArchipelagoManager.Data.UniversalChests)
+            {
+                location = LocationDefinitions.ChestUniversal1.Code;
+                maximum = LocationDefinitions.ChestUniversal120.Code;
+            }
+            else
+            {
+                // Grab our current index and offset it by the starting number we have the location defined.
+                switch (room.Zone)
                 {
-                    location = Game.PlayerStats.OpenedChests.CastleFairyChests++ +
-                               LocationDefinitions.FairyUniversal1.Code;
+                    case Zone.None:
+                    case Zone.Castle:
+                        location = isFairy
+                            ? LocationDefinitions.FairyCastle1.Code
+                            : LocationDefinitions.ChestCastle1.Code;
+                        maximum = isFairy
+                            ? LocationDefinitions.FairyCastle15.Code
+                            : LocationDefinitions.ChestCastle30.Code;
+                        break;
+
+                    case Zone.Garden:
+                        location = isFairy
+                            ? LocationDefinitions.FairyGarden1.Code
+                            : LocationDefinitions.ChestGarden1.Code;
+                        maximum = isFairy
+                            ? LocationDefinitions.FairyGarden15.Code
+                            : LocationDefinitions.ChestGarden30.Code;
+                        break;
+
+                    case Zone.Tower:
+                        location = isFairy
+                            ? LocationDefinitions.FairyTower1.Code
+                            : LocationDefinitions.ChestTower1.Code;
+                        maximum = isFairy
+                            ? LocationDefinitions.FairyTower15.Code
+                            : LocationDefinitions.ChestTower30.Code;
+                        break;
+
+                    case Zone.Dungeon:
+                        location = isFairy
+                            ? LocationDefinitions.FairyDungeon1.Code
+                            : LocationDefinitions.ChestDungeon1.Code;
+                        maximum = isFairy
+                            ? LocationDefinitions.FairyDungeon15.Code
+                            : LocationDefinitions.ChestDungeon30.Code;
+                        break;
                 }
-                else if (Program.Game.ArchipelagoManager.Data.UniversalChests)
-                {
-                    location = Game.PlayerStats.OpenedChests.CastleChests++ + LocationDefinitions.ChestUniversal1.Code;
-                }
-                else
-                {
-                    // Grab our current index and offset it by the starting number we have the location defined.
-                    switch (room.Zone)
-                    {
-                        case Zone.None:
-                        case Zone.Castle:
-                            location = isFairy
-                                ? Game.PlayerStats.OpenedChests.CastleFairyChests++ +
-                                  LocationDefinitions.FairyCastle1.Code
-                                : Game.PlayerStats.OpenedChests.CastleChests++ + LocationDefinitions.ChestCastle1.Code;
-                            break;
+            }
 
-                        case Zone.Garden:
-                            location = isFairy
-                                ? Game.PlayerStats.OpenedChests.GardenFairyChests++ +
-                                  LocationDefinitions.FairyGarden1.Code
-                                : Game.PlayerStats.OpenedChests.GardenChests++ + LocationDefinitions.ChestGarden1.Code;
-                            break;
-
-                        case Zone.Tower:
-                            location = isFairy
-                                ? Game.PlayerStats.OpenedChests.TowerFairyChests++ +
-                                  LocationDefinitions.FairyTower1.Code
-                                : Game.PlayerStats.OpenedChests.TowerChests++ + LocationDefinitions.ChestTower1.Code;
-                            break;
-
-                        case Zone.Dungeon:
-                            location = isFairy
-                                ? Game.PlayerStats.OpenedChests.DungeonFairyChests++ +
-                                  LocationDefinitions.FairyDungeon1.Code
-                                : Game.PlayerStats.OpenedChests.DungeonChests++ +
-                                  LocationDefinitions.ChestDungeon1.Code;
-                            break;
-                    }
-                }
-
-                Console.WriteLine($"Attempted to open location {location}");
-
+            while (location <= maximum)
+            {
                 // If our location cache does not contain this location, then we have run out of locations to check.
                 if (!Program.Game.ArchipelagoManager.LocationCache.ContainsKey(location))
                 {
-                    GiveGold(manager);
-                    return;
+                    break;
                 }
 
                 // Check if we already checked this location and try to get the next item in the sequence if so.
                 if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
                 {
+                    location++;
                     continue;
                 }
 
@@ -402,10 +408,12 @@ namespace RogueCastle
                     player.RunGetItemAnimation();
                 }
 
-                // Break loop.
                 GiveGold(manager);
                 return;
             }
+
+            // No checks found.
+            GiveGold(manager);
         }
 
         public override void CollisionResponse(CollisionBox thisBox, CollisionBox otherBox, int collisionResponseType)

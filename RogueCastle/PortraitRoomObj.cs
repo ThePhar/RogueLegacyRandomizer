@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - PortraitRoomObj.cs
-//  Last Modified 2022-01-23
+//  Last Modified 2022-01-26
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,9 +9,11 @@
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
+using System.Collections.Generic;
 using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using RogueCastle.Enums;
 
 namespace RogueCastle
 {
@@ -67,7 +69,33 @@ namespace RogueCastle
                     var screenManager = Game.ScreenManager;
                     screenManager.DialogueScreen.SetDialogue("PortraitRoomText" + ID);
                     screenManager.DisplayScreen(13, true);
-                    Program.Game.ArchipelagoManager.CheckLocations(LocationDefinitions.SpecialPainting.Code);
+
+                    // Check location.
+                    var location = LocationDefinitions.SpecialPainting.Code;
+                    if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
+                    {
+                        return;
+                    }
+
+                    var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
+                    Program.Game.ArchipelagoManager.CheckLocations(location);
+
+                    // If we're sending someone else something, let's show what we're sending.
+                    if (networkItem.Player != Program.Game.ArchipelagoManager.Data.Slot)
+                    {
+                        var item = new List<object>
+                        {
+                            new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
+                            ItemCategory.GiveNetworkItem,
+                            new Vector2(-1f, -1f),
+                            new Vector2(-1f, -1f),
+                            Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
+                            networkItem.Item
+                        };
+
+                        Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, item);
+                        Game.ScreenManager.Player.RunGetItemAnimation();
+                    }
                 }
             }
 
