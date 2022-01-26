@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.8.1-pre1"
+#define MyAppVersion "0.8.1"
 #define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
@@ -46,7 +46,7 @@ Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\CustomContent\*"; D
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
-[Run]      
+[Run]
 Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{code:CopyDir}\Content"" ""{app}\Content"""
 Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\DS2DEngine.dll"" ""{app}\DS2DEngine.dll*"""
 Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\InputSystem.dll"" ""{app}\InputSystem.dll*"""
