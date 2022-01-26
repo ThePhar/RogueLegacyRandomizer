@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-01-26
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Archipelago;
@@ -516,6 +517,10 @@ namespace RogueCastle
                     var newGame = !PlayerStats.CharacterFound;
                     var heroIsDead = PlayerStats.IsDead;
                     var startingRoom = PlayerStats.LoadStartingRoom;
+
+                    // Initialize Name Array.
+                    InitializeNameArray(ArchipelagoManager.Data.AllowDefaultNames, ArchipelagoManager.Data.AdditionalSirNames);
+                    InitializeFemaleNameArray(ArchipelagoManager.Data.AllowDefaultNames, ArchipelagoManager.Data.AdditionalLadyNames);
 
                     switch (ArchipelagoManager.Data.IsFemale)
                     {
@@ -1687,15 +1692,16 @@ namespace RogueCastle
             base.Draw(gameTime);
         }
 
-        private void InitializeNameArray()
+        private void InitializeNameArray(bool allowDefaults = true, IEnumerable<string> extraNames = null)
         {
             NameArray = new List<string>();
             using var streamReader = new StreamReader(@"Content\HeroNames.txt");
             var spriteFont = Content.Load<SpriteFont>(@"Fonts\Junicode");
-            SpriteFontArray.SpriteFontList.Add(spriteFont);
+            var temp = SpriteFontArray.SpriteFontList;
+            SpriteFontArray.SpriteFontList = new() {spriteFont};
             var textObj = new TextObj(spriteFont);
 
-            while (!streamReader.EndOfStream)
+            while (!streamReader.EndOfStream && allowDefaults)
             {
                 var text = streamReader.ReadLine();
                 var error = false;
@@ -1714,26 +1720,34 @@ namespace RogueCastle
                 }
             }
 
+            if (extraNames != null)
+            {
+                NameArray = NameArray.Concat(extraNames).ToList();
+            }
+
             if (NameArray.Count < 1)
             {
                 NameArray.Add("Lee");
                 NameArray.Add("Charles");
                 NameArray.Add("Lancelot");
+                NameArray.Add("Zachary");
+                NameArray.Add("Travis");
             }
 
             textObj.Dispose();
-            SpriteFontArray.SpriteFontList.Clear();
+            SpriteFontArray.SpriteFontList = temp;
         }
 
-        private void InitializeFemaleNameArray()
+        private void InitializeFemaleNameArray(bool allowDefaults = true, IEnumerable<string> extraNames = null)
         {
             FemaleNameArray = new List<string>();
             using var streamReader = new StreamReader(@"Content\HeroineNames.txt");
             var spriteFont = Content.Load<SpriteFont>(@"Fonts\Junicode");
-            SpriteFontArray.SpriteFontList.Add(spriteFont);
+            var temp = SpriteFontArray.SpriteFontList;
+            SpriteFontArray.SpriteFontList = new() {spriteFont};
             var textObj = new TextObj(spriteFont);
 
-            while (!streamReader.EndOfStream)
+            while (!streamReader.EndOfStream && allowDefaults)
             {
                 var text = streamReader.ReadLine();
                 var error = false;
@@ -1752,15 +1766,22 @@ namespace RogueCastle
                 }
             }
 
+            if (extraNames != null)
+            {
+                FemaleNameArray = FemaleNameArray.Concat(extraNames).ToList();
+            }
+
             if (FemaleNameArray.Count < 1)
             {
                 FemaleNameArray.Add("Jenny");
                 FemaleNameArray.Add("Shanoa");
                 FemaleNameArray.Add("Chun Li");
+                FemaleNameArray.Add("Sasha");
+                FemaleNameArray.Add("Mika-mi");
             }
 
             textObj.Dispose();
-            SpriteFontArray.SpriteFontList.Clear();
+            SpriteFontArray.SpriteFontList = temp;
         }
 
         public void SaveOnExit()
