@@ -522,17 +522,6 @@ namespace RogueCastle
                     InitializeNameArray(ArchipelagoManager.Data.AllowDefaultNames, ArchipelagoManager.Data.AdditionalSirNames);
                     InitializeFemaleNameArray(ArchipelagoManager.Data.AllowDefaultNames, ArchipelagoManager.Data.AdditionalLadyNames);
 
-                    switch (ArchipelagoManager.Data.IsFemale)
-                    {
-                        case true when !FemaleNameArray.Contains(ArchipelagoManager.Data.Name):
-                            FemaleNameArray.Add(ArchipelagoManager.Data.Name);
-                            break;
-
-                        case false when !NameArray.Contains(ArchipelagoManager.Data.Name):
-                            NameArray.Add(ArchipelagoManager.Data.Name);
-                            break;
-                    }
-
                     if (newGame)
                     {
                         PlayerStats.CharacterFound = true;
