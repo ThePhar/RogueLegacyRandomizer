@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.8.1"
+#define MyAppVersion "0.8.2"
 #define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
