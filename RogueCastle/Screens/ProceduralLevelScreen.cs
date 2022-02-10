@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ProceduralLevelScreen.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-02-09
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -532,10 +532,10 @@ namespace RogueCastle.Screens
                     current2.Level = num;
                 }
 
-                var num2 = current2.Level / 32;
-                if (num2 > 2)
+                var difficulty = current2.Level / 32;
+                if (difficulty > 2)
                 {
-                    num2 = 2;
+                    difficulty = 2;
                 }
 
                 if (current2.IsProcedural)
@@ -545,9 +545,9 @@ namespace RogueCastle.Screens
                         current2.Level += 4;
                     }
 
-                    if (current2.Difficulty < (EnemyDifficulty) num2)
+                    if (current2.Difficulty < (EnemyDifficulty) difficulty)
                     {
-                        current2.SetDifficulty((EnemyDifficulty) num2, false);
+                        current2.SetDifficulty((EnemyDifficulty) difficulty, false);
                     }
                 }
                 else if (current2.Difficulty == EnemyDifficulty.MiniBoss)
