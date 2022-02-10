@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - GetItemScreen.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-02-09
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -378,13 +378,32 @@ namespace RogueCastle.Screens
                 return text;
             }
 
-            var index = -1;
-            while (index <= 15 && Game.PlayerStats.GetBlueprintArray[0][index + 1] > 0)
+            var progressiveArmorOrder = new[]
+            {
+                (int) EquipmentBase.Squire,
+                (int) EquipmentBase.Knight,
+                (int) EquipmentBase.Blood,
+                (int) EquipmentBase.Silver,
+                (int) EquipmentBase.Ranger,
+                (int) EquipmentBase.Sage,
+                (int) EquipmentBase.Guardian,
+                (int) EquipmentBase.Sky,
+                (int) EquipmentBase.Retribution,
+                (int) EquipmentBase.Imperial,
+                (int) EquipmentBase.Dragon,
+                (int) EquipmentBase.Holy,
+                (int) EquipmentBase.Royal,
+                (int) EquipmentBase.Slayer,
+                (int) EquipmentBase.Dark,
+            };
+
+            var index = 0;
+            while (index < 15 && Game.PlayerStats.GetBlueprintArray[0][progressiveArmorOrder[index]] != 0)
             {
                 index++;
             }
 
-            return Program.Game.ArchipelagoManager.GetItemName(ItemDefinitions.SquireArmor.Code + index);
+            return Program.Game.ArchipelagoManager.GetItemName(ItemDefinitions.SquireArmor.Code + progressiveArmorOrder[index - 1]);  // Go back to the last one.
         }
 
         private string GetSkillPlateIcon(int item, out string itemName)

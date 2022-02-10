@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-01-26
+//  Last Modified 2022-02-09
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -550,7 +550,7 @@ namespace RogueCastle
                             ClassType.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUnlock),
                             ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUnlock),
                             ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
-                            _                => throw new ArgumentException("Unsupported Starting Class")
+                            _                    => throw new ArgumentException("Unsupported Starting Class")
                         };
 
                         SkillSystem.LevelUpTrait(skill, false, false);
