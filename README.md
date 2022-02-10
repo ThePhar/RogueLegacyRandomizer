@@ -1,4 +1,4 @@
-# Rogue Legacy: Randomizer
+# Rogue Legacy: Randomizer for Archipelago
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/thephar/roguelegacyrandomizer?label=latest&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/thephar/roguelegacyrandomizer?style=flat-square)
 ![GitHub commits since latest release (by date) for a branch](https://img.shields.io/github/commits-since/thephar/roguelegacyrandomizer/latest/master?color=8df702&style=flat-square)
