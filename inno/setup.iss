@@ -40,6 +40,7 @@ Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\Archipe
 Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\websocket-sharp.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\inno\xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -47,14 +48,15 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{code:CopyDir}\Content"" ""{app}\Content"""
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\DS2DEngine.dll"" ""{app}\DS2DEngine.dll*"""
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\InputSystem.dll"" ""{app}\InputSystem.dll*"""
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\Nuclex.Input.dll"" ""{app}\Nuclex.Input.dll*"""
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\SpriteSystem.dll"" ""{app}\SpriteSystem.dll*"""
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\Tweener.dll"" ""{app}\Tweener.dll*"""
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{app}\CustomContent"" ""{app}\Content"""
+Filename: "msiexec.exe"; Parameters: "/i ""{tmp}\xnafx40_redist.msi"" /qb"; WorkingDir: {tmp}; StatusMsg: "Installing XNA redistributable..."
+Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{code:CopyDir}\Content"" ""{app}\Content"""; StatusMsg: "Copying Content files..."
+Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\DS2DEngine.dll"" ""{app}\DS2DEngine.dll*"""; StatusMsg: "Copying DSD2Engine dependancies..."
+Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\InputSystem.dll"" ""{app}\InputSystem.dll*"""; StatusMsg: "Copying InputSystem dependancies..."
+Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\Nuclex.Input.dll"" ""{app}\Nuclex.Input.dll*"""; StatusMsg: "Copying Nuclex dependancies..."
+Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\SpriteSystem.dll"" ""{app}\SpriteSystem.dll*"""; StatusMsg: "Copying SpriteSystem dependancies..."
+Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\Tweener.dll"" ""{app}\Tweener.dll*"""; StatusMsg: "Copying Tweener dependancies..."
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent; StatusMsg: "Installing Rogue Legacy Randomizer"
+Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{app}\CustomContent"" ""{app}\Content"""; StatusMsg: "Overwriting content files with custom content..."
 
 [Code]
 var
