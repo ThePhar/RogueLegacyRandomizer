@@ -171,7 +171,10 @@
     <Compile Include="RogueCastle\Enums\BossRoomType.cs" />
     <Compile Include="RogueCastle\Enums\ChestType.cs" />
     <Compile Include="RogueCastle\Enums\ChestConditionType.cs" />
+    <Compile Include="RogueCastle\Enums\Gender.cs" />
+    <Compile Include="RogueCastle\Enums\Multiplier.cs" />
     <Compile Include="RogueCastle\Enums\TraitRarity.cs" />
+    <Compile Include="RogueCastle\Enums\UniChests.cs" />
     <Compile Include="RogueCastle\EquipmentData.cs" />
     <Compile Include="RogueCastle\EquipmentState.cs" />
     <Compile Include="RogueCastle\EquipmentSystem.cs" />
@@ -241,6 +244,7 @@
     <Compile Include="RogueCastle\QuadRenderComponent.cs" />
     <Compile Include="RogueCastle\QuickDropOptionsObj.cs" />
     <Compile Include="RogueCastle\RaindropObj.cs" />
+    <Compile Include="RogueCastle\Randomizer\RandomizerOptions.cs" />
     <Compile Include="RogueCastle\RandomTeleportRoomObj.cs" />
     <Compile Include="RogueCastle\RCScreenManager.cs" />
     <Compile Include="RogueCastle\ReduceQualityOptionsObj.cs" />
