@@ -105,7 +105,16 @@ namespace RogueCastle.Options
                 }
             }
 
-            _toggleText.Text = _currentValue.Insert(_cursorIndex, "_");
+            try
+            {
+                _toggleText.Text = _currentValue.Insert(_cursorIndex, "_");
+            }
+            catch
+            {
+                _currentValue = "";
+                _cursorIndex = 0;
+                _toggleText.Text = "";
+            }
         }
 
         public void HandleInput(object sender, KeyPressEventArgs e)
