@@ -227,6 +227,7 @@
     <Compile Include="RogueCastle\MusicVolOptionsObj.cs" />
     <Compile Include="RogueCastle\NpcObj.cs" />
     <Compile Include="RogueCastle\OptionsObj.cs" />
+    <Compile Include="RogueCastle\Options\RandoModeOption.cs" />
     <Compile Include="RogueCastle\Options\RandomizerOption.cs" />
     <Compile Include="RogueCastle\Options\BackToMenuArchipelagoObj.cs" />
     <Compile Include="RogueCastle\Options\ConnectArchipelagoOptionObj.cs" />

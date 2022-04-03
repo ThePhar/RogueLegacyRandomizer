@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueCastle.Enums;
 using RogueCastle.GameObjects;
+using RogueCastle.Randomizer;
 using RogueCastle.Screens;
 using SpriteSystem;
 using Tweener;
@@ -36,13 +37,14 @@ namespace RogueCastle
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        public static AreaStruct[]  Area1List;
-        public static SettingStruct GameConfig;
-        private       bool          _contentLoaded;
-        private       GameTime      _forcedGameTime1;
-        private       GameTime      _forcedGameTime2;
-        private       bool          _frameLimitSwap;
-        private       bool          _gameLoaded;
+        public static AreaStruct[]      Area1List;
+        public static SettingStruct     GameConfig;
+        public static RandomizerOptions RandomizerOptions;
+        private       bool              _contentLoaded;
+        private       GameTime          _forcedGameTime1;
+        private       GameTime          _forcedGameTime2;
+        private       bool              _frameLimitSwap;
+        private       bool              _gameLoaded;
 
         public Game()
         {
@@ -76,6 +78,7 @@ namespace RogueCastle
             EquipmentSystem.InitializeEquipmentData();
             EquipmentSystem.InitializeAbilityCosts();
             GameConfig = default;
+            RandomizerOptions = new RandomizerOptions();
 
             if (Control.FromHandle(Window.Handle) is Form form)
             {
