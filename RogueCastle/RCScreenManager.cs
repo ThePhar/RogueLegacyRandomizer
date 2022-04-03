@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - RCScreenManager.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-04-03
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -25,7 +25,7 @@ namespace RogueCastle
 {
     public class RCScreenManager : ScreenManager
     {
-        private ArchipelagoScreen m_archipelagoScreen;
+        private RandomizerScreen _randomizerScreen;
         private SpriteObj m_blackScreen;
         private BlacksmithScreen m_blacksmithScreen;
         private SpriteObj m_blackTransitionIn;
@@ -107,7 +107,7 @@ namespace RogueCastle
             DialogueScreen = new DialogueScreen();
             m_pauseScreen = new PauseScreen();
             m_optionsScreen = new OptionsScreen();
-            m_archipelagoScreen = new ArchipelagoScreen();
+            _randomizerScreen = new RandomizerScreen();
             m_profileCardScreen = new ProfileCardScreen();
             m_creditsScreen = new CreditsScreen();
             m_skillUnlockScreen = new SkillUnlockScreen();
@@ -128,7 +128,7 @@ namespace RogueCastle
             DialogueScreen.LoadContent();
             m_pauseScreen.LoadContent();
             m_optionsScreen.LoadContent();
-            m_archipelagoScreen.LoadContent();
+            _randomizerScreen.LoadContent();
             m_profileCardScreen.LoadContent();
             m_creditsScreen.LoadContent();
             m_skillUnlockScreen.LoadContent();
@@ -319,8 +319,8 @@ namespace RogueCastle
                                  break;
 
                              case (int) ScreenType.Archipelago:
-                                 m_archipelagoScreen.PassInData(objList);
-                                 AddScreen(m_archipelagoScreen, null);
+                                 _randomizerScreen.PassInData(objList);
+                                 AddScreen(_randomizerScreen, null);
                                  break;
                          }
 

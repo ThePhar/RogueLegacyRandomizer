@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - ConnectArchipelagoOptionObj.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-04-03
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -14,11 +14,11 @@ using RogueCastle.Enums;
 
 namespace RogueCastle.Options
 {
-    public class ConnectArchipelagoOptionObj : ArchipelagoOptionsObj
+    public class ConnectArchipelagoOptionObj : RandomizerOption
     {
-        public ConnectArchipelagoOptionObj(ArchipelagoScreen parentScreen) : base(parentScreen, "Connect")
+        public ConnectArchipelagoOptionObj(RandomizerScreen parentScreen) : base(parentScreen, "Connect")
         {
-            m_parentScreen = parentScreen;
+            _parentScreen = parentScreen;
         }
 
         public override bool IsActive
@@ -29,11 +29,11 @@ namespace RogueCastle.Options
                 base.IsActive = value;
                 if (IsActive)
                 {
-                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = _parentScreen.ScreenManager as RCScreenManager;
                     // Add our dialogue if it's not there.
                     DialogueManager.AddText("Ready to Start", new[] { "" }, new[] { "Are you ready to start?" });
 
-                    m_parentScreen.LockControls = true;
+                    _parentScreen.LockControls = true;
 
                     rCScreenManager.DialogueScreen.SetDialogue("Ready to Start");
                     rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
@@ -46,20 +46,20 @@ namespace RogueCastle.Options
 
         public override void Initialize()
         {
-            m_nameText.Text = "Connect";
+            _nameText.Text = "Connect";
             base.Initialize();
         }
 
         public void StartGame()
         {
             IsActive = false;
-            m_parentScreen.Connect();
+            _parentScreen.Connect();
         }
 
         public void CancelCommand()
         {
             IsActive = false;
-            m_parentScreen.LockControls = false;
+            _parentScreen.LockControls = false;
         }
     }
 }

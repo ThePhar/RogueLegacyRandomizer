@@ -47,6 +47,10 @@
     <Reference Include="DS2DEngine">
       <HintPath>lib\DS2DEngine.dll</HintPath>
     </Reference>
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game" />
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
@@ -223,10 +227,10 @@
     <Compile Include="RogueCastle\MusicVolOptionsObj.cs" />
     <Compile Include="RogueCastle\NpcObj.cs" />
     <Compile Include="RogueCastle\OptionsObj.cs" />
-    <Compile Include="RogueCastle\Options\ArchipelagoOptionsObj.cs" />
+    <Compile Include="RogueCastle\Options\RandomizerOption.cs" />
     <Compile Include="RogueCastle\Options\BackToMenuArchipelagoObj.cs" />
     <Compile Include="RogueCastle\Options\ConnectArchipelagoOptionObj.cs" />
-    <Compile Include="RogueCastle\Options\TextBoxOptionsObj.cs" />
+    <Compile Include="RogueCastle\Options\TextBoxOption.cs" />
     <Compile Include="RogueCastle\PlayerEV.cs" />
     <Compile Include="RogueCastle\PlayerHUDObj.cs" />
     <Compile Include="RogueCastle\PlayerLineageData.cs" />
@@ -252,7 +256,7 @@
     <Compile Include="RogueCastle\RoomObj.cs" />
     <Compile Include="RogueCastle\SaveGameManager.cs" />
     <Compile Include="RogueCastle\SavingState.cs" />
-    <Compile Include="RogueCastle\Screens\ArchipelagoScreen.cs" />
+    <Compile Include="RogueCastle\Screens\RandomizerScreen.cs" />
     <Compile Include="RogueCastle\Screens\BlacksmithScreen.cs" />
     <Compile Include="RogueCastle\Screens\CDGSplashScreen.cs" />
     <Compile Include="RogueCastle\Screens\CreditsScreen.cs" />

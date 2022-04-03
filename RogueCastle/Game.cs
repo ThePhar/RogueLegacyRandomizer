@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-02-09
+//  Last Modified 2022-04-03
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -505,7 +505,7 @@ namespace RogueCastle
                 case ConnectionStatus.Connected:
                 {
                     // Do not attempt to start the game if we connect off the Arch screen. Most likely means we lost connection in gameplay and reconnected.
-                    if (ScreenManager.CurrentScreen is not ArchipelagoScreen)
+                    if (ScreenManager.CurrentScreen is not RandomizerScreen)
                     {
                         break;
                     }
