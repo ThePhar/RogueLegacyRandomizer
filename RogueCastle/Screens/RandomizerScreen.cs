@@ -101,28 +101,8 @@ namespace RogueCastle.Screens
             // Solo Randomizer Options
             _startingName = new TextBoxOption(this, "Starting Name", "Lee");
 
-            _soloRandomizerOptions.Add(_startingName);
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test1", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test2", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test3", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test4", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test5", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test6", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test7", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test8", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test9", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test10", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test11", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test12", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test13", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test14", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test15", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test16", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test17", "Test"));
-            _soloRandomizerOptions.Add(new TextBoxOption(this, "Test18", "Test"));
-            _soloRandomizerOptions.Add(new ConnectArchipelagoOptionObj(this));
-            _soloRandomizerOptions.Add(new BackToMenuArchipelagoObj(this));
+            // _soloRandomizerOptions.Add(_startingName);
+            _soloRandomizerOptions.Add(new TextBoxOption(this, "Currently Not Working", ""));
 
             // MultiWorld Randomizer Options
             _hostname = new TextBoxOption(this, "Hostname", "archipelago.gg");
