@@ -10,4 +10,5 @@
   &lt;Assembly Path="C:\Users\Phar\Development\RogueLegacyArchipelago\lib\Archipelago.MultiClient.Net.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Phar\Development\RogueLegacyArchipelago\lib\DS2DEngine.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Phar\Development\Rogue Legacy Randomizer\lib\Archipelago.MultiClient.Net.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Phar\Development\Rogue Legacy Randomizer\packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Archipelago.MultiClient.Net.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
