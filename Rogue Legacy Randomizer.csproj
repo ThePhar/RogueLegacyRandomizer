@@ -40,8 +40,9 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Archipelago.MultiClient.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\Archipelago.MultiClient.Net.dll</HintPath>
+    <Reference Include="Archipelago.MultiClient.Net, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Archipelago.MultiClient.Net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DS2DEngine">
       <HintPath>lib\DS2DEngine.dll</HintPath>
@@ -50,7 +51,8 @@
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nuclex.Input, Version=4.0.0.0, Culture=neutral, PublicKeyToken=889233c3085159a5">
       <HintPath>lib\Nuclex.Input.dll</HintPath>
@@ -70,7 +72,8 @@
       <HintPath>lib\SpriteSystem.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e">
-      <HintPath>lib\websocket-sharp.dll</HintPath>
+      <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\websocket-sharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +323,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

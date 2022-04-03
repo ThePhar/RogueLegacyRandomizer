@@ -1,13 +1,13 @@
-// 
+//
 //  Rogue Legacy Randomizer - GameEV.cs
-//  Last Modified 2022-01-24
-// 
+//  Last Modified 2022-04-03
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using DS2DEngine;
 using RogueCastle.Enums;
@@ -95,15 +95,19 @@ namespace RogueCastle
 
         public static string[] TutorialDownStrikeHint => new[]
         {
-            "Down Attack this",
-            "Hello, world",
-            "When is Hollow Knight AP?",
-            "The Game",
+            "Down Attack this.",
+            "Hello, world.",
+            "When is Ori & Blind Forest AP?",
+            "You lost the Game.",
             "Look ma, I'm on TV!",
-            "This isn't Tourian",
-            "I'm a hint text!",
-            "Insert funny meme here",
-            "Up Attack this"
+            "Wait, this isn't Tourian.",
+            "Insert funny meme here.",
+            "Up Attack this.",
+            "Did you remember your Silver Arrows?",
+            "Wait, this isn't The End.",
+            "",
+            "Don't ask about Rogue Legacy 2.",
+
         };
 
         public static string[] OtherAPGames => new[]
@@ -121,7 +125,13 @@ namespace RogueCastle
             "Timespinner",
             "VVVVVV",
             "Raft",
-            "Super Mario 64"
+            "Super Mario 64",
+            "ArchipIDLE",
+            "ChecksFinder",
+            "Meritous",
+            "SMZ3",
+            "Hollow Knight",
+            "Starcraft 2"
         };
 
         public static string[] GameHints => new[]

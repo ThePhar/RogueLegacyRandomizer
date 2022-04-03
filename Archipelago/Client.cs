@@ -1,13 +1,13 @@
-﻿// 
+﻿//
 //  Rogue Legacy Randomizer - Client.cs
-//  Last Modified 2022-01-25
-// 
+//  Last Modified 2022-04-03
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Archipelago
     public class Client
     {
         public const int    MAXIMUM_RECONNECTION_ATTEMPTS = 3;
-        public const string MINIMUM_AP_VERSION            = "0.2.3";
+        public const string MINIMUM_AP_VERSION            = "0.3.0";
 
         private bool                            _allowReconnect;
         private DeathLinkService                _deathLinkService;
@@ -43,17 +43,17 @@ namespace Archipelago
             Initialize();
         }
 
-        public ConnectionStatus             ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
-        public DateTime                     LastDeath               { get; private set; } = DateTime.MinValue;
-        public ConnectionInfo               CachedConnectionInfo    { get; private set; } = new();
-        public DeathLink                    DeathLink               { get; private set; }
-        public Dictionary<int, NetworkItem> LocationCache           { get; private set; } = new();
-        public SlotData                     Data                    { get; private set; }
-        public Queue<NetworkItem>           ItemQueue               { get; private set; } = new();
-        public List<int>                    CheckedLocations        { get; private set; } = new();
-        public bool                         CheckedLocationsUpdated { get; set; }
-        public bool                         CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
-        public bool                         CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
+        public ConnectionStatus              ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
+        public DateTime                      LastDeath               { get; private set; } = DateTime.MinValue;
+        public ConnectionInfo                CachedConnectionInfo    { get; private set; } = new();
+        public DeathLink                     DeathLink               { get; private set; }
+        public Dictionary<long, NetworkItem> LocationCache           { get; private set; } = new();
+        public SlotData                      Data                    { get; private set; }
+        public Queue<NetworkItem>            ItemQueue               { get; private set; } = new();
+        public List<long>                    CheckedLocations        { get; private set; } = new();
+        public bool                          CheckedLocationsUpdated { get; set; }
+        public bool                          CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
+        public bool                          CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
 
         public void Connect(ConnectionInfo info)
         {
@@ -78,8 +78,14 @@ namespace Archipelago
                 _session.Socket.PacketReceived += OnPacketReceived;
 
                 // Attempt to connect to the AP server.
-                var result = _session.TryConnectAndLogin("Rogue Legacy", info.Name, new Version(MINIMUM_AP_VERSION),
-                    _tags, password: info.Password);
+                var result = _session.TryConnectAndLogin(
+                    "Rogue Legacy",
+                    info.Name,
+                    new Version(MINIMUM_AP_VERSION),
+                    ItemsHandlingFlags.AllItems,
+                    _tags.ToArray(),
+                    password: info.Password
+                );
 
                 if (result.Successful)
                 {
@@ -132,10 +138,10 @@ namespace Archipelago
             _seed = "0";
 
             ConnectionStatus = ConnectionStatus.Disconnected;
-            CheckedLocations = new List<int>();
+            CheckedLocations = new List<long>();
             LastDeath = DateTime.MinValue;
             DeathLink = null;
-            LocationCache = new Dictionary<int, NetworkItem>();
+            LocationCache = new Dictionary<long, NetworkItem>();
             Data = null;
             ItemQueue = new Queue<NetworkItem>();
         }
@@ -181,7 +187,7 @@ namespace Archipelago
                     { Timestamp = LastDeath });
         }
 
-        public void CheckLocations(params int[] locations)
+        public void CheckLocations(params long[] locations)
         {
             _session.Locations.CompleteLocationChecks(locations);
         }
@@ -305,7 +311,7 @@ namespace Archipelago
             if (Data.DeathLink)
             {
                 _tags.Add("DeathLink");
-                _session.UpdateTags(_tags);
+                _session.UpdateConnectionOptions(_tags.ToArray(), ItemsHandlingFlags.AllItems);
 
                 // Clear old DeathLink handlers.
                 if (_deathLinkService != null)
@@ -318,10 +324,10 @@ namespace Archipelago
             }
 
             // Mark our checked locations.
-            CheckedLocations = packet.LocationsChecked;
+            CheckedLocations = packet.LocationsChecked.ToList();
 
             // Build our location cache.
-            var locations = LocationDefinitions.GetAllLocations(Data).Select(location => location.Code);
+            var locations = LocationDefinitions.GetAllLocations(Data).Select(location => (long) location.Code).ToArray();
             _session.Locations.ScoutLocationsAsync(OnReceiveLocationCache, locations.ToArray());
 
             // Set ourselves to connected.
