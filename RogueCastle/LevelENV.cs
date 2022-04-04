@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - LevelENV.cs
-//  Last Modified 2022-02-09
-//
+//  Last Modified 2022-04-03
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using RogueCastle.Enums;
@@ -313,7 +313,7 @@ namespace RogueCastle
         public static bool     RunTutorial                { get; set; } = false;
         public static bool     RunDemoVersion             { get; set; } = false;
         public static bool     DisableSaving              { get; set; } = false;
-        public static bool     RunCrashLogs               { get; set; } = true;
+        public static bool     RunCrashLogs               { get; set; } = false;
         public static bool     WeakenBosses               { get; set; } = true;
         public static bool     EnableOffscreenControl     { get; set; } = false;
         public static bool     EnableBackupSaving         { get; set; } = false;

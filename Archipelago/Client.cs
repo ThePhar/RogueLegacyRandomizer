@@ -1,18 +1,19 @@
-﻿//
+﻿// 
 //  Rogue Legacy Randomizer - Client.cs
 //  Last Modified 2022-04-03
-//
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using Archipelago.Definitions;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
@@ -51,6 +52,7 @@ namespace Archipelago
         public SlotData                      Data                    { get; private set; }
         public Queue<NetworkItem>            ItemQueue               { get; private set; } = new();
         public List<long>                    CheckedLocations        { get; private set; } = new();
+        public List<string>                  ChatHistory             { get; private set; } = new();
         public bool                          CheckedLocationsUpdated { get; set; }
         public bool                          CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
         public bool                          CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
@@ -204,6 +206,12 @@ namespace Archipelago
             return string.IsNullOrEmpty(name) ? "Unknown Item" : name;
         }
 
+        public string GetLocationName(int location)
+        {
+            var name = _session.Locations.GetLocationNameFromId(location);
+            return string.IsNullOrEmpty(name) ? "Unknown Location" : name;
+        }
+
         private void OnSocketDisconnect(CloseEventArgs closeEventArgs)
         {
             // Check to see if we are still in a game, and attempt to reconnect if possible.
@@ -281,6 +289,10 @@ namespace Archipelago
                 case PrintPacket printPacket:
                     OnPrint(printPacket);
                     break;
+
+                case PrintJsonPacket printJsonPacket:
+                    OnJsonPrint(printJsonPacket);
+                    break;
             }
         }
 
@@ -344,9 +356,43 @@ namespace Archipelago
             Console.WriteLine("Received an unhandled exception in ArchipelagoClient: {0}\n\n{1}", message, exception);
         }
 
-        private static void OnPrint(PrintPacket packet)
+        private void OnPrint(PrintPacket packet)
         {
             Console.WriteLine("AP Server: {0}", packet.Text);
+            ChatHistory.Add(packet.Text);
+        }
+
+        private void OnJsonPrint(PrintJsonPacket packet)
+        {
+            var text = new StringBuilder();
+
+            // TODO: Add color support.
+            foreach (var element in packet.Data)
+            {
+                string substring = "";
+                switch (element.Type)
+                {
+                    case JsonMessagePartType.PlayerId:
+                        substring = GetPlayerName(int.Parse(element.Text));
+                        break;
+
+                    case JsonMessagePartType.ItemId:
+                        substring = GetItemName(int.Parse(element.Text));
+                        break;
+
+                    case JsonMessagePartType.LocationId:
+                        substring = GetLocationName(int.Parse(element.Text));
+                        break;
+
+                    default:
+                        substring = element.Text;
+                        break;
+                }
+
+                text.Append(substring);
+            }
+
+            ChatHistory.Add(text.ToString());
         }
     }
 }
