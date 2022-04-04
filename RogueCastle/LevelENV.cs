@@ -57,7 +57,7 @@ namespace RogueCastle
         public const int   LevelDungeonBottomDoor               = 100;
 
         public static string  GameName      => "Rogue Legacy Randomizer";
-        public static Version TargetVersion => Version.Parse("0.9.0");
+        public static Version TargetVersion => Version.Parse("0.8.3");
         public static int     PreRelease    => 1;
         public static string  FullVersion   => $"v{TargetVersion}" + (PreRelease > 0 ? $"-pre{PreRelease}" : "");
 
@@ -301,7 +301,7 @@ namespace RogueCastle
         public static string[] TowerAssetSwapList         { get; set; }
         public static string[] GardenAssetSwapList        { get; set; }
         public static bool     ShowEnemyRadii             { get; set; } = false;
-        public static bool     EnablePlayerDebug          { get; set; } = true;
+        public static bool     EnablePlayerDebug          { get; set; } = false;
         public static bool     UnlockAllAbilities         { get; set; } = false;
         public static bool     TestRoomReverse            { get; set; } = false;
         public static bool     RunTestRoom                { get; set; } = false;
@@ -314,7 +314,7 @@ namespace RogueCastle
         public static bool     RunDemoVersion             { get; set; } = false;
         public static bool     DisableSaving              { get; set; } = false;
         public static bool     RunCrashLogs               { get; set; } = false;
-        public static bool     WeakenBosses               { get; set; } = true;
+        public static bool     WeakenBosses               { get; set; } = false;
         public static bool     EnableOffscreenControl     { get; set; } = false;
         public static bool     EnableBackupSaving         { get; set; } = false;
         public static bool     CreateRetailVersion        { get; set; } = true;
