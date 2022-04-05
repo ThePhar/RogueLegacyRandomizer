@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - LevelENV.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -58,7 +58,7 @@ namespace RogueCastle
 
         public static string  GameName      => "Rogue Legacy Randomizer";
         public static Version TargetVersion => Version.Parse("0.8.3");
-        public static int     PreRelease    => 1;
+        public static int     PreRelease    => 0;
         public static string  FullVersion   => $"v{TargetVersion}" + (PreRelease > 0 ? $"-pre{PreRelease}" : "");
 
         static LevelENV()
@@ -306,21 +306,21 @@ namespace RogueCastle
         public static bool     TestRoomReverse            { get; set; } = false;
         public static bool     RunTestRoom                { get; set; } = false;
         public static bool     ShowDebugText              { get; set; } = false;
-        public static bool     LoadSplashScreen           { get; set; } = false;
+        public static bool     LoadSplashScreen           { get; set; } = true;
         public static bool     ShowSaveLoadDebugText      { get; set; } = false;
         public static bool     DeleteSaveFile             { get; set; } = false;
         public static bool     CloseTestRoomDoors         { get; set; } = false;
         public static bool     RunTutorial                { get; set; } = false;
         public static bool     RunDemoVersion             { get; set; } = false;
         public static bool     DisableSaving              { get; set; } = false;
-        public static bool     RunCrashLogs               { get; set; } = false;
+        public static bool     RunCrashLogs               { get; set; } = true;
         public static bool     WeakenBosses               { get; set; } = false;
         public static bool     EnableOffscreenControl     { get; set; } = false;
         public static bool     EnableBackupSaving         { get; set; } = false;
         public static bool     CreateRetailVersion        { get; set; } = true;
         public static bool     ShowFps                    { get; set; } = false;
         public static bool     SaveFrames                 { get; set; } = false;
-        public static bool     ShowArchipelagoStatus      { get; set; } = true;
-        public static bool     RunConsole                 { get; set; } = true;
+        public static bool     ShowArchipelagoStatus      { get; set; } = false;
+        public static bool     RunConsole                 { get; set; } = false;
     }
 }
