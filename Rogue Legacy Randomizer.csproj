@@ -116,6 +116,8 @@
     <Compile Include="RogueCastle\ChallengeBossRoomObj.cs" />
     <Compile Include="RogueCastle\ChangeControlsOptionsObj.cs" />
     <Compile Include="RogueCastle\CharacterObj.cs" />
+    <Compile Include="RogueCastle\ChatOpacityOption.cs" />
+    <Compile Include="RogueCastle\ChatOption.cs" />
     <Compile Include="RogueCastle\CheckWallLogicAction.cs" />
     <Compile Include="RogueCastle\ChestBonusRoomObj.cs" />
     <Compile Include="RogueCastle\ChestConditionChecker.cs" />

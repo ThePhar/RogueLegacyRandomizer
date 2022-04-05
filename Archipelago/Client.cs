@@ -1,6 +1,6 @@
 ﻿// 
 //  Rogue Legacy Randomizer - Client.cs
-//  Last Modified 2022-04-04
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -22,6 +22,7 @@ using Archipelago.MultiClient.Net.Exceptions;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
+using RogueCastle;
 using WebSocketSharp;
 
 namespace Archipelago
@@ -262,7 +263,14 @@ namespace Archipelago
 
         private void OnReceivedItems(ReceivedItemsHelper helper)
         {
-            ItemQueue.Enqueue(helper.DequeueItem());
+            var item = helper.DequeueItem();
+            ItemQueue.Enqueue(item);
+
+            if (Game.GameConfig.ChatOption == (int) ChatOptionType.ChatHintsOwnItems && Game.PlayerStats.CheckReceived(item) && item.Player != Data.Slot)
+            {
+                var text = $"You received {GetItemName(item.Item)} from {GetPlayerName(item.Player)} ({GetLocationName(item.Location)})";
+                IncomingChatQueue.Enqueue(new (text, ChatType.Item));
+            }
         }
 
         private void OnDeathLink(DeathLink deathLink)
@@ -382,11 +390,17 @@ namespace Archipelago
             var type = packet.MessageType switch
             {
                 JsonMessageType.Hint     => ChatType.Hint,
-                JsonMessageType.ItemSend => ChatType.Item,
                 _                        => ChatType.Normal
             };
 
-            // TODO: Add color support.
+            if (packet.MessageType == JsonMessageType.ItemSend)
+            {
+                if (Game.GameConfig.ChatOption != (int) ChatOptionType.ChatHintsItems)
+                    return;
+
+                type = ChatType.Item;
+            }
+
             foreach (var element in packet.Data)
             {
                 string substring = "";

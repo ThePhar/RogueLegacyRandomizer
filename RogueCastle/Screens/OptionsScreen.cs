@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - OptionsScreen.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -70,6 +70,8 @@ namespace RogueCastle.Screens
             _optionsArray.Add(_quickDropObj);
             _optionsArray.Add(new DeadZoneOptionsObj(this));
             _optionsArray.Add(new ToggleDirectInputOptionsObj(this));
+            _optionsArray.Add(new ChatOpacityOption(this));
+            _optionsArray.Add(new ChatOption(this));
             _optionsArray.Add(new ChangeControlsOptionsObj(this));
             _optionsArray.Add(new ExitProgramOptionsObj(this));
             // m_backToMenuObj = new BackToMenuOptionsObj(this);
@@ -305,6 +307,11 @@ namespace RogueCastle.Screens
                     _quickDropText.Visible = true;
                     _quickDropText.Text =
                         "*Cloud support must be enabled on the Steam platform as well for\nthis feature to work.";
+                }
+                else if (_selectedOption is ChatOption or ChatOpacityOption)
+                {
+                    _quickDropText.Visible = true;
+                    _quickDropText.Text = "*Chat is only applicable for Archipelago rando games.";
                 }
                 else
                 {

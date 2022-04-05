@@ -1,6 +1,6 @@
 ﻿// 
 //  Rogue Legacy Randomizer - ChatInterface.cs
-//  Last Modified 2022-04-04
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -157,6 +157,18 @@ namespace RogueCastle.HUDElements
 
         public void Update()
         {
+            // Update opacity.
+            if (Opacity != Game.GameConfig.ChatOpacity)
+            {
+                Opacity = 1 - Game.GameConfig.ChatOpacity;
+                _inputText.Opacity = Opacity;
+                foreach (var element in Elements)
+                {
+                    if (!element.FadingOut)
+                        element.Opacity = Opacity;
+                }
+            }
+
             // Check if queue has new elements.
             while (Program.Game.ArchipelagoManager.IncomingChatQueue.Count > 0)
             {
@@ -254,6 +266,7 @@ namespace RogueCastle.HUDElements
                 _chatInterface = @interface;
                 X = @interface.X;
                 Y = @interface.Y;
+                Opacity = @interface.Opacity;
             }
 
             public ChatElement UpdateText(string newText)

@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -748,6 +748,8 @@ namespace RogueCastle
                     // Only give item if we haven't received it before!
                     if (PlayerStats.CheckReceived(item))
                     {
+                        PlayerStats.ReceivedItems.Add(item);
+
                         var randomGold = 0;
                         if (item.Item == ItemDefinitions.Gold1000.Code)
                         {
@@ -1897,6 +1899,10 @@ namespace RogueCastle
             streamWriter.WriteLine("[QuickDrop]");
             streamWriter.WriteLine("QuickDrop=" + GameConfig.QuickDrop);
             streamWriter.WriteLine();
+            streamWriter.WriteLine("[ChatOption]");
+            streamWriter.WriteLine("ChatOption=" + GameConfig.ChatOption);
+            streamWriter.WriteLine("ChatOpacity=" + GameConfig.ChatOpacity);
+            streamWriter.WriteLine();
             streamWriter.WriteLine("[Game Volume]");
             streamWriter.WriteLine("MusicVol=" + $"{GameConfig.MusicVolume:F2}");
             streamWriter.WriteLine("SFXVol=" + $"{GameConfig.SFXVolume:F2}");
@@ -1975,6 +1981,14 @@ namespace RogueCastle
 
                             case "QuickDrop":
                                 GameConfig.QuickDrop = bool.Parse(setting);
+                                break;
+
+                            case "ChatOption":
+                                GameConfig.ChatOption = int.Parse(setting);
+                                break;
+
+                            case "ChatOpacity":
+                                GameConfig.ChatOpacity = float.Parse(setting);
                                 break;
 
                             case "MusicVol":
@@ -2130,6 +2144,8 @@ namespace RogueCastle
             public bool  FullScreen;
             public float MusicVolume;
             public bool  QuickDrop;
+            public int   ChatOption;
+            public float ChatOpacity;
             public bool  ReduceQuality;
             public int   ScreenHeight;
             public int   ScreenWidth;
