@@ -1,11 +1,17 @@
-# Rogue Legacy: Randomizer for Archipelago
+# Rogue Legacy: Randomizer
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/thephar/roguelegacyrandomizer?label=latest&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/thephar/roguelegacyrandomizer?style=flat-square)
 ![GitHub commits since latest release (by date) for a branch](https://img.shields.io/github/commits-since/thephar/roguelegacyrandomizer/latest/master?color=8df702&style=flat-square)
 
 This project is based of the decompiled and cleaned source code by Cellar Door Games. This project makes some quality of life improvements and adds a spin to the core game mechanics by adding randomization via the Archipelago service by the [Archipelago Community](https://archipelago.gg).
 
-## Installation
+## Install Instructions
+
+Go to the releases tab and download the latest version of Rogue Legacy Randomizer and run the installer. It will ask you where your vanilla Rogue Legacy install is located, so be sure to choose the right directory. Rogue Legacy Randomizer will install to a new directory in `C:\ProgramData\Rogue Legacy Randomizer`.
+
+If you would prefer to manually install, please see the below directions.
+
+## Manual Installation
 
 In order to run Rogue Legacy Randomizer you will need to have Rogue Legacy installed on your local machine. Extract the Randomizer release into a desired folder **outside** of your Rogue Legacy install. Copy the following files from your Rogue Legacy install into the main directory of your Rogue Legacy Randomizer install:
 
@@ -24,10 +30,6 @@ Then copy the contents of the CustomContent directory in your Rogue Legacy Rando
 **BE SURE YOU ARE REPLACING THE COPIED FILES IN YOUR ROGUE LEGACY RANDOMIZER DIRECTORY AND NOT REPLACING YOUR ROGUE LEGACY FILES!**
 
 You should be good to run RogueLegacyRandomizer.exe! You will also need to generate a game at [archipelago.gg](https://archipelago.gg) to create a new game.
-
-## Building from Source
-
-TODO: Write this!
 
 ## License & Copyright
 
