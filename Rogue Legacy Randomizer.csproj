@@ -204,6 +204,7 @@
     <Compile Include="RogueCastle\GroundCheckLogicAction.cs" />
     <Compile Include="RogueCastle\HazardObj.cs" />
     <Compile Include="RogueCastle\HoverObj.cs" />
+    <Compile Include="RogueCastle\HUDElements\ChatInterface.cs" />
     <Compile Include="RogueCastle\IDealsDamageObj.cs" />
     <Compile Include="RogueCastle\ImpactEffectPool.cs" />
     <Compile Include="RogueCastle\IntroRoomObj.cs" />

@@ -1,13 +1,13 @@
-﻿//
+﻿// 
 //  Rogue Legacy Randomizer - Client.cs
-//  Last Modified 2022-04-03
-//
+//  Last Modified 2022-04-04
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
@@ -37,25 +37,26 @@ namespace Archipelago
         private int                             _reconnectionAttempt;
         private string                          _seed = "0";
         private ArchipelagoSession              _session;
-        private List<string>                    _tags = new() { "AP" };
+        private List<string>                    _tags         = new() { "AP" };
+        private DateTime                        _lastChatSent = DateTime.Now;
 
         public Client()
         {
             Initialize();
         }
 
-        public ConnectionStatus              ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
-        public DateTime                      LastDeath               { get; private set; } = DateTime.MinValue;
-        public ConnectionInfo                CachedConnectionInfo    { get; private set; } = new();
-        public DeathLink                     DeathLink               { get; private set; }
-        public Dictionary<long, NetworkItem> LocationCache           { get; private set; } = new();
-        public SlotData                      Data                    { get; private set; }
-        public Queue<NetworkItem>            ItemQueue               { get; private set; } = new();
-        public List<long>                    CheckedLocations        { get; private set; } = new();
-        public List<string>                  ChatHistory             { get; private set; } = new();
-        public bool                          CheckedLocationsUpdated { get; set; }
-        public bool                          CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
-        public bool                          CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
+        public ConnectionStatus               ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
+        public DateTime                       LastDeath               { get; private set; } = DateTime.MinValue;
+        public ConnectionInfo                 CachedConnectionInfo    { get; private set; } = new();
+        public DeathLink                      DeathLink               { get; private set; }
+        public Dictionary<long, NetworkItem>  LocationCache           { get; private set; } = new();
+        public SlotData                       Data                    { get; private set; }
+        public Queue<NetworkItem>             ItemQueue               { get; private set; } = new();
+        public List<long>                     CheckedLocations        { get; private set; } = new();
+        public Queue<Tuple<string, ChatType>> IncomingChatQueue       { get; private set; } = new();
+        public bool                           CheckedLocationsUpdated { get; set; }
+        public bool                           CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
+        public bool                           CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
 
         public void Connect(ConnectionInfo info)
         {
@@ -212,6 +213,19 @@ namespace Archipelago
             return string.IsNullOrEmpty(name) ? "Unknown Location" : name;
         }
 
+        public void Chat(string message)
+        {
+            if (_lastChatSent.AddSeconds(1) < DateTime.Now)
+            {
+                _session.Socket.SendPacket(new SayPacket
+                {
+                    Text = message
+                });
+
+                _lastChatSent = DateTime.Now;
+            }
+        }
+
         private void OnSocketDisconnect(CloseEventArgs closeEventArgs)
         {
             // Check to see if we are still in a game, and attempt to reconnect if possible.
@@ -359,12 +373,18 @@ namespace Archipelago
         private void OnPrint(PrintPacket packet)
         {
             Console.WriteLine("AP Server: {0}", packet.Text);
-            ChatHistory.Add(packet.Text);
+            IncomingChatQueue.Enqueue(new (packet.Text, ChatType.Normal));
         }
 
         private void OnJsonPrint(PrintJsonPacket packet)
         {
             var text = new StringBuilder();
+            var type = packet.MessageType switch
+            {
+                JsonMessageType.Hint     => ChatType.Hint,
+                JsonMessageType.ItemSend => ChatType.Item,
+                _                        => ChatType.Normal
+            };
 
             // TODO: Add color support.
             foreach (var element in packet.Data)
@@ -392,7 +412,14 @@ namespace Archipelago
                 text.Append(substring);
             }
 
-            ChatHistory.Add(text.ToString());
+            IncomingChatQueue.Enqueue(new (text.ToString(), type));
         }
+    }
+
+    public enum ChatType
+    {
+        Normal,
+        Item,
+        Hint
     }
 }

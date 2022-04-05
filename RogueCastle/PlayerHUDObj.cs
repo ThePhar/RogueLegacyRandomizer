@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - PlayerHUDObj.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-04
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -15,6 +15,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
+using RogueCastle.HUDElements;
 
 namespace RogueCastle
 {
@@ -22,7 +23,7 @@ namespace RogueCastle
     {
         private readonly int          _maxBarLength = 360;
         private          SpriteObj[]  _abilitiesSpriteArray;
-        private          TextObj      _chat;
+        private          ChatInterface _chat;
         private          SpriteObj    _coin;
         private          TextObj      _goldText;
         private          SpriteObj    _hpBar;
@@ -44,11 +45,15 @@ namespace RogueCastle
             _playerLevelText = new TextObj();
             _playerLevelText.Text = Game.PlayerStats.CurrentLevel.ToString();
             _playerLevelText.Font = Game.PlayerLevelFont;
-            _chat = new TextObj(Game.BitFont);
+
+            // _chat = new TextObj(Game.BitFont);
+            // _chat.ForceDraw = true;
+            // _chat.FontSize = 8f;
+            // _chat.OutlineWidth = 1;
+            // _chat.OutlineColour = Color.Black;
+            _chat = new ChatInterface();
             _chat.ForceDraw = true;
-            _chat.FontSize = 8f;
-            _chat.OutlineWidth = 1;
-            _chat.OutlineColour = Color.Black;
+
             _coin = new SpriteObj("PlayerUICoin_Sprite");
             _coin.ForceDraw = true;
             _goldText = new TextObj();
@@ -196,12 +201,13 @@ namespace RogueCastle
             }
 
             _goldText.Text = num2.ToString();
-            _chat.Text = string.Join("\n", Program.Game.ArchipelagoManager.ChatHistory.Skip(Math.Max(0, Program.Game.ArchipelagoManager.ChatHistory.Count - 12)));
-            _chat.WordWrap(512);
+
             _hpText.Text = player.CurrentHealth + "/" + player.MaxHealth;
             _mpText.Text = player.CurrentMana + "/" + player.MaxMana;
             UpdatePlayerHP(player);
             UpdatePlayerMP(player);
+
+            _chat.Update();
         }
 
         private void UpdatePlayerHP(PlayerObj player)

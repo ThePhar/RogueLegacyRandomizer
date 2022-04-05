@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - RandomizerScreen.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-04
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -354,8 +354,6 @@ namespace RogueCastle.Screens
 
                     _selectedOptionIndex++;
                 }
-
-                Console.WriteLine($"{_selectedOptionIndex} / {_soloRandomizerOptions.Count} ({RandomizerOptions.Count})");
 
                 if (_selectedOptionIndex < 0)
                 {
