@@ -739,7 +739,7 @@ namespace RogueCastle
             }
 
             // Check for received items and send to player.
-            if (ArchipelagoManager.ItemQueue.Count > 0)
+            if (ArchipelagoManager.ItemQueue.Count > 0 && !ArchipelagoManager.StopReceivingItems)
             {
                 if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen)
                 {

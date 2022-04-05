@@ -57,6 +57,7 @@ namespace Archipelago
         public List<long>                     CheckedLocations        { get; private set; } = new();
         public Queue<Tuple<string, ChatType>> IncomingChatQueue       { get; private set; } = new();
         public bool                           CheckedLocationsUpdated { get; set; }
+        public bool                           StopReceivingItems      { get; set; }
         public bool                           CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
         public bool                           CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
 
@@ -147,6 +148,7 @@ namespace Archipelago
             LastDeath = DateTime.MinValue;
             DeathLink = null;
             LocationCache = new Dictionary<long, NetworkItem>();
+            StopReceivingItems = false;
             Data = null;
             ItemQueue = new Queue<NetworkItem>();
         }
@@ -166,6 +168,8 @@ namespace Archipelago
         public void AnnounceVictory()
         {
             _session.Socket.SendPacket(new StatusUpdatePacket { Status = ArchipelagoClientState.ClientGoal });
+            // Stop receiving items so we don't get stuck in a loop at the end.
+            StopReceivingItems = true;
         }
 
         public void ClearDeathLink()
