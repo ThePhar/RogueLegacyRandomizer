@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - BackToMenuArchipelagoObj.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -15,12 +15,11 @@ namespace RogueCastle.Options
 {
     public class BackToMenuArchipelagoObj : RandomizerOption
     {
-        public BackToMenuArchipelagoObj(RandomizerScreen parentScreen) :
-            base(parentScreen, "Close Archipelago Menu") { }
+        public BackToMenuArchipelagoObj(RandomizerScreen parentScreen) : base(parentScreen, "Close Menu") { }
 
         public override bool IsActive
         {
-            get { return base.IsActive; }
+            get => base.IsActive;
             set
             {
                 base.IsActive = value;
@@ -33,7 +32,7 @@ namespace RogueCastle.Options
 
         public override void Initialize()
         {
-            _nameText.Text = "Close Archipelago Menu";
+            _nameText.Text = "Close Menu";
             base.Initialize();
         }
 

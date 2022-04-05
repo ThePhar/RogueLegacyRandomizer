@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - RandoModeOption.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -52,12 +52,6 @@ namespace RogueCastle.Options
 
         public override void HandleInput()
         {
-            if (InputTypeHelper.PressedLeft || InputTypeHelper.PressedRight)
-            {
-                SoundManager.PlaySound("frame_swap");
-                _toggleText.Text = _toggleText.Text == "Solo" ? "Archipelago" : "Solo";
-            }
-
             if (InputTypeHelper.PressedConfirm)
             {
                 SoundManager.PlaySound("Option_Menu_Select");

@@ -1,6 +1,6 @@
 ﻿// 
 //  Rogue Legacy Randomizer - RandomizerOptions.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -15,7 +15,7 @@ namespace RogueCastle.Randomizer
 {
     public record RandomizerOptions
     {
-        public bool       IsArchipelago         { get; set; } = false;
+        public bool       IsArchipelago         { get; set; } = true;
         public string     StartingName          { get; set; } = "Lee";
         public ClassType  StartingClass         { get; set; } = ClassType.Knight;
         public Gender     StartingGender        { get; set; } = Gender.Sir;
