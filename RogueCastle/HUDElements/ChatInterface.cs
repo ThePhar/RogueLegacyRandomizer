@@ -111,13 +111,15 @@ namespace RogueCastle.HUDElements
                 return;
             }
 
+            // Don't listen for characters if this isn't active you fool. smh
             if (!IsInputActive)
             {
                 if (e.KeyChar is '\u000d' or '\u000a')
                 {
                     IsInputActive = true;
-                    return;
                 }
+
+                return;
             }
 
             switch (e.KeyChar)

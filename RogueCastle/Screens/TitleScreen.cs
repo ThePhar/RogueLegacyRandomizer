@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - TitleScreen.cs
-//  Last Modified 2022-04-03
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -256,6 +256,7 @@ namespace RogueCastle.Screens
             _pressStartText.Text = "[Input:" + (int) InputType.MenuConfirm1 + "]";
 
             // Load the default profile.
+            Console.WriteLine("Loading default profile...");
             Program.Game.ArchipelagoManager.Disconnect();
             Program.Game.ChangeProfile("DEFAULT", 0);
             SkillSystem.ResetAllTraits();

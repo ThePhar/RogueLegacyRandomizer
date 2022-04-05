@@ -23,6 +23,7 @@ using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
 using RogueCastle;
+using RogueCastle.Enums;
 using WebSocketSharp;
 
 namespace Archipelago
@@ -137,7 +138,7 @@ namespace Archipelago
             _deathLinkService = null;
             _permissions = new Dictionary<string, Permissions>();
             _tags = new List<string> { "AP" };
-            _allowReconnect = false;
+            _allowReconnect = true;
             _reconnectionAttempt = 0;
             _seed = "0";
 
@@ -234,22 +235,13 @@ namespace Archipelago
             {
                 // We were failing to connect.
                 case ConnectionStatus.Connecting:
-                    if (!_allowReconnect)
+                    DialogueManager.AddText("LostConnection", new[] { "Lost connection to AP Server..." }, new[]
                     {
-                        throw new ArchipelagoSocketClosedException("Unable to establish connection to AP server.");
-                    }
-
-                    if (_reconnectionAttempt >= MAXIMUM_RECONNECTION_ATTEMPTS)
-                    {
-                        throw new ArchipelagoSocketClosedException(
-                            "Lost connection to AP server and failed to reconnect. Please save and quit to title " +
-                            "screen and attempt to reconnect as client is no longer syncing."
-                        );
-                    }
-
-                    _reconnectionAttempt += 1;
-                    ConnectionStatus = ConnectionStatus.Connecting;
-                    Connect(CachedConnectionInfo);
+                        "Rogue Legacy Randomizer has lost connection to the AP server. Going back to main menu..."
+                    });
+                    Game.ScreenManager.DialogueScreen.SetDialogue("LostConnection");
+                    Game.ScreenManager.DialogueScreen.SetConfirmEndHandler(this, "GoBackToTitle");
+                    Game.ScreenManager.DisplayScreen((int) ScreenType.Dialogue, true);
                     break;
 
                 // We're in a current game and lost connection, so attempt to reconnect gracefully.
@@ -259,6 +251,48 @@ namespace Archipelago
                     // Ignore this is a goto. Thanks for playing.
                     goto case ConnectionStatus.Connecting;
             }
+        }
+
+        public void GoBackToTitle()
+        {
+            Disconnect();
+
+            var levelScreen = Game.ScreenManager.GetLevelScreen();
+            if (levelScreen != null &&
+                (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom ||
+                 levelScreen.CurrentRoom is CarnivalShoot2BonusRoom))
+            {
+                if (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom)
+                {
+                    (levelScreen.CurrentRoom as CarnivalShoot1BonusRoom).UnequipPlayer();
+                }
+
+                if (levelScreen.CurrentRoom is CarnivalShoot2BonusRoom)
+                {
+                    (levelScreen.CurrentRoom as CarnivalShoot2BonusRoom).UnequipPlayer();
+                }
+            }
+
+            if (levelScreen != null)
+            {
+                if (levelScreen.CurrentRoom is ChallengeBossRoomObj challengeBossRoomObj)
+                {
+                    Program.Game.SaveManager.LoadFiles(levelScreen,
+                        SaveType.UpgradeData);
+                    levelScreen.Player.CurrentHealth = challengeBossRoomObj.StoredHP;
+                    levelScreen.Player.CurrentMana = challengeBossRoomObj.StoredMP;
+                }
+            }
+
+            Program.Game.SaveManager.SaveFiles(SaveType.PlayerData,
+                SaveType.UpgradeData);
+            if (Game.PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start" &&
+                levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
+            {
+                Program.Game.SaveManager.SaveFiles(SaveType.MapData);
+            }
+
+            Game.ScreenManager.DisplayScreen(3, true);
         }
 
         private void OnReceivedItems(ReceivedItemsHelper helper)
