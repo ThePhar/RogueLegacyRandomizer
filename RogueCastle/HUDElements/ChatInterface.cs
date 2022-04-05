@@ -228,11 +228,6 @@ namespace RogueCastle.HUDElements
             _inputHook.KeyPress -= HandleInput;
             _inputHook.KeyDown -= CheckCursor;
 
-            foreach (var element in Elements)
-            {
-                element.Dispose();
-            }
-
             _inputText.Dispose();
             _inputText = null;
             Elements.Clear();
