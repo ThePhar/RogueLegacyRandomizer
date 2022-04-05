@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - InputType.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-04-03
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -15,39 +15,46 @@ namespace RogueCastle.Enums
 {
     public enum InputType
     {
-        MenuConfirm1,
-        MenuConfirm2,
-        MenuCancel1,
-        MenuCancel2,
-        MenuOptions,
-        MenuRogueMode,
-        MenuCredits,
-        MenuProfileCard,
-        MenuPause,
-        MenuMap,
-        PlayerJump1,
-        PlayerJump2,
-        PlayerAttack,
-        PlayerBlock,
-        PlayerDashLeft,
-        PlayerDashRight,
-        PlayerUp1,
-        PlayerUp2,
-        PlayerDown1,
-        PlayerDown2,
-        PlayerLeft1,
-        PlayerLeft2,
-        PlayerRight1,
-        PlayerRight2,
-        PlayerSpell,
-        MenuProfileSelect,
-        MenuDeleteProfile
+        MenuConfirm1      = 0,
+        MenuConfirm2      = 1,
+        MenuCancel1       = 2,
+        MenuCancel2       = 3,
+        MenuOptions       = 4,
+        MenuRogueMode     = 5,
+        MenuCredits       = 6,
+        MenuProfileCard   = 7,
+        MenuPause         = 8,
+        MenuMap           = 9,
+        PlayerJump1       = 10,
+        PlayerJump2       = 11,
+        PlayerAttack      = 12,
+        PlayerBlock       = 13,
+        PlayerDashLeft    = 14,
+        PlayerDashRight   = 15,
+        PlayerUp1         = 16,
+        PlayerUp2         = 17,
+        PlayerDown1       = 18,
+        PlayerDown2       = 19,
+        PlayerLeft1       = 20,
+        PlayerLeft2       = 21,
+        PlayerRight1      = 22,
+        PlayerRight2      = 23,
+        PlayerSpell       = 24,
+        MenuProfileSelect = 25,
+        MenuDeleteProfile = 26
     }
 
     public static class InputTypeExtensions
     {
-        public static int    Value(this InputType input) => (int) input;
-        public static string Input(this InputType input) => $"[Input:{input.Value()}]";
+        public static int Value(this InputType input)
+        {
+            return (int) input;
+        }
+
+        public static string Input(this InputType input)
+        {
+            return $"[Input:{input.Value()}]";
+        }
     }
 
     public static class InputTypeHelper

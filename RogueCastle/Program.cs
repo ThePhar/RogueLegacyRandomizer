@@ -1,13 +1,13 @@
-//
+// 
 //  Rogue Legacy Randomizer - Program.cs
-//  Last Modified 2022-01-25
-//
+//  Last Modified 2022-04-05
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.IO;
@@ -60,8 +60,9 @@ namespace RogueCastle
 
                     MessageBox.Show(
                         "Rogue Legacy has run into a situation it cannot recover from and needs to close. If you are" +
-                        " not a Randomizer developer, please reach out to Phar#4444 and include the crash logs so " +
-                        "they can fix this issue.\n\nIf you're Phar, stop breaking things and fix it.",
+                        " not a Randomizer developer, please reach out to Phar#4444 in Discord and include the crash logs so " +
+                        "they can fix this issue.\n\nIf you're Phar, stop breaking things and fix it.\n\n" +
+                        "You can find these log files in:\n" + path,
                         "Unexpected Exception Occurred", MessageBoxButtons.OK, MessageBoxIcon.Hand);
 
                     return;

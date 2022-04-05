@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - TitleScreen.cs
-//  Last Modified 2022-01-25
+//  Last Modified 2022-04-05
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -135,7 +135,7 @@ namespace RogueCastle.Screens
             _copyrightText = new TextObj(Game.JunicodeFont)
             {
                 FontSize = 8f,
-                Text = "Archipelago Client for Rogue Legacy\nCopyright(C) 2011-2015, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.",
+                Text = "Copyright(C) 2011-2015, Cellar Door Games Inc. Rogue Legacy(TM) is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.",
                 Align = Types.TextAlign.Centre,
                 DropShadow = new Vector2(1f, 2f)
             };
@@ -146,7 +146,7 @@ namespace RogueCastle.Screens
             _versionNumber.Align = Types.TextAlign.Left;
             _versionNumber.FontSize = 8f;
             _versionNumber.Position = new Vector2(14f, 5f);
-            _versionNumber.Text = $"AP Randomizer {LevelENV.FullVersion}";
+            _versionNumber.Text = $"https://github.com/thephar/RogueLegacyRandomizer\nRogue Legacy Randomizer {LevelENV.FullVersion}";
 
             // Press Start Text
             _pressStartText = new KeyIconTextObj(Game.JunicodeFont)
@@ -256,6 +256,7 @@ namespace RogueCastle.Screens
             _pressStartText.Text = "[Input:" + (int) InputType.MenuConfirm1 + "]";
 
             // Load the default profile.
+            Console.WriteLine("Loading default profile...");
             Program.Game.ArchipelagoManager.Disconnect();
             Program.Game.ChangeProfile("DEFAULT", 0);
             SkillSystem.ResetAllTraits();

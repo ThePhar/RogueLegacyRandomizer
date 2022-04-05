@@ -1,6 +1,6 @@
 // 
-//  Rogue Legacy Randomizer - ArchipelagoScreen.cs
-//  Last Modified 2022-01-24
+//  Rogue Legacy Randomizer - RandomizerScreen.cs
+//  Last Modified 2022-04-04
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -12,10 +12,12 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Archipelago;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using RogueCastle.Enums;
 using RogueCastle.Options;
 using Tweener;
@@ -23,28 +25,47 @@ using Tweener.Ease;
 
 namespace RogueCastle.Screens
 {
-    public class ArchipelagoScreen : Screen
+    public class RandomizerScreen : Screen
     {
-        private List<ArchipelagoOptionsObj> _archipelagoArray;
-        private SpriteObj                   _archipelagoBar;
-        private SpriteObj                   _archipelagoTitle;
-        private ObjContainer                _bgSprite;
-        private KeyIconTextObj              _cancelText;
-        private KeyIconTextObj              _confirmText;
-        private TextBoxOptionsObj           _hostname;
-        private KeyIconTextObj              _navigationText;
-        private TextBoxOptionsObj           _password;
-        private TextBoxOptionsObj           _port;
-        private ArchipelagoOptionsObj       _selectedOption;
-        private int                         _selectedOptionIndex;
-        private TextBoxOptionsObj           _slot;
-        private bool                        _transitioning;
+        private List<RandomizerOption> _multiRandomizerOptions;
+        private List<RandomizerOption> _soloRandomizerOptions;
+        private RandoModeOption        _randoMode;
+        private SpriteObj              _randomizerBar;
+        private SpriteObj              _randomizerTitle;
+        private SpriteObj              _upArrow;
+        private SpriteObj              _downArrow;
+        private ObjContainer           _bgSprite;
+        private KeyIconTextObj         _cancelText;
+        private KeyIconTextObj         _confirmText;
+        private RandomizerOption       _selectedOption;
+        private int                    _selectedOptionIndex;
+        private TextBoxOption          _slot;
+        private bool                   _transitioning;
 
-        public ArchipelagoScreen()
+        // Solo
+        private TextBoxOption _startingName;
+
+        // MultiWorld
+        private TextBoxOption  _hostname;
+        private KeyIconTextObj _navigationText;
+        private TextBoxOption  _password;
+        private TextBoxOption  _port;
+
+        public RandomizerScreen()
         {
-            _archipelagoArray = new List<ArchipelagoOptionsObj>();
+            _multiRandomizerOptions = new List<RandomizerOption>();
+            _soloRandomizerOptions = new List<RandomizerOption>();
             UpdateIfCovered = true;
             DrawIfCovered = true;
+        }
+
+        private List<RandomizerOption> RandomizerOptions
+        {
+            get
+            {
+                var list = new List<RandomizerOption> { _randoMode };
+                return list.Concat(Game.RandomizerOptions.IsArchipelago ? _multiRandomizerOptions : _soloRandomizerOptions).ToList();
+            }
         }
 
         public float BackBufferOpacity { get; set; }
@@ -58,34 +79,71 @@ namespace RogueCastle.Screens
                 ForceDraw = true
             };
 
-            // Archipelago Menu Title
-            _archipelagoTitle = new SpriteObj("OptionsScreenTitle_Sprite");
-            _bgSprite.AddChild(_archipelagoTitle);
-            _archipelagoTitle.Position = new Vector2(0f, -(float) _bgSprite.Width / 2f + 60f);
+            // Randomizer Menu Title
+            _randomizerTitle = new SpriteObj("OptionsScreenTitle_Sprite");
+            _bgSprite.AddChild(_randomizerTitle);
+            _randomizerTitle.Position = new Vector2(0f, -(float) _bgSprite.Width / 2f + 60f);
 
-            // Archipelago Options
-            _hostname = new TextBoxOptionsObj(this, "Hostname", "archipelago.gg");
-            _port = new TextBoxOptionsObj(this, "Port", "38281");
-            _slot = new TextBoxOptionsObj(this, "Slot Name", "Lee");
-            _password = new TextBoxOptionsObj(this, "Password", "");
+            // Arrows
+            _upArrow = new SpriteObj("ContinueTextIcon_Sprite");
+            _downArrow = new SpriteObj("ContinueTextIcon_Sprite");
+            _bgSprite.AddChild(_upArrow);
+            _bgSprite.AddChild(_downArrow);
+            _upArrow.Visible = false;
 
-            _archipelagoArray.Add(_hostname);
-            _archipelagoArray.Add(_port);
-            _archipelagoArray.Add(_slot);
-            _archipelagoArray.Add(_password);
-            _archipelagoArray.Add(new ConnectArchipelagoOptionObj(this));
-            _archipelagoArray.Add(new BackToMenuArchipelagoObj(this));
-            for (var i = 0; i < _archipelagoArray.Count; i++)
+            _upArrow.Position = new Vector2(0 - _upArrow.Width / 2, -150);
+            _upArrow.Rotation = 180;
+            _downArrow.Position = new Vector2(0 - _downArrow.Width / 2, 190);
+
+            // Randomizer Mode Selector
+            _randoMode = new RandoModeOption(this);
+
+            // Solo Randomizer Options
+            _startingName = new TextBoxOption(this, "Starting Name", "Lee");
+
+            // _soloRandomizerOptions.Add(_startingName);
+            _soloRandomizerOptions.Add(new TextBoxOption(this, "Currently Not Working", ""));
+
+            // MultiWorld Randomizer Options
+            _hostname = new TextBoxOption(this, "Hostname", "archipelago.gg");
+            _port = new TextBoxOption(this, "Port", "38281");
+            _slot = new TextBoxOption(this, "Slot Name", "Sir Lee");
+            _password = new TextBoxOption(this, "Password", "");
+
+            _multiRandomizerOptions.Add(_hostname);
+            _multiRandomizerOptions.Add(_port);
+            _multiRandomizerOptions.Add(_slot);
+            _multiRandomizerOptions.Add(_password);
+            _multiRandomizerOptions.Add(new ConnectArchipelagoOptionObj(this));
+            _multiRandomizerOptions.Add(new BackToMenuArchipelagoObj(this));
+
+            _randoMode.X = 420f;
+            _randoMode.Y = 160f;
+
+            for (var i = 0; i < _multiRandomizerOptions.Count; i++)
             {
-                _archipelagoArray[i].X = 420f;
-                _archipelagoArray[i].Y = 160 + i * 30;
+                _multiRandomizerOptions[i].X = 420f;
+                _multiRandomizerOptions[i].Y = 180 + (i + 1) * 30;
+            }
+
+            for (var i = 0; i < _soloRandomizerOptions.Count; i++)
+            {
+                if (i < 11)
+                {
+                    _soloRandomizerOptions[i].X = 420f;
+                    _soloRandomizerOptions[i].Y = 180 + (i + 1) * 30;
+                }
+                else
+                {
+                    _soloRandomizerOptions[i].Visible = false;
+                }
             }
 
             // Scrollbar
-            _archipelagoBar = new SpriteObj("OptionsBar_Sprite")
+            _randomizerBar = new SpriteObj("OptionsBar_Sprite")
             {
                 ForceDraw = true,
-                Position = new Vector2(_archipelagoArray[0].X - 20f, _archipelagoArray[0].Y)
+                Position = new Vector2(RandomizerOptions[0].X - 20f, RandomizerOptions[0].Y)
             };
 
             // Menu Help-text
@@ -193,7 +251,7 @@ namespace RogueCastle.Screens
             _transitioning = true;
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0.8");
             _selectedOptionIndex = 0;
-            _selectedOption = _archipelagoArray[_selectedOptionIndex];
+            _selectedOption = RandomizerOptions[_selectedOptionIndex];
             _selectedOption.IsActive = false;
             _bgSprite.Position = new Vector2(660f, 0f);
             _bgSprite.Opacity = 0f;
@@ -201,9 +259,22 @@ namespace RogueCastle.Screens
             Tween.AddEndHandlerToLastTween(this, "EndTransition");
             Tween.To(_bgSprite, 0.2f, Tween.EaseNone, "Opacity", "1");
             var num = 0;
-            foreach (var current in _archipelagoArray)
+            foreach (var current in RandomizerOptions)
             {
-                current.Y = 160 + num * 30 - 360f;
+                current.Y = 180 + num * 30 - 360f;
+
+                if (current is RandoModeOption)
+                    current.Y = -200f;
+
+                if (num < 12)
+                {
+                    current.Visible = true;
+                }
+                else
+                {
+                    current.Visible = false;
+                }
+
                 current.Opacity = 0f;
                 Tween.By(current, 0.5f, Quad.EaseOut, "Y", 360f.ToString(CultureInfo.InvariantCulture));
                 Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "1");
@@ -211,8 +282,8 @@ namespace RogueCastle.Screens
                 num++;
             }
 
-            _archipelagoBar.Opacity = 0f;
-            Tween.To(_archipelagoBar, 0.2f, Tween.EaseNone, "Opacity", "1");
+            _randomizerBar.Opacity = 0f;
+            Tween.To(_randomizerBar, 0.2f, Tween.EaseNone, "Opacity", "1");
             base.OnEnter();
         }
 
@@ -229,19 +300,16 @@ namespace RogueCastle.Screens
             Tween.To(_cancelText, 0.2f, Tween.EaseNone, "Opacity", "0");
             Tween.To(_navigationText, 0.2f, Tween.EaseNone, "Opacity", "0");
             Tween.To(this, 0.2f, Tween.EaseNone, "BackBufferOpacity", "0");
-            Tween.To(_archipelagoBar, 0.2f, Tween.EaseNone, "Opacity", "0");
+            Tween.To(_randomizerBar, 0.2f, Tween.EaseNone, "Opacity", "0");
             _bgSprite.Position = new Vector2(660f, 360f);
             _bgSprite.Opacity = 1f;
             Tween.To(_bgSprite, 0.5f, Quad.EaseOut, "Y", "0");
             Tween.To(_bgSprite, 0.2f, Tween.EaseNone, "Opacity", "0");
-            var num = 0;
-            foreach (var current in _archipelagoArray)
+            foreach (var current in RandomizerOptions)
             {
-                current.Y = 160 + num * 30;
                 current.Opacity = 1f;
                 Tween.By(current, 0.5f, Quad.EaseOut, "Y", (-360f).ToString(CultureInfo.InvariantCulture));
                 Tween.To(current, 0.2f, Tween.EaseNone, "Opacity", "0");
-                num++;
             }
 
             Tween.AddEndHandlerToLastTween(ScreenManager, "HideCurrentScreen");
@@ -279,7 +347,7 @@ namespace RogueCastle.Screens
                 }
                 else if (InputTypeHelper.PressedDown)
                 {
-                    if (_selectedOptionIndex < _archipelagoArray.Count - 1)
+                    if (_selectedOptionIndex < RandomizerOptions.Count - 1)
                     {
                         SoundManager.PlaySound("frame_swap");
                     }
@@ -289,12 +357,82 @@ namespace RogueCastle.Screens
 
                 if (_selectedOptionIndex < 0)
                 {
-                    _selectedOptionIndex = _archipelagoArray.Count - 1;
+                    _selectedOptionIndex = RandomizerOptions.Count - 1;
                 }
 
-                if (_selectedOptionIndex > _archipelagoArray.Count - 1)
+                if (_selectedOptionIndex > RandomizerOptions.Count - 1)
                 {
                     _selectedOptionIndex = 0;
+                }
+
+                // If moved, readjust the order of options.
+                if ((InputTypeHelper.PressedUp || InputTypeHelper.PressedDown) && !Game.RandomizerOptions.IsArchipelago)
+                {
+                    if (_selectedOptionIndex == 0)
+                    {
+                        for (var i = 0; i < _soloRandomizerOptions.Count; i++)
+                        {
+                            _soloRandomizerOptions[i].X = 420;
+
+                            if (i < 11)
+                            {
+                                _soloRandomizerOptions[i].Visible = true;
+                                _soloRandomizerOptions[i].Y = 180 + (i + 1) * 30;
+                            }
+                            else
+                            {
+                                _soloRandomizerOptions[i].Visible = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var i = 0; i < _soloRandomizerOptions.Count; i++)
+                        {
+                            var trueIndex = _selectedOptionIndex - 1;
+                            _soloRandomizerOptions[i].X = 420;
+
+                            // Check if in first 6 values.
+                            if (trueIndex < 6)
+                            {
+                                if (i < 11)
+                                {
+                                    _soloRandomizerOptions[i].Visible = true;
+                                    _soloRandomizerOptions[i].Y = 180 + (i + 1) * 30;
+                                }
+                                else
+                                {
+                                    _soloRandomizerOptions[i].Visible = false;
+                                }
+                            }
+                            // Check if in last 6 values.
+                            else if (trueIndex > _soloRandomizerOptions.Count - 7)
+                            {
+                                if (i > _soloRandomizerOptions.Count - 12)
+                                {
+                                    _soloRandomizerOptions[i].Visible = true;
+                                    _soloRandomizerOptions[i].Y = 180 + (i - (_soloRandomizerOptions.Count - 12)) * 30;
+                                }
+                                else
+                                {
+                                    _soloRandomizerOptions[i].Visible = false;
+                                }
+                            }
+                            // Reorganize everything.
+                            else
+                            {
+                                if (i < trueIndex - 5 || i > trueIndex + 5)
+                                {
+                                    _soloRandomizerOptions[i].Visible = false;
+                                }
+                                else
+                                {
+                                    _soloRandomizerOptions[i].Visible = true;
+                                    _soloRandomizerOptions[i].Y = 180 + (i + (6 - trueIndex)) * 30;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (selectedOptionIndex != _selectedOptionIndex)
@@ -304,7 +442,7 @@ namespace RogueCastle.Screens
                         _selectedOption.IsSelected = false;
                     }
 
-                    _selectedOption = _archipelagoArray[_selectedOptionIndex];
+                    _selectedOption = RandomizerOptions[_selectedOptionIndex];
                     _selectedOption.IsSelected = true;
                 }
 
@@ -321,17 +459,42 @@ namespace RogueCastle.Screens
                 }
             }
 
+            // Hide arrows if on Archipelago settings.
+            if (Game.RandomizerOptions.IsArchipelago)
+            {
+                _upArrow.Visible = false;
+                _downArrow.Visible = false;
+            }
+            else
+            {
+                if (_selectedOptionIndex <= 6)
+                {
+                    _upArrow.Visible = false;
+                    _downArrow.Visible = true;
+                }
+                else if (_selectedOptionIndex >= RandomizerOptions.Count - 6)
+                {
+                    _upArrow.Visible = true;
+                    _downArrow.Visible = false;
+                }
+                else
+                {
+                    _upArrow.Visible = true;
+                    _downArrow.Visible = true;
+                }
+            }
+
             base.HandleInput();
         }
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var current in _archipelagoArray)
+            foreach (var current in RandomizerOptions)
             {
                 current.Update(gameTime);
             }
 
-            _archipelagoBar.Position = new Vector2(_selectedOption.X - 15f, _selectedOption.Y);
+            _randomizerBar.Position = new Vector2(_selectedOption.X - 15f, _selectedOption.Y);
             base.Update(gameTime);
         }
 
@@ -340,7 +503,7 @@ namespace RogueCastle.Screens
             Camera.Begin();
             Camera.Draw(Game.GenericTexture, new Rectangle(0, 0, 1320, 720), Color.Black * BackBufferOpacity);
             _bgSprite.Draw(Camera);
-            foreach (var current in _archipelagoArray)
+            foreach (var current in RandomizerOptions)
             {
                 current.Draw(Camera);
             }
@@ -348,37 +511,41 @@ namespace RogueCastle.Screens
             _confirmText.Draw(Camera);
             _cancelText.Draw(Camera);
             _navigationText.Draw(Camera);
-            _archipelagoBar.Draw(Camera);
+            _randomizerBar.Draw(Camera);
             Camera.End();
             base.Draw(gametime);
         }
 
         public override void Dispose()
         {
-            if (IsDisposed)
-            {
-                return;
-            }
+            if (IsDisposed) return;
 
-            Console.WriteLine("Disposing Archipelago Screen");
-            foreach (var current in _archipelagoArray)
+            Console.WriteLine("Disposing Randomizer Screen");
+            foreach (var current in _multiRandomizerOptions)
             {
                 current.Dispose();
             }
 
-            _archipelagoArray.Clear();
-            _archipelagoArray = null;
+            foreach (var current in _soloRandomizerOptions)
+            {
+                current.Dispose();
+            }
+
+            _multiRandomizerOptions.Clear();
+            _multiRandomizerOptions = null;
+            _soloRandomizerOptions.Clear();
+            _soloRandomizerOptions = null;
             _bgSprite.Dispose();
             _bgSprite = null;
-            _archipelagoTitle = null;
+            _randomizerTitle = null;
             _confirmText.Dispose();
             _confirmText = null;
             _cancelText.Dispose();
             _cancelText = null;
             _navigationText.Dispose();
             _navigationText = null;
-            _archipelagoBar.Dispose();
-            _archipelagoBar = null;
+            _randomizerBar.Dispose();
+            _randomizerBar = null;
             _selectedOption = null;
             base.Dispose();
         }

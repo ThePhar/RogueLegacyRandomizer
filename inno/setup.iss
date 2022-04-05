@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.8.2"
+#define MyAppVersion "0.8.3"
 #define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
@@ -13,17 +13,17 @@
 AppId={{6741975E-782A-438F-8C05-502EDB37E7DB}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName=C:\ProgramData\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\LICENSE
+LicenseFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=Rogue Legacy Randomizer Setup
+OutputBaseFilename=Rogue Legacy Randomizer Installer
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -35,13 +35,19 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\Archipelago.MultiClient.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\bin\Release\websocket-sharp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Phar\RiderProjects\Rogue Legacy Randomizer\inno\xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\Archipelago.MultiClient.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\websocket-sharp.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\inno\xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[Setup]
+SetupIconFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\ico\RLE.ico
+WizardSmallImageFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\inno\sirphar.bmp
+WizardImageFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\inno\banner.bmp
+UninstallDisplayIcon={app}\ico\RLE.ico
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -66,7 +72,7 @@ procedure InitializeWizard();
 begin
   CopyDirPage := CreateInputDirPage(wpSelectDir, 'Select your vanilla Rogue Legacy source directory.', '',  '', False, '');
   CopyDirPage.Add('Source directory:');
-  CopyDirPage.Values[0] := 'C:\Program Files (x86)\Steam\steamapps\common\Rogue Legacy';
+  CopyDirPage.Values[0] := '';
 end;
 
 function CopyDir(Params: string): string;

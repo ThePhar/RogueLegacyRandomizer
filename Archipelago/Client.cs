@@ -1,18 +1,19 @@
-﻿//
+﻿// 
 //  Rogue Legacy Randomizer - Client.cs
-//  Last Modified 2022-04-03
-//
+//  Last Modified 2022-04-05
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-//
+// 
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using Archipelago.Definitions;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
@@ -21,6 +22,8 @@ using Archipelago.MultiClient.Net.Exceptions;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
+using RogueCastle;
+using RogueCastle.Enums;
 using WebSocketSharp;
 
 namespace Archipelago
@@ -28,7 +31,7 @@ namespace Archipelago
     public class Client
     {
         public const int    MAXIMUM_RECONNECTION_ATTEMPTS = 3;
-        public const string MINIMUM_AP_VERSION            = "0.3.0";
+        public const string MINIMUM_AP_VERSION            = "0.3.1";
 
         private bool                            _allowReconnect;
         private DeathLinkService                _deathLinkService;
@@ -36,24 +39,26 @@ namespace Archipelago
         private int                             _reconnectionAttempt;
         private string                          _seed = "0";
         private ArchipelagoSession              _session;
-        private List<string>                    _tags = new() { "AP" };
+        private List<string>                    _tags         = new() { "AP" };
+        private DateTime                        _lastChatSent = DateTime.Now;
 
         public Client()
         {
             Initialize();
         }
 
-        public ConnectionStatus              ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
-        public DateTime                      LastDeath               { get; private set; } = DateTime.MinValue;
-        public ConnectionInfo                CachedConnectionInfo    { get; private set; } = new();
-        public DeathLink                     DeathLink               { get; private set; }
-        public Dictionary<long, NetworkItem> LocationCache           { get; private set; } = new();
-        public SlotData                      Data                    { get; private set; }
-        public Queue<NetworkItem>            ItemQueue               { get; private set; } = new();
-        public List<long>                    CheckedLocations        { get; private set; } = new();
-        public bool                          CheckedLocationsUpdated { get; set; }
-        public bool                          CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
-        public bool                          CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
+        public ConnectionStatus               ConnectionStatus        { get; private set; } = ConnectionStatus.Disconnected;
+        public DateTime                       LastDeath               { get; private set; } = DateTime.MinValue;
+        public ConnectionInfo                 CachedConnectionInfo    { get; private set; } = new();
+        public DeathLink                      DeathLink               { get; private set; }
+        public Dictionary<long, NetworkItem>  LocationCache           { get; private set; } = new();
+        public SlotData                       Data                    { get; private set; }
+        public Queue<NetworkItem>             ItemQueue               { get; private set; } = new();
+        public List<long>                     CheckedLocations        { get; private set; } = new();
+        public Queue<Tuple<string, ChatType>> IncomingChatQueue       { get; private set; } = new();
+        public bool                           CheckedLocationsUpdated { get; set; }
+        public bool                           CanForfeit              => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
+        public bool                           CanCollect              => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
 
         public void Connect(ConnectionInfo info)
         {
@@ -133,7 +138,7 @@ namespace Archipelago
             _deathLinkService = null;
             _permissions = new Dictionary<string, Permissions>();
             _tags = new List<string> { "AP" };
-            _allowReconnect = false;
+            _allowReconnect = true;
             _reconnectionAttempt = 0;
             _seed = "0";
 
@@ -204,6 +209,25 @@ namespace Archipelago
             return string.IsNullOrEmpty(name) ? "Unknown Item" : name;
         }
 
+        public string GetLocationName(int location)
+        {
+            var name = _session.Locations.GetLocationNameFromId(location);
+            return string.IsNullOrEmpty(name) ? "Unknown Location" : name;
+        }
+
+        public void Chat(string message)
+        {
+            if (_lastChatSent.AddSeconds(1) < DateTime.Now)
+            {
+                _session.Socket.SendPacket(new SayPacket
+                {
+                    Text = message
+                });
+
+                _lastChatSent = DateTime.Now;
+            }
+        }
+
         private void OnSocketDisconnect(CloseEventArgs closeEventArgs)
         {
             // Check to see if we are still in a game, and attempt to reconnect if possible.
@@ -211,22 +235,13 @@ namespace Archipelago
             {
                 // We were failing to connect.
                 case ConnectionStatus.Connecting:
-                    if (!_allowReconnect)
+                    DialogueManager.AddText("LostConnection", new[] { "Lost connection to AP Server..." }, new[]
                     {
-                        throw new ArchipelagoSocketClosedException("Unable to establish connection to AP server.");
-                    }
-
-                    if (_reconnectionAttempt >= MAXIMUM_RECONNECTION_ATTEMPTS)
-                    {
-                        throw new ArchipelagoSocketClosedException(
-                            "Lost connection to AP server and failed to reconnect. Please save and quit to title " +
-                            "screen and attempt to reconnect as client is no longer syncing."
-                        );
-                    }
-
-                    _reconnectionAttempt += 1;
-                    ConnectionStatus = ConnectionStatus.Connecting;
-                    Connect(CachedConnectionInfo);
+                        "Rogue Legacy Randomizer has lost connection to the AP server. Going back to main menu..."
+                    });
+                    Game.ScreenManager.DialogueScreen.SetDialogue("LostConnection");
+                    Game.ScreenManager.DialogueScreen.SetConfirmEndHandler(this, "GoBackToTitle");
+                    Game.ScreenManager.DisplayScreen((int) ScreenType.Dialogue, true);
                     break;
 
                 // We're in a current game and lost connection, so attempt to reconnect gracefully.
@@ -238,9 +253,58 @@ namespace Archipelago
             }
         }
 
+        public void GoBackToTitle()
+        {
+            Disconnect();
+
+            var levelScreen = Game.ScreenManager.GetLevelScreen();
+            if (levelScreen != null &&
+                (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom ||
+                 levelScreen.CurrentRoom is CarnivalShoot2BonusRoom))
+            {
+                if (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom)
+                {
+                    (levelScreen.CurrentRoom as CarnivalShoot1BonusRoom).UnequipPlayer();
+                }
+
+                if (levelScreen.CurrentRoom is CarnivalShoot2BonusRoom)
+                {
+                    (levelScreen.CurrentRoom as CarnivalShoot2BonusRoom).UnequipPlayer();
+                }
+            }
+
+            if (levelScreen != null)
+            {
+                if (levelScreen.CurrentRoom is ChallengeBossRoomObj challengeBossRoomObj)
+                {
+                    Program.Game.SaveManager.LoadFiles(levelScreen,
+                        SaveType.UpgradeData);
+                    levelScreen.Player.CurrentHealth = challengeBossRoomObj.StoredHP;
+                    levelScreen.Player.CurrentMana = challengeBossRoomObj.StoredMP;
+                }
+            }
+
+            Program.Game.SaveManager.SaveFiles(SaveType.PlayerData,
+                SaveType.UpgradeData);
+            if (Game.PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start" &&
+                levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
+            {
+                Program.Game.SaveManager.SaveFiles(SaveType.MapData);
+            }
+
+            Game.ScreenManager.DisplayScreen(3, true);
+        }
+
         private void OnReceivedItems(ReceivedItemsHelper helper)
         {
-            ItemQueue.Enqueue(helper.DequeueItem());
+            var item = helper.DequeueItem();
+            ItemQueue.Enqueue(item);
+
+            if (Game.GameConfig.ChatOption == (int) ChatOptionType.ChatHintsOwnItems && Game.PlayerStats.CheckReceived(item) && item.Player != Data.Slot)
+            {
+                var text = $"You received {GetItemName(item.Item)} from {GetPlayerName(item.Player)} ({GetLocationName(item.Location)})";
+                IncomingChatQueue.Enqueue(new (text, ChatType.Item));
+            }
         }
 
         private void OnDeathLink(DeathLink deathLink)
@@ -280,6 +344,10 @@ namespace Archipelago
 
                 case PrintPacket printPacket:
                     OnPrint(printPacket);
+                    break;
+
+                case PrintJsonPacket printJsonPacket:
+                    OnJsonPrint(printJsonPacket);
                     break;
             }
         }
@@ -344,9 +412,62 @@ namespace Archipelago
             Console.WriteLine("Received an unhandled exception in ArchipelagoClient: {0}\n\n{1}", message, exception);
         }
 
-        private static void OnPrint(PrintPacket packet)
+        private void OnPrint(PrintPacket packet)
         {
             Console.WriteLine("AP Server: {0}", packet.Text);
+            IncomingChatQueue.Enqueue(new (packet.Text, ChatType.Normal));
         }
+
+        private void OnJsonPrint(PrintJsonPacket packet)
+        {
+            var text = new StringBuilder();
+            var type = packet.MessageType switch
+            {
+                JsonMessageType.Hint     => ChatType.Hint,
+                _                        => ChatType.Normal
+            };
+
+            if (packet.MessageType == JsonMessageType.ItemSend)
+            {
+                if (Game.GameConfig.ChatOption != (int) ChatOptionType.ChatHintsItems)
+                    return;
+
+                type = ChatType.Item;
+            }
+
+            foreach (var element in packet.Data)
+            {
+                string substring = "";
+                switch (element.Type)
+                {
+                    case JsonMessagePartType.PlayerId:
+                        substring = GetPlayerName(int.Parse(element.Text));
+                        break;
+
+                    case JsonMessagePartType.ItemId:
+                        substring = GetItemName(int.Parse(element.Text));
+                        break;
+
+                    case JsonMessagePartType.LocationId:
+                        substring = GetLocationName(int.Parse(element.Text));
+                        break;
+
+                    default:
+                        substring = element.Text;
+                        break;
+                }
+
+                text.Append(substring);
+            }
+
+            IncomingChatQueue.Enqueue(new (text.ToString(), type));
+        }
+    }
+
+    public enum ChatType
+    {
+        Normal,
+        Item,
+        Hint
     }
 }
