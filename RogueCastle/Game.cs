@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - Game.cs
-//  Last Modified 2022-04-05
+//  Last Modified 2022-04-07
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -311,7 +311,7 @@ namespace RogueCastle
                 InputManager.SetPadType(PlayerIndex.One, PadTypes.GamePad);
             }
 
-            InputManager.UseDirectInput = GameConfig.EnableDirectInput;
+            // InputManager.UseDirectInput = GameConfig.EnableDirectInput;
             GenericTexture = new Texture2D(GraphicsDevice, 1, 1);
             GenericTexture.SetData(new[]
             {

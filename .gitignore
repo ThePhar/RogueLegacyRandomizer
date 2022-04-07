@@ -495,12 +495,7 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-### Rogue Legacy .dll Files ###
-/lib/DS2DEngine.dll
-/lib/InputSystem.dll
-/lib/Nuclex.Input.dll
-/lib/SpriteSystem.dll
-/lib/Tweener.dll
+### Rogue Legacy Asset Files ###
 /Content/
 
 ### Inno Output ###

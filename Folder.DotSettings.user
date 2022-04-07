@@ -3,6 +3,15 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogueLegacyArchipelago_005Clib_005CNewtonsoft_002EJson_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogueLegacyArchipelago_005Clib_005Cwebsocket_002Dsharp_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogueLegacyEnhanced_005Clib_005CNuclex_002EInput_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CDS2DEngine_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CFAudio_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CFNA_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CFNA3D_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CInputSystem_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005Clibtheorafile_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CSDL2_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CSpriteSystem_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CPhar_005CDevelopment_005CRogue_0020Legacy_0020Randomizer_005Clib_005CTweener_002Edll/@EntryIndexedValue">True</s:Boolean>
 	
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.dll" /&gt;&#xD;

@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - OptionsScreen.cs
-//  Last Modified 2022-04-05
+//  Last Modified 2022-04-07
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -69,7 +69,6 @@ namespace RogueCastle.Screens
             _quickDropObj = new QuickDropOptionsObj(this);
             _optionsArray.Add(_quickDropObj);
             _optionsArray.Add(new DeadZoneOptionsObj(this));
-            _optionsArray.Add(new ToggleDirectInputOptionsObj(this));
             _optionsArray.Add(new ChatOpacityOption(this));
             _optionsArray.Add(new ChatOption(this));
             _optionsArray.Add(new ChangeControlsOptionsObj(this));

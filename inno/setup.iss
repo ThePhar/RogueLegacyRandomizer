@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.8.3"
+#define MyAppVersion "0.8.4"
 #define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
@@ -35,18 +35,27 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\Archipelago.MultiClient.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\bin\Debug\websocket-sharp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Phar\Development\Rogue Legacy Randomizer\inno\xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "..\bin\Debug\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Debug\Archipelago.MultiClient.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Debug\websocket-sharp.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Debug\DS2DEngine.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Debug\Gma.System.MouseKeyHook.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\FAudio.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\FNA.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\FNA3D.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\InputSystem.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\SpriteSystem.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\Tweener.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Setup]
-SetupIconFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\ico\RLE.ico
-WizardSmallImageFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\inno\sirphar.bmp
-WizardImageFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\inno\banner.bmp
+SetupIconFile="..\ico\RLE.ico"
+WizardSmallImageFile=sirphar.bmp
+WizardImageFile=banner.bmp
 UninstallDisplayIcon={app}\ico\RLE.ico
 
 [Icons]
@@ -56,11 +65,6 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 Filename: "msiexec.exe"; Parameters: "/i ""{tmp}\xnafx40_redist.msi"" /qb"; WorkingDir: {tmp}; StatusMsg: "Installing XNA redistributable..."
 Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{code:CopyDir}\Content"" ""{app}\Content"""; StatusMsg: "Copying Content files..."
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\DS2DEngine.dll"" ""{app}\DS2DEngine.dll*"""; StatusMsg: "Copying DSD2Engine dependancies..."
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\InputSystem.dll"" ""{app}\InputSystem.dll*"""; StatusMsg: "Copying InputSystem dependancies..."
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\Nuclex.Input.dll"" ""{app}\Nuclex.Input.dll*"""; StatusMsg: "Copying Nuclex dependancies..."
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\SpriteSystem.dll"" ""{app}\SpriteSystem.dll*"""; StatusMsg: "Copying SpriteSystem dependancies..."
-Filename: "xcopy.exe"; Parameters: "/Y ""{code:CopyDir}\Tweener.dll"" ""{app}\Tweener.dll*"""; StatusMsg: "Copying Tweener dependancies..."
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent; StatusMsg: "Installing Rogue Legacy Randomizer"
 Filename: "xcopy.exe"; Parameters: "/Y /E /I ""{app}\CustomContent"" ""{app}\Content"""; StatusMsg: "Overwriting content files with custom content..."
 

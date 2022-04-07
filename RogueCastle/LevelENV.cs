@@ -1,6 +1,6 @@
 // 
 //  Rogue Legacy Randomizer - LevelENV.cs
-//  Last Modified 2022-04-05
+//  Last Modified 2022-04-07
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -57,7 +57,7 @@ namespace RogueCastle
         public const int   LevelDungeonBottomDoor               = 100;
 
         public static string  GameName      => "Rogue Legacy Randomizer";
-        public static Version TargetVersion => Version.Parse("0.8.3");
+        public static Version TargetVersion => Version.Parse("0.8.4");
         public static int     PreRelease    => 0;
         public static string  FullVersion   => $"v{TargetVersion}" + (PreRelease > 0 ? $"-pre{PreRelease}" : "");
 
