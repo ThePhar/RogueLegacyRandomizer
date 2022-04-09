@@ -27,7 +27,7 @@
         <Optimize>true</Optimize>
     </PropertyGroup>
     <PropertyGroup>
-        <ApplicationIcon>Icon\RLE.ico</ApplicationIcon>
+        <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
     </PropertyGroup>
     <PropertyGroup>
         <StartupObject>RogueCastle.Program</StartupObject>
@@ -40,50 +40,39 @@
         <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\DS2DEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\FNA.dll</HintPath>
+        </Reference>
+        <Reference Include="InputSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\InputSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\SpriteSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="System" />
+        
         <Reference Include="Archipelago.MultiClient.Net, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Archipelago.MultiClient.Net.dll</HintPath>
             <Private>True</Private>
-        </Reference>
-        <Reference Include="DS2DEngine">
-            <HintPath>Libraries\DS2DEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>Libraries\DS2DEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>Libraries\FNA.dll</HintPath>
         </Reference>
         <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
             <Private>True</Private>
         </Reference>
-        <Reference Include="InputSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>Libraries\InputSystem.dll</HintPath>
-        </Reference>
-        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
-            <Private>True</Private>
-        </Reference>
-        <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>Libraries\SpriteSystem.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Xml" />
-        <Reference Include="Tweener">
-            <HintPath>Libraries\Tweener.dll</HintPath>
-        </Reference>
-        <Reference Include="InputSystem">
-            <HintPath>Libraries\InputSystem.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System" />
-        <Reference Include="SpriteSystem">
-            <HintPath>Libraries\SpriteSystem.dll</HintPath>
-        </Reference>
         <Reference Include="Tweener, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>Libraries\Tweener.dll</HintPath>
+          <HintPath>lib\Tweener.dll</HintPath>
         </Reference>
         <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e">
             <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\websocket-sharp.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
             <Private>True</Private>
         </Reference>
     </ItemGroup>
@@ -338,203 +327,6 @@
         <Compile Include="RogueCastle\WaypointObj.cs" />
         <Compile Include="RogueCastle\WordBuilder.cs" />
         <Compile Include="RogueCastle\XMLCompiler.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="ico\RLE.ico" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include=".gitignore" />
-      <Content Include="Content\Audio\MusicSoundBank.xsb" />
-      <Content Include="Content\Audio\MusicWaveBank.xwb" />
-      <Content Include="Content\Audio\RogueCastleXACTProj.xgs" />
-      <Content Include="Content\Audio\SFXSoundBank.xsb" />
-      <Content Include="Content\Audio\SFXWaveBank.xwb" />
-      <Content Include="Content\Audio\sfx_blitworks_logo.xnb" />
-      <Content Include="Content\Fonts\Arial12.xnb" />
-      <Content Include="Content\Fonts\BitFont.xnb" />
-      <Content Include="Content\Fonts\CinzelFont.xnb" />
-      <Content Include="Content\Fonts\EnemyLevelFont.xnb" />
-      <Content Include="Content\Fonts\FpsFont.xnb" />
-      <Content Include="Content\Fonts\GoldFont.xnb" />
-      <Content Include="Content\Fonts\HerzogVonGraf24.xnb" />
-      <Content Include="Content\Fonts\Junicode.xnb" />
-      <Content Include="Content\Fonts\JunicodeLarge.xnb" />
-      <Content Include="Content\Fonts\NotoSansSC.xnb" />
-      <Content Include="Content\Fonts\PixelArtFont.xnb" />
-      <Content Include="Content\Fonts\PixelArtFontBold.xnb" />
-      <Content Include="Content\Fonts\PlayerLevelFont.xnb" />
-      <Content Include="Content\Fonts\RobotoSlab.xnb" />
-      <Content Include="Content\GameSpritesheets\blacksmithUISpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\blacksmithUISpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\blitworksSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\blitworksSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\castleTerrainSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\castleTerrainSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\dungeonTerrainSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\dungeonTerrainSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\enemyFinal2Spritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\enemyFinal2Spritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\enemyFinalSpritesheetBig.xml" />
-      <Content Include="Content\GameSpritesheets\enemyFinalSpritesheetBig.xnb" />
-      <Content Include="Content\GameSpritesheets\flare3.xnb" />
-      <Content Include="Content\GameSpritesheets\gardenTerrainSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\gardenTerrainSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\getItemScreenSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\getItemScreenSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\language2Spritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\language2Spritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\language3Spritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\language3Spritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\languageSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\languageSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\mapSpritesheetBig.xml" />
-      <Content Include="Content\GameSpritesheets\mapSpritesheetBig.xnb" />
-      <Content Include="Content\GameSpritesheets\miscSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\miscSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\neoTerrainSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\neoTerrainSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\parallaxBGSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\parallaxBGSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\playerSpritesheetBig.xml" />
-      <Content Include="Content\GameSpritesheets\playerSpritesheetBig.xnb" />
-      <Content Include="Content\GameSpritesheets\portraitSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\portraitSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\profileCardSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\profileCardSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\startingRoomSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\startingRoomSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\titleScreen3Spritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\titleScreen3Spritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\towerTerrainSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\towerTerrainSpritesheet.xnb" />
-      <Content Include="Content\GameSpritesheets\traitsCastleSpritesheet.xml" />
-      <Content Include="Content\GameSpritesheets\traitsCastleSpritesheet.xnb" />
-      <Content Include="Content\HeroineNames.txt" />
-      <Content Include="Content\HeroNames.txt" />
-      <Content Include="Content\Languages\Diary_En.bin" />
-      <Content Include="Content\Languages\Text_En.bin" />
-      <Content Include="Content\Levels\Map_1x1.xml" />
-      <Content Include="Content\Levels\Map_1x2.xml" />
-      <Content Include="Content\Levels\Map_1x3.xml" />
-      <Content Include="Content\Levels\Map_2x1.xml" />
-      <Content Include="Content\Levels\Map_2x2.xml" />
-      <Content Include="Content\Levels\Map_2x3.xml" />
-      <Content Include="Content\Levels\Map_3x1.xml" />
-      <Content Include="Content\Levels\Map_3x2.xml" />
-      <Content Include="Content\Levels\Map_DLC1.xml" />
-      <Content Include="Content\Levels\Map_Special.xml" />
-      <Content Include="Content\PLACEHOLDER" />
-      <Content Include="Content\Shaders\2xMultiBlend.xnb" />
-      <Content Include="Content\Shaders\AlphaMaskShader.xnb" />
-      <Content Include="Content\Shaders\AmbientNormalMapFX.xnb" />
-      <Content Include="Content\Shaders\BlurShader.xnb" />
-      <Content Include="Content\Shaders\BrightPass.xnb" />
-      <Content Include="Content\Shaders\BWMaskShader.xnb" />
-      <Content Include="Content\Shaders\ColourSwapShader.xnb" />
-      <Content Include="Content\Shaders\CrepuscularShader.xnb" />
-      <Content Include="Content\Shaders\GaussianBlur.xnb" />
-      <Content Include="Content\Shaders\GaussianBlurMask.xnb" />
-      <Content Include="Content\Shaders\HSVShader.xnb" />
-      <Content Include="Content\Shaders\InvertShader.xnb" />
-      <Content Include="Content\Shaders\LightRays.xnb" />
-      <Content Include="Content\Shaders\LightSourceMask.xnb" />
-      <Content Include="Content\Shaders\MaskFX_Shader2.xnb" />
-      <Content Include="Content\Shaders\NormalMapFX.xnb" />
-      <Content Include="Content\Shaders\OutlineShader.xnb" />
-      <Content Include="Content\Shaders\ParallaxFX.xnb" />
-      <Content Include="Content\Shaders\reductionEffect.xnb" />
-      <Content Include="Content\Shaders\resolveShadowsEffect.xnb" />
-      <Content Include="Content\Shaders\RippleFX.xnb" />
-      <Content Include="Content\Shaders\SceneBlend.xnb" />
-      <Content Include="Content\Shaders\ShadowFX.xnb" />
-      <Content Include="Content\Shaders\Shockwave.xnb" />
-      <Content Include="Content\Shaders\ShockwaveTest.xnb" />
-      <Content Include="Content\Shaders\StrokeShader.xnb" />
-      <Content Include="Content\Shaders\TintRemovalShader.xnb" />
-      <Content Include="CustomContent\GameSpritesheets\getItemScreenSpritesheet.xml" />
-      <Content Include="CustomContent\GameSpritesheets\getItemScreenSpritesheet.xnb" />
-      <Content Include="CustomContent\GameSpritesheets\traitsCastleSpritesheet.xnb" />
-      <Content Include="CustomContent\Levels\Map_Special.xml" />
-      <Content Include="inno\images\banner.bmp" />
-      <Content Include="inno\images\sirphar.bmp" />
-      <Content Include="inno\installer.iss" />
-      <Content Include="inno\Output\Rogue Legacy Randomizer Installer.exe" />
-      <Content Include="inno\redist\xnafx40_redist.msi" />
-      <Content Include="util\prepare-debug.ps1" />
-      <Content Include="util\xnbcli\lz4.node" />
-      <Content Include="util\xnbcli\pack.bat" />
-      <Content Include="util\xnbcli\packed\blacksmithUISpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\blitworksSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\castleTerrainSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\dungeonTerrainSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\enemyFinal2Spritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\enemyFinalSpritesheetBig.xnb" />
-      <Content Include="util\xnbcli\packed\flare3.xnb" />
-      <Content Include="util\xnbcli\packed\gardenTerrainSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\getItemScreenSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\language2Spritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\language3Spritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\languageSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\mapSpritesheetBig.xnb" />
-      <Content Include="util\xnbcli\packed\miscSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\neoTerrainSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\parallaxBGSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\playerSpritesheetBig.xnb" />
-      <Content Include="util\xnbcli\packed\portraitSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\profileCardSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\startingRoomSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\titleScreen3Spritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\towerTerrainSpritesheet.xnb" />
-      <Content Include="util\xnbcli\packed\traitsCastleSpritesheet.xnb" />
-      <Content Include="util\xnbcli\unpack.bat" />
-      <Content Include="util\xnbcli\unpacked\blacksmithUISpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\blacksmithUISpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\blitworksSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\blitworksSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\castleTerrainSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\castleTerrainSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\dungeonTerrainSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\dungeonTerrainSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\enemyFinal2Spritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\enemyFinal2Spritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\enemyFinalSpritesheetBig.json" />
-      <Content Include="util\xnbcli\unpacked\enemyFinalSpritesheetBig.png" />
-      <Content Include="util\xnbcli\unpacked\flare3.json" />
-      <Content Include="util\xnbcli\unpacked\flare3.png" />
-      <Content Include="util\xnbcli\unpacked\gardenTerrainSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\gardenTerrainSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\getItemScreenSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\getItemScreenSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\language2Spritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\language2Spritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\language3Spritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\language3Spritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\languageSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\languageSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\mapSpritesheetBig.json" />
-      <Content Include="util\xnbcli\unpacked\mapSpritesheetBig.png" />
-      <Content Include="util\xnbcli\unpacked\miscSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\miscSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\neoTerrainSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\neoTerrainSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\parallaxBGSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\parallaxBGSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\playerSpritesheetBig.json" />
-      <Content Include="util\xnbcli\unpacked\playerSpritesheetBig.png" />
-      <Content Include="util\xnbcli\unpacked\portraitSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\portraitSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\profileCardSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\profileCardSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\startingRoomSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\startingRoomSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\titleScreen3Spritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\titleScreen3Spritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\towerTerrainSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\towerTerrainSpritesheet.png" />
-      <Content Include="util\xnbcli\unpacked\traitsCastleSpritesheet.json" />
-      <Content Include="util\xnbcli\unpacked\traitsCastleSpritesheet.png" />
-      <Content Include="util\xnbcli\xnbcli.exe" />
-      <Content Include="util\xnbcli\xxhash.node" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <PropertyGroup>

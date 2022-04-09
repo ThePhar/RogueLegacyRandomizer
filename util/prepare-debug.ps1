@@ -1,5 +1,5 @@
 $build = ".\bin\Debug\"
-$libraries = ".\Libraries\"
+$libraries = ".\lib\"
 $content = ".\Content\"
 $custom = ".\CustomContent\"
 
