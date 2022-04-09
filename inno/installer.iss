@@ -20,7 +20,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName=C:\ProgramData\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\Phar\Development\Rogue Legacy Randomizer\LICENSE
+LicenseFile="..\LICENSE"
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputBaseFilename=Rogue Legacy Randomizer Installer
@@ -49,13 +49,13 @@ Source: "..\lib\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\SpriteSystem.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\Tweener.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: ".\redist\xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Setup]
 SetupIconFile="..\ico\RLE.ico"
-WizardSmallImageFile=sirphar.bmp
-WizardImageFile=banner.bmp
+WizardSmallImageFile=".\images\sirphar.bmp"
+WizardImageFile=".\images\banner.bmp"
 UninstallDisplayIcon={app}\ico\RLE.ico
 
 [Icons]

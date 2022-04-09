@@ -1,351 +1,336 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ProjectGuid>{A35103C9-552D-4491-92B4-BB20069096FE}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
-    <AssemblyName>Rogue Legacy Randomizer</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>latestmajor</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>RogueCastle.Program</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Archipelago.MultiClient.Net, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Archipelago.MultiClient.Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="DS2DEngine">
-      <HintPath>lib\DS2DEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\DS2DEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\FNA.dll</HintPath>
-    </Reference>
-    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="InputSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\InputSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\SpriteSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Tweener">
-      <HintPath>lib\Tweener.dll</HintPath>
-    </Reference>
-    <Reference Include="InputSystem">
-      <HintPath>lib\InputSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System" />
-    <Reference Include="SpriteSystem">
-      <HintPath>lib\SpriteSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Tweener, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\Tweener.dll</HintPath>
-    </Reference>
-    <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e">
-      <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\websocket-sharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Archipelago\Client.cs" />
-    <Compile Include="Archipelago\Definitions\ItemCode.cs" />
-    <Compile Include="Archipelago\Definitions\ItemDefinitions.cs" />
-    <Compile Include="Archipelago\Definitions\ItemType.cs" />
-    <Compile Include="Archipelago\Definitions\LocationDefinitions.cs" />
-    <Compile Include="Archipelago\ItemData.cs" />
-    <Compile Include="Archipelago\LocationData.cs" />
-    <Compile Include="Archipelago\ConnectionStatus.cs" />
-    <Compile Include="Archipelago\ConnectionInfo.cs" />
-    <Compile Include="Archipelago\SlotData.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Randomchaos2DGodRays\BasePostProcess.cs" />
-    <Compile Include="Randomchaos2DGodRays\BasePostProcessingEffect.cs" />
-    <Compile Include="Randomchaos2DGodRays\CrepuscularRays.cs" />
-    <Compile Include="Randomchaos2DGodRays\LightRay.cs" />
-    <Compile Include="Randomchaos2DGodRays\LightSourceMask.cs" />
-    <Compile Include="Randomchaos2DGodRays\PostProcessingManager.cs" />
-    <Compile Include="Randomchaos2DGodRays\ScreenQuad.cs" />
-    <Compile Include="RogueCastle\ArchipelagoStatusIndicator.cs" />
-    <Compile Include="RogueCastle\AreaStruct.cs" />
-    <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
-    <Compile Include="RogueCastle\BackToMenuOptionsObj.cs" />
-    <Compile Include="RogueCastle\BlacksmithObj.cs" />
-    <Compile Include="RogueCastle\BlobBossRoom.cs" />
-    <Compile Include="RogueCastle\BlobChallengeRoom.cs" />
-    <Compile Include="RogueCastle\BonusRoomObj.cs" />
-    <Compile Include="RogueCastle\BorderObj.cs" />
-    <Compile Include="RogueCastle\BossRoomObj.cs" />
-    <Compile Include="RogueCastle\BreakableObj.cs" />
-    <Compile Include="RogueCastle\CarnivalShoot1BonusRoom.cs" />
-    <Compile Include="RogueCastle\CarnivalShoot2BonusRoom.cs" />
-    <Compile Include="RogueCastle\CastleEntranceRoomObj.cs" />
-    <Compile Include="RogueCastle\ChallengeBossRoomObj.cs" />
-    <Compile Include="RogueCastle\ChangeControlsOptionsObj.cs" />
-    <Compile Include="RogueCastle\CharacterObj.cs" />
-    <Compile Include="RogueCastle\ChatOpacityOption.cs" />
-    <Compile Include="RogueCastle\ChatOption.cs" />
-    <Compile Include="RogueCastle\CheckWallLogicAction.cs" />
-    <Compile Include="RogueCastle\ChestBonusRoomObj.cs" />
-    <Compile Include="RogueCastle\ChestConditionChecker.cs" />
-    <Compile Include="RogueCastle\ChestObj.cs" />
-    <Compile Include="RogueCastle\CompassRoomObj.cs" />
-    <Compile Include="RogueCastle\DeadZoneOptionsObj.cs" />
-    <Compile Include="RogueCastle\DelayObjLogicAction.cs" />
-    <Compile Include="RogueCastle\DeleteSaveOptionsObj.cs" />
-    <Compile Include="RogueCastle\DialogueManager.cs" />
-    <Compile Include="RogueCastle\DialogueObj.cs" />
-    <Compile Include="RogueCastle\DiaryRoomObj.cs" />
-    <Compile Include="RogueCastle\DoorObj.cs" />
-    <Compile Include="RogueCastle\EndingRoomObj.cs" />
-    <Compile Include="RogueCastle\EnemyBuilder.cs" />
-    <Compile Include="RogueCastle\EnemyEditorData.cs" />
-    <Compile Include="RogueCastle\EnemyEV.cs" />
-    <Compile Include="RogueCastle\EnemyHUDObj.cs" />
-    <Compile Include="RogueCastle\EnemyObj.cs" />
-    <Compile Include="RogueCastle\EnemyObj_BallAndChain.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Blob.cs" />
-    <Compile Include="RogueCastle\EnemyObj_BouncySpike.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Chicken.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Dummy.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Eagle.cs" />
-    <Compile Include="RogueCastle\EnemyObj_EarthWizard.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Energon.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Eyeball.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Fairy.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Fireball.cs" />
-    <Compile Include="RogueCastle\EnemyObj_FireWizard.cs" />
-    <Compile Include="RogueCastle\EnemyObj_HomingTurret.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Horse.cs" />
-    <Compile Include="RogueCastle\EnemyObj_IceWizard.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Knight.cs" />
-    <Compile Include="RogueCastle\EnemyObj_LastBoss.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Mimic.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Ninja.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Plant.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Platform.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Portrait.cs" />
-    <Compile Include="RogueCastle\EnemyObj_ShieldKnight.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Skeleton.cs" />
-    <Compile Include="RogueCastle\EnemyObj_SkeletonArcher.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Spark.cs" />
-    <Compile Include="RogueCastle\EnemyObj_SpikeTrap.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Starburst.cs" />
-    <Compile Include="RogueCastle\EnemyObj_SwordKnight.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Turret.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Wall.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Wolf.cs" />
-    <Compile Include="RogueCastle\EnemyObj_Zombie.cs" />
-    <Compile Include="RogueCastle\EnemyOrbObj.cs" />
-    <Compile Include="RogueCastle\EnemyTagObj.cs" />
-    <Compile Include="RogueCastle\EnemyTemplate.cs" />
-    <Compile Include="RogueCastle\EnergonProjectileObj.cs" />
-    <Compile Include="RogueCastle\Enums\BonusRoomType.cs" />
-    <Compile Include="RogueCastle\Enums\BossRoomType.cs" />
-    <Compile Include="RogueCastle\Enums\ChestType.cs" />
-    <Compile Include="RogueCastle\Enums\ChestConditionType.cs" />
-    <Compile Include="RogueCastle\Enums\Gender.cs" />
-    <Compile Include="RogueCastle\Enums\Multiplier.cs" />
-    <Compile Include="RogueCastle\Enums\TraitRarity.cs" />
-    <Compile Include="RogueCastle\Enums\UniChests.cs" />
-    <Compile Include="RogueCastle\EquipmentData.cs" />
-    <Compile Include="RogueCastle\EquipmentState.cs" />
-    <Compile Include="RogueCastle\EquipmentSystem.cs" />
-    <Compile Include="RogueCastle\ExitProgramOptionsObj.cs" />
-    <Compile Include="RogueCastle\EyeballBossRoom.cs" />
-    <Compile Include="RogueCastle\EyeballChallengeRoom.cs" />
-    <Compile Include="RogueCastle\FairyBossRoom.cs" />
-    <Compile Include="RogueCastle\FairyChallengeRoom.cs" />
-    <Compile Include="RogueCastle\FairyChestObj.cs" />
-    <Compile Include="RogueCastle\FamilyTreeNode.cs" />
-    <Compile Include="RogueCastle\FireballBossRoom.cs" />
-    <Compile Include="RogueCastle\FireballChallengeRoom.cs" />
-    <Compile Include="RogueCastle\FireProjectileLogicAction.cs" />
-    <Compile Include="RogueCastle\FrameRateCounter.cs" />
-    <Compile Include="RogueCastle\FullScreenOptionsObj.cs" />
-    <Compile Include="RogueCastle\Game.cs" />
-    <Compile Include="RogueCastle\GameEV.cs" />
-    <Compile Include="RogueCastle\GameObjects\DeathLinkObj.cs" />
-    <Compile Include="RogueCastle\GameObjects\SkyObj.cs" />
-    <Compile Include="RogueCastle\GameUtil.cs" />
-    <Compile Include="RogueCastle\GaussianBlur.cs" />
-    <Compile Include="RogueCastle\GlobalEV.cs" />
-    <Compile Include="RogueCastle\GroundCheckLogicAction.cs" />
-    <Compile Include="RogueCastle\HazardObj.cs" />
-    <Compile Include="RogueCastle\HoverObj.cs" />
-    <Compile Include="RogueCastle\HUDElements\ChatInterface.cs" />
-    <Compile Include="RogueCastle\IDealsDamageObj.cs" />
-    <Compile Include="RogueCastle\ImpactEffectPool.cs" />
-    <Compile Include="RogueCastle\IntroRoomObj.cs" />
-    <Compile Include="RogueCastle\ItemDropManager.cs" />
-    <Compile Include="RogueCastle\ItemDropObj.cs" />
-    <Compile Include="RogueCastle\JukeboxBonusRoom.cs" />
-    <Compile Include="RogueCastle\JumpLogicAction.cs" />
-    <Compile Include="RogueCastle\KeyIconObj.cs" />
-    <Compile Include="RogueCastle\KeyIconTextObj.cs" />
-    <Compile Include="RogueCastle\KingObj.cs" />
-    <Compile Include="RogueCastle\LastBossChallengeRoom.cs" />
-    <Compile Include="RogueCastle\LastBossRoom.cs" />
-    <Compile Include="RogueCastle\LevelBuilder2.cs" />
-    <Compile Include="RogueCastle\LevelENV.cs" />
-    <Compile Include="RogueCastle\LevelParser.cs" />
-    <Compile Include="RogueCastle\LightArea.cs" />
-    <Compile Include="RogueCastle\LightSourceObj.cs" />
-    <Compile Include="RogueCastle\LineageObj.cs" />
-    <Compile Include="RogueCastle\LockFaceDirectionLogicAction.cs" />
-    <Compile Include="RogueCastle\MapObj.cs" />
-    <Compile Include="RogueCastle\MusicVolOptionsObj.cs" />
-    <Compile Include="RogueCastle\NpcObj.cs" />
-    <Compile Include="RogueCastle\OptionsObj.cs" />
-    <Compile Include="RogueCastle\Options\RandoModeOption.cs" />
-    <Compile Include="RogueCastle\Options\RandomizerOption.cs" />
-    <Compile Include="RogueCastle\Options\BackToMenuArchipelagoObj.cs" />
-    <Compile Include="RogueCastle\Options\ConnectArchipelagoOptionObj.cs" />
-    <Compile Include="RogueCastle\Options\TextBoxOption.cs" />
-    <Compile Include="RogueCastle\PlayerEV.cs" />
-    <Compile Include="RogueCastle\PlayerHUDObj.cs" />
-    <Compile Include="RogueCastle\PlayerLineageData.cs" />
-    <Compile Include="RogueCastle\PlayerObj.cs" />
-    <Compile Include="RogueCastle\PlayerPart.cs" />
-    <Compile Include="RogueCastle\PlayerStartObj.cs" />
-    <Compile Include="RogueCastle\PlayerStats.cs" />
-    <Compile Include="RogueCastle\PortraitRoomObj.cs" />
-    <Compile Include="RogueCastle\Program.cs" />
-    <Compile Include="RogueCastle\ProjectileData.cs" />
-    <Compile Include="RogueCastle\ProjectileIconObj.cs" />
-    <Compile Include="RogueCastle\ProjectileIconPool.cs" />
-    <Compile Include="RogueCastle\ProjectileManager.cs" />
-    <Compile Include="RogueCastle\ProjectileObj.cs" />
-    <Compile Include="RogueCastle\QuadRenderComponent.cs" />
-    <Compile Include="RogueCastle\QuickDropOptionsObj.cs" />
-    <Compile Include="RogueCastle\RaindropObj.cs" />
-    <Compile Include="RogueCastle\Randomizer\RandomizerOptions.cs" />
-    <Compile Include="RogueCastle\RandomTeleportRoomObj.cs" />
-    <Compile Include="RogueCastle\RCScreenManager.cs" />
-    <Compile Include="RogueCastle\ReduceQualityOptionsObj.cs" />
-    <Compile Include="RogueCastle\ResolutionOptionsObj.cs" />
-    <Compile Include="RogueCastle\RoomObj.cs" />
-    <Compile Include="RogueCastle\SaveGameManager.cs" />
-    <Compile Include="RogueCastle\SavingState.cs" />
-    <Compile Include="RogueCastle\Screens\RandomizerScreen.cs" />
-    <Compile Include="RogueCastle\Screens\BlacksmithScreen.cs" />
-    <Compile Include="RogueCastle\Screens\CDGSplashScreen.cs" />
-    <Compile Include="RogueCastle\Screens\CreditsScreen.cs" />
-    <Compile Include="RogueCastle\Screens\DeathDefiedScreen.cs" />
-    <Compile Include="RogueCastle\Screens\DialogueScreen.cs" />
-    <Compile Include="RogueCastle\Screens\DiaryEntryScreen.cs" />
-    <Compile Include="RogueCastle\Screens\DiaryFlashbackScreen.cs" />
-    <Compile Include="RogueCastle\Screens\EnchantressScreen.cs" />
-    <Compile Include="RogueCastle\Screens\GameOverBossScreen.cs" />
-    <Compile Include="RogueCastle\Screens\GameOverScreen.cs" />
-    <Compile Include="RogueCastle\Screens\GetItemScreen.cs" />
-    <Compile Include="RogueCastle\Screens\LineageScreen.cs" />
-    <Compile Include="RogueCastle\Screens\LoadingScreen.cs" />
-    <Compile Include="RogueCastle\Screens\MapScreen.cs" />
-    <Compile Include="RogueCastle\Screens\OptionsScreen.cs" />
-    <Compile Include="RogueCastle\Screens\PauseScreen.cs" />
-    <Compile Include="RogueCastle\Screens\ProceduralLevelScreen.cs" />
-    <Compile Include="RogueCastle\Screens\ProfileCardScreen.cs" />
-    <Compile Include="RogueCastle\Screens\SkillScreen.cs" />
-    <Compile Include="RogueCastle\Screens\SkillUnlockScreen.cs" />
-    <Compile Include="RogueCastle\Screens\TextScreen.cs" />
-    <Compile Include="RogueCastle\Screens\VirtualScreen.cs" />
-    <Compile Include="RogueCastle\SFXVolOptionsObj.cs" />
-    <Compile Include="RogueCastle\ShadowmapResolver.cs" />
-    <Compile Include="RogueCastle\ShadowmapSize.cs" />
-    <Compile Include="RogueCastle\SkillBuilder.cs" />
-    <Compile Include="RogueCastle\SkillLinker.cs" />
-    <Compile Include="RogueCastle\SkillObj.cs" />
-    <Compile Include="RogueCastle\SkillSystem.cs" />
-    <Compile Include="RogueCastle\SleepUtil.cs" />
-    <Compile Include="RogueCastle\SpecialItemRoomObj.cs" />
-    <Compile Include="RogueCastle\SpellEV.cs" />
-    <Compile Include="RogueCastle\SpellSwapRoomObj.cs" />
-    <Compile Include="RogueCastle\StartingRoomObj.cs" />
-    <Compile Include="RogueCastle\SteamCloudOptionsObj.cs" />
-    <Compile Include="RogueCastle\Enums\CollisionType.cs" />
-    <Compile Include="RogueCastle\Enums\DoorState.cs" />
-    <Compile Include="RogueCastle\Enums\EnemyDifficulty.cs" />
-    <Compile Include="RogueCastle\Enums\Zone.cs" />
-    <Compile Include="RogueCastle\Enums\ManorPieceType.cs" />
-    <Compile Include="RogueCastle\Systems\ManorContainer.cs" />
-    <Compile Include="RogueCastle\TeleporterObj.cs" />
-    <Compile Include="RogueCastle\TerrainObj.cs" />
-    <Compile Include="RogueCastle\TextManager.cs" />
-    <Compile Include="RogueCastle\ThroneRoomObj.cs" />
-    <Compile Include="RogueCastle\Screens\TitleScreen.cs" />
-    <Compile Include="RogueCastle\TraitState.cs" />
-    <Compile Include="RogueCastle\TutorialRoomObj.cs" />
-    <Compile Include="RogueCastle\Enums\ClassType.cs" />
-    <Compile Include="RogueCastle\Enums\EnemyType.cs" />
-    <Compile Include="RogueCastle\Enums\EquipmentAbility.cs" />
-    <Compile Include="RogueCastle\Enums\EquipmentBase.cs" />
-    <Compile Include="RogueCastle\Enums\EquipmentCategory.cs" />
-    <Compile Include="RogueCastle\Enums\EquipmentBonus.cs" />
-    <Compile Include="RogueCastle\Enums\ItemCategory.cs" />
-    <Compile Include="RogueCastle\Enums\InputType.cs" />
-    <Compile Include="RogueCastle\Enums\ItemDropType.cs" />
-    <Compile Include="RogueCastle\Enums\OrbType.cs" />
-    <Compile Include="RogueCastle\Enums\RoomType.cs" />
-    <Compile Include="RogueCastle\Enums\SaveType.cs" />
-    <Compile Include="RogueCastle\Enums\ScreenType.cs" />
-    <Compile Include="RogueCastle\Enums\SkillType.cs" />
-    <Compile Include="RogueCastle\Enums\SkillUnlock.cs" />
-    <Compile Include="RogueCastle\Enums\SpecialItemType.cs" />
-    <Compile Include="RogueCastle\Enums\SpellType.cs" />
-    <Compile Include="RogueCastle\Enums\Trait.cs" />
-    <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
-    <Compile Include="RogueCastle\WaypointObj.cs" />
-    <Compile Include="RogueCastle\WordBuilder.cs" />
-    <Compile Include="RogueCastle\XMLCompiler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
+    <PropertyGroup>
+        <ProjectGuid>{A35103C9-552D-4491-92B4-BB20069096FE}</ProjectGuid>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+        <OutputType>WinExe</OutputType>
+        <AssemblyName>Rogue Legacy Randomizer</AssemblyName>
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworkProfile></TargetFrameworkProfile>
+        <WarningLevel>4</WarningLevel>
+        <LangVersion>latestmajor</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <OutputPath>bin\Debug\</OutputPath>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <OutputPath>bin\Release\</OutputPath>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
+    </PropertyGroup>
+    <PropertyGroup>
+        <StartupObject>RogueCastle.Program</StartupObject>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+        <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+        <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\DS2DEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\FNA.dll</HintPath>
+        </Reference>
+        <Reference Include="InputSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\InputSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\SpriteSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="System" />
+        
+        <Reference Include="Archipelago.MultiClient.Net, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Archipelago.MultiClient.Net.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="Tweener, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>lib\Tweener.dll</HintPath>
+        </Reference>
+        <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e">
+            <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\websocket-sharp.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>packages\Archipelago.MultiClient.Net.3.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Archipelago\Client.cs" />
+        <Compile Include="Archipelago\Definitions\ItemCode.cs" />
+        <Compile Include="Archipelago\Definitions\ItemDefinitions.cs" />
+        <Compile Include="Archipelago\Definitions\ItemType.cs" />
+        <Compile Include="Archipelago\Definitions\LocationDefinitions.cs" />
+        <Compile Include="Archipelago\ItemData.cs" />
+        <Compile Include="Archipelago\LocationData.cs" />
+        <Compile Include="Archipelago\ConnectionStatus.cs" />
+        <Compile Include="Archipelago\ConnectionInfo.cs" />
+        <Compile Include="Archipelago\SlotData.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RandomChaos\BasePostProcess.cs" />
+        <Compile Include="RandomChaos\BasePostProcessingEffect.cs" />
+        <Compile Include="RandomChaos\CrepuscularRays.cs" />
+        <Compile Include="RandomChaos\LightRay.cs" />
+        <Compile Include="RandomChaos\LightSourceMask.cs" />
+        <Compile Include="RandomChaos\PostProcessingManager.cs" />
+        <Compile Include="RandomChaos\ScreenQuad.cs" />
+        <Compile Include="RogueCastle\ArchipelagoStatusIndicator.cs" />
+        <Compile Include="RogueCastle\AreaStruct.cs" />
+        <Compile Include="RogueCastle\ArenaBonusRoom.cs" />
+        <Compile Include="RogueCastle\BackToMenuOptionsObj.cs" />
+        <Compile Include="RogueCastle\BlacksmithObj.cs" />
+        <Compile Include="RogueCastle\BlobBossRoom.cs" />
+        <Compile Include="RogueCastle\BlobChallengeRoom.cs" />
+        <Compile Include="RogueCastle\BonusRoomObj.cs" />
+        <Compile Include="RogueCastle\BorderObj.cs" />
+        <Compile Include="RogueCastle\BossRoomObj.cs" />
+        <Compile Include="RogueCastle\BreakableObj.cs" />
+        <Compile Include="RogueCastle\CarnivalShoot1BonusRoom.cs" />
+        <Compile Include="RogueCastle\CarnivalShoot2BonusRoom.cs" />
+        <Compile Include="RogueCastle\CastleEntranceRoomObj.cs" />
+        <Compile Include="RogueCastle\ChallengeBossRoomObj.cs" />
+        <Compile Include="RogueCastle\ChangeControlsOptionsObj.cs" />
+        <Compile Include="RogueCastle\CharacterObj.cs" />
+        <Compile Include="RogueCastle\ChatOpacityOption.cs" />
+        <Compile Include="RogueCastle\ChatOption.cs" />
+        <Compile Include="RogueCastle\CheckWallLogicAction.cs" />
+        <Compile Include="RogueCastle\ChestBonusRoomObj.cs" />
+        <Compile Include="RogueCastle\ChestConditionChecker.cs" />
+        <Compile Include="RogueCastle\ChestObj.cs" />
+        <Compile Include="RogueCastle\CompassRoomObj.cs" />
+        <Compile Include="RogueCastle\DeadZoneOptionsObj.cs" />
+        <Compile Include="RogueCastle\DelayObjLogicAction.cs" />
+        <Compile Include="RogueCastle\DeleteSaveOptionsObj.cs" />
+        <Compile Include="RogueCastle\DialogueManager.cs" />
+        <Compile Include="RogueCastle\DialogueObj.cs" />
+        <Compile Include="RogueCastle\DiaryRoomObj.cs" />
+        <Compile Include="RogueCastle\DoorObj.cs" />
+        <Compile Include="RogueCastle\EndingRoomObj.cs" />
+        <Compile Include="RogueCastle\EnemyBuilder.cs" />
+        <Compile Include="RogueCastle\EnemyEditorData.cs" />
+        <Compile Include="RogueCastle\EnemyEV.cs" />
+        <Compile Include="RogueCastle\EnemyHUDObj.cs" />
+        <Compile Include="RogueCastle\EnemyObj.cs" />
+        <Compile Include="RogueCastle\EnemyObj_BallAndChain.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Blob.cs" />
+        <Compile Include="RogueCastle\EnemyObj_BouncySpike.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Chicken.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Dummy.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Eagle.cs" />
+        <Compile Include="RogueCastle\EnemyObj_EarthWizard.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Energon.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Eyeball.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Fairy.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Fireball.cs" />
+        <Compile Include="RogueCastle\EnemyObj_FireWizard.cs" />
+        <Compile Include="RogueCastle\EnemyObj_HomingTurret.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Horse.cs" />
+        <Compile Include="RogueCastle\EnemyObj_IceWizard.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Knight.cs" />
+        <Compile Include="RogueCastle\EnemyObj_LastBoss.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Mimic.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Ninja.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Plant.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Platform.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Portrait.cs" />
+        <Compile Include="RogueCastle\EnemyObj_ShieldKnight.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Skeleton.cs" />
+        <Compile Include="RogueCastle\EnemyObj_SkeletonArcher.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Spark.cs" />
+        <Compile Include="RogueCastle\EnemyObj_SpikeTrap.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Starburst.cs" />
+        <Compile Include="RogueCastle\EnemyObj_SwordKnight.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Turret.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Wall.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Wolf.cs" />
+        <Compile Include="RogueCastle\EnemyObj_Zombie.cs" />
+        <Compile Include="RogueCastle\EnemyOrbObj.cs" />
+        <Compile Include="RogueCastle\EnemyTagObj.cs" />
+        <Compile Include="RogueCastle\EnemyTemplate.cs" />
+        <Compile Include="RogueCastle\EnergonProjectileObj.cs" />
+        <Compile Include="RogueCastle\Enums\BonusRoomType.cs" />
+        <Compile Include="RogueCastle\Enums\BossRoomType.cs" />
+        <Compile Include="RogueCastle\Enums\ChestType.cs" />
+        <Compile Include="RogueCastle\Enums\ChestConditionType.cs" />
+        <Compile Include="RogueCastle\Enums\Gender.cs" />
+        <Compile Include="RogueCastle\Enums\Multiplier.cs" />
+        <Compile Include="RogueCastle\Enums\TraitRarity.cs" />
+        <Compile Include="RogueCastle\Enums\UniChests.cs" />
+        <Compile Include="RogueCastle\EquipmentData.cs" />
+        <Compile Include="RogueCastle\EquipmentState.cs" />
+        <Compile Include="RogueCastle\EquipmentSystem.cs" />
+        <Compile Include="RogueCastle\ExitProgramOptionsObj.cs" />
+        <Compile Include="RogueCastle\EyeballBossRoom.cs" />
+        <Compile Include="RogueCastle\EyeballChallengeRoom.cs" />
+        <Compile Include="RogueCastle\FairyBossRoom.cs" />
+        <Compile Include="RogueCastle\FairyChallengeRoom.cs" />
+        <Compile Include="RogueCastle\FairyChestObj.cs" />
+        <Compile Include="RogueCastle\FamilyTreeNode.cs" />
+        <Compile Include="RogueCastle\FireballBossRoom.cs" />
+        <Compile Include="RogueCastle\FireballChallengeRoom.cs" />
+        <Compile Include="RogueCastle\FireProjectileLogicAction.cs" />
+        <Compile Include="RogueCastle\FrameRateCounter.cs" />
+        <Compile Include="RogueCastle\FullScreenOptionsObj.cs" />
+        <Compile Include="RogueCastle\Game.cs" />
+        <Compile Include="RogueCastle\GameEV.cs" />
+        <Compile Include="RogueCastle\GameObjects\DeathLinkObj.cs" />
+        <Compile Include="RogueCastle\GameObjects\SkyObj.cs" />
+        <Compile Include="RogueCastle\GameUtil.cs" />
+        <Compile Include="RogueCastle\GaussianBlur.cs" />
+        <Compile Include="RogueCastle\GlobalEV.cs" />
+        <Compile Include="RogueCastle\GroundCheckLogicAction.cs" />
+        <Compile Include="RogueCastle\HazardObj.cs" />
+        <Compile Include="RogueCastle\HoverObj.cs" />
+        <Compile Include="RogueCastle\HUDElements\ChatInterface.cs" />
+        <Compile Include="RogueCastle\IDealsDamageObj.cs" />
+        <Compile Include="RogueCastle\ImpactEffectPool.cs" />
+        <Compile Include="RogueCastle\IntroRoomObj.cs" />
+        <Compile Include="RogueCastle\ItemDropManager.cs" />
+        <Compile Include="RogueCastle\ItemDropObj.cs" />
+        <Compile Include="RogueCastle\JukeboxBonusRoom.cs" />
+        <Compile Include="RogueCastle\JumpLogicAction.cs" />
+        <Compile Include="RogueCastle\KeyIconObj.cs" />
+        <Compile Include="RogueCastle\KeyIconTextObj.cs" />
+        <Compile Include="RogueCastle\KingObj.cs" />
+        <Compile Include="RogueCastle\LastBossChallengeRoom.cs" />
+        <Compile Include="RogueCastle\LastBossRoom.cs" />
+        <Compile Include="RogueCastle\LevelBuilder2.cs" />
+        <Compile Include="RogueCastle\LevelENV.cs" />
+        <Compile Include="RogueCastle\LevelParser.cs" />
+        <Compile Include="RogueCastle\LightArea.cs" />
+        <Compile Include="RogueCastle\LightSourceObj.cs" />
+        <Compile Include="RogueCastle\LineageObj.cs" />
+        <Compile Include="RogueCastle\LockFaceDirectionLogicAction.cs" />
+        <Compile Include="RogueCastle\MapObj.cs" />
+        <Compile Include="RogueCastle\MusicVolOptionsObj.cs" />
+        <Compile Include="RogueCastle\NpcObj.cs" />
+        <Compile Include="RogueCastle\OptionsObj.cs" />
+        <Compile Include="RogueCastle\Options\RandoModeOption.cs" />
+        <Compile Include="RogueCastle\Options\RandomizerOption.cs" />
+        <Compile Include="RogueCastle\Options\BackToMenuArchipelagoObj.cs" />
+        <Compile Include="RogueCastle\Options\ConnectArchipelagoOptionObj.cs" />
+        <Compile Include="RogueCastle\Options\TextBoxOption.cs" />
+        <Compile Include="RogueCastle\PlayerEV.cs" />
+        <Compile Include="RogueCastle\PlayerHUDObj.cs" />
+        <Compile Include="RogueCastle\PlayerLineageData.cs" />
+        <Compile Include="RogueCastle\PlayerObj.cs" />
+        <Compile Include="RogueCastle\PlayerPart.cs" />
+        <Compile Include="RogueCastle\PlayerStartObj.cs" />
+        <Compile Include="RogueCastle\PlayerStats.cs" />
+        <Compile Include="RogueCastle\PortraitRoomObj.cs" />
+        <Compile Include="RogueCastle\Program.cs" />
+        <Compile Include="RogueCastle\ProjectileData.cs" />
+        <Compile Include="RogueCastle\ProjectileIconObj.cs" />
+        <Compile Include="RogueCastle\ProjectileIconPool.cs" />
+        <Compile Include="RogueCastle\ProjectileManager.cs" />
+        <Compile Include="RogueCastle\ProjectileObj.cs" />
+        <Compile Include="RogueCastle\QuadRenderComponent.cs" />
+        <Compile Include="RogueCastle\QuickDropOptionsObj.cs" />
+        <Compile Include="RogueCastle\RaindropObj.cs" />
+        <Compile Include="RogueCastle\Randomizer\RandomizerOptions.cs" />
+        <Compile Include="RogueCastle\RandomTeleportRoomObj.cs" />
+        <Compile Include="RogueCastle\RCScreenManager.cs" />
+        <Compile Include="RogueCastle\ReduceQualityOptionsObj.cs" />
+        <Compile Include="RogueCastle\ResolutionOptionsObj.cs" />
+        <Compile Include="RogueCastle\RoomObj.cs" />
+        <Compile Include="RogueCastle\SaveGameManager.cs" />
+        <Compile Include="RogueCastle\SavingState.cs" />
+        <Compile Include="RogueCastle\Screens\RandomizerScreen.cs" />
+        <Compile Include="RogueCastle\Screens\BlacksmithScreen.cs" />
+        <Compile Include="RogueCastle\Screens\CDGSplashScreen.cs" />
+        <Compile Include="RogueCastle\Screens\CreditsScreen.cs" />
+        <Compile Include="RogueCastle\Screens\DeathDefiedScreen.cs" />
+        <Compile Include="RogueCastle\Screens\DialogueScreen.cs" />
+        <Compile Include="RogueCastle\Screens\DiaryEntryScreen.cs" />
+        <Compile Include="RogueCastle\Screens\DiaryFlashbackScreen.cs" />
+        <Compile Include="RogueCastle\Screens\EnchantressScreen.cs" />
+        <Compile Include="RogueCastle\Screens\GameOverBossScreen.cs" />
+        <Compile Include="RogueCastle\Screens\GameOverScreen.cs" />
+        <Compile Include="RogueCastle\Screens\GetItemScreen.cs" />
+        <Compile Include="RogueCastle\Screens\LineageScreen.cs" />
+        <Compile Include="RogueCastle\Screens\LoadingScreen.cs" />
+        <Compile Include="RogueCastle\Screens\MapScreen.cs" />
+        <Compile Include="RogueCastle\Screens\OptionsScreen.cs" />
+        <Compile Include="RogueCastle\Screens\PauseScreen.cs" />
+        <Compile Include="RogueCastle\Screens\ProceduralLevelScreen.cs" />
+        <Compile Include="RogueCastle\Screens\ProfileCardScreen.cs" />
+        <Compile Include="RogueCastle\Screens\SkillScreen.cs" />
+        <Compile Include="RogueCastle\Screens\SkillUnlockScreen.cs" />
+        <Compile Include="RogueCastle\Screens\TextScreen.cs" />
+        <Compile Include="RogueCastle\Screens\VirtualScreen.cs" />
+        <Compile Include="RogueCastle\SFXVolOptionsObj.cs" />
+        <Compile Include="RogueCastle\ShadowmapResolver.cs" />
+        <Compile Include="RogueCastle\ShadowmapSize.cs" />
+        <Compile Include="RogueCastle\SkillBuilder.cs" />
+        <Compile Include="RogueCastle\SkillLinker.cs" />
+        <Compile Include="RogueCastle\SkillObj.cs" />
+        <Compile Include="RogueCastle\SkillSystem.cs" />
+        <Compile Include="RogueCastle\SleepUtil.cs" />
+        <Compile Include="RogueCastle\SpecialItemRoomObj.cs" />
+        <Compile Include="RogueCastle\SpellEV.cs" />
+        <Compile Include="RogueCastle\SpellSwapRoomObj.cs" />
+        <Compile Include="RogueCastle\StartingRoomObj.cs" />
+        <Compile Include="RogueCastle\SteamCloudOptionsObj.cs" />
+        <Compile Include="RogueCastle\Enums\CollisionType.cs" />
+        <Compile Include="RogueCastle\Enums\DoorState.cs" />
+        <Compile Include="RogueCastle\Enums\EnemyDifficulty.cs" />
+        <Compile Include="RogueCastle\Enums\Zone.cs" />
+        <Compile Include="RogueCastle\Enums\ManorPieceType.cs" />
+        <Compile Include="RogueCastle\Systems\ManorContainer.cs" />
+        <Compile Include="RogueCastle\TeleporterObj.cs" />
+        <Compile Include="RogueCastle\TerrainObj.cs" />
+        <Compile Include="RogueCastle\TextManager.cs" />
+        <Compile Include="RogueCastle\ThroneRoomObj.cs" />
+        <Compile Include="RogueCastle\Screens\TitleScreen.cs" />
+        <Compile Include="RogueCastle\TraitState.cs" />
+        <Compile Include="RogueCastle\TutorialRoomObj.cs" />
+        <Compile Include="RogueCastle\Enums\ClassType.cs" />
+        <Compile Include="RogueCastle\Enums\EnemyType.cs" />
+        <Compile Include="RogueCastle\Enums\EquipmentAbility.cs" />
+        <Compile Include="RogueCastle\Enums\EquipmentBase.cs" />
+        <Compile Include="RogueCastle\Enums\EquipmentCategory.cs" />
+        <Compile Include="RogueCastle\Enums\EquipmentBonus.cs" />
+        <Compile Include="RogueCastle\Enums\ItemCategory.cs" />
+        <Compile Include="RogueCastle\Enums\InputType.cs" />
+        <Compile Include="RogueCastle\Enums\ItemDropType.cs" />
+        <Compile Include="RogueCastle\Enums\OrbType.cs" />
+        <Compile Include="RogueCastle\Enums\RoomType.cs" />
+        <Compile Include="RogueCastle\Enums\SaveType.cs" />
+        <Compile Include="RogueCastle\Enums\ScreenType.cs" />
+        <Compile Include="RogueCastle\Enums\SkillType.cs" />
+        <Compile Include="RogueCastle\Enums\SkillUnlock.cs" />
+        <Compile Include="RogueCastle\Enums\SpecialItemType.cs" />
+        <Compile Include="RogueCastle\Enums\SpellType.cs" />
+        <Compile Include="RogueCastle\Enums\Trait.cs" />
+        <Compile Include="RogueCastle\VitaChamberRoomObj.cs" />
+        <Compile Include="RogueCastle\WaypointObj.cs" />
+        <Compile Include="RogueCastle\WordBuilder.cs" />
+        <Compile Include="RogueCastle\XMLCompiler.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <PropertyGroup>
+        <PostBuildEvent>
+        </PostBuildEvent>
+    </PropertyGroup>
 </Project>

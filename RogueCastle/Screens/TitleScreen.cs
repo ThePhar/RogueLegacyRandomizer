@@ -1,13 +1,13 @@
-// 
+//
 //  Rogue Legacy Randomizer - TitleScreen.cs
 //  Last Modified 2022-04-05
-// 
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2015, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Randomchaos2DGodRays;
+using RandomChaos;
 using RogueCastle.Enums;
 using Tweener;
 using Tweener.Ease;
@@ -63,7 +63,7 @@ namespace RogueCastle.Screens
             _ppm = new PostProcessingManager(ScreenManager.Game, ScreenManager.Camera);
             _godRay = new CrepuscularRays(ScreenManager.Game, Vector2.One * 0.5f, "GameSpritesheets/flare3", 2f, 0.97f, 0.97f, 0.5f, 1.25f);
             _ppm.AddEffect(_godRay);
-            _godRay.lightSource = new Vector2(0.495f, 0.3f);
+            _godRay.LightSource = new Vector2(0.495f, 0.3f);
             _godRayTexture = new RenderTarget2D(Camera.GraphicsDevice, 1320, 720, false, SurfaceFormat.Color, DepthFormat.None);
 
             // Background

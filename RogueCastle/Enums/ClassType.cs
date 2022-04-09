@@ -1,11 +1,11 @@
 // 
 //  Rogue Legacy Randomizer - ClassType.cs
-//  Last Modified 2022-01-24
+//  Last Modified 2022-04-08
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 // 
 
@@ -61,7 +61,7 @@ namespace RogueCastle.Enums
                 ClassType.LichKing      => isFemale ? "Lich Queen" : "Lich King",
                 ClassType.Dragon        => "Dragon",
                 ClassType.Traitor       => "Traitor",
-                _                       => throw new ArgumentException($"Unsupported Class Type in ToString(): {nameof(@class)}")
+                _                       => throw new ArgumentException($"Unsupported Class Type in Name(): {nameof(@class)}")
             };
         }
 
@@ -130,6 +130,22 @@ namespace RogueCastle.Enums
                 ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellSwordUp).ModifierAmount > 0f,
                 ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUp).ModifierAmount > 0f,
                 _                    => false
+            };
+        }
+
+        public static ClassType Upgrade(this ClassType @class)
+        {
+            return @class switch
+            {
+                ClassType.Knight     => ClassType.Paladin,
+                ClassType.Mage       => ClassType.Archmage,
+                ClassType.Barbarian  => ClassType.BarbarianKing,
+                ClassType.Knave      => ClassType.Assassin,
+                ClassType.Shinobi    => ClassType.Hokage,
+                ClassType.Miner      => ClassType.Spelunker,
+                ClassType.Spellthief => ClassType.Spellsword,
+                ClassType.Lich       => ClassType.LichKing,
+                _                    => @class
             };
         }
 
@@ -251,66 +267,65 @@ namespace RogueCastle.Enums
 
         public static ClassType RandomClass()
         {
-            var list = new List<ClassType>();
+            var classes = new List<ClassType>();
 
             if (SkillSystem.GetSkill(SkillType.KnightUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Knight);
+                classes.Add(ClassType.Knight);
             }
 
             if (SkillSystem.GetSkill(SkillType.MageUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Mage);
+                classes.Add(ClassType.Mage);
             }
 
             if (SkillSystem.GetSkill(SkillType.AssassinUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Knave);
+                classes.Add(ClassType.Knave);
             }
 
             if (SkillSystem.GetSkill(SkillType.BarbarianUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Barbarian);
+                classes.Add(ClassType.Barbarian);
             }
 
             if (SkillSystem.GetSkill(SkillType.NinjaUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Shinobi);
+                classes.Add(ClassType.Shinobi);
             }
 
             if (SkillSystem.GetSkill(SkillType.BankerUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Miner);
+                classes.Add(ClassType.Miner);
             }
 
             if (SkillSystem.GetSkill(SkillType.SpellswordUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Spellthief);
+                classes.Add(ClassType.Spellthief);
             }
 
             if (SkillSystem.GetSkill(SkillType.LichUnlock).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Lich);
+                classes.Add(ClassType.Lich);
             }
 
             if (SkillSystem.GetSkill(SkillType.SuperSecret).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Dragon);
+                classes.Add(ClassType.Dragon);
             }
 
             if (SkillSystem.GetSkill(SkillType.Traitorous).ModifierAmount > 0f)
             {
-                list.Add(ClassType.Traitor);
+                classes.Add(ClassType.Traitor);
             }
 
-            // Upgraded versions are 8 positions away in the table.
-            var randomClass = list[CDGMath.RandomInt(0, list.Count - 1)];
-            if (Upgraded(randomClass))
+            var @class = classes[CDGMath.RandomInt(0, classes.Count - 1)];
+            if (Upgraded(@class))
             {
-                randomClass += 8;
+                @class = Upgrade(@class);
             }
 
-            return randomClass;
+            return @class;
         }
     }
 }
