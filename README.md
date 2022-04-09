@@ -20,19 +20,53 @@ the following:
   - Runes
   - Gold
   - Stat Increases
-  - Traps
+  - ~~Traps~~ **Coming soon.*
 
 ### Manor
 
 You can no longer by skill upgrades in the Manor, instead it becomes a repository of additional locations to spend gold
-and find your items.
+and find and unlock more items.
+
+### Starting Character Customization
+
+You can define the parameters of your starting character, including the class you have unlocked from the start:
+
+  - Starting Name
+  - Starting Gender
+  - Starting Class
+  - ~~Starting Spell~~ **Coming soon.*
+
+### Additional Randomization Options
+
+You can also tweak the randomization with the following settings:
+
+  - NG+ level.
+  - Number of Chests and Fairy Chests which contain items.
+  - Vendor placement logic.
+  - Toggling Charon from taking your money.
+  - Gold multiplier settings.
+  - Toggling purchasing runes and armor once acquired before you can equip them.
+  - Setting the number of children you can choose from on the Lineage screen.
+  - Allow the diary in the starting room to be a source of new checks every new castle generation.
+  - Toggling of challenge bosses.
+  - Number of Stat Skill increases in the item pool.
+  - Ability to change the default names your children can have.
+  - Ability to change the fee percentage of the Architect's services.
 
 ### Multi-World Randomization
 
 You can also randomize items across additional randomizers via the Archipelago service. Create a player settings file at
 the [Archipelago Generator Site](https://archipelago.gg/games/Rogue%20Legacy/player-settings) and create a new Room.
-From the title screen, connect to your AP room using the hostname, port, and slot name to join. There is also a built-in
-TextClient for communicating with others in the same room as you.
+From the title screen, connect to your AP room using the hostname, port, and slot name to join. 
+
+#### Chatting
+
+There is also a built-in TextClient for communicating with others in the same room as you. Use the `Enter` key to pull
+up the chat input. See more chat options in the Options menu.
+
+#### Death Link
+
+You can also enable Death Link with other players who have it enabled. If one of you dies, you all die. Very exciting.
 
 ## Install Instructions
 
