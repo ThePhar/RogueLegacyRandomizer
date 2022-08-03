@@ -88,7 +88,7 @@ TODO: Write me.
 
 For feature requests or bug reports on Rogue Legacy Randomizer, reach out to me on discord. My handle is `Phar#4444`.
 Alternatively, you can also pop in the [Archipelago Discord](https://discord.gg/8Z65BR2) and in `#role-request` accept 
-the Rogue Legacy role and communicate more on this project in the `#rogue-general` and `#rogue-suggestions` channels.
+the Rogue Legacy role and communicate more on this project in the `#rogue-legacy` channel.
 
 ## License & Copyright
 
