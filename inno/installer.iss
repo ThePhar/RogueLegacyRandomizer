@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.8.4"
-#define MyAppPublisher "Zach Parks & Cellar Door Games"
+#define MyAppVersion "0.9.0"
+#define MyAppPublisher "Zach 'Phar' Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
 
@@ -39,8 +39,7 @@ Source: "..\bin\Debug\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Debug\Archipelago.MultiClient.Net.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Debug\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Debug\websocket-sharp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Debug\DS2DEngine.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Debug\Gma.System.MouseKeyHook.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\DS2DEngine.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\FAudio.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\FNA.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\FNA3D.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -48,6 +47,7 @@ Source: "..\lib\InputSystem.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\SpriteSystem.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\lib\Tweener.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\lib\Gma.System.MouseKeyHook.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\CustomContent\*"; DestDir: "{app}\CustomContent"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ".\redist\xnafx40_redist.msi"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
