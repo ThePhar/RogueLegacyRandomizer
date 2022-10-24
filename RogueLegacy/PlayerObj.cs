@@ -2429,8 +2429,8 @@ namespace RogueLegacy
             if (Program.Game.ArchipelagoManager.CanForfeit)
             {
                 var rCScreenManager = Game.ScreenManager;
-                DialogueManager.AddText("Forfeit", new[] { "Congrats!" },
-                    new[] { "Would you like to forfeit your remaining items?" });
+                DialogueManager.AddText("Release", new[] { "Congrats!" },
+                    new[] { "Would you like to release your remaining items?" });
                 rCScreenManager.DialogueScreen.SetDialogue("Forfeit");
                 rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                 rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
