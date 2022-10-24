@@ -356,6 +356,9 @@ namespace RogueLegacy.Screens
                 _rerollText.Visible = false;
             }
 
+            // Disable death links now that we are in lineage screen.
+            Program.Game.ArchipelagoManager.DeathLinkSafe = false;
+
             base.OnEnter();
         }
 

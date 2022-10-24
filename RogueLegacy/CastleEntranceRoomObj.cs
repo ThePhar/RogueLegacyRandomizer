@@ -269,6 +269,9 @@ namespace RogueLegacy
                 Player.AttachedLevel.RunCinematicBorders(6f);
             }
 
+            // Enable death links now that we are in the castle.
+            Program.Game.ArchipelagoManager.DeathLinkSafe = true;
+
             base.OnEnter();
         }
 

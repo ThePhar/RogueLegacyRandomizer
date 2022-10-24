@@ -797,7 +797,7 @@ namespace RogueLegacy
             // Death Link handling logic.
             if (ArchipelagoManager.ItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
             {
-                if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead)
+                if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead && ArchipelagoManager.DeathLinkSafe)
                 {
                     if (PlayerStats.SpecialItem == 3)
                     {

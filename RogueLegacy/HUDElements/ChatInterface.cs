@@ -185,6 +185,10 @@ namespace RogueLegacy.HUDElements
                     case ChatType.Hint:
                         element.TextureColor = Color.Yellow;
                         break;
+
+                    case ChatType.Error:
+                        element.TextureColor = Color.Red;
+                        break;
                 }
 
                 Elements.Add(element);

@@ -54,6 +54,7 @@ namespace Archipelago
         public bool StopReceivingItems { get; set; }
         public bool CanForfeit => _permissions["forfeit"] is Permissions.Goal or Permissions.Enabled;
         public bool CanCollect => _permissions["collect"] is Permissions.Goal or Permissions.Enabled;
+        public bool DeathLinkSafe { get; set; } = false;
 
         public void Connect(ConnectionInfo info)
         {
@@ -146,20 +147,45 @@ namespace Archipelago
         public void Forfeit()
         {
             // Not sure if there's a better way to do this, but I know this works!
-            _session.Socket.SendPacket(new SayPacket { Text = "!forfeit" });
+            try
+            {
+                _session.Socket.SendPacket(new SayPacket { Text = "!release" });
+            }
+            catch (ArchipelagoSocketClosedException ex)
+            {
+                IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Unable to '!release'. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
+                ConnectionStatus = ConnectionStatus.Disconnected;
+            }
         }
 
         public void Collect()
         {
             // Not sure if there's a better way to do this, but I know this works!
-            _session.Socket.SendPacket(new SayPacket { Text = "!collect" });
+            try
+            {
+                _session.Socket.SendPacket(new SayPacket { Text = "!collect" });
+            }
+            catch (ArchipelagoSocketClosedException ex)
+            {
+                IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Unable to '!collect'. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
+                ConnectionStatus = ConnectionStatus.Disconnected;
+            }
+
         }
 
         public void AnnounceVictory()
         {
-            _session.Socket.SendPacket(new StatusUpdatePacket { Status = ArchipelagoClientState.ClientGoal });
-            // Stop receiving items so we don't get stuck in a loop at the end.
-            StopReceivingItems = true;
+            try
+            {
+                _session.Socket.SendPacket(new StatusUpdatePacket { Status = ArchipelagoClientState.ClientGoal });
+                // Stop receiving items so we don't get stuck in a loop at the end.
+                StopReceivingItems = true;
+            }
+            catch (ArchipelagoSocketClosedException ex)
+            {
+                IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Unable to send Goal status. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
+                ConnectionStatus = ConnectionStatus.Disconnected;
+            }
         }
 
         public void ClearDeathLink()
@@ -180,14 +206,43 @@ namespace Archipelago
                 return;
             }
 
-            var causeWithPlayerName = $"{_session.Players.GetPlayerAlias(Data.Slot)}'s {cause}.";
-            _deathLinkService.SendDeathLink(
-                new DeathLink(_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName));
+            try
+            {
+                var causeWithPlayerName = $"{_session.Players.GetPlayerAlias(Data.Slot)}'s {cause}.";
+                _deathLinkService.SendDeathLink(
+                    new DeathLink(_session.Players.GetPlayerAlias(Data.Slot), causeWithPlayerName));
+            }
+            catch (ArchipelagoSocketClosedException ex)
+            {
+                IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Unable to send DeathLink. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
+                ConnectionStatus = ConnectionStatus.Disconnected;
+            }
         }
 
         public void CheckLocations(params long[] locations)
         {
-            _session.Locations.CompleteLocationChecks(locations);
+            // Add these locations to our local locations check.
+            foreach (var location in locations)
+            {
+                CheckedLocations.Add(location);
+            }
+
+            try
+            {
+                _session.Locations.CompleteLocationChecks(CheckedLocations.ToArray());
+            }
+            catch (ArchipelagoSocketClosedException ex)
+            {
+                var locationNames = new StringBuilder();
+                foreach (var location in locations)
+                {
+                    locationNames.Append(location + ", ");
+                }
+                locationNames.Remove(locationNames.Length - 2, 2);
+
+                IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Error checking locations: {locationNames}. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
+                ConnectionStatus = ConnectionStatus.Disconnected;
+            }
         }
 
         public string GetPlayerName(int slot)
@@ -212,10 +267,18 @@ namespace Archipelago
         {
             if (_lastChatSent.AddSeconds(1) < DateTime.Now)
             {
-                _session.Socket.SendPacket(new SayPacket
+                try
                 {
-                    Text = message
-                });
+                    _session.Socket.SendPacket(new SayPacket
+                    {
+                        Text = message
+                    });
+                }
+                catch (ArchipelagoSocketClosedException ex)
+                {
+                    IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Error sending message. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
+                    ConnectionStatus = ConnectionStatus.Disconnected;
+                }
 
                 _lastChatSent = DateTime.Now;
             }
@@ -347,7 +410,7 @@ namespace Archipelago
             Data = new SlotData(packet.SlotData, _seed, packet.Slot, CachedConnectionInfo.Name);
 
             // Check if DeathLink is enabled and establish the appropriate helper.
-            if (Data.DeathLink)
+            if (/* Data.DeathLink */ true) // TODO: Remove this, it forces death link on regardless of setting.
             {
                 // Clear old DeathLink handlers.
                 if (_deathLinkService != null)
@@ -442,6 +505,7 @@ namespace Archipelago
     {
         Normal,
         Item,
-        Hint
+        Hint,
+        Error
     }
 }
