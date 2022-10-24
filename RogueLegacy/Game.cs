@@ -522,8 +522,6 @@ namespace RogueLegacy
                         break;
                     }
 
-                    throw new Exception("Test Exception");
-
                     // Initialize Save Data
                     ChangeProfile(ArchipelagoManager.Data.Seed, ArchipelagoManager.Data.Slot);
 

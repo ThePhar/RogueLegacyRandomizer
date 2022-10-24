@@ -34,7 +34,7 @@ namespace Archipelago
         private Dictionary<string, Permissions> _permissions  = new();
         private string                          _seed         = "0";
         private ArchipelagoSession              _session;
-        private List<string>                    _tags = new() { "RL Beta Client" };
+        private List<string>                    _tags = new();
 
         public Client()
         {
@@ -130,7 +130,7 @@ namespace Archipelago
             _session = null;
             _deathLinkService = null;
             _permissions = new Dictionary<string, Permissions>();
-            _tags = new List<string> { "RL Beta Client" };
+            _tags = new List<string>();
             _seed = "0";
 
             ConnectionStatus = ConnectionStatus.Disconnected;

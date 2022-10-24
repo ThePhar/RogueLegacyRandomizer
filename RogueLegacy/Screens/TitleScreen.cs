@@ -144,7 +144,7 @@ namespace RogueLegacy.Screens
             _versionNumber.Align = Types.TextAlign.Left;
             _versionNumber.FontSize = 8f;
             _versionNumber.Position = new Vector2(14f, 5f);
-            _versionNumber.Text = $"https://github.com/thephar/RogueLegacyRandomizer\nRogue Legacy Randomizer {LevelENV.FullVersion}";
+            _versionNumber.Text = $"https://github.com/thephar/RogueLegacyRandomizer\nRogue Legacy Randomizer {LevelENV.FullVersion} - {LevelENV.VersionSubtitle}";
 
             // Press Start Text
             _pressStartText = new KeyIconTextObj(Game.JunicodeFont)
