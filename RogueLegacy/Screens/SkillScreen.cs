@@ -1,9 +1,9 @@
 // Rogue Legacy Randomizer - SkillScreen.cs
 // Last Modified 2022-10-24
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -232,14 +232,16 @@ namespace RogueLegacy.Screens
             var skillArray = SkillSystem.GetSkillArray();
             for (var i = 0; i < skillArray.Length; i++)
             {
-                if (skillArray[i].CurrentLevel > 0)
-                {
-                    SetVisible(skillArray[i], false);
-                }
-
                 if (skillArray[i].Trait >= SkillType.ManorGroundRoad)
                 {
                     var networkItem = Program.Game.ArchipelagoManager.LocationCache[ManorContainer.ArchipelagoLocationTable[skillArray[i].ManorPiece]];
+                    // Check if we grabbed this location, and change our skillArray current level.
+                    if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(networkItem.Location))
+                    {
+                        skillArray[i].CurrentLevel = 1;
+                    }
+
+                    // Update the description
                     skillArray[i].Description = string.Format(
                         "If you're going to leave your children GENDER, you might as well make sure they have a nice place to live.\n\nThis upgrade contains {0} for {1}.",
                         Program.Game.ArchipelagoManager.GetItemName(networkItem.Item),
@@ -250,6 +252,11 @@ namespace RogueLegacy.Screens
 
                     skillArray[i].Description = AddSpacesToString(Enum.GetName(typeof(ManorPiece), SkillSystem.GetManorPiece(skillArray[i]))) +
                                                 "\n\n" + skillArray[i].Description;
+                }
+
+                if (skillArray[i].CurrentLevel > 0)
+                {
+                    SetVisible(skillArray[i], false);
                 }
             }
 

@@ -1,9 +1,9 @@
 // Rogue Legacy Randomizer - CastleEntranceRoomObj.cs
 // Last Modified 2022-10-24
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -384,6 +384,9 @@ namespace RogueLegacy
             {
                 if ((!RoomCompleted && Game.PlayerStats.DiaryEntry < 25 && Program.Game.ArchipelagoManager.Data.FreeDiaryOnGeneration) || Game.PlayerStats.DiaryEntry < 1)
                 {
+                    // We're going to set diaries based on lower ones completed.
+                    Game.PlayerStats.DiaryEntry = 0;
+
                     var location = LocationDefinitions.Diary1.Code;
                     while (location <= LocationDefinitions.Diary25.Code)
                     {
@@ -393,6 +396,8 @@ namespace RogueLegacy
                             location++;
                             continue;
                         }
+
+                        Game.PlayerStats.DiaryEntry = (byte) (location - LocationDefinitions.Diary25.Code + 25);
 
                         // If we've gotten this far, then this is a new item.
                         var item = Program.Game.ArchipelagoManager.LocationCache[location];
