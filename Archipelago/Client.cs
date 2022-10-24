@@ -87,7 +87,6 @@ namespace Archipelago
                     password: info.Password
                 );
 
-
                 if (result.Successful)
                 {
                     return;
@@ -170,7 +169,6 @@ namespace Archipelago
                 IncomingChatQueue.Enqueue((new Tuple<string, ChatType>($"Unable to '!collect'. No connection to Archipelago server! If this message keeps appearing, please restart Rogue Legacy Randomizer.", ChatType.Error)));
                 ConnectionStatus = ConnectionStatus.Disconnected;
             }
-
         }
 
         public void AnnounceVictory()
@@ -410,7 +408,7 @@ namespace Archipelago
             Data = new SlotData(packet.SlotData, _seed, packet.Slot, CachedConnectionInfo.Name);
 
             // Check if DeathLink is enabled and establish the appropriate helper.
-            if (/* Data.DeathLink */ true) // TODO: Remove this, it forces death link on regardless of setting.
+            if (Data.DeathLink)
             {
                 // Clear old DeathLink handlers.
                 if (_deathLinkService != null)

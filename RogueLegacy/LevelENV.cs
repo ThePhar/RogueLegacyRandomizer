@@ -304,21 +304,21 @@ namespace RogueLegacy
         public static bool     TestRoomReverse            { get; set; } = false;
         public static bool     RunTestRoom                { get; set; } = false;
         public static bool     ShowDebugText              { get; set; } = false;
-        public static bool     LoadSplashScreen           { get; set; } = false; // TODO
+        public static bool     LoadSplashScreen           { get; set; } = true;
         public static bool     ShowSaveLoadDebugText      { get; set; } = false;
         public static bool     DeleteSaveFile             { get; set; } = false;
         public static bool     CloseTestRoomDoors         { get; set; } = false;
         public static bool     RunTutorial                { get; set; } = false;
         public static bool     RunDemoVersion             { get; set; } = false;
         public static bool     DisableSaving              { get; set; } = false;
-        public static bool     RunCrashLogs               { get; set; } = false; // TODO
+        public static bool     RunCrashLogs               { get; set; } = true;
         public static bool     WeakenBosses               { get; set; } = false;
         public static bool     EnableOffscreenControl     { get; set; } = false;
         public static bool     EnableBackupSaving         { get; set; } = false;
         public static bool     CreateRetailVersion        { get; set; } = true;
         public static bool     ShowFps                    { get; set; } = false;
         public static bool     SaveFrames                 { get; set; } = false;
-        public static bool     ShowArchipelagoStatus      { get; set; } = true; // TODO
-        public static bool     RunConsole                 { get; set; } = true; // TODO
+        public static bool     ShowArchipelagoStatus      { get; set; } = false;
+        public static bool     RunConsole                 { get; set; } = false;
     }
 }
