@@ -2,15 +2,15 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.9.0"
-#define MyAppPublisher "Zach 'Phar' Parks & Cellar Door Games"
+#define MyAppVersion "0.9.1"
+#define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{6741975E-782A-438F-8C05-502EDB37E7DB}
+AppId={6741975E-782A-438F-8C05-502EDB37E7DB}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
