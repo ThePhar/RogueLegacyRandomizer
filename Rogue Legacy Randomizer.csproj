@@ -40,9 +40,8 @@
         <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Archipelago.MultiClient.Net, Version=3.1.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>packages\Archipelago.MultiClient.Net.3.1.0\lib\net35\Archipelago.MultiClient.Net.dll</HintPath>
-          <Private>True</Private>
+        <Reference Include="Archipelago.MultiClient.Net, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.4.0.0\lib\net40\Archipelago.MultiClient.Net.dll</HintPath>
         </Reference>
         <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\DS2DEngine.dll</HintPath>
@@ -50,12 +49,14 @@
         <Reference Include="FNA, Version=22.3.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\FNA.dll</HintPath>
         </Reference>
+        <Reference Include="Gma.System.MouseKeyHook">
+          <HintPath>lib\Gma.System.MouseKeyHook.dll</HintPath>
+        </Reference>
         <Reference Include="InputSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\InputSystem.dll</HintPath>
         </Reference>
-        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>packages\Archipelago.MultiClient.Net.3.1.0\lib\net35\Newtonsoft.Json.dll</HintPath>
-          <Private>True</Private>
+        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.4.0.0\lib\net40\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\SpriteSystem.dll</HintPath>
@@ -63,16 +64,11 @@
         <Reference Include="System.Xml" />
         <Reference Include="System.Windows.Forms" />
         <Reference Include="System" />
-        <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
-            <Private>True</Private>
-        </Reference>
         <Reference Include="Tweener, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\Tweener.dll</HintPath>
         </Reference>
-        <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e">
-          <HintPath>packages\Archipelago.MultiClient.Net.3.1.0\lib\net35\websocket-sharp.dll</HintPath>
-          <Private>True</Private>
+        <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.4.0.0\lib\net40\websocket-sharp.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

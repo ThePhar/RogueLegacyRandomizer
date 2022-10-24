@@ -1,13 +1,11 @@
+// Rogue Legacy Randomizer - GetItemScreen.cs
+// Last Modified 2022-10-24
 // 
-//  Rogue Legacy Randomizer - GetItemScreen.cs
-//  Last Modified 2022-02-09
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-//  Original Source - © 2011-2015, Cellar Door Games Inc.
-//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-// 
+// Original Source © 2011-2015, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -42,7 +40,7 @@ namespace RogueCastle.Screens
         private          SpriteObj      _levelUpBGImage;
         private          SpriteObj[]    _levelUpParticles;
         private          bool           _lockControls;
-        private          int            _network_item;
+        private          long           _network_item;
         private          string         _network_player;
         private          string         _songName;
         private          float          _storedMusicVolume;
@@ -138,7 +136,7 @@ namespace RogueCastle.Screens
                 case (int) ItemCategory.GiveNetworkItem:
                     _tripStatData = (Vector2) objList[3];
                     _network_player = (string) objList[4];
-                    _network_item = (int) objList[5];
+                    _network_item = (long) objList[5];
                     break;
             }
 
@@ -370,7 +368,7 @@ namespace RogueCastle.Screens
             base.OnEnter();
         }
 
-        private string GetBlueprintName(int item)
+        private string GetBlueprintName(long item)
         {
             var text = Program.Game.ArchipelagoManager.GetItemName(item);
             if (text != ItemDefinitions.ProgressiveArmor.Name)
@@ -406,7 +404,7 @@ namespace RogueCastle.Screens
             return Program.Game.ArchipelagoManager.GetItemName(ItemDefinitions.SquireArmor.Code + progressiveArmorOrder[index - 1]);  // Go back to the last one.
         }
 
-        private string GetSkillPlateIcon(int item, out string itemName)
+        private string GetSkillPlateIcon(long item, out string itemName)
         {
             itemName = Program.Game.ArchipelagoManager.GetItemName(_network_item);
 
