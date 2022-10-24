@@ -9,7 +9,7 @@
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <TargetFrameworkProfile></TargetFrameworkProfile>
         <WarningLevel>4</WarningLevel>
-        <LangVersion>latestmajor</LangVersion>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
         <PlatformTarget>x86</PlatformTarget>
@@ -55,11 +55,16 @@
         <Reference Include="InputSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\InputSystem.dll</HintPath>
         </Reference>
+        <Reference Include="mscorlib" />
         <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>packages\Archipelago.MultiClient.Net.4.0.0\lib\net40\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\SpriteSystem.dll</HintPath>
+        </Reference>
+        <Reference Include="System.IO.Compression.FileSystem" />
+        <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+          <HintPath>packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
         </Reference>
         <Reference Include="System.Xml" />
         <Reference Include="System.Windows.Forms" />
@@ -318,6 +323,7 @@
         <Compile Include="RogueLegacy\Enums\SpecialItemType.cs" />
         <Compile Include="RogueLegacy\Enums\SpellType.cs" />
         <Compile Include="RogueLegacy\Enums\Trait.cs" />
+        <Compile Include="RogueLegacy\Util\ConsoleLogger.cs" />
         <Compile Include="RogueLegacy\VitaChamberRoomObj.cs" />
         <Compile Include="RogueLegacy\WaypointObj.cs" />
         <Compile Include="RogueLegacy\WordBuilder.cs" />
@@ -325,9 +331,6 @@
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="RogueLegacy\Util" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <PropertyGroup>

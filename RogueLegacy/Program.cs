@@ -9,8 +9,11 @@
 
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using RogueLegacy.Util;
 
 namespace RogueLegacy
 {
@@ -30,46 +33,71 @@ namespace RogueLegacy
                 AllocConsole();
             }
 
-            using var game = new Game();
-            if (LevelENV.RunCrashLogs)
+            using (var logger = new ConsoleLogger())
+            using (var game = new Game())
             {
-                try
+                if (LevelENV.RunCrashLogs)
                 {
-                    Game = game;
-                    game.Run();
-
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    var str = DateTime.Now.ToString("dd-mm-yyyy_HH-mm-ss");
-                    var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    var path = Path.Combine(folderPath, LevelENV.GameName);
-                    if (!Directory.Exists(path))
+                    try
                     {
-                        Directory.CreateDirectory(path);
-                    }
+                        Game = game;
+                        game.Run();
 
-                    var path2 = Path.Combine(folderPath, LevelENV.GameName, "CrashLog_" + str + ".log");
-                    using (var sw = new StreamWriter(path2, false))
+                        return;
+                    }
+                    catch (Exception ex)
                     {
-                        sw.WriteLine(ex.ToString());
+                        var str = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+                        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                        var folderPath = Path.Combine(appDataPath, LevelENV.GameName, "CrashLog_" + str);
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+
+                        var exceptionLog = Path.Combine(folderPath, "exception.log");
+                        using (var sw = new StreamWriter(exceptionLog, false))
+                        {
+                            sw.WriteLine(ex.ToString());
+                        }
+
+                        var consoleLog = Path.Combine(folderPath, "console.log");
+                        using (var sw = new StreamWriter(consoleLog, false))
+                        {
+                            sw.WriteLine(logger.Log);
+                        }
+
+                        var gameJson = Path.Combine(folderPath, "game.json");
+                        using (var sw = new StreamWriter(gameJson, false))
+                        {
+                            var settings = new JsonSerializerSettings
+                            {
+                                Error = (_,err) => err.ErrorContext.Handled = true
+                            };
+                            sw.WriteLine(JsonConvert.SerializeObject(game, settings));
+                        }
+
+                        // Create zip and delete folder.
+                        ZipFile.CreateFromDirectory(folderPath, folderPath + ".zip");
+                        Directory.Delete(folderPath, true);
+
+                        MessageBox.Show(
+                            "Rogue Legacy Randomizer has run into a situation it cannot recover from and needs to " +
+                            "close. If you are not Phar, please reach out to Phar#4444 in Discord and include the " +
+                            "crash logs so they can fix this issue.\n\nIf you are Phar, stop breaking everything.\n\n" +
+
+                            "These log files are located at:\n" + folderPath + ".zip",
+
+                            "RLR: Unhandled Exception Occurred", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+
+                        return;
                     }
-
-                    MessageBox.Show(
-                        "Rogue Legacy has run into a situation it cannot recover from and needs to close. If you are" +
-                        " not a Randomizer developer, please reach out to Phar#4444 in Discord and include the crash logs so " +
-                        "they can fix this issue.\n\nIf you're Phar, stop breaking things and fix it.\n\n" +
-                        "You can find these log files in:\n" + path,
-                        "Unexpected Exception Occurred", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
-                    return;
                 }
+
+                // Run without crash logger.
+                Game = game;
+                game.Run();
             }
-
-            // Run without crash logger.
-            Game = game;
-            game.Run();
         }
     }
 }
