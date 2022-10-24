@@ -56,7 +56,7 @@ namespace RogueLegacy
 
         public static string  GameName      => "Rogue Legacy Randomizer";
         public static Version TargetVersion => Version.Parse("0.8.5");
-        public static int     PreRelease    => 1;
+        public static int     PreRelease    => 0;
         public static string  FullVersion   => $"v{TargetVersion}" + (PreRelease > 0 ? $"-pre{PreRelease}" : "");
 
         static LevelENV()
