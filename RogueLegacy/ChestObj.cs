@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - ChestObj.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-11-30
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -320,7 +320,7 @@ namespace RogueLegacy
             else if (!isFairy && Program.Game.ArchipelagoManager.Data.UniversalChests)
             {
                 location = LocationDefinitions.ChestUniversal1.Code;
-                maximum = LocationDefinitions.ChestUniversal120.Code;
+                maximum = LocationDefinitions.ChestUniversal200.Code;
             }
             else
             {
@@ -334,7 +334,7 @@ namespace RogueLegacy
                             : LocationDefinitions.ChestCastle1.Code;
                         maximum = isFairy
                             ? LocationDefinitions.FairyCastle15.Code
-                            : LocationDefinitions.ChestCastle30.Code;
+                            : LocationDefinitions.ChestCastle50.Code;
                         break;
 
                     case Zone.Garden:
@@ -343,7 +343,7 @@ namespace RogueLegacy
                             : LocationDefinitions.ChestGarden1.Code;
                         maximum = isFairy
                             ? LocationDefinitions.FairyGarden15.Code
-                            : LocationDefinitions.ChestGarden30.Code;
+                            : LocationDefinitions.ChestGarden50.Code;
                         break;
 
                     case Zone.Tower:
@@ -352,7 +352,7 @@ namespace RogueLegacy
                             : LocationDefinitions.ChestTower1.Code;
                         maximum = isFairy
                             ? LocationDefinitions.FairyTower15.Code
-                            : LocationDefinitions.ChestTower30.Code;
+                            : LocationDefinitions.ChestTower50.Code;
                         break;
 
                     case Zone.Dungeon:
@@ -361,7 +361,7 @@ namespace RogueLegacy
                             : LocationDefinitions.ChestDungeon1.Code;
                         maximum = isFairy
                             ? LocationDefinitions.FairyDungeon15.Code
-                            : LocationDefinitions.ChestDungeon30.Code;
+                            : LocationDefinitions.ChestDungeon50.Code;
                         break;
                 }
             }
