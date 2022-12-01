@@ -1,5 +1,5 @@
 ﻿// Rogue Legacy Randomizer - RetireObj.cs
-// Last Modified 2022-11-30
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,13 +9,12 @@
 
 using DS2DEngine;
 
-namespace RogueLegacy.GameObjects
+namespace RogueLegacy.GameObjects;
+
+public class RetireObj : GameObj
 {
-    public class RetireObj : GameObj
+    protected override GameObj CreateCloneInstance()
     {
-        protected override GameObj CreateCloneInstance()
-        {
-            return new RetireObj();
-        }
+        return new RetireObj();
     }
 }

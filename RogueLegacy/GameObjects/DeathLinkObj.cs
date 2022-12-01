@@ -1,5 +1,5 @@
 ﻿// Rogue Legacy Randomizer - DeathLinkObj.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,18 +9,17 @@
 
 using DS2DEngine;
 
-namespace RogueLegacy.GameObjects
-{
-    public class DeathLinkObj : GameObj
-    {
-        public DeathLinkObj(string player)
-        {
-            Name = player;
-        }
+namespace RogueLegacy.GameObjects;
 
-        protected override GameObj CreateCloneInstance()
-        {
-            return new DeathLinkObj(Name);
-        }
+public class DeathLinkObj : GameObj
+{
+    public DeathLinkObj(string player)
+    {
+        Name = player;
+    }
+
+    protected override GameObj CreateCloneInstance()
+    {
+        return new DeathLinkObj(Name);
     }
 }
