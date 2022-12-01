@@ -195,6 +195,7 @@
         <Compile Include="RogueLegacy\Game.cs" />
         <Compile Include="RogueLegacy\GameEV.cs" />
         <Compile Include="RogueLegacy\GameObjects\DeathLinkObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\HUD\PlayerHUDObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\RetireObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\SkyObj.cs" />
         <Compile Include="RogueLegacy\GameUtil.cs" />
@@ -203,7 +204,6 @@
         <Compile Include="RogueLegacy\GroundCheckLogicAction.cs" />
         <Compile Include="RogueLegacy\HazardObj.cs" />
         <Compile Include="RogueLegacy\HoverObj.cs" />
-        <Compile Include="RogueLegacy\HUDElements\ChatInterface.cs" />
         <Compile Include="RogueLegacy\IDealsDamageObj.cs" />
         <Compile Include="RogueLegacy\ImpactEffectPool.cs" />
         <Compile Include="RogueLegacy\IntroRoomObj.cs" />
@@ -233,7 +233,6 @@
         <Compile Include="RogueLegacy\Options\ConnectArchipelagoOptionObj.cs" />
         <Compile Include="RogueLegacy\Options\TextBoxOption.cs" />
         <Compile Include="RogueLegacy\PlayerEV.cs" />
-        <Compile Include="RogueLegacy\PlayerHUDObj.cs" />
         <Compile Include="RogueLegacy\PlayerLineageData.cs" />
         <Compile Include="RogueLegacy\PlayerObj.cs" />
         <Compile Include="RogueLegacy\PlayerPart.cs" />
@@ -333,6 +332,9 @@
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="RogueLegacy\HUDElements" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <PropertyGroup>

@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
+using RogueLegacy.GameObjects.HUD;
 using Tweener;
 using Tweener.Ease;
 
