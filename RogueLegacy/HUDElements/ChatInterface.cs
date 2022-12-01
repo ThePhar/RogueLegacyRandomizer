@@ -1,5 +1,5 @@
 ﻿// Rogue Legacy Randomizer - ChatInterface.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -39,25 +39,24 @@ namespace RogueLegacy.HUDElements
             set
             {
                 var player = Game.ScreenManager.Player;
+                _isInputActive = false;
 
-                if (value)
-                {
-                    _isInputActive = true;
-                    _inputText.Visible = true;
-                    _inputHook.KeyDown += CheckCursor;
-
-                    player.LockControls();
-                }
-                else
-                {
-                    _isInputActive = false;
-                    _inputText.Visible = false;
-                    _inputEntry = string.Empty;
-                    _inputCursor = 0;
-                    _inputHook.KeyDown -= CheckCursor;
-
-                    player.UnlockControls();
-                }
+                // if (value)
+                // {
+                //     _isInputActive = true;
+                //     _inputText.Visible = true;
+                //     _inputHook.KeyDown += CheckCursor;
+                //
+                // }
+                // else
+                // {
+                //     _isInputActive = false;
+                //     _inputText.Visible = false;
+                //     _inputEntry = string.Empty;
+                //     _inputCursor = 0;
+                //     _inputHook.KeyDown -= CheckCursor;
+                //
+                // }
             }
         }
 
@@ -112,7 +111,7 @@ namespace RogueLegacy.HUDElements
             // Don't listen for characters if this isn't active you fool. smh
             if (!IsInputActive)
             {
-                if (e.KeyChar is '\u000d' or '\u000a')
+                if (e.KeyChar is '\u0060' or '\u007E')
                 {
                     IsInputActive = true;
                 }

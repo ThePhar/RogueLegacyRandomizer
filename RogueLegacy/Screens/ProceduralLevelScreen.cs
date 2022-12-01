@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - ProceduralLevelScreen.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -178,7 +178,7 @@ namespace RogueLegacy.Screens
 
         public ItemDropManager ItemDropManager => _itemDropManager;
 
-        public Zone CurrentZone => _currentRoom.Zone;
+        public Zone CurrentZone => _currentRoom?.Zone ?? Zone.None;
 
         public int LeftBorder => _leftMostBorder;
 
@@ -2126,12 +2126,17 @@ namespace RogueLegacy.Screens
             }
 
             Camera.End();
-            Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null,
-                RasterizerState.CullNone, Game.BWMaskEffect, Camera.GetTransformation());
-            Camera.GraphicsDevice.Textures[1] = _fgRenderTarget;
-            Camera.GraphicsDevice.Textures[1].GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
-            Camera.Draw(CurrentRoom.BGRender, Camera.TopLeftCorner, Color.White);
-            Camera.End();
+
+            if (CurrentRoom != null)
+            {
+                Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null,
+                    RasterizerState.CullNone, Game.BWMaskEffect, Camera.GetTransformation());
+                Camera.GraphicsDevice.Textures[1] = _fgRenderTarget;
+                Camera.GraphicsDevice.Textures[1].GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
+                Camera.Draw(CurrentRoom.BGRender, Camera.TopLeftCorner, Color.White);
+                Camera.End();
+            }
+
             if (!LevelENV.ShowEnemyRadii)
             {
                 Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null, null,
@@ -2143,12 +2148,15 @@ namespace RogueLegacy.Screens
                     Camera.GetTransformation());
             }
 
-            CurrentRoom.Draw(Camera);
-            if (LevelENV.ShowEnemyRadii)
+            if (CurrentRoom != null)
             {
-                foreach (var current2 in _currentRoom.EnemyList)
+                CurrentRoom.Draw(Camera);
+                if (LevelENV.ShowEnemyRadii)
                 {
-                    current2.DrawDetectionRadii(Camera);
+                    foreach (var current2 in _currentRoom.EnemyList)
+                    {
+                        current2.DrawDetectionRadii(Camera);
+                    }
                 }
             }
 
@@ -2194,7 +2202,7 @@ namespace RogueLegacy.Screens
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, null, null, null,
                 Camera.GetTransformation());
             _textManager.Draw(Camera);
-            if (CurrentRoom.Zone == Zone.Tower)
+            if (CurrentRoom is { Zone: Zone.Tower })
             {
                 _gardenParallaxFG.Draw(Camera);
             }
@@ -2222,7 +2230,7 @@ namespace RogueLegacy.Screens
                 Camera.End();
             }
 
-            if (CurrentRoom.Name != "Ending")
+            if (CurrentRoom is { Name: not "Ending" })
             {
                 if ((Game.PlayerStats.Traits.X == 3f || Game.PlayerStats.Traits.Y == 3f) &&
                     Game.PlayerStats.SpecialItem != 8)
@@ -2251,14 +2259,14 @@ namespace RogueLegacy.Screens
                 _enemyHUDCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (CurrentRoom.Name != "Start" && CurrentRoom.Name != "Boss" && CurrentRoom.Name != "ChallengeBoss" &&
+            if (CurrentRoom != null && CurrentRoom.Name != "Start" && CurrentRoom.Name != "Boss" && CurrentRoom.Name != "ChallengeBoss" &&
                 _miniMapDisplay.Visible)
             {
                 _mapBG.Draw(Camera);
                 _miniMapDisplay.Draw(Camera);
             }
 
-            if (CurrentRoom.Name != "Boss" && CurrentRoom.Name != "Ending")
+            if (CurrentRoom != null && CurrentRoom.Name != "Boss" && CurrentRoom.Name != "Ending")
             {
                 _compassBG.Draw(Camera);
                 _compass.Draw(Camera);
@@ -2267,7 +2275,8 @@ namespace RogueLegacy.Screens
             _objectivePlate.Draw(Camera);
             _roomEnteringTitle.Draw(Camera);
             _roomTitle.Draw(Camera);
-            if (CurrentRoom.Name != "Ending" &&
+            if (CurrentRoom != null &&
+                CurrentRoom.Name != "Ending" &&
                 (!Game.PlayerStats.TutorialComplete || Game.PlayerStats.Traits.X == 29f ||
                  Game.PlayerStats.Traits.Y == 29f) && Game.PlayerStats.SpecialItem != 8)
             {
@@ -2298,7 +2307,7 @@ namespace RogueLegacy.Screens
             Camera.Draw(RenderTarget, Vector2.Zero, Color.White);
             Camera.End();
             Camera.GraphicsDevice.SetRenderTarget((ScreenManager as RCScreenManager).RenderTarget);
-            if (CurrentRoom.Name != "Ending")
+            if (CurrentRoom != null && CurrentRoom.Name != "Ending")
             {
                 if ((Game.PlayerStats.Traits.X == 1f || Game.PlayerStats.Traits.Y == 1f) &&
                     Game.PlayerStats.SpecialItem != 8)

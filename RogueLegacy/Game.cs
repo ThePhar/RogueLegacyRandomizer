@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - Game.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -100,6 +100,7 @@ namespace RogueLegacy
         public static EquipmentSystem EquipmentSystem      { get; set; }
         public static GaussianBlur    GaussianBlur         { get; set; }
         public static PlayerStats     PlayerStats          { get; set; }
+        public static bool            Retired              { get; set; }
         public static InputMap        GlobalInput          { get; set; }
         public static List<string>    NameArray            { get; set; }
         public static List<string>    FemaleNameArray      { get; set; }
@@ -334,43 +335,91 @@ namespace RogueLegacy
 
             SkillSystem.Initialize();
 
-            var castleArea = new AreaStruct
+            AreaStruct castleArea;
+            AreaStruct gardenArea;
+            AreaStruct towerArea;
+            AreaStruct dungeonArea;
+
+            if (LevelENV.LargeCastle)
             {
-                Name = "The Grand Entrance",
-                Zone = Zone.Castle,
-                TotalRooms = new Vector2(30f, 35f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.White
-            };
-            var gardenArea = new AreaStruct
+                castleArea = new AreaStruct
+                {
+                    Name = "The Grand Entrance",
+                    Zone = Zone.Castle,
+                    TotalRooms = new Vector2(90f, 105f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(3f, 9f),
+                    BonusRooms = new Vector2(12f, 15f),
+                    Color = Color.White
+                };
+                gardenArea = new AreaStruct
+                {
+                    Zone = Zone.Garden,
+                    TotalRooms = new Vector2(84f, 90f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(3f, 9f),
+                    BonusRooms = new Vector2(12f, 15f),
+                    Color = Color.Green
+                };
+                towerArea = new AreaStruct
+                {
+                    Zone = Zone.Tower,
+                    TotalRooms = new Vector2(84f, 90f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(3f, 9f),
+                    BonusRooms = new Vector2(12f, 15f),
+                    Color = Color.DarkBlue
+                };
+                dungeonArea = new AreaStruct
+                {
+                    Zone = Zone.Dungeon,
+                    TotalRooms = new Vector2(84f, 90f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(3f, 9f),
+                    BonusRooms = new Vector2(12f, 15f),
+                    Color = Color.Red
+                };
+            }
+            else
             {
-                Zone = Zone.Garden,
-                TotalRooms = new Vector2(28f, 30f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.Green
-            };
-            var towerArea = new AreaStruct
-            {
-                Zone = Zone.Tower,
-                TotalRooms = new Vector2(28f, 30f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.DarkBlue
-            };
-            var dungeonArea = new AreaStruct
-            {
-                Zone = Zone.Dungeon,
-                TotalRooms = new Vector2(28f, 30f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.Red
-            };
+                castleArea = new AreaStruct
+                {
+                    Name = "The Grand Entrance",
+                    Zone = Zone.Castle,
+                    TotalRooms = new Vector2(30f, 35f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(1f, 3f),
+                    BonusRooms = new Vector2(4f, 5f),
+                    Color = Color.White
+                };
+                gardenArea = new AreaStruct
+                {
+                    Zone = Zone.Garden,
+                    TotalRooms = new Vector2(28f, 30f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(1f, 3f),
+                    BonusRooms = new Vector2(4f, 5f),
+                    Color = Color.Green
+                };
+                towerArea = new AreaStruct
+                {
+                    Zone = Zone.Tower,
+                    TotalRooms = new Vector2(28f, 30f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(1f, 3f),
+                    BonusRooms = new Vector2(4f, 5f),
+                    Color = Color.DarkBlue
+                };
+                dungeonArea = new AreaStruct
+                {
+                    Zone = Zone.Dungeon,
+                    TotalRooms = new Vector2(28f, 30f),
+                    BossInArea = true,
+                    SecretRooms = new Vector2(1f, 3f),
+                    BonusRooms = new Vector2(4f, 5f),
+                    Color = Color.Red
+                };
+            }
 
             Area1List = new[]
             {
@@ -825,6 +874,17 @@ namespace RogueLegacy
 
                     ArchipelagoManager.ClearDeathLink();
                 }
+            }
+
+            // Retire handling Logic.
+            if (Retired
+                && ScreenManager.Player is { ControlsLocked: false }
+                && ScreenManager.CurrentScreen is ProceduralLevelScreen
+                && !PlayerStats.IsDead)
+            {
+                ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(new RetireObj());
+                ScreenManager.Player.Kill();
+                Retired = false;
             }
 
             base.Update(gameTime);

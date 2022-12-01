@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - Program.cs
-// Last Modified 2022-10-28
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -64,6 +64,9 @@ namespace RogueLegacy
                         break;
                     case "--weak_bosses":
                         LevelENV.WeakenBosses = true;
+                        break;
+                    case "--large":
+                        LevelENV.LargeCastle = true;
                         break;
                     default:
                         Console.WriteLine($"Unknown argument: {arg}");

@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - GameEV.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -92,43 +92,50 @@ namespace RogueLegacy
 
         public static string[] TutorialDownStrikeHint => new[]
         {
-            "Down Attack this.",
-            "Hello, world.",
-            "When is Ori & Blind Forest AP?",
+            "Where is Cookie Clicker AP!?",
             "You lost the Game.",
-            "Look ma, I'm on TV!",
             "Wait, this isn't Tourian.",
-            "Insert funny meme here.",
-            "Up Attack this.",
             "Did you remember your Silver Arrows?",
             "Wait, this isn't The End.",
-            "",
             "Don't ask about Rogue Legacy 2.",
-
+            "Incoming Diary Forfeit...",
+            "Phar is a bad programmer.",
+            "You remembered to play vanilla RL right?",
+            "Stop. You have violated the law.",
+            "bitly.com/98K8eH",
+            "Remember, Phar loves you.",
         };
 
         public static string[] OtherAPGames => new[]
         {
             "A Link to the Past",
             "Factorio",
-            "Final Fantasy",
             "Minecraft",
-            "Ocarina of Time",
-            "Risk of Rain 2",
-            "Secret of Evermore",
-            "Slay the Spire",
             "Subnautica",
-            "Super Metroid",
+            "Slay the Spire",
+            "Risk of Rain 2",
+            "Ocarina of Time",
             "Timespinner",
+            "Super Metroid",
+            "Secret of Evermore",
+            "Final Fantasy",
             "VVVVVV",
             "Raft",
             "Super Mario 64",
-            "ArchipIDLE",
-            "ChecksFinder",
             "Meritous",
             "SMZ3",
+            "ChecksFinder",
             "Hollow Knight",
-            "Starcraft 2"
+            "The Witness",
+            "Sonic Adventure 2: Battle",
+            "Starcraft 2",
+            "Donkey Kong Country 3",
+            "Dark Souls 3",
+            "Super Mario World",
+            "Pokemon Red/Blue",
+            "Hylics 2",
+            "Overcooked! 2",
+            "Zillion"
         };
 
         public static string[] GameHints => new[]
@@ -179,7 +186,9 @@ namespace RogueLegacy
             "At least this isn't death link... right?",
             "Class abilities are very powerful if used correctly.",
             "Some classes have advantages over certain bosses.",
-            $"You should have played {OtherAPGames[CDGMath.RandomInt(0, OtherAPGames.Length - 1)]} instead."
+            "You can retire at any time in the options menu.",
+            "If you start the game with the command argument --large, you'll have a bad time.",
+            $"You should have played the {OtherAPGames[CDGMath.RandomInt(0, OtherAPGames.Length - 1)]} randomizer instead!"
         };
 
         static GameEV()

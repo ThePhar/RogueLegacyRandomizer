@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - GameOverScreen.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -131,16 +131,20 @@ namespace RogueLegacy.Screens
 
         public override void OnEnter()
         {
-            _playerFrame.Opacity = 0f;
-            _playerFrame.Position = _player.Position;
-            _playerFrame.SetTraits(Game.PlayerStats.Traits);
-            _playerFrame.IsFemale = Game.PlayerStats.IsFemale;
-            _playerFrame.Class = Game.PlayerStats.Class;
-            _playerFrame.Y -= 120f;
-            _playerFrame.SetPortrait(Game.PlayerStats.HeadPiece, Game.PlayerStats.ShoulderPiece,
-                Game.PlayerStats.ChestPiece);
-            _playerFrame.UpdateData();
-            Tween.To(_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
+            if (_objKilledPlayer is not RetireObj)
+            {
+                _playerFrame.Opacity = 0f;
+                _playerFrame.Position = _player.Position;
+                _playerFrame.SetTraits(Game.PlayerStats.Traits);
+                _playerFrame.IsFemale = Game.PlayerStats.IsFemale;
+                _playerFrame.Class = Game.PlayerStats.Class;
+                _playerFrame.Y -= 120f;
+                _playerFrame.SetPortrait(Game.PlayerStats.HeadPiece, Game.PlayerStats.ShoulderPiece,
+                    Game.PlayerStats.ChestPiece);
+                _playerFrame.UpdateData();
+                Tween.To(_playerFrame, 1f, Tween.EaseNone, "delay", "4", "Opacity", "1");
+            }
+
             var item = new FamilyTreeNode
             {
                 Name = Game.PlayerStats.PlayerName,
@@ -184,10 +188,6 @@ namespace RogueLegacy.Screens
             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.MapData);
             (ScreenManager.Game as Game).SaveManager.SaveAllFileTypes(true);
             Game.PlayerStats.Traits = traits;
-            if (Game.PlayerStats.TimesDead >= 20)
-            {
-                GameUtil.UnlockAchievement("FEAR_OF_LIFE");
-            }
 
             SoundManager.StopMusic(0.5f);
             _droppingStats = false;
@@ -200,21 +200,37 @@ namespace RogueLegacy.Screens
             _dialoguePlate.Opacity = 0f;
             _playerGhost.Opacity = 0f;
             _spotlight.Opacity = 0f;
-            _playerGhost.Position = new Vector2(_player.X - _playerGhost.Width / 2, _player.Bounds.Top - 20);
-            Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
-            Tween.To(_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
-            Tween.By(_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
-            _playerGhost.Opacity = 0.4f;
-            Tween.To(_playerGhost, 0.5f, Linear.EaseNone, "delay", "4", "Opacity", "0");
-            _playerGhost.Opacity = 0f;
-            _playerGhost.PlayAnimation();
+            if (_objKilledPlayer is not RetireObj)
+            {
+                _playerGhost.Position = new Vector2(_player.X - _playerGhost.Width / 2, _player.Bounds.Top - 20);
+                Tween.RunFunction(3f, typeof(SoundManager), "PlaySound", "Player_Ghost");
+                Tween.To(_playerGhost, 0.5f, Linear.EaseNone, "delay", "3", "Opacity", "0.4");
+                Tween.By(_playerGhost, 2f, Linear.EaseNone, "delay", "3", "Y", "-150");
+                _playerGhost.Opacity = 0.4f;
+                Tween.To(_playerGhost, 0.5f, Linear.EaseNone, "delay", "4", "Opacity", "0");
+                _playerGhost.Opacity = 0f;
+                _playerGhost.PlayAnimation();
+            }
+
             Tween.To(this, 0.5f, Linear.EaseNone, "BackBufferOpacity", "1");
             Tween.To(_spotlight, 0.1f, Linear.EaseNone, "delay", "1", "Opacity", "1");
             Tween.AddEndHandlerToLastTween(typeof(SoundManager), "PlaySound", "Player_Death_Spotlight");
             Tween.RunFunction(1.2f, typeof(SoundManager), "PlayMusic", "GameOverStinger", false, 0.5f);
             Tween.To(Camera, 1f, Quad.EaseInOut, "X", _player.AbsX.ToString(), "Y",
                 (_player.Bounds.Bottom - 10).ToString(), "Zoom", "1");
-            Tween.RunFunction(2f, _player, "RunDeathAnimation1");
+
+            if (_objKilledPlayer is not RetireObj)
+            {
+                Tween.RunFunction(2f, _player, "RunDeathAnimation1");
+            }
+            else
+            {
+                _player.Flip = SpriteEffects.FlipHorizontally;
+                Tween.RunFunction(2f, _player, "RunDeathAnimation2");
+                Tween.To(_player, 2f, Linear.EaseNone, "delay", "2", "Opacity", "0");
+                Tween.By(_player, 2f, Linear.EaseNone, "delay", "2", "X", "-400");
+            }
+
             if (Game.PlayerStats.Traits.X == 13f || Game.PlayerStats.Traits.Y == 13f)
             {
                 (_dialoguePlate.GetChildAt(2) as TextObj).Text = "#)!(%*#@!%^";
@@ -228,7 +244,7 @@ namespace RogueLegacy.Screens
 
             (_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + Game.PlayerStats.PlayerName + "'s Parting Words";
             Tween.To(_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
-            Tween.RunFunction(4f, this, "DropStats");
+            Tween.RunFunction(4.5f, this, "DropStats");
             Tween.To(_continueText, 0.4f, Linear.EaseNone, "delay", "4", "Opacity", "1");
             base.OnEnter();
         }
@@ -305,6 +321,7 @@ namespace RogueLegacy.Screens
                 var enemyObj = _objKilledPlayer as EnemyObj;
                 var projectileObj = _objKilledPlayer as ProjectileObj;
                 var deathLinkObj = _objKilledPlayer as DeathLinkObj;
+                var retireObj = _objKilledPlayer as RetireObj;
                 if (enemyObj != null)
                 {
                     if (enemyObj.Difficulty == EnemyDifficulty.MiniBoss || enemyObj is EnemyObj_LastBoss)
@@ -339,6 +356,10 @@ namespace RogueLegacy.Screens
                 {
                     textObj.Text = Game.PlayerStats.PlayerName + " was done in by " + deathLinkObj.Name +
                                    "'s carelessness";
+                }
+                else if (retireObj != null)
+                {
+                    textObj.Text = Game.PlayerStats.PlayerName + " had enough and decided to call it quits";
                 }
 
                 var hazardObj = _objKilledPlayer as HazardObj;

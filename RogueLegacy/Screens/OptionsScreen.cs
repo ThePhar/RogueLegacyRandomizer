@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - OptionsScreen.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -33,6 +33,7 @@ namespace RogueLegacy.Screens
         private OptionsObj       _quickDropObj;
         private TextObj          _quickDropText;
         private OptionsObj       _reduceQualityObj;
+        private OptionsObj       _retireCharacterOptionObj;
         private OptionsObj       _selectedOption;
         private int              _selectedOptionIndex;
         private bool             _titleScreenOptions;
@@ -70,6 +71,8 @@ namespace RogueLegacy.Screens
             _optionsArray.Add(new ChatOpacityOption(this));
             _optionsArray.Add(new ChatOption(this));
             _optionsArray.Add(new ChangeControlsOptionsObj(this));
+            _retireCharacterOptionObj = new RetireOptionsObj(this);
+            _optionsArray.Add(_retireCharacterOptionObj);
             _optionsArray.Add(new ExitProgramOptionsObj(this));
             // m_backToMenuObj = new BackToMenuOptionsObj(this);
             // m_backToMenuObj.X = 420f;
@@ -149,6 +152,11 @@ namespace RogueLegacy.Screens
             //     m_optionsArray.Insert(m_optionsArray.Count - 1, m_backToMenuObj);
             // }
 
+            if (!_optionsArray.Contains(_retireCharacterOptionObj))
+            {
+                _optionsArray.Insert(_optionsArray.Count - 1, _retireCharacterOptionObj);
+            }
+
             if (_titleScreenOptions)
             {
                 _optionsArray.RemoveAt(_optionsArray.Count - 2);
@@ -185,7 +193,7 @@ namespace RogueLegacy.Screens
             _transitioning = false;
         }
 
-        private void ExitTransition()
+        public void ExitTransition()
         {
             SoundManager.PlaySound("DialogMenuClose");
             _transitioning = true;

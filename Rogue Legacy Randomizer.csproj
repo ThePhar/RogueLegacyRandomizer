@@ -195,6 +195,7 @@
         <Compile Include="RogueLegacy\Game.cs" />
         <Compile Include="RogueLegacy\GameEV.cs" />
         <Compile Include="RogueLegacy\GameObjects\DeathLinkObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\RetireObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\SkyObj.cs" />
         <Compile Include="RogueLegacy\GameUtil.cs" />
         <Compile Include="RogueLegacy\GaussianBlur.cs" />
@@ -253,6 +254,7 @@
         <Compile Include="RogueLegacy\RCScreenManager.cs" />
         <Compile Include="RogueLegacy\ReduceQualityOptionsObj.cs" />
         <Compile Include="RogueLegacy\ResolutionOptionsObj.cs" />
+        <Compile Include="RogueLegacy\RetireOptionsObj.cs" />
         <Compile Include="RogueLegacy\RoomObj.cs" />
         <Compile Include="RogueLegacy\SaveGameManager.cs" />
         <Compile Include="RogueLegacy\SavingState.cs" />
