@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - EquipmentBonus.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,51 +9,50 @@
 
 using System;
 
-namespace RogueLegacy.Enums
-{
-    public enum EquipmentBonus
-    {
-        None,
-        CritChance,
-        CritDamage,
-        GoldBonus,
-        DamageReturn,
-        XPBonus,
-        AirAttack,
-        Vampirism,
-        Siphon,
-        AirJump,
-        MoveSpeed,
-        AirDash,
-        Block,
-        Float,
-        AttackProjectiles,
-        Flight
-    }
+namespace RogueLegacy.Enums;
 
-    public static class EquipmentBonusExtensions
+public enum EquipmentBonus
+{
+    None,
+    CritChance,
+    CritDamage,
+    GoldBonus,
+    DamageReturn,
+    XPBonus,
+    AirAttack,
+    Vampirism,
+    Siphon,
+    AirJump,
+    MoveSpeed,
+    AirDash,
+    Block,
+    Float,
+    AttackProjectiles,
+    Flight
+}
+
+public static class EquipmentBonusExtensions
+{
+    public static string Name(this EquipmentBonus bonus)
     {
-        public static string Name(this EquipmentBonus bonus)
+        return bonus switch
         {
-            return bonus switch
-            {
-                EquipmentBonus.CritChance        => "Critical Chance",
-                EquipmentBonus.CritDamage        => "Critical Damage",
-                EquipmentBonus.GoldBonus         => "Gold Bonus",
-                EquipmentBonus.DamageReturn      => "Damage Return",
-                EquipmentBonus.XPBonus           => "XP Bonus",
-                EquipmentBonus.AirAttack         => "Air Attack",
-                EquipmentBonus.Vampirism         => "Vampirism",
-                EquipmentBonus.Siphon            => "Siphon",
-                EquipmentBonus.AirJump           => "Air Jump",
-                EquipmentBonus.MoveSpeed         => "Move Speed",
-                EquipmentBonus.AirDash           => "Air Dash",
-                EquipmentBonus.Block             => "Block",
-                EquipmentBonus.Float             => "Float",
-                EquipmentBonus.AttackProjectiles => "Can Attack Projectiles",
-                EquipmentBonus.Flight            => "Flight",
-                _                                => throw new ArgumentException($"Unsupported EquipmentBonus Type in Name(): {nameof(bonus)}")
-            };
-        }
+            EquipmentBonus.CritChance        => "Critical Chance",
+            EquipmentBonus.CritDamage        => "Critical Damage",
+            EquipmentBonus.GoldBonus         => "Gold Bonus",
+            EquipmentBonus.DamageReturn      => "Damage Return",
+            EquipmentBonus.XPBonus           => "XP Bonus",
+            EquipmentBonus.AirAttack         => "Air Attack",
+            EquipmentBonus.Vampirism         => "Vampirism",
+            EquipmentBonus.Siphon            => "Siphon",
+            EquipmentBonus.AirJump           => "Air Jump",
+            EquipmentBonus.MoveSpeed         => "Move Speed",
+            EquipmentBonus.AirDash           => "Air Dash",
+            EquipmentBonus.Block             => "Block",
+            EquipmentBonus.Float             => "Float",
+            EquipmentBonus.AttackProjectiles => "Can Attack Projectiles",
+            EquipmentBonus.Flight            => "Flight",
+            _                                => throw new ArgumentException($"Unsupported EquipmentBonus Type in Name(): {nameof(bonus)}")
+        };
     }
 }
