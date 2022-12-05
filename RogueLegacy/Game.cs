@@ -25,6 +25,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
+using RogueLegacy.GameObjects.HUD;
 using RogueLegacy.Randomizer;
 using RogueLegacy.Screens;
 using SpriteSystem;
@@ -344,7 +345,6 @@ namespace RogueLegacy
             {
                 castleArea = new AreaStruct
                 {
-                    Name = "The Grand Entrance",
                     Zone = Zone.Castle,
                     TotalRooms = new Vector2(90f, 105f),
                     BossInArea = true,
@@ -384,7 +384,6 @@ namespace RogueLegacy
             {
                 castleArea = new AreaStruct
                 {
-                    Name = "The Grand Entrance",
                     Zone = Zone.Castle,
                     TotalRooms = new Vector2(30f, 35f),
                     BossInArea = true,

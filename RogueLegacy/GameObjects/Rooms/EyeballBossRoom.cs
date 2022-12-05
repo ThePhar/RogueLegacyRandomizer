@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - EyeballBossRoom.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -23,7 +23,7 @@ namespace RogueLegacy
             m_roomActivityDelay = 0.5f;
         }
 
-        public override bool BossKilled
+        protected override bool BossKilled
         {
             get { return m_boss.IsKilled; }
         }
@@ -36,7 +36,7 @@ namespace RogueLegacy
 
         public override void OnEnter()
         {
-            _cutsceneRunning = true;
+            CutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
             m_boss.ChangeSprite("EnemyEyeballBossFire_Character");
             m_boss.ChangeToBossPupil();
@@ -75,12 +75,12 @@ namespace RogueLegacy
             SoundManager.PlayMusic("CastleBossIntroSong", false, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = true;
             Player.UnlockControls();
-            _cutsceneRunning = false;
+            CutsceneRunning = false;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (!_cutsceneRunning && !m_boss.BossVersionKilled && !SoundManager.IsMusicPlaying)
+            if (!CutsceneRunning && !m_boss.BossVersionKilled && !SoundManager.IsMusicPlaying)
             {
                 SoundManager.PlayMusic("CastleBossSong", true);
             }

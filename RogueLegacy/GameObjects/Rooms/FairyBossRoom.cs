@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - FairyBossRoom.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -20,7 +20,7 @@ namespace RogueLegacy
         private EnemyObj_Fairy m_boss;
         private ObjContainer m_bossShadow;
 
-        public override bool BossKilled
+        protected override bool BossKilled
         {
             get { return m_boss.IsKilled; }
         }

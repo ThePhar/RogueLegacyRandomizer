@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - FireballBossRoom.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -21,7 +21,7 @@ namespace RogueLegacy
         private float m_bossStartingScale;
         private List<SpriteObj> m_fireList;
 
-        public override bool BossKilled
+        protected override bool BossKilled
         {
             get { return m_boss.IsKilled; }
         }
@@ -62,7 +62,7 @@ namespace RogueLegacy
 
         public override void OnEnter()
         {
-            _cutsceneRunning = true;
+            CutsceneRunning = true;
             SoundManager.StopMusic(0.5f);
             Player.LockControls();
             m_boss.Scale = Vector2.Zero;
@@ -144,7 +144,7 @@ namespace RogueLegacy
                 current.Visible = true;
             }
 
-            _cutsceneRunning = false;
+            CutsceneRunning = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -158,7 +158,7 @@ namespace RogueLegacy
                     }
             }
 
-            if (!_cutsceneRunning && !SoundManager.IsMusicPlaying && !m_boss.BossVersionKilled)
+            if (!CutsceneRunning && !SoundManager.IsMusicPlaying && !m_boss.BossVersionKilled)
             {
                 SoundManager.PlayMusic("TowerBossSong", true);
             }

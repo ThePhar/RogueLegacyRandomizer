@@ -1,5 +1,5 @@
 // Rogue Legacy Randomizer - LastBossRoom.cs
-// Last Modified 2022-10-24
+// Last Modified 2022-12-01
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -38,7 +38,7 @@ namespace RogueLegacy
 
         public float BackBufferOpacity { get; set; }
 
-        public override bool BossKilled
+        protected override bool BossKilled
         {
             get { return m_boss.IsKilled && m_boss.IsSecondForm; }
         }
@@ -88,7 +88,7 @@ namespace RogueLegacy
 
         public void StartCutscene()
         {
-            _cutsceneRunning = true;
+            CutsceneRunning = true;
             Player.LockControls();
             Player.AccelerationY = 0f;
             Player.AttachedLevel.RunCinematicBorders(8f);
@@ -148,7 +148,7 @@ namespace RogueLegacy
             SoundManager.PlayMusic("TitleScreenSong", true, 1f);
             Player.AttachedLevel.CameraLockedToPlayer = true;
             Player.UnlockControls();
-            _cutsceneRunning = false;
+            CutsceneRunning = false;
         }
 
         public void RunFountainCutscene()
@@ -231,7 +231,7 @@ namespace RogueLegacy
                 }
             }
 
-            if (!_cutsceneRunning)
+            if (!CutsceneRunning)
             {
                 foreach (var current in EnemyList)
                     if (!current.IsKilled)
