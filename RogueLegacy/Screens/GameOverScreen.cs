@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -399,6 +400,11 @@ namespace RogueLegacy.Screens
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
                     Game.PlayerStats.ReceivedItems = received;
                     Game.PlayerStats.FountainPieces = pieces;
+
+                    // Level up player if anything stored in child stuff.
+                    while (Program.Game.NextChildItemQueue.Any())
+                        Program.Game.DisgustingGetItemLogic(Program.Game.NextChildItemQueue.Dequeue(), true);
+
                     (ScreenManager as RCScreenManager).DisplayScreen((int) ScreenType.Lineage, true);
                     _lockControls = true;
                 }

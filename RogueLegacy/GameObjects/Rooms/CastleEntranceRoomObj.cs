@@ -186,7 +186,8 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (Program.Game.ArchipelagoManager.RandomizerData.FountainHuntMode)
         {
-            if (Game.PlayerStats.FountainPieces > Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement
+            if (Game.PlayerStats.FountainPieces >=
+                Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement
                 && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
             {
                 PlayBossDoorAnimation();
@@ -218,7 +219,8 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (Program.Game.ArchipelagoManager.RandomizerData.FountainHuntMode)
         {
-            if (Game.PlayerStats.FountainPieces > Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement
+            if (Game.PlayerStats.FountainPieces >=
+                Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement
                 && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
             {
                 Game.PlayerStats.FinalDoorOpened = true;

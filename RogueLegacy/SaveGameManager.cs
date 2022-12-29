@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
@@ -632,6 +633,14 @@ namespace RogueLegacy
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
                     binaryWriter.Write(Game.ProfileName);
                     binaryWriter.Write(Game.PlayerStats.FountainPieces);
+                    binaryWriter.Write(Program.Game.NextChildItemQueue.Count);
+                    foreach (var item in Program.Game.NextChildItemQueue)
+                    {
+                        binaryWriter.Write(item.Item);
+                        binaryWriter.Write(item.Player);
+                        binaryWriter.Write(item.Location);
+                        binaryWriter.Write((int) item.Flags);
+                    }
                     var value = Game.PlayerStats.TotalHoursPlayed + Game.PlaySessionLength;
                     binaryWriter.Write(value);
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.X);
@@ -1443,6 +1452,21 @@ namespace RogueLegacy
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
                     Game.ProfileName = binaryReader.ReadString();
                     Game.PlayerStats.FountainPieces = binaryReader.ReadInt32();
+
+                    Program.Game.NextChildItemQueue = new Queue<NetworkItem>();
+                    var queuedCount = binaryReader.ReadInt32();
+                    for (var i = 0; i < queuedCount; i++)
+                    {
+                        var item = new NetworkItem
+                        {
+                            Item = binaryReader.ReadInt64(),
+                            Player = binaryReader.ReadInt32(),
+                            Location = binaryReader.ReadInt64(),
+                            Flags = (ItemFlags) binaryReader.ReadInt32()
+                        };
+
+                        Program.Game.NextChildItemQueue.Enqueue(item);
+                    }
                     Game.PlayerStats.TotalHoursPlayed = binaryReader.ReadSingle();
                     var b = binaryReader.ReadByte();
                     var b2 = binaryReader.ReadByte();

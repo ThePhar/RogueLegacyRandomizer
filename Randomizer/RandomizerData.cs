@@ -64,6 +64,7 @@ public class RandomizerData
     public bool ChallengeHerodotus      => Convert.ToBoolean(_settings["herodotus"]);
     public bool FountainHuntMode        => Convert.ToBoolean(_settings["goal"]);
     public int  FountainHuntRequirement => Convert.ToInt32(_settings["fountain_hunt_requirement"]);
+    public int  AutomaticUpgrades       => Convert.ToInt32(_settings["automatic_upgrades"]);
     public bool DeathLink               => Convert.ToBoolean(_settings["death_link"]);
 
     public float GoldGainMultiplier => Convert.ToInt32(_settings["gold_gain_multiplier"]) switch

@@ -48,6 +48,7 @@ public class Game : Microsoft.Xna.Framework.Game
         SaveManager = new SaveGameManager();
         PhysicsManager = new PhysicsManager();
         EquipmentSystem = new EquipmentSystem();
+        NextChildItemQueue = new Queue<NetworkItem>();
 
         PlayerStats = new PlayerStats();
         Content.RootDirectory = "Content";
@@ -70,38 +71,39 @@ public class Game : Microsoft.Xna.Framework.Game
         SleepUtil.DisableScreensaver();
     }
 
-    public static Cue             LineageSongCue       { get; set; }
-    public static RCScreenManager ScreenManager        { get; set; }
-    public static Effect          BWMaskEffect         { get; set; }
-    public static Effect          ColourSwapShader     { get; set; }
-    public static Effect          HSVEffect            { get; set; }
-    public static Effect          InvertShader         { get; set; }
-    public static Effect          MaskEffect           { get; set; }
-    public static Effect          ParallaxEffect       { get; set; }
-    public static Effect          RippleEffect         { get; set; }
-    public static Effect          ShadowEffect         { get; set; }
-    public static EquipmentSystem EquipmentSystem      { get; set; }
-    public static GaussianBlur    GaussianBlur         { get; set; }
-    public static PlayerStats     PlayerStats          { get; set; }
-    public static bool            Retired              { get; set; }
-    public static InputMap        GlobalInput          { get; set; }
-    public static List<string>    NameArray            { get; set; }
-    public static List<string>    FemaleNameArray      { get; set; }
-    public static SpriteFont      PixelArtFont         { get; set; }
-    public static SpriteFont      PixelArtFontBold     { get; set; }
-    public static SpriteFont      JunicodeFont         { get; set; }
-    public static SpriteFont      EnemyLevelFont       { get; set; }
-    public static SpriteFont      PlayerLevelFont      { get; set; }
-    public static SpriteFont      GoldFont             { get; set; }
-    public static SpriteFont      HerzogFont           { get; set; }
-    public static SpriteFont      JunicodeLargeFont    { get; set; }
-    public static SpriteFont      CinzelFont           { get; set; }
-    public static SpriteFont      BitFont              { get; set; }
-    public static Texture2D       GenericTexture       { get; set; }
-    public static float           PlaySessionLength    { get; set; }
-    public static float           TotalGameTimeSeconds { get; set; }
-    public static float           TotalGameTimeHours   { get; set; }
-    public static string          ProfileName          { get; set; }
+    public static Cue                LineageSongCue       { get; set; }
+    public static RCScreenManager    ScreenManager        { get; set; }
+    public static Effect             BWMaskEffect         { get; set; }
+    public static Effect             ColourSwapShader     { get; set; }
+    public static Effect             HSVEffect            { get; set; }
+    public static Effect             InvertShader         { get; set; }
+    public static Effect             MaskEffect           { get; set; }
+    public static Effect             ParallaxEffect       { get; set; }
+    public static Effect             RippleEffect         { get; set; }
+    public static Effect             ShadowEffect         { get; set; }
+    public static EquipmentSystem    EquipmentSystem      { get; set; }
+    public static GaussianBlur       GaussianBlur         { get; set; }
+    public static PlayerStats        PlayerStats          { get; set; }
+    public static bool               Retired              { get; set; }
+    public static InputMap           GlobalInput          { get; set; }
+    public static List<string>       NameArray            { get; set; }
+    public static List<string>       FemaleNameArray      { get; set; }
+    public static SpriteFont         PixelArtFont         { get; set; }
+    public static SpriteFont         PixelArtFontBold     { get; set; }
+    public static SpriteFont         JunicodeFont         { get; set; }
+    public static SpriteFont         EnemyLevelFont       { get; set; }
+    public static SpriteFont         PlayerLevelFont      { get; set; }
+    public static SpriteFont         GoldFont             { get; set; }
+    public static SpriteFont         HerzogFont           { get; set; }
+    public static SpriteFont         JunicodeLargeFont    { get; set; }
+    public static SpriteFont         CinzelFont           { get; set; }
+    public static SpriteFont         BitFont              { get; set; }
+    public static Texture2D          GenericTexture       { get; set; }
+    public static float              PlaySessionLength    { get; set; }
+    public static float              TotalGameTimeSeconds { get; set; }
+    public static float              TotalGameTimeHours   { get; set; }
+    public static string             ProfileName          { get; set; }
+    public        Queue<NetworkItem> NextChildItemQueue   { get; set; }
 
     public ArchipelagoManager    ArchipelagoManager    { get; set; }
     public GraphicsDeviceManager GraphicsDeviceManager { get; }
@@ -550,7 +552,7 @@ public class Game : Microsoft.Xna.Framework.Game
                                 Item = item,
                                 Location = -2,
                                 Player = 0
-                            });
+                            }, true);
                         }
 
                         SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
@@ -661,11 +663,22 @@ public class Game : Microsoft.Xna.Framework.Game
         base.Update(gameTime);
     }
 
-    public Tuple<float, float, float, float> DisgustingGetItemLogic(NetworkItem item)
+    public Tuple<float, float, float, float> DisgustingGetItemLogic(NetworkItem item, bool ignoreDefer = false)
     {
         SkillObj skill;
         byte equipStatus = 0;
         var player = ScreenManager.Player;
+
+        // Child defer
+        if (ArchipelagoManager.RandomizerData.AutomaticUpgrades == 1 && !ignoreDefer)
+        {
+            var type = item.Item.GetItemType();
+            if (type == ItemCode.ItemType.Skill)
+            {
+                NextChildItemQueue.Enqueue(item);
+                return new Tuple<float, float, float, float>(-1f, -1f, -1f, 0);
+            }
+        }
 
         switch (item.Item)
         {
