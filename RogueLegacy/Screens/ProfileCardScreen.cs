@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - ProfileCardScreen.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -38,7 +29,7 @@ namespace RogueLegacy.Screens
         private Color          _lichColour2 = new(198, 198, 198, 255);
         private TextObj        _money;
         private SpriteObj      _playerBG;
-        private PlayerHUDObj   _playerHUD;
+        private PlayerHUD      _playerHUD;
         private bool           _playerInAir;
         private TextObj        _playerName;
         private ObjContainer   _playerSprite;
@@ -119,7 +110,7 @@ namespace RogueLegacy.Screens
             _playerBG = new SpriteObj("CardDungeonBG_Sprite");
             _playerBG.Position = new Vector2(45f, 80f);
             _frontCard.AddChildAt(1, _playerBG);
-            _playerHUD = new PlayerHUDObj();
+            _playerHUD = new PlayerHUD();
             _playerHUD.ForceDraw = true;
             _playerHUD.ShowBarsOnly = true;
             _playerHUD.SetPosition(new Vector2(_frontCard.X + 46f, _frontCard.Y + 64f));

@@ -75,7 +75,7 @@ namespace RogueLegacy.Screens
                 // Do not send a death link if what is killing us is a DeathLink.
                 if (!(_objKilledPlayer is DeathLinkObj))
                 {
-                    Program.Game.ArchipelagoManager.SendDeathLink(cause);
+                    Program.Game.ArchipelagoManager.SendDeathLinkIfEnabled(cause);
                 }
 
                 base.PassInData(objList);

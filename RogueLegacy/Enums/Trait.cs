@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - Trait.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Linq;
 using DS2DEngine;
@@ -15,43 +6,45 @@ namespace RogueLegacy.Enums;
 
 public enum Trait
 {
-    None,
-    ColorBlind,
-    Gay,
-    NearSighted,
-    FarSighted,
-    Dyslexia,
-    Gigantism,
-    Dwarfism,
-    Baldness,
-    Endomorph,
-    Ectomorph,
-    Alzheimers,
-    Dextrocardia,
-    Coprolalia,
-    Hyperactive,
-    OCD,
-    Hypergonadism,
-    Hypogonadism,
-    StereoBlind,
-    IBS,
-    Vertigo,
-    TunnelVision,
-    Ambilevous,
-    PAD,
-    Alektorophobia,
-    Hypochondriac,
-    Dementia,
-    Flexible,
-    EideticMemory,
-    Nostalgic,
-    CIP,
-    Savant,
-    TheOne,
-    Clumsy,
-    EHS,
-    Glaucoma,
-    Adopted = 100 // Hilarious that this is a trait in the game.
+    None           = 0,
+    ColorBlind     = 1,
+    Gay            = 2,
+    NearSighted    = 3,
+    FarSighted     = 4,
+    Dyslexia       = 5,
+    Gigantism      = 6,
+    Dwarfism       = 7,
+    Baldness       = 8,
+    Endomorph      = 9,
+    Ectomorph      = 10,
+    Alzheimers     = 11,
+    Dextrocardia   = 12,
+    Coprolalia     = 13,
+    Hyperactive    = 14,
+    OCD            = 15,
+    Hypergonadism  = 16,
+    Hypogonadism   = 17,
+    StereoBlind    = 18,
+    IBS            = 19,
+    Vertigo        = 20,
+    TunnelVision   = 21,
+    Ambilevous     = 22,
+    PAD            = 23,
+    Alektorophobia = 24,
+    Hypochondriac  = 25,
+    Dementia       = 26,
+    Flexible       = 27,
+    EideticMemory  = 28,
+    Nostalgic      = 29,
+    CIP            = 30,
+    Savant         = 31,
+    TheOne         = 32,
+    Clumsy         = 33,
+    EHS            = 34,
+    Glaucoma       = 35
+
+    // Hilarious that this is a trait in the game.
+    // Adopted = 100
 }
 
 public static class TraitExtensions
@@ -249,7 +242,7 @@ public static class TraitExtensions
 
 public static class TraitHelper
 {
-    public static Trait[] CreateRandomTraits()
+    public static Trait[] ReturnRandomTraits()
     {
         var traits = new[] { Trait.None, Trait.None };
         int[] rarityThresholds = { 48, 85, 100 };
@@ -285,9 +278,7 @@ public static class TraitHelper
 
             // Add trait to item pool.
             if (traitIndex == 0)
-            {
                 traits[traitIndex] = possibleTraits[CDGMath.RandomInt(0, possibleTraits.Count - 1)];
-            }
             else
             {
                 do
@@ -298,5 +289,12 @@ public static class TraitHelper
         }
 
         return traits;
+    }
+
+    public static bool HasTrait(Trait trait)
+    {
+        // TODO: Move this away from using floats. It's terrible.
+        // ReSharper disable line CompareOfFloatsByEqualityOperator
+        return Game.PlayerStats.Traits.X == (float) trait || Game.PlayerStats.Traits.Y == (float) trait;
     }
 }

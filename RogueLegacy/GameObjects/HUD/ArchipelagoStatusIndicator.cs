@@ -1,16 +1,7 @@
-// Rogue Legacy Randomizer - ArchipelagoStatusIndicator.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
-using Archipelago;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer;
 
 namespace RogueLegacy.GameObjects.HUD;
 
@@ -29,7 +20,7 @@ public class ArchipelagoStatusIndicator : DrawableGameComponent
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _spriteFont = _content.Load<SpriteFont>("Fonts\\Arial12");
+        _spriteFont = _content.Load<SpriteFont>(@"Fonts\Arial12");
     }
 
     protected override void UnloadContent()
@@ -39,13 +30,12 @@ public class ArchipelagoStatusIndicator : DrawableGameComponent
 
     public override void Update(GameTime gameTime)
     {
-        _status = Program.Game.ArchipelagoManager.ConnectionStatus switch
+        _status = Program.Game.ArchipelagoManager.Status switch
         {
             ConnectionStatus.Disconnected  => "Disconnected",
-            ConnectionStatus.Disconnecting => "Disconnecting",
             ConnectionStatus.Connecting    => "Connecting",
-            ConnectionStatus.Connected     => "Connected",
-            _                              => $"Unknown {Program.Game.ArchipelagoManager.ConnectionStatus}"
+            ConnectionStatus.Authenticated => "Authenticated",
+            _                              => $"Unknown {Program.Game.ArchipelagoManager.Status}"
         };
     }
 

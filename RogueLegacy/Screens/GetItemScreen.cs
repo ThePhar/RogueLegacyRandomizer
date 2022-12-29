@@ -1,19 +1,10 @@
-// Rogue Legacy Randomizer - GetItemScreen.cs
-// Last Modified 2022-10-24
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
-using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
 using Tweener.Ease;
@@ -232,6 +223,10 @@ namespace RogueLegacy.Screens
                         _tripStat2FoundText.Text = GetStatText((int) _tripStatData.Y);
                         _itemFoundText.Y += 50f;
                         _tripStat1FoundText.Y = _itemFoundText.Y + 50f;
+
+                        _tripStat1FoundText.TextureColor = Color.Yellow;
+                        _tripStat2FoundText.TextureColor = Color.Yellow;
+                        _itemFoundText.TextureColor = Color.Yellow;
                     }
 
                     break;
@@ -257,8 +252,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case (int) ItemCategory.GiveNetworkItem:
-                    _itemSpinning = true;
-                    _itemSprite.ChangeSprite("BlueprintIcon_Sprite");
+                    _itemSpinning = false;
+                    _itemSprite.ChangeSprite("Icon_AP_Sprite");
                     _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                     _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
                     _itemFoundPlayerText.Visible = true;
@@ -267,22 +262,28 @@ namespace RogueLegacy.Screens
 
                     switch (_network_item.GetItemType())
                     {
-                        case ItemType.Rune:
+                        case ItemCode.ItemType.Blueprint:
+                            _itemSpinning = true;
+                            _itemSprite.ChangeSprite("BlueprintIcon_Sprite");
+                            break;
+
+                        case ItemCode.ItemType.Rune:
+                            _itemSpinning = true;
                             _itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
                             _itemSprite.ChangeSprite("RuneIcon_Sprite");
                             break;
 
-                        case ItemType.Skill:
+                        case ItemCode.ItemType.Skill:
                             _itemSpinning = false;
                             _itemSprite.ChangeSprite(GetSkillPlateIcon(_network_item, out _));
                             break;
 
-                        case ItemType.Stats:
+                        case ItemCode.ItemType.Stats:
                             _itemSpinning = false;
                             _itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
                             break;
 
-                        case ItemType.Gold:
+                        case ItemCode.ItemType.Gold:
                             _itemSpinning = false;
                             _itemSprite.ChangeSprite("MoneyBag_Sprite");
                             break;
@@ -291,45 +292,48 @@ namespace RogueLegacy.Screens
                     break;
 
                 case (int) ItemCategory.ReceiveNetworkItem:
+                    var self = _network_player == Program.Game.ArchipelagoManager.GetPlayerName(
+                        Program.Game.ArchipelagoManager.RandomizerData.Slot
+                    );
+
                     _itemFoundPlayerText.Visible = true;
+                    _itemFoundText.TextureColor = Color.Yellow;
                     switch (_network_item.GetItemType())
                     {
-                        case ItemType.Blueprint:
+                        case ItemCode.ItemType.Blueprint:
                             _itemFoundText.Y += 40f;
                             _itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                             _itemSpinning = true;
                             _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                             _itemFoundText.Text = GetBlueprintName(_network_item);
-                            _itemFoundPlayerText.Text = $"You received from {_network_player}";
-                            _itemFoundText.TextureColor = Color.Yellow;
+                            _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             break;
 
-                        case ItemType.Rune:
+                        case ItemCode.ItemType.Rune:
                             _itemFoundText.Y += 40f;
                             _itemSpinning = true;
                             _itemSprite.ChangeSprite("RuneIcon_Sprite");
                             _itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
                             _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
-                            _itemFoundPlayerText.Text = $"You received from {_network_player}";
+                            _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             _itemSprite.AnimationDelay = 0.05f;
                             break;
 
-                        case ItemType.Skill:
+                        case ItemCode.ItemType.Skill:
                             _itemFoundText.Y += 40f;
                             _itemSprite.ChangeSprite(GetSkillPlateIcon(_network_item, out var itemName));
                             _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                             _itemFoundText.Text = itemName;
-                            _itemFoundPlayerText.Text = $"You received from {_network_player}";
-                            _itemFoundText.TextureColor = Color.Yellow;
+                            _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             break;
 
-                        case ItemType.Stats:
+                        case ItemCode.ItemType.Stats:
                             _itemFoundText.Y += 50f;
                             _itemSprite.ChangeSprite(GetStatSpriteName((int) _itemInfo.X));
                             _itemFoundText.Text = GetStatText((int) _itemInfo.X);
                             _itemSprite.AnimationDelay = 0.05f;
                             _itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
-                            _itemFoundPlayerText.Text = $"You received from {_network_player}";
+                            _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             _tripStat1FoundText.Visible = true;
                             _tripStat2FoundText.Visible = true;
                             _tripStat1.ChangeSprite(GetStatSpriteName((int) _tripStatData.X));
@@ -349,14 +353,13 @@ namespace RogueLegacy.Screens
 
                             break;
 
-                        case ItemType.Gold:
+                        case ItemCode.ItemType.Gold:
                             _itemFoundText.Y += 40f;
                             _itemSprite.ChangeSprite("MoneyBag_Sprite");
-                            _itemSprite.AnimationSpeed = 0;
+                            _itemSprite.StopAnimation();
                             _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                             _itemFoundText.Text = $"{(int) _itemInfo.Y} Gold";
-                            _itemFoundPlayerText.Text = $"You received from {_network_player}";
-                            _itemFoundText.TextureColor = Color.Yellow;
+                            _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             break;
                     }
 
@@ -371,7 +374,7 @@ namespace RogueLegacy.Screens
         private string GetBlueprintName(long item)
         {
             var text = Program.Game.ArchipelagoManager.GetItemName(item);
-            if (text != ItemDefinitions.ProgressiveArmor.Name)
+            if (text != "Progressive Blueprints")
             {
                 return text;
             }
@@ -401,29 +404,31 @@ namespace RogueLegacy.Screens
                 index++;
             }
 
-            return Program.Game.ArchipelagoManager.GetItemName(ItemDefinitions.SquireArmor.Code + progressiveArmorOrder[index - 1]);  // Go back to the last one.
+            return Program.Game.ArchipelagoManager.GetItemName(ItemCode.EQUIPMENT_SQUIRE +
+                                                               progressiveArmorOrder[
+                                                                   index - 1]); // Go back to the last one.
         }
 
-        private string GetSkillPlateIcon(long item, out string itemName)
+        public static string GetSkillPlateIcon(long item, out string itemName)
         {
-            itemName = Program.Game.ArchipelagoManager.GetItemName(_network_item);
+            itemName = Program.Game.ArchipelagoManager.GetItemName(item);
 
-            if (item == ItemDefinitions.Blacksmith.Code)
+            if (item == ItemCode.BLACKSMITH)
             {
                 return SkillSystem.GetSkill(SkillType.Smithy).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.Architect.Code)
+            if (item == ItemCode.ARCHITECT)
             {
                 return SkillSystem.GetSkill(SkillType.Architect).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.Enchantress.Code)
+            if (item == ItemCode.ENCHANTRESS)
             {
                 return SkillSystem.GetSkill(SkillType.Enchanter).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveKnight.Code)
+            if (item == ItemCode.PROGRESSIVE_KNIGHT)
             {
                 if (SkillSystem.GetSkill(SkillType.KnightUp).CurrentLevel > 0)
                 {
@@ -435,7 +440,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.KnightUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveMage.Code)
+            if (item == ItemCode.PROGRESSIVE_MAGE)
             {
                 if (SkillSystem.GetSkill(SkillType.MageUp).CurrentLevel > 0)
                 {
@@ -447,7 +452,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.MageUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveBarbarian.Code)
+            if (item == ItemCode.PROGRESSIVE_BARBARIAN)
             {
                 if (SkillSystem.GetSkill(SkillType.BarbarianUp).CurrentLevel > 0)
                 {
@@ -459,7 +464,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.BarbarianUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveKnave.Code)
+            if (item == ItemCode.PROGRESSIVE_KNAVE)
             {
                 if (SkillSystem.GetSkill(SkillType.AssassinUp).CurrentLevel > 0)
                 {
@@ -471,7 +476,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.AssassinUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveShinobi.Code)
+            if (item == ItemCode.PROGRESSIVE_SHINOBI)
             {
                 if (SkillSystem.GetSkill(SkillType.NinjaUp).CurrentLevel > 0)
                 {
@@ -483,7 +488,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.NinjaUnlock).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveMiner.Code)
+            if (item == ItemCode.PROGRESSIVE_MINER)
             {
                 if (SkillSystem.GetSkill(SkillType.BankerUp).CurrentLevel > 0)
                 {
@@ -495,7 +500,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.BankerUnlock).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveLich.Code)
+            if (item == ItemCode.PROGRESSIVE_LICH)
             {
                 if (SkillSystem.GetSkill(SkillType.LichUp).CurrentLevel > 0)
                 {
@@ -507,7 +512,7 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.LichUnlock).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ProgressiveSpellthief.Code)
+            if (item == ItemCode.PROGRESSIVE_SPELLTHIEF)
             {
                 if (SkillSystem.GetSkill(SkillType.SpellSwordUp).CurrentLevel > 0)
                 {
@@ -519,98 +524,98 @@ namespace RogueLegacy.Screens
                 return SkillSystem.GetSkill(SkillType.SpellswordUnlock).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.Dragon.Code)
+            if (item == ItemCode.DRAGON)
             {
                 return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.Dragon.Code)
+            if (item == ItemCode.TRAITOR)
             {
                 // TODO: Make Traitor icon
                 return SkillSystem.GetSkill(SkillType.SuperSecret).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.HealthUp.Code)
+            if (item == ItemCode.HEALTH)
             {
                 return SkillSystem.GetSkill(SkillType.HealthUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ManaUp.Code)
+            if (item == ItemCode.MANA)
             {
                 return SkillSystem.GetSkill(SkillType.ManaUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.AttackUp.Code)
+            if (item == ItemCode.ATTACK)
             {
                 return SkillSystem.GetSkill(SkillType.AttackUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.MagicDamageUp.Code)
+            if (item == ItemCode.MAGIC_DAMAGE)
             {
                 return SkillSystem.GetSkill(SkillType.MagicDamageUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ArmorUp.Code)
+            if (item == ItemCode.ARMOR)
             {
                 return SkillSystem.GetSkill(SkillType.ArmorUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.EquipUp.Code)
+            if (item == ItemCode.EQUIP)
             {
                 return SkillSystem.GetSkill(SkillType.EquipUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.CritChanceUp.Code)
+            if (item == ItemCode.CRIT_CHANCE)
             {
                 return SkillSystem.GetSkill(SkillType.CritChanceUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.CritDamageUp.Code)
+            if (item == ItemCode.CRIT_DAMAGE)
             {
                 return SkillSystem.GetSkill(SkillType.CritDamageUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.DownStrikeUp.Code)
+            if (item == ItemCode.DOWN_STRIKE)
             {
                 return SkillSystem.GetSkill(SkillType.DownStrikeUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.GoldGainUp.Code)
+            if (item == ItemCode.GOLD_GAIN)
             {
                 return SkillSystem.GetSkill(SkillType.GoldGainUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.PotionEfficiencyUp.Code)
+            if (item == ItemCode.POTION_EFFICIENCY)
             {
                 return SkillSystem.GetSkill(SkillType.PotionUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.InvulnTimeUp.Code)
+            if (item == ItemCode.INVULN_TIME)
             {
                 return SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.ManaCostDown.Code)
+            if (item == ItemCode.MANA_COST_DOWN)
             {
                 return SkillSystem.GetSkill(SkillType.ManaCostDown).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.DeathDefiance.Code)
+            if (item == ItemCode.DEATH_DEFIANCE)
             {
                 return SkillSystem.GetSkill(SkillType.DeathDodge).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.Haggling.Code)
+            if (item == ItemCode.HAGGLING)
             {
                 return SkillSystem.GetSkill(SkillType.PricesDown).IconName.Replace("Locked", "");
             }
 
-            if (item == ItemDefinitions.RandomizeChildren.Code)
+            if (item == ItemCode.RANDOMIZE_CHILDREN)
             {
                 return SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName.Replace("Locked", "");
             }
 
-            return "BlueprintIcon_Sprite";
+            return "Icon_AP_Sprite";
         }
 
         private void ItemSpinAnimation()

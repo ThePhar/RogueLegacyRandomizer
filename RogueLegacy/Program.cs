@@ -1,18 +1,8 @@
-// Rogue Legacy Randomizer - Program.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using RogueLegacy.Util;
 
 namespace RogueLegacy
@@ -111,16 +101,6 @@ namespace RogueLegacy
                     using (var sw = new StreamWriter(consoleLog, false))
                     {
                         sw.WriteLine(logger.Log);
-                    }
-
-                    var gameJson = Path.Combine(folderPath, "game.json");
-                    using (var sw = new StreamWriter(gameJson, false))
-                    {
-                        var settings = new JsonSerializerSettings
-                        {
-                            Error = (_,err) => err.ErrorContext.Handled = true
-                        };
-                        sw.WriteLine(JsonConvert.SerializeObject(game, settings));
                     }
 
                     // Create zip and delete folder.

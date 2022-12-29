@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - ProceduralLevelScreen.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -14,6 +5,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
 using RogueLegacy.GameObjects.HUD;
@@ -80,7 +72,7 @@ namespace RogueLegacy.Screens
         private          TweenObject        _objectivePlateTween;
         private          GameObj            _objKilledPlayer;
         protected        PhysicsManager     _physicsManager;
-        private          PlayerHUDObj       _playerHUD;
+        private          PlayerHUD          _playerHUD;
         private          ProjectileIconPool _projectileIconPool;
         protected        ProjectileManager  _projectileManager;
         protected        int                _rightMostBorder = -2147483647;
@@ -209,7 +201,7 @@ namespace RogueLegacy.Screens
             _physicsManager.Initialize(ScreenManager.Camera);
             _itemDropManager = new ItemDropManager(600, _physicsManager);
             _itemDropManager.Initialize();
-            _playerHUD = new PlayerHUDObj();
+            _playerHUD = new PlayerHUD();
             _playerHUD.SetPosition(new Vector2(20f, 40f));
             _enemyHUD = new EnemyHUDObj();
             _enemyHUD.Position = new Vector2(660 - _enemyHUD.Width / 2, 20f);
@@ -959,7 +951,8 @@ namespace RogueLegacy.Screens
             switch (zone)
             {
                 case Zone.Castle:
-                    if (Game.PlayerStats.EyeballBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeKhidr)
+                    if (Game.PlayerStats.EyeballBossBeaten ||
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -967,7 +960,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case Zone.Garden:
-                    if (Game.PlayerStats.FairyBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeAlexander)
+                    if (Game.PlayerStats.FairyBossBeaten ||
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -975,7 +969,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case Zone.Dungeon:
-                    if (Game.PlayerStats.BlobBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeHerodotus)
+                    if (Game.PlayerStats.BlobBossBeaten ||
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -983,7 +978,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case Zone.Tower:
-                    if (Game.PlayerStats.FireballBossBeaten || Program.Game.ArchipelagoManager.Data.ChallengeLeon)
+                    if (Game.PlayerStats.FireballBossBeaten ||
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeLeon)
                     {
                         flag = true;
                     }
@@ -1107,7 +1103,8 @@ namespace RogueLegacy.Screens
             switch (zone)
             {
                 case Zone.Castle:
-                    if (!Game.PlayerStats.EyeballBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeKhidr)
+                    if (!Game.PlayerStats.EyeballBossBeaten &&
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -1115,7 +1112,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case Zone.Garden:
-                    if (!Game.PlayerStats.FairyBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeAlexander)
+                    if (!Game.PlayerStats.FairyBossBeaten &&
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -1123,7 +1121,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case Zone.Dungeon:
-                    if (!Game.PlayerStats.BlobBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeHerodotus)
+                    if (!Game.PlayerStats.BlobBossBeaten &&
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -1131,7 +1130,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case Zone.Tower:
-                    if (!Game.PlayerStats.FireballBossBeaten && Program.Game.ArchipelagoManager.Data.ChallengeLeon)
+                    if (!Game.PlayerStats.FireballBossBeaten &&
+                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeLeon)
                     {
                         flag = true;
                     }
@@ -3255,6 +3255,12 @@ namespace RogueLegacy.Screens
         public void UpdatePlayerHUDSpecialItem()
         {
             _playerHUD.UpdateSpecialItemIcon();
+        }
+
+        public void AddReceivedItem(ItemCode.ItemType type, long item, string receivedFrom,
+            Tuple<float, float, float, float> stats)
+        {
+            _playerHUD.AddReceivedItem(type, item, receivedFrom, stats);
         }
 
         public void UpdatePlayerSpellIcon()

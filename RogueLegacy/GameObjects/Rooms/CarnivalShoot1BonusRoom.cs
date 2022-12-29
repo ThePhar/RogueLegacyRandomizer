@@ -1,20 +1,11 @@
-// Rogue Legacy Randomizer - CarnivalShoot1BonusRoom.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Archipelago.Definitions;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
 using Tweener.Ease;
@@ -115,10 +106,7 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
 
         foreach (var obj in GameObjList)
         {
-            if (obj is WaypointObj)
-            {
-                _elf.X = obj.X;
-            }
+            if (obj is WaypointObj) _elf.X = obj.X;
 
             switch (obj.Name)
             {
@@ -141,10 +129,7 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
             break;
         }
 
-        if (!IsReversed)
-        {
-            _elf.Flip = SpriteEffects.FlipHorizontally;
-        }
+        if (!IsReversed) _elf.Flip = SpriteEffects.FlipHorizontally;
 
         GameObjList.Add(_elf);
         _elf.Y -= 2f;
@@ -188,23 +173,16 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
     public override void OnEnter()
     {
         _rewardChest.ChestType = ChestType.Gold;
-        if (_rewardChest.PhysicsMngr == null)
-        {
-            Player.PhysicsMngr.AddObject(_rewardChest);
-        }
+        if (_rewardChest.PhysicsMngr == null) Player.PhysicsMngr.AddObject(_rewardChest);
 
         _spokeToNPC = false;
         Player.AttachedLevel.CameraLockedToPlayer = false;
         if (!IsReversed)
-        {
             Player.AttachedLevel.Camera.Position = new Vector2(Bounds.Left + Player.AttachedLevel.Camera.Width / 2,
                 Bounds.Top + Player.AttachedLevel.Camera.Height / 2);
-        }
         else
-        {
             Player.AttachedLevel.Camera.Position = new Vector2(Bounds.Right - Player.AttachedLevel.Camera.Width / 2,
                 Bounds.Top + Player.AttachedLevel.Camera.Height / 2);
-        }
 
         _currentTargetIndex = 0;
         _daggersThrown = 0;
@@ -232,17 +210,13 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
     private void ReflipPosters()
     {
         foreach (var obj in GameObjList)
-        {
             if (obj is SpriteObj
                 {
                     Flip: SpriteEffects.FlipHorizontally,
                     SpriteName: "CarnivalPoster1_Sprite" or "CarnivalPoster2_Sprite" or "CarnivalPoster3_Sprite"
                     or "CarnivalTent_Sprite"
                 } spriteObj)
-            {
                 spriteObj.Flip = SpriteEffects.None;
-            }
-        }
     }
 
     public void BeginGame()
@@ -287,33 +261,7 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
             rCScreenManager.DisplayScreen((int) ScreenType.Dialogue, true);
             RevealChest();
 
-            // Check location.
-            var location = LocationDefinitions.SpecialCarnival.Code;
-            if (Program.Game.ArchipelagoManager.CheckedLocations.Contains(location))
-            {
-                return;
-            }
-
-            var networkItem = Program.Game.ArchipelagoManager.LocationCache[location];
-            Program.Game.ArchipelagoManager.CheckLocations(location);
-
-            // If we're sending someone else something, let's show what we're sending.
-            if (networkItem.Player != Program.Game.ArchipelagoManager.Data.Slot)
-            {
-                var item = new List<object>
-                {
-                    new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y - Height / 2f),
-                    ItemCategory.GiveNetworkItem,
-                    new Vector2(-1f, -1f),
-                    new Vector2(-1f, -1f),
-                    Program.Game.ArchipelagoManager.GetPlayerName(networkItem.Player),
-                    networkItem.Item
-                };
-
-                Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, item);
-                Game.ScreenManager.Player.RunGetItemAnimation();
-            }
-
+            Program.Game.CollectItemFromLocation(LocationCode.CARNIVAL_GAME_REWARD);
             return;
         }
 
@@ -376,15 +324,9 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
         {
             _daggersThrown++;
             Player.CurrentMana = Player.MaxMana;
-            if (_daggersThrown <= NUM_TRIES)
-            {
-                _daggerIcons.GetChildAt(NUM_TRIES - _daggersThrown).Visible = false;
-            }
+            if (_daggersThrown <= NUM_TRIES) _daggerIcons.GetChildAt(NUM_TRIES - _daggersThrown).Visible = false;
 
-            if (_daggersThrown > NUM_TRIES)
-            {
-                Game.PlayerStats.Spell = 0;
-            }
+            if (_daggersThrown > NUM_TRIES) Game.PlayerStats.Spell = 0;
         }
     }
 
@@ -393,10 +335,7 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
         _elf.Update(gameTime, Player);
         if (!IsReversed)
         {
-            if (Player.X >= _line.X - 150f)
-            {
-                Player.X = (int) _line.X - 150;
-            }
+            if (Player.X >= _line.X - 150f) Player.X = (int) _line.X - 150;
         }
         else if (Player.X < _line.X + 150f)
         {
@@ -406,26 +345,16 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
         if (!IsReversed)
         {
             if (_isPlayingGame && Player.X < Player.AttachedLevel.Camera.Bounds.Left)
-            {
                 Player.X = Player.AttachedLevel.Camera.Bounds.Left;
-            }
 
-            if (Player.X > Bounds.Right - 1320)
-            {
-                Player.X = Bounds.Right - 1320;
-            }
+            if (Player.X > Bounds.Right - 1320) Player.X = Bounds.Right - 1320;
         }
         else
         {
             if (_isPlayingGame && Player.X > Player.AttachedLevel.Camera.Bounds.Right)
-            {
                 Player.X = Player.AttachedLevel.Camera.Bounds.Right;
-            }
 
-            if (Player.X < Bounds.Left + 1320)
-            {
-                Player.X = Bounds.Left + 1320;
-            }
+            if (Player.X < Bounds.Left + 1320) Player.X = Bounds.Left + 1320;
         }
 
         if (_currentTarget != null && !_currentTarget.Broken)
@@ -455,9 +384,7 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
         if (_isPlayingGame &&
             ((_daggersThrown >= NUM_TRIES && Player.AttachedLevel.ProjectileManager.ActiveProjectiles < 1 &&
               ActiveTargets > 0) || ActiveTargets <= 0))
-        {
             EndGame();
-        }
 
         if (_currentTarget != null && _currentTarget.Broken && ActiveTargets >= 0)
         {
@@ -487,13 +414,9 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
         }
 
         if (_isPlayingGame)
-        {
             _elf.CanTalk = false;
-        }
         else
-        {
             _elf.CanTalk = true;
-        }
 
         var totalGameTime = Game.TotalGameTimeSeconds;
         var num2 = 2f;
@@ -521,10 +444,7 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
             return;
         }
 
-        if (_currentTarget != null)
-        {
-            _targetSpeed += TARGET_SPEED_MOD;
-        }
+        if (_currentTarget != null) _targetSpeed += TARGET_SPEED_MOD;
 
         _currentTarget = _targetList[_currentTargetIndex];
         _currentTarget.Visible = true;
@@ -541,33 +461,33 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
     {
         var num = NUM_TARGETS - ActiveTargets;
         if (ActiveTargets > 0)
-        {
-            Player.AttachedLevel.ImpactEffectPool.CarnivalGoldEffect(_currentTarget.Position,
-                new Vector2(Player.AttachedLevel.Camera.TopLeftCorner.X + 50f,
-                    Player.AttachedLevel.Camera.TopLeftCorner.Y + 135f), num);
-        }
+            Player.AttachedLevel.ImpactEffectPool.CarnivalGoldEffect(
+                _currentTarget.Position,
+                new Vector2(
+                    Player.AttachedLevel.Camera.TopLeftCorner.X + 50f,
+                    Player.AttachedLevel.Camera.TopLeftCorner.Y + 135f
+                ),
+                num);
 
-        Player.AttachedLevel.TextManager.DisplayNumberStringText(
-            (int) (num * 10 * Program.Game.ArchipelagoManager.Data.GoldGainMultiplier), " gold", Color.Yellow,
-            _currentTarget.Position);
-        Game.PlayerStats.Gold += (int) (num * 10 * Program.Game.ArchipelagoManager.Data.GoldGainMultiplier);
+        var gold = (int) (num * 10 * Program.Game.ArchipelagoManager.RandomizerData.GoldGainMultiplier);
+        Player.AttachedLevel.TextManager.DisplayNumberStringText(gold, " gold", Color.Yellow, _currentTarget.Position);
+        Game.PlayerStats.Gold += gold;
     }
 
     public override void Dispose()
     {
-        if (!IsDisposed)
-        {
-            _targetList.Clear();
-            _targetList = null;
-            _line = null;
-            _currentTarget = null;
-            _elf = null;
-            _daggerIcons = null;
-            _targetIcons = null;
-            _balloonList.Clear();
-            _balloonList = null;
-            _rewardChest = null;
-            base.Dispose();
-        }
+        if (IsDisposed) return;
+
+        _targetList.Clear();
+        _targetList = null;
+        _line = null;
+        _currentTarget = null;
+        _elf = null;
+        _daggerIcons = null;
+        _targetIcons = null;
+        _balloonList.Clear();
+        _balloonList = null;
+        _rewardChest = null;
+        base.Dispose();
     }
 }

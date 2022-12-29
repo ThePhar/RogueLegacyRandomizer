@@ -1,20 +1,11 @@
-// Rogue Legacy Randomizer - RandomizerScreen.cs
-// Last Modified 2022-10-28
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Archipelago;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
+using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.Options;
 using Tweener;
@@ -61,7 +52,7 @@ namespace RogueLegacy.Screens
             get
             {
                 var list = new List<RandomizerOption> { _randoMode };
-                return list.Concat(Game.RandomizerOptions.IsArchipelago ? _multiRandomizerOptions : _soloRandomizerOptions).ToList();
+                return list.Concat(true ? _multiRandomizerOptions : _soloRandomizerOptions).ToList();
             }
         }
 
@@ -182,8 +173,8 @@ namespace RogueLegacy.Screens
             try
             {
                 // Parse port and connect.
-                var port = int.Parse(_port.GetValue);
-                Program.Game.ArchipelagoManager.Connect(new ConnectionInfo
+                var port = ushort.Parse(_port.GetValue);
+                Program.Game.ArchipelagoManager = ArchipelagoManager.Connect(new ConnectionInfo
                 {
                     Hostname = _hostname.GetValue,
                     Port = port,
@@ -363,7 +354,7 @@ namespace RogueLegacy.Screens
                 }
 
                 // If moved, readjust the order of options.
-                if ((InputTypeHelper.PressedUp || InputTypeHelper.PressedDown) && !Game.RandomizerOptions.IsArchipelago)
+                if (InputTypeHelper.PressedUp || InputTypeHelper.PressedDown)
                 {
                     if (_selectedOptionIndex == 0)
                     {
@@ -457,7 +448,8 @@ namespace RogueLegacy.Screens
             }
 
             // Hide arrows if on Archipelago settings.
-            if (Game.RandomizerOptions.IsArchipelago)
+            // TODO: Add additional randomizer options.
+            if (true)
             {
                 _upArrow.Visible = false;
                 _downArrow.Visible = false;

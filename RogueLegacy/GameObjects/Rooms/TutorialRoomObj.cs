@@ -1,15 +1,14 @@
 // Rogue Legacy Randomizer - TutorialRoomObj.cs
 // Last Modified 2022-10-24
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
-using Archipelago.Definitions;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -321,36 +320,6 @@ namespace RogueLegacy
             m_door.Locked = false;
             Game.PlayerStats.ReadLastDiary = true;
 
-            // Complete the diary.
-            Program.Game.ArchipelagoManager.CheckLocations(
-                LocationDefinitions.Diary1.Code,
-                LocationDefinitions.Diary2.Code,
-                LocationDefinitions.Diary3.Code,
-                LocationDefinitions.Diary4.Code,
-                LocationDefinitions.Diary5.Code,
-                LocationDefinitions.Diary6.Code,
-                LocationDefinitions.Diary7.Code,
-                LocationDefinitions.Diary8.Code,
-                LocationDefinitions.Diary9.Code,
-                LocationDefinitions.Diary10.Code,
-                LocationDefinitions.Diary11.Code,
-                LocationDefinitions.Diary12.Code,
-                LocationDefinitions.Diary13.Code,
-                LocationDefinitions.Diary14.Code,
-                LocationDefinitions.Diary15.Code,
-                LocationDefinitions.Diary16.Code,
-                LocationDefinitions.Diary17.Code,
-                LocationDefinitions.Diary18.Code,
-                LocationDefinitions.Diary19.Code,
-                LocationDefinitions.Diary20.Code,
-                LocationDefinitions.Diary21.Code,
-                LocationDefinitions.Diary22.Code,
-                LocationDefinitions.Diary23.Code,
-                LocationDefinitions.Diary24.Code,
-                LocationDefinitions.Diary25.Code
-            );
-
-            Game.PlayerStats.DiaryEntry = 25;
             (Player.AttachedLevel.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData);
         }
 

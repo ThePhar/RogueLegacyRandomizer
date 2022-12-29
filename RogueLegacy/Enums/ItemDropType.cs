@@ -1,35 +1,26 @@
-// Rogue Legacy Randomizer - ItemDropType.cs
-// Last Modified 2022-10-24
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 namespace RogueLegacy.Enums;
 
 public enum ItemDropType
 {
-    None,
-    Coin,
-    Health,
-    Mana,
-    StatStrength,
-    StatMagic,
-    StatDefense,
-    StatMaxHealth,
-    StatMaxMana,
-    StatWeight,
-    MoneyBag,
-    Diamond,
-    Blueprint,
-    Rune,
-    TripStatDrop,
-    FountainPiece1,
-    FountainPiece2,
-    FountainPiece3,
-    FountainPiece4,
-    FountainPiece5,
-    NetworkItem,
+    None           = 0,
+    Coin           = 1,
+    Health         = 2,
+    Mana           = 3,
+    StatStrength   = 4,
+    StatMagic      = 5,
+    StatDefense    = 6,
+    StatMaxHealth  = 7,
+    StatMaxMana    = 8,
+    StatWeight     = 9,
+    MoneyBag       = 10,
+    Diamond        = 11,
+    Blueprint      = 12,
+    Rune           = 13,
+    TripStatDrop   = 14,
+    FountainPiece1 = 15,
+    FountainPiece2 = 16,
+    FountainPiece3 = 17,
+    FountainPiece4 = 18,
+    FountainPiece5 = 19,
+    NetworkItem    = 20
 }

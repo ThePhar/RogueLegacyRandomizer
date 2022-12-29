@@ -1,9 +1,9 @@
 // Rogue Legacy Randomizer - StartingRoomObj.cs
 // Last Modified 2022-10-24
-// 
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source © 2011-2015, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -632,7 +632,11 @@ namespace RogueLegacy
                                 }
                                 else
                                 {
-                                    DialogueManager.AddText("Meet Architect AP", new []{""}, new []{$"Do you want to lock the castle and get only {100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage}% gold?"});
+                                    DialogueManager.AddText("Meet Architect AP", new[] { "" },
+                                        new[]
+                                        {
+                                            $"Do you want to lock the castle and get only {100 - Program.Game.ArchipelagoManager.RandomizerData.ArchitectFee}% gold?"
+                                        });
                                     rCScreenManager.DialogueScreen.SetDialogue("Meet Architect AP");
                                 }
 
@@ -702,7 +706,7 @@ namespace RogueLegacy
                         return;
                     }
 
-                    if (Program.Game.ArchipelagoManager.Data.DisableCharon)
+                    if (Program.Game.ArchipelagoManager.RandomizerData.DisableCharon)
                     {
                         Tween.RunFunction(0.1f, this, "TollPaid", false);
                         DialogueManager.AddText("Disabled Toll Collector",
@@ -825,7 +829,7 @@ namespace RogueLegacy
 
         public void TollPaid(bool chargeFee)
         {
-            if (Program.Game.ArchipelagoManager.Data.DisableCharon)
+            if (Program.Game.ArchipelagoManager.RandomizerData.DisableCharon)
                 chargeFee = false;
 
             if (chargeFee)

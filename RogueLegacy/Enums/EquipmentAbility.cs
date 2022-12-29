@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - EquipmentAbility.cs
-// Last Modified 2022-10-24
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 
 namespace RogueLegacy.Enums;
@@ -85,7 +76,8 @@ public static class EquipmentAbilityExtensions
             EquipmentAbility.Curse                => $"Enemies start {(int) (amount / 4f * 2.75f)} levels higher.",
             EquipmentAbility.Grace                => amount > 1f ? $"Enemies scale {amount} units slower." : $"Enemies scale {amount} unit slower.",
             EquipmentAbility.Balance              => $"Gain back {amount} HP and MP for every kill.",
-            EquipmentAbility.ArchitectFee         => $"Earn {100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage}% total gold in the castle.",
+            EquipmentAbility.ArchitectFee =>
+                $"Earn {100 - Program.Game.ArchipelagoManager.RandomizerData.ArchitectFee}% total gold in the castle.",
             EquipmentAbility.NewGamePlusGoldBonus => $"Bounty increased by {amount}%.",
             _                                     => throw new ArgumentException($"Unsupported EquipmentAbility Type in ShortDescription(): {nameof(ability)}")
         };

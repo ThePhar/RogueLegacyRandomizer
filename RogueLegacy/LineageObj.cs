@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - LineageObj.cs
-// Last Modified 2022-10-24
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -123,7 +114,7 @@ namespace RogueLegacy
                     CreateMaleName(screen);
                 }
 
-                var t = TraitHelper.CreateRandomTraits();
+                var t = TraitHelper.ReturnRandomTraits();
                 Traits = new Vector2((float) t[0], (float) t[1]);
                 Class = (byte) ClassExtensions.RandomClass();
                 m_classTextObj.Text = "the " + ((ClassType) Class).Name(IsFemale);
@@ -134,13 +125,13 @@ namespace RogueLegacy
                         break;
                     }
 
-                    var t2 = TraitHelper.CreateRandomTraits();
+                    var t2 = TraitHelper.ReturnRandomTraits();
                     Traits = new Vector2((float) t2[0], (float) t2[1]);
                 }
 
                 while ((Class == 1 || Class == 9 || Class == 16) && (Traits.X == 31f || Traits.Y == 31f))
                 {
-                    var t2 = TraitHelper.CreateRandomTraits();
+                    var t2 = TraitHelper.ReturnRandomTraits();
                     Traits = new Vector2((float) t2[0], (float) t2[1]);
                 }
                 var spellList = ((ClassType) Class).SpellList();

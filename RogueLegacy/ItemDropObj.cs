@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - ItemDropObj.cs
-// Last Modified 2022-10-24
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -104,14 +95,15 @@ namespace RogueLegacy
                     var feeFactor = 1f;
                     if (Game.PlayerStats.HasArchitectFee)
                     {
-                        feeFactor = (100 - Program.Game.ArchipelagoManager.Data.ArchitectFeePercentage) / 100f;
+                        feeFactor = (100 - Program.Game.ArchipelagoManager.RandomizerData.ArchitectFee) / 100f;
                         ;
                     }
 
                     var num2 =
                         (int) Math.Round(
                             _amount * (1f + player.TotalGoldBonus) * feeFactor *
-                            Program.Game.ArchipelagoManager.Data.GoldGainMultiplier, MidpointRounding.AwayFromZero);
+                            Program.Game.ArchipelagoManager.RandomizerData.GoldGainMultiplier,
+                            MidpointRounding.AwayFromZero);
                     Game.PlayerStats.Gold += num2;
                     textManager.DisplayNumberStringText(num2, "gold", Color.Yellow, new Vector2(X, Bounds.Top));
                     if (DropType == 10)
