@@ -184,6 +184,13 @@ namespace RogueLegacy.Screens
             _tripStat2FoundText.Visible = false;
             switch (_itemType)
             {
+                case (int) ItemCategory.Teleporter:
+                    _itemSpinning = false;
+                    _itemSprite.ChangeSprite("TeleporterBase_Sprite");
+                    _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                    _itemFoundText.Text = "You unlocked the teleporter for the next zone permanently!";
+                    break;
+
                 case (int) ItemCategory.Blueprint:
                     _itemSpinning = true;
                     _itemSprite.ChangeSprite("BlueprintIcon_Sprite");

@@ -66,7 +66,7 @@ namespace RogueLegacy.Screens
         protected        int                _leftMostBorder = 2147483647;
         private          RenderTarget2D     _lightSourceRenderTarget;
         private          SpriteObj          _mapBG;
-        protected        MapObj             _miniMapDisplay;
+        public           MapObj             MiniMapDisplay;
         private          Texture2D          _neoBorderTexture;
         private          ObjContainer       _objectivePlate;
         private          TweenObject        _objectivePlateTween;
@@ -128,7 +128,7 @@ namespace RogueLegacy.Screens
             _inputMap.AddInput(6, Keys.Down);
             _inputMap.AddInput(7, Keys.OemTilde);
             ChestList = new List<ChestObj>();
-            _miniMapDisplay = new MapObj(true, this);
+            MiniMapDisplay = new MapObj(true, this);
             _killedEnemyObjList = new List<EnemyObj>();
         }
 
@@ -142,15 +142,15 @@ namespace RogueLegacy.Screens
 
         public List<RoomObj> MapRoomsUnveiled
         {
-            get => _miniMapDisplay.AddedRoomsList;
+            get => MiniMapDisplay.AddedRoomsList;
             set
             {
-                _miniMapDisplay.ClearRoomsAdded();
-                _miniMapDisplay.AddAllRooms(value);
+                MiniMapDisplay.ClearRoomsAdded();
+                MiniMapDisplay.AddAllRooms(value);
             }
         }
 
-        public List<RoomObj> MapRoomsAdded => _miniMapDisplay.AddedRoomsList;
+        public List<RoomObj> MapRoomsAdded => MiniMapDisplay.AddedRoomsList;
 
         public PlayerObj     Player   { get; set; }
         public List<RoomObj> RoomList { get; private set; }
@@ -205,8 +205,8 @@ namespace RogueLegacy.Screens
             _playerHUD.SetPosition(new Vector2(20f, 40f));
             _enemyHUD = new EnemyHUDObj();
             _enemyHUD.Position = new Vector2(660 - _enemyHUD.Width / 2, 20f);
-            _miniMapDisplay.SetPlayer(Player);
-            _miniMapDisplay.InitializeAlphaMap(new Rectangle(1070, 50, 200, 100), Camera);
+            MiniMapDisplay.SetPlayer(Player);
+            MiniMapDisplay.InitializeAlphaMap(new Rectangle(1070, 50, 200, 100), Camera);
             InitializeAllRooms(true);
             InitializeEnemies();
             InitializeChests(true);
@@ -375,7 +375,7 @@ namespace RogueLegacy.Screens
         public override void ReinitializeRTs()
         {
             Sky.ReinitializeRT(Camera);
-            _miniMapDisplay.InitializeAlphaMap(new Rectangle(1070, 50, 200, 100), Camera);
+            MiniMapDisplay.InitializeAlphaMap(new Rectangle(1070, 50, 200, 100), Camera);
             InitializeRenderTargets();
             InitializeAllRooms(false);
             if (CurrentRoom == null || CurrentRoom.Name != "Start")
@@ -1241,7 +1241,8 @@ namespace RogueLegacy.Screens
                         }
 
                         Player.RoomTransitionReset();
-                        _miniMapDisplay.AddRoom(current);
+                        MiniMapDisplay.AddRoom(current);
+
                         if (current.Name != "Start")
                         {
                             (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.MapData);
@@ -1630,6 +1631,21 @@ namespace RogueLegacy.Screens
                         _objectivePlate.Opacity = 1f;
                     }
                 }
+
+                // Check for bosses defeated and add linker rooms if not already in.
+                var gardenLinker = RoomList.Find(r => r.LinkerRoomZone == Zone.Garden);
+                var towerLinker = RoomList.Find(r => r.LinkerRoomZone == Zone.Tower);
+                var dungeonLinker = RoomList.Find(r => r.LinkerRoomZone == Zone.Dungeon);
+
+                if (gardenLinker != null && Game.PlayerStats.EyeballBossBeaten &&
+                    !MiniMapDisplay.AddedRoomsList.Contains(gardenLinker))
+                    MiniMapDisplay.AddRoom(gardenLinker);
+                if (towerLinker != null && Game.PlayerStats.FairyBossBeaten &&
+                    !MiniMapDisplay.AddedRoomsList.Contains(towerLinker))
+                    MiniMapDisplay.AddRoom(towerLinker);
+                if (dungeonLinker != null && Game.PlayerStats.FireballBossBeaten &&
+                    !MiniMapDisplay.AddedRoomsList.Contains(dungeonLinker))
+                    MiniMapDisplay.AddRoom(dungeonLinker);
             }
 
             base.Update(gameTime);
@@ -1709,7 +1725,7 @@ namespace RogueLegacy.Screens
 
                 if (_inputMap.JustPressed(0))
                 {
-                    _miniMapDisplay.AddAllRooms(RoomList);
+                    MiniMapDisplay.AddAllRooms(RoomList);
                 }
 
                 if (_inputMap.JustPressed(7))
@@ -2072,7 +2088,7 @@ namespace RogueLegacy.Screens
 
             Camera.End();
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-            _miniMapDisplay.DrawRenderTargets(Camera);
+            MiniMapDisplay.DrawRenderTargets(Camera);
             Camera.End();
             Camera.GraphicsDevice.SetRenderTarget(_skyRenderTarget);
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, null, null);
@@ -2261,10 +2277,10 @@ namespace RogueLegacy.Screens
             }
 
             if (CurrentRoom != null && CurrentRoom.Name != "Start" && CurrentRoom.Name != "Boss" && CurrentRoom.Name != "ChallengeBoss" &&
-                _miniMapDisplay.Visible)
+                MiniMapDisplay.Visible)
             {
                 _mapBG.Draw(Camera);
-                _miniMapDisplay.Draw(Camera);
+                MiniMapDisplay.Draw(Camera);
             }
 
             if (CurrentRoom != null && CurrentRoom.Name != "Boss" && CurrentRoom.Name != "Ending")
@@ -2575,7 +2591,7 @@ namespace RogueLegacy.Screens
 
         public void DisplayMap(bool isTeleporterScreen)
         {
-            (ScreenManager as RCScreenManager).AddRoomsToMap(_miniMapDisplay.AddedRoomsList);
+            (ScreenManager as RCScreenManager).AddRoomsToMap(MiniMapDisplay.AddedRoomsList);
             if (isTeleporterScreen)
             {
                 (ScreenManager as RCScreenManager).ActivateMapScreenTeleporter();
@@ -2721,7 +2737,7 @@ namespace RogueLegacy.Screens
             _gardenParallaxFG = null;
             _roomBWRenderTarget.Dispose();
             _roomBWRenderTarget = null;
-            _miniMapDisplay.DisposeRTs();
+            MiniMapDisplay.DisposeRTs();
             base.DisposeRTs();
         }
 
@@ -2755,8 +2771,8 @@ namespace RogueLegacy.Screens
             _itemDropManager.Dispose();
             _itemDropManager = null;
             _currentRoom = null;
-            _miniMapDisplay.Dispose();
-            _miniMapDisplay = null;
+            MiniMapDisplay.Dispose();
+            MiniMapDisplay = null;
             _mapBG.Dispose();
             _mapBG = null;
             _inputMap.Dispose();
@@ -2882,7 +2898,7 @@ namespace RogueLegacy.Screens
 
         public void RefreshMapChestIcons()
         {
-            _miniMapDisplay.RefreshChestIcons(CurrentRoom);
+            MiniMapDisplay.RefreshChestIcons(CurrentRoom);
             (ScreenManager as RCScreenManager).RefreshMapScreenChestIcons(CurrentRoom);
         }
 
@@ -2998,6 +3014,7 @@ namespace RogueLegacy.Screens
             }
 
             Player.UpdateInternalScale();
+
             CheckForRoomTransition();
             UpdateCamera();
             UpdatePlayerHUDAbilities();
@@ -3005,7 +3022,7 @@ namespace RogueLegacy.Screens
             Player.StopAllSpells();
             if (Game.PlayerStats.Class == 13)
             {
-                _miniMapDisplay.AddAllIcons(RoomList);
+                MiniMapDisplay.AddAllIcons(RoomList);
                 (ScreenManager as RCScreenManager).AddIconsToMap(RoomList);
             }
 
@@ -3270,7 +3287,7 @@ namespace RogueLegacy.Screens
 
         public void SetMapDisplayVisibility(bool visible)
         {
-            _miniMapDisplay.Visible = visible;
+            MiniMapDisplay.Visible = visible;
         }
 
         public void SetPlayerHUDVisibility(bool visible)

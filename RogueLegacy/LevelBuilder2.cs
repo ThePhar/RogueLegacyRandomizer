@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - LevelBuilder2.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -1188,6 +1179,8 @@ namespace RogueLegacy
         {
             DoorObj result = null;
             RoomObj roomObj = null;
+
+            Console.WriteLine("");
             switch (needsLinking.Room.Zone)
             {
                 case Zone.Castle:
@@ -1204,6 +1197,20 @@ namespace RogueLegacy
 
                 case Zone.Tower:
                     roomObj = m_linkerTowerRoom.Clone() as RoomObj;
+                    break;
+            }
+
+            // Set the our room objects.
+            switch (doorPositionWanted)
+            {
+                case "Right":
+                    roomObj.LinkerRoomZone = Zone.Garden;
+                    break;
+                case "Top":
+                    roomObj.LinkerRoomZone = Zone.Tower;
+                    break;
+                case "Bottom":
+                    roomObj.LinkerRoomZone = Zone.Dungeon;
                     break;
             }
 
@@ -1721,7 +1728,7 @@ namespace RogueLegacy
             return proceduralLevelScreen;
         }
 
-        public static ProceduralLevelScreen CreateLevel(Vector4[] roomInfoList, Vector3[] roomColorList)
+        public static ProceduralLevelScreen CreateLevel(Vector4[] roomInfoList, Vector4[] roomColorList)
         {
             Console.WriteLine("///////////// LOADING PRE-CONSTRUCTED LEVEL //////");
             var sequencedRoomList = SequencedRoomList;
@@ -1758,6 +1765,7 @@ namespace RogueLegacy
                 }
 
                 roomObj.Zone = (Zone) vector.X;
+                roomObj.LinkerRoomZone = (Zone) roomColorList[num].W;
                 MoveRoom(roomObj, new Vector2(vector.Y, vector.Z));
                 list.Add(roomObj);
                 roomObj.TextureColor = new Color((byte) roomColorList[num].X, (byte) roomColorList[num].Y,

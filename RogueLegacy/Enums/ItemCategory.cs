@@ -12,5 +12,6 @@ public enum ItemCategory : byte
     FountainPiece      = 7,
     GiveNetworkItem    = 8,
     ReceiveNetworkItem = 9,
-    Skill              = 10
+    Skill              = 10,
+    Teleporter         = 11
 }

@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - RoomObj.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
@@ -61,21 +52,22 @@ namespace RogueLegacy
             IsReversed = false;
         }
 
-        public bool AddToCastlePool { get; set; }
-        public bool AddToGardenPool { get; set; }
-        public bool AddToTowerPool { get; set; }
-        public bool AddToDungeonPool { get; set; }
-        public bool IsDLCMap { get; set; }
-        public Zone Zone { get; set; }
-        public int Level { get; set; }
-        public List<DoorObj> DoorList { get; internal set; }
-        public List<EnemyObj> EnemyList { get; internal set; }
-        public List<TerrainObj> TerrainObjList { get; internal set; }
-        public List<GameObj> GameObjList { get; internal set; }
-        public List<BorderObj> BorderList { get; internal set; }
-        public List<EnemyObj> TempEnemyList { get; internal set; }
-        public bool IsReversed { get; internal set; }
-        public RoomObj LinkedRoom { get; set; }
+        public bool             AddToCastlePool  { get; set; }
+        public bool             AddToGardenPool  { get; set; }
+        public bool             AddToTowerPool   { get; set; }
+        public bool             AddToDungeonPool { get; set; }
+        public bool             IsDLCMap         { get; set; }
+        public Zone             Zone             { get; set; }
+        public int              Level            { get; set; }
+        public List<DoorObj>    DoorList         { get; internal set; }
+        public List<EnemyObj>   EnemyList        { get; internal set; }
+        public List<TerrainObj> TerrainObjList   { get; internal set; }
+        public List<GameObj>    GameObjList      { get; internal set; }
+        public List<BorderObj>  BorderList       { get; internal set; }
+        public List<EnemyObj>   TempEnemyList    { get; internal set; }
+        public bool             IsReversed       { get; internal set; }
+        public RoomObj          LinkedRoom       { get; set; }
+        public Zone             LinkerRoomZone   { get; set; } = Zone.None;
 
         public int RoomNumber
         {

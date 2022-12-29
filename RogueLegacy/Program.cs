@@ -55,9 +55,6 @@ namespace RogueLegacy
                     case "--weak_bosses":
                         LevelENV.WeakenBosses = true;
                         break;
-                    case "--large":
-                        LevelENV.LargeCastle = true;
-                        break;
                     default:
                         Console.WriteLine($"Unknown argument: {arg}");
                         break;

@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - BlobChallengeRoom.cs
-// Last Modified 2022-12-01
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System.Globalization;
 using System.Linq;
 using DS2DEngine;
@@ -41,6 +32,7 @@ public class BlobChallengeRoom : ChallengeBossRoomObj
         _boss2 = (EnemyObj_Blob) EnemyList[1];
         _boss1.SaveToFile = false;
         _boss2.SaveToFile = false;
+        Zone = Zone.Dungeon;
         base.Initialize();
     }
 

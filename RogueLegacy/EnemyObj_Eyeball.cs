@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 using Tweener;
@@ -722,9 +721,19 @@ public class EnemyObj_Eyeball : EnemyObj
             Tween.RunFunction(1f, this, "Part2");
             GameUtil.UnlockAchievement("FEAR_OF_EYES");
 
-            // Check location.
-            var location = LocationCode.CASTLE_BOSS_REWARD;
-            Program.Game.CollectItemFromLocation(location);
+            Program.Game.ArchipelagoManager.DeathLinkSafe = false;
+            var data = new List<object>
+            {
+                new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y),
+                ItemCategory.Teleporter,
+                new Vector2(-1f, -1f),
+                new Vector2(-1f, -1f),
+                "You",
+                null
+            };
+
+            Game.ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, data);
+            Game.ScreenManager.Player.RunGetItemAnimation();
         }
     }
 

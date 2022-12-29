@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 using Tweener;
@@ -690,6 +689,7 @@ public class EnemyObj_Blob : EnemyObj
             if (((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1) ||
                  (blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1)) && !m_bossVersionKilled)
             {
+                Program.Game.ArchipelagoManager.DeathLinkSafe = false;
                 Game.PlayerStats.BlobBossBeaten = true;
                 SoundManager.StopMusic();
                 m_bossVersionKilled = true;
@@ -701,10 +701,6 @@ public class EnemyObj_Blob : EnemyObj
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Eyeball_Freeze");
                 GameUtil.UnlockAchievement("FEAR_OF_SLIME");
-
-                // Check location.
-                var location = LocationCode.DUNGEON_BOSS_REWARD;
-                Program.Game.CollectItemFromLocation(location);
 
                 if (IsNeo)
                 {

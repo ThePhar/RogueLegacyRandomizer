@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - RCScreenManager.cs
-// Last Modified 2022-11-30
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -189,144 +180,134 @@ namespace RogueLegacy
         public void DisplayScreen(int screenType, bool pauseOtherScreens, List<object> objList = null)
         {
             LoadPlayer();
-                         if (pauseOtherScreens)
-                         {
-                             var screens = GetScreens();
-                             foreach (var screen in screens)
-                             {
-                                 if (screen != CurrentScreen)
-                                 {
-                                     continue;
-                                 }
+            if (pauseOtherScreens)
+            {
+                var screens = GetScreens();
+                foreach (var screen in screens)
+                {
+                    if (screen != CurrentScreen) continue;
 
-                                 screen.PauseScreen();
-                                 break;
-                             }
-                         }
+                    screen.PauseScreen();
+                    break;
+                }
+            }
 
-                         switch (screenType)
-                         {
-                             case (int)ScreenType.CDGSplash:
-                             case (int)ScreenType.Title:
-                             case (int)ScreenType.Lineage:
-                             case (int)ScreenType.StartingRoom:
-                             case (int)ScreenType.TitleWhite:
-                             case (int)ScreenType.DemoStart:
-                             case (int)ScreenType.DemoEnd:
-                                 LoadScreen((byte) screenType, true);
-                                 break;
+            switch (screenType)
+            {
+                case (int) ScreenType.CDGSplash:
+                case (int) ScreenType.Title:
+                case (int) ScreenType.Lineage:
+                case (int) ScreenType.StartingRoom:
+                case (int) ScreenType.TitleWhite:
+                case (int) ScreenType.DemoStart:
+                case (int) ScreenType.DemoEnd:
+                    LoadScreen((byte) screenType, true);
+                    break;
 
-                             case (int)ScreenType.Options:
-                                 m_optionsScreen.PassInData(objList);
-                                 AddScreen(m_optionsScreen, null);
-                                 break;
+                case (int) ScreenType.Options:
+                    m_optionsScreen.PassInData(objList);
+                    AddScreen(m_optionsScreen, null);
+                    break;
 
-                             case (int)ScreenType.Level:
-                                 if (RogueLegacy.Game.PlayerStats.LockCastle || !(CurrentScreen is ProceduralLevelScreen))
-                                 {
-                                     LoadScreen((byte) screenType, true);
-                                 }
-                                 else
-                                 {
-                                     LoadScreen((byte) screenType, false);
-                                 }
+                case (int) ScreenType.Level:
+                    if (RogueLegacy.Game.PlayerStats.LockCastle || !(CurrentScreen is ProceduralLevelScreen))
+                        LoadScreen((byte) screenType, true);
+                    else
+                        LoadScreen((byte) screenType, false);
 
-                                 break;
+                    break;
 
-                             case (int)ScreenType.Skill:
-                                 AddScreen(SkillScreen, null);
-                                 break;
+                case (int) ScreenType.Skill:
+                    AddScreen(SkillScreen, null);
+                    break;
 
-                             case (int)ScreenType.GameOver:
-                                 m_gameOverScreen.PassInData(objList);
-                                 AddScreen(m_gameOverScreen, null);
-                                 break;
+                case (int) ScreenType.GameOver:
+                    m_gameOverScreen.PassInData(objList);
+                    AddScreen(m_gameOverScreen, null);
+                    break;
 
-                             case (int)ScreenType.Blacksmith:
-                                 AddScreen(m_blacksmithScreen, null);
-                                 m_blacksmithScreen.Player = Player;
-                                 break;
+                case (int) ScreenType.Blacksmith:
+                    AddScreen(m_blacksmithScreen, null);
+                    m_blacksmithScreen.Player = Player;
+                    break;
 
-                             case (int)ScreenType.Enchantress:
-                                 AddScreen(m_enchantressScreen, null);
-                                 m_enchantressScreen.Player = Player;
-                                 break;
+                case (int) ScreenType.Enchantress:
+                    AddScreen(m_enchantressScreen, null);
+                    m_enchantressScreen.Player = Player;
+                    break;
 
-                             case (int)ScreenType.GetItem:
-                                 m_getItemScreen.PassInData(objList);
-                                 AddScreen(m_getItemScreen, null);
-                                 break;
+                case (int) ScreenType.GetItem:
+                    m_getItemScreen.PassInData(objList);
+                    AddScreen(m_getItemScreen, null);
+                    break;
 
-                             case (int)ScreenType.Dialogue:
-                                 AddScreen(DialogueScreen, null);
-                                 break;
+                case (int) ScreenType.Dialogue:
+                    AddScreen(DialogueScreen, null);
+                    break;
 
-                             case (int)ScreenType.Map:
-                                 m_mapScreen.SetPlayer(Player);
-                                 AddScreen(m_mapScreen, null);
-                                 break;
+                case (int) ScreenType.Map:
+                    m_mapScreen.SetPlayer(Player);
+                    AddScreen(m_mapScreen, null);
+                    break;
 
-                             case (int)ScreenType.Pause:
-                                 GetLevelScreen().CurrentRoom.DarkenRoom();
-                                 AddScreen(m_pauseScreen, null);
-                                 break;
+                case (int) ScreenType.Pause:
+                    GetLevelScreen().CurrentRoom.DarkenRoom();
+                    AddScreen(m_pauseScreen, null);
+                    break;
 
-                             case (int)ScreenType.ProfileCard:
-                                 AddScreen(m_profileCardScreen, null);
-                                 break;
+                case (int) ScreenType.ProfileCard:
+                    AddScreen(m_profileCardScreen, null);
+                    break;
 
-                             case (int)ScreenType.Credits:
-                                 LoadScreen((int) ScreenType.Credits, true);
-                                 break;
+                case (int) ScreenType.Credits:
+                    LoadScreen((int) ScreenType.Credits, true);
+                    break;
 
-                             case (int)ScreenType.SkillUnlock:
-                                 m_skillUnlockScreen.PassInData(objList);
-                                 AddScreen(m_skillUnlockScreen, null);
-                                 break;
+                case (int) ScreenType.SkillUnlock:
+                    m_skillUnlockScreen.PassInData(objList);
+                    AddScreen(m_skillUnlockScreen, null);
+                    break;
 
-                             case (int)ScreenType.DiaryEntry:
-                                 AddScreen(m_diaryEntryScreen, null);
-                                 break;
+                case (int) ScreenType.DiaryEntry:
+                    AddScreen(m_diaryEntryScreen, null);
+                    break;
 
-                             case (int)ScreenType.DeathDefy:
-                                 AddScreen(m_deathDefyScreen, null);
-                                 break;
+                case (int) ScreenType.DeathDefy:
+                    AddScreen(m_deathDefyScreen, null);
+                    break;
 
-                             case (int)ScreenType.Text:
-                                 m_textScreen.PassInData(objList);
-                                 AddScreen(m_textScreen, null);
-                                 break;
+                case (int) ScreenType.Text:
+                    m_textScreen.PassInData(objList);
+                    AddScreen(m_textScreen, null);
+                    break;
 
-                             case (int)ScreenType.TutorialRoom:
-                                 LoadScreen((int) ScreenType.TutorialRoom, true);
-                                 break;
+                case (int) ScreenType.TutorialRoom:
+                    LoadScreen((int) ScreenType.TutorialRoom, true);
+                    break;
 
-                             case (int)ScreenType.Ending:
-                                 GetLevelScreen().CameraLockedToPlayer = false;
-                                 GetLevelScreen().DisableRoomTransitioning = true;
-                                 Player.Position = new Vector2(100f, 100f);
-                                 LoadScreen((int) ScreenType.Ending, true);
-                                 break;
+                case (int) ScreenType.Ending:
+                    GetLevelScreen().CameraLockedToPlayer = false;
+                    GetLevelScreen().DisableRoomTransitioning = true;
+                    Player.Position = new Vector2(100f, 100f);
+                    LoadScreen((int) ScreenType.Ending, true);
+                    break;
 
-                             case (int)ScreenType.DiaryFlashback:
-                                 AddScreen(m_flashbackScreen, null);
-                                 break;
+                case (int) ScreenType.DiaryFlashback:
+                    AddScreen(m_flashbackScreen, null);
+                    break;
 
-                             case (int)ScreenType.GameOverBoss:
-                                 m_gameOverBossScreen.PassInData(objList);
-                                 AddScreen(m_gameOverBossScreen, null);
-                                 break;
+                case (int) ScreenType.GameOverBoss:
+                    m_gameOverBossScreen.PassInData(objList);
+                    AddScreen(m_gameOverBossScreen, null);
+                    break;
 
-                             case (int) ScreenType.Archipelago:
-                                 _randomizerScreen.PassInData(objList);
-                                 AddScreen(_randomizerScreen, null);
-                                 break;
-                         }
+                case (int) ScreenType.Archipelago:
+                    _randomizerScreen.PassInData(objList);
+                    AddScreen(_randomizerScreen, null);
+                    break;
+            }
 
-                         if (m_isWipeTransitioning)
-                         {
-                             EndWipeTransition();
-                         }
+            if (m_isWipeTransitioning) EndWipeTransition();
         }
 
         public void AddRoomsToMap(List<RoomObj> roomList)

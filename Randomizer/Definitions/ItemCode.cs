@@ -62,6 +62,7 @@ public static class ItemCode
     public const long RUNE_CURSE             = 90_068;
     public const long RUNE_GRACE             = 90_069;
     public const long RUNE_BALANCE           = 90_070;
+    public const long FOUNTAIN_PIECE         = 91_000;
 
     public static ItemType GetItemType(this long itemCode)
     {
@@ -127,6 +128,7 @@ public static class ItemCode
             RUNE_CURSE             => ItemType.Rune,
             RUNE_GRACE             => ItemType.Rune,
             RUNE_BALANCE           => ItemType.Rune,
+            FOUNTAIN_PIECE         => ItemType.Fountain,
             _                      => ItemType.NetworkItem
         };
     }
@@ -139,6 +141,7 @@ public static class ItemCode
         Stats,
         Gold,
         NetworkItem,
-        Trap
+        Trap,
+        Fountain
     }
 }

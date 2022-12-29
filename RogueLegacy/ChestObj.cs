@@ -4,6 +4,7 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
+using RogueLegacy.Screens;
 using Tweener;
 using Tweener.Ease;
 
@@ -107,8 +108,26 @@ public class ChestObj : PhysicsObj
         // Extra boss stuff!
         if (ChestType == ChestType.Boss)
         {
-            GiveStatDrop(itemDropManager, player, 3, 0);
-            return;
+            var zone = (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).CurrentRoom.Zone;
+            Program.Game.ArchipelagoManager.DeathLinkSafe = true;
+            switch (zone)
+            {
+                case Zone.Castle:
+                    Program.Game.CollectItemFromLocation(LocationCode.CASTLE_BOSS_REWARD);
+                    return;
+                case Zone.Garden:
+                    Program.Game.CollectItemFromLocation(LocationCode.GARDEN_BOSS_REWARD);
+                    return;
+                case Zone.Dungeon:
+                    Program.Game.CollectItemFromLocation(LocationCode.DUNGEON_BOSS_REWARD);
+                    return;
+                case Zone.Tower:
+                    Program.Game.CollectItemFromLocation(LocationCode.TOWER_BOSS_REWARD);
+                    return;
+                default:
+                    GiveStatDrop(itemDropManager, player, 3, 0);
+                    return;
+            }
         }
 
         GiveNetworkItem(itemDropManager, player);

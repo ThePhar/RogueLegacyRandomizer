@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - SaveGameManager.cs
-// Last Modified 2022-10-24
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1006,6 +997,7 @@ namespace RogueLegacy
                                 binaryWriter.Write((byte) current.Zone);
                                 binaryWriter.Write((int) current.X);
                                 binaryWriter.Write((int) current.Y);
+                                binaryWriter.Write((byte) current.LinkerRoomZone);
                                 binaryWriter.Write(current.TextureColor.R);
                                 binaryWriter.Write(current.TextureColor.G);
                                 binaryWriter.Write(current.TextureColor.B);
@@ -1047,6 +1039,7 @@ namespace RogueLegacy
                             goto IL_34E;
                         }
                     }
+
 
                     Console.WriteLine(
                         "WARNING: Attempting to save LEVEL screen but it was null. Make sure it exists in the screen manager before saving it.");
@@ -1777,13 +1770,14 @@ namespace RogueLegacy
                 {
                     var num = binaryReader.ReadInt32();
                     var array = new Vector4[num];
-                    var array2 = new Vector3[num];
+                    var array2 = new Vector4[num];
                     for (var i = 0; i < num; i++)
                     {
                         array[i].W = binaryReader.ReadInt32();
                         array[i].X = binaryReader.ReadByte();
                         array[i].Y = binaryReader.ReadInt32();
                         array[i].Z = binaryReader.ReadInt32();
+                        array2[i].W = binaryReader.ReadByte();
                         array2[i].X = binaryReader.ReadByte();
                         array2[i].Y = binaryReader.ReadByte();
                         array2[i].Z = binaryReader.ReadByte();
@@ -1796,6 +1790,7 @@ namespace RogueLegacy
                     var list2 = new List<byte>();
                     for (var k = 0; k < num2; k++) list2.Add(binaryReader.ReadByte());
                     LevelBuilder2.OverrideProceduralEnemies(proceduralLevelScreen, list.ToArray(), list2.ToArray());
+
                     binaryReader.Close();
                 }
 

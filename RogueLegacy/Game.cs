@@ -314,84 +314,43 @@ public class Game : Microsoft.Xna.Framework.Game
         AreaStruct towerArea;
         AreaStruct dungeonArea;
 
-        if (LevelENV.LargeCastle)
+        // Safe defaults.
+        castleArea = new AreaStruct
         {
-            castleArea = new AreaStruct
-            {
-                Zone = Zone.Castle,
-                TotalRooms = new Vector2(90f, 105f),
-                BossInArea = true,
-                SecretRooms = new Vector2(3f, 9f),
-                BonusRooms = new Vector2(12f, 15f),
-                Color = Color.White
-            };
-            gardenArea = new AreaStruct
-            {
-                Zone = Zone.Garden,
-                TotalRooms = new Vector2(84f, 90f),
-                BossInArea = true,
-                SecretRooms = new Vector2(3f, 9f),
-                BonusRooms = new Vector2(12f, 15f),
-                Color = Color.Green
-            };
-            towerArea = new AreaStruct
-            {
-                Zone = Zone.Tower,
-                TotalRooms = new Vector2(84f, 90f),
-                BossInArea = true,
-                SecretRooms = new Vector2(3f, 9f),
-                BonusRooms = new Vector2(12f, 15f),
-                Color = Color.DarkBlue
-            };
-            dungeonArea = new AreaStruct
-            {
-                Zone = Zone.Dungeon,
-                TotalRooms = new Vector2(84f, 90f),
-                BossInArea = true,
-                SecretRooms = new Vector2(3f, 9f),
-                BonusRooms = new Vector2(12f, 15f),
-                Color = Color.Red
-            };
-        }
-        else
+            Zone = Zone.Castle,
+            TotalRooms = new Vector2(30f, 35f),
+            BossInArea = true,
+            SecretRooms = new Vector2(1f, 3f),
+            BonusRooms = new Vector2(4f, 5f),
+            Color = Color.White
+        };
+        gardenArea = new AreaStruct
         {
-            castleArea = new AreaStruct
-            {
-                Zone = Zone.Castle,
-                TotalRooms = new Vector2(30f, 35f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.White
-            };
-            gardenArea = new AreaStruct
-            {
-                Zone = Zone.Garden,
-                TotalRooms = new Vector2(28f, 30f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.Green
-            };
-            towerArea = new AreaStruct
-            {
-                Zone = Zone.Tower,
-                TotalRooms = new Vector2(28f, 30f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.DarkBlue
-            };
-            dungeonArea = new AreaStruct
-            {
-                Zone = Zone.Dungeon,
-                TotalRooms = new Vector2(28f, 30f),
-                BossInArea = true,
-                SecretRooms = new Vector2(1f, 3f),
-                BonusRooms = new Vector2(4f, 5f),
-                Color = Color.Red
-            };
-        }
+            Zone = Zone.Garden,
+            TotalRooms = new Vector2(28f, 30f),
+            BossInArea = true,
+            SecretRooms = new Vector2(1f, 3f),
+            BonusRooms = new Vector2(4f, 5f),
+            Color = Color.Green
+        };
+        towerArea = new AreaStruct
+        {
+            Zone = Zone.Tower,
+            TotalRooms = new Vector2(28f, 30f),
+            BossInArea = true,
+            SecretRooms = new Vector2(1f, 3f),
+            BonusRooms = new Vector2(4f, 5f),
+            Color = Color.DarkBlue
+        };
+        dungeonArea = new AreaStruct
+        {
+            Zone = Zone.Dungeon,
+            TotalRooms = new Vector2(28f, 30f),
+            BossInArea = true,
+            SecretRooms = new Vector2(1f, 3f),
+            BonusRooms = new Vector2(4f, 5f),
+            Color = Color.Red
+        };
 
         Area1List = new[]
         {
@@ -544,10 +503,14 @@ public class Game : Microsoft.Xna.Framework.Game
                     // Initialize Save Data
                     ChangeProfile(ArchipelagoManager.RandomizerData.Seed, ArchipelagoManager.RandomizerData.Slot);
 
+                    // Load Area Struct Data
+                    Area1List = ArchipelagoManager.RandomizerData.AreaStructs;
+
                     SoundManager.PlaySound("Game_Start");
                     var newGame = !PlayerStats.CharacterFound;
                     var heroIsDead = PlayerStats.IsDead;
                     var startingRoom = PlayerStats.LoadStartingRoom;
+                    LevelENV.WeakenBosses = true;
 
                     if (newGame)
                     {
