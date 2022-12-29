@@ -1,0 +1,357 @@
+<xml>
+  <instance name="TraitsCastleTopExt_Sprite" index="0" posX="0" posY="0" anchorX="0" anchorY="0" width="15" height="34"/>
+  <instance name="TraitsCastleTelescope_Sprite" index="0" posX="16" posY="0" anchorX="0" anchorY="0" width="44" height="17"/>
+  <instance name="TraitsCastleForSale_Sprite" index="0" posX="61" posY="0" anchorX="0" anchorY="0" width="35" height="29"/>
+  <instance name="TraitsCastleRoofLeftmost_Sprite" index="0" posX="97" posY="0" anchorX="0" anchorY="0" width="31" height="52"/>
+  <instance name="TraitsCastleRightWindow_Sprite" index="0" posX="129" posY="0" anchorX="0" anchorY="0" width="38" height="52"/>
+  <instance name="TraitsCastleLeftWindow_Sprite" index="0" posX="168" posY="0" anchorX="0" anchorY="0" width="36" height="55"/>
+  <instance name="TraitsCastleMidWindowTop_Sprite" index="0" posX="205" posY="0" anchorX="0" anchorY="0" width="53" height="40"/>
+  <instance name="TraitsCastleRightExt_Sprite" index="0" posX="259" posY="0" anchorX="0" anchorY="0" width="31" height="83"/>
+  <instance name="TraitsCastleLeftExt_Sprite" index="0" posX="291" posY="0" anchorX="0" anchorY="0" width="31" height="83"/>
+  <instance name="TraitsCastleMidWindowBottom_Sprite" index="0" posX="323" posY="0" anchorX="0" anchorY="0" width="53" height="50"/>
+  <instance name="TraitsCastleTopMid_Sprite" index="0" posX="377" posY="0" anchorX="-3.5" anchorY="0" width="119" height="24"/>
+  <instance name="TraitsCastleTopHigh_Sprite" index="0" posX="497" posY="0" anchorX="0" anchorY="0" width="99" height="30"/>
+  <instance name="Icon_BootsLocked_Sprite" index="0" posX="597" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Health_UpLocked_Sprite" index="0" posX="658" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ShieldLocked_Sprite" index="0" posX="719" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SwordLocked_Sprite" index="0" posX="780" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_EnchanterLocked_Sprite" index="0" posX="841" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SmithyLocked_Sprite" index="0" posX="902" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ArchitectLocked_Sprite" index="0" posX="963" posY="0" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Crit_Damage_UpLocked_Sprite" index="0" posX="0" posY="35" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Crit_Chance_UpLocked_Sprite" index="0" posX="61" posY="53" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_XP_Gain_UpLocked_Sprite" index="0" posX="122" posY="56" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Display_Pause_InfoLocked_Sprite" index="0" posX="183" posY="56" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Gold_Gain_UpLocked_Sprite" index="0" posX="244" posY="84" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Gold_Flat_BonusLocked_Sprite" index="0" posX="305" posY="84" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Attack_UpLocked_Sprite" index="0" posX="366" posY="51" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Equip_UpLocked_Sprite" index="0" posX="427" posY="25" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Display_Boss_RoomsLocked_Sprite" index="0" posX="488" posY="31" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_BootsMax_Sprite" index="0" posX="549" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Health_UpMax_Sprite" index="0" posX="610" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ShieldMax_Sprite" index="0" posX="671" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SwordMax_Sprite" index="0" posX="732" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_EnchanterMax_Sprite" index="0" posX="793" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SmithyMax_Sprite" index="0" posX="854" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ArchitectMax_Sprite" index="0" posX="915" posY="61" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Crit_Damage_UpMax_Sprite" index="0" posX="0" posY="96" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Crit_Chance_UpMax_Sprite" index="0" posX="61" posY="114" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_XP_Gain_UpMax_Sprite" index="0" posX="122" posY="117" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Display_Pause_InfoMax_Sprite" index="0" posX="183" posY="117" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Gold_Gain_UpMax_Sprite" index="0" posX="244" posY="145" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Gold_Flat_BonusMax_Sprite" index="0" posX="305" posY="145" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Attack_UpMax_Sprite" index="0" posX="366" posY="112" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Equip_UpMax_Sprite" index="0" posX="427" posY="86" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Display_Boss_RoomsMax_Sprite" index="0" posX="488" posY="92" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Boots_Sprite" index="0" posX="549" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Health_Up_Sprite" index="0" posX="610" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Shield_Sprite" index="0" posX="671" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Sword_Sprite" index="0" posX="732" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Enchanter_Sprite" index="0" posX="793" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Smithy_Sprite" index="0" posX="854" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Architect_Sprite" index="0" posX="915" posY="122" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Crit_Damage_Up_Sprite" index="0" posX="0" posY="157" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Crit_Chance_Up_Sprite" index="0" posX="61" posY="175" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_XP_Gain_Up_Sprite" index="0" posX="122" posY="178" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Display_Pause_Info_Sprite" index="0" posX="183" posY="178" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Gold_Gain_Up_Sprite" index="0" posX="244" posY="206" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Gold_Flat_Bonus_Sprite" index="0" posX="305" posY="206" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Attack_Up_Sprite" index="0" posX="366" posY="173" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Equip_Up_Sprite" index="0" posX="427" posY="147" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Display_Boss_Rooms_Sprite" index="0" posX="488" posY="153" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_DeathDefy_Sprite" index="0" posX="549" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_DeathDefyLocked_Sprite" index="0" posX="610" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_DeathDefyMax_Sprite" index="0" posX="671" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_Haggle_Sprite" index="0" posX="732" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_HaggleLocked_Sprite" index="0" posX="793" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_HaggleMax_Sprite" index="0" posX="854" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_InvulnTimeUp_Sprite" index="0" posX="915" posY="183" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_InvulnTimeUpLocked_Sprite" index="0" posX="0" posY="218" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_InvulnTimeUpMax_Sprite" index="0" posX="61" posY="236" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_MagicDmgUp_Sprite" index="0" posX="122" posY="239" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_MagicDmgUpLocked_Sprite" index="0" posX="183" posY="239" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_MagicDmgUpMax_Sprite" index="0" posX="244" posY="267" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ManaCostDown_Sprite" index="0" posX="305" posY="267" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ManaCostDownLocked_Sprite" index="0" posX="366" posY="234" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ManaCostDownMax_Sprite" index="0" posX="427" posY="208" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ManaUp_Sprite" index="0" posX="488" posY="214" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ManaUpLocked_Sprite" index="0" posX="549" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_ManaUpMax_Sprite" index="0" posX="610" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_PotionUp_Sprite" index="0" posX="671" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_PotionUpLocked_Sprite" index="0" posX="732" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_PotionUpMax_Sprite" index="0" posX="793" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_RandomizeChildren_Sprite" index="0" posX="854" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_RandomizeChildrenLocked_Sprite" index="0" posX="915" posY="244" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_RandomizeChildrenMax_Sprite" index="0" posX="0" posY="279" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_AssassinUp_Sprite" index="0" posX="61" posY="297" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_AssassinUpLocked_Sprite" index="0" posX="122" posY="300" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_AssassinUpMax_Sprite" index="0" posX="183" posY="300" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_BarbarianUp_Sprite" index="0" posX="244" posY="328" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_BarbarianUpLocked_Sprite" index="0" posX="305" posY="328" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_BarbarianUpMax_Sprite" index="0" posX="366" posY="295" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_KnightUp_Sprite" index="0" posX="427" posY="269" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_KnightUpLocked_Sprite" index="0" posX="488" posY="275" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_KnightUpMax_Sprite" index="0" posX="549" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_LichUnlock_Sprite" index="0" posX="610" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_LichUnlockLocked_Sprite" index="0" posX="671" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_LichUnlockMax_Sprite" index="0" posX="732" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_LichUp_Sprite" index="0" posX="793" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_LichUpLocked_Sprite" index="0" posX="854" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_LichUpMax_Sprite" index="0" posX="915" posY="305" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_NinjaUnlock_Sprite" index="0" posX="0" posY="340" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_NinjaUnlockLocked_Sprite" index="0" posX="61" posY="358" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_NinjaUnlockMax_Sprite" index="0" posX="122" posY="361" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_NinjaUp_Sprite" index="0" posX="183" posY="361" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_NinjaUpLocked_Sprite" index="0" posX="244" posY="389" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_NinjaUpMax_Sprite" index="0" posX="305" posY="389" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpellswordUnlock_Sprite" index="0" posX="366" posY="356" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpellswordUnlockLocked_Sprite" index="0" posX="427" posY="330" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpellswordUnlockMax_Sprite" index="0" posX="488" posY="336" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpellswordUp_Sprite" index="0" posX="549" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpellswordUpLocked_Sprite" index="0" posX="610" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpellswordUpMax_Sprite" index="0" posX="671" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpelunkerUnlock_Sprite" index="0" posX="732" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpelunkerUnlockLocked_Sprite" index="0" posX="793" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpelunkerUnlockMax_Sprite" index="0" posX="854" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpelunkerUp_Sprite" index="0" posX="915" posY="366" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpelunkerUpLocked_Sprite" index="0" posX="0" posY="401" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_SpelunkerUpMax_Sprite" index="0" posX="61" posY="419" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_WizardUp_Sprite" index="0" posX="122" posY="422" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_WizardUpLocked_Sprite" index="0" posX="183" posY="422" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_WizardUpMax_Sprite" index="0" posX="244" posY="450" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="SkillTreeFlag_Sprite" index="0" posX="305" posY="450" anchorX="0" anchorY="0" width="60" height="61"/>
+  <instance name="SkillTreeFlag_Sprite" index="1" posX="366" posY="417" anchorX="0" anchorY="0" width="60" height="61"/>
+  <instance name="SkillTreeFlag_Sprite" index="2" posX="427" posY="391" anchorX="0" anchorY="0" width="60" height="61"/>
+  <instance name="SkillTreeFlag_Sprite" index="3" posX="488" posY="397" anchorX="0" anchorY="0" width="60" height="61"/>
+  <instance name="SkillTreeFlag_Sprite" index="4" posX="549" posY="427" anchorX="0" anchorY="0" width="60" height="61"/>
+  <instance name="SkillTreeFlag_Sprite" index="5" posX="610" posY="427" anchorX="0" anchorY="0" width="60" height="61"/>
+  <instance name="SkillTreeFlag_Sprite" index="6" posX="671" posY="427" anchorX="0" anchorY="0" width="61" height="61"/>
+  <instance name="TraitsCastleLeftmost_Sprite" index="0" posX="733" posY="427" anchorX="0" anchorY="0" width="35" height="108"/>
+  <instance name="TraitsCastleTree1_Sprite" index="0" posX="769" posY="427" anchorX="22.45" anchorY="84.3" width="52" height="83"/>
+  <instance name="TraitsCastleMidRoof_Sprite" index="0" posX="822" posY="427" anchorX="-3.5" anchorY="0" width="124" height="36"/>
+  <instance name="TraitsCastleTopRightRoof_Sprite" index="0" posX="0" posY="483" anchorX="-4" anchorY="0" width="153" height="37"/>
+  <instance name="TraitsCastleRightRoof_Sprite" index="0" posX="154" posY="511" anchorX="0" anchorY="0" width="109" height="52"/>
+  <instance name="TraitsCastleLeftRoof_Sprite" index="0" posX="264" posY="512" anchorX="0" anchorY="0" width="109" height="52"/>
+  <instance name="TraitsCastleTopRightRoof_Sprite" index="1" posX="374" posY="479" anchorX="0" anchorY="0" width="161" height="37"/>
+  <instance name="TraitsCastleTree2_Sprite" index="0" posX="536" posY="489" anchorX="34.5" anchorY="96" width="66" height="95"/>
+  <instance name="IconHalo_Sprite" index="2" posX="603" posY="489" anchorX="40.5" anchorY="40.5" width="81" height="81"/>
+  <instance name="TraitsCastleTopLeftWindows_Sprite" index="0" posX="685" posY="536" anchorX="0" anchorY="0" width="180" height="38"/>
+  <instance name="IconHalo_Sprite" index="1" posX="866" posY="464" anchorX="41.5" anchorY="41.5" width="83" height="83"/>
+  <instance name="IconHalo_Sprite" index="3" posX="0" posY="521" anchorX="41.5" anchorY="41.5" width="83" height="83"/>
+  <instance name="IconHalo_Sprite" index="0" posX="84" posY="564" anchorX="42.5" anchorY="42.5" width="85" height="85"/>
+  <instance name="TraitsCastleRoofTopLeft_Sprite" index="0" posX="170" posY="565" anchorX="-3" anchorY="0" width="221" height="37"/>
+  <instance name="TraitsCastleTree3_Sprite" index="0" posX="392" posY="517" anchorX="48.05" anchorY="112.95" width="74" height="112"/>
+  <instance name="TraitsCastleRoad_Sprite" index="0" posX="467" posY="585" anchorX="-87.5" anchorY="0" width="214" height="44"/>
+  <instance name="TraitsCastleTopRightHigh_Sprite" index="0" posX="682" posY="575" anchorX="0" anchorY="0" width="165" height="70"/>
+  <instance name="TraitsCastleTopRightHigh_Sprite" index="1" posX="848" posY="575" anchorX="0" anchorY="0" width="165" height="70"/>
+  <instance name="TraitsCastleRight_Sprite" index="0" posX="0" posY="650" anchorX="0" anchorY="0" width="103" height="123"/>
+  <instance name="TraitsCastleLeft_Sprite" index="0" posX="104" posY="650" anchorX="0" anchorY="0" width="103" height="123"/>
+  <instance name="TraitsCastleTopLow_Sprite" index="0" posX="208" posY="603" anchorX="0" anchorY="0" width="126" height="103"/>
+  <instance name="TraitsBGMask_Sprite" index="0" posX="335" posY="646" anchorX="0" anchorY="0" width="388" height="35"/>
+  <instance name="TraitsCastleTopLeftHigh_Sprite" index="0" posX="724" posY="646" anchorX="0" anchorY="0" width="232" height="70"/>
+  <instance name="TraitsCastleTopLeftMid_Sprite" index="0" posX="0" posY="774" anchorX="0" anchorY="0" width="232" height="88"/>
+  <instance name="TraitsCastleTopLeftLow_Sprite" index="0" posX="233" posY="707" anchorX="0" anchorY="0" width="232" height="95"/>
+  <instance name="TraitsCastleMid_Sprite" index="0" posX="466" posY="682" anchorX="0" anchorY="0" width="140" height="165"/>
+  <instance name="TraitsCastleTopRightLow_Sprite" index="0" posX="607" posY="717" anchorX="0" anchorY="0" width="158" height="147"/>
+  <instance name="ManorTitleText_Sprite" index="0" posX="0" posY="863" anchorX="215" anchorY="44" width="430" height="88"/>
+  <instance name="Icon_APLocked_Sprite" index="0" posX="842" posY="964" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_AP_Sprite" index="0" posX="842" posY="903" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_APMax_Sprite" index="0" posX="842" posY="842" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_TraitorUnlockMax_Sprite" index="0" posX="903" posY="842" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_TraitorUnlockLocked_Sprite" index="0" posX="903" posY="964" anchorX="30" anchorY="30" width="60" height="60"/>
+  <instance name="Icon_TraitorUnlock_Sprite" index="0" posX="903" posY="903" anchorX="30" anchorY="30" width="60" height="60"/>
+  <animation frame="1" name="Icon_APLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_AP_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_APMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_TraitorUnlockMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_TraitorUnlockLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_TraitorUnlock_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_BootsLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Health_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ShieldLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SwordLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_EnchanterLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SmithyLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ArchitectLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Crit_Damage_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Crit_Chance_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_XP_Gain_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Display_Pause_InfoLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Gold_Gain_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Gold_Flat_BonusLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Attack_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Equip_UpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Display_Boss_RoomsLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_BootsMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Health_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ShieldMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SwordMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_EnchanterMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SmithyMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ArchitectMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Crit_Damage_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Crit_Chance_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_XP_Gain_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Display_Pause_InfoMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Gold_Gain_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Gold_Flat_BonusMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Attack_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Equip_UpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Display_Boss_RoomsMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTelescope_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopExt_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopHigh_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopMid_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopLow_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRightExt_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopRightRoof_Sprite" index="0" duration="1" label=""/>
+  <animation frame="2" name="TraitsCastleTopRightRoof_Sprite" index="1" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopRightHigh_Sprite" index="0" duration="1" label=""/>
+  <animation frame="2" name="TraitsCastleTopRightHigh_Sprite" index="1" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopRightLow_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRightRoof_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRight_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRightWindow_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleLeftExt_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRoofLeftmost_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleLeftmost_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRoofTopLeft_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopLeftHigh_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopLeftWindows_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopLeftMid_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTopLeftLow_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleLeftRoof_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleLeft_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleLeftWindow_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsBGMask_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleRoad_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleMidRoof_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleMid_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleMidWindowTop_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleMidWindowBottom_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTree1_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTree3_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleTree2_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="SkillTreeFlag_Sprite" index="0" duration="2" label=""/>
+  <animation frame="3" name="SkillTreeFlag_Sprite" index="1" duration="2" label=""/>
+  <animation frame="5" name="SkillTreeFlag_Sprite" index="2" duration="2" label=""/>
+  <animation frame="7" name="SkillTreeFlag_Sprite" index="3" duration="2" label=""/>
+  <animation frame="9" name="SkillTreeFlag_Sprite" index="4" duration="2" label=""/>
+  <animation frame="11" name="SkillTreeFlag_Sprite" index="5" duration="2" label=""/>
+  <animation frame="13" name="SkillTreeFlag_Sprite" index="6" duration="2" label=""/>
+  <animation frame="1" name="Icon_Boots_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Health_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Shield_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Sword_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Enchanter_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Smithy_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Architect_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Crit_Damage_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Crit_Chance_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_XP_Gain_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Display_Pause_Info_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Gold_Gain_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Gold_Flat_Bonus_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Attack_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Equip_Up_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Display_Boss_Rooms_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="IconHalo_Sprite" index="0" duration="1" label=""/>
+  <animation frame="2" name="IconHalo_Sprite" index="1" duration="1" label=""/>
+  <animation frame="3" name="IconHalo_Sprite" index="2" duration="1" label=""/>
+  <animation frame="4" name="IconHalo_Sprite" index="3" duration="1" label=""/>
+  <animation frame="1" name="TraitsCastleForSale_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="ManorTitleText_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_DeathDefy_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_DeathDefyLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_DeathDefyMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_Haggle_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_HaggleLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_HaggleMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_InvulnTimeUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_InvulnTimeUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_InvulnTimeUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_MagicDmgUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_MagicDmgUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_MagicDmgUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ManaCostDown_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ManaCostDownLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ManaCostDownMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ManaUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ManaUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_ManaUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_PotionUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_PotionUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_PotionUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_RandomizeChildren_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_RandomizeChildrenLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_RandomizeChildrenMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_AssassinUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_AssassinUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_AssassinUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_BarbarianUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_BarbarianUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_BarbarianUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_KnightUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_KnightUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_KnightUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_LichUnlock_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_LichUnlockLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_LichUnlockMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_LichUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_LichUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_LichUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_NinjaUnlock_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_NinjaUnlockLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_NinjaUnlockMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_NinjaUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_NinjaUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_NinjaUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpellswordUnlock_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpellswordUnlockLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpellswordUnlockMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpellswordUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpellswordUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpellswordUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpelunkerUnlock_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpelunkerUnlockLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpelunkerUnlockMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpelunkerUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpelunkerUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_SpelunkerUpMax_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_WizardUp_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_WizardUpLocked_Sprite" index="0" duration="1" label=""/>
+  <animation frame="1" name="Icon_WizardUpMax_Sprite" index="0" duration="1" label=""/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTelescope_Sprite" childX="389.19447097778317" childY="50.72057342529297" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopExt_Sprite" childX="376.4528366088867" childY="50.72057342529297" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopHigh_Sprite" childX="274.7695976257324" childY="24.73564910888672" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopMid_Sprite" childX="259.7794395446777" childY="46.223182678222656" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopLow_Sprite" childX="259.7794395446777" childY="65.31210784912109" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRightExt_Sprite" childX="437.7126159667969" childY="183.3436294555664" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopRightRoof_Sprite" childX="272.6210083007813" childY="89.44810485839844" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopRightHigh_Sprite" childX="271.72159881591796" childY="118.78108673095703" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopRightLow_Sprite" childX="284.26336441040036" childY="179.3959197998047" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRightRoof_Sprite" childX="301.7518821716308" childY="158.757893371582" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRight_Sprite" childX="314.24368057250973" childY="203.3820037841797" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRightWindow_Sprite" childX="348.2713394165039" childY="252.30362091064453" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleLeftExt_Sprite" childX="14.74032211303711" childY="181.59464416503906" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRoofLeftmost_Sprite" childX="43.72129440307617" childY="153.66085052490234" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleLeftmost_Sprite" childX="33.22818374633789" childY="189.49006347656248" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRoofTopLeft_Sprite" childX="70.20390701293945" childY="60.56486206054688" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopLeftHigh_Sprite" childX="67.65558013916016" childY="89.19824981689453" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopLeftWindows_Sprite" childX="84.89426193237306" childY="107.53760986328125" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopLeftMid_Sprite" childX="62.658860778808595" childY="150.2628219604492" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTopLeftLow_Sprite" childX="57.71210861206055" childY="231.3157974243164" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleLeftRoof_Sprite" childX="93.88835678100587" childY="158.757893371582" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleLeft_Sprite" childX="85.7437042236328" childY="203.3320327758789" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleLeftWindow_Sprite" childX="121.2204116821289" childY="250.05492553710937" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsBGMask_Sprite" childX="55.9632568359375" childY="325.81097412109375" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleRoad_Sprite" childX="49.66739044189453" childY="322.8127136230469" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleMidRoof_Sprite" childX="185.67809143066407" childY="145.01586608886717" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleMid_Sprite" childX="181.53081436157228" childY="171.3505874633789" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleMidWindowTop_Sprite" childX="225.00227279663088" childY="190.98919372558592" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleMidWindowBottom_Sprite" childX="225.00227279663088" childY="230.96600036621092" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTree1_Sprite" childX="64.10790939331055" childY="338.30372619628906" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTree3_Sprite" childX="113.97516860961913" childY="344.20030517578124" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="TraitsCastleTree2_Sprite" childX="425.9703254699707" childY="340.70233459472655" childRotation="0"/>
+  <container name="TraitsCastle_Character" child="SkillTreeFlag_Sprite" childX="322.4383003234863" childY="-32.63106842041015" childRotation="0"/>
+</xml>
