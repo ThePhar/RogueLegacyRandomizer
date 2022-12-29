@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - LineageScreen.cs
-// Last Modified 2022-10-24
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -427,10 +418,13 @@ namespace RogueLegacy.Screens
 
         public void LoadCurrentBranches()
         {
+            var childrenCount = Program.Game.ArchipelagoManager.RandomizerData.NumberOfChildren;
+            if (childrenCount == 0)
+                childrenCount = CDGMath.RandomInt(1, 5);
+
             if (Game.PlayerStats.CurrentBranches == null || Game.PlayerStats.CurrentBranches.Count < 1)
             {
-                AddLineageRow(Program.Game.ArchipelagoManager.RandomizerData.NumberOfChildren,
-                    _masterArray[_masterArray.Count - 1].Position, false, true);
+                AddLineageRow(childrenCount, _masterArray[_masterArray.Count - 1].Position, false, true);
                 var list = new List<PlayerLineageData>();
                 for (var i = 0; i < _currentBranchArray.Count; i++)
                 {
@@ -455,8 +449,7 @@ namespace RogueLegacy.Screens
                 return;
             }
 
-            AddLineageRow(Program.Game.ArchipelagoManager.RandomizerData.NumberOfChildren,
-                _masterArray[_masterArray.Count - 1].Position, true, true);
+            AddLineageRow(childrenCount, _masterArray[_masterArray.Count - 1].Position, true, true);
             var currentBranches = Game.PlayerStats.CurrentBranches;
             for (var j = 0; j < _currentBranchArray.Count; j++)
             {
