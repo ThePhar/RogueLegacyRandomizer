@@ -1,12 +1,3 @@
-// Rogue Legacy Randomizer - EnemyObj.cs
-// Last Modified 2022-10-24
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -1082,7 +1073,7 @@ namespace RogueLegacy
                 var num7 =
                     (int)
                     Math.Round(
-                        (m_target.BaseHealth + m_target.GetEquipmentHealth() + Game.PlayerStats.BonusHealth * 5 +
+                        (m_target.BaseHealth + m_target.GetEquipmentHealth() + Game.PlayerStats.BonusHealth * 10 +
                          SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
                          SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount) * 1f,
                         MidpointRounding.AwayFromZero);

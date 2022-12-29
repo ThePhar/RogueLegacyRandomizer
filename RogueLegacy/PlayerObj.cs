@@ -245,7 +245,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             var num =
                 (int)
                 ((BaseMagicDamage + SkillSystem.GetSkill(SkillType.MagicDamageUp).ModifierAmount +
-                  GetEquipmentMagicDamage() + Game.PlayerStats.BonusMagic) * ClassMagicDamageGivenMultiplier);
+                  GetEquipmentMagicDamage() + Game.PlayerStats.BonusMagic * 2) * ClassMagicDamageGivenMultiplier);
             if (num < 1) num = 1;
 
             return num;
@@ -271,7 +271,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public int RandomDamage =>
         CDGMath.RandomInt(MinDamage + GetEquipmentDamage(), MaxDamage + GetEquipmentDamage()) +
-        Game.PlayerStats.BonusStrength + DamageGainPerLevel * Game.PlayerStats.CurrentLevel;
+        Game.PlayerStats.BonusStrength * 2 + DamageGainPerLevel * Game.PlayerStats.CurrentLevel;
 
     public float MaxMana
     {
@@ -283,7 +283,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     (int)
                     Math.Round(
                         (BaseHealth + GetEquipmentHealth() + HealthGainPerLevel * Game.PlayerStats.CurrentLevel +
-                         Game.PlayerStats.BonusHealth * 5 +
+                         Game.PlayerStats.BonusHealth * 10 +
                          SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
                          SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount) * ClassTotalHPMultiplier *
                         Game.PlayerStats.LichHealthMod, MidpointRounding.AwayFromZero) +
@@ -296,7 +296,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             var num2 =
                 (int)
                 ((BaseMana + GetEquipmentMana() + ManaGainPerLevel * Game.PlayerStats.CurrentLevel +
-                  Game.PlayerStats.BonusMana * 5 + SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
+                  Game.PlayerStats.BonusMana * 10 + SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
                   SkillSystem.GetSkill(SkillType.ManaUpFinal).ModifierAmount) * ClassTotalMPMultiplier) +
                 Game.PlayerStats.LichMana;
             if (num2 < 1) num2 = 1;
@@ -314,7 +314,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 var num =
                     (int)
                     ((BaseMana + GetEquipmentMana() + ManaGainPerLevel * Game.PlayerStats.CurrentLevel +
-                      Game.PlayerStats.BonusMana * 5 + SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
+                      Game.PlayerStats.BonusMana * 10 + SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
                       SkillSystem.GetSkill(SkillType.ManaUpFinal).ModifierAmount) * ClassTotalMPMultiplier) +
                     Game.PlayerStats.LichMana;
                 if (num < 1) num = 1;
@@ -326,7 +326,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 (int)
                 Math.Round(
                     (BaseHealth + GetEquipmentHealth() + HealthGainPerLevel * Game.PlayerStats.CurrentLevel +
-                     Game.PlayerStats.BonusHealth * 5 + SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
+                     Game.PlayerStats.BonusHealth * 10 + SkillSystem.GetSkill(SkillType.HealthUp).ModifierAmount +
                      SkillSystem.GetSkill(SkillType.HealthUpFinal).ModifierAmount) * ClassTotalHPMultiplier *
                     Game.PlayerStats.LichHealthMod, MidpointRounding.AwayFromZero) + Game.PlayerStats.LichHealth;
             if (num2 < 1) num2 = 1;
@@ -345,7 +345,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
     public int MaxWeight =>
         (int)
         (BaseWeight + SkillSystem.GetSkill(SkillType.EquipUp).ModifierAmount +
-         SkillSystem.GetSkill(SkillType.EquipUpFinal).ModifierAmount) + Game.PlayerStats.BonusWeight * 5;
+         SkillSystem.GetSkill(SkillType.EquipUpFinal).ModifierAmount) + Game.PlayerStats.BonusWeight * 10;
 
     public bool CanFly => Game.PlayerStats.Class == 16 || TotalFlightTime > 0f;
 
@@ -472,7 +472,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                       (int) GetEquipmentSecondaryAttrib(15));
 
     public float TotalArmor =>
-        SkillSystem.GetSkill(SkillType.ArmorUp).ModifierAmount + Game.PlayerStats.BonusDefense * 2 +
+        SkillSystem.GetSkill(SkillType.ArmorUp).ModifierAmount + Game.PlayerStats.BonusDefense * 4 +
         GetEquipmentArmor();
 
     public float TotalDamageReduc => TotalArmor / (ArmorReductionMod + TotalArmor);
@@ -3154,7 +3154,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             var num2 = (int) (Game.PlayerStats.LichHealth * 0.5f);
             var num3 =
                 (int)
-                ((BaseMana + GetEquipmentMana() + Game.PlayerStats.BonusMana * 5 +
+                ((BaseMana + GetEquipmentMana() + Game.PlayerStats.BonusMana * 10 +
                   SkillSystem.GetSkill(SkillType.ManaUp).ModifierAmount +
                   SkillSystem.GetSkill(SkillType.ManaUpFinal).ModifierAmount) * 2f);
             if (MaxMana + num + num2 < num3)

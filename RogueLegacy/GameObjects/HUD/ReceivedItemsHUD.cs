@@ -151,12 +151,12 @@ public sealed class ReceivedItemElement : ObjContainer
     {
         return (ItemDropType) type switch
         {
-            ItemDropType.StatStrength  => "+1 ATK",
-            ItemDropType.StatMagic     => "+1 MAG",
-            ItemDropType.StatDefense   => "+1 DEF",
-            ItemDropType.StatMaxHealth => "+5 HP",
-            ItemDropType.StatMaxMana   => "+5 MP",
-            ItemDropType.StatWeight    => "+5 WGT",
+            ItemDropType.StatStrength  => "+2 ATK",
+            ItemDropType.StatMagic     => "+2 MAG",
+            ItemDropType.StatDefense   => "+4 DEF",
+            ItemDropType.StatMaxHealth => "+10 HP",
+            ItemDropType.StatMaxMana   => "+10 MP",
+            ItemDropType.StatWeight    => "+10 WGT",
             _                          => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }

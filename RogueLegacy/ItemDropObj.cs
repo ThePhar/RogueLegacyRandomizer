@@ -138,39 +138,39 @@ namespace RogueLegacy
 
                 case 4:
                     Game.PlayerStats.BonusStrength++;
-                    textManager.DisplayStringNumberText("Attack Up", 1, Color.LightSteelBlue,
+                    textManager.DisplayStringNumberText("Attack Up", 2, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     return;
 
                 case 5:
                     Game.PlayerStats.BonusMagic++;
-                    textManager.DisplayStringNumberText("Magic Up", 1, Color.LightSteelBlue,
+                    textManager.DisplayStringNumberText("Magic Up", 2, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     return;
 
                 case 6:
                     Game.PlayerStats.BonusDefense++;
-                    textManager.DisplayStringNumberText("Armor Up", 2, Color.LightSteelBlue,
+                    textManager.DisplayStringNumberText("Armor Up", 4, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     return;
 
                 case 7:
                     Game.PlayerStats.BonusHealth++;
-                    textManager.DisplayStringNumberText("Max Health Up", 5, Color.LightSteelBlue,
+                    textManager.DisplayStringNumberText("Max Health Up", 10, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     player.CurrentHealth += 5;
                     return;
 
                 case 8:
                     Game.PlayerStats.BonusMana++;
-                    textManager.DisplayStringNumberText("Max Mana Up", 5, Color.LightSteelBlue,
+                    textManager.DisplayStringNumberText("Max Mana Up", 10, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     player.CurrentMana += 5f;
                     return;
 
                 case 9:
                     Game.PlayerStats.BonusWeight++;
-                    textManager.DisplayStringNumberText("Max Weight Up", 5, Color.LightSteelBlue,
+                    textManager.DisplayStringNumberText("Max Weight Up", 10, Color.LightSteelBlue,
                         new Vector2(X, Bounds.Top));
                     break;
 
