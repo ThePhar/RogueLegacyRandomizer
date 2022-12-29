@@ -11,28 +11,38 @@ public class PlayerHUD : SpriteObj
 {
     private const int MaxBarLength = 360;
 
-    private SpriteObj[]      _abilitiesSpriteArray;
-    private SpriteObj        _coin;
-    private TextObj          _goldText;
-    private SpriteObj        _hpBar;
-    private ObjContainer     _hpBarContainer;
-    private TextObj          _hpText;
-    private SpriteObj        _iconHolder1;
-    private SpriteObj        _iconHolder2;
-    private SpriteObj        _mpBar;
-    private ObjContainer     _mpBarContainer;
-    private TextObj          _mpText;
-    private TextObj          _playerLevelText;
-    private SpriteObj        _specialItemIcon;
-    private TextObj          _spellCost;
-    private SpriteObj        _spellIcon;
-    private ReceivedItemsHUD _receivedItemsHUD;
+    private          SpriteObj[]      _abilitiesSpriteArray;
+    private          SpriteObj        _coin;
+    private          TextObj          _goldText;
+    private readonly SpriteObj        _fountainPiece;
+    private readonly TextObj          _fountainPieceText;
+    private          SpriteObj        _hpBar;
+    private          ObjContainer     _hpBarContainer;
+    private          TextObj          _hpText;
+    private          SpriteObj        _iconHolder1;
+    private          SpriteObj        _iconHolder2;
+    private          SpriteObj        _mpBar;
+    private          ObjContainer     _mpBarContainer;
+    private          TextObj          _mpText;
+    private          TextObj          _playerLevelText;
+    private          SpriteObj        _specialItemIcon;
+    private          TextObj          _spellCost;
+    private          SpriteObj        _spellIcon;
+    private          ReceivedItemsHUD _receivedItemsHUD;
 
     public PlayerHUD() : base("PlayerHUDLvlText_Sprite")
     {
         ForceDraw = true;
 
         _coin = new SpriteObj("PlayerUICoin_Sprite") { ForceDraw = true };
+        _fountainPiece = new SpriteObj("TeleportRock4_Sprite")
+        {
+            ForceDraw = true,
+            OutlineColour = Color.Black,
+            OutlineWidth = 2,
+            Anchor = new Vector2(0, 0)
+        };
+
         _hpBar = new SpriteObj("HPBar_Sprite") { ForceDraw = true };
         _mpBar = new SpriteObj("MPBar_Sprite") { ForceDraw = true };
         _hpBarContainer = new ObjContainer("PlayerHUDHPBar_Character") { ForceDraw = true };
@@ -48,6 +58,15 @@ public class PlayerHUD : SpriteObj
             Text = "0",
             Font = Game.GoldFont,
             FontSize = 25f
+        };
+        _fountainPieceText = new TextObj
+        {
+            Text = "0",
+            Font = Game.BitFont,
+            FontSize = 17f,
+            OutlineColour = Color.Black,
+            OutlineWidth = 2,
+            TextureColor = Color.MediumPurple
         };
         _hpText = new TextObj(Game.JunicodeFont)
         {
@@ -187,10 +206,17 @@ public class PlayerHUD : SpriteObj
 
         _playerLevelText.Text = level.ToString();
         _goldText.Text = gold.ToString();
+
+        _fountainPieceText.Text =
+            $"{Game.PlayerStats.FountainPieces}/{Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement}";
         _hpText.Text = player.CurrentHealth + "/" + player.MaxHealth;
         _mpText.Text = player.CurrentMana + "/" + player.MaxMana;
         UpdatePlayerHP(player);
         UpdatePlayerMP(player);
+
+        _fountainPiece.Position = new Vector2(X, _spellCost.Bounds.Bottom + 12f);
+        _fountainPieceText.Position = new Vector2(_fountainPiece.X + 24f, _fountainPiece.Y);
+
         _receivedItemsHUD.Update();
     }
 
@@ -300,6 +326,12 @@ public class PlayerHUD : SpriteObj
         if (!ShowBarsOnly)
         {
             base.Draw(camera);
+            if (Program.Game.ArchipelagoManager.RandomizerData.FountainHuntMode)
+            {
+                _fountainPiece.Draw(camera);
+                _fountainPieceText.Draw(camera);
+            }
+
             _coin.Draw(camera);
             _playerLevelText.Draw(camera);
             _goldText.Draw(camera);

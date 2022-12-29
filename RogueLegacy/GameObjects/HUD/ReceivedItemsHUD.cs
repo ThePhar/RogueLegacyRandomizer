@@ -118,6 +118,17 @@ public sealed class ReceivedItemElement : ObjContainer
             case ItemCode.ItemType.Skill:
                 _icon = new SpriteObj(GetItemScreen.GetSkillPlateIcon(item, out _));
                 break;
+            case ItemCode.ItemType.Fountain:
+                var randomSprite = new[]
+                {
+                    "TeleportRock1_Sprite",
+                    "TeleportRock2_Sprite",
+                    "TeleportRock3_Sprite",
+                    "TeleportRock4_Sprite",
+                    "TeleportRock5_Sprite"
+                };
+                _icon = new SpriteObj(randomSprite[CDGMath.RandomInt(0, 4)]);
+                break;
             default:
                 _icon = new SpriteObj("BlueprintIcon_Sprite");
                 break;

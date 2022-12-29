@@ -631,6 +631,7 @@ namespace RogueLegacy
                     binaryWriter.Write(Game.PlayerStats.SpokenToLastBoss);
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
                     binaryWriter.Write(Game.ProfileName);
+                    binaryWriter.Write(Game.PlayerStats.FountainPieces);
                     var value = Game.PlayerStats.TotalHoursPlayed + Game.PlaySessionLength;
                     binaryWriter.Write(value);
                     binaryWriter.Write((byte) Game.PlayerStats.WizardSpellList.X);
@@ -1441,6 +1442,7 @@ namespace RogueLegacy
                     Game.PlayerStats.SpokenToLastBoss = binaryReader.ReadBoolean();
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
                     Game.ProfileName = binaryReader.ReadString();
+                    Game.PlayerStats.FountainPieces = binaryReader.ReadInt32();
                     Game.PlayerStats.TotalHoursPlayed = binaryReader.ReadSingle();
                     var b = binaryReader.ReadByte();
                     var b2 = binaryReader.ReadByte();

@@ -510,7 +510,6 @@ public class Game : Microsoft.Xna.Framework.Game
                     var newGame = !PlayerStats.CharacterFound;
                     var heroIsDead = PlayerStats.IsDead;
                     var startingRoom = PlayerStats.LoadStartingRoom;
-                    LevelENV.WeakenBosses = true;
 
                     if (newGame)
                     {
@@ -1229,6 +1228,10 @@ public class Game : Microsoft.Xna.Framework.Game
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Dark] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Limbs][(int) EquipmentBase.Dark] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][(int) EquipmentBase.Dark] = equipStatus;
+                break;
+
+            case ItemCode.FOUNTAIN_PIECE:
+                PlayerStats.FountainPieces += 1;
                 break;
 
             case ItemCode.GOLD_1000:

@@ -61,7 +61,8 @@ namespace RogueLegacy
             ReceivedItems = new List<NetworkItem>();
         }
 
-        public int CurrentLevel { get; set; }
+        public int CurrentLevel   { get; set; }
+        public int FountainPieces { get; set; }
 
         public int Gold
         {

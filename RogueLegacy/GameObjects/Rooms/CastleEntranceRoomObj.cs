@@ -184,27 +184,56 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (Game.PlayerStats.FireballBossBeaten) RevealSymbol(Zone.Tower, false);
 
-        if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
-            Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
-            !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
+        if (Program.Game.ArchipelagoManager.RandomizerData.FountainHuntMode)
         {
-            PlayBossDoorAnimation();
+            if (Game.PlayerStats.FountainPieces > Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement
+                && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
+            {
+                PlayBossDoorAnimation();
+            }
+            else if (Game.PlayerStats.FinalDoorOpened)
+            {
+                _bossDoor.Locked = false;
+                _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
+                _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
+            }
         }
-        else if (Game.PlayerStats.FinalDoorOpened)
+        else
         {
-            _bossDoor.Locked = false;
-            _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
-            _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
+            if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
+                Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
+                !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
+            {
+                PlayBossDoorAnimation();
+            }
+            else if (Game.PlayerStats.FinalDoorOpened)
+            {
+                _bossDoor.Locked = false;
+                _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
+                _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
+            }
         }
 
         if (!_gateClosed) CloseGate(true);
 
-        if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
-            Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
-            !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
+        if (Program.Game.ArchipelagoManager.RandomizerData.FountainHuntMode)
         {
-            Game.PlayerStats.FinalDoorOpened = true;
-            Player.AttachedLevel.RunCinematicBorders(6f);
+            if (Game.PlayerStats.FountainPieces > Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement
+                && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
+            {
+                Game.PlayerStats.FinalDoorOpened = true;
+                Player.AttachedLevel.RunCinematicBorders(6f);
+            }
+        }
+        else
+        {
+            if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
+                Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
+                !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
+            {
+                Game.PlayerStats.FinalDoorOpened = true;
+                Player.AttachedLevel.RunCinematicBorders(6f);
+            }
         }
 
         // Enable death links now that we are in the castle.

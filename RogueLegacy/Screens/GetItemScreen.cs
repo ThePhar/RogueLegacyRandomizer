@@ -311,7 +311,7 @@ namespace RogueLegacy.Screens
                             _itemFoundText.Y += 40f;
                             _itemSprite.ChangeSprite("BlueprintIcon_Sprite");
                             _itemSpinning = true;
-                            _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                            _itemFoundSprite.ChangeSprite("BlueprintFoundText_Sprite");
                             _itemFoundText.Text = GetBlueprintName(_network_item);
                             _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             break;
@@ -363,9 +363,27 @@ namespace RogueLegacy.Screens
                         case ItemCode.ItemType.Gold:
                             _itemFoundText.Y += 40f;
                             _itemSprite.ChangeSprite("MoneyBag_Sprite");
-                            _itemSprite.StopAnimation();
+                            _itemSprite.GoToFrame(_itemSprite.TotalFrames);
                             _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                             _itemFoundText.Text = $"{(int) _itemInfo.Y} Gold";
+                            _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
+                            break;
+
+                        case ItemCode.ItemType.Fountain:
+                            _itemFoundText.Y += 40f;
+                            var randomSprite = new[]
+                            {
+                                "TeleportRock1_Sprite",
+                                "TeleportRock2_Sprite",
+                                "TeleportRock3_Sprite",
+                                "TeleportRock4_Sprite",
+                                "TeleportRock5_Sprite"
+                            };
+
+                            _itemSprite.ChangeSprite(randomSprite[CDGMath.RandomInt(0, 4)]);
+                            _itemSpinning = true;
+                            _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
+                            _itemFoundText.Text = "a Fountain Piece!";
                             _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             break;
                     }
@@ -621,6 +639,8 @@ namespace RogueLegacy.Screens
             {
                 return SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName.Replace("Locked", "");
             }
+
+            if (item == ItemCode.FOUNTAIN_PIECE) return "IconBoot_Sprite";
 
             return "Icon_AP_Sprite";
         }

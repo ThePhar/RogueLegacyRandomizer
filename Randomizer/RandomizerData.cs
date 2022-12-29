@@ -46,23 +46,25 @@ public class RandomizerData
     public string                        Seed              { get; }
     public int                           Slot              { get; }
 
-    public bool StartingGender        => Convert.ToBoolean(_settings["starting_gender"]);
-    public byte StartingClass         => Convert.ToByte(_settings["starting_class"]);
-    public int  NewGamePlus           => Convert.ToInt32(_settings["new_game_plus"]);
-    public int  ChestsPerZone         => Convert.ToInt32(_settings["chests_per_zone"]);
-    public int  FairyChestsPerZone    => Convert.ToInt32(_settings["fairy_chests_per_zone"]);
-    public bool UniversalChests       => Convert.ToBoolean(_settings["universal_chests"]);
-    public bool UniversalFairyChests  => Convert.ToBoolean(_settings["universal_fairy_chests"]);
-    public int  ArchitectFee          => Convert.ToInt32(_settings["architect_fee"]);
-    public bool DisableCharon         => Convert.ToBoolean(_settings["disable_charon"]);
-    public bool RequirePurchasing     => Convert.ToBoolean(_settings["require_purchasing"]);
-    public int  NumberOfChildren      => Convert.ToInt32(_settings["number_of_children"]);
-    public bool FreeDiaryOnGeneration => Convert.ToBoolean(_settings["free_diary_on_generation"]);
-    public bool ChallengeKhidr        => Convert.ToBoolean(_settings["khidr"]);
-    public bool ChallengeAlexander    => Convert.ToBoolean(_settings["alexander"]);
-    public bool ChallengeLeon         => Convert.ToBoolean(_settings["leon"]);
-    public bool ChallengeHerodotus    => Convert.ToBoolean(_settings["herodotus"]);
-    public bool DeathLink             => Convert.ToBoolean(_settings["death_link"]);
+    public bool StartingGender          => Convert.ToBoolean(_settings["starting_gender"]);
+    public byte StartingClass           => Convert.ToByte(_settings["starting_class"]);
+    public int  NewGamePlus             => Convert.ToInt32(_settings["new_game_plus"]);
+    public int  ChestsPerZone           => Convert.ToInt32(_settings["chests_per_zone"]);
+    public int  FairyChestsPerZone      => Convert.ToInt32(_settings["fairy_chests_per_zone"]);
+    public bool UniversalChests         => Convert.ToBoolean(_settings["universal_chests"]);
+    public bool UniversalFairyChests    => Convert.ToBoolean(_settings["universal_fairy_chests"]);
+    public int  ArchitectFee            => Convert.ToInt32(_settings["architect_fee"]);
+    public bool DisableCharon           => Convert.ToBoolean(_settings["disable_charon"]);
+    public bool RequirePurchasing       => Convert.ToBoolean(_settings["require_purchasing"]);
+    public int  NumberOfChildren        => Convert.ToInt32(_settings["number_of_children"]);
+    public bool FreeDiaryOnGeneration   => Convert.ToBoolean(_settings["free_diary_on_generation"]);
+    public bool ChallengeKhidr          => Convert.ToBoolean(_settings["khidr"]);
+    public bool ChallengeAlexander      => Convert.ToBoolean(_settings["alexander"]);
+    public bool ChallengeLeon           => Convert.ToBoolean(_settings["leon"]);
+    public bool ChallengeHerodotus      => Convert.ToBoolean(_settings["herodotus"]);
+    public bool FountainHuntMode        => Convert.ToBoolean(_settings["goal"]);
+    public int  FountainHuntRequirement => Convert.ToInt32(_settings["fountain_hunt_requirement"]);
+    public bool DeathLink               => Convert.ToBoolean(_settings["death_link"]);
 
     public float GoldGainMultiplier => Convert.ToInt32(_settings["gold_gain_multiplier"]) switch
     {
