@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - GameEV.cs
+// Last Modified 2023-05-27 2:39 PM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using DS2DEngine;
 using RogueLegacy.Enums;
 using static RogueLegacy.Enums.InputType;
@@ -127,7 +136,17 @@ namespace RogueLegacy
             "Hylics 2",
             "Overcooked! 2",
             "Zillion",
-            "Lufia II: Ancient Cave"
+            "Lufia II: Ancient Cave",
+            "Blasphemous",
+            "Wargroove",
+            "Stardew Valley",
+            "The Legend of Zelda",
+            "The Messenger",
+            "Link's Awakening DX",
+            "Clique... actually no",
+            "Adventure",
+            "DLC Quest",
+            "Noita"
         };
 
         public static string[] GameHints => new[]

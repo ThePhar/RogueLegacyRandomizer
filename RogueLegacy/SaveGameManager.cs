@@ -57,7 +57,7 @@ namespace RogueLegacy
             asyncResult.AsyncWaitHandle.WaitOne();
             var storageDevice = StorageDevice.EndShowSelector(asyncResult);
             asyncResult.AsyncWaitHandle.Close();
-            asyncResult = storageDevice.BeginOpenContainer("RogueLegacyArchipelagoStorageContainer", null, null);
+            asyncResult = storageDevice.BeginOpenContainer("RogueLegacyRandomizerStorageContainer", null, null);
             asyncResult.AsyncWaitHandle.WaitOne();
             m_storageContainer = storageDevice.EndOpenContainer(asyncResult);
             asyncResult.AsyncWaitHandle.Close();

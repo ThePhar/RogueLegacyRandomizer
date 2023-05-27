@@ -1,9 +1,16 @@
-﻿using System;
+﻿// RogueLegacyRandomizer - RandomizerData.cs
+// Last Modified 2023-05-27 2:14 PM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
+using System;
 using System.Collections.Generic;
-using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Models;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
 using RogueLegacy;
 using RogueLegacy.Enums;
 using Color = Microsoft.Xna.Framework.Color;
@@ -21,23 +28,23 @@ public class RandomizerData
         Slot = slot;
 
         // Initialize our locations dictionaries.
-        foreach (var jToken in (JArray) _settings["active_locations"])
-        {
-            var obj = (JObject) jToken;
-            var item = new NetworkItem
-            {
-                Item = Convert.ToInt64(obj["item"]),
-                Location = Convert.ToInt64(obj["location"]),
-                Player = Convert.ToInt32(obj["player"]),
-                Flags = (ItemFlags) Convert.ToInt32(obj["flags"])
-            };
-            ActiveLocations.Add(item.Location, item);
-            CheckedLocations.Add(item.Location, false);
-        }
+        // foreach (var jToken in (JArray) _settings["active_locations"])
+        // {
+        //     var obj = (JObject) jToken;
+        //     var item = new NetworkItem
+        //     {
+        //         Item = Convert.ToInt64(obj["item"]),
+        //         Location = Convert.ToInt64(obj["location"]),
+        //         Player = Convert.ToInt32(obj["player"]),
+        //         Flags = (ItemFlags) Convert.ToInt32(obj["flags"])
+        //     };
+        //     ActiveLocations.Add(item.Location, item);
+        //     CheckedLocations.Add(item.Location, false);
+        // }
 
         // Add our starting inventory into memory so we can collect them on a new save.
-        foreach (var item in (JArray) _settings["starting_inventory"])
-            StartingInventory.Add(Convert.ToInt64(item));
+        // foreach (var item in (JArray) _settings["starting_inventory"])
+        //     StartingInventory.Add(Convert.ToInt64(item));
     }
 
     public Dictionary<long, NetworkItem> ActiveLocations   { get; } = new();
@@ -62,10 +69,16 @@ public class RandomizerData
     public bool ChallengeAlexander      => Convert.ToBoolean(_settings["alexander"]);
     public bool ChallengeLeon           => Convert.ToBoolean(_settings["leon"]);
     public bool ChallengeHerodotus      => Convert.ToBoolean(_settings["herodotus"]);
-    public bool FountainHuntMode        => Convert.ToBoolean(_settings["goal"]);
-    public int  FountainHuntRequirement => Convert.ToInt32(_settings["fountain_hunt_requirement"]);
-    public int  AutomaticUpgrades       => Convert.ToInt32(_settings["automatic_upgrades"]);
     public bool DeathLink               => Convert.ToBoolean(_settings["death_link"]);
+
+    // TODO: Add these
+    // public bool FountainHuntMode        => Convert.ToBoolean(_settings["goal"]);
+    // public int  FountainHuntRequirement => Convert.ToInt32(_settings["fountain_hunt_requirement"]);
+    // public int  AutomaticUpgrades       => Convert.ToInt32(_settings["automatic_upgrades"]);
+
+    public bool FountainHuntMode        => false;
+    public int  FountainHuntRequirement => 1;
+    public int  AutomaticUpgrades       => 0;
 
     public float GoldGainMultiplier => Convert.ToInt32(_settings["gold_gain_multiplier"]) switch
     {
@@ -77,7 +90,8 @@ public class RandomizerData
         _ => 1f
     };
 
-    public AreaStruct[] AreaStructs => Convert.ToInt32(_settings["castle_size"]) switch
+    // TODO: Change back to castle_size.
+    public AreaStruct[] AreaStructs => (1) switch
     {
         // Normal or Vanilla
         0 => new[]

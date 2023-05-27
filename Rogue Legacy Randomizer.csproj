@@ -6,10 +6,10 @@
         <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
         <OutputType>WinExe</OutputType>
         <AssemblyName>Rogue Legacy Randomizer</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
         <TargetFrameworkProfile></TargetFrameworkProfile>
         <WarningLevel>4</WarningLevel>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
         <PlatformTarget>x86</PlatformTarget>
@@ -27,7 +27,7 @@
         <Optimize>true</Optimize>
     </PropertyGroup>
     <PropertyGroup>
-        <ApplicationIcon>ico\RLE.ico</ApplicationIcon>
+        <ApplicationIcon>ico\RLR.ico</ApplicationIcon>
     </PropertyGroup>
     <PropertyGroup>
         <StartupObject>RogueLegacy.Program</StartupObject>
@@ -40,8 +40,8 @@
         <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Archipelago.MultiClient.Net, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\Archipelago.MultiClient.Net.4.2.0\lib\net40\Archipelago.MultiClient.Net.dll</HintPath>
+        <Reference Include="Archipelago.MultiClient.Net, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.5.0.4\lib\net45\Archipelago.MultiClient.Net.dll</HintPath>
         </Reference>
         <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\DS2DEngine.dll</HintPath>
@@ -56,8 +56,8 @@
           <HintPath>lib\InputSystem.dll</HintPath>
         </Reference>
         <Reference Include="mscorlib" />
-        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\Archipelago.MultiClient.Net.4.2.0\lib\net40\Newtonsoft.Json.dll</HintPath>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>lib\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\SpriteSystem.dll</HintPath>
@@ -72,28 +72,25 @@
         <Reference Include="Tweener, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\Tweener.dll</HintPath>
         </Reference>
-        <Reference Include="websocket-sharp, Version=1.0.2.34775, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
-            <HintPath>packages\Archipelago.MultiClient.Net.4.2.0\lib\net40\websocket-sharp.dll</HintPath>
-        </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Randomizer\ArchipelagoManager.cs"/>
-        <Compile Include="Randomizer\Definitions\ItemCode.cs"/>
-        <Compile Include="Randomizer\ConnectionStatus.cs"/>
-        <Compile Include="Randomizer\ConnectionInfo.cs"/>
-        <Compile Include="Randomizer\Definitions\LocationCode.cs"/>
-        <Compile Include="Randomizer\RandomizerData.cs"/>
-        <Compile Include="IsExternalInit.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="RandomChaos\BasePostProcess.cs"/>
-        <Compile Include="RandomChaos\BasePostProcessingEffect.cs"/>
-        <Compile Include="RandomChaos\CrepuscularRays.cs"/>
-        <Compile Include="RandomChaos\LightRay.cs"/>
-        <Compile Include="RandomChaos\LightSourceMask.cs"/>
-        <Compile Include="RandomChaos\PostProcessingManager.cs"/>
-        <Compile Include="RandomChaos\ScreenQuad.cs"/>
-        <Compile Include="RogueLegacy\BackToMenuOptionsObj.cs"/>
-        <Compile Include="RogueLegacy\BlacksmithObj.cs"/>
+        <Compile Include="Randomizer\ArchipelagoManager.cs" />
+        <Compile Include="Randomizer\Definitions\ItemCode.cs" />
+        <Compile Include="Randomizer\ConnectionStatus.cs" />
+        <Compile Include="Randomizer\ConnectionInfo.cs" />
+        <Compile Include="Randomizer\Definitions\LocationCode.cs" />
+        <Compile Include="Randomizer\RandomizerData.cs" />
+        <Compile Include="IsExternalInit.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RandomChaos\BasePostProcess.cs" />
+        <Compile Include="RandomChaos\BasePostProcessingEffect.cs" />
+        <Compile Include="RandomChaos\CrepuscularRays.cs" />
+        <Compile Include="RandomChaos\LightRay.cs" />
+        <Compile Include="RandomChaos\LightSourceMask.cs" />
+        <Compile Include="RandomChaos\PostProcessingManager.cs" />
+        <Compile Include="RandomChaos\ScreenQuad.cs" />
+        <Compile Include="RogueLegacy\BackToMenuOptionsObj.cs" />
+        <Compile Include="RogueLegacy\BlacksmithObj.cs" />
         <Compile Include="RogueLegacy\BorderObj.cs" />
         <Compile Include="RogueLegacy\BreakableObj.cs" />
         <Compile Include="RogueLegacy\ChangeControlsOptionsObj.cs" />
@@ -161,28 +158,28 @@
         <Compile Include="RogueLegacy\EquipmentData.cs" />
         <Compile Include="RogueLegacy\EquipmentState.cs" />
         <Compile Include="RogueLegacy\EquipmentSystem.cs" />
-        <Compile Include="RogueLegacy\ExitProgramOptionsObj.cs"/>
-        <Compile Include="RogueLegacy\FairyChestObj.cs"/>
-        <Compile Include="RogueLegacy\FamilyTreeNode.cs"/>
-        <Compile Include="RogueLegacy\FireProjectileLogicAction.cs"/>
-        <Compile Include="RogueLegacy\FrameRateCounter.cs"/>
-        <Compile Include="RogueLegacy\FullScreenOptionsObj.cs"/>
-        <Compile Include="RogueLegacy\Game.cs"/>
-        <Compile Include="RogueLegacy\GameEV.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\DeathLinkObj.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\HUD\ArchipelagoStatusIndicator.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\HUD\PlayerHUD.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\HUD\ReceivedItemsHUD.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\RetireObj.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\ArenaBonusRoom.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\BlobBossRoom.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\BlobChallengeRoom.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\BonusRoomObj.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\BossRoomObj.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\CarnivalShoot1BonusRoom.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\CarnivalShoot2BonusRoom.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\CastleEntranceRoomObj.cs"/>
-        <Compile Include="RogueLegacy\GameObjects\Rooms\ChallengeBossRoomObj.cs"/>
+        <Compile Include="RogueLegacy\ExitProgramOptionsObj.cs" />
+        <Compile Include="RogueLegacy\FairyChestObj.cs" />
+        <Compile Include="RogueLegacy\FamilyTreeNode.cs" />
+        <Compile Include="RogueLegacy\FireProjectileLogicAction.cs" />
+        <Compile Include="RogueLegacy\FrameRateCounter.cs" />
+        <Compile Include="RogueLegacy\FullScreenOptionsObj.cs" />
+        <Compile Include="RogueLegacy\Game.cs" />
+        <Compile Include="RogueLegacy\GameEV.cs" />
+        <Compile Include="RogueLegacy\GameObjects\DeathLinkObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\HUD\ArchipelagoStatusIndicator.cs" />
+        <Compile Include="RogueLegacy\GameObjects\HUD\PlayerHUD.cs" />
+        <Compile Include="RogueLegacy\GameObjects\HUD\ReceivedItemsHUD.cs" />
+        <Compile Include="RogueLegacy\GameObjects\RetireObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\ArenaBonusRoom.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\BlobBossRoom.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\BlobChallengeRoom.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\BonusRoomObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\BossRoomObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\CarnivalShoot1BonusRoom.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\CarnivalShoot2BonusRoom.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\CastleEntranceRoomObj.cs" />
+        <Compile Include="RogueLegacy\GameObjects\Rooms\ChallengeBossRoomObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\Rooms\ChestBonusRoomObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\Rooms\CompassRoomObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\Rooms\DiaryRoomObj.cs" />
@@ -327,6 +324,7 @@
         <Compile Include="RogueLegacy\XMLCompiler.cs" />
     </ItemGroup>
     <ItemGroup>
+      <None Include="ico\RLR.ico" />
       <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

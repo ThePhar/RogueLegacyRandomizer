@@ -1,6 +1,16 @@
-﻿using System;
+﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
+// Last Modified 2023-05-27 2:19 PM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
@@ -13,7 +23,7 @@ namespace Randomizer;
 
 public class ArchipelagoManager
 {
-    private readonly Version            _minimumArchipelagoServerVersion = new(0, 3, 8);
+    private readonly Version            _minimumArchipelagoServerVersion = new(0, 4, 1);
     private readonly ArchipelagoSession _session;
     private          DeathLinkService   _deathLinkService;
     private          DateTime           _lastDeath;
@@ -33,7 +43,7 @@ public class ArchipelagoManager
     public Queue<NetworkItem> ReceiveItemQueue { get; } = new();
     public ConnectionInfo     ConnectionInfo   { get; }
 
-    public bool CanRelease => _session.RoomState.ForfeitPermissions is Permissions.Goal or Permissions.Enabled;
+    public bool CanRelease => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
     public bool CanCollect => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
     public int  HintCost   => _session.RoomState.HintCost;
     public int  HintPoints => _session.RoomState.HintPoints;
@@ -68,10 +78,10 @@ public class ArchipelagoManager
         _session.Socket.ErrorReceived -= OnError;
         _session.Items.ItemReceived -= OnItemReceived;
         _session.Socket.PacketReceived -= OnPacketReceived;
-        _session.Socket.Disconnect();
+        _session.Socket.DisconnectAsync();
     }
 
-    public void Forfeit()
+    public void Release()
     {
         SendPacket(new SayPacket { Text = "!release" });
     }
@@ -157,7 +167,7 @@ public class ArchipelagoManager
         var result = _session.TryConnectAndLogin(
             "Rogue Legacy",
             ConnectionInfo.Name,
-            ItemsHandlingFlags.IncludeOwnItems,
+            ItemsHandlingFlags.AllItems,
             _minimumArchipelagoServerVersion,
             uuid: Guid.NewGuid().ToString(),
             password: ConnectionInfo.Password
@@ -222,10 +232,9 @@ public class ArchipelagoManager
         }
     }
 
-    private void OnConnected(ConnectedPacket packet)
+    private async Task OnConnected(ConnectedPacket packet)
     {
         RandomizerData = new RandomizerData(packet.SlotData, _session.RoomState.Seed, packet.Slot);
-        Status = ConnectionStatus.Authenticated;
 
         _deathLinkService = _session.CreateDeathLinkService();
         _deathLinkService.OnDeathLinkReceived += OnDeathLink;
@@ -234,8 +243,25 @@ public class ArchipelagoManager
         if (RandomizerData.DeathLink)
             _deathLinkService.EnableDeathLink();
 
+        var locations = await _session.Locations.ScoutLocationsAsync(false, packet.LocationsChecked.Concat(packet.MissingChecks).ToArray());
+        foreach (var location in locations.Locations)
+        {
+            var item = new NetworkItem
+            {
+                Item = location.Item,
+                Location = location.Location,
+                Player = location.Player,
+                Flags = location.Flags
+            };
+
+            RandomizerData.ActiveLocations.Add(item.Location, item);
+            RandomizerData.CheckedLocations.Add(item.Location, false);
+        }
+
         foreach (var location in packet.LocationsChecked)
             RandomizerData.CheckedLocations[location] = true;
+
+        Status = ConnectionStatus.Authenticated;
     }
 
     private void OnRoomUpdate(RoomUpdatePacket packet)
