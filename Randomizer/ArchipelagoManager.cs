@@ -1,9 +1,9 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-07-27 12:19 AM by
-//
+// Last Modified 2023-07-27 1:26 AM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -18,6 +18,7 @@ using Archipelago.MultiClient.Net.Exceptions;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
+using RogueLegacy.Enums;
 
 namespace Randomizer;
 
@@ -241,7 +242,7 @@ public static class ArchipelagoManager
         _deathLinkService.OnDeathLinkReceived += OnDeathLink;
 
         // Check if DeathLink is enabled and establish the appropriate helper.
-        if (RandomizerData.DeathLink)
+        if (RandomizerData.DeathLinkMode is DeathLinkMode.Enabled or DeathLinkMode.ForcedEnabled)
         {
             _deathLinkService.EnableDeathLink();
         }

@@ -152,6 +152,7 @@
         <Compile Include="RogueLegacy\Enums\BossRoomType.cs" />
         <Compile Include="RogueLegacy\Enums\ChestType.cs" />
         <Compile Include="RogueLegacy\Enums\ChestConditionType.cs" />
+        <Compile Include="RogueLegacy\Enums\DeathLinkMode.cs" />
         <Compile Include="RogueLegacy\Enums\Gender.cs" />
         <Compile Include="RogueLegacy\Enums\Multiplier.cs" />
         <Compile Include="RogueLegacy\Enums\TraitRarity.cs" />

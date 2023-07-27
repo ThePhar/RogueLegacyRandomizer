@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - ClassType.cs
+// Last Modified 2023-07-27 12:40 AM by
+//
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -6,24 +15,24 @@ namespace RogueLegacy.Enums;
 
 public enum ClassType
 {
-    Knight,
-    Mage,
-    Barbarian,
-    Knave,
-    Shinobi,
-    Miner,
-    Spellthief,
-    Lich,
-    Paladin,
-    Archmage,
-    BarbarianKing,
-    Assassin,
-    Hokage,
-    Spelunker,
-    Spellsword,
-    LichKing,
-    Dragon,
-    Traitor
+    Knight        = 0,
+    Mage          = 1,
+    Barbarian     = 2,
+    Knave         = 3,
+    Shinobi       = 4,
+    Miner         = 5,
+    Spellthief    = 6,
+    Lich          = 7,
+    Paladin       = 8,
+    Archmage      = 9,
+    BarbarianKing = 10,
+    Assassin      = 11,
+    Hokage        = 12,
+    Spelunker     = 13,
+    Spellsword    = 14,
+    LichKing      = 15,
+    Dragon        = 16,
+    Traitor       = 17
 }
 
 public static class ClassExtensions

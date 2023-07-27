@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-// Last Modified 2023-07-27 12:06 AM by 
+// Last Modified 2023-07-27 1:27 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -194,10 +194,10 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (Game.PlayerStats.FireballBossBeaten) RevealSymbol(Zone.Tower, false);
 
-        if (ArchipelagoManager.RandomizerData.FountainHuntMode)
+        if (ArchipelagoManager.RandomizerData.FountainPieceRequirement > 0)
         {
             if (Game.PlayerStats.FountainPieces >=
-                ArchipelagoManager.RandomizerData.FountainHuntRequirement
+                ArchipelagoManager.RandomizerData.FountainPieceRequirement
                 && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
             {
                 PlayBossDoorAnimation();
@@ -227,10 +227,10 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (!_gateClosed) CloseGate(true);
 
-        if (ArchipelagoManager.RandomizerData.FountainHuntMode)
+        if (ArchipelagoManager.RandomizerData.FountainPieceRequirement > 0)
         {
             if (Game.PlayerStats.FountainPieces >=
-                ArchipelagoManager.RandomizerData.FountainHuntRequirement
+                ArchipelagoManager.RandomizerData.FountainPieceRequirement
                 && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
             {
                 Game.PlayerStats.FinalDoorOpened = true;

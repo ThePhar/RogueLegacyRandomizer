@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-27 12:13 AM by 
+// Last Modified 2023-07-27 1:28 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -497,137 +497,136 @@ public class Game : Microsoft.Xna.Framework.Game
         ScreenManager.Update(gameTime);
         SoundManager.Update3DSounds();
 
-// Wait for Arch to say its ready.
-            switch (ArchipelagoManager.Status)
+        // Wait for Arch to say its ready.
+        switch (ArchipelagoManager.Status)
+        {
+            // We're ready!
+            case ConnectionStatus.Authenticated:
             {
-                // We're ready!
-                case ConnectionStatus.Authenticated:
-                {
-                    // Do not attempt to start the game if we connect off the Arch screen. Most likely means we lost
-                    // connection in gameplay and reconnected.
-                    if (ScreenManager.CurrentScreen is not RandomizerScreen)
-                        break;
-
-                    // Initialize Save Data
-                    ChangeProfile(ArchipelagoManager.RandomizerData.Seed, ArchipelagoManager.RandomizerData.Slot);
-
-                    // Load Area Struct Data
-                    Area1List = ArchipelagoManager.RandomizerData.AreaStructs;
-
-                    SoundManager.PlaySound("Game_Start");
-                    var newGame = !PlayerStats.CharacterFound;
-                    var heroIsDead = PlayerStats.IsDead;
-                    var startingRoom = PlayerStats.LoadStartingRoom;
-
-                    if (newGame)
-                    {
-                        PlayerStats.CharacterFound = true;
-                        PlayerStats.Gold = 0;
-                        PlayerStats.Class = ArchipelagoManager.RandomizerData.StartingClass;
-
-                        // Unlock the player's starting class.
-                        var skill = (ClassType) ArchipelagoManager.RandomizerData.StartingClass switch
-                        {
-                            ClassType.Knight     => SkillSystem.GetSkill(SkillType.KnightUnlock),
-                            ClassType.Mage       => SkillSystem.GetSkill(SkillType.MageUnlock),
-                            ClassType.Barbarian  => SkillSystem.GetSkill(SkillType.BarbarianUnlock),
-                            ClassType.Knave      => SkillSystem.GetSkill(SkillType.AssassinUnlock),
-                            ClassType.Miner      => SkillSystem.GetSkill(SkillType.BankerUnlock),
-                            ClassType.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUnlock),
-                            ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUnlock),
-                            ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
-                            _                    => throw new ArgumentException("Unsupported Starting Class")
-                        };
-
-                        SkillSystem.LevelUpTrait(skill, false);
-
-                        PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
-                        PlayerStats.EnemiesKilledInRun.Clear();
-
-                        // Set AP Settings
-                        PlayerStats.TimesCastleBeaten = ArchipelagoManager.RandomizerData.NewGamePlus;
-
-                        // Set the player's initial gender.
-                        PlayerStats.IsFemale = ArchipelagoManager.RandomizerData.StartingGender;
-
-                        // Starting inventory.
-                        foreach (var item in ArchipelagoManager.RandomizerData.StartingInventory)
-                        {
-                            DisgustingGetItemLogic(new NetworkItem
-                            {
-                                Item = item,
-                                Location = -2,
-                                Player = 0
-                            }, true);
-                        }
-
-                        SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
-                        ScreenManager.DisplayScreen((int) ScreenType.StartingRoom, true);
-                    }
-                    else
-                    {
-                        // Sync checked locations with server.
-                        ArchipelagoManager.CheckLocations(
-                            ArchipelagoManager.RandomizerData.CheckedLocations
-                                .Where(l => l.Value)
-                                .Select(l => l.Key)
-                                .ToArray()
-                        );
-
-                        if (heroIsDead)
-                            ScreenManager.DisplayScreen((int) ScreenType.Lineage, true);
-                        else
-                            ScreenManager.DisplayScreen(
-                                startingRoom ? (int) ScreenType.StartingRoom : (int) ScreenType.Level,
-                                true);
-                    }
-
-                    SoundManager.StopMusic(0.2f);
+                // Do not attempt to start the game if we connect off the Arch screen. Most likely means we lost
+                // connection in gameplay and reconnected.
+                if (ScreenManager.CurrentScreen is not RandomizerScreen)
                     break;
+
+                // Initialize Save Data
+                ChangeProfile(ArchipelagoManager.RandomizerData.Seed, ArchipelagoManager.RandomizerData.Slot);
+
+                // Load Area Struct Data
+                Area1List = ArchipelagoManager.RandomizerData.AreaStructs;
+
+                SoundManager.PlaySound("Game_Start");
+                var newGame = !PlayerStats.CharacterFound;
+                var heroIsDead = PlayerStats.IsDead;
+                var startingRoom = PlayerStats.LoadStartingRoom;
+
+                if (newGame)
+                {
+                    PlayerStats.CharacterFound = true;
+                    PlayerStats.Gold = 0;
+                    PlayerStats.Class = ArchipelagoManager.RandomizerData.StartingClass;
+
+                    // Unlock the player's starting class.
+                    var skill = (ClassType) ArchipelagoManager.RandomizerData.StartingClass switch
+                    {
+                        ClassType.Knight     => SkillSystem.GetSkill(SkillType.KnightUnlock),
+                        ClassType.Mage       => SkillSystem.GetSkill(SkillType.MageUnlock),
+                        ClassType.Barbarian  => SkillSystem.GetSkill(SkillType.BarbarianUnlock),
+                        ClassType.Knave      => SkillSystem.GetSkill(SkillType.AssassinUnlock),
+                        ClassType.Miner      => SkillSystem.GetSkill(SkillType.BankerUnlock),
+                        ClassType.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUnlock),
+                        ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUnlock),
+                        ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
+                        _                    => throw new ArgumentException("Unsupported Starting Class")
+                    };
+
+                    SkillSystem.LevelUpTrait(skill, false);
+
+                    PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
+                    PlayerStats.EnemiesKilledInRun.Clear();
+
+                    // Set AP Settings
+                    PlayerStats.TimesCastleBeaten = ArchipelagoManager.RandomizerData.NewGamePlus;
+
+                    // Set the player's initial gender.
+                    PlayerStats.IsFemale = ArchipelagoManager.RandomizerData.StartingGender == Gender.Lady;
+
+                    SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
+                    ScreenManager.DisplayScreen((int) ScreenType.StartingRoom, true);
+                }
+                else
+                {
+                    // Sync checked locations with server.
+                    ArchipelagoManager.CheckLocations(
+                        ArchipelagoManager.RandomizerData.CheckedLocations
+                            .Where(l => l.Value)
+                            .Select(l => l.Key)
+                            .ToArray()
+                    );
+
+                    if (heroIsDead)
+                        ScreenManager.DisplayScreen((int) ScreenType.Lineage, true);
+                    else
+                        ScreenManager.DisplayScreen(
+                            startingRoom ? (int) ScreenType.StartingRoom : (int) ScreenType.Level,
+                            true);
+                }
+
+                SoundManager.StopMusic(0.2f);
+                break;
+            }
+        }
+
+        // Check for received items and send to player.
+        if (ArchipelagoManager.ReceiveItemQueue.Count > 0)
+            if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen)
+            {
+                var item = ArchipelagoManager.ReceiveItemQueue.Dequeue();
+
+                // Only give item if we haven't received it before!
+                if (PlayerStats.HasNotReceivedItem(item))
+                {
+                    PlayerStats.ReceivedItems.Add(item);
+                    var stats = DisgustingGetItemLogic(item);
+
+                    (ScreenManager.CurrentScreen as ProceduralLevelScreen).AddReceivedItem(
+                        item.Item.GetItemType(),
+                        item.Item,
+                        ArchipelagoManager.GetPlayerName(item.Player),
+                        stats
+                    );
+                    // var data = new List<object>
+                    // {
+                    //     new Vector2(ScreenManager.Player.X, ScreenManager.Player.Y),
+                    //     ItemCategory.ReceiveNetworkItem,
+                    //     new Vector2(stats.Item1, stats.Item4),
+                    //     new Vector2(stats.Item2, stats.Item3),
+                    //     ArchipelagoManager.GetPlayerName(item.Player),
+                    //     item.Item
+                    // };
+                    //
+                    // ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, data);
+                    // ScreenManager.Player.RunGetItemAnimation();
                 }
             }
 
-            // Check for received items and send to player.
-            if (ArchipelagoManager.ReceiveItemQueue.Count > 0)
-                if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen)
-                {
-                    var item = ArchipelagoManager.ReceiveItemQueue.Dequeue();
-
-                    // Only give item if we haven't received it before!
-                    if (PlayerStats.HasNotReceivedItem(item))
-                    {
-                        PlayerStats.ReceivedItems.Add(item);
-                        var stats = DisgustingGetItemLogic(item);
-
-                        (ScreenManager.CurrentScreen as ProceduralLevelScreen).AddReceivedItem(
-                            item.Item.GetItemType(),
-                            item.Item,
-                            ArchipelagoManager.GetPlayerName(item.Player),
-                            stats
-                        );
-                        // var data = new List<object>
-                        // {
-                        //     new Vector2(ScreenManager.Player.X, ScreenManager.Player.Y),
-                        //     ItemCategory.ReceiveNetworkItem,
-                        //     new Vector2(stats.Item1, stats.Item4),
-                        //     new Vector2(stats.Item2, stats.Item3),
-                        //     ArchipelagoManager.GetPlayerName(item.Player),
-                        //     item.Item
-                        // };
-                        //
-                        // ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, data);
-                        // ScreenManager.Player.RunGetItemAnimation();
-                    }
-                }
-
-            // Death Link handling logic.
-            if (ArchipelagoManager.ReceiveItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
+        // Death Link handling logic.
+        if (ArchipelagoManager.ReceiveItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
+        {
+            if (ScreenManager.Player is { ControlsLocked: false } &&
+                ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead &&
+                ArchipelagoManager.DeathLinkSafe)
             {
-                if (ScreenManager.Player is { ControlsLocked: false } &&
-                    ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead &&
-                    ArchipelagoManager.DeathLinkSafe)
+                if (PlayerStats.SpecialItem == 3)
                 {
-                    if (PlayerStats.SpecialItem == 3)
+                    ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
+                    PlayerStats.SpecialItem = 0;
+                    (ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
+                    ScreenManager.DisplayScreen(21, true);
+                }
+                else
+                {
+                    var num6 = CDGMath.RandomInt(1, 100);
+                    if (num6 <= SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount * 100f)
                     {
                         ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
                         PlayerStats.SpecialItem = 0;
@@ -636,36 +635,26 @@ public class Game : Microsoft.Xna.Framework.Game
                     }
                     else
                     {
-                        var num6 = CDGMath.RandomInt(1, 100);
-                        if (num6 <= SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount * 100f)
-                        {
-                            ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
-                            PlayerStats.SpecialItem = 0;
-                            (ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
-                            ScreenManager.DisplayScreen(21, true);
-                        }
-                        else
-                        {
-                            ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(
-                                new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
-                            ScreenManager.Player.Kill();
-                        }
+                        ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(
+                            new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
+                        ScreenManager.Player.Kill();
                     }
-
-                    ArchipelagoManager.ClearDeathLink();
                 }
-            }
 
-            // Retire handling Logic.
-            if (Retired
-                && ScreenManager.Player is { ControlsLocked: false }
-                && ScreenManager.CurrentScreen is ProceduralLevelScreen
-                && !PlayerStats.IsDead)
-            {
-                ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(new RetireObj());
-                ScreenManager.Player.Kill();
-                Retired = false;
+                ArchipelagoManager.ClearDeathLink();
             }
+        }
+
+        // Retire handling Logic.
+        if (Retired
+            && ScreenManager.Player is { ControlsLocked: false }
+            && ScreenManager.CurrentScreen is ProceduralLevelScreen
+            && !PlayerStats.IsDead)
+        {
+            ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(new RetireObj());
+            ScreenManager.Player.Kill();
+            Retired = false;
+        }
 
         base.Update(gameTime);
     }
@@ -675,17 +664,6 @@ public class Game : Microsoft.Xna.Framework.Game
         SkillObj skill;
         byte equipStatus = 0;
         var player = ScreenManager.Player;
-
-        // Child defer
-        if (ArchipelagoManager.RandomizerData.AutomaticUpgrades == 1 && !ignoreDefer)
-        {
-            var type = item.Item.GetItemType();
-            if (type == ItemCode.ItemType.Skill)
-            {
-                NextChildItemQueue.Enqueue(item);
-                return new Tuple<float, float, float, float>(-1f, -1f, -1f, 0);
-            }
-        }
 
         switch (item.Item)
         {
@@ -968,7 +946,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_VAULT:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Vault] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Vault] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Vault] = equipStatus;
@@ -977,7 +955,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_SPRINT:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Sprint] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Sprint] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Sprint] = equipStatus;
@@ -986,7 +964,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_VAMPIRE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Vampire] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Vampire] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Vampire] = equipStatus;
@@ -995,7 +973,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_SKY:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Sky] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Sky] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Sky] = equipStatus;
@@ -1004,7 +982,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_SIPHON:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Siphon] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Siphon] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Siphon] = equipStatus;
@@ -1013,7 +991,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_RETALIATION:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Retaliation] =
                     equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Retaliation] =
@@ -1027,7 +1005,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_BOUNTY:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Bounty] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Bounty] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Bounty] = equipStatus;
@@ -1036,7 +1014,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_HASTE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Haste] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Haste] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Haste] = equipStatus;
@@ -1045,7 +1023,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_CURSE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Curse] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Curse] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Curse] = equipStatus;
@@ -1054,7 +1032,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_GRACE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Grace] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Grace] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Grace] = equipStatus;
@@ -1063,7 +1041,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.RUNE_BALANCE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Balance] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) EquipmentAbility.Balance] = equipStatus;
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) EquipmentAbility.Balance] = equipStatus;
@@ -1072,7 +1050,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_PROGRESSIVE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 var index = 0;
                 var progressiveArmorOrder = new[]
                 {
@@ -1107,7 +1085,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_SQUIRE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Squire] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Squire] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Squire] = equipStatus;
@@ -1116,7 +1094,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_SILVER:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Silver] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Silver] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Silver] = equipStatus;
@@ -1125,7 +1103,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_GUARDIAN:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Guardian] =
                     equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Guardian] = equipStatus;
@@ -1137,7 +1115,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_IMPERIAL:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Imperial] =
                     equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Imperial] = equipStatus;
@@ -1149,7 +1127,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_ROYAL:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Royal] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Royal] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Royal] = equipStatus;
@@ -1158,7 +1136,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_KNIGHT:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Knight] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Knight] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Knight] = equipStatus;
@@ -1167,7 +1145,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_RANGER:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Ranger] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Ranger] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Ranger] = equipStatus;
@@ -1176,7 +1154,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_SKY:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Sky] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Sky] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Sky] = equipStatus;
@@ -1185,7 +1163,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_DRAGON:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Dragon] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Dragon] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Dragon] = equipStatus;
@@ -1194,7 +1172,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_SLAYER:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Slayer] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Slayer] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Slayer] = equipStatus;
@@ -1203,7 +1181,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_BLOOD:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Blood] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Blood] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Blood] = equipStatus;
@@ -1212,7 +1190,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_SAGE:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Sage] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Sage] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Sage] = equipStatus;
@@ -1221,7 +1199,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_RETRIBUTION:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Retribution] =
                     equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Retribution] =
@@ -1235,7 +1213,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_HOLY:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Holy] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Holy] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Holy] = equipStatus;
@@ -1244,7 +1222,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 break;
 
             case ItemCode.EQUIPMENT_DARK:
-                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequirePurchasing ? 1 : 3);
+                equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) EquipmentBase.Dark] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) EquipmentBase.Dark] = equipStatus;
                 PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) EquipmentBase.Dark] = equipStatus;
