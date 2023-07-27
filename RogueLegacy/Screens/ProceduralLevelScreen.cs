@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - ProceduralLevelScreen.cs
+// Last Modified 2023-07-27 12:08 AM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
@@ -5,6 +14,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
@@ -952,7 +962,7 @@ namespace RogueLegacy.Screens
             {
                 case Zone.Castle:
                     if (Game.PlayerStats.EyeballBossBeaten ||
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeKhidr)
+                        ArchipelagoManager.RandomizerData.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -961,7 +971,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Garden:
                     if (Game.PlayerStats.FairyBossBeaten ||
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeAlexander)
+                        ArchipelagoManager.RandomizerData.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -970,7 +980,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Dungeon:
                     if (Game.PlayerStats.BlobBossBeaten ||
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeHerodotus)
+                        ArchipelagoManager.RandomizerData.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -979,7 +989,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Tower:
                     if (Game.PlayerStats.FireballBossBeaten ||
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeLeon)
+                        ArchipelagoManager.RandomizerData.ChallengeLeon)
                     {
                         flag = true;
                     }
@@ -1104,7 +1114,7 @@ namespace RogueLegacy.Screens
             {
                 case Zone.Castle:
                     if (!Game.PlayerStats.EyeballBossBeaten &&
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeKhidr)
+                        ArchipelagoManager.RandomizerData.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -1113,7 +1123,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Garden:
                     if (!Game.PlayerStats.FairyBossBeaten &&
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeAlexander)
+                        ArchipelagoManager.RandomizerData.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -1122,7 +1132,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Dungeon:
                     if (!Game.PlayerStats.BlobBossBeaten &&
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeHerodotus)
+                        ArchipelagoManager.RandomizerData.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -1131,7 +1141,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Tower:
                     if (!Game.PlayerStats.FireballBossBeaten &&
-                        Program.Game.ArchipelagoManager.RandomizerData.ChallengeLeon)
+                        ArchipelagoManager.RandomizerData.ChallengeLeon)
                     {
                         flag = true;
                     }

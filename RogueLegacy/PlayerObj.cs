@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - PlayerObj.cs
-// Last Modified 2023-05-27 1:46 PM by 
+// Last Modified 2023-07-27 12:12 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -14,6 +14,7 @@ using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 using Tweener;
@@ -2044,9 +2045,9 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void Forfeit()
     {
-        Program.Game.ArchipelagoManager.Release();
+        ArchipelagoManager.Release();
 
-        if (Program.Game.ArchipelagoManager.CanCollect)
+        if (ArchipelagoManager.CanCollect)
             CollectPrompt();
         else
             LoadEnding();
@@ -2054,7 +2055,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void ForfeitPrompt()
     {
-        if (Program.Game.ArchipelagoManager.CanRelease)
+        if (ArchipelagoManager.CanRelease)
         {
             var rCScreenManager = Game.ScreenManager;
             DialogueManager.AddText("Release", new[] { "Congrats!" },
@@ -2063,7 +2064,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
 
-            if (Program.Game.ArchipelagoManager.CanCollect)
+            if (ArchipelagoManager.CanCollect)
                 rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CollectPrompt");
             else
                 rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "LoadEnding");
@@ -2074,13 +2075,13 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void Collect()
     {
-        Program.Game.ArchipelagoManager.Collect();
+        ArchipelagoManager.Collect();
         LoadEnding();
     }
 
     public void CollectPrompt()
     {
-        if (Program.Game.ArchipelagoManager.CanCollect)
+        if (ArchipelagoManager.CanCollect)
         {
             var rCScreenManager = Game.ScreenManager;
             DialogueManager.AddText("Collect", new[] { "Congrats!" },
@@ -2117,9 +2118,9 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         {
             if (doorObj.Name == "FinalBossDoor")
             {
-                if (Program.Game.ArchipelagoManager.CanRelease)
+                if (ArchipelagoManager.CanRelease)
                     ForfeitPrompt();
-                else if (Program.Game.ArchipelagoManager.CanCollect)
+                else if (ArchipelagoManager.CanCollect)
                     CollectPrompt();
                 else
                     LoadEnding();
@@ -2571,10 +2572,10 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 {
                     var feeFactor = 1f;
                     if (Game.PlayerStats.HasArchitectFee)
-                        feeFactor = (100 - Program.Game.ArchipelagoManager.RandomizerData.ArchitectFee) / 100f;
+                        feeFactor = (100 - ArchipelagoManager.RandomizerData.ArchitectFee) / 100f;
 
                     var num9 = (int) (num7 * 10 * (1f + TotalGoldBonus) * feeFactor *
-                                      Program.Game.ArchipelagoManager.RandomizerData.GoldGainMultiplier);
+                                      ArchipelagoManager.RandomizerData.GoldGainMultiplier);
                     Game.PlayerStats.Gold -= num9;
                     for (var i = 0; i < num7; i++) m_levelScreen.ItemDropManager.DropItemWide(Position, 1, 10f);
                     if (num9 > 0)

@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-05-27 4:37 PM by
-//
+// Last Modified 2023-07-27 12:13 AM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -114,7 +114,6 @@ public class Game : Microsoft.Xna.Framework.Game
     public static string             ProfileName          { get; set; }
     public        Queue<NetworkItem> NextChildItemQueue   { get; set; }
 
-    public ArchipelagoManager    ArchipelagoManager    { get; set; }
     public GraphicsDeviceManager GraphicsDeviceManager { get; }
     public PhysicsManager        PhysicsManager        { get; }
     public SaveGameManager       SaveManager           { get; }
@@ -498,9 +497,7 @@ public class Game : Microsoft.Xna.Framework.Game
         ScreenManager.Update(gameTime);
         SoundManager.Update3DSounds();
 
-        if (ArchipelagoManager != null)
-        {
-            // Wait for Arch to say its ready.
+// Wait for Arch to say its ready.
             switch (ArchipelagoManager.Status)
             {
                 // We're ready!
@@ -625,6 +622,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             // Death Link handling logic.
             if (ArchipelagoManager.ReceiveItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
+            {
                 if (ScreenManager.Player is { ControlsLocked: false } &&
                     ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead &&
                     ArchipelagoManager.DeathLinkSafe)
@@ -656,6 +654,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
                     ArchipelagoManager.ClearDeathLink();
                 }
+            }
 
             // Retire handling Logic.
             if (Retired
@@ -667,7 +666,6 @@ public class Game : Microsoft.Xna.Framework.Game
                 ScreenManager.Player.Kill();
                 Retired = false;
             }
-        }
 
         base.Update(gameTime);
     }

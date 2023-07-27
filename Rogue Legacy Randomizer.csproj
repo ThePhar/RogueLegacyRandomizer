@@ -40,8 +40,8 @@
         <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Archipelago.MultiClient.Net, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>packages\Archipelago.MultiClient.Net.5.0.4\lib\net45\Archipelago.MultiClient.Net.dll</HintPath>
+        <Reference Include="Archipelago.MultiClient.Net, Version=5.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.5.0.6\lib\net45\Archipelago.MultiClient.Net.dll</HintPath>
         </Reference>
         <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\DS2DEngine.dll</HintPath>
@@ -56,8 +56,8 @@
           <HintPath>lib\InputSystem.dll</HintPath>
         </Reference>
         <Reference Include="mscorlib" />
-        <Reference Include="Newtonsoft.Json">
-          <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\SpriteSystem.dll</HintPath>

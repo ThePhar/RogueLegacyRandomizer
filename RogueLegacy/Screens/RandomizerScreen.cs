@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - RandomizerScreen.cs
+// Last Modified 2023-07-27 12:09 AM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,7 +46,6 @@ namespace RogueLegacy.Screens
         private TextBoxOption  _hostname;
         private KeyIconTextObj _navigationText;
         private TextBoxOption  _password;
-        private TextBoxOption  _port;
 
         public RandomizerScreen()
         {
@@ -93,13 +101,11 @@ namespace RogueLegacy.Screens
             _soloRandomizerOptions.Add(new TextBoxOption(this, "Currently Not Working", ""));
 
             // MultiWorld Randomizer Options
-            _hostname = new TextBoxOption(this, "Hostname", !LevelENV.RunConsole ? "archipelago.gg" : "localhost");
-            _port = new TextBoxOption(this, "Port", "38281");
+            _hostname = new TextBoxOption(this, "Hostname", !LevelENV.RunConsole ? "archipelago.gg:38281" : "localhost");
             _slot = new TextBoxOption(this, "Slot Name", !LevelENV.RunConsole ? "Sir Lee" : "Phar");
             _password = new TextBoxOption(this, "Password", "");
 
             _multiRandomizerOptions.Add(_hostname);
-            _multiRandomizerOptions.Add(_port);
             _multiRandomizerOptions.Add(_slot);
             _multiRandomizerOptions.Add(_password);
             _multiRandomizerOptions.Add(new ConnectArchipelagoOptionObj(this));
@@ -173,11 +179,9 @@ namespace RogueLegacy.Screens
             try
             {
                 // Parse port and connect.
-                var port = ushort.Parse(_port.GetValue);
-                Program.Game.ArchipelagoManager = ArchipelagoManager.Connect(new ConnectionInfo
+                ArchipelagoManager.Connect(new ConnectionInfo
                 {
                     Hostname = _hostname.GetValue,
-                    Port = port,
                     Name = _slot.GetValue,
                     Password = _password.GetValue
                 });

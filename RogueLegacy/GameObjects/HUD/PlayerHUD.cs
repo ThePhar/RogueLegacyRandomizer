@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - PlayerHUD.cs
-// Last Modified 2023-05-27 1:50 PM by 
+// Last Modified 2023-07-27 12:04 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -11,6 +11,7 @@ using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 
@@ -217,7 +218,7 @@ public class PlayerHUD : SpriteObj
         _goldText.Text = gold.ToString();
 
         _fountainPieceText.Text =
-            $"{Game.PlayerStats.FountainPieces}/{Program.Game.ArchipelagoManager.RandomizerData.FountainHuntRequirement}";
+            $"{Game.PlayerStats.FountainPieces}/{ArchipelagoManager.RandomizerData.FountainHuntRequirement}";
         _hpText.Text = player.CurrentHealth + "/" + player.MaxHealth;
         _mpText.Text = player.CurrentMana + "/" + player.MaxMana;
         UpdatePlayerHP(player);
@@ -335,7 +336,7 @@ public class PlayerHUD : SpriteObj
         if (!ShowBarsOnly)
         {
             base.Draw(camera);
-            if (Program.Game.ArchipelagoManager.RandomizerData.FountainHuntMode)
+            if (ArchipelagoManager.RandomizerData.FountainHuntMode)
             {
                 _fountainPiece.Draw(camera);
                 _fountainPieceText.Draw(camera);

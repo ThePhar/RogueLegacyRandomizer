@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - EnemyObj_LastBoss.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - EnemyObj_LastBoss.cs
+// Last Modified 2023-07-27 12:11 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 using Tweener;
@@ -1476,7 +1477,7 @@ namespace RogueLegacy
                 if (IsSecondForm && !m_bossVersionKilled)
                 {
                     // Announce our victory!
-                    Program.Game.ArchipelagoManager.AnnounceVictory();
+                    ArchipelagoManager.AnnounceVictory();
 
                     m_bossVersionKilled = true;
                     SetPlayerData();

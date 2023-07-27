@@ -1,9 +1,9 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-05-27 2:19 PM by 
-// 
+// Last Modified 2023-07-27 12:19 AM by
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -21,51 +21,39 @@ using Archipelago.MultiClient.Net.Packets;
 
 namespace Randomizer;
 
-public class ArchipelagoManager
+public static class ArchipelagoManager
 {
-    private readonly Version            _minimumArchipelagoServerVersion = new(0, 4, 1);
-    private readonly ArchipelagoSession _session;
-    private          DeathLinkService   _deathLinkService;
-    private          DateTime           _lastDeath;
+    private static readonly Version            MinimumArchipelagoServerVersion = new(0, 4, 1);
+    private static          ArchipelagoSession _session;
+    private static          DeathLinkService   _deathLinkService;
+    private static          DateTime           _lastDeath = DateTime.MinValue;
 
-    private ArchipelagoManager(ConnectionInfo connectionInfo, ArchipelagoSession session)
+    public static ConnectionStatus   Status           { get; private set; } = ConnectionStatus.Disconnected;
+    public static DeathLink          DeathLink        { get; private set; }
+    public static RandomizerData     RandomizerData   { get; private set; }
+    public static bool               DeathLinkSafe    { get; set; }
+    public static Queue<NetworkItem> ReceiveItemQueue { get; } = new();
+    public static ConnectionInfo     ConnectionInfo   { get; private set; }
+
+    public static bool CanRelease => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
+    public static bool CanCollect => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
+
+    public static void Connect(ConnectionInfo info)
     {
-        ConnectionInfo = connectionInfo;
-
-        _session = session;
-        _lastDeath = DateTime.MinValue;
-    }
-
-    public ConnectionStatus   Status           { get; private set; } = ConnectionStatus.Disconnected;
-    public DeathLink          DeathLink        { get; private set; }
-    public RandomizerData     RandomizerData   { get; private set; }
-    public bool               DeathLinkSafe    { get; set; }
-    public Queue<NetworkItem> ReceiveItemQueue { get; } = new();
-    public ConnectionInfo     ConnectionInfo   { get; }
-
-    public bool CanRelease => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
-    public bool CanCollect => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
-    public int  HintCost   => _session.RoomState.HintCost;
-    public int  HintPoints => _session.RoomState.HintPoints;
-
-    public static ArchipelagoManager Connect(ConnectionInfo info)
-    {
-        var session = ArchipelagoSessionFactory.CreateSession(info.Hostname, info.Port);
-        var manager = new ArchipelagoManager(info, session);
+        _session = ArchipelagoSessionFactory.CreateSession(info.Hostname);
+        ConnectionInfo = info;
         try
         {
-            manager.Initialize();
+            Initialize();
         }
         catch
         {
-            manager.Disconnect();
+            Disconnect();
             throw;
         }
-
-        return manager;
     }
 
-    public void Disconnect()
+    private static void Disconnect()
     {
         Status = ConnectionStatus.Disconnected;
 
@@ -81,31 +69,33 @@ public class ArchipelagoManager
         _session.Socket.DisconnectAsync();
     }
 
-    public void Release()
+    public static void Release()
     {
         SendPacket(new SayPacket { Text = "!release" });
     }
 
-    public void Collect()
+    public static void Collect()
     {
         SendPacket(new SayPacket { Text = "!collect" });
     }
 
-    public void AnnounceVictory()
+    public static void AnnounceVictory()
     {
         SendPacket(new StatusUpdatePacket { Status = ArchipelagoClientState.ClientGoal });
     }
 
-    public void ClearDeathLink()
+    public static void ClearDeathLink()
     {
         DeathLink = null;
     }
 
-    public void SendDeathLinkIfEnabled(string cause)
+    public static void SendDeathLinkIfEnabled(string cause)
     {
         // Do not send any DeathLink messages if it's not enabled.
         if (!_session.ConnectionInfo.Tags.Contains("DeathLink"))
+        {
             return;
+        }
 
         // Log our current time so we can make sure we ignore our own DeathLink.
         _lastDeath = DateTime.Now;
@@ -124,13 +114,16 @@ public class ArchipelagoManager
         }
     }
 
-    public void CheckLocations(params long[] locations)
+    public static void CheckLocations(params long[] locations)
     {
         try
         {
             _session.Locations.CompleteLocationChecks(locations);
 
-            foreach (var location in locations) RandomizerData.CheckedLocations[location] = true;
+            foreach (var location in locations)
+            {
+                RandomizerData.CheckedLocations[location] = true;
+            }
         }
         catch (ArchipelagoSocketClosedException)
         {
@@ -139,22 +132,24 @@ public class ArchipelagoManager
         }
     }
 
-    public string GetPlayerName(int slot)
+    public static string GetPlayerName(int slot)
     {
         if (slot == 0)
-            return "Archipelago Admin Console";
+        {
+            return "Archipelago";
+        }
 
         var name = _session.Players.GetPlayerAlias(slot);
         return string.IsNullOrEmpty(name) ? $"Unknown Player {slot}" : name;
     }
 
-    public string GetItemName(long item)
+    public static string GetItemName(long item)
     {
         var name = _session.Items.GetItemName(item);
         return string.IsNullOrEmpty(name) ? $"Unknown Item {item}" : name;
     }
 
-    private void Initialize()
+    private static void Initialize()
     {
         // Watch for the following events.
         _session.Socket.ErrorReceived += OnError;
@@ -168,20 +163,22 @@ public class ArchipelagoManager
             "Rogue Legacy",
             ConnectionInfo.Name,
             ItemsHandlingFlags.AllItems,
-            _minimumArchipelagoServerVersion,
+            MinimumArchipelagoServerVersion,
             uuid: Guid.NewGuid().ToString(),
             password: ConnectionInfo.Password
         );
 
         if (result.Successful)
+        {
             return;
+        }
 
         // Disconnect and throw an exception.
         var failure = (LoginFailure) result;
         throw new ArchipelagoSocketClosedException(failure.Errors[0]);
     }
 
-    private void SendPacket(ArchipelagoPacketBase packet)
+    private static void SendPacket(ArchipelagoPacketBase packet)
     {
         try
         {
@@ -194,26 +191,30 @@ public class ArchipelagoManager
         }
     }
 
-    private void OnItemReceived(ReceivedItemsHelper helper)
+    private static void OnItemReceived(ReceivedItemsHelper helper)
     {
         while (helper.Any())
         {
             var item = helper.DequeueItem();
             if (item.Player == RandomizerData.Slot)
+            {
                 RandomizerData.CheckedLocations[item.Location] = true;
+            }
 
             ReceiveItemQueue.Enqueue(item);
         }
     }
 
-    private void OnDeathLink(DeathLink deathLink)
+    private static void OnDeathLink(DeathLink deathLink)
     {
         // If we receive a DeathLink that is after our last death, let's set it.
         if (DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
+        {
             DeathLink = deathLink;
+        }
     }
 
-    private void OnPacketReceived(ArchipelagoPacketBase packet)
+    private static void OnPacketReceived(ArchipelagoPacketBase packet)
     {
         Console.WriteLine($"Packet {packet.GetType().Name} received!");
         Console.WriteLine("========================================");
@@ -232,7 +233,7 @@ public class ArchipelagoManager
         }
     }
 
-    private async Task OnConnected(ConnectedPacket packet)
+    private static async Task OnConnected(ConnectedPacket packet)
     {
         RandomizerData = new RandomizerData(packet.SlotData, _session.RoomState.Seed, packet.Slot);
 
@@ -241,7 +242,9 @@ public class ArchipelagoManager
 
         // Check if DeathLink is enabled and establish the appropriate helper.
         if (RandomizerData.DeathLink)
+        {
             _deathLinkService.EnableDeathLink();
+        }
 
         var locations = await _session.Locations.ScoutLocationsAsync(false, packet.LocationsChecked.Concat(packet.MissingChecks).ToArray());
         foreach (var location in locations.Locations)
@@ -259,18 +262,27 @@ public class ArchipelagoManager
         }
 
         foreach (var location in packet.LocationsChecked)
+        {
             RandomizerData.CheckedLocations[location] = true;
+        }
 
         Status = ConnectionStatus.Authenticated;
     }
 
-    private void OnRoomUpdate(RoomUpdatePacket packet)
+    private static void OnRoomUpdate(RoomUpdatePacket packet)
     {
+        if (packet.CheckedLocations is null)
+        {
+            return;
+        }
+
         foreach (var location in packet.CheckedLocations)
+        {
             RandomizerData.CheckedLocations[location] = true;
+        }
     }
 
-    private void OnError(Exception exception, string message)
+    private static void OnError(Exception exception, string message)
     {
         Console.WriteLine($"Received an unhandled exception in ArchipelagoClient: {message}\n\n{exception}");
     }

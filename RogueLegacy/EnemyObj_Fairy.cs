@@ -1,7 +1,17 @@
+// RogueLegacyRandomizer - EnemyObj_Fairy.cs
+// Last Modified 2023-07-27 12:11 AM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 using Tweener;
@@ -684,7 +694,7 @@ public class EnemyObj_Fairy : EnemyObj
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Freeze");
             GameUtil.UnlockAchievement("FEAR_OF_GHOSTS");
 
-            Program.Game.ArchipelagoManager.DeathLinkSafe = false;
+            ArchipelagoManager.DeathLinkSafe = false;
             var data = new List<object>
             {
                 new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y),

@@ -1,7 +1,17 @@
-﻿using System;
+﻿// RogueLegacyRandomizer - ReceivedItemsHUD.cs
+// Last Modified 2023-07-27 12:04 AM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
+using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
+using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
@@ -68,8 +78,8 @@ public sealed class ReceivedItemElement : ObjContainer
         Tuple<float, float, float, float> stats)
     {
         ForceDraw = true;
-        var randomizerData = Program.Game.ArchipelagoManager.RandomizerData;
-        var self = Program.Game.ArchipelagoManager.GetPlayerName(randomizerData.Slot) == receivedFrom;
+        var randomizerData = ArchipelagoManager.RandomizerData;
+        var self = ArchipelagoManager.GetPlayerName(randomizerData.Slot) == receivedFrom;
 
         _receivedItemsHUD = parent;
         X = parent.X;
@@ -78,7 +88,7 @@ public sealed class ReceivedItemElement : ObjContainer
 
         _item = new TextObj
         {
-            Text = Program.Game.ArchipelagoManager.GetItemName(item),
+            Text = ArchipelagoManager.GetItemName(item),
             Font = Game.BitFont,
             TextureColor = Color.Yellow,
             OutlineWidth = 1,

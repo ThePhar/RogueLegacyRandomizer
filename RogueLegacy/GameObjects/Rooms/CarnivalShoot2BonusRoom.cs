@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - CarnivalShoot2BonusRoom.cs
-// Last Modified 2022-10-24
-//
+// RogueLegacyRandomizer - CarnivalShoot2BonusRoom.cs
+// Last Modified 2023-07-27 12:05 AM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
@@ -324,7 +325,7 @@ public class CarnivalShoot2BonusRoom : BonusRoomObj
         }
 
         Player.AttachedLevel.TextManager.DisplayNumberStringText(gold, " gold", Color.Yellow, Player.Position);
-        Game.PlayerStats.Gold += (int) (gold * Program.Game.ArchipelagoManager.RandomizerData.GoldGainMultiplier);
+        Game.PlayerStats.Gold += (int) (gold * ArchipelagoManager.RandomizerData.GoldGainMultiplier);
         Tween.By(m_gate, 0.5f, Quad.EaseInOut, "Y", (-m_gate.Height).ToString());
         m_gateClosed = false;
         RoomCompleted = true;
