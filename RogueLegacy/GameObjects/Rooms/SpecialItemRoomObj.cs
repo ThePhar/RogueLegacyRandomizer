@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - SpecialItemRoomObj.cs
-// Last Modified 2022-10-24
-// 
+// RogueLegacyRandomizer - SpecialItemRoomObj.cs
+// Last Modified 2023-07-30 10:28 AM by
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+//
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -55,13 +55,12 @@ namespace RogueLegacy
         private void RandomizeItem()
         {
             if (Game.PlayerStats.Traits.X == 3f || Game.PlayerStats.Traits.Y == 3f || Game.PlayerStats.Traits.X == 4f ||
-                Game.PlayerStats.Traits.Y == 4f || Game.PlayerStats.Traits.X == 20f ||
-                Game.PlayerStats.Traits.Y == 20f ||
+                Game.PlayerStats.Traits.Y == 4f || Game.PlayerStats.HasVertigo ||
                 Game.PlayerStats.Traits.X == 1f || Game.PlayerStats.Traits.Y == 1f ||
                 Game.PlayerStats.Traits.X == 29f ||
                 Game.PlayerStats.Traits.Y == 29f)
             {
-                if (CDGMath.RandomInt(1, 100) <= 30)
+                if (CDGMath.RandomInt(1, 100) <= 40)
                 {
                     ItemType = 8;
                 }

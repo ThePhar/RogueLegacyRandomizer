@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - Trait.cs
+// Last Modified 2023-07-30 10:28 AM by
+//
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Linq;
 using DS2DEngine;
@@ -72,7 +81,7 @@ public static class TraitExtensions
             Trait.Hypogonadism   => TraitRarity.Rare,
             Trait.StereoBlind    => TraitRarity.Common,
             Trait.IBS            => TraitRarity.Uncommon,
-            Trait.Vertigo        => TraitRarity.Rare,
+            // Trait.Vertigo        => TraitRarity.Rare,
             Trait.TunnelVision   => TraitRarity.Uncommon,
             Trait.Ambilevous     => TraitRarity.Uncommon,
             Trait.PAD            => TraitRarity.Uncommon,
@@ -115,7 +124,7 @@ public static class TraitExtensions
             Trait.Hypogonadism   => "Muscle Wk.",
             Trait.StereoBlind    => "Stereo Blind",
             Trait.IBS            => "I.B.S.",
-            Trait.Vertigo        => "Vertigo",
+            // Trait.Vertigo        => "Vertigo",
             Trait.TunnelVision   => "Tunnel Vision",
             Trait.Ambilevous     => "Ambilevous",
             Trait.PAD            => "P.A.D.",
@@ -158,7 +167,7 @@ public static class TraitExtensions
             Trait.Hypogonadism   => "You have weak limbs.  Enemies won't get knocked back.",
             Trait.StereoBlind    => "You can't see in 3D.",
             Trait.IBS            => "Even the most valiant heroes can suffer from irritable bowels.",
-            Trait.Vertigo        => "Welcome to Barfs-ville.",
+            // Trait.Vertigo        => "Welcome to Barfs-ville.",
             Trait.TunnelVision   => "No peripheral vision.",
             Trait.Ambilevous     => "You've got two left hands, and can't cast spells properly.",
             Trait.PAD            => "Peripheral Arterial Disease. No foot pulse.",
@@ -201,7 +210,7 @@ public static class TraitExtensions
             Trait.Hypogonadism   => "You can't knock enemies back.",
             Trait.StereoBlind    => "You can't see in 3D.",
             Trait.IBS            => "You fart a lot.",
-            Trait.Vertigo        => "Everything is upside down.",
+            // Trait.Vertigo        => "Everything is upside down.",
             Trait.TunnelVision   => "No early indicators.",
             Trait.Ambilevous     => "Spells come out your back.",
             Trait.PAD            => "No foot pulse.",
@@ -278,13 +287,18 @@ public static class TraitHelper
 
             // Add trait to item pool.
             if (traitIndex == 0)
-                traits[traitIndex] = possibleTraits[CDGMath.RandomInt(0, possibleTraits.Count - 1)];
+            {
+                do
+                {
+                    traits[traitIndex] = possibleTraits[CDGMath.RandomInt(0, possibleTraits.Count - 1)];
+                } while (traits[0] != Trait.Vertigo);
+            }
             else
             {
                 do
                 {
                     traits[traitIndex] = possibleTraits[CDGMath.RandomInt(0, possibleTraits.Count - 1)];
-                } while (traits[1] == traits[0] || traits[0].ConflictsWith(traits[1]));
+                } while (traits[1] == traits[0] || traits[1] != Trait.Vertigo || traits[0].ConflictsWith(traits[1]));
             }
         }
 

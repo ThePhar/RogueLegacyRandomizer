@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - LineageScreen.cs
-// Last Modified 2023-07-27 12:08 AM by
+// Last Modified 2023-07-30 10:28 AM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -297,7 +297,7 @@ namespace RogueLegacy.Screens
 
                 lineageObj.Y = children[i];
                 _currentBranchArray.Add(lineageObj);
-                if (lineageObj.Traits.X == 20f || lineageObj.Traits.Y == 20f)
+                if (Game.PlayerStats.HasVertigo)
                 {
                     lineageObj.FlipPortrait = true;
                 }
@@ -393,7 +393,7 @@ namespace RogueLegacy.Screens
                         lineageObj.X = num2;
                         num2 += _xPosOffset;
                         _masterArray.Add(lineageObj);
-                        if (lineageObj.Traits.X == 20f || lineageObj.Traits.Y == 20f)
+                        if (Game.PlayerStats.HasVertigo)
                         {
                             lineageObj.FlipPortrait = true;
                         }
@@ -420,7 +420,7 @@ namespace RogueLegacy.Screens
             lineageObj2.X = num3;
             num3 += _xPosOffset;
             _masterArray.Add(lineageObj2);
-            if (lineageObj2.Traits.X == 20f || lineageObj2.Traits.Y == 20f)
+            if (Game.PlayerStats.HasVertigo)
             {
                 lineageObj2.FlipPortrait = true;
             }
