@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - GameEV.cs
-// Last Modified 2023-07-30 10:08 AM by 
-// 
+// Last Modified 2023-07-30 1:27 PM by
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -89,6 +89,42 @@ namespace RogueLegacy
         public static int[] SILVERCHEST_ITEMDROP_CHANCE;
         public static int[] GOLDCHEST_ITEMDROP_CHANCE;
         public static int[] STATDROP_CHANCE;
+
+        public static string[] FinalWords = new[]
+        {
+            "Bury me with my money.",
+            "See how easy it is with DeathLink on?",
+            "Is that really the fastest it takes you to beat me?",
+            "See you in Rogue Legacy 2.",
+            "Don't... eat... the... gazpacho...",
+            "They came from... behind...",
+            "I'll be back...",
+            "Did I leave my oven on?",
+            "Have you played any of the other games in Archipelago?",
+            "Delete my \"homework\" folder.",
+            "Skill issue...",
+            "Ha! No way I'm dying!",
+            "This was a triumph. I'm making a note here: Huge success.",
+            "You think you've won? Time for Phase 3! Wait, where's my Phase 3? Curse you, Cellar Door Games!",
+            "Next time I'm hiding the key in a fairy chest...",
+            "I blame Phar for my defeat.",
+            "That wasn't very poggers of you.",
+            "Gah, I'm defeated! ...I sure hope no one is streaming this!",
+            "I just remembered... I've still got that library book!",
+            "The sun... I had forgotten how much it BURRRNS!!! AAAAAHHH!",
+            "Could you do me one favor, though? Feed my pets while I'm gone.",
+            "By all known laws of aviation, there's no way a bee should be able to fly...",
+            "Meow meow meow meow meow meow meow meow meow meow meow... Meow.",
+            "I'm about to do what's called a, \"Pro Gamer move.\"",
+            "ERROR reading from FinalWords[], index -1 out of range. Stack trace follows: ...Just kidding!",
+            "The sun... is about 25% helium. That's why it doesn't fall down.",
+            "I guess this is the end of my Rogue Legacy...",
+            "Did you find the Silver Arrows in The Maya?",
+            "My disappointment is immeasurable, and my day is ruined.",
+            "My only regret is I have boneitis.",
+            "Please take care of my pet rock Bocchi.",
+            "This armor's getting heavy... Where's the zipper on this thing?",
+        };
 
         public static string[] TutorialDownStrikeHint => new[]
         {

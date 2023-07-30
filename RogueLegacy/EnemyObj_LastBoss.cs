@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - EnemyObj_LastBoss.cs
-// Last Modified 2023-07-27 12:11 AM by 
+// Last Modified 2023-07-30 1:29 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -1641,6 +1642,13 @@ namespace RogueLegacy
         public void Part3()
         {
             var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+
+            var finalWords = DialogueManager.GetText("FinalBossTalk03");
+            finalWords.Dialogue = finalWords.Dialogue.Take(finalWords.Dialogue.Length - 2)
+                .Append("I have one last thing to say...")
+                .Append(Game.FinalWords)
+                .ToArray();
+
             rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk03");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Part4");
             rCScreenManager.DisplayScreen(13, true);

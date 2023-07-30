@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-30 1:05 PM by 
+// Last Modified 2023-07-30 1:28 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -51,6 +51,8 @@ public class Game : Microsoft.Xna.Framework.Game
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US", false);
         }
+
+        FinalWords = GameEV.FinalWords[CDGMath.RandomInt(0, GameEV.FinalWords.Length - 1)];
 
         GraphicsDeviceManager = new GraphicsDeviceManager(this);
         ScreenManager = new RCScreenManager(this);
@@ -113,6 +115,7 @@ public class Game : Microsoft.Xna.Framework.Game
     public static float              TotalGameTimeHours   { get; set; }
     public static string             ProfileName          { get; set; }
     public        Queue<NetworkItem> NextChildItemQueue   { get; set; }
+    public static string             FinalWords           { get; private set; }
 
     public GraphicsDeviceManager GraphicsDeviceManager { get; }
     public PhysicsManager        PhysicsManager        { get; }

@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - GameOverBossScreen.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - GameOverBossScreen.cs
+// Last Modified 2023-07-30 1:29 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -137,7 +137,7 @@ namespace RogueLegacy.Screens
             Tween.To(Camera, 1f, Quad.EaseInOut, "X", _lastBoss.AbsX.ToString(), "Y",
                 (_lastBoss.Bounds.Bottom - 10).ToString());
             Tween.RunFunction(2f, _lastBoss, "PlayAnimation", false);
-            (_dialoguePlate.GetChildAt(2) as TextObj).Text = "The sun... I had forgotten how it feels...";
+            (_dialoguePlate.GetChildAt(2) as TextObj).Text = Game.FinalWords;
             (_dialoguePlate.GetChildAt(3) as TextObj).Text = "-" + _lastBoss.Name + "'s Parting Words";
             Tween.To(_dialoguePlate, 0.5f, Tween.EaseNone, "delay", "2", "Opacity", "1");
             Tween.RunFunction(4f, this, "DropStats");
