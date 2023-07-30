@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - ChestBonusRoomObj.cs
-// Last Modified 2023-07-27 12:06 AM by 
+// Last Modified 2023-07-30 8:32 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -156,8 +156,7 @@ public class ChestBonusRoomObj : BonusRoomObj
 
                 RoomCompleted = true;
                 var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                if (!flag ||
-                    !ArchipelagoManager.RandomizerData.CheckedLocations[LocationCode.CHEST_GAME_REWARD])
+                if (!flag || !ArchipelagoManager.IsLocationChecked(LocationCode.CHEST_GAME_REWARD))
                 {
                     rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Won");
 

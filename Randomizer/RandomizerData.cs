@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - RandomizerData.cs
-// Last Modified 2023-07-27 1:25 AM by 
+// Last Modified 2023-07-30 8:18 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,11 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using Archipelago.MultiClient.Net.Models;
 using Microsoft.Xna.Framework;
 using RogueLegacy;
 using RogueLegacy.Enums;
-using Color = Microsoft.Xna.Framework.Color;
 
 namespace Randomizer;
 
@@ -29,7 +27,7 @@ public class RandomizerData
 
         // Convert properties appropriately if we're using the old version.
         _settings["world_version"] = GetValueOrNull("world_version") ?? 1;
-        if ((int) _settings["world_version"] == 1)
+        if ((long) _settings["world_version"] == 1)
         {
             // Starting Gender
             _settings["starting_gender"] = Convert.ToInt32(_settings["starting_gender"]) == 0 ? Gender.Sir : Gender.Lady;
@@ -96,16 +94,16 @@ public class RandomizerData
             // Starting Class
             _settings["starting_class"] = Convert.ToString(_settings["starting_class"]) switch
             {
-                "knight"     => 0,
-                "mage"       => 1,
-                "barbarian"  => 2,
-                "knave"      => 3,
-                "shinobi"    => 4,
-                "miner"      => 5,
-                "spellthief" => 6,
-                "lich"       => 7,
-                "dragon"     => 16,
-                "traitor"    => 17,
+                "knight"     => (byte) 0,
+                "mage"       => (byte) 1,
+                "barbarian"  => (byte) 2,
+                "knave"      => (byte) 3,
+                "shinobi"    => (byte) 4,
+                "miner"      => (byte) 5,
+                "spellthief" => (byte) 6,
+                "lich"       => (byte) 7,
+                "dragon"     => (byte) 16,
+                "traitor"    => (byte) 17,
                 _ => throw new ArgumentException($"Unexpected Starting Class!"),
             };
 
@@ -199,8 +197,6 @@ public class RandomizerData
         return exists ? value : null;
     }
 
-    public Dictionary<long, NetworkItem> ActiveLocations  { get; } = new();
-    public Dictionary<long, bool>        CheckedLocations { get; } = new();
     public string                        Seed             { get; }
     public int                           Slot             { get; }
 
@@ -230,6 +226,7 @@ public class RandomizerData
     public int           FountainPieceRequirement => (int)           _settings["fountain_piece_requirement"];
     public bool          RequireBosses            => (bool)          _settings["require_bosses"];
     public DeathLinkMode DeathLinkMode            => (DeathLinkMode) _settings["death_link"];
+    public bool          CanToggleDeathLink       => DeathLinkMode is DeathLinkMode.Disabled or DeathLinkMode.Enabled;
 
     private static AreaStruct[][] PossibleCastleSizes => new[]
     {

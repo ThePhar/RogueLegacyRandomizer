@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - CreditsScreen.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - CreditsScreen.cs
+// Last Modified 2023-07-30 9:58 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -307,7 +307,34 @@ namespace RogueLegacy.Screens
                 "Sean Fleming",
                 "",
                 "",
-                "Thanks to all our fans for their support!"
+                "Thanks to all our fans for their support!",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "Rogue Legacy Randomizer Developed by",
+                "Zach \"Phar\" Parks",
+                "",
+                "",
+                "Randomizer Additional Contributors",
+                "Aaron \"alwaysintreble\" Wagener",
+                "\"Alchav\"",
+                "",
+                "",
+                "Randomizer Additional Thanks",
+                "Travis \"Cainsith\" Ingle",
+                "TJ \"DemonicKarizaki\" Ingle",
+                "Jimmie \"Poseidon\" Hall",
+                "Dorian \"Gesellshcaft\"",
+                "Fabian \"Berserker\" Dill",
+                "Hussein \"ijwu\" Farran",
+                "Jarno",
+                "The Love Labyrinth Community <3",
+                "The Archipelago Community <3",
+                "",
+                "",
+                "And you for playing! :3"
             };
             string[] array2 =
             {

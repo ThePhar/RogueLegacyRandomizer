@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - OptionsScreen.cs
-// Last Modified 2022-12-01
+// RogueLegacyRandomizer - OptionsScreen.cs
+// Last Modified 2023-07-30 9:28 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
+using RogueLegacy.Options;
 using Tweener;
 using Tweener.Ease;
 
@@ -31,6 +32,7 @@ namespace RogueLegacy.Screens
         private SpriteObj        _optionsBar;
         private SpriteObj        _optionsTitle;
         private OptionsObj       _quickDropObj;
+        private OptionsObj       _toggleDeathLinkObj;
         private TextObj          _quickDropText;
         private OptionsObj       _reduceQualityObj;
         private OptionsObj       _retireCharacterOptionObj;
@@ -68,14 +70,16 @@ namespace RogueLegacy.Screens
             _quickDropObj = new QuickDropOptionsObj(this);
             _optionsArray.Add(_quickDropObj);
             _optionsArray.Add(new DeadZoneOptionsObj(this));
-            _optionsArray.Add(new ChatOpacityOption(this));
-            _optionsArray.Add(new ChatOption(this));
+            // _optionsArray.Add(new ChatOpacityOption(this));
+            // _optionsArray.Add(new ChatOption(this));
             _optionsArray.Add(new ChangeControlsOptionsObj(this));
+            _toggleDeathLinkObj = new DeathLinkOptionsObj(this);
             _retireCharacterOptionObj = new RetireOptionsObj(this);
+            _optionsArray.Add(_toggleDeathLinkObj);
             _optionsArray.Add(_retireCharacterOptionObj);
             _optionsArray.Add(new ExitProgramOptionsObj(this));
-            // m_backToMenuObj = new BackToMenuOptionsObj(this);
-            // m_backToMenuObj.X = 420f;
+            _backToMenuObj = new BackToMenuOptionsObj(this);
+            _backToMenuObj.X = 420f;
             for (var i = 0; i < _optionsArray.Count; i++)
             {
                 _optionsArray[i].X = 420f;
@@ -106,6 +110,8 @@ namespace RogueLegacy.Screens
             _navigationText.FontSize = 12f;
             _navigationText.Position = new Vector2(_confirmText.X, _confirmText.Y + 80f);
             _navigationText.ForceDraw = true;
+
+            // Quick Drop Text
             _quickDropText = new TextObj(Game.JunicodeFont);
             _quickDropText.FontSize = 8f;
             _quickDropText.Text =
@@ -147,19 +153,33 @@ namespace RogueLegacy.Screens
             Tween.To(_cancelText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.To(_navigationText, 0.2f, Tween.EaseNone, "Opacity", "1");
             Tween.RunFunction(0.1f, typeof(SoundManager), "PlaySound", "DialogueMenuOpen");
-            // if (!m_optionsArray.Contains(m_backToMenuObj))
-            // {
-            //     m_optionsArray.Insert(m_optionsArray.Count - 1, m_backToMenuObj);
-            // }
 
-            if (!_optionsArray.Contains(_retireCharacterOptionObj))
+            // Death Link Object
+            if (!_titleScreenOptions && !_optionsArray.Contains(_toggleDeathLinkObj))
+            {
+                _optionsArray.Insert(_optionsArray.Count - 1, _toggleDeathLinkObj);
+            }
+
+            if (_titleScreenOptions && _optionsArray.Contains(_toggleDeathLinkObj))
+            {
+                _optionsArray = _optionsArray.FindAll(options => options is not DeathLinkOptionsObj);
+            }
+
+            // Retire Object
+            if (!_titleScreenOptions && !_optionsArray.Contains(_retireCharacterOptionObj))
             {
                 _optionsArray.Insert(_optionsArray.Count - 1, _retireCharacterOptionObj);
             }
 
-            if (_titleScreenOptions)
+            if (_titleScreenOptions && _optionsArray.Contains(_retireCharacterOptionObj))
             {
-                _optionsArray.RemoveAt(_optionsArray.Count - 2);
+                _optionsArray = _optionsArray.FindAll(options => options is not RetireOptionsObj);
+            }
+
+            // Return to menu.
+            if (!_titleScreenOptions && !_optionsArray.Contains(_backToMenuObj))
+            {
+                _optionsArray.Insert(_optionsArray.Count - 1, _backToMenuObj);
             }
 
             _transitioning = true;

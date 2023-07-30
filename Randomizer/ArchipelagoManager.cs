@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-07-27 1:26 AM by 
+// Last Modified 2023-07-30 8:57 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
@@ -18,26 +19,29 @@ using Archipelago.MultiClient.Net.Exceptions;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
+using DS2DEngine;
 using RogueLegacy.Enums;
 
 namespace Randomizer;
 
 public static class ArchipelagoManager
 {
-    private static readonly Version            MinimumArchipelagoServerVersion = new(0, 4, 1);
-    private static          ArchipelagoSession _session;
-    private static          DeathLinkService   _deathLinkService;
-    private static          DateTime           _lastDeath = DateTime.MinValue;
+    private static readonly Version                      MinimumArchipelagoServerVersion = new(0, 4, 2);
+    private static          ArchipelagoSession           _session;
+    private static          DeathLinkService             _deathLinkService;
+    private static          DateTime                     _lastDeath  = DateTime.MinValue;
 
-    public static ConnectionStatus   Status           { get; private set; } = ConnectionStatus.Disconnected;
-    public static DeathLink          DeathLink        { get; private set; }
-    public static RandomizerData     RandomizerData   { get; private set; }
-    public static bool               DeathLinkSafe    { get; set; }
-    public static Queue<NetworkItem> ReceiveItemQueue { get; } = new();
-    public static ConnectionInfo     ConnectionInfo   { get; private set; }
+    public static ConnectionStatus              Status           { get; private set; } = ConnectionStatus.Disconnected;
+    public static DeathLink                     DeathLink        { get; private set; }
+    public static RandomizerData                RandomizerData   { get; private set; }
+    public static bool                          DeathLinkSafe    { get; set; }
+    public static Queue<NetworkItem>            ReceiveItemQueue { get; } = new();
+    public static Dictionary<long, NetworkItem> AllLocations       { get; } = new();
+    public static ConnectionInfo                ConnectionInfo   { get; private set; }
 
-    public static bool CanRelease => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
-    public static bool CanCollect => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
+    public static bool CanRelease       => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
+    public static bool CanCollect       => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
+    public static bool DeathLinkEnabled => _session.ConnectionInfo.Tags.Contains("DeathLink");
 
     public static void Connect(ConnectionInfo info)
     {
@@ -120,11 +124,6 @@ public static class ArchipelagoManager
         try
         {
             _session.Locations.CompleteLocationChecks(locations);
-
-            foreach (var location in locations)
-            {
-                RandomizerData.CheckedLocations[location] = true;
-            }
         }
         catch (ArchipelagoSocketClosedException)
         {
@@ -150,6 +149,55 @@ public static class ArchipelagoManager
         return string.IsNullOrEmpty(name) ? $"Unknown Item {item}" : name;
     }
 
+    public static string GetTrapItemName(NetworkItem item)
+    {
+        if (!item.Flags.HasFlag(ItemFlags.Trap))
+        {
+            return GetItemName(item.Item);
+        }
+
+        var items = new[]
+        {
+            "Blacksmith",
+            "Enchantress",
+            "Health Up",
+            "Mana Up",
+            "Attack Up",
+            "Magic Damage Up",
+            "Randomize Children",
+            "Grace Runes",
+            "Dragons",
+            "Vault Runes",
+            "Sprint Runes",
+            "Sky Runes",
+            "Enchantress - Sword",
+            "Enchantress - Helm",
+            "Enchantress - Chest",
+            "Enchantress - Limbs",
+            "Enchantress - Cape",
+            "Progressive Spending",
+            "Piece of the Fountain",
+            "Phar's Guidance Shrine",
+        };
+
+        var text = items[CDGMath.RandomInt(0, items.Length - 1)];
+        foreach (Capture match in Regex.Matches(text, "\\b[\\w']*\\b"))
+        {
+            var str1 = match.Value;
+            var list = str1.ToList();
+            var ch1 = list[0];
+            var ch2 = list[list.Count - 1];
+            list.RemoveAt(list.Count - 1);
+            list.RemoveAt(0);
+            CDGMath.Shuffle<char>(list);
+            var str2 = new string(list.ToArray());
+            var newValue = ch1 + str2 + ch2;
+            text = text.Replace(str1, newValue);
+        }
+
+        return text;
+    }
+
     private static void Initialize()
     {
         // Watch for the following events.
@@ -160,6 +208,7 @@ public static class ArchipelagoManager
         Status = ConnectionStatus.Connecting;
 
         // Attempt to connect to the server.
+        // var roomInfo = await _session.ConnectAsync();
         var result = _session.TryConnectAndLogin(
             "Rogue Legacy",
             ConnectionInfo.Name,
@@ -196,13 +245,7 @@ public static class ArchipelagoManager
     {
         while (helper.Any())
         {
-            var item = helper.DequeueItem();
-            if (item.Player == RandomizerData.Slot)
-            {
-                RandomizerData.CheckedLocations[item.Location] = true;
-            }
-
-            ReceiveItemQueue.Enqueue(item);
+            ReceiveItemQueue.Enqueue(helper.DequeueItem());
         }
     }
 
@@ -227,14 +270,10 @@ public static class ArchipelagoManager
             case ConnectedPacket connectedPacket:
                 OnConnected(connectedPacket);
                 break;
-
-            case RoomUpdatePacket roomUpdatePacket:
-                OnRoomUpdate(roomUpdatePacket);
-                break;
         }
     }
 
-    private static async Task OnConnected(ConnectedPacket packet)
+    private static void OnConnected(ConnectedPacket packet)
     {
         RandomizerData = new RandomizerData(packet.SlotData, _session.RoomState.Seed, packet.Slot);
 
@@ -247,44 +286,40 @@ public static class ArchipelagoManager
             _deathLinkService.EnableDeathLink();
         }
 
-        var locations = await _session.Locations.ScoutLocationsAsync(false, packet.LocationsChecked.Concat(packet.MissingChecks).ToArray());
-        foreach (var location in locations.Locations)
-        {
-            var item = new NetworkItem
-            {
-                Item = location.Item,
-                Location = location.Location,
-                Player = location.Player,
-                Flags = location.Flags
-            };
+        // Get Locations.
+        GetLocations();
+    }
 
-            RandomizerData.ActiveLocations.Add(item.Location, item);
-            RandomizerData.CheckedLocations.Add(item.Location, false);
-        }
+    private static async Task GetLocations()
+    {
+        var locations = await _session.Locations.ScoutLocationsAsync(false, _session.Locations.AllLocations.ToArray());
 
-        foreach (var location in packet.LocationsChecked)
+        foreach (var networkItem in locations.Locations)
         {
-            RandomizerData.CheckedLocations[location] = true;
+            AllLocations[networkItem.Location] = networkItem;
         }
 
         Status = ConnectionStatus.Authenticated;
     }
 
-    private static void OnRoomUpdate(RoomUpdatePacket packet)
-    {
-        if (packet.CheckedLocations is null)
-        {
-            return;
-        }
-
-        foreach (var location in packet.CheckedLocations)
-        {
-            RandomizerData.CheckedLocations[location] = true;
-        }
-    }
-
     private static void OnError(Exception exception, string message)
     {
         Console.WriteLine($"Received an unhandled exception in ArchipelagoClient: {message}\n\n{exception}");
+    }
+
+    public static void EnableDeathLink()
+    {
+        _deathLinkService.EnableDeathLink();
+    }
+
+    public static void DisableDeathLink()
+    {
+        _deathLinkService.DisableDeathLink();
+    }
+
+    public static bool IsLocationChecked(long id)
+    {
+        // Verify location exists first, we'll treat locations that don't exist as already checked.
+        return !_session.Locations.AllLocations.Contains(id) || _session.Locations.AllLocationsChecked.Contains(id);
     }
 }

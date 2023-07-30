@@ -230,6 +230,7 @@
         <Compile Include="RogueLegacy\MusicVolOptionsObj.cs" />
         <Compile Include="RogueLegacy\NpcObj.cs" />
         <Compile Include="RogueLegacy\OptionsObj.cs" />
+        <Compile Include="RogueLegacy\Options\DeathLinkOptionsObj.cs" />
         <Compile Include="RogueLegacy\Options\RandoModeOption.cs" />
         <Compile Include="RogueLegacy\Options\RandomizerOption.cs" />
         <Compile Include="RogueLegacy\Options\BackToMenuArchipelagoObj.cs" />

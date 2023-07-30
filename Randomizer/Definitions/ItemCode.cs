@@ -1,4 +1,13 @@
-﻿namespace Randomizer.Definitions;
+﻿// RogueLegacyRandomizer - ItemCode.cs
+// Last Modified 2023-07-30 8:32 AM by
+//
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
+namespace Randomizer.Definitions;
 
 public static class ItemCode
 {
@@ -15,6 +24,7 @@ public static class ItemCode
     public const long PROGRESSIVE_SPELLTHIEF = 90_010;
     public const long DRAGON                 = 90_096;
     public const long TRAITOR                = 90_097;
+
     public const long HEALTH                 = 90_013;
     public const long MANA                   = 90_014;
     public const long ATTACK                 = 90_015;
@@ -31,10 +41,36 @@ public static class ItemCode
     public const long DEATH_DEFIANCE         = 90_026;
     public const long HAGGLING               = 90_027;
     public const long RANDOMIZE_CHILDREN     = 90_028;
+
     public const long TRIP_STAT_INCREASE     = 90_030;
     public const long GOLD_1000              = 90_031;
     public const long GOLD_3000              = 90_032;
     public const long GOLD_5000              = 90_033;
+
+    public const long TRAP_TELEPORT          = 90_150;
+    public const long TRAP_HEDGEHOG          = 90_151;
+    public const long TRAP_VERTIGO           = 90_152;
+    public const long TRAP_GENETIC_LOTTERY   = 90_153;
+
+    public const long SHRINE_CHARON          = 90_160;
+    public const long SHRINE_HYPERION        = 90_161;
+    public const long SHRINE_HERMES          = 90_162;
+    public const long SHRINE_HELIOS          = 90_163;
+    public const long SHRINE_CALYPSO         = 90_164;
+    public const long SHRINE_NERDY           = 90_165;
+    public const long SHRINE_PHAR            = 90_169;
+
+    public const long BLACKSMITH_SWORD       = 90_105;
+    public const long BLACKSMITH_HELM        = 90_106;
+    public const long BLACKSMITH_CHEST       = 90_107;
+    public const long BLACKSMITH_LIMBS       = 90_108;
+    public const long BLACKSMITH_CAPE        = 90_109;
+    public const long ENCHANTRESS_SWORD      = 90_100;
+    public const long ENCHANTRESS_HELM       = 90_101;
+    public const long ENCHANTRESS_CHEST      = 90_102;
+    public const long ENCHANTRESS_LIMBS      = 90_103;
+    public const long ENCHANTRESS_CAPE       = 90_104;
+
     public const long EQUIPMENT_PROGRESSIVE  = 90_055;
     public const long EQUIPMENT_SQUIRE       = 90_040;
     public const long EQUIPMENT_SILVER       = 90_041;
@@ -51,6 +87,7 @@ public static class ItemCode
     public const long EQUIPMENT_RETRIBUTION  = 90_052;
     public const long EQUIPMENT_HOLY         = 90_053;
     public const long EQUIPMENT_DARK         = 90_054;
+
     public const long RUNE_VAULT             = 90_060;
     public const long RUNE_SPRINT            = 90_061;
     public const long RUNE_VAMPIRE           = 90_062;
@@ -62,7 +99,9 @@ public static class ItemCode
     public const long RUNE_CURSE             = 90_068;
     public const long RUNE_GRACE             = 90_069;
     public const long RUNE_BALANCE           = 90_070;
-    public const long FOUNTAIN_PIECE         = 91_000;
+
+    public const long FOUNTAIN_PIECE         = 90_180;
+    public const long SPENDING               = 90_190;
 
     public static ItemType GetItemType(this long itemCode)
     {
@@ -117,6 +156,11 @@ public static class ItemCode
             EQUIPMENT_RETRIBUTION  => ItemType.Blueprint,
             EQUIPMENT_HOLY         => ItemType.Blueprint,
             EQUIPMENT_DARK         => ItemType.Blueprint,
+            BLACKSMITH_SWORD       => ItemType.Blueprint,
+            BLACKSMITH_HELM        => ItemType.Blueprint,
+            BLACKSMITH_CHEST       => ItemType.Blueprint,
+            BLACKSMITH_LIMBS       => ItemType.Blueprint,
+            BLACKSMITH_CAPE        => ItemType.Blueprint,
             RUNE_VAULT             => ItemType.Rune,
             RUNE_SPRINT            => ItemType.Rune,
             RUNE_VAMPIRE           => ItemType.Rune,
@@ -128,8 +172,17 @@ public static class ItemCode
             RUNE_CURSE             => ItemType.Rune,
             RUNE_GRACE             => ItemType.Rune,
             RUNE_BALANCE           => ItemType.Rune,
+            ENCHANTRESS_SWORD      => ItemType.Rune,
+            ENCHANTRESS_HELM       => ItemType.Rune,
+            ENCHANTRESS_CHEST      => ItemType.Rune,
+            ENCHANTRESS_LIMBS      => ItemType.Rune,
+            ENCHANTRESS_CAPE       => ItemType.Rune,
             FOUNTAIN_PIECE         => ItemType.Fountain,
-            _                      => ItemType.NetworkItem
+            TRAP_TELEPORT          => ItemType.Trap,
+            TRAP_HEDGEHOG          => ItemType.Trap,
+            TRAP_VERTIGO           => ItemType.Trap,
+            TRAP_GENETIC_LOTTERY   => ItemType.Trap,
+            _                      => ItemType.NetworkItem,
         };
     }
 

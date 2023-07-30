@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-27 1:28 AM by 
+// Last Modified 2023-07-30 8:56 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -536,6 +536,8 @@ public class Game : Microsoft.Xna.Framework.Game
                         ClassType.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUnlock),
                         ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUnlock),
                         ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
+                        ClassType.Dragon     => SkillSystem.GetSkill(SkillType.SuperSecret),
+                        ClassType.Traitor    => SkillSystem.GetSkill(SkillType.Traitorous),
                         _                    => throw new ArgumentException("Unsupported Starting Class")
                     };
 
@@ -555,20 +557,16 @@ public class Game : Microsoft.Xna.Framework.Game
                 }
                 else
                 {
-                    // Sync checked locations with server.
-                    ArchipelagoManager.CheckLocations(
-                        ArchipelagoManager.RandomizerData.CheckedLocations
-                            .Where(l => l.Value)
-                            .Select(l => l.Key)
-                            .ToArray()
-                    );
-
                     if (heroIsDead)
+                    {
                         ScreenManager.DisplayScreen((int) ScreenType.Lineage, true);
+                    }
                     else
+                    {
                         ScreenManager.DisplayScreen(
                             startingRoom ? (int) ScreenType.StartingRoom : (int) ScreenType.Level,
                             true);
+                    }
                 }
 
                 SoundManager.StopMusic(0.2f);
@@ -594,18 +592,6 @@ public class Game : Microsoft.Xna.Framework.Game
                         ArchipelagoManager.GetPlayerName(item.Player),
                         stats
                     );
-                    // var data = new List<object>
-                    // {
-                    //     new Vector2(ScreenManager.Player.X, ScreenManager.Player.Y),
-                    //     ItemCategory.ReceiveNetworkItem,
-                    //     new Vector2(stats.Item1, stats.Item4),
-                    //     new Vector2(stats.Item2, stats.Item3),
-                    //     ArchipelagoManager.GetPlayerName(item.Player),
-                    //     item.Item
-                    // };
-                    //
-                    // ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, data);
-                    // ScreenManager.Player.RunGetItemAnimation();
                 }
             }
 
@@ -1699,9 +1685,9 @@ public class Game : Microsoft.Xna.Framework.Game
     public void CollectItemFromLocation(long location)
     {
         // Ignore checking the location if it was already checked.
-        if (ArchipelagoManager.RandomizerData.CheckedLocations[location]) return;
+        if (ArchipelagoManager.IsLocationChecked(location)) return;
 
-        var item = ArchipelagoManager.RandomizerData.ActiveLocations[location];
+        var item = ArchipelagoManager.AllLocations[location];
         var self = item.Player == ArchipelagoManager.RandomizerData.Slot;
         var stats = new Tuple<float, float, float, float>(-1, -1, -1, 0);
         if (self)

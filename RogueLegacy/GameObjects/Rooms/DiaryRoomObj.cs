@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - DiaryRoomObj.cs
-// Last Modified 2023-07-27 12:06 AM by 
+// Last Modified 2023-07-30 8:32 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -86,7 +86,7 @@ public class DiaryRoomObj : BonusRoomObj
                         var location = LocationCode.STARTING_DIARY + diary;
 
                         // Check if we already checked this location and try to get the next item in the sequence if so.
-                        if (ArchipelagoManager.RandomizerData.CheckedLocations[location]) continue;
+                        if (ArchipelagoManager.IsLocationChecked(location)) continue;
 
                         Game.PlayerStats.DiaryEntry = (byte) (diary + 1);
                         Program.Game.CollectItemFromLocation(location);

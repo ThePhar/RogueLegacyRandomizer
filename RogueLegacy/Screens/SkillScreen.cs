@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - SkillScreen.cs
-// Last Modified 2023-07-27 12:10 AM by
+// Last Modified 2023-07-30 8:54 AM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -237,17 +237,17 @@ public class SkillScreen : Screen
         {
             if (s.Trait >= SkillType.ManorGroundRoad)
             {
-                var item = ArchipelagoManager.RandomizerData.ActiveLocations[
-                    ManorContainer.ArchipelagoLocationTable[s.ManorPiece]
-                ];
+                var item = ArchipelagoManager.AllLocations[ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
 
                 // Toggle correct plate.
                 s.IconName = GetSkillPlateIcon(item.Item);
                 s.Name = ArchipelagoManager.GetItemName(item.Item);
 
                 // Check if we grabbed this location, and change our skillArray current level.
-                if (ArchipelagoManager.RandomizerData.CheckedLocations[item.Location])
+                if (ArchipelagoManager.IsLocationChecked(item.Location))
+                {
                     s.CurrentLevel = 1;
+                }
 
                 // Update the description.
                 var gender = Game.PlayerStats.IsFemale ? "mother" : "father";
