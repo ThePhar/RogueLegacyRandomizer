@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - GameEV.cs
-// Last Modified 2023-05-27 2:39 PM by 
+// Last Modified 2023-07-30 10:08 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -146,7 +146,13 @@ namespace RogueLegacy
             "Clique... actually no",
             "Adventure",
             "DLC Quest",
-            "Noita"
+            "Noita",
+            "Undertale",
+            "Bumper Stickers",
+            "Mega Man Battle Network 3",
+            "Muse Dash",
+            "DOOM 1993",
+            "Terraria",
         };
 
         public static string[] GameHints => new[]
@@ -195,10 +201,10 @@ namespace RogueLegacy
             "Health is a very important stat to raise.",
             "Retribution runes can damage invulnerable objects.",
             "At least this isn't death link... right?",
+            "If DeathLink is too rough, you can toggle it in options (if you didn't force it enabled).",
             "Class abilities are very powerful if used correctly.",
             "Some classes have advantages over certain bosses.",
             "You can retire at any time in the options menu.",
-            "If you start the game with the command argument --large, you'll have a bad time.",
             $"You should have played the {OtherAPGames[CDGMath.RandomInt(0, OtherAPGames.Length - 1)]} randomizer instead!"
         };
 
