@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - SkillScreen.cs
-// Last Modified 2023-07-30 8:54 AM by
-//
+// Last Modified 2023-07-30 10:20 AM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -241,7 +241,7 @@ public class SkillScreen : Screen
 
                 // Toggle correct plate.
                 s.IconName = GetSkillPlateIcon(item.Item);
-                s.Name = ArchipelagoManager.GetItemName(item.Item);
+                s.Name = ArchipelagoManager.GetTrapItemName(item);
 
                 // Check if we grabbed this location, and change our skillArray current level.
                 if (ArchipelagoManager.IsLocationChecked(item.Location))
@@ -251,19 +251,24 @@ public class SkillScreen : Screen
 
                 // Update the description.
                 var gender = Game.PlayerStats.IsFemale ? "mother" : "father";
-                var itemName = ArchipelagoManager.GetItemName(item.Item);
                 var playerName = ArchipelagoManager.GetPlayerName(item.Player);
                 s.Description =
                     $"If you're going to leave your children {gender}less, you may as well ensure they have a nice " +
-                    $"place to live.\n\nThis manor upgrade unlocks {itemName} for {playerName}. ";
+                    $"place to live.\n\nThis manor upgrade unlocks {s.Name} for {playerName}. ";
 
                 // Add item flag flavor text.
                 if ((item.Flags & ItemFlags.Advancement) != 0)
+                {
                     s.Description += "It looks like something they need.";
+                }
                 else if ((item.Flags & ItemFlags.NeverExclude) != 0)
+                {
                     s.Description += "It looks like something that could be of use.";
+                }
                 else if ((item.Flags & ItemFlags.Trap) != 0)
-                    s.Description += "It looks like something that would ruin their day.";
+                {
+                    s.Description += "It looks like somethign they need...";
+                }
             }
 
             if (s.CurrentLevel > 0) SetVisible(s, false);

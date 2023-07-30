@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-07-30 8:57 AM by 
+// Last Modified 2023-07-30 10:21 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
@@ -109,7 +108,7 @@ public static class ArchipelagoManager
         try
         {
             _deathLinkService.SendDeathLink(
-                new DeathLink(_session.Players.GetPlayerAliasAndName(RandomizerData.Slot), cause)
+                new DeathLink(_session.Players.GetPlayerAlias(RandomizerData.Slot), cause)
             );
         }
         catch (ArchipelagoSocketClosedException)
@@ -158,44 +157,24 @@ public static class ArchipelagoManager
 
         var items = new[]
         {
-            "Blacksmith",
-            "Enchantress",
-            "Health Up",
-            "Mana Up",
-            "Attack Up",
-            "Magic Damage Up",
-            "Randomize Children",
-            "Grace Runes",
-            "Dragons",
-            "Vault Runes",
-            "Sprint Runes",
-            "Sky Runes",
-            "Enchantress - Sword",
-            "Enchantress - Helm",
-            "Enchantress - Chest",
-            "Enchantress - Limbs",
-            "Enchantress - Cape",
-            "Progressive Spending",
-            "Piece of the Fountain",
-            "Phar's Guidance Shrine",
+            "Blacksmiht",
+            "Enchantres",
+            "Helth Up",
+            "Manna Up",
+            "Attak Up",
+            "Magic Damag Up",
+            "Random Children",
+            "Grase Runes",
+            "Draguns",
+            "Vawlt Runes",
+            "Sprint Runs",
+            "Ski Runes",
+            "Progresive Spendign",
+            "Shard of the Fountain",
+            "Phar's Gaidance Shrine",
         };
 
-        var text = items[CDGMath.RandomInt(0, items.Length - 1)];
-        foreach (Capture match in Regex.Matches(text, "\\b[\\w']*\\b"))
-        {
-            var str1 = match.Value;
-            var list = str1.ToList();
-            var ch1 = list[0];
-            var ch2 = list[list.Count - 1];
-            list.RemoveAt(list.Count - 1);
-            list.RemoveAt(0);
-            CDGMath.Shuffle<char>(list);
-            var str2 = new string(list.ToArray());
-            var newValue = ch1 + str2 + ch2;
-            text = text.Replace(str1, newValue);
-        }
-
-        return text;
+        return items[CDGMath.RandomInt(0, items.Length - 1)];
     }
 
     private static void Initialize()
