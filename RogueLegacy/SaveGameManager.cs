@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - SaveGameManager.cs
+// Last Modified 2023-07-30 1:04 PM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,6 +14,7 @@ using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
+using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 using Tweener;
@@ -632,7 +642,6 @@ namespace RogueLegacy
                     binaryWriter.Write(Game.PlayerStats.SpokenToLastBoss);
                     binaryWriter.Write(Game.PlayerStats.HardcoreMode);
                     binaryWriter.Write(Game.ProfileName);
-                    binaryWriter.Write(Game.PlayerStats.FountainPieces);
                     binaryWriter.Write(Program.Game.NextChildItemQueue.Count);
                     foreach (var item in Program.Game.NextChildItemQueue)
                     {
@@ -1451,7 +1460,6 @@ namespace RogueLegacy
                     Game.PlayerStats.SpokenToLastBoss = binaryReader.ReadBoolean();
                     Game.PlayerStats.HardcoreMode = binaryReader.ReadBoolean();
                     Game.ProfileName = binaryReader.ReadString();
-                    Game.PlayerStats.FountainPieces = binaryReader.ReadInt32();
 
                     Program.Game.NextChildItemQueue = new Queue<NetworkItem>();
                     var queuedCount = binaryReader.ReadInt32();
@@ -1765,6 +1773,14 @@ namespace RogueLegacy
                     }
 
                     Game.PlayerStats.ReceivedItems = list;
+                    // Set fountain pieces
+                    foreach (var item in Game.PlayerStats.ReceivedItems)
+                    {
+                        if (item.Item == ItemCode.FOUNTAIN_PIECE)
+                        {
+                            Game.PlayerStats.FountainPieces++;
+                        }
+                    }
 
                     binaryReader.Close();
                     Game.ScreenManager.Player.UpdateEquipmentColours();

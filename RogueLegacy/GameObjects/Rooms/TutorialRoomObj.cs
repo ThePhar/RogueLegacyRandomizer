@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - TutorialRoomObj.cs
-// Last Modified 2022-10-24
-//
+// RogueLegacyRandomizer - TutorialRoomObj.cs
+// Last Modified 2023-07-30 12:40 PM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -13,6 +13,7 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
 
@@ -280,6 +281,7 @@ namespace RogueLegacy
                             rCScreenManager.DialogueScreen.SetDialogue("DiaryEntry" + 24);
                             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "RunFlashback");
                             rCScreenManager.DisplayScreen(13, true);
+                            Program.Game.CollectItemFromLocation(LocationCode.FINAL_DIARY);
                         }
                         else
                         {

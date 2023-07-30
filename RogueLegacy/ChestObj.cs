@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - ChestObj.cs
-// Last Modified 2023-07-30 8:51 AM by
-//
+// Last Modified 2023-07-30 1:12 PM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -29,6 +29,7 @@ public class ChestObj : PhysicsObj
     private          SpriteObj _arrowIcon;
     private          ChestType _chestTypeType;
     public           int       Level;
+    public           long?     ForcedLocation = null;
 
     public ChestObj(PhysicsManager physicsManager) : base("Chest1_Sprite", physicsManager)
     {
@@ -139,6 +140,8 @@ public class ChestObj : PhysicsObj
                     return;
             }
         }
+
+        // Handle
 
         GiveNetworkItem(itemDropManager, player);
         player.AttachedLevel.RefreshMapChestIcons();
@@ -303,6 +306,20 @@ public class ChestObj : PhysicsObj
         if (ForcedItemType == ItemDropType.Coin)
         {
             GiveGold(manager, (int) ForcedAmount);
+            return;
+        }
+
+        if (ForcedLocation != null)
+        {
+            if (_chestTypeType == ChestType.Gold && ArchipelagoManager.IsLocationChecked((long) ForcedLocation))
+            {
+                GiveStatDrop(manager, player, 1, 0);
+            }
+            else
+            {
+                Program.Game.CollectItemFromLocation((long) ForcedLocation);
+                GiveGold(manager);
+            }
             return;
         }
 

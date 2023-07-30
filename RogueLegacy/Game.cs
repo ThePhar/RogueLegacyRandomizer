@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-30 12:00 PM by
-//
+// Last Modified 2023-07-30 1:05 PM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -524,6 +524,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     PlayerStats.CharacterFound = true;
                     PlayerStats.Gold = 0;
                     PlayerStats.Class = ArchipelagoManager.RandomizerData.StartingClass;
+                    PlayerStats.Spell = (byte) ClassExtensions.SpellList((ClassType) PlayerStats.Class)[0];
 
                     // Unlock the player's starting class.
                     var skill = (ClassType) ArchipelagoManager.RandomizerData.StartingClass switch
@@ -1262,6 +1263,10 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.FOUNTAIN_PIECE:
                 PlayerStats.FountainPieces += 1;
+                break;
+
+            case ItemCode.TRAP_HEDGEHOG:
+                PlayerStats.SpecialItem = (byte) SpecialItemType.HedgehogsCurse;
                 break;
 
             case ItemCode.TRAP_VERTIGO:

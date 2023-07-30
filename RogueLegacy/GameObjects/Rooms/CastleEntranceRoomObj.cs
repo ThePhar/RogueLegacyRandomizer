@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-// Last Modified 2023-07-30 8:20 AM by 
-// 
+// Last Modified 2023-07-30 12:35 PM by
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -194,58 +194,30 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (Game.PlayerStats.FireballBossBeaten) RevealSymbol(Zone.Tower, false);
 
-        if (ArchipelagoManager.RandomizerData.FountainPieceRequirement > 0)
+        var hasFountainRequirement = ArchipelagoManager.RandomizerData.FountainPieceRequirement == 0 || Game.PlayerStats.FountainPieces >= ArchipelagoManager.RandomizerData.FountainPieceRequirement;
+        var bossesKilled = !ArchipelagoManager.RandomizerData.RequireBosses ||
+                           (Game.PlayerStats.EyeballBossBeaten &&
+                            Game.PlayerStats.FairyBossBeaten &&
+                            Game.PlayerStats.BlobBossBeaten &&
+                            Game.PlayerStats.FireballBossBeaten);
+
+        if (bossesKilled && hasFountainRequirement && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
         {
-            if (Game.PlayerStats.FountainPieces >=
-                ArchipelagoManager.RandomizerData.FountainPieceRequirement
-                && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
-            {
-                PlayBossDoorAnimation();
-            }
-            else if (Game.PlayerStats.FinalDoorOpened)
-            {
-                _bossDoor.Locked = false;
-                _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
-                _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
-            }
+            PlayBossDoorAnimation();
         }
-        else
+        else if (Game.PlayerStats.FinalDoorOpened)
         {
-            if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
-                Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
-                !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
-            {
-                PlayBossDoorAnimation();
-            }
-            else if (Game.PlayerStats.FinalDoorOpened)
-            {
-                _bossDoor.Locked = false;
-                _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
-                _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
-            }
+            _bossDoor.Locked = false;
+            _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
+            _bossDoorSprite.GoToFrame(_bossDoorSprite.TotalFrames);
         }
 
         if (!_gateClosed) CloseGate(true);
 
-        if (ArchipelagoManager.RandomizerData.FountainPieceRequirement > 0)
+        if (bossesKilled && hasFountainRequirement && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
         {
-            if (Game.PlayerStats.FountainPieces >=
-                ArchipelagoManager.RandomizerData.FountainPieceRequirement
-                && !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
-            {
-                Game.PlayerStats.FinalDoorOpened = true;
-                Player.AttachedLevel.RunCinematicBorders(6f);
-            }
-        }
-        else
-        {
-            if (Game.PlayerStats.EyeballBossBeaten && Game.PlayerStats.FairyBossBeaten &&
-                Game.PlayerStats.BlobBossBeaten && Game.PlayerStats.FireballBossBeaten &&
-                !Game.PlayerStats.FinalDoorOpened && Player.ScaleX > 0.1f)
-            {
-                Game.PlayerStats.FinalDoorOpened = true;
-                Player.AttachedLevel.RunCinematicBorders(6f);
-            }
+            Game.PlayerStats.FinalDoorOpened = true;
+            Player.AttachedLevel.RunCinematicBorders(6f);
         }
 
         // Enable death links now that we are in the castle.
