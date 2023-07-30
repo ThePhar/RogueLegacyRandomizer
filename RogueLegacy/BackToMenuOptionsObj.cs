@@ -1,12 +1,13 @@
-// Rogue Legacy Randomizer - BackToMenuOptionsObj.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - BackToMenuOptionsObj.cs
+// Last Modified 2023-07-30 10:54 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
+using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
 
@@ -51,6 +52,7 @@ namespace RogueLegacy
         public void GoBackToTitle()
         {
             IsActive = false;
+            ArchipelagoManager.Disconnect();
             var levelScreen = Game.ScreenManager.GetLevelScreen();
             if (levelScreen != null &&
                 (levelScreen.CurrentRoom is CarnivalShoot1BonusRoom ||

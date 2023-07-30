@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-30 10:31 AM by
+// Last Modified 2023-07-30 10:42 AM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -576,12 +576,13 @@ public class Game : Microsoft.Xna.Framework.Game
 
         // Check for received items and send to player.
         if (ArchipelagoManager.ReceiveItemQueue.Count > 0)
+        {
             if (ScreenManager.Player is { ControlsLocked: false } && ScreenManager.CurrentScreen is ProceduralLevelScreen)
             {
-                var item = ArchipelagoManager.ReceiveItemQueue.Dequeue();
+                var (index, item) = ArchipelagoManager.ReceiveItemQueue.Dequeue();
 
                 // Only give item if we haven't received it before!
-                if (PlayerStats.HasNotReceivedItem(item))
+                if (PlayerStats.HasNotReceivedItem(index, item))
                 {
                     PlayerStats.ReceivedItems.Add(item);
                     var stats = DisgustingGetItemLogic(item);
@@ -594,6 +595,7 @@ public class Game : Microsoft.Xna.Framework.Game
                     );
                 }
             }
+        }
 
         // Death Link handling logic.
         if (ArchipelagoManager.ReceiveItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
@@ -1697,7 +1699,7 @@ public class Game : Microsoft.Xna.Framework.Game
         if (self)
         {
             // Ignore any items we've already received.
-            if (!PlayerStats.HasNotReceivedItem(item))
+            if (!PlayerStats.HasNotReceivedItem(-1, item))
                 return;
 
             stats = DisgustingGetItemLogic(item);

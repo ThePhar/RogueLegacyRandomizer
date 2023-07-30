@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - CreditsScreen.cs
-// Last Modified 2023-07-30 10:32 AM by 
+// Last Modified 2023-07-30 11:06 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Randomizer;
 using RogueLegacy.GameObjects;
 using Tweener;
 
@@ -457,7 +458,7 @@ namespace RogueLegacy.Screens
 
             Camera.Position = Vector2.Zero;
             _displayingContinueText = false;
-            _continueText.Text = "Press [Input:" + 0 + "] to exit";
+            _continueText.Text = "Press [Input:" + 0 + "] to return to title.";
             if (_sky == null)
             {
                 _sky = new SkyObj(null);
@@ -710,7 +711,8 @@ namespace RogueLegacy.Screens
                 {
                     Tween.StopAll(false);
                     Program.Game.SaveOnExit();
-                    Program.Game.Exit();
+                    ArchipelagoManager.Disconnect();
+                    Game.ScreenManager.DisplayScreen(3, true);
                 }
                 else
                 {

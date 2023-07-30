@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - PlayerStats.cs
-// Last Modified 2023-07-30 10:28 AM by
-//
+// Last Modified 2023-07-30 10:51 AM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -148,19 +148,25 @@ namespace RogueLegacy
         public List<byte[]>      GetBlueprintArray         { get; private set; }
         public sbyte[]           GetEquippedArray          { get; private set; }
         public List<NetworkItem> ReceivedItems             { get; set; }
+        public int               ReceivedItemsIndex        => ReceivedItems.Count;
         public bool              HasVertigo                { get; set; }
 
-        public bool HasNotReceivedItem(NetworkItem item)
+        public bool HasNotReceivedItem(int index, NetworkItem item)
         {
-            var nItem = item;
-
-            foreach (var rItem in ReceivedItems)
+            if (index == -1)
             {
-                if (rItem.Item == nItem.Item && rItem.Location == nItem.Location && rItem.Player == nItem.Player)
+                foreach (var rItem in ReceivedItems)
                 {
-                    // We already received this item.
-                    return false;
+                    if (rItem.Item == item.Item && rItem.Location == item.Location && rItem.Player == item.Player)
+                    {
+                        // We already received this item.
+                        return false;
+                    }
                 }
+            }
+            else
+            {
+                return index > ReceivedItemsIndex;
             }
 
             return true;

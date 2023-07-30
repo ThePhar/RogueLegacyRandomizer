@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - StartingRoomObj.cs
-// Last Modified 2023-07-27 12:06 AM by 
+// Last Modified 2023-07-30 11:00 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -219,7 +219,7 @@ namespace RogueLegacy
 
         private bool TollCollectorAvailable
         {
-            get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible; }
+            get { return Game.PlayerStats.TimesDead > 0 && m_tollCollector.Visible && !ArchipelagoManager.RandomizerData.DisableCharon; }
         }
 
         public override void Initialize()

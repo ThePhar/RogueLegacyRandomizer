@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-07-30 10:21 AM by 
+// Last Modified 2023-07-30 10:56 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -30,13 +30,13 @@ public static class ArchipelagoManager
     private static          DeathLinkService             _deathLinkService;
     private static          DateTime                     _lastDeath  = DateTime.MinValue;
 
-    public static ConnectionStatus              Status           { get; private set; } = ConnectionStatus.Disconnected;
-    public static DeathLink                     DeathLink        { get; private set; }
-    public static RandomizerData                RandomizerData   { get; private set; }
-    public static bool                          DeathLinkSafe    { get; set; }
-    public static Queue<NetworkItem>            ReceiveItemQueue { get; } = new();
-    public static Dictionary<long, NetworkItem> AllLocations       { get; } = new();
-    public static ConnectionInfo                ConnectionInfo   { get; private set; }
+    public static ConnectionStatus               Status           { get; private set; } = ConnectionStatus.Disconnected;
+    public static DeathLink                      DeathLink        { get; private set; }
+    public static RandomizerData                 RandomizerData   { get; private set; }
+    public static bool                           DeathLinkSafe    { get; set; }
+    public static Queue<Tuple<int, NetworkItem>> ReceiveItemQueue { get; private set; } = new();
+    public static Dictionary<long, NetworkItem>  AllLocations     { get; private set; } = new();
+    public static ConnectionInfo                 ConnectionInfo   { get; private set; }
 
     public static bool CanRelease       => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
     public static bool CanCollect       => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
@@ -57,15 +57,21 @@ public static class ArchipelagoManager
         }
     }
 
-    private static void Disconnect()
+    public static void Disconnect()
     {
         Status = ConnectionStatus.Disconnected;
 
         // Clear DeathLink handlers.
-        if (_deathLinkService != null) _deathLinkService.OnDeathLinkReceived -= OnDeathLink;
+        if (_deathLinkService != null)
+        {
+            _deathLinkService.OnDeathLinkReceived -= OnDeathLink;
+        }
 
         // Clear Session handlers.
-        if (_session == null) return;
+        if (_session == null)
+        {
+            return;
+        }
 
         _session.Socket.ErrorReceived -= OnError;
         _session.Items.ItemReceived -= OnItemReceived;
@@ -179,6 +185,9 @@ public static class ArchipelagoManager
 
     private static void Initialize()
     {
+        ReceiveItemQueue = new();
+        AllLocations = new();
+
         // Watch for the following events.
         _session.Socket.ErrorReceived += OnError;
         _session.Socket.PacketReceived += OnPacketReceived;
@@ -222,9 +231,10 @@ public static class ArchipelagoManager
 
     private static void OnItemReceived(ReceivedItemsHelper helper)
     {
+        var i = helper.Index;
         while (helper.Any())
         {
-            ReceiveItemQueue.Enqueue(helper.DequeueItem());
+            ReceiveItemQueue.Enqueue(new Tuple<int, NetworkItem>(i++, helper.DequeueItem()));
         }
     }
 
@@ -262,6 +272,7 @@ public static class ArchipelagoManager
         // Check if DeathLink is enabled and establish the appropriate helper.
         if (RandomizerData.DeathLinkMode is DeathLinkMode.Enabled or DeathLinkMode.ForcedEnabled)
         {
+            _lastDeath = DateTime.MinValue;
             _deathLinkService.EnableDeathLink();
         }
 

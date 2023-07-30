@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Trait.cs
-// Last Modified 2023-07-30 10:28 AM by
+// Last Modified 2023-07-30 10:59 AM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -291,14 +291,14 @@ public static class TraitHelper
                 do
                 {
                     traits[traitIndex] = possibleTraits[CDGMath.RandomInt(0, possibleTraits.Count - 1)];
-                } while (traits[0] != Trait.Vertigo);
+                } while (traits[0] == Trait.Vertigo);
             }
             else
             {
                 do
                 {
                     traits[traitIndex] = possibleTraits[CDGMath.RandomInt(0, possibleTraits.Count - 1)];
-                } while (traits[1] == traits[0] || traits[1] != Trait.Vertigo || traits[0].ConflictsWith(traits[1]));
+                } while (traits[1] == traits[0] || traits[1] == Trait.Vertigo || traits[0].ConflictsWith(traits[1]));
             }
         }
 
