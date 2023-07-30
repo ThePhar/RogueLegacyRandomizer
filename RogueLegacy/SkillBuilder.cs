@@ -1,3 +1,12 @@
+// RogueLegacyRandomizer - SkillBuilder.cs
+// Last Modified 2023-07-30 12:22 PM by 
+// 
+// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+// Original Source - © 2011-2018, Cellar Door Games Inc.
+// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using Microsoft.Xna.Framework;
 using RogueLegacy.Enums;
 
@@ -1251,6 +1260,106 @@ namespace RogueLegacy
                     skillObj.MaxLevel = 1;
                     skillObj.IconName = "Icon_SmithyLocked_Sprite";
                     skillObj.DisplayStat = true;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.BlacksmithSword:
+                    skillObj.Name = "Blacksmith - Sword";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.BlacksmithHelm:
+                    skillObj.Name = "Blacksmith - Helm";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.BlacksmithChest:
+                    skillObj.Name = "Blacksmith - Chest";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.BlacksmithLimbs:
+                    skillObj.Name = "Blacksmith - Limbs";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.BlacksmithCape:
+                    skillObj.Name = "Blacksmith - Cape";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.EnchantressSword:
+                    skillObj.Name = "Enchantress - Sword";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.EnchantressHelm:
+                    skillObj.Name = "Enchantress - Helm";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.EnchantressChest:
+                    skillObj.Name = "Enchantress - Chest";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.EnchantressLimbs:
+                    skillObj.Name = "Enchantress - Limbs";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
+                    skillObj.StatType = 0;
+                    skillObj.CanPurchase = true;
+                    break;
+
+                case SkillType.EnchantressCape:
+                    skillObj.Name = "Enchantress - Cape";
+                    skillObj.Description = "";
+                    skillObj.MaxLevel = 1;
+                    skillObj.IconName = "Icon_SmithyLocked_Sprite";
+                    skillObj.DisplayStat = false;
                     skillObj.StatType = 0;
                     skillObj.CanPurchase = true;
                     break;

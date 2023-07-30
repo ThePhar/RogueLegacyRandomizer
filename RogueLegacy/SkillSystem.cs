@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - SkillSystem.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - SkillSystem.cs
+// Last Modified 2023-07-30 12:16 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -325,6 +325,12 @@ namespace RogueLegacy
 
             SkillStatArray = new List<SkillObj>();
             for (var i = (int) SkillType.HealthUp; i <= (int) SkillType.Traitorous; i++)
+            {
+                var skillObj = SkillBuilder.BuildSkill((SkillType) i);
+                SkillStatArray.Add(skillObj);
+            }
+
+            for (var i = (int) SkillType.BlacksmithSword; i <= (int) SkillType.EnchantressCape; i++)
             {
                 var skillObj = SkillBuilder.BuildSkill((SkillType) i);
                 SkillStatArray.Add(skillObj);

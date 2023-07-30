@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-30 10:42 AM by
+// Last Modified 2023-07-30 12:00 PM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -933,6 +933,48 @@ public class Game : Microsoft.Xna.Framework.Game
                 SkillSystem.LevelUpTrait(skill, false);
                 break;
 
+            case ItemCode.BLACKSMITH_SWORD:
+                skill = SkillSystem.GetSkill(SkillType.BlacksmithSword);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.BLACKSMITH_HELM:
+                skill = SkillSystem.GetSkill(SkillType.BlacksmithHelm);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.BLACKSMITH_CHEST:
+                skill = SkillSystem.GetSkill(SkillType.BlacksmithChest);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.BLACKSMITH_LIMBS:
+                skill = SkillSystem.GetSkill(SkillType.BlacksmithLimbs);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.BLACKSMITH_CAPE:
+                skill = SkillSystem.GetSkill(SkillType.BlacksmithCape);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+
+            case ItemCode.ENCHANTRESS_SWORD:
+                skill = SkillSystem.GetSkill(SkillType.EnchantressSword);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.ENCHANTRESS_HELM:
+                skill = SkillSystem.GetSkill(SkillType.EnchantressHelm);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.ENCHANTRESS_CHEST:
+                skill = SkillSystem.GetSkill(SkillType.EnchantressChest);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.ENCHANTRESS_LIMBS:
+                skill = SkillSystem.GetSkill(SkillType.EnchantressLimbs);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+            case ItemCode.ENCHANTRESS_CAPE:
+                skill = SkillSystem.GetSkill(SkillType.EnchantressCape);
+                SkillSystem.LevelUpTrait(skill, false);
+                break;
+
             case ItemCode.RUNE_VAULT:
                 equipStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
                 PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) EquipmentAbility.Vault] = equipStatus;
@@ -1224,6 +1266,26 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.TRAP_VERTIGO:
                 PlayerStats.HasVertigo = !PlayerStats.HasVertigo;
+                break;
+
+            case ItemCode.TRAP_GENETIC_LOTTERY:
+                var @class = PlayerStats.Class;
+                PlayerStats.Class = (byte) ClassExtensions.RandomClass();
+
+                var spells = ClassExtensions.SpellList((ClassType) PlayerStats.Class);
+                PlayerStats.Spell = (byte) spells[CDGMath.RandomInt(0, spells.Length - 1)];
+
+                var traits = TraitHelper.ReturnRandomTraits();
+                PlayerStats.Traits = new Vector2((float) traits[0], (float) traits[1]);
+
+                var currentlyFemale = PlayerStats.IsFemale;
+                PlayerStats.IsFemale = CDGMath.RandomInt(0, 1) == 0;
+                if (currentlyFemale != PlayerStats.IsFemale)
+                {
+                    PlayerStats.PlayerName = PlayerStats.IsFemale
+                        ? PlayerStats.PlayerName.Replace("Sir ", "Lady ")
+                        : PlayerStats.PlayerName.Replace("Lady ", "Sir ");
+                }
                 break;
 
             case ItemCode.GOLD_1000:

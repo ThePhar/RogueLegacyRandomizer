@@ -1,10 +1,10 @@
-// Rogue Legacy Randomizer - BlacksmithScreen.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - BlacksmithScreen.cs
+// Last Modified 2023-07-30 12:27 PM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 //
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
@@ -13,6 +13,7 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Randomizer;
 using RogueLegacy.Enums;
 using Tweener;
 using Tweener.Ease;
@@ -346,6 +347,53 @@ namespace RogueLegacy.Screens
             for (var j = 0; j < Game.PlayerStats.GetBlueprintArray[i].Length; j++)
             {
                 var b = Game.PlayerStats.GetBlueprintArray[i][j];
+
+                // Outline disabled slots.
+                _masterIconArray[i][j].OutlineWidth = 0;
+                if (ArchipelagoManager.RandomizerData.ShuffleBlacksmith)
+                {
+                    switch ((EquipmentCategory) i)
+                    {
+                        case EquipmentCategory.Sword:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithSword).CurrentLevel == 0)
+                            {
+                                _masterIconArray[i][j].OutlineColour = Color.Red;
+                                _masterIconArray[i][j].OutlineWidth = 2;
+                            }
+                            break;
+                        case EquipmentCategory.Helm:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithHelm).CurrentLevel == 0)
+                            {
+                                _masterIconArray[i][j].OutlineColour = Color.Red;
+                                _masterIconArray[i][j].OutlineWidth = 2;
+                            }
+                            break;
+                        case EquipmentCategory.Chest:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithChest).CurrentLevel == 0)
+                            {
+                                _masterIconArray[i][j].OutlineColour = Color.Red;
+                                _masterIconArray[i][j].OutlineWidth = 2;
+                            }
+                            break;
+                        case EquipmentCategory.Limbs:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithLimbs).CurrentLevel == 0)
+                            {
+                                _masterIconArray[i][j].OutlineColour = Color.Red;
+                                _masterIconArray[i][j].OutlineWidth = 2;
+                            }
+                            break;
+                        case EquipmentCategory.Cape:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithCape).CurrentLevel == 0)
+                            {
+                                _masterIconArray[i][j].OutlineColour = Color.Red;
+                                _masterIconArray[i][j].OutlineWidth = 2;
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+
                 if (b == 0)
                 {
                     _masterIconArray[i][j].ChangeSprite("BlacksmithUI_QuestionMarkIcon_Character");
@@ -604,6 +652,51 @@ namespace RogueLegacy.Screens
 
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
+                if (ArchipelagoManager.RandomizerData.ShuffleBlacksmith)
+                {
+                    // TODO: Why is it 6+???
+                    switch (_currentCategoryIndex)
+                    {
+                        case (int) EquipmentCategory.Sword + 6:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithSword).CurrentLevel == 0)
+                            {
+                                SoundManager.PlaySound("Error_Spell");
+                                return;
+                            }
+                            break;
+                        case (int) EquipmentCategory.Helm + 6:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithHelm).CurrentLevel == 0)
+                            {
+                                SoundManager.PlaySound("Error_Spell");
+                                return;
+                            }
+                            break;
+                        case (int) EquipmentCategory.Chest + 6:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithChest).CurrentLevel == 0)
+                            {
+                                SoundManager.PlaySound("Error_Spell");
+                                return;
+                            }
+                            break;
+                        case (int) EquipmentCategory.Limbs + 6:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithLimbs).CurrentLevel == 0)
+                            {
+                                SoundManager.PlaySound("Error_Spell");
+                                return;
+                            }
+                            break;
+                        case (int) EquipmentCategory.Cape + 6:
+                            if (SkillSystem.GetSkill(SkillType.BlacksmithCape).CurrentLevel == 0)
+                            {
+                                SoundManager.PlaySound("Error_Spell");
+                                return;
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+
                 _inCategoryMenu = false;
                 _currentEquipmentIndex = 0;
                 _selectionIcon.Position = _activeIconArray[_currentEquipmentIndex].AbsPosition;
