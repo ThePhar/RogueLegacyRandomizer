@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - SaveGameManager.cs
-// Last Modified 2023-07-30 1:04 PM by 
+// Last Modified 2023-07-30 6:10 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -943,8 +943,11 @@ namespace RogueLegacy
 
                     // Store the count as well.
                     binaryWriter.Write(Game.PlayerStats.ReceivedItems.Count);
-                    foreach (var item in Game.PlayerStats.ReceivedItems)
+                    foreach (var pair in Game.PlayerStats.ReceivedItems)
                     {
+                        var index = pair.Key;
+                        var item = pair.Value;
+                        binaryWriter.Write(index);
                         binaryWriter.Write(item.Item);
                         binaryWriter.Write(item.Location);
                         binaryWriter.Write(item.Player);
@@ -1753,10 +1756,11 @@ namespace RogueLegacy
                         }
                     }
 
-                    var list = new List<NetworkItem>();
+                    var itemReceivedDict = new Dictionary<int, NetworkItem>();
                     var count = binaryReader.ReadInt32();
                     for (var i = 0; i < count; i++)
                     {
+                        var index = binaryReader.ReadInt32();
                         var item = new NetworkItem
                         {
                             Item = binaryReader.ReadInt64(),
@@ -1769,14 +1773,14 @@ namespace RogueLegacy
                             Console.Write(" " + item.Item + ":" + item.Location + ":" + item.Player);
                         }
 
-                        list.Add(item);
+                        itemReceivedDict.Add(index, item);
                     }
 
-                    Game.PlayerStats.ReceivedItems = list;
+                    Game.PlayerStats.ReceivedItems = itemReceivedDict;
                     // Set fountain pieces
-                    foreach (var item in Game.PlayerStats.ReceivedItems)
+                    foreach (var pair in Game.PlayerStats.ReceivedItems)
                     {
-                        if (item.Item == ItemCode.FOUNTAIN_PIECE)
+                        if (pair.Value.Item == ItemCode.FOUNTAIN_PIECE)
                         {
                             Game.PlayerStats.FountainPieces++;
                         }

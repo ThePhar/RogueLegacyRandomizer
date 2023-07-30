@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - PlayerStats.cs
-// Last Modified 2023-07-30 10:51 AM by 
+// Last Modified 2023-07-30 6:22 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -67,7 +67,7 @@ namespace RogueLegacy
             ChestPiece = (byte) CDGMath.RandomInt(1, 5);
             CDGMath.RandomInt(0, 14);
 
-            ReceivedItems = new List<NetworkItem>();
+            ReceivedItems = new Dictionary<int, NetworkItem>();
         }
 
         public int CurrentLevel   { get; set; }
@@ -86,90 +86,73 @@ namespace RogueLegacy
             }
         }
 
-        public int               CurrentHealth             { get; set; }
-        public int               CurrentMana               { get; set; }
-        public byte              Age                       { get; set; }
-        public byte              ChildAge                  { get; set; }
-        public byte              Spell                     { get; set; }
-        public byte              Class                     { get; set; }
-        public byte              SpecialItem               { get; set; }
-        public Vector2           Traits                    { get; set; }
-        public string            PlayerName                { get; set; }
-        public byte              HeadPiece                 { get; set; }
-        public byte              ShoulderPiece             { get; set; }
-        public byte              ChestPiece                { get; set; }
-        public byte              DiaryEntry                { get; set; }
-        public int               BonusHealth               { get; set; }
-        public int               BonusStrength             { get; set; }
-        public int               BonusMana                 { get; set; }
-        public int               BonusDefense              { get; set; }
-        public int               BonusWeight               { get; set; }
-        public int               BonusMagic                { get; set; }
-        public int               LichHealth                { get; set; }
-        public int               LichMana                  { get; set; }
-        public float             LichHealthMod             { get; set; }
-        public bool              NewBossBeaten             { get; set; }
-        public bool              EyeballBossBeaten         { get; set; }
-        public bool              FairyBossBeaten           { get; set; }
-        public bool              FireballBossBeaten        { get; set; }
-        public bool              BlobBossBeaten            { get; set; }
-        public bool              LastbossBeaten            { get; set; }
-        public int               TimesCastleBeaten         { get; set; }
-        public int               NumEnemiesBeaten          { get; set; }
-        public bool              TutorialComplete          { get; set; }
-        public bool              CharacterFound            { get; set; }
-        public bool              LoadStartingRoom          { get; set; }
-        public bool              LockCastle                { get; set; }
-        public bool              SpokeToBlacksmith         { get; set; } = true;
-        public bool              SpokeToEnchantress        { get; set; } = true;
-        public bool              SpokeToArchitect          { get; set; } = true;
-        public bool              SpokeToTollCollector      { get; set; } = true;
-        public bool              IsDead                    { get; set; }
-        public bool              FinalDoorOpened           { get; set; }
-        public bool              RerolledChildren          { get; set; }
-        public bool              IsFemale                  { get; set; }
-        public int               TimesDead                 { get; set; }
-        public bool              HasArchitectFee           { get; set; }
-        public bool              ReadLastDiary             { get; set; }
-        public bool              SpokenToLastBoss          { get; set; }
-        public bool              HardcoreMode              { get; set; }
-        public float             TotalHoursPlayed          { get; set; }
-        public Vector3           WizardSpellList           { get; set; }
-        public bool              ChallengeEyeballUnlocked  { get; set; }
-        public bool              ChallengeFireballUnlocked { get; set; }
-        public bool              ChallengeBlobUnlocked     { get; set; }
-        public bool              ChallengeSkullUnlocked    { get; set; }
-        public bool              ChallengeLastBossUnlocked { get; set; }
-        public bool              ChallengeEyeballBeaten    { get; set; }
-        public bool              ChallengeFireballBeaten   { get; set; }
-        public bool              ChallengeBlobBeaten       { get; set; }
-        public bool              ChallengeSkullBeaten      { get; set; }
-        public bool              ChallengeLastBossBeaten   { get; set; }
-        public List<byte[]>      GetBlueprintArray         { get; private set; }
-        public sbyte[]           GetEquippedArray          { get; private set; }
-        public List<NetworkItem> ReceivedItems             { get; set; }
-        public int               ReceivedItemsIndex        => ReceivedItems.Count;
-        public bool              HasVertigo                { get; set; }
+        public int                          CurrentHealth             { get; set; }
+        public int                          CurrentMana               { get; set; }
+        public byte                         Age                       { get; set; }
+        public byte                         ChildAge                  { get; set; }
+        public byte                         Spell                     { get; set; }
+        public byte                         Class                     { get; set; }
+        public byte                         SpecialItem               { get; set; }
+        public Vector2                      Traits                    { get; set; }
+        public string                       PlayerName                { get; set; }
+        public byte                         HeadPiece                 { get; set; }
+        public byte                         ShoulderPiece             { get; set; }
+        public byte                         ChestPiece                { get; set; }
+        public byte                         DiaryEntry                { get; set; }
+        public int                          BonusHealth               { get; set; }
+        public int                          BonusStrength             { get; set; }
+        public int                          BonusMana                 { get; set; }
+        public int                          BonusDefense              { get; set; }
+        public int                          BonusWeight               { get; set; }
+        public int                          BonusMagic                { get; set; }
+        public int                          LichHealth                { get; set; }
+        public int                          LichMana                  { get; set; }
+        public float                        LichHealthMod             { get; set; }
+        public bool                         NewBossBeaten             { get; set; }
+        public bool                         EyeballBossBeaten         { get; set; }
+        public bool                         FairyBossBeaten           { get; set; }
+        public bool                         FireballBossBeaten        { get; set; }
+        public bool                         BlobBossBeaten            { get; set; }
+        public bool                         LastbossBeaten            { get; set; }
+        public int                          TimesCastleBeaten         { get; set; }
+        public int                          NumEnemiesBeaten          { get; set; }
+        public bool                         TutorialComplete          { get; set; }
+        public bool                         CharacterFound            { get; set; }
+        public bool                         LoadStartingRoom          { get; set; }
+        public bool                         LockCastle                { get; set; }
+        public bool                         SpokeToBlacksmith         { get; set; } = true;
+        public bool                         SpokeToEnchantress        { get; set; } = true;
+        public bool                         SpokeToArchitect          { get; set; } = true;
+        public bool                         SpokeToTollCollector      { get; set; } = true;
+        public bool                         IsDead                    { get; set; }
+        public bool                         FinalDoorOpened           { get; set; }
+        public bool                         RerolledChildren          { get; set; }
+        public bool                         IsFemale                  { get; set; }
+        public int                          TimesDead                 { get; set; }
+        public bool                         HasArchitectFee           { get; set; }
+        public bool                         ReadLastDiary             { get; set; }
+        public bool                         SpokenToLastBoss          { get; set; }
+        public bool                         HardcoreMode              { get; set; }
+        public float                        TotalHoursPlayed          { get; set; }
+        public Vector3                      WizardSpellList           { get; set; }
+        public bool                         ChallengeEyeballUnlocked  { get; set; }
+        public bool                         ChallengeFireballUnlocked { get; set; }
+        public bool                         ChallengeBlobUnlocked     { get; set; }
+        public bool                         ChallengeSkullUnlocked    { get; set; }
+        public bool                         ChallengeLastBossUnlocked { get; set; }
+        public bool                         ChallengeEyeballBeaten    { get; set; }
+        public bool                         ChallengeFireballBeaten   { get; set; }
+        public bool                         ChallengeBlobBeaten       { get; set; }
+        public bool                         ChallengeSkullBeaten      { get; set; }
+        public bool                         ChallengeLastBossBeaten   { get; set; }
+        public List<byte[]>                 GetBlueprintArray         { get; private set; }
+        public sbyte[]                      GetEquippedArray          { get; private set; }
+        public Dictionary<int, NetworkItem> ReceivedItems             { get; set; }
+        public bool                         HasVertigo                { get; set; }
 
         public bool HasNotReceivedItem(int index, NetworkItem item)
         {
-            if (index == -1)
-            {
-                foreach (var rItem in ReceivedItems)
-                {
-                    if (rItem.Item == item.Item && rItem.Location == item.Location && rItem.Player == item.Player)
-                    {
-                        // We already received this item.
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                return index > ReceivedItemsIndex;
-            }
-
-            return true;
+            return !ReceivedItems.ContainsKey(index);
         }
 
         public byte TotalBlueprintsPurchased

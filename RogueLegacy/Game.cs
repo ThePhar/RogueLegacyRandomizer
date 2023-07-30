@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-07-30 1:28 PM by 
+// Last Modified 2023-07-30 6:58 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -588,7 +588,7 @@ public class Game : Microsoft.Xna.Framework.Game
                 // Only give item if we haven't received it before!
                 if (PlayerStats.HasNotReceivedItem(index, item))
                 {
-                    PlayerStats.ReceivedItems.Add(item);
+                    PlayerStats.ReceivedItems.Add(index, item);
                     var stats = DisgustingGetItemLogic(item);
 
                     (ScreenManager.CurrentScreen as ProceduralLevelScreen).AddReceivedItem(
@@ -598,6 +598,14 @@ public class Game : Microsoft.Xna.Framework.Game
                         stats
                     );
                 }
+
+                Console.WriteLine("Barbarian");
+                Console.WriteLine(SkillSystem.GetSkill(SkillType.BarbarianUnlock).CurrentLevel);
+                Console.WriteLine(SkillSystem.GetSkill(SkillType.BarbarianUp).CurrentLevel);
+
+                Console.WriteLine("Shinobi");
+                Console.WriteLine(SkillSystem.GetSkill(SkillType.NinjaUnlock).CurrentLevel);
+                Console.WriteLine(SkillSystem.GetSkill(SkillType.NinjaUp).CurrentLevel);
             }
         }
 
@@ -685,7 +693,10 @@ public class Game : Microsoft.Xna.Framework.Game
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
                 skill.CanPurchase = true;
                 break;
@@ -695,12 +706,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.MageUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.PROGRESSIVE_BARBARIAN:
@@ -708,12 +722,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.BarbarianUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.PROGRESSIVE_KNAVE:
@@ -721,12 +738,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.AssassinUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.PROGRESSIVE_SHINOBI:
@@ -734,12 +754,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.NinjaUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.PROGRESSIVE_MINER:
@@ -747,12 +770,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.BankerUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.PROGRESSIVE_LICH:
@@ -760,12 +786,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.LichUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.PROGRESSIVE_SPELLTHIEF:
@@ -773,12 +802,15 @@ public class Game : Microsoft.Xna.Framework.Game
                 if (skill.CurrentLevel > 0)
                 {
                     skill = SkillSystem.GetSkill(SkillType.SpellSwordUp);
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
                 }
                 else
+                {
+                    skill.CanPurchase = true;
                     SkillSystem.LevelUpTrait(skill, false);
+                }
 
-                skill.CanPurchase = true;
                 break;
 
             case ItemCode.DRAGON:
@@ -796,6 +828,7 @@ public class Game : Microsoft.Xna.Framework.Game
             case ItemCode.HEALTH:
                 var preMaxHealth = player.MaxHealth;
                 skill = SkillSystem.GetSkill(SkillType.HealthUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -807,6 +840,7 @@ public class Game : Microsoft.Xna.Framework.Game
             case ItemCode.MANA:
                 var preMaxMana = player.MaxMana;
                 skill = SkillSystem.GetSkill(SkillType.ManaUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -817,6 +851,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.ATTACK:
                 skill = SkillSystem.GetSkill(SkillType.AttackUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -826,6 +861,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.MAGIC_DAMAGE:
                 skill = SkillSystem.GetSkill(SkillType.MagicDamageUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -835,6 +871,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.ARMOR:
                 skill = SkillSystem.GetSkill(SkillType.ArmorUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -844,6 +881,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.EQUIP:
                 skill = SkillSystem.GetSkill(SkillType.EquipUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -853,6 +891,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.CRIT_CHANCE:
                 skill = SkillSystem.GetSkill(SkillType.CritChanceUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -862,6 +901,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.CRIT_DAMAGE:
                 skill = SkillSystem.GetSkill(SkillType.CritDamageUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -871,6 +911,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.DOWN_STRIKE:
                 skill = SkillSystem.GetSkill(SkillType.DownStrikeUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -880,6 +921,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.GOLD_GAIN:
                 skill = SkillSystem.GetSkill(SkillType.GoldGainUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -889,6 +931,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.POTION_EFFICIENCY:
                 skill = SkillSystem.GetSkill(SkillType.PotionUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -898,6 +941,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.INVULN_TIME:
                 skill = SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -907,6 +951,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.MANA_COST_DOWN:
                 skill = SkillSystem.GetSkill(SkillType.ManaCostDown);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -916,6 +961,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.DEATH_DEFIANCE:
                 skill = SkillSystem.GetSkill(SkillType.DeathDodge);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -925,6 +971,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.HAGGLING:
                 skill = SkillSystem.GetSkill(SkillType.PricesDown);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
                 SkillSystem.LevelUpTrait(skill, false);
@@ -934,6 +981,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.RANDOMIZE_CHILDREN:
                 skill = SkillSystem.GetSkill(SkillType.RandomizeChildren);
+                skill.CanPurchase = true;
                 SkillSystem.LevelUpTrait(skill, false);
                 break;
 
@@ -1270,6 +1318,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
             case ItemCode.TRAP_HEDGEHOG:
                 PlayerStats.SpecialItem = (byte) SpecialItemType.HedgehogsCurse;
+                ScreenManager.GetLevelScreen().UpdatePlayerHUDSpecialItem();
                 break;
 
             case ItemCode.TRAP_VERTIGO:
@@ -1766,15 +1815,6 @@ public class Game : Microsoft.Xna.Framework.Game
         var item = ArchipelagoManager.AllLocations[location];
         var self = item.Player == ArchipelagoManager.RandomizerData.Slot;
         var stats = new Tuple<float, float, float, float>(-1, -1, -1, 0);
-        if (self)
-        {
-            // Ignore any items we've already received.
-            if (!PlayerStats.HasNotReceivedItem(-1, item))
-                return;
-
-            stats = DisgustingGetItemLogic(item);
-            PlayerStats.ReceivedItems.Add(item);
-        }
 
         var data = new List<object>
         {

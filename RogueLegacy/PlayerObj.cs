@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - PlayerObj.cs
-// Last Modified 2023-07-27 12:12 AM by 
+// Last Modified 2023-07-30 4:09 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -2400,9 +2400,14 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void LastBossDoorHack()
     {
-        if (m_levelScreen.CurrentRoom is CastleEntranceRoomObj && Game.PlayerStats.EyeballBossBeaten &&
-            Game.PlayerStats.FairyBossBeaten && Game.PlayerStats.BlobBossBeaten &&
-            Game.PlayerStats.FireballBossBeaten && !Game.PlayerStats.FinalDoorOpened)
+        var hasFountainRequirement = ArchipelagoManager.RandomizerData.FountainPieceRequirement == 0 || Game.PlayerStats.FountainPieces >= ArchipelagoManager.RandomizerData.FountainPieceRequirement;
+        var bossesKilled = !ArchipelagoManager.RandomizerData.RequireBosses ||
+                           (Game.PlayerStats.EyeballBossBeaten &&
+                            Game.PlayerStats.FairyBossBeaten &&
+                            Game.PlayerStats.BlobBossBeaten &&
+                            Game.PlayerStats.FireballBossBeaten);
+
+        if (m_levelScreen.CurrentRoom is CastleEntranceRoomObj && hasFountainRequirement && bossesKilled && !Game.PlayerStats.FinalDoorOpened)
         {
             (m_levelScreen.CurrentRoom as CastleEntranceRoomObj).PlayBossDoorAnimation();
             Game.PlayerStats.FinalDoorOpened = true;

@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - LocationCode.cs
-// Last Modified 2023-07-30 8:23 AM by 
+// Last Modified 2023-07-30 4:03 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -83,7 +83,7 @@ public static class LocationCode
         var universalChests = randomizerData.UniversalChests;
         var maxChests = universalChests ? randomizerData.ChestsPerZone * 4 : randomizerData.ChestsPerZone;
 
-        if (chest >= maxChests || chest >= MAX_CHESTS)
+        if (chest >= maxChests)
         {
             location = -1;
             return false;
@@ -109,7 +109,7 @@ public static class LocationCode
         var universalChests = randomizerData.UniversalFairyChests;
         var maxChests = universalChests ? randomizerData.FairyChestsPerZone * 4 : randomizerData.FairyChestsPerZone;
 
-        if (chest >= maxChests || chest >= MAX_FAIRY_CHESTS)
+        if (chest >= maxChests)
         {
             location = -1;
             return false;

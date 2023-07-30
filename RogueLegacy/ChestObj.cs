@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - ChestObj.cs
-// Last Modified 2023-07-30 1:12 PM by 
+// Last Modified 2023-07-30 3:57 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -326,7 +326,8 @@ public class ChestObj : PhysicsObj
         var randomizerData = ArchipelagoManager.RandomizerData;
         if (isFairy)
         {
-            for (var chest = 0; chest <= LocationCode.MAX_FAIRY_CHESTS; chest++)
+            var chestMultiplier = ArchipelagoManager.RandomizerData.UniversalFairyChests ? 4 : 1;
+            for (var chest = 0; chest <= LocationCode.MAX_FAIRY_CHESTS * chestMultiplier; chest++)
             {
                 // Ignore if chest doesn't exist.
                 if (!LocationCode.TryGetFairyChestLocation(randomizerData, chest, room.Zone, out var location))
@@ -348,7 +349,8 @@ public class ChestObj : PhysicsObj
         }
         else
         {
-            for (var chest = 0; chest <= LocationCode.MAX_CHESTS; chest++)
+            var chestMultiplier = ArchipelagoManager.RandomizerData.UniversalChests ? 4 : 1;
+            for (var chest = 0; chest <= LocationCode.MAX_CHESTS * chestMultiplier; chest++)
             {
                 // Ignore if chest doesn't exist.
                 if (!LocationCode.TryGetChestLocation(randomizerData, chest, room.Zone, out var location))

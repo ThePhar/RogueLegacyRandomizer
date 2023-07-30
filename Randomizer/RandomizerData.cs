@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - RandomizerData.cs
-// Last Modified 2023-07-30 8:18 AM by 
+// Last Modified 2023-07-30 6:17 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -27,7 +27,7 @@ public class RandomizerData
 
         // Convert properties appropriately if we're using the old version.
         _settings["world_version"] = GetValueOrNull("world_version") ?? 1;
-        if ((long) _settings["world_version"] == 1)
+        if (Convert.ToInt32(_settings["world_version"]) == 1)
         {
             // Starting Gender
             _settings["starting_gender"] = Convert.ToInt32(_settings["starting_gender"]) == 0 ? Gender.Sir : Gender.Lady;

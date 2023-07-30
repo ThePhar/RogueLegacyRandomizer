@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-07-30 10:56 AM by 
+// Last Modified 2023-07-30 6:48 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -241,7 +241,7 @@ public static class ArchipelagoManager
     private static void OnDeathLink(DeathLink deathLink)
     {
         // If we receive a DeathLink that is after our last death, let's set it.
-        if (DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
+        if (!DeathLinkSafe && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
         {
             DeathLink = deathLink;
         }

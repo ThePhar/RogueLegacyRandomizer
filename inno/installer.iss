@@ -3,7 +3,7 @@
 
 #define MyAppId "{6741975E-782A-438F-8C05-502EDB37E7DB}"
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "0.9.4"
+#define MyAppVersion "1.0 Dev Pre3"
 #define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
