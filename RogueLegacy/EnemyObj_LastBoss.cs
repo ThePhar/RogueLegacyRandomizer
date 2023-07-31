@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - EnemyObj_LastBoss.cs
-// Last Modified 2023-07-30 1:29 PM by 
+// Last Modified 2023-07-30 7:21 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -1645,9 +1645,22 @@ namespace RogueLegacy
 
             var finalWords = DialogueManager.GetText("FinalBossTalk03");
             finalWords.Dialogue = finalWords.Dialogue.Take(finalWords.Dialogue.Length - 2)
-                .Append("I have one last thing to say...")
-                .Append(Game.FinalWords)
+                .Append("I only have one last thing to say...")
+                .Append(Game.FinalWords.Item2)
                 .ToArray();
+
+            if (string.IsNullOrEmpty(Game.FinalWords.Item1))
+            {
+                finalWords.Speakers = finalWords.Speakers.Take(finalWords.Dialogue.Length - 1)
+                    .Append($"The Fountain of Youth (by Anonymous)")
+                    .ToArray();
+            }
+            else
+            {
+                finalWords.Speakers = finalWords.Speakers.Take(finalWords.Dialogue.Length - 1)
+                    .Append($"The Fountain of Youth (by {Game.FinalWords.Item1})")
+                    .ToArray();
+            }
 
             rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk03");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Part4");
