@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-// Last Modified 2023-07-30 12:35 PM by
+// Last Modified 2023-08-03 4:41 PM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -60,7 +60,14 @@ public class CastleEntranceRoomObj : RoomObj
         _mapText.Align = Types.TextAlign.Centre;
         _mapText.FontSize = 12f;
         _mapText.OutlineWidth = 2;
+        var placeholder = new TextObj(Game.JunicodeFont);
+        placeholder.Text = "this is where my shrine items would go... IF they were ready!";
+        placeholder.Align = Types.TextAlign.Centre;
+        placeholder.FontSize = 10f;
+        placeholder.OutlineWidth = 2;
+        placeholder.Name = "placeholder";
         GameObjList.Add(_mapText);
+        GameObjList.Add(placeholder);
         _mapIcon = new KeyIconObj();
         _mapIcon.Scale = new Vector2(0.5f, 0.5f);
         GameObjList.Add(_mapIcon);
@@ -73,6 +80,11 @@ public class CastleEntranceRoomObj : RoomObj
                 (current as SpriteObj).OutlineWidth = 2;
                 _mapText.Position = new Vector2(current.X, current.Bounds.Top - 50);
                 _mapIcon.Position = new Vector2(_mapText.X, _mapText.Y - 20f);
+            }
+
+            if (current.Name == "placeholder")
+            {
+                placeholder.Position = new Vector2(_mapText.X + 1020f, _mapText.Y + 120);
             }
         }
 
@@ -102,7 +114,7 @@ public class CastleEntranceRoomObj : RoomObj
         _bossDoorSprite.AnimationDelay = 0.1f;
         _castleGate.Position = new Vector2(doorObj.Bounds.Right - _castleGate.Width,
             doorObj.Y - _castleGate.Height);
-        _teleporter.Position = new Vector2(X + Width / 2f - 600f, Y + 720f - 120f);
+        _teleporter.Position = new Vector2(X + Width / 2f - 1260f, Y + 720f - 120f);
         base.Initialize();
     }
 
@@ -254,7 +266,7 @@ public class CastleEntranceRoomObj : RoomObj
         _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
         _bossDoorSprite.PlayAnimation(false);
         SoundManager.PlaySound("LastDoor_Open");
-        Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "2", "X", storedX.ToString());
+        Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "2", "X", (storedX - 660).ToString());
         Tween.RunFunction(3.1f, this, "BossDoorAnimationComplete");
     }
 

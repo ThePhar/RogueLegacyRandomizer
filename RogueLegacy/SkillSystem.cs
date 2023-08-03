@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - SkillSystem.cs
-// Last Modified 2023-08-02 10:12 PM by
-//
+// Last Modified 2023-08-03 3:18 PM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -16,333 +16,396 @@ using RogueLegacy.Systems;
 
 namespace RogueLegacy
 {
+    public class SkillData
+    {
+        public SkillType    SkillType  { get; init; } = SkillType.Null;
+        public Vector2      Position   { get; init; } = new Vector2(-80, -80);
+        public ManorPiece   ManorPiece { get; init; } = ManorPiece.None;
+        public ManorPiece[] Connected  { get; init; } = Array.Empty<ManorPiece>();
+    }
+
     public class SkillSystem
     {
         private const SkillType STARTING_TRAIT = SkillType.ManorMainBase;
 
         private static          SkillObj       _blankTrait;
-        private static readonly SkillType[,]       _skillTypeArray;
         private static readonly Vector2[,]     _skillPositionArray;
         private static readonly int[,]         _manorPieceArray;
-        private static          SkillLinker[,] _skillLinkerArray;
+
+        public static readonly SkillType[,] SkillTypeArray;
+        public static readonly SkillData[,] Skills;
 
         static SkillSystem()
         {
-            var array = new SkillType[10, 10];
-            array[0, 8] = SkillType.ManorObservatoryTelescope;
-            array[1, 7] = SkillType.SuperSecret;
-            array[1, 8] = SkillType.ManorObservatoryBase;
-            array[2, 7] = SkillType.ManorRightHighTower;
-            array[2, 8] = SkillType.ManorRightHighUpper;
-            array[3, 2] = SkillType.ManorLeftBigRoof;
-            array[3, 8] = SkillType.ManorRightHighBase;
-            array[4, 2] = SkillType.ManorLeftBigUpper2;
-            array[4, 3] = SkillType.ManorLeftBigWindows;
-            array[4, 8] = SkillType.ManorRightBigRoof;
-            array[5, 0] = SkillType.ManorLeftFarRoof;
-            array[5, 1] = SkillType.ManorLeftFarBase;
-            array[5, 2] = SkillType.ManorLeftBigUpper1;
-            array[5, 4] = SkillType.ManorLeftWingWindow;
-            array[5, 6] = SkillType.ManorRightWingWindow;
-            array[5, 8] = SkillType.ManorRightBigUpper;
-            array[6, 0] = SkillType.ManorLeftExtension;
-            array[6, 2] = SkillType.ManorLeftBigBase;
-            array[6, 3] = SkillType.ManorLeftWingRoof;
-            array[6, 4] = SkillType.ManorLeftWingBase;
-            array[6, 5] = SkillType.ManorMainRoof;
-            array[6, 6] = SkillType.ManorRightWingBase;
-            array[6, 7] = SkillType.ManorRightWingRoof;
-            array[6, 8] = SkillType.ManorRightBigBase;
-            array[6, 9] = SkillType.ManorRightExtension;
-            array[7, 2] = SkillType.ManorLeftTree1;
-            array[7, 5] = SkillType.ManorMainWindowTop;
-            array[7, 8] = SkillType.ManorRightTree;
-            array[8, 2] = SkillType.ManorLeftTree2;
-            array[8, 5] = SkillType.ManorMainWindowBottom;
-            array[9, 5] = SkillType.ManorMainBase;
-            array[9, 6] = SkillType.ManorGroundRoad;
-            _skillTypeArray = array;
+            Skills = new SkillData[13, 10];
+            Skills[ 0, 0] = new SkillData { SkillType = SkillType.Smithy, Position           = new Vector2(45 + (0 * 75), 675 - (0 * 75)) };
+            Skills[ 1, 0] = new SkillData { SkillType = SkillType.Enchanter, Position        = new Vector2(45 + (1 * 75), 675 - (0 * 75)) };
+            Skills[ 3, 0] = new SkillData { SkillType = SkillType.Architect, Position        = new Vector2(45 + (3 * 75), 675 - (0 * 75)) };
 
-            var array2 = new Vector2[10, 10];
-            array2[0, 0] = new Vector2(0f, 0f);
-            array2[0, 1] = new Vector2(0f, 0f);
-            array2[0, 2] = new Vector2(0f, 0f);
-            array2[0, 3] = new Vector2(0f, 0f);
-            array2[0, 4] = new Vector2(0f, 0f);
-            array2[0, 5] = new Vector2(0f, 0f);
-            array2[0, 6] = new Vector2(0f, 0f);
-            array2[0, 7] = new Vector2(0f, 0f);
-            array2[0, 8] = new Vector2(860f, 125f);
-            array2[0, 9] = new Vector2(0f, 0f);
-            array2[1, 0] = new Vector2(0f, 0f);
-            array2[1, 1] = new Vector2(0f, 0f);
-            array2[1, 2] = new Vector2(0f, 0f);
-            array2[1, 3] = new Vector2(0f, 0f);
-            array2[1, 4] = new Vector2(0f, 0f);
-            array2[1, 5] = new Vector2(0f, 0f);
-            array2[1, 6] = new Vector2(0f, 0f);
-            array2[1, 7] = new Vector2(655f, -100f);
-            array2[1, 8] = new Vector2(735f, 95f);
-            array2[1, 9] = new Vector2(0f, 0f);
-            array2[2, 0] = new Vector2(0f, 0f);
-            array2[2, 1] = new Vector2(0f, 0f);
-            array2[2, 2] = new Vector2(0f, 0f);
-            array2[2, 3] = new Vector2(0f, 0f);
-            array2[2, 4] = new Vector2(0f, 0f);
-            array2[2, 5] = new Vector2(0f, 0f);
-            array2[2, 6] = new Vector2(0f, 0f);
-            array2[2, 7] = new Vector2(655f, 50f);
-            array2[2, 8] = new Vector2(655f, 125f);
-            array2[2, 9] = new Vector2(0f, 0f);
-            array2[3, 0] = new Vector2(0f, 0f);
-            array2[3, 1] = new Vector2(0f, 0f);
-            array2[3, 2] = new Vector2(365f, 150f);
-            array2[3, 3] = new Vector2(0f, 0f);
-            array2[3, 4] = new Vector2(0f, 0f);
-            array2[3, 5] = new Vector2(0f, 0f);
-            array2[3, 6] = new Vector2(0f, 0f);
-            array2[3, 7] = new Vector2(0f, 0f);
-            array2[3, 8] = new Vector2(655f, 200f);
-            array2[3, 9] = new Vector2(0f, 0f);
-            array2[4, 0] = new Vector2(0f, 0f);
-            array2[4, 1] = new Vector2(0f, 0f);
-            array2[4, 2] = new Vector2(185f, 250f);
-            array2[4, 3] = new Vector2(365f, 250f);
-            array2[4, 4] = new Vector2(0f, 0f);
-            array2[4, 5] = new Vector2(0f, 0f);
-            array2[4, 6] = new Vector2(0f, 0f);
-            array2[4, 7] = new Vector2(0f, 0f);
-            array2[4, 8] = new Vector2(735f, 200f);
-            array2[4, 9] = new Vector2(0f, 0f);
-            array2[5, 0] = new Vector2(110f, 360f);
-            array2[5, 1] = new Vector2(110f, 460f);
-            array2[5, 2] = new Vector2(185f, 360f);
-            array2[5, 3] = new Vector2(0f, 0f);
-            array2[5, 4] = new Vector2(275f, 555f);
-            array2[5, 5] = new Vector2(0f, 0f);
-            array2[5, 6] = new Vector2(735f, 555f);
-            array2[5, 7] = new Vector2(0f, 0f);
-            array2[5, 8] = new Vector2(735f, 280f);
-            array2[5, 9] = new Vector2(0f, 0f);
-            array2[6, 0] = new Vector2(40f, 410f);
-            array2[6, 1] = new Vector2(0f, 0f);
-            array2[6, 2] = new Vector2(185f, 555f);
-            array2[6, 3] = new Vector2(275f, 360f);
-            array2[6, 4] = new Vector2(275f, 460f);
-            array2[6, 5] = new Vector2(505f, 315f);
-            array2[6, 6] = new Vector2(735f, 460f);
-            array2[6, 7] = new Vector2(735f, 360f);
-            array2[6, 8] = new Vector2(860f, 460f);
-            array2[6, 9] = new Vector2(938f, 415f);
-            array2[7, 0] = new Vector2(0f, 0f);
-            array2[7, 1] = new Vector2(0f, 0f);
-            array2[7, 2] = new Vector2(185f, 680f);
-            array2[7, 3] = new Vector2(0f, 0f);
-            array2[7, 4] = new Vector2(0f, 0f);
-            array2[7, 5] = new Vector2(505f, 410f);
-            array2[7, 6] = new Vector2(0f, 0f);
-            array2[7, 7] = new Vector2(0f, 0f);
-            array2[7, 8] = new Vector2(860f, 680f);
-            array2[7, 9] = new Vector2(0f, 0f);
-            array2[8, 0] = new Vector2(0f, 0f);
-            array2[8, 1] = new Vector2(0f, 0f);
-            array2[8, 2] = new Vector2(275f, 680f);
-            array2[8, 3] = new Vector2(0f, 0f);
-            array2[8, 4] = new Vector2(0f, 0f);
-            array2[8, 5] = new Vector2(505f, 490f);
-            array2[8, 6] = new Vector2(0f, 0f);
-            array2[8, 7] = new Vector2(0f, 0f);
-            array2[8, 8] = new Vector2(0f, 0f);
-            array2[8, 9] = new Vector2(0f, 0f);
-            array2[9, 0] = new Vector2(0f, 0f);
-            array2[9, 1] = new Vector2(0f, 0f);
-            array2[9, 2] = new Vector2(0f, 0f);
-            array2[9, 3] = new Vector2(0f, 0f);
-            array2[9, 4] = new Vector2(0f, 0f);
-            array2[9, 5] = new Vector2(505f, 590f);
-            array2[9, 6] = new Vector2(505f, 680f);
-            array2[9, 7] = new Vector2(0f, 0f);
-            array2[9, 8] = new Vector2(0f, 0f);
-            array2[9, 9] = new Vector2(0f, 0f);
+            Skills[ 0, 1] = new SkillData { SkillType = SkillType.HealthUp, Position         = new Vector2(45 + (0 * 75), 675 - (1 * 75)) };
+            Skills[ 1, 1] = new SkillData { SkillType = SkillType.ManaUp, Position           = new Vector2(45 + (1 * 75), 675 - (1 * 75)) };
+            Skills[ 2, 1] = new SkillData { SkillType = SkillType.AttackUp, Position         = new Vector2(45 + (2 * 75), 675 - (1 * 75)) };
+            Skills[ 3, 1] = new SkillData { SkillType = SkillType.MagicDamageUp, Position    = new Vector2(45 + (3 * 75), 675 - (1 * 75)) };
 
-            _skillPositionArray = array2;
-            _manorPieceArray = new[,]
+            Skills[ 0, 2] = new SkillData { SkillType = SkillType.ArmorUp, Position          = new Vector2(45 + (0 * 75), 675 - (2 * 75)) };
+            Skills[ 1, 2] = new SkillData { SkillType = SkillType.EquipUp, Position          = new Vector2(45 + (1 * 75), 675 - (2 * 75)) };
+            Skills[ 2, 2] = new SkillData { SkillType = SkillType.CritChanceUp, Position     = new Vector2(45 + (2 * 75), 675 - (2 * 75)) };
+            Skills[ 3, 2] = new SkillData { SkillType = SkillType.CritDamageUp, Position     = new Vector2(45 + (3 * 75), 675 - (2 * 75)) };
+
+            Skills[ 0, 3] = new SkillData { SkillType = SkillType.DownStrikeUp, Position     = new Vector2(45 + (0 * 75), 675 - (3 * 75)) };
+            Skills[ 1, 3] = new SkillData { SkillType = SkillType.GoldGainUp, Position       = new Vector2(45 + (1 * 75), 675 - (3 * 75)) };
+            Skills[ 2, 3] = new SkillData { SkillType = SkillType.PotionUp, Position         = new Vector2(45 + (2 * 75), 675 - (3 * 75)) };
+            Skills[ 3, 3] = new SkillData { SkillType = SkillType.InvulnTimeUp, Position     = new Vector2(45 + (3 * 75), 675 - (3 * 75)) };
+
+            Skills[ 0, 4] = new SkillData { SkillType = SkillType.ManaCostDown, Position     = new Vector2(45 + (0 * 75), 675 - (4 * 75)) };
+            Skills[ 1, 4] = new SkillData { SkillType = SkillType.DeathDodge, Position       = new Vector2(45 + (1 * 75), 675 - (4 * 75)) };
+            Skills[ 2, 4] = new SkillData { SkillType = SkillType.PricesDown, Position       = new Vector2(45 + (2 * 75), 675 - (4 * 75)) };
+            Skills[ 3, 4] = new SkillData { SkillType = SkillType.RandomChildren, Position   = new Vector2(45 + (3 * 75), 675 - (4 * 75)) };
+
+            Skills[ 0, 9] = new SkillData { SkillType = SkillType.KnightUnlock, Position     = new Vector2(45 + (0 * 75), 45  + (0 * 75)) };
+            Skills[ 1, 9] = new SkillData { SkillType = SkillType.KnightUp, Position         = new Vector2(45 + (1 * 75), 45  + (0 * 75)) };
+            Skills[ 2, 9] = new SkillData { SkillType = SkillType.NinjaUnlock, Position      = new Vector2(45 + (2 * 75), 45  + (0 * 75)) };
+            Skills[ 3, 9] = new SkillData { SkillType = SkillType.NinjaUp, Position          = new Vector2(45 + (3 * 75), 45  + (0 * 75)) };
+
+            Skills[ 0, 8] = new SkillData { SkillType = SkillType.MageUnlock, Position       = new Vector2(45 + (0 * 75), 45  + (1 * 75)) };
+            Skills[ 1, 8] = new SkillData { SkillType = SkillType.MageUp, Position           = new Vector2(45 + (1 * 75), 45  + (1 * 75)) };
+            Skills[ 2, 8] = new SkillData { SkillType = SkillType.BankerUnlock, Position     = new Vector2(45 + (2 * 75), 45  + (1 * 75)) };
+            Skills[ 3, 8] = new SkillData { SkillType = SkillType.BankerUp, Position         = new Vector2(45 + (3 * 75), 45  + (1 * 75)) };
+
+            Skills[ 0, 7] = new SkillData { SkillType = SkillType.BarbarianUnlock, Position  = new Vector2(45 + (0 * 75), 45  + (2 * 75)) };
+            Skills[ 1, 7] = new SkillData { SkillType = SkillType.BarbarianUp, Position      = new Vector2(45 + (1 * 75), 45  + (2 * 75)) };
+            Skills[ 2, 7] = new SkillData { SkillType = SkillType.LichUnlock, Position       = new Vector2(45 + (2 * 75), 45  + (2 * 75)) };
+            Skills[ 3, 7] = new SkillData { SkillType = SkillType.LichUp, Position           = new Vector2(45 + (3 * 75), 45  + (2 * 75)) };
+            Skills[ 4, 7] = new SkillData { SkillType = SkillType.SuperSecret, Position      = new Vector2(45 + (4 * 75), 45  + (2 * 75)) };
+
+            Skills[ 0, 6] = new SkillData { SkillType = SkillType.AssassinUnlock, Position   = new Vector2(45 + (0 * 75), 45  + (3 * 75)) };
+            Skills[ 1, 6] = new SkillData { SkillType = SkillType.AssassinUp, Position       = new Vector2(45 + (1 * 75), 45  + (3 * 75)) };
+            Skills[ 2, 6] = new SkillData { SkillType = SkillType.SpellswordUnlock, Position = new Vector2(45 + (2 * 75), 45  + (3 * 75)) };
+            Skills[ 3, 6] = new SkillData { SkillType = SkillType.SpellSwordUp, Position     = new Vector2(45 + (3 * 75), 45  + (3 * 75)) };
+            Skills[ 4, 6] = new SkillData { SkillType = SkillType.Traitorous, Position       = new Vector2(45 + (4 * 75), 45  + (3 * 75)) };
+
+            // Manor
+            Skills[6, 0] = new SkillData
             {
+                SkillType = SkillType.ManorLeftTree1,
+                Position = new Vector2(905 - (6 * 75), 675 - (0 * 75)),
+                ManorPiece = ManorPiece.LeftTree1,
+                Connected = new[]
                 {
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    0,
-                    -1
-                },
-
-                {
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    2,
-                    1,
-                    -1
-                },
-
-                {
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    2,
-                    3,
-                    -1
-                },
-
-                {
-                    -1,
-                    -1,
-                    15,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    4,
-                    -1
-                },
-
-                {
-                    -1,
-                    -1,
-                    16,
-                    17,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    6,
-                    -1
-                },
-
-                {
-                    13,
-                    14,
-                    18,
-                    -1,
-                    22,
-                    -1,
-                    11,
-                    -1,
-                    7,
-                    -1
-                },
-
-                {
-                    12,
-                    -1,
-                    19,
-                    20,
-                    21,
-                    25,
-                    10,
-                    9,
-                    8,
-                    5
-                },
-
-                {
-                    -1,
-                    -1,
-                    29,
-                    -1,
-                    -1,
-                    27,
-                    -1,
-                    -1,
-                    31,
-                    -1
-                },
-
-                {
-                    -1,
-                    -1,
-                    30,
-                    -1,
-                    -1,
-                    28,
-                    -1,
-                    -1,
-                    -1,
-                    -1
-                },
-
-                {
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    26,
-                    24,
-                    -1,
-                    -1,
-                    -1
+                    ManorPiece.LeftTree2,
                 }
             };
+            Skills[7, 0] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftTree2,
+                Position = new Vector2(905 - (5 * 75), 675 - (0 * 75)),
+                ManorPiece = ManorPiece.LeftTree2
+            };
+            Skills[8, 0] = new SkillData
+            {
+                SkillType = SkillType.ManorGroundRoad,
+                Position = new Vector2(905 - (4 * 75), 675 - (0 * 75)),
+                ManorPiece = ManorPiece.GroundRoad
+            };
+            Skills[10, 0] = new SkillData
+            {
+                SkillType = SkillType.ManorRightTree,
+                Position = new Vector2(905 - (2 * 75), 675 - (0 * 75)),
+                ManorPiece = ManorPiece.RightTree
+            };
+
+            Skills[5, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftFarBase,
+                Position = new Vector2(905 - (7 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.LeftFarBase,
+                Connected = new []
+                {
+                    ManorPiece.LeftFarRoof,
+                }
+            };
+            Skills[6, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftBigBase,
+                Position = new Vector2(905 - (6 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.LeftBigBase,
+                Connected = new []
+                {
+                    ManorPiece.LeftBigUpper1,
+                    ManorPiece.LeftFarBase,
+                    ManorPiece.LeftTree1,
+                }
+            };
+            Skills[7, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftWingBase,
+                Position = new Vector2(905 - (5 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.LeftWingBase,
+                Connected = new []
+                {
+                    ManorPiece.LeftWingWindow,
+                    ManorPiece.LeftWingRoof,
+                    ManorPiece.LeftBigBase,
+                }
+            };
+            Skills[8, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorMainBase,
+                Position = new Vector2(905 - (4 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.MainBase,
+                Connected = new[]
+                {
+                    ManorPiece.LeftWingBase,
+                    ManorPiece.MainWindowBottom,
+                    ManorPiece.MainWindowTop,
+                    ManorPiece.MainRoof,
+                    ManorPiece.RightWingBase,
+                    ManorPiece.GroundRoad,
+                }
+            };
+            Skills[9, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorRightWingBase,
+                Position = new Vector2(905 - (3 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.RightWingBase,
+                Connected = new []
+                {
+                    ManorPiece.RightWingWindow,
+                    ManorPiece.RightWingRoof,
+                    ManorPiece.RightBigBase,
+                }
+            };
+            Skills[10, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorRightBigBase,
+                Position = new Vector2(905 - (2 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.RightBigBase,
+                Connected = new []
+                {
+                    ManorPiece.RightTree,
+                    ManorPiece.RightBigUpper,
+                    ManorPiece.RightExtension,
+                }
+            };
+            Skills[11, 1] = new SkillData
+            {
+                SkillType = SkillType.ManorRightExtension,
+                Position = new Vector2(905 - (1 * 75), 675 - (1 * 75)),
+                ManorPiece = ManorPiece.RightExtension
+            };
+
+            Skills[5, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftExtension,
+                Position = new Vector2(905 - (7 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.LeftExtension
+            };
+            Skills[6, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftBigUpper1,
+                Position = new Vector2(905 - (6 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.LeftBigUpper1,
+                Connected = new []
+                {
+                    ManorPiece.LeftBigUpper2,
+                }
+            };
+            Skills[7, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftWingWindow,
+                Position = new Vector2(905 - (5 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.LeftWingWindow
+            };
+            Skills[8, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorMainWindowBottom,
+                Position = new Vector2(905 - (4 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.MainWindowBottom
+            };
+            Skills[9, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorRightWingWindow,
+                Position = new Vector2(905 - (3 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.RightWingWindow
+            };
+            Skills[10, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorRightBigUpper,
+                Position = new Vector2(905 - (2 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.RightBigUpper,
+                Connected = new []
+                {
+                    ManorPiece.RightBigRoof,
+                    ManorPiece.RightHighBase,
+                }
+            };
+            Skills[11, 2] = new SkillData
+            {
+                SkillType = SkillType.ManorRightHighBase,
+                Position = new Vector2(905 - (1 * 75), 675 - (2 * 75)),
+                ManorPiece = ManorPiece.RightHighBase,
+                Connected = new []
+                {
+                    ManorPiece.RightHighUpper,
+                }
+            };
+
+            Skills[5, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftFarRoof,
+                Position = new Vector2(905 - (7 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.LeftFarRoof,
+                Connected = new []
+                {
+                    ManorPiece.LeftExtension,
+                }
+            };
+            Skills[6, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftBigUpper2,
+                Position = new Vector2(905 - (6 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.LeftBigUpper2,
+                Connected = new []
+                {
+                    ManorPiece.LeftBigRoof,
+                    ManorPiece.LeftBigWindows,
+                }
+            };
+            Skills[7, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftWingRoof,
+                Position = new Vector2(905 - (5 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.LeftWingRoof
+            };
+            Skills[8, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorMainWindowTop,
+                Position = new Vector2(905 - (4 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.MainWindowTop
+            };
+            Skills[9, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorRightWingRoof,
+                Position = new Vector2(905 - (3 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.RightWingRoof
+            };
+            Skills[10, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorRightBigRoof,
+                Position = new Vector2(905 - (2 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.RightBigRoof
+            };
+            Skills[11, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorRightHighUpper,
+                Position = new Vector2(905 - (1 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.RightHighUpper,
+                Connected = new []
+                {
+                    ManorPiece.RightHighTower,
+                    ManorPiece.ObservatoryBase,
+                }
+            };
+            Skills[12, 3] = new SkillData
+            {
+                SkillType = SkillType.ManorObservatoryBase,
+                Position = new Vector2(905 - (0 * 75), 675 - (3 * 75)),
+                ManorPiece = ManorPiece.ObservatoryBase,
+                Connected = new []
+                {
+                    ManorPiece.ObservatoryTelescope
+                }
+            };
+
+            Skills[6, 4] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftBigWindows,
+                Position = new Vector2(905 - (6 * 75), 675 - (4 * 75)),
+                ManorPiece = ManorPiece.LeftBigWindows
+            };
+            Skills[8, 4] = new SkillData
+            {
+                SkillType = SkillType.ManorMainRoof,
+                Position = new Vector2(905 - (4 * 75), 675 - (4 * 75)),
+                ManorPiece = ManorPiece.MainRoof
+            };
+            Skills[11, 4] = new SkillData
+            {
+                SkillType = SkillType.ManorRightHighTower,
+                Position = new Vector2(905 - (1 * 75), 675 - (4 * 75)),
+                ManorPiece = ManorPiece.RightHighTower
+            };
+            Skills[12, 4] = new SkillData
+            {
+                SkillType = SkillType.ManorObservatoryTelescope,
+                Position = new Vector2(905 - (0 * 75), 675 - (4 * 75)),
+                ManorPiece = ManorPiece.ObservatoryTelescope
+            };
+
+            Skills[6, 5] = new SkillData
+            {
+                SkillType = SkillType.ManorLeftBigRoof,
+                Position = new Vector2(905 - (6 * 75), 675 - (5 * 75)),
+                ManorPiece = ManorPiece.LeftBigRoof
+            };
+
+            SkillTypeArray = new SkillType[13, 10];
+            _skillPositionArray = new Vector2[13, 10];
+            _manorPieceArray = new int[13, 10];
+            for (var i = 0; i < 13; i++)
+            for (var j = 0; j < 10; j++)
+            {
+                if (Skills[i, j] == null)
+                {
+                    SkillTypeArray[i, j] = SkillType.Null;
+                    _skillPositionArray[i, j] = new Vector2(-80, -80);
+                    _manorPieceArray[i, j] = (int) ManorPiece.None;
+                }
+                else
+                {
+                    SkillTypeArray[i, j] = Skills[i, j].SkillType;
+                    _skillPositionArray[i, j] = Skills[i, j].Position;
+                    _manorPieceArray[i, j] = (int) Skills[i, j].ManorPiece;
+                }
+            }
+
             IconsVisible = true;
         }
 
-        public static List<SkillObj> SkillManorArray { get; private set; }
-        public static List<SkillObj> SkillStatArray  { get; private set; }
+        public static List<SkillObj> SkillArray { get; private set; }
         public static bool           IconsVisible    { get; private set; }
 
         public static void Initialize()
         {
             _blankTrait = new SkillObj("Icon_Sword_Sprite");
-            if (_skillTypeArray.Length != _skillPositionArray.Length)
+            if (SkillTypeArray.Length != _skillPositionArray.Length)
             {
                 throw new Exception(
                     "Cannot create Trait System. The type array is not the same length as the position array.");
             }
 
-            SkillManorArray = new List<SkillObj>();
+            SkillArray = new List<SkillObj>();
             for (var i = (int) SkillType.ManorGroundRoad; i <= (int) SkillType.ManorObservatoryTelescope; i++)
             {
                 var skillObj = SkillBuilder.BuildSkill((SkillType) i);
                 skillObj.Position = GetSkillPosition(skillObj);
-                skillObj.ManorPiece = (ManorPiece) GetManorPiece(skillObj);
-                SkillManorArray.Add(skillObj);
+                SkillArray.Add(skillObj);
             }
 
-            SkillStatArray = new List<SkillObj>();
             for (var i = (int) SkillType.HealthUp; i <= (int) SkillType.Traitorous; i++)
             {
                 var skillObj = SkillBuilder.BuildSkill((SkillType) i);
-                SkillStatArray.Add(skillObj);
+                skillObj.Position = GetSkillPosition(skillObj);
+                SkillArray.Add(skillObj);
             }
 
             for (var i = (int) SkillType.BlacksmithSword; i <= (int) SkillType.EnchantressCape; i++)
             {
                 var skillObj = SkillBuilder.BuildSkill((SkillType) i);
-                SkillStatArray.Add(skillObj);
+                SkillArray.Add(skillObj);
             }
 
             GetSkill(STARTING_TRAIT).Visible = true;
-            _skillLinkerArray = new SkillLinker[10, 10];
-            for (var j = 0; j < 10; j++)
-            for (var k = 0; k < 10; k++)
-            {
-                _skillLinkerArray[j, k] = SkillBuilder.GetSkillLinker(j, k);
-            }
         }
 
         public static void LevelUpTrait(SkillObj trait, bool giveGoldBonus, bool level = true)
@@ -367,13 +430,11 @@ namespace RogueLegacy
 
         public static void ResetAllTraits()
         {
-            foreach (var current in SkillManorArray)
+            foreach (var current in SkillArray)
             {
                 current.CurrentLevel = 0;
                 current.Visible = false;
             }
-
-            foreach (var current in SkillStatArray) current.CurrentLevel = 0;
 
             GetSkill(STARTING_TRAIT).Visible = true;
             Game.PlayerStats.CurrentLevel = 0;
@@ -381,59 +442,41 @@ namespace RogueLegacy
 
         public static void UpdateAllTraitSprites()
         {
-            foreach (var current in SkillManorArray) UpdateTraitSprite(current);
+            foreach (var current in SkillArray) UpdateTraitSprite(current);
         }
 
         public static void UpdateTraitSprite(SkillObj trait)
         {
             var text = trait.IconName;
-            if (trait.CurrentLevel > 0 && trait.CurrentLevel < trait.MaxLevel)
-            {
-                text = text.Replace("Locked", "");
-            }
-            else if (trait.CurrentLevel > 0 && trait.CurrentLevel >= trait.MaxLevel)
+            if (trait.CurrentLevel > 0 && trait.CurrentLevel >= trait.MaxMaxLevel)
             {
                 text = text.Replace("Locked", "Max");
             }
+            else if (trait.CurrentLevel > 0 && trait.CurrentLevel <= trait.MaxLevel)
+            {
+                text = text.Replace("Locked", "");
+            }
 
-            Console.WriteLine(trait.Name);
             trait.ChangeSprite(text);
         }
 
         public static List<SkillObj> GetAllConnectingTraits(SkillObj trait)
         {
-            var typeArrayColumns = GetTypeArrayColumns();
-            var typeArrayRows = GetTypeArrayRows();
-            var traitTypeIndex = GetTraitTypeIndex(trait);
-            var array = new SkillObj[4];
-            if (traitTypeIndex.X + 1f < typeArrayColumns)
-            {
-                array[0] = GetSkill((int) traitTypeIndex.X + 1, (int) traitTypeIndex.Y);
-            }
-
-            if (traitTypeIndex.X - 1f >= 0f)
-            {
-                array[1] = GetSkill((int) traitTypeIndex.X - 1, (int) traitTypeIndex.Y);
-            }
-
-            if (traitTypeIndex.Y - 1f >= 0f)
-            {
-                array[2] = GetSkill((int) traitTypeIndex.X, (int) traitTypeIndex.Y - 1);
-            }
-
-            if (traitTypeIndex.Y + 1f < typeArrayRows)
-            {
-                array[3] = GetSkill((int) traitTypeIndex.X, (int) traitTypeIndex.Y + 1);
-            }
-
             var list = new List<SkillObj>();
-            var array2 = array;
-            for (var i = 0; i < array2.Length; i++)
+            var index = GetTraitTypeIndex(trait);
+            var data = Skills[(int) index.X, (int) index.Y];
+
+            for (var i = 0; i < 13; i++)
+            for (var j = 0; j < 10; j++)
             {
-                var skillObj = array2[i];
-                if (skillObj != null)
+                if (Skills[i, j] == null)
                 {
-                    list.Add(skillObj);
+                    continue;
+                }
+
+                if (data.Connected.Contains(Skills[i, j].ManorPiece))
+                {
+                    list.Add(GetSkill(Skills[i, j].SkillType));
                 }
             }
 
@@ -442,12 +485,7 @@ namespace RogueLegacy
 
         public static SkillObj GetSkill(SkillType skillType)
         {
-            foreach (var current in SkillManorArray.Where(current => current.Trait == skillType))
-            {
-                return current;
-            }
-
-            foreach (var current in SkillStatArray.Where(current => current.Trait == skillType))
+            foreach (var current in SkillArray.Where(current => current.Trait == skillType))
             {
                 return current;
             }
@@ -457,7 +495,21 @@ namespace RogueLegacy
 
         public static SkillObj GetSkill(int indexX, int indexY)
         {
-            return GetSkill(_skillTypeArray[indexY, indexX]);
+            return GetSkill(SkillTypeArray[indexX, indexY]);
+        }
+
+        public static bool IsSkillScreenSkill(SkillType skillType)
+        {
+            for (var i = 0; i < SkillTypeArray.GetLength(0); i++)
+            for (var j = 0; j < SkillTypeArray.GetLength(1); j++)
+            {
+                if (SkillTypeArray[i, j] == skillType)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static Vector2 GetTraitTypeIndex(SkillObj trait)
@@ -465,10 +517,10 @@ namespace RogueLegacy
             var result = new Vector2(-1f, -1f);
             var traitType = trait.Trait;
 
-            for (var i = 0; i < _skillTypeArray.GetLength(1); i++)
-            for (var j = 0; j < _skillTypeArray.GetLength(0); j++)
+            for (var i = 0; i < SkillTypeArray.GetLength(0); i++)
+            for (var j = 0; j < SkillTypeArray.GetLength(1); j++)
             {
-                if (_skillTypeArray[j, i] == traitType)
+                if (SkillTypeArray[i, j] == traitType)
                 {
                     result = new Vector2(i, j);
                 }
@@ -480,49 +532,49 @@ namespace RogueLegacy
         public static Vector2 GetSkillPosition(SkillObj skill)
         {
             var traitTypeIndex = GetTraitTypeIndex(skill);
-            return _skillPositionArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
+            if (traitTypeIndex.X == -1f || traitTypeIndex.Y == -1f)
+            {
+                return new Vector2(-80, -80);
+            }
+
+            return _skillPositionArray[(int) traitTypeIndex.X, (int) traitTypeIndex.Y];
         }
 
         public static int GetTypeArrayRows()
         {
-            return _skillTypeArray.GetLength(0);
+            return SkillTypeArray.GetLength(0);
         }
 
         public static int GetTypeArrayColumns()
         {
-            return _skillTypeArray.GetLength(1);
+            return SkillTypeArray.GetLength(1);
         }
 
         public static SkillObj[] GetSkillArray()
         {
-            return SkillManorArray.ToArray();
-        }
-
-        public static SkillObj[] GetStatArray()
-        {
-            return SkillStatArray.ToArray();
+            return SkillArray.ToArray();
         }
 
         public static int GetManorPiece(SkillObj trait)
         {
             var traitTypeIndex = GetTraitTypeIndex(trait);
-            return _manorPieceArray[(int) traitTypeIndex.Y, (int) traitTypeIndex.X];
-        }
+            if (traitTypeIndex.X == -1f || traitTypeIndex.Y == -1f)
+            {
+                return -1;
+            }
 
-        public static SkillLinker GetSkillLink(int x, int y)
-        {
-            return _skillLinkerArray[x, y];
+            return _manorPieceArray[(int) traitTypeIndex.X, (int) traitTypeIndex.Y];
         }
 
         public static void HideAllIcons()
         {
-            foreach (var current in SkillManorArray) current.Opacity = 0f;
+            foreach (var current in SkillArray) current.Opacity = 0f;
             IconsVisible = false;
         }
 
         public static void ShowAllIcons()
         {
-            foreach (var current in SkillManorArray) current.Opacity = 1f;
+            foreach (var current in SkillArray) current.Opacity = 1f;
             IconsVisible = true;
         }
     }

@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - CreditsScreen.cs
-// Last Modified 2023-07-30 11:06 AM by 
+// Last Modified 2023-08-03 11:33 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -186,8 +186,11 @@ namespace RogueLegacy.Screens
             {
                 if (SkillSystem.GetSkillArray()[i].CurrentLevel > 0)
                 {
-                    _manor.GetChildAt(SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i])).Visible = true;
-                    _manor.GetChildAt(SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i])).Opacity = 1f;
+                    if (SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i]) != -1)
+                    {
+                        _manor.GetChildAt(SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i])).Visible = true;
+                        _manor.GetChildAt(SkillSystem.GetManorPiece(SkillSystem.GetSkillArray()[i])).Opacity = 1f;
+                    }
                 }
             }
 

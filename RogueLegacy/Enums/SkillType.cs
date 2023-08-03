@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - SkillType.cs
-// Last Modified 2023-07-30 11:48 AM by
-//
+// Last Modified 2023-08-03 12:42 PM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -14,7 +14,7 @@ public enum SkillType
     Null,
     Filler,
     HealthUp,
-    InvulnerabilityTimeUp,
+    InvulnTimeUp,
     DeathDodge,
     AttackUp,
     DownStrikeUp,
@@ -31,7 +31,7 @@ public enum SkillType
     GoldGainUp,
     PricesDown,
     PotionUp,
-    RandomizeChildren,
+    RandomChildren,
     LichUnlock,
     BankerUnlock,
     SpellswordUnlock,
@@ -152,7 +152,7 @@ public static class SkillExtensions
         {
             SkillType.HealthUp              => Game.ScreenManager.Player.MaxHealth,
             SkillType.HealthUpFinal         => Game.ScreenManager.Player.MaxHealth,
-            SkillType.InvulnerabilityTimeUp => Game.ScreenManager.Player.InvincibilityTime,
+            SkillType.InvulnTimeUp          => Game.ScreenManager.Player.InvincibilityTime,
             SkillType.DeathDodge            => SkillSystem.GetSkill(SkillType.DeathDodge).ModifierAmount * 100f,
             SkillType.AttackUp              => Game.ScreenManager.Player.Damage,
             SkillType.DamageUpFinal         => Game.ScreenManager.Player.Damage,

@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - PlayerObj.cs
-// Last Modified 2023-07-30 4:09 PM by 
+// Last Modified 2023-08-03 11:54 AM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -346,7 +346,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
     }
 
     public float InvincibilityTime =>
-        BaseInvincibilityTime + SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).ModifierAmount;
+        BaseInvincibilityTime + SkillSystem.GetSkill(SkillType.InvulnTimeUp).ModifierAmount;
 
     public override Rectangle Bounds => TerrainBounds;
 

@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ItemHandler.cs
-// Last Modified 2023-08-02 11:24 PM by 
+// Last Modified 2023-08-03 1:58 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -165,7 +165,7 @@ public class ItemHandler
                 break;
 
             case ItemCode.INVULN_TIME:
-                IncreaseSkillLevel(SkillType.InvulnerabilityTimeUp, 5);
+                IncreaseSkillLevel(SkillType.InvulnTimeUp, 5);
                 break;
 
             case ItemCode.MANA_COST_DOWN:
@@ -181,7 +181,7 @@ public class ItemHandler
                 break;
 
             case ItemCode.RANDOMIZE_CHILDREN:
-                IncreaseSkillLevel(SkillType.RandomizeChildren);
+                IncreaseSkillLevel(SkillType.RandomChildren);
                 break;
 
             #endregion
@@ -449,9 +449,18 @@ public class ItemHandler
         var skill = SkillSystem.GetSkill(skillType);
         skill.CanPurchase = true;
 
+        skill.MaxLevel += levels;
+        if (skill.MaxLevel > skill.MaxMaxLevel)
+        {
+            skill.MaxLevel = skill.MaxMaxLevel;
+        }
+
         for (var i = 0; i < levels; i++)
         {
-            SkillSystem.LevelUpTrait(skill, false);
+            if (!ArchipelagoManager.RandomizerData.RequireSkillPurchasing)
+            {
+                SkillSystem.LevelUpTrait(skill, false);
+            }
         }
     }
 

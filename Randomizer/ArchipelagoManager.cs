@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-07-30 6:48 PM by 
+// Last Modified 2023-08-03 2:18 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -152,6 +152,12 @@ public static class ArchipelagoManager
     {
         var name = _session.Items.GetItemName(item);
         return string.IsNullOrEmpty(name) ? $"Unknown Item {item}" : name;
+    }
+
+    public static string GetLocationName(long location)
+    {
+        var name = _session.Locations.GetLocationNameFromId(location);
+        return string.IsNullOrEmpty(name) ? $"Unknown Location {location}" : name;
     }
 
     public static string GetTrapItemName(NetworkItem item)

@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - BackToMenuOptionsObj.cs
-// Last Modified 2023-07-30 10:54 AM by 
+// Last Modified 2023-08-03 3:45 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -80,14 +80,23 @@ namespace RogueLegacy
                 }
             }
 
-            (m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData,
-                SaveType.UpgradeData);
-            if (Game.PlayerStats.TutorialComplete && levelScreen != null && levelScreen.CurrentRoom.Name != "Start" &&
-                levelScreen.CurrentRoom.Name != "Ending" && levelScreen.CurrentRoom.Name != "Tutorial")
+            (m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
+            if (
+                Game.PlayerStats.TutorialComplete &&
+                levelScreen != null &&
+                levelScreen.CurrentRoom.Name != "Start" &&
+                levelScreen.CurrentRoom.Name != "Ending" &&
+                levelScreen.CurrentRoom.Name != "Tutorial")
             {
                 (m_parentScreen.ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.MapData);
             }
 
+            SkillSystem.ResetAllTraits();
+            Game.PlayerStats.Dispose();
+            Game.PlayerStats = new PlayerStats();
+            Game.ScreenManager.Player.Reset();
+            Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
+            Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
             Game.ScreenManager.DisplayScreen(3, true);
         }
 

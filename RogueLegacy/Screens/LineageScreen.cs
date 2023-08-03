@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - LineageScreen.cs
-// Last Modified 2023-07-30 10:59 AM by
-//
+// Last Modified 2023-08-03 11:54 AM by 
+// 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -347,7 +347,7 @@ namespace RogueLegacy.Screens
             }
 
             _rerollText.Text = "[Input:" + 9 + "] to re-roll your children once";
-            if (SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
+            if (SkillSystem.GetSkill(SkillType.RandomChildren).ModifierAmount > 0f &&
                 !Game.PlayerStats.RerolledChildren)
             {
                 _rerollText.Visible = true;
@@ -554,7 +554,7 @@ namespace RogueLegacy.Screens
                 var selectedLineageObj = _selectedLineageObj;
                 var selectedLineageIndex = _selectedLineageIndex;
                 if (Game.GlobalInput.JustPressed(9) &&
-                    SkillSystem.GetSkill(SkillType.RandomizeChildren).ModifierAmount > 0f &&
+                    SkillSystem.GetSkill(SkillType.RandomChildren).ModifierAmount > 0f &&
                     !Game.PlayerStats.RerolledChildren)
                 {
                     _lockControls = true;

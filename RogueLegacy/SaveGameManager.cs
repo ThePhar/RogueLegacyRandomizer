@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - SaveGameManager.cs
-// Last Modified 2023-08-02 11:22 PM by
+// Last Modified 2023-08-03 4:42 PM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -924,16 +924,7 @@ namespace RogueLegacy
                     var array5 = skillArray;
                     foreach (var skillObj in array5)
                     {
-                        binaryWriter.Write(skillObj.CurrentLevel);
-                        if (LevelENV.ShowSaveLoadDebugText)
-                        {
-                            Console.Write(" " + skillObj.CurrentLevel);
-                        }
-                    }
-
-                    var statArray = SkillSystem.GetStatArray();
-                    foreach (var skillObj in statArray)
-                    {
+                        binaryWriter.Write(skillObj.MaxLevel);
                         binaryWriter.Write(skillObj.CurrentLevel);
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
@@ -1728,7 +1719,6 @@ namespace RogueLegacy
                     }
 
                     var skillArray = SkillSystem.GetSkillArray();
-                    var skillArray2 = SkillSystem.GetStatArray();
                     if (LevelENV.ShowSaveLoadDebugText)
                     {
                         Console.WriteLine("\nLoading Traits");
@@ -1738,18 +1728,20 @@ namespace RogueLegacy
                     Game.PlayerStats.CurrentLevel = 0;
                     foreach (var skill in skillArray)
                     {
+                        skill.MaxLevel = binaryReader.ReadInt32();
                         var level = binaryReader.ReadInt32();
-                        for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false, false);
-                        if (LevelENV.ShowSaveLoadDebugText)
-                        {
-                            Console.Write(" " + skill.CurrentLevel);
-                        }
-                    }
 
-                    foreach (var skill in skillArray2)
-                    {
-                        var level = binaryReader.ReadInt32();
-                        for (var j = 0; j < level; j++) SkillSystem.LevelUpTrait(skill, false);
+                        for (var j = 0; j < level; j++)
+                        {
+                            if (SkillSystem.GetManorPiece(skill) == -1)
+                            {
+                                SkillSystem.LevelUpTrait(skill, false);
+                            }
+                            else
+                            {
+                                SkillSystem.LevelUpTrait(skill, false, false);
+                            }
+                        }
                         if (LevelENV.ShowSaveLoadDebugText)
                         {
                             Console.Write(" " + skill.CurrentLevel);

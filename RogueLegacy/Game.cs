@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-08-02 11:22 PM by
+// Last Modified 2023-08-03 2:42 PM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -546,7 +546,8 @@ public class Game : Microsoft.Xna.Framework.Game
                         _                    => throw new ArgumentException("Unsupported Starting Class")
                     };
 
-                    SkillSystem.LevelUpTrait(skill, false);
+                    skill.MaxLevel = 1;
+                    SkillSystem.LevelUpTrait(skill, false, false);
 
                     PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
                     PlayerStats.EnemiesKilledInRun.Clear();

@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - SkillScreen.cs
-// Last Modified 2023-07-30 10:20 AM by 
+// Last Modified 2023-08-03 3:36 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -70,7 +70,7 @@ public class SkillScreen : Screen
 
     public SkillScreen()
     {
-        _selectedTraitIndex = new Vector2(5f, 9f);
+        _selectedTraitIndex = new Vector2(8, 1);
         _impactEffectPool = new ImpactEffectPool(1000);
         DrawIfCovered = true;
     }
@@ -235,13 +235,15 @@ public class SkillScreen : Screen
         var skillArray = SkillSystem.GetSkillArray();
         foreach (var s in skillArray)
         {
-            if (s.Trait >= SkillType.ManorGroundRoad)
+            if (s.Trait is >= SkillType.ManorGroundRoad and <= SkillType.ManorObservatoryTelescope)
             {
-                var item = ArchipelagoManager.AllLocations[ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
+                // var item = ArchipelagoManager.AllLocations[ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
+                var item = ArchipelagoManager.AllLocations[ManorContainer.ArchipelagoLocationTable[(ManorPiece) SkillSystem.GetManorPiece(s)]];
 
                 // Toggle correct plate.
                 s.IconName = GetSkillPlateIcon(item.Item);
-                s.Name = ArchipelagoManager.GetTrapItemName(item);
+                s.Name = ArchipelagoManager.GetLocationName(item.Location).Replace("Manor - ", "");
+                var itemName = ArchipelagoManager.GetTrapItemName(item);
 
                 // Check if we grabbed this location, and change our skillArray current level.
                 if (ArchipelagoManager.IsLocationChecked(item.Location))
@@ -254,7 +256,7 @@ public class SkillScreen : Screen
                 var playerName = ArchipelagoManager.GetPlayerName(item.Player);
                 s.Description =
                     $"If you're going to leave your children {gender}less, you may as well ensure they have a nice " +
-                    $"place to live.\n\nThis manor upgrade unlocks {s.Name} for {playerName}. ";
+                    $"place to live.\n\nThis manor upgrade unlocks {itemName} for {playerName}.\n\n";
 
                 // Add item flag flavor text.
                 if ((item.Flags & ItemFlags.Advancement) != 0)
@@ -267,11 +269,21 @@ public class SkillScreen : Screen
                 }
                 else if ((item.Flags & ItemFlags.Trap) != 0)
                 {
-                    s.Description += "It looks like somethign they need...";
+                    s.Description += "It looks like something they need?";
                 }
             }
 
-            if (s.CurrentLevel > 0) SetVisible(s, false);
+            if (SkillSystem.IsSkillScreenSkill(s.Trait))
+            {
+                if (SkillSystem.GetManorPiece(s) == -1)
+                {
+                    s.Visible = true;
+                } else if (s.CurrentLevel > 0)
+                {
+                    s.Visible = true;
+                    SetVisible(s, false);
+                }
+            }
         }
 
         if (!SoundManager.IsMusicPlaying) SoundManager.PlayMusic("SkillTreeSong", true, 1f);
@@ -328,11 +340,11 @@ public class SkillScreen : Screen
             ItemCode.DOWN_STRIKE            => SkillSystem.GetSkill(SkillType.DownStrikeUp).IconName,
             ItemCode.GOLD_GAIN              => SkillSystem.GetSkill(SkillType.GoldGainUp).IconName,
             ItemCode.POTION_EFFICIENCY      => SkillSystem.GetSkill(SkillType.PotionUp).IconName,
-            ItemCode.INVULN_TIME            => SkillSystem.GetSkill(SkillType.InvulnerabilityTimeUp).IconName,
+            ItemCode.INVULN_TIME            => SkillSystem.GetSkill(SkillType.InvulnTimeUp).IconName,
             ItemCode.MANA_COST_DOWN         => SkillSystem.GetSkill(SkillType.ManaCostDown).IconName,
             ItemCode.DEATH_DEFIANCE         => SkillSystem.GetSkill(SkillType.DeathDodge).IconName,
             ItemCode.HAGGLING               => SkillSystem.GetSkill(SkillType.PricesDown).IconName,
-            ItemCode.RANDOMIZE_CHILDREN     => SkillSystem.GetSkill(SkillType.RandomizeChildren).IconName,
+            ItemCode.RANDOMIZE_CHILDREN     => SkillSystem.GetSkill(SkillType.RandomChildren).IconName,
             ItemCode.RUNE_VAULT             => SkillSystem.GetSkill(SkillType.Enchanter).IconName,
             ItemCode.RUNE_SPRINT            => SkillSystem.GetSkill(SkillType.Enchanter).IconName,
             ItemCode.RUNE_VAMPIRE           => SkillSystem.GetSkill(SkillType.Enchanter).IconName,
@@ -371,7 +383,7 @@ public class SkillScreen : Screen
     public void SetVisible(SkillObj trait, bool fadeIn)
     {
         var manorPiece = SkillSystem.GetManorPiece(trait);
-        if (fadeIn)
+        if (fadeIn && manorPiece != -1)
         {
             var location = ManorContainer.ArchipelagoLocationTable[(ManorPiece) manorPiece];
             SetManorPieceVisible(new Tuple<int, int>(manorPiece, location), trait);
@@ -379,21 +391,30 @@ public class SkillScreen : Screen
             return;
         }
 
-        var childAt = _manor.GetChildAt(manorPiece);
-        childAt.Opacity = 1f;
-        childAt.Visible = true;
-        foreach (var current in SkillSystem.GetAllConnectingTraits(trait))
-            if (!current.Visible)
+        if (manorPiece != -1)
+        {
+            var childAt = _manor.GetChildAt(manorPiece);
+            childAt.Opacity = 1f;
+            childAt.Visible = true;
+            foreach (var current in SkillSystem.GetAllConnectingTraits(trait))
             {
-                current.Visible = true;
-                current.Opacity = 1f;
+                if (!current.Visible)
+                {
+                    current.Visible = true;
+                    current.Opacity = 1f;
+                }
             }
+        }
 
         if (_manor.GetChildAt(7).Visible && _manor.GetChildAt(16).Visible)
+        {
             (_manor.GetChildAt(7) as SpriteObj).GoToFrame(2);
+        }
 
         if (_manor.GetChildAt(6).Visible && _manor.GetChildAt(16).Visible)
+        {
             (_manor.GetChildAt(6) as SpriteObj).GoToFrame(2);
+        }
 
         if (_manor.GetChildAt(2).Visible)
         {
@@ -581,6 +602,7 @@ public class SkillScreen : Screen
     {
         var num = 0f;
         foreach (var current in SkillSystem.GetAllConnectingTraits(skill))
+        {
             if (!current.Visible)
             {
                 current.Visible = true;
@@ -588,6 +610,7 @@ public class SkillScreen : Screen
                 Tween.To(current, 0.2f, Linear.EaseNone, "Opacity", "1");
                 num += 0.2f;
             }
+        }
 
         Tween.RunFunction(num, this, "UnlockControls");
         Tween.RunFunction(num, this, "CheckForSkillUnlock", skill, true, manorPiece);
@@ -826,77 +849,105 @@ public class SkillScreen : Screen
 
             if (SkillSystem.IconsVisible)
             {
-                var selectedTraitIndex = _selectedTraitIndex;
-                var vector = new Vector2(-1f, -1f);
-                if (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17))
+                var nextIndex = new Vector2(_selectedTraitIndex.X, _selectedTraitIndex.Y);
+                if (InputTypeHelper.PressedUp)
                 {
-                    vector =
-                        SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
-                            .TopLink;
-                    var skill = SkillSystem.GetSkill(SkillType.SuperSecret);
-                    if (!_cameraTweening && skill.Visible && vector == new Vector2(7f, 1f))
+                    do
                     {
-                        _cameraTweening = true;
-                        Tween.To(Camera, 0.5f, Quad.EaseOut, "Y", 60f.ToString());
-                        Tween.AddEndHandlerToLastTween(this, "EndCameraTween");
-                    }
+                        nextIndex.Y++;
+                        if (nextIndex.Y > 9)
+                        {
+                            nextIndex.Y = 0;
+                        }
+                    } while (
+                        SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Trait == SkillType.Null ||
+                        !SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Visible
+                    );
                 }
-                else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
+                else if (InputTypeHelper.PressedDown)
                 {
-                    vector =
-                        SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
-                            .BottomLink;
-                }
-
-                if (Game.GlobalInput.JustPressed(20) || Game.GlobalInput.JustPressed(21))
-                    vector =
-                        SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
-                            .LeftLink;
-                else if (Game.GlobalInput.JustPressed(22) || Game.GlobalInput.JustPressed(23))
-                    vector =
-                        SkillSystem.GetSkillLink((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y)
-                            .RightLink;
-
-                if (vector.X != -1f && vector.Y != -1f)
-                {
-                    var skill2 = SkillSystem.GetSkill((int) vector.X, (int) vector.Y);
-                    if (skill2.Trait != SkillType.Null && skill2.Visible) _selectedTraitIndex = vector;
+                    do
+                    {
+                        nextIndex.Y--;
+                        if (nextIndex.Y < 0)
+                        {
+                            nextIndex.Y = 9;
+                        }
+                    } while (
+                        SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Trait == SkillType.Null ||
+                        !SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Visible
+                    );
                 }
 
-                if (selectedTraitIndex != _selectedTraitIndex)
+                if (InputTypeHelper.PressedLeft)
                 {
-                    var skill3 = SkillSystem.GetSkill((int) _selectedTraitIndex.X,
-                        (int) _selectedTraitIndex.Y);
-                    _selectionIcon.Position = SkillSystem.GetSkillPosition(skill3);
-                    UpdateDescriptionPlate(skill3);
+                    do
+                    {
+                        nextIndex.X--;
+                        if (nextIndex.X < 0)
+                        {
+                            nextIndex.X = 12;
+                        }
+                    } while (
+                        SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Trait == SkillType.Null ||
+                        !SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Visible
+                    );
+                }
+                else if (InputTypeHelper.PressedRight)
+                {
+                    do
+                    {
+                        nextIndex.X++;
+                        if (nextIndex.X > 12)
+                        {
+                            nextIndex.X = 0;
+                        }
+                    } while (
+                        SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Trait == SkillType.Null ||
+                        !SkillSystem.GetSkill((int) nextIndex.X, (int) nextIndex.Y).Visible
+                    );
+                }
+
+                if (nextIndex != _selectedTraitIndex)
+                {
+                    _selectedTraitIndex = nextIndex;
+                    var selectedSkill = SkillSystem.GetSkill((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y);
+                    _selectionIcon.Position = SkillSystem.GetSkillPosition(selectedSkill);
+                    UpdateDescriptionPlate(selectedSkill);
                     SoundManager.PlaySound("ShopMenuMove");
-                    skill3.Scale = new Vector2(1.1f, 1.1f);
-                    Tween.To(skill3, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
+                    selectedSkill.Scale = new Vector2(1.1f, 1.1f);
+                    Tween.To(selectedSkill, 0.1f, Back.EaseOutLarge, "ScaleX", "1", "ScaleY", "1");
                     _dialoguePlate.Visible = true;
                 }
 
-                var skill4 = SkillSystem.GetSkill((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y);
-                if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
-                    Game.PlayerStats.Gold >= skill4.TotalCost && skill4.CurrentLevel < skill4.MaxLevel)
+                var skill = SkillSystem.GetSkill((int) _selectedTraitIndex.X, (int) _selectedTraitIndex.Y);
+                if (InputTypeHelper.PressedConfirm && skill.CanPurchase && Game.PlayerStats.Gold >= skill.TotalCost && skill.CurrentLevel < skill.MaxLevel)
                 {
                     SoundManager.PlaySound("TraitUpgrade");
                     if (!_fadingIn)
                     {
-                        Game.PlayerStats.Gold -= skill4.TotalCost;
-                        SetVisible(skill4, true);
-                        SkillSystem.LevelUpTrait(skill4, true, false);
-                        if (skill4.CurrentLevel >= skill4.MaxLevel) SoundManager.PlaySound("TraitMaxxed");
+                        Game.PlayerStats.Gold -= skill.TotalCost;
+                        SetVisible(skill, true);
+                        if (SkillSystem.GetManorPiece(skill) == -1)
+                        {
+                            SkillSystem.LevelUpTrait(skill, true);
+                        }
+                        else
+                        {
+                            SkillSystem.LevelUpTrait(skill, true, false);
+                        }
 
-                        UpdateDescriptionPlate(skill4);
+                        if (skill.CurrentLevel >= skill.MaxMaxLevel) SoundManager.PlaySound("TraitMaxxed");
+
+                        UpdateDescriptionPlate(skill);
                     }
                 }
-                else if ((Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1)) &&
-                         Game.PlayerStats.Gold < skill4.TotalCost)
+                else if (InputTypeHelper.PressedConfirm && (Game.PlayerStats.Gold < skill.TotalCost || !skill.CanPurchase))
                 {
                     SoundManager.PlaySound("TraitPurchaseFail");
                 }
 
-                if (Game.GlobalInput.JustPressed(2) || (Game.GlobalInput.JustPressed(3) && !flag))
+                if (InputTypeHelper.PressedCancel && !flag)
                 {
                     _lockControls = true;
                     var rCScreenManager = ScreenManager as RCScreenManager;
@@ -960,10 +1011,10 @@ public class SkillScreen : Screen
             }
 
             _skillCurrent.Text = "Current: " + stat + skill.UnitOfMeasurement;
-            if (skill.CurrentLevel < skill.MaxLevel)
+            if (skill.CurrentLevel < skill.MaxMaxLevel)
             {
                 var mod = skill.PerLevelModifier;
-                if (mod < 1f && skill.Trait != SkillType.InvulnerabilityTimeUp)
+                if (mod < 1f && skill.Trait != SkillType.InvulnTimeUp)
                 {
                     mod *= 100f;
                     if (skill.Trait != SkillType.DeathDodge) mod = (int) Math.Round(mod, MidpointRounding.AwayFromZero);
@@ -976,7 +1027,7 @@ public class SkillScreen : Screen
                 _skillUpgrade.Text = "Upgrade: --";
             }
 
-            _skillLevel.Text = string.Concat("Level: ", skill.CurrentLevel, "/", skill.MaxLevel);
+            _skillLevel.Text = string.Concat("Level: ", skill.CurrentLevel, "/", skill.MaxMaxLevel);
 
             var upText = "unlock";
             if (skill.CurrentLevel > 0) upText = "upgrade";

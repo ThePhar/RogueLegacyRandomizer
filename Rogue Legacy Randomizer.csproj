@@ -285,7 +285,6 @@
         <Compile Include="RogueLegacy\ShadowmapResolver.cs" />
         <Compile Include="RogueLegacy\ShadowmapSize.cs" />
         <Compile Include="RogueLegacy\SkillBuilder.cs" />
-        <Compile Include="RogueLegacy\SkillLinker.cs" />
         <Compile Include="RogueLegacy\SkillObj.cs" />
         <Compile Include="RogueLegacy\SkillSystem.cs" />
         <Compile Include="RogueLegacy\SleepUtil.cs" />

@@ -1,16 +1,16 @@
-// Rogue Legacy Randomizer - SkillObj.cs
-// Last Modified 2022-10-24
+// RogueLegacyRandomizer - SkillObj.cs
+// Last Modified 2023-08-03 2:50 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
+// Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
+using System;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using RogueLegacy.Enums;
-using RogueLegacy.Systems;
 
 namespace RogueLegacy
 {
@@ -24,31 +24,42 @@ namespace RogueLegacy
         {
             StatType = 0;
             DisplayStat = false;
-            CanPurchase = false;
+            CanPurchase = true;
             Visible = false;
             ForceDraw = true;
             LevelText = new TextObj(Game.JunicodeFont);
             LevelText.FontSize = 10f;
             LevelText.Align = Types.TextAlign.Centre;
             LevelText.OutlineWidth = 2;
+            MaxMaxLevel = 1;
             InputDescription = "";
             OutlineWidth = 2;
             m_coinIcon = new SpriteObj("UpgradeIcon_Sprite");
         }
 
-        public string Description { get; set; }
-        public string InputDescription { get; set; }
-        public float PerLevelModifier { get; set; }
-        public int BaseCost { get; set; }
-        public int Appreciation { get; set; }
-        public int MaxLevel { get; set; }
-        public SkillType Trait { get; set; }
-        public string IconName { get; set; }
-        public string UnitOfMeasurement { get; set; }
-        public byte StatType { get; set; }
-        public bool DisplayStat { get; set; }
-        public bool CanPurchase { get; set; }
-        public ManorPiece ManorPiece { get; set; }
+        public string    Description       { get; set; }
+        public string    InputDescription  { get; set; }
+        public float     PerLevelModifier  { get; set; }
+        public int       BaseCost          { get; set; }
+        public int       Appreciation      { get; set; }
+        public int       MaxLevel          { get; set; }
+        public int       MaxMaxLevel       { get; set; }
+        public SkillType Trait             { get; set; }
+        public string    IconName          { get; set; }
+        public string    UnitOfMeasurement { get; set; }
+        public byte      StatType          { get; set; }
+        public bool      DisplayStat       { get; set; }
+        public bool      CanPurchase       { get; set; }
+
+        public bool Visible
+        {
+            get => base.Visible;
+            set
+            {
+                Console.WriteLine("");
+                base.Visible = value;
+            }
+        }
 
         public int CurrentLevel
         {
@@ -95,14 +106,31 @@ namespace RogueLegacy
             LevelText.Position = new Vector2(X, Bounds.Bottom - LevelText.Height / 2);
             LevelText.Text = CurrentLevel + "/" + MaxLevel;
             LevelText.Opacity = Opacity;
-            if (CurrentLevel >= MaxLevel)
+            if (SkillSystem.GetManorPiece(this) != -1)
             {
-                LevelText.TextureColor = Color.Yellow;
-                LevelText.Text = "Max";
+                if (CurrentLevel == MaxLevel)
+                {
+                    LevelText.TextureColor = Color.Lime;
+                    LevelText.Text = "Checked";
+                    LevelText.FontSize = 8f;
+                }
             }
             else
             {
-                LevelText.TextureColor = Color.White;
+                if (MaxLevel == 0)
+                {
+                    LevelText.TextureColor = Color.Gray;
+                    LevelText.Text = "Locked";
+                }
+                else if (CurrentLevel >= MaxMaxLevel)
+                {
+                    LevelText.TextureColor = Color.Yellow;
+                    LevelText.Text = "Max";
+                }
+                else
+                {
+                    LevelText.TextureColor = Color.White;
+                }
             }
 
             LevelText.Draw(camera);
@@ -128,6 +156,7 @@ namespace RogueLegacy
             skillObj.BaseCost = BaseCost;
             skillObj.Appreciation = Appreciation;
             skillObj.MaxLevel = MaxLevel;
+            skillObj.MaxMaxLevel = MaxMaxLevel;
             skillObj.CurrentLevel = CurrentLevel;
             skillObj.Trait = Trait;
             skillObj.InputDescription = InputDescription;
