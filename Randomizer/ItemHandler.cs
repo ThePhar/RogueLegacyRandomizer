@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ItemHandler.cs
-// Last Modified 2023-08-02 11:16 PM by 
+// Last Modified 2023-08-02 11:24 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -27,7 +27,7 @@ public class ItemHandler
 
     public void CheckReceivedItemQueue()
     {
-        if (ArchipelagoManager.ReceiveItemQueue.Count != 0)
+        if (ArchipelagoManager.ReceiveItemQueue.Count == 0)
         {
             return;
         }
@@ -45,7 +45,7 @@ public class ItemHandler
         return ReceivedItems.ContainsKey(index);
     }
 
-    private void GainItem(NetworkItem item)
+    private static void GainItem(NetworkItem item)
     {
         var stats = new float[] { -1, -1, -1 };
         switch (item.Item)
@@ -443,7 +443,7 @@ public class ItemHandler
         );
     }
 
-    private void IncreaseSkillLevel(SkillType skillType, int levels = 1)
+    private static void IncreaseSkillLevel(SkillType skillType, int levels = 1)
     {
         // Ensure we can level up skill.
         var skill = SkillSystem.GetSkill(skillType);
@@ -455,13 +455,13 @@ public class ItemHandler
         }
     }
 
-    private void IncreaseClassLevel(SkillType baseClass, SkillType upgradeClass)
+    private static void IncreaseClassLevel(SkillType baseClass, SkillType upgradeClass)
     {
         var baseSkill = SkillSystem.GetSkill(baseClass);
         IncreaseSkillLevel(baseSkill.CurrentLevel > 0 ? upgradeClass : baseClass);
     }
 
-    private void UnlockRune(EquipmentAbility ability)
+    private static void UnlockRune(EquipmentAbility ability)
     {
         var unlockStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
         Game.PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) ability] = unlockStatus;
@@ -471,7 +471,7 @@ public class ItemHandler
         Game.PlayerStats.GetRuneArray[(int) EquipmentCategory.Cape][(int) ability] = unlockStatus;
     }
 
-    private void UnlockEquipment(EquipmentBase @base)
+    private static void UnlockEquipment(EquipmentBase @base)
     {
         var unlockStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
         Game.PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) @base] = unlockStatus;
@@ -481,7 +481,7 @@ public class ItemHandler
         Game.PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Cape][(int) @base] = unlockStatus;
     }
 
-    private void UnlockProgressiveEquipment()
+    private static void UnlockProgressiveEquipment()
     {
         var unlockStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
         var equipmentOrder = new[]
