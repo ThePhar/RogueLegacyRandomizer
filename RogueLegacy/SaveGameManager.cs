@@ -1,9 +1,9 @@
 // RogueLegacyRandomizer - SaveGameManager.cs
-// Last Modified 2023-07-30 6:10 PM by 
-// 
+// Last Modified 2023-08-02 11:22 PM by
+//
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -942,8 +942,8 @@ namespace RogueLegacy
                     }
 
                     // Store the count as well.
-                    binaryWriter.Write(Game.PlayerStats.ReceivedItems.Count);
-                    foreach (var pair in Game.PlayerStats.ReceivedItems)
+                    binaryWriter.Write(Game.ItemHandler.ReceivedItems.Count);
+                    foreach (var pair in Game.ItemHandler.ReceivedItems)
                     {
                         var index = pair.Key;
                         var item = pair.Value;
@@ -1776,9 +1776,9 @@ namespace RogueLegacy
                         itemReceivedDict.Add(index, item);
                     }
 
-                    Game.PlayerStats.ReceivedItems = itemReceivedDict;
+                    Game.ItemHandler.ReceivedItems = itemReceivedDict;
                     // Set fountain pieces
-                    foreach (var pair in Game.PlayerStats.ReceivedItems)
+                    foreach (var pair in Game.ItemHandler.ReceivedItems)
                     {
                         if (pair.Value.Item == ItemCode.FOUNTAIN_PIECE)
                         {

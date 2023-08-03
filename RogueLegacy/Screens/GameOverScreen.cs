@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - GameOverScreen.cs
-// Last Modified 2023-07-27 12:07 AM by
+// Last Modified 2023-08-02 11:22 PM by
 //
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
@@ -399,7 +398,6 @@ namespace RogueLegacy.Screens
                 else
                 {
                     SkillSystem.ResetAllTraits();
-                    var received = Game.PlayerStats.ReceivedItems;
                     var pieces = Game.PlayerStats.FountainPieces;
                     Game.PlayerStats.Dispose();
                     Game.PlayerStats = new PlayerStats();
@@ -408,12 +406,7 @@ namespace RogueLegacy.Screens
                         SaveType.UpgradeData);
                     Game.ScreenManager.Player.CurrentHealth = Game.PlayerStats.CurrentHealth;
                     Game.ScreenManager.Player.CurrentMana = Game.PlayerStats.CurrentMana;
-                    Game.PlayerStats.ReceivedItems = received;
                     Game.PlayerStats.FountainPieces = pieces;
-
-                    // Level up player if anything stored in child stuff.
-                    while (Program.Game.NextChildItemQueue.Any())
-                        Program.Game.DisgustingGetItemLogic(Program.Game.NextChildItemQueue.Dequeue(), true);
 
                     (ScreenManager as RCScreenManager).DisplayScreen((int) ScreenType.Lineage, true);
                     _lockControls = true;

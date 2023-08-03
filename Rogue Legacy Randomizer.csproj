@@ -79,6 +79,7 @@
         <Compile Include="Randomizer\ConnectionStatus.cs" />
         <Compile Include="Randomizer\ConnectionInfo.cs" />
         <Compile Include="Randomizer\Definitions\LocationCode.cs" />
+        <Compile Include="Randomizer\ItemHandler.cs" />
         <Compile Include="Randomizer\RandomizerData.cs" />
         <Compile Include="IsExternalInit.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
