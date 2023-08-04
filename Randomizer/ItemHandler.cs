@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ItemHandler.cs
-// Last Modified 2023-08-03 1:58 PM by 
+// Last Modified 2023-08-03 6:47 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -37,6 +37,7 @@ public class ItemHandler
         {
             GainItem(item);
             ReceivedItems.Add(index, item);
+            Program.Game.SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
         }
     }
 
@@ -457,7 +458,7 @@ public class ItemHandler
 
         for (var i = 0; i < levels; i++)
         {
-            if (!ArchipelagoManager.RandomizerData.RequireSkillPurchasing)
+            if (!ArchipelagoManager.RandomizerData.RequireSkillPurchasing || !SkillSystem.IsSkillScreenSkill(skill.Trait))
             {
                 SkillSystem.LevelUpTrait(skill, false);
             }

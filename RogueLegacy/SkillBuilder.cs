@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - SkillBuilder.cs
-// Last Modified 2023-08-03 1:53 PM by 
+// Last Modified 2023-08-03 7:07 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -184,7 +184,7 @@ namespace RogueLegacy
                     skillObj.Name = "Smithy";
                     skillObj.Description = "Unlock the smithy and gain access to phat loot.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 50;
+                    skillObj.BaseCost = 100;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -199,7 +199,7 @@ namespace RogueLegacy
                     skillObj.Name = "Enchantress";
                     skillObj.Description = "Unlock the enchantress and gain access to her magical runes and powers.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 50;
+                    skillObj.BaseCost = 100;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -214,7 +214,7 @@ namespace RogueLegacy
                     skillObj.Name = "Architect";
                     skillObj.Description = "Unlock the architect and gain the powers to lock down the castle.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 50;
+                    skillObj.BaseCost = 100;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -230,7 +230,7 @@ namespace RogueLegacy
                     skillObj.Description =
                         "Upgrading your carry capacity will allow you to wear better and heavier armor.";
                     skillObj.PerLevelModifier = 10f;
-                    skillObj.BaseCost = 50;
+                    skillObj.BaseCost = 75;
                     skillObj.Appreciation = 40;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 50;
@@ -245,7 +245,7 @@ namespace RogueLegacy
                     skillObj.Name = "Armor Up";
                     skillObj.Description = "Strengthen your innards through natural means to reduce incoming damage.";
                     skillObj.PerLevelModifier = 4f;
-                    skillObj.BaseCost = 125;
+                    skillObj.BaseCost = 75;
                     skillObj.Appreciation = 105;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 50;
@@ -336,7 +336,7 @@ namespace RogueLegacy
                     skillObj.Name = "Unlock Miner";
                     skillObj.Description = "Unlock the skills of the Miner and raise your family fortune";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 400;
+                    skillObj.BaseCost = 500;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -366,7 +366,7 @@ namespace RogueLegacy
                     skillObj.Name = "Unlock Shinobi";
                     skillObj.Description = "Unlock the Shinobi, the fleetest of fighters.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 400;
+                    skillObj.BaseCost = 850;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -381,7 +381,7 @@ namespace RogueLegacy
                     skillObj.Name = "Upgrade Knight";
                     skillObj.Description = "Turn your knights into Paladins. A ferocious forefront fighter.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 50;
+                    skillObj.BaseCost = 1000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -397,7 +397,7 @@ namespace RogueLegacy
                     skillObj.Description =
                         "Unlock the latent powers of the Mage and transform them into the all powerful Archmage";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 300;
+                    skillObj.BaseCost = 1000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -412,7 +412,7 @@ namespace RogueLegacy
                     skillObj.Name = "Upgrade Knave";
                     skillObj.Description = "Learn the dark arts, and turn the Knave into an Assassin";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 300;
+                    skillObj.BaseCost = 1000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -442,7 +442,7 @@ namespace RogueLegacy
                     skillObj.Name = "Upgrade Barbarian";
                     skillObj.Description = "Become a Barbarian King.  The king of freemen. That makes no sense.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 300;
+                    skillObj.BaseCost = 1000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -458,7 +458,7 @@ namespace RogueLegacy
                     skillObj.Name = "Upgrade Lich";
                     skillObj.Description = "Royalize your all-powerful Liches, and turn them into Lich Kings.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 1500;
+                    skillObj.BaseCost = 2000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -474,7 +474,7 @@ namespace RogueLegacy
                     skillObj.Description =
                         "Become the leader of your village, and turn your Shinobi into a Hokage. Believe it!";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 750;
+                    skillObj.BaseCost = 2000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -489,7 +489,7 @@ namespace RogueLegacy
                     skillObj.Name = "Upgrade Spell Thief";
                     skillObj.Description = "Ride the vortexes of magic, and turn your Spellthiefs into Spellswords.";
                     skillObj.PerLevelModifier = 1f;
-                    skillObj.BaseCost = 1500;
+                    skillObj.BaseCost = 2000;
                     skillObj.Appreciation = 0;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -518,7 +518,7 @@ namespace RogueLegacy
                     skillObj.Name = "Traitorous";
                     skillObj.Description = "Cosplay as one of your most infamous ancestors.";
                     skillObj.PerLevelModifier = 10f;
-                    skillObj.BaseCost = 8000;
+                    skillObj.BaseCost = 5000;
                     skillObj.Appreciation = 30;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -531,7 +531,7 @@ namespace RogueLegacy
                     skillObj.Name = "Unlock Knight";
                     skillObj.Description = "Unlock the Knight and defeat your enemies with all around good stats.";
                     skillObj.PerLevelModifier = 10f;
-                    skillObj.BaseCost = 8000;
+                    skillObj.BaseCost = 250;
                     skillObj.Appreciation = 30;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -543,7 +543,7 @@ namespace RogueLegacy
                     skillObj.Name = "Unlock Mage";
                     skillObj.Description = "Unlock the Mage and utilize your magic power to defeat your enemies.";
                     skillObj.PerLevelModifier = 10f;
-                    skillObj.BaseCost = 8000;
+                    skillObj.BaseCost = 250;
                     skillObj.Appreciation = 30;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -555,7 +555,7 @@ namespace RogueLegacy
                     skillObj.Name = "Unlock Knave";
                     skillObj.Description = "Unlock the Knave and utilize your high crit chance to deal massive damage.";
                     skillObj.PerLevelModifier = 10f;
-                    skillObj.BaseCost = 8000;
+                    skillObj.BaseCost = 250;
                     skillObj.Appreciation = 30;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;
@@ -567,7 +567,7 @@ namespace RogueLegacy
                     skillObj.Name = "Unlock Barbarian";
                     skillObj.Description = "Unlock the Barbarian and out endure your enemies.";
                     skillObj.PerLevelModifier = 10f;
-                    skillObj.BaseCost = 8000;
+                    skillObj.BaseCost = 250;
                     skillObj.Appreciation = 30;
                     skillObj.MaxLevel = 0;
                     skillObj.MaxMaxLevel = 1;

@@ -1,5 +1,5 @@
 // RogueLegacyRandomizer - GetItemScreen.cs
-// Last Modified 2023-08-03 11:54 AM by 
+// Last Modified 2023-08-03 6:10 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -346,28 +346,11 @@ namespace RogueLegacy.Screens
 
                         case ItemCode.ItemType.Stats:
                             _itemFoundText.Y += 50f;
-                            _itemSprite.ChangeSprite(GetStatSpriteName((int) _itemInfo.X));
-                            _itemFoundText.Text = GetStatText((int) _itemInfo.X);
+                            _itemSprite.ChangeSprite("ManaCrystal_Sprite");
+                            _itemFoundText.Text = "Triple Stat Increase";
                             _itemSprite.AnimationDelay = 0.05f;
                             _itemFoundSprite.ChangeSprite("StatFoundText_Sprite");
                             _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
-                            _tripStat1FoundText.Visible = true;
-                            _tripStat2FoundText.Visible = true;
-                            _tripStat1.ChangeSprite(GetStatSpriteName((int) _tripStatData.X));
-                            _tripStat2.ChangeSprite(GetStatSpriteName((int) _tripStatData.Y));
-                            _tripStat1.Visible = true;
-                            _tripStat2.Visible = true;
-                            _tripStat1.AnimationDelay = 0.05f;
-                            _tripStat2.AnimationDelay = 0.05f;
-                            Tween.RunFunction(0.1f, _tripStat1, "PlayAnimation", true);
-                            Tween.RunFunction(0.2f, _tripStat2, "PlayAnimation", true);
-                            _tripStat1FoundText.Text = GetStatText((int) _tripStatData.X);
-                            _tripStat2FoundText.Text = GetStatText((int) _tripStatData.Y);
-                            _tripStat1FoundText.Y = _itemFoundText.Y + 50f;
-                            _tripStat2FoundText.Y = _itemFoundText.Y + 100f;
-                            _tripStat1FoundText.TextureColor = Color.Yellow;
-                            _tripStat2FoundText.TextureColor = Color.Yellow;
-
                             break;
 
                         case ItemCode.ItemType.Gold:

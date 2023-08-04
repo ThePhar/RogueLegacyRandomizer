@@ -1,5 +1,5 @@
 ﻿// RogueLegacyRandomizer - ReceivedItemsHUD.cs
-// Last Modified 2023-07-27 12:04 AM by 
+// Last Modified 2023-08-03 6:08 PM by 
 // 
 // This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 // original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
