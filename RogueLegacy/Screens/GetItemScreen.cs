@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - GetItemScreen.cs
-//  Last Modified 2023-10-24 4:18 PM
+//  Last Modified 2023-10-24 6:29 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -421,9 +421,7 @@ namespace RogueLegacy.Screens
                 index++;
             }
 
-            return Program.Game.ArchipelagoManager.GetItemName(ItemCode.EQUIPMENT_SQUIRE +
-                                                               progressiveArmorOrder[
-                                                                   index - 1]); // Go back to the last one.
+            return Program.Game.ArchipelagoManager.GetItemName(ItemCode.EQUIPMENT_SQUIRE + progressiveArmorOrder[index]);
         }
 
         public static string GetSkillPlateIcon(long item, out string itemName)
