@@ -76,8 +76,7 @@
     <ItemGroup>
         <Compile Include="Randomizer\ArchipelagoManager.cs" />
         <Compile Include="Randomizer\Definitions\ItemCode.cs" />
-        <Compile Include="Randomizer\ConnectionStatus.cs" />
-        <Compile Include="Randomizer\ConnectionInfo.cs" />
+        <Compile Include="Randomizer\ArchipelagoConnectionInfo.cs" />
         <Compile Include="Randomizer\Definitions\LocationCode.cs" />
         <Compile Include="Randomizer\ItemHandler.cs" />
         <Compile Include="Randomizer\RandomizerData.cs" />
@@ -90,6 +89,7 @@
         <Compile Include="RandomChaos\LightSourceMask.cs" />
         <Compile Include="RandomChaos\PostProcessingManager.cs" />
         <Compile Include="RandomChaos\ScreenQuad.cs" />
+        <Compile Include="Randomizer\Util.cs" />
         <Compile Include="RogueLegacy\BackToMenuOptionsObj.cs" />
         <Compile Include="RogueLegacy\BlacksmithObj.cs" />
         <Compile Include="RogueLegacy\BorderObj.cs" />
@@ -169,7 +169,6 @@
         <Compile Include="RogueLegacy\Game.cs" />
         <Compile Include="RogueLegacy\GameEV.cs" />
         <Compile Include="RogueLegacy\GameObjects\DeathLinkObj.cs" />
-        <Compile Include="RogueLegacy\GameObjects\HUD\ArchipelagoStatusIndicator.cs" />
         <Compile Include="RogueLegacy\GameObjects\HUD\PlayerHUD.cs" />
         <Compile Include="RogueLegacy\GameObjects\HUD\ReceivedItemsHUD.cs" />
         <Compile Include="RogueLegacy\GameObjects\RetireObj.cs" />

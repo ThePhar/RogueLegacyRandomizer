@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - GetItemScreen.cs
-// Last Modified 2023-08-03 6:10 PM by 
+//  RogueLegacyRandomizer - GetItemScreen.cs
+//  Last Modified 2023-10-24 4:18 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
@@ -272,7 +271,7 @@ namespace RogueLegacy.Screens
                     _itemSpinning = false;
                     _itemSprite.ChangeSprite("Icon_AP_Sprite");
                     _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    _itemFoundText.Text = ArchipelagoManager.GetItemName(_network_item);
+                    _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
                     _itemFoundPlayerText.Visible = true;
                     _itemFoundPlayerText.Text = $"You found {_network_player}'s";
                     _itemFoundText.TextureColor = Color.Yellow;
@@ -309,8 +308,8 @@ namespace RogueLegacy.Screens
                     break;
 
                 case (int) ItemCategory.ReceiveNetworkItem:
-                    var self = _network_player == ArchipelagoManager.GetPlayerName(
-                        ArchipelagoManager.RandomizerData.Slot
+                    var self = _network_player == Program.Game.ArchipelagoManager.GetPlayerName(
+                        Program.Game.ArchipelagoManager.Slot
                     );
 
                     _itemFoundPlayerText.Visible = true;
@@ -331,7 +330,7 @@ namespace RogueLegacy.Screens
                             _itemSpinning = true;
                             _itemSprite.ChangeSprite("RuneIcon_Sprite");
                             _itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
-                            _itemFoundText.Text = ArchipelagoManager.GetItemName(_network_item);
+                            _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
                             _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             _itemSprite.AnimationDelay = 0.05f;
                             break;
@@ -391,7 +390,7 @@ namespace RogueLegacy.Screens
 
         private string GetBlueprintName(long item)
         {
-            var text = ArchipelagoManager.GetItemName(item);
+            var text = Program.Game.ArchipelagoManager.GetItemName(item);
             if (text != "Progressive Blueprints")
             {
                 return text;
@@ -422,14 +421,14 @@ namespace RogueLegacy.Screens
                 index++;
             }
 
-            return ArchipelagoManager.GetItemName(ItemCode.EQUIPMENT_SQUIRE +
+            return Program.Game.ArchipelagoManager.GetItemName(ItemCode.EQUIPMENT_SQUIRE +
                                                                progressiveArmorOrder[
                                                                    index - 1]); // Go back to the last one.
         }
 
         public static string GetSkillPlateIcon(long item, out string itemName)
         {
-            itemName = ArchipelagoManager.GetItemName(item);
+            itemName = Program.Game.ArchipelagoManager.GetItemName(item);
 
             if (item == ItemCode.BLACKSMITH)
             {

@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - ChestObj.cs
-// Last Modified 2023-07-30 3:57 PM by 
+//  RogueLegacyRandomizer - ChestObj.cs
+//  Last Modified 2023-10-24 4:29 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -120,7 +120,6 @@ public class ChestObj : PhysicsObj
         if (ChestType == ChestType.Boss)
         {
             var zone = (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).CurrentRoom.Zone;
-            ArchipelagoManager.DeathLinkSafe = true;
             switch (zone)
             {
                 case Zone.Castle:
@@ -142,9 +141,9 @@ public class ChestObj : PhysicsObj
         }
 
         // Handle
-
         GiveNetworkItem(itemDropManager, player);
         player.AttachedLevel.RefreshMapChestIcons();
+        Program.Game.ArchipelagoManager.CanDeathLink = true;
     }
 
     public void GiveGold(ItemDropManager itemDropManager, int amount = 0)
@@ -311,7 +310,7 @@ public class ChestObj : PhysicsObj
 
         if (ForcedLocation != null)
         {
-            if (_chestTypeType == ChestType.Gold && ArchipelagoManager.IsLocationChecked((long) ForcedLocation))
+            if (_chestTypeType == ChestType.Gold && Program.Game.ArchipelagoManager.IsLocationChecked((long) ForcedLocation))
             {
                 GiveStatDrop(manager, player, 1, 0);
             }
@@ -323,20 +322,19 @@ public class ChestObj : PhysicsObj
             return;
         }
 
-        var randomizerData = ArchipelagoManager.RandomizerData;
         if (isFairy)
         {
-            var chestMultiplier = ArchipelagoManager.RandomizerData.UniversalFairyChests ? 4 : 1;
+            var chestMultiplier = RandomizerData.UniversalFairyChests ? 4 : 1;
             for (var chest = 0; chest <= LocationCode.MAX_FAIRY_CHESTS * chestMultiplier; chest++)
             {
                 // Ignore if chest doesn't exist.
-                if (!LocationCode.TryGetFairyChestLocation(randomizerData, chest, room.Zone, out var location))
+                if (!LocationCode.TryGetFairyChestLocation(chest, room.Zone, out var location))
                 {
                     break;
                 }
 
                 // Ignore checked locations.
-                if (ArchipelagoManager.IsLocationChecked(location))
+                if (Program.Game.ArchipelagoManager.IsLocationChecked(location))
                 {
                     continue;
                 }
@@ -349,17 +347,17 @@ public class ChestObj : PhysicsObj
         }
         else
         {
-            var chestMultiplier = ArchipelagoManager.RandomizerData.UniversalChests ? 4 : 1;
+            var chestMultiplier = RandomizerData.UniversalChests ? 4 : 1;
             for (var chest = 0; chest <= LocationCode.MAX_CHESTS * chestMultiplier; chest++)
             {
                 // Ignore if chest doesn't exist.
-                if (!LocationCode.TryGetChestLocation(randomizerData, chest, room.Zone, out var location))
+                if (!LocationCode.TryGetChestLocation(chest, room.Zone, out var location))
                 {
                     break;
                 }
 
                 // Ignore checked locations.
-                if (ArchipelagoManager.IsLocationChecked(location))
+                if (Program.Game.ArchipelagoManager.IsLocationChecked(location))
                 {
                     continue;
                 }

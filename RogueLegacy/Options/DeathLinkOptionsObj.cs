@@ -1,11 +1,11 @@
-﻿// RogueLegacyRandomizer - DeathLinkOptionsObj.cs
-// Last Modified 2023-07-30 9:28 AM by 
+﻿//  RogueLegacyRandomizer - DeathLinkOptionsObj.cs
+//  Last Modified 2023-10-24 4:16 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -19,7 +19,7 @@ namespace RogueLegacy.Options;
 public class DeathLinkOptionsObj : OptionsObj
 {
     private TextObj _modeText;
-    private string  _initalText = "Uninitialized";
+    private string  _initialText = "Uninitialized";
 
     public DeathLinkOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Toggle DeathLink")
     {
@@ -37,11 +37,11 @@ public class DeathLinkOptionsObj : OptionsObj
             base.IsActive = value;
             if (value)
             {
-                _initalText = _modeText.Text;
-                if (ArchipelagoManager.RandomizerData.CanToggleDeathLink)
+                _initialText = _modeText.Text;
+                if (RandomizerData.CanToggleDeathLink)
                 {
                     _modeText.TextureColor = Color.Yellow;
-                    _initalText = _modeText.Text;
+                    _initialText = _modeText.Text;
                 }
                 else
                 {
@@ -57,7 +57,7 @@ public class DeathLinkOptionsObj : OptionsObj
 
     public override void Initialize()
     {
-        _modeText.Text = ArchipelagoManager.RandomizerData.DeathLinkMode switch
+        _modeText.Text = RandomizerData.DeathLinkMode switch
         {
             DeathLinkMode.Disabled       => "Disabled",
             DeathLinkMode.Enabled        => "Enabled",
@@ -69,10 +69,11 @@ public class DeathLinkOptionsObj : OptionsObj
 
     public override void HandleInput()
     {
+        var manager = Program.Game.ArchipelagoManager;
         if (InputTypeHelper.PressedCancel)
         {
             IsActive = false;
-            _modeText.Text = _initalText;
+            _modeText.Text = _initialText;
             base.HandleInput();
             return;
         }
@@ -81,7 +82,7 @@ public class DeathLinkOptionsObj : OptionsObj
         {
             SoundManager.PlaySound("Option_Menu_Select");
             IsActive = false;
-            if (!ArchipelagoManager.RandomizerData.CanToggleDeathLink)
+            if (!RandomizerData.CanToggleDeathLink)
             {
                 base.HandleInput();
                 return;
@@ -89,18 +90,18 @@ public class DeathLinkOptionsObj : OptionsObj
 
             if (_modeText.Text == "Enabled")
             {
-                ArchipelagoManager.EnableDeathLink();
+                manager.EnableDeathLink();
             }
             else
             {
-                ArchipelagoManager.DisableDeathLink();
+                manager.DisableDeathLink();
             }
 
             base.HandleInput();
             return;
         }
 
-        if (!ArchipelagoManager.RandomizerData.CanToggleDeathLink)
+        if (!RandomizerData.CanToggleDeathLink)
         {
             base.HandleInput();
             return;
@@ -123,7 +124,7 @@ public class DeathLinkOptionsObj : OptionsObj
         }
 
         _modeText = null;
-        _initalText = null;
+        _initialText = null;
         base.Dispose();
     }
 }

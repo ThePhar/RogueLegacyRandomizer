@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - SkillScreen.cs
-// Last Modified 2023-08-03 3:36 PM by 
+//  RogueLegacyRandomizer - SkillScreen.cs
+//  Last Modified 2023-10-24 4:27 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,6 @@ using DS2DEngine;
 using InputSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.Systems;
@@ -238,22 +237,22 @@ public class SkillScreen : Screen
             if (s.Trait is >= SkillType.ManorGroundRoad and <= SkillType.ManorObservatoryTelescope)
             {
                 // var item = ArchipelagoManager.AllLocations[ManorContainer.ArchipelagoLocationTable[s.ManorPiece]];
-                var item = ArchipelagoManager.AllLocations[ManorContainer.ArchipelagoLocationTable[(ManorPiece) SkillSystem.GetManorPiece(s)]];
+                var item = Program.Game.ArchipelagoManager.LocationDictionary[ManorContainer.ArchipelagoLocationTable[(ManorPiece) SkillSystem.GetManorPiece(s)]];
 
                 // Toggle correct plate.
                 s.IconName = GetSkillPlateIcon(item.Item);
-                s.Name = ArchipelagoManager.GetLocationName(item.Location).Replace("Manor - ", "");
-                var itemName = ArchipelagoManager.GetTrapItemName(item);
+                s.Name = Program.Game.ArchipelagoManager.GetLocationName(item.Location).Replace("Manor - ", "");
+                var itemName = Program.Game.ArchipelagoManager.GetItemOrTrapName(item);
 
                 // Check if we grabbed this location, and change our skillArray current level.
-                if (ArchipelagoManager.IsLocationChecked(item.Location))
+                if (Program.Game.ArchipelagoManager.IsLocationChecked(item.Location))
                 {
                     s.CurrentLevel = 1;
                 }
 
                 // Update the description.
                 var gender = Game.PlayerStats.IsFemale ? "mother" : "father";
-                var playerName = ArchipelagoManager.GetPlayerName(item.Player);
+                var playerName = Program.Game.ArchipelagoManager.GetPlayerName(item.Player);
                 s.Description =
                     $"If you're going to leave your children {gender}less, you may as well ensure they have a nice " +
                     $"place to live.\n\nThis manor upgrade unlocks {itemName} for {playerName}.\n\n";
@@ -387,7 +386,7 @@ public class SkillScreen : Screen
         {
             var location = ManorContainer.ArchipelagoLocationTable[(ManorPiece) manorPiece];
             SetManorPieceVisible(new Tuple<int, int>(manorPiece, location), trait);
-            ArchipelagoManager.CheckLocations(location);
+            Program.Game.ArchipelagoManager.CheckLocations(location);
             return;
         }
 

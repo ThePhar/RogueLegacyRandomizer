@@ -1,11 +1,11 @@
-﻿// RogueLegacyRandomizer - RandomizerData.cs
-// Last Modified 2023-07-30 6:17 PM by 
+﻿//  RogueLegacyRandomizer - RandomizerData.cs
+//  Last Modified 2023-10-24 5:11 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -15,15 +15,13 @@ using RogueLegacy.Enums;
 
 namespace Randomizer;
 
-public class RandomizerData
+public static class RandomizerData
 {
-    private readonly Dictionary<string, object> _settings;
+    private static Dictionary<string, object> _settings;
 
-    public RandomizerData(IDictionary<string, object> settings, string seed, int slot = 1)
+    public static void LoadSlotData(IDictionary<string, object> settings)
     {
-        _settings = new Dictionary<string, object>(settings);
-        Seed = seed;
-        Slot = slot;
+        _settings = new(settings);
 
         // Convert properties appropriately if we're using the old version.
         _settings["world_version"] = GetValueOrNull("world_version") ?? 1;
@@ -51,12 +49,12 @@ public class RandomizerData
             // Gold Multiplier
             _settings["gold_gain_multiplier"] = Convert.ToInt32(_settings["gold_gain_multiplier"]) switch
             {
-                0 => 1f,    // Normal
+                0 => 1f, // Normal
                 1 => 0.25f, // Quarter
-                2 => 0.5f,  // Half
-                3 => 2f,    // Double
-                4 => 4f,    // Quadruple
-                _ => throw new ArgumentException($"Unexpected Gold Multiplier!")
+                2 => 0.5f, // Half
+                3 => 2f, // Double
+                4 => 4f, // Quadruple
+                _ => throw new ArgumentException($"Unexpected Gold Multiplier!"),
             };
 
             // Spending Restrictions
@@ -191,42 +189,39 @@ public class RandomizerData
         _settings["disable_charon"] = Convert.ToBoolean(_settings["disable_charon"]);
     }
 
-    private object GetValueOrNull(string key)
+    private static object GetValueOrNull(string key)
     {
         var exists = _settings.TryGetValue(key, out var value);
         return exists ? value : null;
     }
 
-    public string                        Seed             { get; }
-    public int                           Slot             { get; }
-
-    public int           WorldVersion             => (int)           _settings["world_version"];
-    public Gender        StartingGender           => (Gender)        _settings["starting_gender"];
-    public byte          StartingClass            => (byte)          _settings["starting_class"];
-    public int           NewGamePlus              => (int)           _settings["new_game_plus"];
-    public int           ChestsPerZone            => (int)           _settings["chests_per_zone"];
-    public int           FairyChestsPerZone       => (int)           _settings["fairy_chests_per_zone"];
-    public bool          UniversalChests          => (bool)          _settings["universal_chests"];
-    public bool          UniversalFairyChests     => (bool)          _settings["universal_fairy_chests"];
-    public int           ArchitectFee             => (int)           _settings["architect_fee"];
-    public bool          DisableCharon            => (bool)          _settings["disable_charon"];
-    public bool          RequireVendorPurchasing  => (bool)          _settings["require_vendor_purchasing"];
-    public bool          RequireSkillPurchasing   => (bool)          _settings["require_skill_purchasing"];
-    public bool          ShuffleBlacksmith        => (bool)          _settings["shuffle_blacksmith"];
-    public bool          ShuffleEnchantress       => (bool)          _settings["shuffle_enchantress"];
-    public float         GoldGainMultiplier       => (float)         _settings["gold_gain_multiplier"];
-    public bool          SpendingRestrictions     => (bool)          _settings["spending_restrictions"];
-    public int           NumberOfChildren         => (int)           _settings["number_of_children"];
-    public bool          FreeDiaryOnGeneration    => (bool)          _settings["free_diary_per_generation"];
-    public bool          ChallengeKhidr           => (bool)          _settings["challenge_khidr"];
-    public bool          ChallengeAlexander       => (bool)          _settings["challenge_alexander"];
-    public bool          ChallengeLeon            => (bool)          _settings["challenge_leon"];
-    public bool          ChallengeHerodotus       => (bool)          _settings["challenge_herodotus"];
-    public AreaStruct[]  AreaStructs              => (AreaStruct[])  _settings["castle_size"];
-    public int           FountainPieceRequirement => (int)           _settings["fountain_piece_requirement"];
-    public bool          RequireBosses            => (bool)          _settings["require_bosses"];
-    public DeathLinkMode DeathLinkMode            => (DeathLinkMode) _settings["death_link"];
-    public bool          CanToggleDeathLink       => DeathLinkMode is DeathLinkMode.Disabled or DeathLinkMode.Enabled;
+    public static int           WorldVersion             => (int)           _settings["world_version"];
+    public static Gender        StartingGender           => (Gender)        _settings["starting_gender"];
+    public static byte          StartingClass            => (byte)          _settings["starting_class"];
+    public static int           NewGamePlus              => (int)           _settings["new_game_plus"];
+    public static int           ChestsPerZone            => (int)           _settings["chests_per_zone"];
+    public static int           FairyChestsPerZone       => (int)           _settings["fairy_chests_per_zone"];
+    public static bool          UniversalChests          => (bool)          _settings["universal_chests"];
+    public static bool          UniversalFairyChests     => (bool)          _settings["universal_fairy_chests"];
+    public static int           ArchitectFee             => (int)           _settings["architect_fee"];
+    public static bool          DisableCharon            => (bool)          _settings["disable_charon"];
+    public static bool          RequireVendorPurchasing  => (bool)          _settings["require_vendor_purchasing"];
+    public static bool          RequireSkillPurchasing   => (bool)          _settings["require_skill_purchasing"];
+    public static bool          ShuffleBlacksmith        => (bool)          _settings["shuffle_blacksmith"];
+    public static bool          ShuffleEnchantress       => (bool)          _settings["shuffle_enchantress"];
+    public static float         GoldGainMultiplier       => (float)         _settings["gold_gain_multiplier"];
+    public static bool          SpendingRestrictions     => (bool)          _settings["spending_restrictions"];
+    public static int           NumberOfChildren         => (int)           _settings["number_of_children"];
+    public static bool          FreeDiaryOnGeneration    => (bool)          _settings["free_diary_per_generation"];
+    public static bool          ChallengeKhidr           => (bool)          _settings["challenge_khidr"];
+    public static bool          ChallengeAlexander       => (bool)          _settings["challenge_alexander"];
+    public static bool          ChallengeLeon            => (bool)          _settings["challenge_leon"];
+    public static bool          ChallengeHerodotus       => (bool)          _settings["challenge_herodotus"];
+    public static AreaStruct[]  AreaStructs              => (AreaStruct[])  _settings["castle_size"];
+    public static int           FountainPieceRequirement => (int)           _settings["fountain_piece_requirement"];
+    public static bool          RequireBosses            => (bool)          _settings["require_bosses"];
+    public static DeathLinkMode DeathLinkMode            => (DeathLinkMode) _settings["death_link"];
+    public static bool          CanToggleDeathLink       => DeathLinkMode is DeathLinkMode.Disabled or DeathLinkMode.Enabled;
 
     private static AreaStruct[][] PossibleCastleSizes => new[]
     {

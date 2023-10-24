@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - PlayerObj.cs
-// Last Modified 2023-08-03 11:54 AM by 
+//  RogueLegacyRandomizer - PlayerObj.cs
+//  Last Modified 2023-10-24 4:43 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -2045,9 +2045,9 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void Forfeit()
     {
-        ArchipelagoManager.Release();
+        Program.Game.ArchipelagoManager.Release();
 
-        if (ArchipelagoManager.CanCollect)
+        if (Program.Game.ArchipelagoManager.CanCollect)
             CollectPrompt();
         else
             LoadEnding();
@@ -2055,7 +2055,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void ForfeitPrompt()
     {
-        if (ArchipelagoManager.CanRelease)
+        if (Program.Game.ArchipelagoManager.CanRelease)
         {
             var rCScreenManager = Game.ScreenManager;
             DialogueManager.AddText("Release", new[] { "Congrats!" },
@@ -2064,7 +2064,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
             rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "Forfeit");
 
-            if (ArchipelagoManager.CanCollect)
+            if (Program.Game.ArchipelagoManager.CanCollect)
                 rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "CollectPrompt");
             else
                 rCScreenManager.DialogueScreen.SetCancelEndHandler(this, "LoadEnding");
@@ -2075,13 +2075,13 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void Collect()
     {
-        ArchipelagoManager.Collect();
+        Program.Game.ArchipelagoManager.Collect();
         LoadEnding();
     }
 
     public void CollectPrompt()
     {
-        if (ArchipelagoManager.CanCollect)
+        if (Program.Game.ArchipelagoManager.CanCollect)
         {
             var rCScreenManager = Game.ScreenManager;
             DialogueManager.AddText("Collect", new[] { "Congrats!" },
@@ -2118,9 +2118,9 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         {
             if (doorObj.Name == "FinalBossDoor")
             {
-                if (ArchipelagoManager.CanRelease)
+                if (Program.Game.ArchipelagoManager.CanRelease)
                     ForfeitPrompt();
-                else if (ArchipelagoManager.CanCollect)
+                else if (Program.Game.ArchipelagoManager.CanCollect)
                     CollectPrompt();
                 else
                     LoadEnding();
@@ -2400,8 +2400,8 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void LastBossDoorHack()
     {
-        var hasFountainRequirement = ArchipelagoManager.RandomizerData.FountainPieceRequirement == 0 || Game.PlayerStats.FountainPieces >= ArchipelagoManager.RandomizerData.FountainPieceRequirement;
-        var bossesKilled = !ArchipelagoManager.RandomizerData.RequireBosses ||
+        var hasFountainRequirement = RandomizerData.FountainPieceRequirement == 0 || Game.PlayerStats.FountainPieces >= RandomizerData.FountainPieceRequirement;
+        var bossesKilled = !RandomizerData.RequireBosses ||
                            (Game.PlayerStats.EyeballBossBeaten &&
                             Game.PlayerStats.FairyBossBeaten &&
                             Game.PlayerStats.BlobBossBeaten &&
@@ -2577,10 +2577,10 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 {
                     var feeFactor = 1f;
                     if (Game.PlayerStats.HasArchitectFee)
-                        feeFactor = (100 - ArchipelagoManager.RandomizerData.ArchitectFee) / 100f;
+                        feeFactor = (100 - RandomizerData.ArchitectFee) / 100f;
 
                     var num9 = (int) (num7 * 10 * (1f + TotalGoldBonus) * feeFactor *
-                                      ArchipelagoManager.RandomizerData.GoldGainMultiplier);
+                                      RandomizerData.GoldGainMultiplier);
                     Game.PlayerStats.Gold -= num9;
                     for (var i = 0; i < num7; i++) m_levelScreen.ItemDropManager.DropItemWide(Position, 1, 10f);
                     if (num9 > 0)

@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-// Last Modified 2023-08-03 4:41 PM by
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  RogueLegacyRandomizer - CastleEntranceRoomObj.cs
+//  Last Modified 2023-10-24 4:12 PM
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -206,8 +206,8 @@ public class CastleEntranceRoomObj : RoomObj
 
         if (Game.PlayerStats.FireballBossBeaten) RevealSymbol(Zone.Tower, false);
 
-        var hasFountainRequirement = ArchipelagoManager.RandomizerData.FountainPieceRequirement == 0 || Game.PlayerStats.FountainPieces >= ArchipelagoManager.RandomizerData.FountainPieceRequirement;
-        var bossesKilled = !ArchipelagoManager.RandomizerData.RequireBosses ||
+        var hasFountainRequirement = RandomizerData.FountainPieceRequirement == 0 || Game.PlayerStats.FountainPieces >= RandomizerData.FountainPieceRequirement;
+        var bossesKilled = !RandomizerData.RequireBosses ||
                            (Game.PlayerStats.EyeballBossBeaten &&
                             Game.PlayerStats.FairyBossBeaten &&
                             Game.PlayerStats.BlobBossBeaten &&
@@ -233,7 +233,8 @@ public class CastleEntranceRoomObj : RoomObj
         }
 
         // Enable death links now that we are in the castle.
-        ArchipelagoManager.DeathLinkSafe = true;
+        var manager = Program.Game.ArchipelagoManager;
+        manager.CanDeathLink = true;
         base.OnEnter();
     }
 
@@ -312,7 +313,7 @@ public class CastleEntranceRoomObj : RoomObj
             _speechBubble.ChangeSprite("ExclamationSquare_Sprite");
         }
 
-        var freeDiary = ArchipelagoManager.RandomizerData.FreeDiaryOnGeneration;
+        var freeDiary = RandomizerData.FreeDiaryOnGeneration;
 
         if ((!RoomCompleted && freeDiary) || (Game.PlayerStats.DiaryEntry < 1 && !freeDiary) ||
             CollisionMath.Intersects(Player.Bounds, bounds))
@@ -337,7 +338,8 @@ public class CastleEntranceRoomObj : RoomObj
                     var location = LocationCode.STARTING_DIARY + diary;
 
                     // Check if we already checked this location and try to get the next item in the sequence if so.
-                    if (ArchipelagoManager.IsLocationChecked(location))
+                    var manager = Program.Game.ArchipelagoManager;
+                    if (manager.IsLocationChecked(location))
                     {
                         continue;
                     }

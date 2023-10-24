@@ -1,18 +1,17 @@
-// RogueLegacyRandomizer - ChestBonusRoomObj.cs
-// Last Modified 2023-07-30 8:32 AM by 
+//  RogueLegacyRandomizer - ChestBonusRoomObj.cs
+//  Last Modified 2023-10-24 4:13 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
@@ -140,7 +139,9 @@ public class ChestBonusRoomObj : BonusRoomObj
             if (m_paid)
             {
                 if (!IsReversed && Player.X < X + 50f)
+                {
                     Player.X = X + 50f;
+                }
                 else if (IsReversed && Player.X > X + Width - 50f) Player.X = X + Width - 50f;
             }
 
@@ -156,7 +157,8 @@ public class ChestBonusRoomObj : BonusRoomObj
 
                 RoomCompleted = true;
                 var rCScreenManager = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                if (!flag || !ArchipelagoManager.IsLocationChecked(LocationCode.CHEST_GAME_REWARD))
+                var manager = Program.Game.ArchipelagoManager;
+                if (!flag || !manager.IsLocationChecked(LocationCode.CHEST_GAME_REWARD))
                 {
                     rCScreenManager.DialogueScreen.SetDialogue("ChestBonusRoom1-Won");
 

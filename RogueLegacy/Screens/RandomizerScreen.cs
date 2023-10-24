@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - RandomizerScreen.cs
-// Last Modified 2023-07-27 11:23 AM by
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  RogueLegacyRandomizer - RandomizerScreen.cs
+//  Last Modified 2023-10-24 5:00 PM
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -102,7 +102,7 @@ namespace RogueLegacy.Screens
 
             // MultiWorld Randomizer Options
             _hostname = new TextBoxOption(this, "Hostname", !LevelENV.RunConsole ? "archipelago.gg:38281" : "ws://localhost:38281");
-            _slot = new TextBoxOption(this, "Slot Name", !LevelENV.RunConsole ? "Sir Lee" : "Player1");
+            _slot = new TextBoxOption(this, "Slot Name", !LevelENV.RunConsole ? "Sir Lee" : "Phar");
             _password = new TextBoxOption(this, "Password", "");
 
             _multiRandomizerOptions.Add(_hostname);
@@ -176,41 +176,27 @@ namespace RogueLegacy.Screens
         {
             LockControls = true;
 
-            try
+            // Parse port and connect.
+            var manager = new ArchipelagoManager(new()
             {
-                // Parse port and connect.
-                ArchipelagoManager.Connect(new ConnectionInfo
-                {
-                    Hostname = _hostname.GetValue,
-                    Name = _slot.GetValue,
-                    Password = _password.GetValue
-                });
-            }
-            catch (FormatException ex)
+                Url = _hostname.GetValue,
+                SlotName = _slot.GetValue,
+                Password = _password.GetValue,
+            });
+
+            Program.Game.ArchipelagoManager = manager;
+            var result = manager.TryConnect().Result;
+            if (result != null)
             {
                 // TODO: Make this into a standardized message handler?
                 var screenManager = Game.ScreenManager;
                 var errorUuid = Guid.NewGuid().ToString();
+                var errors = result.Errors;
+                var speakers = Enumerable.Repeat("Error Connecting to Archipelago", errors.Length).ToArray();
 
-                // Print exception message.
-                Console.WriteLine(ex);
-                DialogueManager.AddText(errorUuid, new[] { "Invalid Port" }, new[] { ex.Message });
+                DialogueManager.AddText(errorUuid, speakers, errors);
                 screenManager.DialogueScreen.SetDialogue(errorUuid);
                 screenManager.DisplayScreen((int) ScreenType.Dialogue, true);
-            }
-            catch (Exception ex)
-            {
-                var screenManager = Game.ScreenManager;
-                var errorUuid = Guid.NewGuid().ToString();
-
-                // Print exception message.
-                Console.WriteLine(ex);
-                DialogueManager.AddText(errorUuid, new[] { "An Exception Occurred" }, new[] { ex.Message });
-                screenManager.DialogueScreen.SetDialogue(errorUuid);
-                screenManager.DisplayScreen((int) ScreenType.Dialogue, true);
-            }
-            finally
-            {
                 LockControls = false;
             }
         }

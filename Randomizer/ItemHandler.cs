@@ -1,11 +1,11 @@
-﻿// RogueLegacyRandomizer - ItemHandler.cs
-// Last Modified 2023-08-03 6:47 PM by 
+﻿//  RogueLegacyRandomizer - ItemHandler.cs
+//  Last Modified 2023-10-24 4:07 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -23,16 +23,17 @@ public class ItemHandler
 {
     public Dictionary<int, NetworkItem> ReceivedItems { get; set; } = new();
 
-    private static PlayerObj Player => Game.ScreenManager.Player;
+    private static PlayerObj          Player  => Game.ScreenManager.Player;
+    private static ArchipelagoManager Manager => Program.Game.ArchipelagoManager;
 
     public void CheckReceivedItemQueue()
     {
-        if (ArchipelagoManager.ReceiveItemQueue.Count == 0)
+        if (Manager.ItemQueue.Count == 0)
         {
             return;
         }
 
-        var (index, item) = ArchipelagoManager.ReceiveItemQueue.Dequeue();
+        var (index, item) = Manager.ItemQueue.Dequeue();
         if (!HasReceivedItem(index))
         {
             GainItem(item);
@@ -439,7 +440,7 @@ public class ItemHandler
         Game.ScreenManager.GetLevelScreen().AddReceivedItem(
             item.Item.GetItemType(),
             item.Item,
-            ArchipelagoManager.GetPlayerName(item.Player),
+            Manager.GetPlayerName(item.Player),
             tupleStats
         );
     }
@@ -458,7 +459,7 @@ public class ItemHandler
 
         for (var i = 0; i < levels; i++)
         {
-            if (!ArchipelagoManager.RandomizerData.RequireSkillPurchasing || !SkillSystem.IsSkillScreenSkill(skill.Trait))
+            if (!RandomizerData.RequireSkillPurchasing || !SkillSystem.IsSkillScreenSkill(skill.Trait))
             {
                 SkillSystem.LevelUpTrait(skill, false);
             }
@@ -473,7 +474,7 @@ public class ItemHandler
 
     private static void UnlockRune(EquipmentAbility ability)
     {
-        var unlockStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
+        var unlockStatus = (byte) (RandomizerData.RequireVendorPurchasing ? 1 : 3);
         Game.PlayerStats.GetRuneArray[(int) EquipmentCategory.Sword][(int) ability] = unlockStatus;
         Game.PlayerStats.GetRuneArray[(int) EquipmentCategory.Helm][(int) ability] = unlockStatus;
         Game.PlayerStats.GetRuneArray[(int) EquipmentCategory.Chest][(int) ability] = unlockStatus;
@@ -483,7 +484,7 @@ public class ItemHandler
 
     private static void UnlockEquipment(EquipmentBase @base)
     {
-        var unlockStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
+        var unlockStatus = (byte) (RandomizerData.RequireVendorPurchasing ? 1 : 3);
         Game.PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Sword][(int) @base] = unlockStatus;
         Game.PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Helm][(int) @base] = unlockStatus;
         Game.PlayerStats.GetBlueprintArray[(int) EquipmentCategory.Chest][(int) @base] = unlockStatus;
@@ -493,7 +494,7 @@ public class ItemHandler
 
     private static void UnlockProgressiveEquipment()
     {
-        var unlockStatus = (byte) (ArchipelagoManager.RandomizerData.RequireVendorPurchasing ? 1 : 3);
+        var unlockStatus = (byte) (RandomizerData.RequireVendorPurchasing ? 1 : 3);
         var equipmentOrder = new[]
         {
             EquipmentBase.Squire,

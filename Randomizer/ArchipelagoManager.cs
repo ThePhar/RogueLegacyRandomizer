@@ -1,15 +1,17 @@
-﻿// RogueLegacyRandomizer - ArchipelagoManager.cs
-// Last Modified 2023-08-03 2:18 PM by 
+﻿//  RogueLegacyRandomizer - ArchipelagoManager.cs
+//  Last Modified 2023-10-24 5:43 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
@@ -23,83 +25,168 @@ using RogueLegacy.Enums;
 
 namespace Randomizer;
 
-public static class ArchipelagoManager
+public class ArchipelagoManager
 {
-    private static readonly Version                      MinimumArchipelagoServerVersion = new(0, 4, 2);
-    private static          ArchipelagoSession           _session;
-    private static          DeathLinkService             _deathLinkService;
-    private static          DateTime                     _lastDeath  = DateTime.MinValue;
+    private static readonly Version _supportedArchipelagoVersion = new(0, 4, 3);
 
-    public static ConnectionStatus               Status           { get; private set; } = ConnectionStatus.Disconnected;
-    public static DeathLink                      DeathLink        { get; private set; }
-    public static RandomizerData                 RandomizerData   { get; private set; }
-    public static bool                           DeathLinkSafe    { get; set; }
-    public static Queue<Tuple<int, NetworkItem>> ReceiveItemQueue { get; private set; } = new();
-    public static Dictionary<long, NetworkItem>  AllLocations     { get; private set; } = new();
-    public static ConnectionInfo                 ConnectionInfo   { get; private set; }
+    private readonly ArchipelagoConnectionInfo _connectionInfo;
+    private          ArchipelagoSession        _session;
+    private          DeathLinkService          _deathLinkService;
+    private          DateTime                  _lastDeath;
 
-    public static bool CanRelease       => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
-    public static bool CanCollect       => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
-    public static bool DeathLinkEnabled => _session.ConnectionInfo.Tags.Contains("DeathLink");
+    public DeathLink                                       DeathLinkData      { get; private set; }
+    public bool                                            CanDeathLink       { get; set; }
+    public bool                                            Ready              { get; private set; }
+    public Queue<Tuple<int, NetworkItem>>                  ItemQueue          { get; private set; } = new();
+    public Dictionary<long, NetworkItem>                   LocationDictionary { get; private set; } = new();
+    public List<Tuple<JsonMessageType, JsonMessagePart[]>> ChatLog            { get; }              = new();
 
-    public static void Connect(ConnectionInfo info)
+    public bool   CanCollect   => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
+    public bool   CanRelease   => _session.RoomState.ReleasePermissions is Permissions.Goal or Permissions.Enabled;
+    public bool   CanRemaining => _session.RoomState.RemainingPermissions is Permissions.Goal or Permissions.Enabled;
+    public string Seed         => _session.RoomState.Seed;
+    public int    Slot         => _session.ConnectionInfo.Slot;
+    public int    HintPoints   => _session.RoomState.HintPoints;
+    public int    HintCost     => _session.RoomState.HintCost;
+    public Hint[] Hints        => _session.DataStorage.GetHints();
+
+    public ArchipelagoManager(ArchipelagoConnectionInfo connectionInfo)
     {
-        _session = ArchipelagoSessionFactory.CreateSession(info.Hostname);
-        ConnectionInfo = info;
-        try
-        {
-            Initialize();
-        }
-        catch
-        {
-            Disconnect();
-            throw;
-        }
+        _connectionInfo = connectionInfo;
     }
 
-    public static void Disconnect()
+    /// <summary>
+    /// Attempt to connect to the Archipelago server.
+    /// </summary>
+    /// <returns>
+    /// Returns a LoginFailure object if fails to connect, otherwise returns null.
+    /// </returns>
+    public async Task<LoginFailure> TryConnect()
     {
-        Status = ConnectionStatus.Disconnected;
+        _lastDeath = DateTime.MinValue;
+        _session = ArchipelagoSessionFactory.CreateSession(_connectionInfo.Url);
 
-        // Clear DeathLink handlers.
+        // (Re-)initialize state.
+        DeathLinkData = null;
+        CanDeathLink = false;
+        Ready = false;
+        ItemQueue = new();
+        LocationDictionary = new();
+
+        // Watch for the following events.
+        _session.Socket.ErrorReceived += OnError;
+        _session.Socket.PacketReceived += OnPacketReceived;
+        _session.Items.ItemReceived += OnItemReceived;
+
+        // Attempt to connect to the server.
+        try
+        {
+            await _session.ConnectAsync();
+        }
+        catch (Exception ex)
+        {
+            Disconnect();
+            return new (ex.ToString());
+        }
+
+        var result = await _session.LoginAsync(
+            "Rogue Legacy",
+            _connectionInfo.SlotName,
+            ItemsHandlingFlags.AllItems,
+            _supportedArchipelagoVersion,
+            uuid: Guid.NewGuid().ToString(),
+            password: _connectionInfo.Password
+        );
+
+        if (!result.Successful)
+        {
+            Disconnect();
+            return result as LoginFailure;
+        }
+
+        // Load randomizer data.
+        RandomizerData.LoadSlotData(((LoginSuccessful) result).SlotData);
+
+        // Initialize DeathLink service.
+        _deathLinkService = _session.CreateDeathLinkService();
+        _deathLinkService.OnDeathLinkReceived += OnDeathLink;
+        if (RandomizerData.DeathLinkMode is DeathLinkMode.Enabled or DeathLinkMode.ForcedEnabled)
+        {
+            _deathLinkService.EnableDeathLink();
+        }
+
+        // Build dictionary of locations with item information for fast lookup.
+        await BuildLocationDictionary();
+
+
+        // Return null to signify no error.
+        Ready = true;
+        return null;
+    }
+
+    /// <summary>
+    /// Disconnects from the connected Archipelago server and cleans up event listeners.
+    /// </summary>
+    public void Disconnect()
+    {
+        Ready = false;
+
+        // Clear DeathLink events.
         if (_deathLinkService != null)
         {
             _deathLinkService.OnDeathLinkReceived -= OnDeathLink;
+            _deathLinkService = null;
         }
 
-        // Clear Session handlers.
-        if (_session == null)
+        // Clear events and session object.
+        if (_session != null)
         {
-            return;
+            _session.Socket.ErrorReceived -= OnError;
+            _session.Items.ItemReceived -= OnItemReceived;
+            _session.Socket.PacketReceived -= OnPacketReceived;
+            _session.Socket.DisconnectAsync(); // It'll disconnect on its own time.
+            _session = null;
         }
-
-        _session.Socket.ErrorReceived -= OnError;
-        _session.Items.ItemReceived -= OnItemReceived;
-        _session.Socket.PacketReceived -= OnPacketReceived;
-        _session.Socket.DisconnectAsync();
     }
 
-    public static void Release()
+    /// <summary>
+    /// Sends the release chat command.
+    /// </summary>
+    public void Release()
     {
         SendPacket(new SayPacket { Text = "!release" });
     }
 
-    public static void Collect()
+    /// <summary>
+    /// Sends the collect chat command.
+    /// </summary>
+    public void Collect()
     {
         SendPacket(new SayPacket { Text = "!collect" });
     }
 
-    public static void AnnounceVictory()
+    /// <summary>
+    /// Sends an update status command.
+    /// </summary>
+    /// <param name="state">The desired state to change to.</param>
+    public void UpdateGameStatus(ArchipelagoClientState state)
     {
-        SendPacket(new StatusUpdatePacket { Status = ArchipelagoClientState.ClientGoal });
+        SendPacket(new StatusUpdatePacket { Status = state });
     }
 
-    public static void ClearDeathLink()
+    /// <summary>
+    ///  Clear any DeathLink data we have stored.
+    /// </summary>
+    public void ClearDeathLink()
     {
-        DeathLink = null;
+        DeathLinkData = null;
     }
 
-    public static void SendDeathLinkIfEnabled(string cause)
+    /// <summary>
+    /// Attempt to send a DeathLink if we have it enabled. Otherwise, do nothing.
+    /// </summary>
+    /// <param name="cause">Reason everyone hates you.</param>
+    public void SendDeathLinkIfEnabled(string cause)
     {
         // Do not send any DeathLink messages if it's not enabled.
         if (!_session.ConnectionInfo.Tags.Contains("DeathLink"))
@@ -109,13 +196,11 @@ public static class ArchipelagoManager
 
         // Log our current time so we can make sure we ignore our own DeathLink.
         _lastDeath = DateTime.Now;
-        cause = $"{_session.Players.GetPlayerAlias(RandomizerData.Slot)}'s {cause}.";
+        cause = $"{_session.Players.GetPlayerAlias(Slot)}'s {cause}.";
 
         try
         {
-            _deathLinkService.SendDeathLink(
-                new DeathLink(_session.Players.GetPlayerAlias(RandomizerData.Slot), cause)
-            );
+            _deathLinkService.SendDeathLink(new (_session.Players.GetPlayerAlias(Slot), cause));
         }
         catch (ArchipelagoSocketClosedException)
         {
@@ -124,7 +209,11 @@ public static class ArchipelagoManager
         }
     }
 
-    public static void CheckLocations(params long[] locations)
+    /// <summary>
+    /// Mark the following locations on the server as collected.
+    /// </summary>
+    /// <param name="locations">An array of location ids.</param>
+    public void CheckLocations(params long[] locations)
     {
         try
         {
@@ -137,7 +226,12 @@ public static class ArchipelagoManager
         }
     }
 
-    public static string GetPlayerName(int slot)
+    /// <summary>
+    /// Returns the alias of a given player.
+    /// </summary>
+    /// <param name="slot">Slot number of the player.</param>
+    /// <returns>The player alias.</returns>
+    public string GetPlayerName(int slot)
     {
         if (slot == 0)
         {
@@ -148,29 +242,48 @@ public static class ArchipelagoManager
         return string.IsNullOrEmpty(name) ? $"Unknown Player {slot}" : name;
     }
 
-    public static string GetItemName(long item)
-    {
-        var name = _session.Items.GetItemName(item);
-        return string.IsNullOrEmpty(name) ? $"Unknown Item {item}" : name;
-    }
-
-    public static string GetLocationName(long location)
+    /// <summary>
+    /// Returns the location name of a given location id.
+    /// </summary>
+    /// <param name="location">The location id.</param>
+    /// <returns>The string representation of the location.</returns>
+    public string GetLocationName(long location)
     {
         var name = _session.Locations.GetLocationNameFromId(location);
         return string.IsNullOrEmpty(name) ? $"Unknown Location {location}" : name;
     }
 
-    public static string GetTrapItemName(NetworkItem item)
+    /// <summary>
+    /// Returns the item name of a given item id.
+    /// </summary>
+    /// <param name="item">The item id.</param>
+    /// <returns>The string representation of the item.</returns>
+    public string GetItemName(long item)
+    {
+        var name = _session.Items.GetItemName(item);
+        return string.IsNullOrEmpty(name) ? $"Unknown Item {item}" : name;
+    }
+
+    /// <summary>
+    /// If a NetworkItem is a trap, returns a random trap name. Otherwise, returns the normal item name.
+    /// </summary>
+    /// <param name="item">The network item to get name from.</param>
+    /// <returns>A string representation of the item (or a trap).</returns>
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public string GetItemOrTrapName(NetworkItem item)
     {
         if (!item.Flags.HasFlag(ItemFlags.Trap))
         {
             return GetItemName(item.Item);
         }
 
-        var items = new[]
+        // I'm hilarious, obviously.
+        var trapItemNames = new[]
         {
             "Blacksmiht",
+            "Blaccsmith",
             "Enchantres",
+            "Arcitech",
             "Helth Up",
             "Manna Up",
             "Attak Up",
@@ -178,51 +291,47 @@ public static class ArchipelagoManager
             "Random Children",
             "Grase Runes",
             "Draguns",
+            "Trators",
+            "Cursed Rune",
             "Vawlt Runes",
             "Sprint Runs",
+            "Jump Runes",
             "Ski Runes",
-            "Progresive Spendign",
-            "Shard of the Fountain",
-            "Phar's Gaidance Shrine",
+            "Gold Runes",
+            "Phar's Love and Adoration", // You know you shouldn't trust something named this, don't kid yourself.
         };
 
-        return items[CDGMath.RandomInt(0, items.Length - 1)];
+        return trapItemNames[CDGMath.RandomInt(0, trapItemNames.Length - 1)];
     }
 
-    private static void Initialize()
+    /// <summary>
+    /// Enable DeathLink.
+    /// </summary>
+    public void EnableDeathLink()
     {
-        ReceiveItemQueue = new();
-        AllLocations = new();
-
-        // Watch for the following events.
-        _session.Socket.ErrorReceived += OnError;
-        _session.Socket.PacketReceived += OnPacketReceived;
-        _session.Items.ItemReceived += OnItemReceived;
-
-        Status = ConnectionStatus.Connecting;
-
-        // Attempt to connect to the server.
-        // var roomInfo = await _session.ConnectAsync();
-        var result = _session.TryConnectAndLogin(
-            "Rogue Legacy",
-            ConnectionInfo.Name,
-            ItemsHandlingFlags.AllItems,
-            MinimumArchipelagoServerVersion,
-            uuid: Guid.NewGuid().ToString(),
-            password: ConnectionInfo.Password
-        );
-
-        if (result.Successful)
-        {
-            return;
-        }
-
-        // Disconnect and throw an exception.
-        var failure = (LoginFailure) result;
-        throw new ArchipelagoSocketClosedException(failure.Errors[0]);
+        _deathLinkService.EnableDeathLink();
     }
 
-    private static void SendPacket(ArchipelagoPacketBase packet)
+    /// <summary>
+    /// Disable DeathLink.
+    /// </summary>
+    public void DisableDeathLink()
+    {
+        _deathLinkService.DisableDeathLink();
+    }
+
+    /// <summary>
+    /// Checks if a given location was checked.
+    /// </summary>
+    /// <param name="id">The id of the location.</param>
+    /// <returns>If location was checked.</returns>
+    public bool IsLocationChecked(long id)
+    {
+        // Verify location exists first, we'll treat locations that don't exist as already checked.
+        return !_session.Locations.AllLocations.Contains(id) || _session.Locations.AllLocationsChecked.Contains(id);
+    }
+
+    private void SendPacket(ArchipelagoPacketBase packet)
     {
         try
         {
@@ -235,87 +344,59 @@ public static class ArchipelagoManager
         }
     }
 
-    private static void OnItemReceived(ReceivedItemsHelper helper)
+    private void OnItemReceived(ReceivedItemsHelper helper)
     {
         var i = helper.Index;
         while (helper.Any())
         {
-            ReceiveItemQueue.Enqueue(new Tuple<int, NetworkItem>(i++, helper.DequeueItem()));
+            ItemQueue.Enqueue(new (i++, helper.DequeueItem()));
         }
     }
 
-    private static void OnDeathLink(DeathLink deathLink)
+    private void OnDeathLink(DeathLink deathLink)
     {
         // If we receive a DeathLink that is after our last death, let's set it.
-        if (!DeathLinkSafe && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
+        if (!CanDeathLink && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
         {
-            DeathLink = deathLink;
+            DeathLinkData = deathLink;
         }
     }
 
-    private static void OnPacketReceived(ArchipelagoPacketBase packet)
-    {
-        Console.WriteLine($"Packet {packet.GetType().Name} received!");
-        Console.WriteLine("========================================");
-        foreach (var property in packet.GetType().GetProperties())
-            Console.WriteLine($"{property.Name}: {property.GetValue(packet, null)}");
-
-        switch (packet)
-        {
-            case ConnectedPacket connectedPacket:
-                OnConnected(connectedPacket);
-                break;
-        }
-    }
-
-    private static void OnConnected(ConnectedPacket packet)
-    {
-        RandomizerData = new RandomizerData(packet.SlotData, _session.RoomState.Seed, packet.Slot);
-
-        _deathLinkService = _session.CreateDeathLinkService();
-        _deathLinkService.OnDeathLinkReceived += OnDeathLink;
-
-        // Check if DeathLink is enabled and establish the appropriate helper.
-        if (RandomizerData.DeathLinkMode is DeathLinkMode.Enabled or DeathLinkMode.ForcedEnabled)
-        {
-            _lastDeath = DateTime.MinValue;
-            _deathLinkService.EnableDeathLink();
-        }
-
-        // Get Locations.
-        GetLocations();
-    }
-
-    private static async Task GetLocations()
+    private async Task BuildLocationDictionary()
     {
         var locations = await _session.Locations.ScoutLocationsAsync(false, _session.Locations.AllLocations.ToArray());
 
-        foreach (var networkItem in locations.Locations)
+        foreach (var item in locations.Locations)
         {
-            AllLocations[networkItem.Location] = networkItem;
+            LocationDictionary[item.Location] = item;
+        }
+    }
+
+    private void OnPacketReceived(ArchipelagoPacketBase packet)
+    {
+        // Special handling for PrintJSON messages only, otherwise we log complete details about packet below.
+        if (packet is PrintJsonPacket messagePacket)
+        {
+            // Treat unknown message types as "Chat" for forwards compat so we don't crash on new ones.
+            ChatLog.Add(new(messagePacket.MessageType ?? JsonMessageType.Chat, messagePacket.Data));
+            var message = messagePacket
+                .Data
+                .Aggregate(new StringBuilder(), (sb, data) => sb.Append(data.Text))
+                .ToString();
+
+            Console.WriteLine($"[Archipelago] @ [{DateTime.UtcNow}]: Message Received: {message}");
+            return;
         }
 
-        Status = ConnectionStatus.Authenticated;
+        Console.WriteLine($"[Archipelago] @ [{DateTime.UtcNow}]: Packet Received: {packet.GetType().Name}");
+        Util.PrintProperties(packet);
     }
 
     private static void OnError(Exception exception, string message)
     {
-        Console.WriteLine($"Received an unhandled exception in ArchipelagoClient: {message}\n\n{exception}");
-    }
-
-    public static void EnableDeathLink()
-    {
-        _deathLinkService.EnableDeathLink();
-    }
-
-    public static void DisableDeathLink()
-    {
-        _deathLinkService.DisableDeathLink();
-    }
-
-    public static bool IsLocationChecked(long id)
-    {
-        // Verify location exists first, we'll treat locations that don't exist as already checked.
-        return !_session.Locations.AllLocations.Contains(id) || _session.Locations.AllLocationsChecked.Contains(id);
+        Console.WriteLine(
+            $"[Archipelago] @ [{DateTime.UtcNow}]: Encountered an unhandled exception in ArchipelagoManager: " +
+            $"{message}\n\nStack Trace:\n{exception.StackTrace}"
+        );
     }
 }

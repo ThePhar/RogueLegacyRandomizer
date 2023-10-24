@@ -1,11 +1,11 @@
-﻿// RogueLegacyRandomizer - LocationCode.cs
-// Last Modified 2023-07-30 4:03 PM by 
+﻿//  RogueLegacyRandomizer - LocationCode.cs
+//  Last Modified 2023-10-24 4:08 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System.ComponentModel;
 using RogueLegacy.Enums;
@@ -78,10 +78,10 @@ public static class LocationCode
     public const long STARTING_DIARY                 = 91_300;
     public const long FINAL_DIARY                    = 91_324;
 
-    public static bool TryGetChestLocation(RandomizerData randomizerData, int chest, Zone zone, out long location)
+    public static bool TryGetChestLocation(int chest, Zone zone, out long location)
     {
-        var universalChests = randomizerData.UniversalChests;
-        var maxChests = universalChests ? randomizerData.ChestsPerZone * 4 : randomizerData.ChestsPerZone;
+        var universalChests = RandomizerData.UniversalChests;
+        var maxChests = universalChests ? RandomizerData.ChestsPerZone * 4 : RandomizerData.ChestsPerZone;
 
         if (chest >= maxChests)
         {
@@ -104,10 +104,10 @@ public static class LocationCode
         return true;
     }
 
-    public static bool TryGetFairyChestLocation(RandomizerData randomizerData, int chest, Zone zone, out long location)
+    public static bool TryGetFairyChestLocation(int chest, Zone zone, out long location)
     {
-        var universalChests = randomizerData.UniversalFairyChests;
-        var maxChests = universalChests ? randomizerData.FairyChestsPerZone * 4 : randomizerData.FairyChestsPerZone;
+        var universalChests = RandomizerData.UniversalFairyChests;
+        var maxChests = universalChests ? RandomizerData.FairyChestsPerZone * 4 : RandomizerData.FairyChestsPerZone;
 
         if (chest >= maxChests)
         {

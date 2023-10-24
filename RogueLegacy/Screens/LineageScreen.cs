@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - LineageScreen.cs
-// Last Modified 2023-08-03 11:54 AM by 
+//  RogueLegacyRandomizer - LineageScreen.cs
+//  Last Modified 2023-10-24 4:19 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -358,7 +358,7 @@ namespace RogueLegacy.Screens
             }
 
             // Disable death links now that we are in lineage screen.
-            ArchipelagoManager.DeathLinkSafe = false;
+            Program.Game.ArchipelagoManager.CanDeathLink = false;
 
             base.OnEnter();
         }
@@ -428,7 +428,7 @@ namespace RogueLegacy.Screens
 
         public void LoadCurrentBranches()
         {
-            var childrenCount = ArchipelagoManager.RandomizerData.NumberOfChildren;
+            var childrenCount = RandomizerData.NumberOfChildren;
             if (childrenCount == 0)
                 childrenCount = CDGMath.RandomInt(1, 5);
 

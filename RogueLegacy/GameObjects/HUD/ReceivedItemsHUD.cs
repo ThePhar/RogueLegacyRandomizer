@@ -1,17 +1,16 @@
-﻿// RogueLegacyRandomizer - ReceivedItemsHUD.cs
-// Last Modified 2023-08-03 6:08 PM by 
+﻿//  RogueLegacyRandomizer - ReceivedItemsHUD.cs
+//  Last Modified 2023-10-24 4:10 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
-using Randomizer;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using RogueLegacy.Screens;
@@ -78,8 +77,8 @@ public sealed class ReceivedItemElement : ObjContainer
         Tuple<float, float, float, float> stats)
     {
         ForceDraw = true;
-        var randomizerData = ArchipelagoManager.RandomizerData;
-        var self = ArchipelagoManager.GetPlayerName(randomizerData.Slot) == receivedFrom;
+        var manager = Program.Game.ArchipelagoManager;
+        var self = manager.GetPlayerName(manager.Slot) == receivedFrom;
 
         _receivedItemsHUD = parent;
         X = parent.X;
@@ -88,7 +87,7 @@ public sealed class ReceivedItemElement : ObjContainer
 
         _item = new TextObj
         {
-            Text = ArchipelagoManager.GetItemName(item),
+            Text = manager.GetItemName(item),
             Font = Game.BitFont,
             TextureColor = Color.Yellow,
             OutlineWidth = 1,

@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - Game.cs
-// Last Modified 2023-08-03 2:42 PM by
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  RogueLegacyRandomizer - Game.cs
+//  Last Modified 2023-10-24 4:45 PM
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,6 @@ using Microsoft.Xna.Framework.Input;
 using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
-using RogueLegacy.GameObjects.HUD;
 using RogueLegacy.Screens;
 using SpriteSystem;
 using Tweener;
@@ -121,6 +120,7 @@ public class Game : Microsoft.Xna.Framework.Game
     public GraphicsDeviceManager GraphicsDeviceManager { get; }
     public PhysicsManager        PhysicsManager        { get; }
     public SaveGameManager       SaveManager           { get; }
+    public ArchipelagoManager    ArchipelagoManager    { get; set; }
 
     protected void ChangeGraphicsSettings(object sender, PreparingDeviceSettingsEventArgs e)
     {
@@ -172,13 +172,6 @@ public class Game : Microsoft.Xna.Framework.Game
             var frameRateCounter = new FrameRateCounter(this);
             Components.Add(frameRateCounter);
             frameRateCounter.Initialize();
-        }
-
-        if (LevelENV.ShowArchipelagoStatus)
-        {
-            var statusIndicator = new ArchipelagoStatusIndicator(this);
-            Components.Add(statusIndicator);
-            statusIndicator.Initialize();
         }
 
         _forcedGameTime1 = new GameTime(default, new TimeSpan(0, 0, 0, 0, (int) (LevelENV.FrameLimit * 1000f)));
@@ -501,83 +494,80 @@ public class Game : Microsoft.Xna.Framework.Game
         ScreenManager.Update(gameTime);
         SoundManager.Update3DSounds();
 
-        // Wait for Arch to say its ready.
-        switch (ArchipelagoManager.Status)
+        // Do not proceed if ArchipelagoManager is not ready.
+        if (ArchipelagoManager == null)
         {
-            // We're ready!
-            case ConnectionStatus.Authenticated:
+            base.Update(gameTime);
+            return;
+        }
+
+        // Wait for Arch to say its ready.
+        if (ArchipelagoManager.Ready && ScreenManager.CurrentScreen is RandomizerScreen)
+        {
+            // Initialize Save Data
+            ChangeProfile(ArchipelagoManager.Seed, ArchipelagoManager.Slot);
+
+            // Load Area Struct Data
+            Area1List = RandomizerData.AreaStructs;
+
+            SoundManager.PlaySound("Game_Start");
+            var newGame = !PlayerStats.CharacterFound;
+            var heroIsDead = PlayerStats.IsDead;
+            var startingRoom = PlayerStats.LoadStartingRoom;
+
+            if (newGame)
             {
-                // Do not attempt to start the game if we connect off the Arch screen. Most likely means we lost
-                // connection in gameplay and reconnected.
-                if (ScreenManager.CurrentScreen is not RandomizerScreen)
-                    break;
+                PlayerStats.CharacterFound = true;
+                PlayerStats.Gold = 0;
+                PlayerStats.Class = RandomizerData.StartingClass;
+                PlayerStats.Spell = (byte) ((ClassType) PlayerStats.Class).SpellList()[0];
 
-                // Initialize Save Data
-                ChangeProfile(ArchipelagoManager.RandomizerData.Seed, ArchipelagoManager.RandomizerData.Slot);
-
-                // Load Area Struct Data
-                Area1List = ArchipelagoManager.RandomizerData.AreaStructs;
-
-                SoundManager.PlaySound("Game_Start");
-                var newGame = !PlayerStats.CharacterFound;
-                var heroIsDead = PlayerStats.IsDead;
-                var startingRoom = PlayerStats.LoadStartingRoom;
-
-                if (newGame)
+                // Unlock the player's starting class.
+                var skill = (ClassType) RandomizerData.StartingClass switch
                 {
-                    PlayerStats.CharacterFound = true;
-                    PlayerStats.Gold = 0;
-                    PlayerStats.Class = ArchipelagoManager.RandomizerData.StartingClass;
-                    PlayerStats.Spell = (byte) ClassExtensions.SpellList((ClassType) PlayerStats.Class)[0];
+                    ClassType.Knight        => SkillSystem.GetSkill(SkillType.KnightUnlock),
+                    ClassType.Mage          => SkillSystem.GetSkill(SkillType.MageUnlock),
+                    ClassType.Barbarian     => SkillSystem.GetSkill(SkillType.BarbarianUnlock),
+                    ClassType.Knave         => SkillSystem.GetSkill(SkillType.AssassinUnlock),
+                    ClassType.Miner         => SkillSystem.GetSkill(SkillType.BankerUnlock),
+                    ClassType.Shinobi       => SkillSystem.GetSkill(SkillType.NinjaUnlock),
+                    ClassType.Lich          => SkillSystem.GetSkill(SkillType.LichUnlock),
+                    ClassType.Spellthief    => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
+                    ClassType.Dragon        => SkillSystem.GetSkill(SkillType.SuperSecret),
+                    ClassType.Traitor       => SkillSystem.GetSkill(SkillType.Traitorous),
+                    _                       => throw new ArgumentException("Unsupported Starting Class"),
+                };
 
-                    // Unlock the player's starting class.
-                    var skill = (ClassType) ArchipelagoManager.RandomizerData.StartingClass switch
-                    {
-                        ClassType.Knight     => SkillSystem.GetSkill(SkillType.KnightUnlock),
-                        ClassType.Mage       => SkillSystem.GetSkill(SkillType.MageUnlock),
-                        ClassType.Barbarian  => SkillSystem.GetSkill(SkillType.BarbarianUnlock),
-                        ClassType.Knave      => SkillSystem.GetSkill(SkillType.AssassinUnlock),
-                        ClassType.Miner      => SkillSystem.GetSkill(SkillType.BankerUnlock),
-                        ClassType.Shinobi    => SkillSystem.GetSkill(SkillType.NinjaUnlock),
-                        ClassType.Lich       => SkillSystem.GetSkill(SkillType.LichUnlock),
-                        ClassType.Spellthief => SkillSystem.GetSkill(SkillType.SpellswordUnlock),
-                        ClassType.Dragon     => SkillSystem.GetSkill(SkillType.SuperSecret),
-                        ClassType.Traitor    => SkillSystem.GetSkill(SkillType.Traitorous),
-                        _                    => throw new ArgumentException("Unsupported Starting Class")
-                    };
+                skill.MaxLevel = 1;
+                SkillSystem.LevelUpTrait(skill, false, false);
 
-                    skill.MaxLevel = 1;
-                    SkillSystem.LevelUpTrait(skill, false, false);
+                PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
+                PlayerStats.EnemiesKilledInRun.Clear();
 
-                    PlayerStats.HeadPiece = (byte) CDGMath.RandomInt(1, 5);
-                    PlayerStats.EnemiesKilledInRun.Clear();
+                // Set AP Settings
+                PlayerStats.TimesCastleBeaten = RandomizerData.NewGamePlus;
 
-                    // Set AP Settings
-                    PlayerStats.TimesCastleBeaten = ArchipelagoManager.RandomizerData.NewGamePlus;
+                // Set the player's initial gender.
+                PlayerStats.IsFemale = RandomizerData.StartingGender == Gender.Lady;
 
-                    // Set the player's initial gender.
-                    PlayerStats.IsFemale = ArchipelagoManager.RandomizerData.StartingGender == Gender.Lady;
-
-                    SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
-                    ScreenManager.DisplayScreen((int) ScreenType.StartingRoom, true);
+                SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
+                ScreenManager.DisplayScreen((int) ScreenType.StartingRoom, true);
+            }
+            else
+            {
+                if (heroIsDead)
+                {
+                    ScreenManager.DisplayScreen((int) ScreenType.Lineage, true);
                 }
                 else
                 {
-                    if (heroIsDead)
-                    {
-                        ScreenManager.DisplayScreen((int) ScreenType.Lineage, true);
-                    }
-                    else
-                    {
-                        ScreenManager.DisplayScreen(
-                            startingRoom ? (int) ScreenType.StartingRoom : (int) ScreenType.Level,
-                            true);
-                    }
+                    ScreenManager.DisplayScreen(
+                        startingRoom ? (int) ScreenType.StartingRoom : (int) ScreenType.Level,
+                        true);
                 }
-
-                SoundManager.StopMusic(0.2f);
-                break;
             }
+
+            SoundManager.StopMusic(0.2f);
         }
 
         // Check for received items and send to player.
@@ -587,17 +577,17 @@ public class Game : Microsoft.Xna.Framework.Game
         }
 
         // Death Link handling logic.
-        if (ArchipelagoManager.ReceiveItemQueue.Count == 0 && ArchipelagoManager.DeathLink != null)
+        if (ArchipelagoManager.ItemQueue.Count == 0 && ArchipelagoManager.DeathLinkData != null)
         {
             if (ScreenManager.Player is { ControlsLocked: false } &&
-                ScreenManager.CurrentScreen is ProceduralLevelScreen && !PlayerStats.IsDead &&
-                ArchipelagoManager.DeathLinkSafe)
+                ScreenManager.CurrentScreen is ProceduralLevelScreen screen && !PlayerStats.IsDead &&
+                ArchipelagoManager.CanDeathLink)
             {
                 if (PlayerStats.SpecialItem == 3)
                 {
                     ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
                     PlayerStats.SpecialItem = 0;
-                    (ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
+                    screen.UpdatePlayerHUDSpecialItem();
                     ScreenManager.DisplayScreen(21, true);
                 }
                 else
@@ -607,13 +597,13 @@ public class Game : Microsoft.Xna.Framework.Game
                     {
                         ScreenManager.Player.CurrentHealth = (int) (ScreenManager.Player.MaxHealth * 0.25f);
                         PlayerStats.SpecialItem = 0;
-                        (ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
+                        (ScreenManager.CurrentScreen as ProceduralLevelScreen)!.UpdatePlayerHUDSpecialItem();
                         ScreenManager.DisplayScreen(21, true);
                     }
                     else
                     {
                         ScreenManager.Player.AttachedLevel.SetObjectKilledPlayer(
-                            new DeathLinkObj(ArchipelagoManager.DeathLink.Source));
+                            new DeathLinkObj(ArchipelagoManager.DeathLinkData.Source));
                         ScreenManager.Player.Kill();
                     }
                 }
@@ -1055,8 +1045,8 @@ public class Game : Microsoft.Xna.Framework.Game
         // Ignore checking the location if it was already checked.
         if (ArchipelagoManager.IsLocationChecked(location)) return;
 
-        var item = ArchipelagoManager.AllLocations[location];
-        var self = item.Player == ArchipelagoManager.RandomizerData.Slot;
+        var item = ArchipelagoManager.LocationDictionary[location];
+        var self = item.Player == ArchipelagoManager.Slot;
         var stats = new Tuple<float, float, float, float>(-1, -1, -1, 0);
 
         var data = new List<object>

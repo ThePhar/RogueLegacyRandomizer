@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - ProceduralLevelScreen.cs
-// Last Modified 2023-07-27 12:08 AM by 
+//  RogueLegacyRandomizer - ProceduralLevelScreen.cs
+//  Last Modified 2023-10-24 5:32 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -962,7 +962,7 @@ namespace RogueLegacy.Screens
             {
                 case Zone.Castle:
                     if (Game.PlayerStats.EyeballBossBeaten ||
-                        ArchipelagoManager.RandomizerData.ChallengeKhidr)
+                        RandomizerData.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -971,7 +971,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Garden:
                     if (Game.PlayerStats.FairyBossBeaten ||
-                        ArchipelagoManager.RandomizerData.ChallengeAlexander)
+                        RandomizerData.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -980,7 +980,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Dungeon:
                     if (Game.PlayerStats.BlobBossBeaten ||
-                        ArchipelagoManager.RandomizerData.ChallengeHerodotus)
+                        RandomizerData.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -989,7 +989,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Tower:
                     if (Game.PlayerStats.FireballBossBeaten ||
-                        ArchipelagoManager.RandomizerData.ChallengeLeon)
+                        RandomizerData.ChallengeLeon)
                     {
                         flag = true;
                     }
@@ -1114,7 +1114,7 @@ namespace RogueLegacy.Screens
             {
                 case Zone.Castle:
                     if (!Game.PlayerStats.EyeballBossBeaten &&
-                        ArchipelagoManager.RandomizerData.ChallengeKhidr)
+                        RandomizerData.ChallengeKhidr)
                     {
                         flag = true;
                     }
@@ -1123,7 +1123,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Garden:
                     if (!Game.PlayerStats.FairyBossBeaten &&
-                        ArchipelagoManager.RandomizerData.ChallengeAlexander)
+                        RandomizerData.ChallengeAlexander)
                     {
                         flag = true;
                     }
@@ -1132,7 +1132,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Dungeon:
                     if (!Game.PlayerStats.BlobBossBeaten &&
-                        ArchipelagoManager.RandomizerData.ChallengeHerodotus)
+                        RandomizerData.ChallengeHerodotus)
                     {
                         flag = true;
                     }
@@ -1141,7 +1141,7 @@ namespace RogueLegacy.Screens
 
                 case Zone.Tower:
                     if (!Game.PlayerStats.FireballBossBeaten &&
-                        ArchipelagoManager.RandomizerData.ChallengeLeon)
+                        RandomizerData.ChallengeLeon)
                     {
                         flag = true;
                     }
@@ -3030,7 +3030,7 @@ namespace RogueLegacy.Screens
             UpdatePlayerHUDAbilities();
             Player.UpdateEquipmentColours();
             Player.StopAllSpells();
-            if (Game.PlayerStats.Class == 13)
+            if (Game.PlayerStats.Class == 13 || LevelENV.EnablePlayerDebug)
             {
                 MiniMapDisplay.AddAllIcons(RoomList);
                 (ScreenManager as RCScreenManager).AddIconsToMap(RoomList);

@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - BlacksmithScreen.cs
-// Last Modified 2023-07-30 12:27 PM by
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  RogueLegacyRandomizer - BlacksmithScreen.cs
+//  Last Modified 2023-10-24 4:17 PM
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -350,7 +350,7 @@ namespace RogueLegacy.Screens
 
                 // Outline disabled slots.
                 _masterIconArray[i][j].OutlineWidth = 0;
-                if (ArchipelagoManager.RandomizerData.ShuffleBlacksmith)
+                if (RandomizerData.ShuffleBlacksmith)
                 {
                     switch ((EquipmentCategory) i)
                     {
@@ -652,7 +652,7 @@ namespace RogueLegacy.Screens
 
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
-                if (ArchipelagoManager.RandomizerData.ShuffleBlacksmith)
+                if (RandomizerData.ShuffleBlacksmith)
                 {
                     // TODO: Why is it 6+???
                     switch (_currentCategoryIndex)
