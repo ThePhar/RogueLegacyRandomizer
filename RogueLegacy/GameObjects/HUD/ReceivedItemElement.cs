@@ -1,5 +1,5 @@
 ﻿//  RogueLegacyRandomizer - ReceivedItemElement.cs
-//  Last Modified 2023-10-25 6:21 PM
+//  Last Modified 2023-10-25 6:37 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -34,8 +34,6 @@ public sealed class ReceivedItemElement : ObjContainer
         ForceDraw = true;
         var manager = Program.Game.ArchipelagoManager;
         var self = manager.GetPlayerName(manager.Slot) == receivedFrom;
-
-        Console.WriteLine("WE GOT AN ITEM");
 
         _receivedItemsHUD = parent;
         X = parent.X;
