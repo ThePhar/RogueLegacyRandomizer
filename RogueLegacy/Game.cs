@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - Game.cs
-//  Last Modified 2023-10-24 4:45 PM
+//  Last Modified 2023-10-25 5:05 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -104,6 +104,7 @@ public class Game : Microsoft.Xna.Framework.Game
     public static SpriteFont            EnemyLevelFont       { get; set; }
     public static SpriteFont            PlayerLevelFont      { get; set; }
     public static SpriteFont            GoldFont             { get; set; }
+    public static SpriteFont            FountainFont         { get; set; }
     public static SpriteFont            HerzogFont           { get; set; }
     public static SpriteFont            JunicodeLargeFont    { get; set; }
     public static SpriteFont            CinzelFont           { get; set; }
@@ -377,6 +378,7 @@ public class Game : Microsoft.Xna.Framework.Game
         EnemyLevelFont = Content.Load<SpriteFont>(@"Fonts\EnemyLevelFont");
         PlayerLevelFont = Content.Load<SpriteFont>(@"Fonts\PlayerLevelFont");
         GoldFont = Content.Load<SpriteFont>(@"Fonts\GoldFont");
+        FountainFont = Content.Load<SpriteFont>(@"Fonts\FountainFont");
         JunicodeFont = Content.Load<SpriteFont>(@"Fonts\Junicode");
         JunicodeLargeFont = Content.Load<SpriteFont>(@"Fonts\JunicodeLarge");
         HerzogFont = Content.Load<SpriteFont>(@"Fonts\HerzogVonGraf24");
@@ -388,6 +390,7 @@ public class Game : Microsoft.Xna.Framework.Game
         EnemyLevelFont.DefaultCharacter = '?';
         PlayerLevelFont.DefaultCharacter = '?';
         GoldFont.DefaultCharacter = '?';
+        FountainFont.DefaultCharacter = '?';
         JunicodeFont.DefaultCharacter = '?';
         JunicodeLargeFont.DefaultCharacter = '?';
         HerzogFont.DefaultCharacter = '?';
@@ -399,6 +402,7 @@ public class Game : Microsoft.Xna.Framework.Game
         SpriteFontArray.SpriteFontList.Add(EnemyLevelFont);
         SpriteFontArray.SpriteFontList.Add(PlayerLevelFont);
         SpriteFontArray.SpriteFontList.Add(GoldFont);
+        SpriteFontArray.SpriteFontList.Add(FountainFont);
         SpriteFontArray.SpriteFontList.Add(JunicodeFont);
         SpriteFontArray.SpriteFontList.Add(JunicodeLargeFont);
         SpriteFontArray.SpriteFontList.Add(HerzogFont);
@@ -408,6 +412,7 @@ public class Game : Microsoft.Xna.Framework.Game
         EnemyLevelFont.Spacing = -5f;
         PlayerLevelFont.Spacing = -7f;
         GoldFont.Spacing = -5f;
+        FountainFont.Spacing = -5f;
         JunicodeLargeFont.Spacing = -1f;
     }
 
