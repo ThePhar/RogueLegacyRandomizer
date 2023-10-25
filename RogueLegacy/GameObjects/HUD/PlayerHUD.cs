@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - PlayerHUD.cs
-//  Last Modified 2023-10-24 4:08 PM
+//  Last Modified 2023-10-25 6:31 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -19,13 +19,13 @@ namespace RogueLegacy.GameObjects.HUD;
 
 public class PlayerHUD : SpriteObj
 {
-    private const int MaxBarLength = 360;
+    private const int MAX_BAR_LENGTH = 360;
 
+    private readonly SpriteObj        _fountainPiece;
+    private readonly TextObj          _fountainPieceText;
     private          SpriteObj[]      _abilitiesSpriteArray;
     private          SpriteObj        _coin;
     private          TextObj          _goldText;
-    private readonly SpriteObj        _fountainPiece;
-    private readonly TextObj          _fountainPieceText;
     private          SpriteObj        _hpBar;
     private          ObjContainer     _hpBarContainer;
     private          TextObj          _hpText;
@@ -40,94 +40,93 @@ public class PlayerHUD : SpriteObj
     private          SpriteObj        _spellIcon;
     private          ReceivedItemsHUD _receivedItemsHUD;
 
+    public bool ShowBarsOnly { get; set; }
+
     public PlayerHUD() : base("PlayerHUDLvlText_Sprite")
     {
         ForceDraw = true;
 
-        _coin = new SpriteObj("PlayerUICoin_Sprite") { ForceDraw = true };
-        _fountainPiece = new SpriteObj("TeleportRock4_Sprite")
+        _coin = new("PlayerUICoin_Sprite") { ForceDraw = true };
+        _fountainPiece = new("TeleportRock4_Sprite")
         {
             ForceDraw = true,
             OutlineColour = Color.Black,
             OutlineWidth = 2,
-            Anchor = new Vector2(0, 0)
+            Anchor = new(0, 0),
         };
 
-        _hpBar = new SpriteObj("HPBar_Sprite") { ForceDraw = true };
-        _mpBar = new SpriteObj("MPBar_Sprite") { ForceDraw = true };
-        _hpBarContainer = new ObjContainer("PlayerHUDHPBar_Character") { ForceDraw = true };
-        _mpBarContainer = new ObjContainer("PlayerHUDMPBar_Character") { ForceDraw = true };
-        _receivedItemsHUD = new ReceivedItemsHUD();
-        _playerLevelText = new TextObj
+        _hpBar = new("HPBar_Sprite") { ForceDraw = true };
+        _mpBar = new("MPBar_Sprite") { ForceDraw = true };
+        _hpBarContainer = new("PlayerHUDHPBar_Character") { ForceDraw = true };
+        _mpBarContainer = new("PlayerHUDMPBar_Character") { ForceDraw = true };
+        _receivedItemsHUD = new();
+        _playerLevelText = new()
         {
             Text = Game.PlayerStats.CurrentLevel.ToString(),
-            Font = Game.PlayerLevelFont
+            Font = Game.PlayerLevelFont,
         };
-        _goldText = new TextObj
+        _goldText = new()
         {
             Text = "0",
             Font = Game.GoldFont,
-            FontSize = 25f
+            FontSize = 25f,
         };
-        _fountainPieceText = new TextObj
+        _fountainPieceText = new()
         {
             Text = "0",
-            Font = Game.BitFont,
-            FontSize = 17f,
-            OutlineColour = Color.Black,
-            OutlineWidth = 2,
-            TextureColor = Color.MediumPurple
+            Font = Game.FountainFont,
+            FontSize = 25f,
         };
-        _hpText = new TextObj(Game.JunicodeFont)
+        _hpText = new(Game.JunicodeFont)
         {
             FontSize = 7f,
-            DropShadow = new Vector2(1f, 1f),
-            ForceDraw = true
+            DropShadow = new(1f, 1f),
+            ForceDraw = true,
         };
-        _mpText = new TextObj(Game.JunicodeFont)
+        _mpText = new(Game.JunicodeFont)
         {
             FontSize = 7f,
-            DropShadow = new Vector2(1f, 1f),
-            ForceDraw = true
+            DropShadow = new(1f, 1f),
+            ForceDraw = true,
         };
-        _specialItemIcon = new SpriteObj("Blank_Sprite")
+        _specialItemIcon = new("Blank_Sprite")
         {
             ForceDraw = true,
             OutlineWidth = 1,
-            Scale = new Vector2(1.7f, 1.7f),
-            Visible = false
+            Scale = new(1.7f, 1.7f),
+            Visible = false,
         };
-        _spellIcon = new SpriteObj(((SpellType) 0).Icon())
+        _spellIcon = new(((SpellType) 0).Icon())
         {
             ForceDraw = true,
             OutlineWidth = 1,
-            Visible = false
+            Visible = false,
         };
-        _iconHolder1 = new SpriteObj("BlacksmithUI_IconBG_Sprite")
+        _iconHolder1 = new("BlacksmithUI_IconBG_Sprite")
         {
             ForceDraw = true,
             Opacity = 0.5f,
-            Scale = new Vector2(0.8f, 0.8f)
+            Scale = new(0.8f, 0.8f),
         };
         _iconHolder2 = _iconHolder1.Clone() as SpriteObj;
-        _spellCost = new TextObj(Game.JunicodeFont)
+        _spellCost = new(Game.JunicodeFont)
         {
             Align = Types.TextAlign.Centre,
             ForceDraw = true,
             OutlineWidth = 2,
             FontSize = 8f,
-            Visible = false
+            Visible = false,
         };
 
         _abilitiesSpriteArray = new SpriteObj[5];
         var position = new Vector2(130f, 690f);
         for (var i = 0; i < _abilitiesSpriteArray.Length; i++)
         {
-            _abilitiesSpriteArray[i] = new SpriteObj("Blank_Sprite")
+            _abilitiesSpriteArray[i] = new("Blank_Sprite")
             {
                 ForceDraw = true,
                 Position = position,
-                Scale = new Vector2(0.5f, 0.5f)
+                Scale = new(0.5f, 0.5f),
             };
 
             position.X += 35;
@@ -136,8 +135,6 @@ public class PlayerHUD : SpriteObj
         UpdateSpecialItemIcon();
         UpdateSpellIcon();
     }
-
-    public bool ShowBarsOnly { get; set; }
 
     public void SetPosition(Vector2 position)
     {
@@ -164,19 +161,19 @@ public class PlayerHUD : SpriteObj
 
         // Set positions for HP and MP text and initial spots for top and bottom bars.
         Position = position;
-        topBar.Position = new Vector2(X + 7f, Y + 60f);
-        bottomBar.Position = new Vector2(X + 8f, Y + 29f);
-        _playerLevelText.Position = new Vector2(X + 30f, Y - 20f);
+        topBar.Position = new(X + 7f, Y + 60f);
+        bottomBar.Position = new(X + 8f, Y + 29f);
+        _playerLevelText.Position = new(X + 30f, Y - 20f);
         if (TraitHelper.HasTrait(Trait.Dextrocardia))
         {
-            _mpText.Position = new Vector2(X + 5f, Y + 19f);
+            _mpText.Position = new(X + 5f, Y + 19f);
             _mpText.X += 8f;
             _hpText.Position = _mpText.Position;
             _hpText.Y += 28f;
         }
         else
         {
-            _hpText.Position = new Vector2(X + 5f, Y + 19f);
+            _hpText.Position = new(X + 5f, Y + 19f);
             _hpText.X += 8f;
             _hpText.Y += 5f;
             _mpText.Position = _hpText.Position;
@@ -184,48 +181,64 @@ public class PlayerHUD : SpriteObj
         }
 
         // Finalize bar and container positions for HP and MP.
-        bottomContainer.Position = new Vector2(X, Y + 17f);
+        bottomContainer.Position = new(X, Y + 17f);
         bottomBar.Position = bottomBar == _hpBar
-            ? new Vector2(bottomContainer.X + 2f, bottomContainer.Y + 7f)
+            ? new(bottomContainer.X + 2f, bottomContainer.Y + 7f)
             : new Vector2(bottomContainer.X + 2f, bottomContainer.Y + 6f);
-        topContainer.Position = new Vector2(X, bottomContainer.Bounds.Bottom);
+        topContainer.Position = new(X, bottomContainer.Bounds.Bottom);
         topBar.Position = topBar == _mpBar
-            ? new Vector2(topContainer.X + 2f, topContainer.Y + 6f)
+            ? new(topContainer.X + 2f, topContainer.Y + 6f)
             : new Vector2(topContainer.X + 2f, topContainer.Y + 7f);
 
         // Set the rest of the UI positions.
-        _coin.Position = new Vector2(X, topContainer.Bounds.Bottom + 2);
-        _goldText.Position = new Vector2(_coin.X + 28f, _coin.Y - 2f);
-        _iconHolder1.Position = new Vector2(_coin.X + 25f, _coin.Y + 60f);
-        _iconHolder2.Position = new Vector2(_iconHolder1.X + 55f, _iconHolder1.Y);
-        _spellIcon.Position = _iconHolder1.Position;
-        _specialItemIcon.Position = _iconHolder2.Position;
-        _spellCost.Position = new Vector2(_spellIcon.X, _spellIcon.Bounds.Bottom + 10);
-        _receivedItemsHUD.Position = new Vector2(X, topContainer.Bounds.Bottom + 8);
+        _coin.Position = new(X, topContainer.Bounds.Bottom + 2);
+        _goldText.Position = new(_coin.X + 28f, _coin.Y - 2f);
+        _fountainPiece.Position = new(X + 3, topContainer.Bounds.Bottom + 32f);
+        _fountainPieceText.Position = new(_fountainPiece.X + 25f, _fountainPiece.Y - 2f);
+
+        // Received items view goes on the other side, just below where the mini map would be.
+        _receivedItemsHUD.Position = new(1070, 84);
+        _receivedItemsHUD.AnchorX = 200;
     }
 
     public void Update(PlayerObj player)
     {
         var level = Game.PlayerStats.CurrentLevel;
         if (level < 0)
+        {
             level = 0;
+        }
 
         var gold = Game.PlayerStats.Gold;
         if (gold < 0)
+        {
             gold = 0;
+        }
 
         _playerLevelText.Text = level.ToString();
         _goldText.Text = gold.ToString();
 
-        _fountainPieceText.Text =
-            $"{Game.PlayerStats.FountainPieces}/{RandomizerData.FountainPieceRequirement}";
+        _fountainPieceText.Text = $"{Game.PlayerStats.FountainPieces}";
         _hpText.Text = player.CurrentHealth + "/" + player.MaxHealth;
         _mpText.Text = player.CurrentMana + "/" + player.MaxMana;
         UpdatePlayerHP(player);
         UpdatePlayerMP(player);
 
-        _fountainPiece.Position = new Vector2(X, _spellCost.Bounds.Bottom + 12f);
-        _fountainPieceText.Position = new Vector2(_fountainPiece.X + 24f, _fountainPiece.Y);
+        // Position icon holders based on FountainPieceRequirement.
+        if (RandomizerData.FountainPieceRequirement > 0)
+        {
+            _iconHolder1.Position = new(_fountainPiece.X + 22f, _fountainPiece.Y + 60f);
+        }
+        else
+        {
+            _iconHolder1.Position = new(_coin.X + 25f, _coin.Y + 60f);
+        }
+
+        // These move based on the initialIconHolder.
+        _iconHolder2.Position = new(_iconHolder1.X + 55f, _iconHolder1.Y);
+        _spellIcon.Position = _iconHolder1.Position;
+        _specialItemIcon.Position = _iconHolder2.Position;
+        _spellCost.Position = new(_spellIcon.X, _spellIcon.Bounds.Bottom + 10);
 
         _receivedItemsHUD.Update();
         UpdateSpellIcon();
@@ -236,9 +249,9 @@ public class PlayerHUD : SpriteObj
         var currentHealth = player.MaxHealth - player.BaseHealth;
         var healthPercentage = player.CurrentHealth / (float) player.MaxHealth;
         var hpBarWidth = (int) (88f + currentHealth / 5f);
-        if (hpBarWidth > MaxBarLength)
+        if (hpBarWidth > MAX_BAR_LENGTH)
         {
-            hpBarWidth = MaxBarLength;
+            hpBarWidth = MAX_BAR_LENGTH;
         }
 
         var scaleX = (hpBarWidth - 28 - 28) / 32f;
@@ -254,9 +267,9 @@ public class PlayerHUD : SpriteObj
         var currentMana = (int) (player.MaxMana - player.BaseMana);
         var manaPercentage = player.CurrentMana / player.MaxMana;
         var mpBarWidth = (int) (88f + currentMana / 5f);
-        if (mpBarWidth > MaxBarLength)
+        if (mpBarWidth > MAX_BAR_LENGTH)
         {
-            mpBarWidth = MaxBarLength;
+            mpBarWidth = MAX_BAR_LENGTH;
         }
 
         var scaleX = (mpBarWidth - 28 - 28) / 32f;
@@ -285,7 +298,9 @@ public class PlayerHUD : SpriteObj
         foreach (var rune in getEquippedRuneArray)
         {
             if (rune == -1)
+            {
                 continue;
+            }
 
             _abilitiesSpriteArray[runeIndex].ChangeSprite(((EquipmentAbility) rune).Icon());
             runeIndex++;
@@ -323,16 +338,21 @@ public class PlayerHUD : SpriteObj
         }
     }
 
-    public void AddReceivedItem(ItemCode.ItemType type, long item, string receivedFrom,
+    public void AddReceivedItem(
+        ItemCode.ItemType type,
+        long item,
+        string receivedFrom,
         Tuple<float, float, float, float> stats)
     {
-        _receivedItemsHUD.Elements.Add(new ReceivedItemElement(_receivedItemsHUD, type, item, receivedFrom, stats));
+        _receivedItemsHUD.Elements.Add(new(_receivedItemsHUD, type, item, receivedFrom, stats));
     }
 
     public override void Draw(Camera2D camera)
     {
         if (!Visible)
+        {
             return;
+        }
 
         if (!ShowBarsOnly)
         {
@@ -356,7 +376,9 @@ public class PlayerHUD : SpriteObj
 
             var abilitiesSpriteArray = _abilitiesSpriteArray;
             foreach (var spriteObj in abilitiesSpriteArray)
+            {
                 spriteObj.Draw(camera);
+            }
         }
 
         _mpBar.Draw(camera);
@@ -375,11 +397,15 @@ public class PlayerHUD : SpriteObj
     public override void Dispose()
     {
         if (IsDisposed)
+        {
             return;
+        }
 
         var abilitiesSpriteArray = _abilitiesSpriteArray;
         foreach (var spriteObj in abilitiesSpriteArray)
+        {
             spriteObj.Dispose();
+        }
 
         Array.Clear(_abilitiesSpriteArray, 0, _abilitiesSpriteArray.Length);
         _abilitiesSpriteArray = null;

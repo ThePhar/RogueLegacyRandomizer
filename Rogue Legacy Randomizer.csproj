@@ -170,6 +170,7 @@
         <Compile Include="RogueLegacy\GameEV.cs" />
         <Compile Include="RogueLegacy\GameObjects\DeathLinkObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\HUD\PlayerHUD.cs" />
+        <Compile Include="RogueLegacy\GameObjects\HUD\ReceivedItemElement.cs" />
         <Compile Include="RogueLegacy\GameObjects\HUD\ReceivedItemsHUD.cs" />
         <Compile Include="RogueLegacy\GameObjects\RetireObj.cs" />
         <Compile Include="RogueLegacy\GameObjects\Rooms\ArenaBonusRoom.cs" />
