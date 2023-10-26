@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_SwordKnight.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_SwordKnight.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -226,7 +226,7 @@ namespace RogueLegacy
             logicSet6.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
             logicSet6.AddAction(new DelayLogicAction(SlashDelay));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
-            logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+            logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
             logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet6.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
@@ -252,7 +252,7 @@ namespace RogueLegacy
             logicSet7.AddAction(new MoveLogicAction(null, true, 0f));
             logicSet7.AddAction(new ChangePropertyLogicAction(this, "AnimationDelay", 0.0833333358f));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
-            logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+            logicSet7.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
             logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet7.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
@@ -264,7 +264,7 @@ namespace RogueLegacy
             logicSet8.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
             logicSet8.AddAction(new DelayLogicAction(SlashDelay));
             logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
-            logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+            logicSet8.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
             logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet8.AddAction(new ChangeSpriteLogicAction("EnemySwordKnightIdle_Character", false, false));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(false));

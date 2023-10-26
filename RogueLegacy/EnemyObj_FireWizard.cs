@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_FireWizard.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_FireWizard.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -418,7 +418,7 @@ namespace RogueLegacy
                 m_fireParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_fireParticleEffectCounter <= 0f)
                 {
-                    m_levelScreen.ImpactEffectPool.DisplayFireParticleEffect(this);
+                    _levelScreen.ImpactEffectPool.DisplayFireParticleEffect(this);
                     m_fireParticleEffectCounter = 0.15f;
                 }
             }
@@ -452,7 +452,7 @@ namespace RogueLegacy
 
             SoundManager.Play3DSound(this, m_target, "FireWizard_Attack_01", "FireWizard_Attack_02",
                 "FireWizard_Attack_03", "FireWizard_Attack_04");
-            var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileObj.Rotation = 0f;
             if (Difficulty != EnemyDifficulty.Expert)
             {
@@ -489,7 +489,7 @@ namespace RogueLegacy
             }
 
             SoundManager.Play3DSound(this, m_target, "Fire_Wizard_Form");
-            m_fireballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            m_fireballSummon = _levelScreen.ProjectileManager.FireProjectile(projectileData);
             m_fireballSummon.Opacity = 0f;
             m_fireballSummon.Scale = Vector2.Zero;
             m_fireballSummon.AnimationDelay = 0.1f;
@@ -519,7 +519,7 @@ namespace RogueLegacy
         {
             if (m_fireballSummon != null)
             {
-                m_levelScreen.ProjectileManager.DestroyProjectile(m_fireballSummon);
+                _levelScreen.ProjectileManager.DestroyProjectile(m_fireballSummon);
                 m_fireballSummon = null;
             }
         }

@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_SkeletonArcher.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_SkeletonArcher.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -182,7 +182,7 @@ namespace RogueLegacy
             logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Load"));
             logicSet2.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet2.AddAction(new DelayLogicAction(m_fireDelay));
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet2.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -199,9 +199,9 @@ namespace RogueLegacy
             logicSet3.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet3.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-20f, -20f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-50f, -50f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet3.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -218,11 +218,11 @@ namespace RogueLegacy
             logicSet4.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet4.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-35f, -35f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-15f, -15f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-55f, -55f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet4.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -239,7 +239,7 @@ namespace RogueLegacy
             logicSet5.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet5.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-50f, -50f);
-            logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet5.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -256,9 +256,9 @@ namespace RogueLegacy
             logicSet6.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet6.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-50f, -50f);
-            logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-75f, -75f);
-            logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -275,11 +275,11 @@ namespace RogueLegacy
             logicSet7.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet7.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-60f, -60f);
-            logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet7.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-75f, -75f);
-            logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet7.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-45f, -45f);
-            logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet7.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -296,7 +296,7 @@ namespace RogueLegacy
             logicSet8.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet8.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-70f, -70f);
-            logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet8.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet8.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -313,9 +313,9 @@ namespace RogueLegacy
             logicSet9.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet9.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-55f, -55f);
-            logicSet9.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet9.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-85f, -85f);
-            logicSet9.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet9.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet9.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet9.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));
@@ -332,11 +332,11 @@ namespace RogueLegacy
             logicSet10.AddAction(new PlayAnimationLogicAction("Start", "BeginAttack"));
             logicSet10.AddAction(new DelayLogicAction(m_fireDelay));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet10.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-85f, -85f);
-            logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet10.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-95f, -95f);
-            logicSet10.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet10.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet10.AddAction(new Play3DSoundLogicAction(this, m_target, "SkeletonArcher_Attack_01",
                 "SkeletonArcher_Attack_02", "SkeletonArcher_Attack_03"));
             logicSet10.AddAction(new PlayAnimationLogicAction("Attack", "EndAttack"));

@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Spark.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Spark.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -232,7 +232,7 @@ namespace RogueLegacy
             m_hookedToGround = true;
             var num = 1000f;
             TerrainObj terrainObj = null;
-            foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
+            foreach (var current in _levelScreen.CurrentRoom.TerrainObjList)
                 if (current.Y >= Y && current.Y - Y < num &&
                     CollisionMath.Intersects(current.Bounds,
                         new Rectangle((int) X, (int) (Y + (current.Y - Y) + 5f), Width, Height / 2)))
@@ -322,33 +322,33 @@ namespace RogueLegacy
             var flag7 = false;
             var flag8 = false;
             var num = 0f;
-            if (Bounds.Right >= m_levelScreen.CurrentRoom.Bounds.Right)
+            if (Bounds.Right >= _levelScreen.CurrentRoom.Bounds.Right)
             {
                 flag6 = true;
                 flag4 = true;
                 flag8 = true;
             }
-            else if (Bounds.Left <= m_levelScreen.CurrentRoom.Bounds.Left)
+            else if (Bounds.Left <= _levelScreen.CurrentRoom.Bounds.Left)
             {
                 flag5 = true;
                 flag3 = true;
                 flag7 = true;
             }
 
-            if (Bounds.Top <= m_levelScreen.CurrentRoom.Bounds.Top)
+            if (Bounds.Top <= _levelScreen.CurrentRoom.Bounds.Top)
             {
                 flag6 = true;
                 flag = true;
                 flag5 = true;
             }
-            else if (Bounds.Bottom >= m_levelScreen.CurrentRoom.Bounds.Bottom)
+            else if (Bounds.Bottom >= _levelScreen.CurrentRoom.Bounds.Bottom)
             {
                 flag7 = true;
                 flag2 = true;
                 flag8 = true;
             }
 
-            foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
+            foreach (var current in _levelScreen.CurrentRoom.TerrainObjList)
             {
                 var b = new Rectangle((int) current.X, (int) current.Y, current.Width, current.Height);
                 if (CollisionMath.RotatedRectIntersects(TopLeftPoint, 0f, Vector2.Zero, b, current.Rotation,

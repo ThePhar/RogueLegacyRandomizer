@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_ShieldKnight.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_ShieldKnight.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -429,18 +429,18 @@ namespace RogueLegacy
                 base.CollisionResponse(thisBox, otherBox, collisionResponseType);
                 var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
                 var position = new Vector2(center.X, center.Y);
-                m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, new Vector2(2f, 2f));
+                _levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, new Vector2(2f, 2f));
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "ShieldKnight_Block01",
                     "ShieldKnight_Block02",
                     "ShieldKnight_Block03");
                 m_invincibleCounter = InvincibilityTime;
-                m_levelScreen.SetLastEnemyHit(this);
+                _levelScreen.SetLastEnemyHit(this);
                 Blink(Color.LightBlue, 0.1f);
                 var projectileObj2 = otherBox.AbsParent as ProjectileObj;
                 if (projectileObj2 != null)
                 {
                     m_invincibleCounterProjectile = InvincibilityTime;
-                    m_levelScreen.ProjectileManager.DestroyProjectile(projectileObj2);
+                    _levelScreen.ProjectileManager.DestroyProjectile(projectileObj2);
                 }
             }
             else

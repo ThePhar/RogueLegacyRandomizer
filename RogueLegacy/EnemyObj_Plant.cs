@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Plant.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Plant.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -169,11 +169,11 @@ namespace RogueLegacy
             logicSet.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-75f, -75f);
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-105f, -105f);
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet.Tag = 2;
@@ -182,15 +182,15 @@ namespace RogueLegacy
             logicSet2.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
             projectileData.Angle = new Vector2(-60f, -60f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-75f, -75f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-105f, -105f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-120f, -120f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet2.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet2.Tag = 2;
@@ -199,23 +199,23 @@ namespace RogueLegacy
             logicSet3.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
             projectileData.Angle = new Vector2(-45f, -45f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-60f, -60f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-85f, -85f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-95f, -95f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-75f, -75f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-105f, -105f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-120f, -120f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-135f, -135f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet3.Tag = 2;
@@ -224,19 +224,19 @@ namespace RogueLegacy
             logicSet4.AddAction(new PlayAnimationLogicAction(1, TotalFrames - 1));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Enemy_Venus_Attack_01"));
             projectileData.Angle = new Vector2(-60f, -60f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-87f, -87f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-93f, -93f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-75f, -75f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-105f, -105f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-120f, -120f);
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet4.AddAction(new PlayAnimationLogicAction(TotalFrames - 1, TotalFrames));
             logicSet4.AddAction(new ChangeSpriteLogicAction("EnemyPlantIdle_Character"));
             logicSet4.Tag = 2;

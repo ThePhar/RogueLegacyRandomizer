@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnemyObj_Eyeball.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-26 12:01 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -214,7 +214,7 @@ public class EnemyObj_Eyeball : EnemyObj
         logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
         logicSet.AddAction(new DelayLogicAction(FireballDelay));
         logicSet.AddAction(new Play3DSoundLogicAction(this, m_target, "Eyeball_ProjectileAttack"));
-        logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         logicSet.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
         logicSet.AddAction(new DelayLogicAction(1f, 3f));
         logicSet.Tag = 2;
@@ -222,13 +222,13 @@ public class EnemyObj_Eyeball : EnemyObj
         logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballFire_Character"));
         logicSet2.AddAction(new DelayLogicAction(FireballDelay));
         logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "EyeballFire1"));
-        logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         logicSet2.AddAction(new DelayLogicAction(0.15f));
-        logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         logicSet2.AddAction(new DelayLogicAction(0.15f));
-        logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         logicSet2.AddAction(new DelayLogicAction(0.15f));
-        logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyEyeballIdle_Character", false, false));
         logicSet2.AddAction(new DelayLogicAction(0.75f, 2f));
         logicSet2.Tag = 2;
@@ -345,11 +345,11 @@ public class EnemyObj_Eyeball : EnemyObj
         for (var i = 0; i <= 3; i++)
         {
             projectileData.AngleOffset = 0f;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.AngleOffset = 45f;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.AngleOffset = -45f;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new DelayLogicAction(0.1f));
         }
 
@@ -376,13 +376,13 @@ public class EnemyObj_Eyeball : EnemyObj
         for (var i = 0; i <= 170; i += 10)
         {
             projectileData.AngleOffset = i * num;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.AngleOffset = 90 + i * num;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.AngleOffset = 180 + i * num;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.AngleOffset = 270 + i * num;
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new DelayLogicAction(0.175f));
         }
 
@@ -410,13 +410,13 @@ public class EnemyObj_Eyeball : EnemyObj
             if (randomizeFlipper) flipper = CDGMath.RandomPlusMinus();
 
             projectileData.AngleOffset = -10 + startProjIndex * 10 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.AngleOffset = 80 + startProjIndex * 10 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.AngleOffset = 170 + startProjIndex * 10 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.AngleOffset = 260 + startProjIndex * 10 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.Dispose();
             startProjIndex++;
             Tween.RunFunction(0.12f, this, "ThrowCardinalProjectiles", startProjIndex, false, flipper);
@@ -444,13 +444,13 @@ public class EnemyObj_Eyeball : EnemyObj
             if (randomizeFlipper) flipper = CDGMath.RandomPlusMinus();
 
             projectileData.AngleOffset = -10 + startProjIndex * 17 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.AngleOffset = 80 + startProjIndex * 17 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.AngleOffset = 170 + startProjIndex * 17 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.AngleOffset = 260 + startProjIndex * 17 * flipper;
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.Dispose();
             startProjIndex++;
             Tween.RunFunction(0.12f, this, "ThrowCardinalProjectilesNeo", startProjIndex, false, flipper);
@@ -497,7 +497,7 @@ public class EnemyObj_Eyeball : EnemyObj
             else
                 projectileData.AngleOffset = 20 + i;
 
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
         }
 
         if (firstShot) Tween.RunFunction(0.8f, this, "ThrowSprayProjectiles", false);
@@ -522,21 +522,21 @@ public class EnemyObj_Eyeball : EnemyObj
             Scale = ProjectileScale
         };
         projectileData.Angle = new Vector2(0f, 44f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(45f, 89f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(90f, 134f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(135f, 179f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(180f, 224f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(225f, 269f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(270f, 314f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(315f, 359f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Dispose();
     }
 
@@ -722,9 +722,9 @@ public class EnemyObj_Eyeball : EnemyObj
             SoundManager.StopMusic();
             m_bossVersionKilled = true;
             m_target.LockControls();
-            m_levelScreen.PauseScreen();
-            m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
-            m_levelScreen.RunWhiteSlashEffect();
+            _levelScreen.PauseScreen();
+            _levelScreen.ProjectileManager.DestroyAllProjectiles(false);
+            _levelScreen.RunWhiteSlashEffect();
             SoundManager.PlaySound("Boss_Flash");
             SoundManager.PlaySound("Boss_Eyeball_Freeze");
             Tween.RunFunction(1f, this, "Part2");
@@ -748,7 +748,7 @@ public class EnemyObj_Eyeball : EnemyObj
 
     public void Part2()
     {
-        m_levelScreen.UnpauseScreen();
+        _levelScreen.UnpauseScreen();
         m_target.UnlockControls();
         if (m_currentActiveLB != null) m_currentActiveLB.StopLogicBlock();
 
@@ -760,19 +760,19 @@ public class EnemyObj_Eyeball : EnemyObj
         m_target.ForceInvincible = true;
         if (IsNeo) m_target.InvincibleToSpikes = true;
 
-        object arg_106_0 = m_levelScreen.Camera;
+        object arg_106_0 = _levelScreen.Camera;
         var arg_106_1 = 0.5f;
         Easing arg_106_2 = Quad.EaseInOut;
         var array = new string[4];
         array[0] = "X";
         var arg_CF_0 = array;
         var arg_CF_1 = 1;
-        var x = m_levelScreen.CurrentRoom.Bounds.Center.X;
+        var x = _levelScreen.CurrentRoom.Bounds.Center.X;
         arg_CF_0[arg_CF_1] = x.ToString();
         array[2] = "Y";
         var arg_103_0 = array;
         var arg_103_1 = 3;
-        var y = m_levelScreen.CurrentRoom.Bounds.Center.Y;
+        var y = _levelScreen.CurrentRoom.Bounds.Center.Y;
         arg_103_0[arg_103_1] = y.ToString();
         Tween.To(arg_106_0, arg_106_1, arg_106_2, array);
         m_shake = true;
@@ -788,7 +788,7 @@ public class EnemyObj_Eyeball : EnemyObj
                 "Boss_Explo_02",
                 "Boss_Explo_03"
             });
-            Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
+            Tween.RunFunction(i * 0.1f, _levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
         }
 
         Tween.AddEndHandlerToLastTween(this, "Part3");
@@ -805,11 +805,11 @@ public class EnemyObj_Eyeball : EnemyObj
                 var vector2 = new Vector2(CDGMath.RandomInt(m_pupil.AbsBounds.Left, m_pupil.AbsBounds.Right),
                     CDGMath.RandomInt(m_pupil.AbsBounds.Top, m_pupil.AbsBounds.Bottom));
                 if (list[m] == 0)
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 1, 10);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", vector2, 1, 10);
                 else if (list[m] == 1)
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 10, 100);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", vector2, 10, 100);
                 else
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", vector2, 11, 500);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", vector2, 11, 500);
             }
         }
     }

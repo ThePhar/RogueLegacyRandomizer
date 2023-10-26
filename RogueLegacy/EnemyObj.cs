@@ -1,3 +1,12 @@
+//  RogueLegacyRandomizer - EnemyObj.cs
+//  Last Modified 2023-10-26 12:01 PM
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -164,7 +173,7 @@ namespace RogueLegacy
             set
             {
                 if ((Game.PlayerStats.Traits.X == 18f || Game.PlayerStats.Traits.Y == 18f) && Flip != value &&
-                    m_levelScreen != null)
+                    _levelScreen != null)
                 {
                     if (m_flipTween != null && m_flipTween.TweenedObject == this && m_flipTween.Active)
                     {
@@ -254,10 +263,10 @@ namespace RogueLegacy
             m_internalIsWeighted = IsWeighted;
             m_internalRotation = Rotation;
             m_internalAnimationDelay = AnimationDelay;
-            m_internalScale = Scale;
+            _internalScale = Scale;
             InternalFlip = Flip;
             foreach (var current in logicBlocksToDispose) current.ClearAllLogicSets();
-            if (m_levelScreen != null)
+            if (_levelScreen != null)
             {
                 InitializeLogic();
             }
@@ -288,9 +297,9 @@ namespace RogueLegacy
                     num3 = 1000;
                 }
 
-                m_engageRadiusTexture = DebugHelper.CreateCircleTexture(num, m_levelScreen.Camera.GraphicsDevice);
-                m_projectileRadiusTexture = DebugHelper.CreateCircleTexture(num2, m_levelScreen.Camera.GraphicsDevice);
-                m_meleeRadiusTexture = DebugHelper.CreateCircleTexture(num3, m_levelScreen.Camera.GraphicsDevice);
+                m_engageRadiusTexture = DebugHelper.CreateCircleTexture(num, _levelScreen.Camera.GraphicsDevice);
+                m_projectileRadiusTexture = DebugHelper.CreateCircleTexture(num2, _levelScreen.Camera.GraphicsDevice);
+                m_meleeRadiusTexture = DebugHelper.CreateCircleTexture(num3, _levelScreen.Camera.GraphicsDevice);
             }
         }
 
@@ -301,7 +310,7 @@ namespace RogueLegacy
 
         public void SetLevelScreen(ProceduralLevelScreen levelScreen)
         {
-            m_levelScreen = levelScreen;
+            _levelScreen = levelScreen;
         }
 
         public override void Update(GameTime gameTime)
@@ -458,22 +467,22 @@ namespace RogueLegacy
                         Position += Heading * (CurrentSpeed * num);
                     }
 
-                    if (X < m_levelScreen.CurrentRoom.Bounds.Left)
+                    if (X < _levelScreen.CurrentRoom.Bounds.Left)
                     {
-                        X = m_levelScreen.CurrentRoom.Bounds.Left;
+                        X = _levelScreen.CurrentRoom.Bounds.Left;
                     }
-                    else if (X > m_levelScreen.CurrentRoom.Bounds.Right)
+                    else if (X > _levelScreen.CurrentRoom.Bounds.Right)
                     {
-                        X = m_levelScreen.CurrentRoom.Bounds.Right;
+                        X = _levelScreen.CurrentRoom.Bounds.Right;
                     }
 
-                    if (Y < m_levelScreen.CurrentRoom.Bounds.Top)
+                    if (Y < _levelScreen.CurrentRoom.Bounds.Top)
                     {
-                        Y = m_levelScreen.CurrentRoom.Bounds.Top;
+                        Y = _levelScreen.CurrentRoom.Bounds.Top;
                     }
-                    else if (Y > m_levelScreen.CurrentRoom.Bounds.Bottom)
+                    else if (Y > _levelScreen.CurrentRoom.Bounds.Bottom)
                     {
-                        Y = m_levelScreen.CurrentRoom.Bounds.Bottom;
+                        Y = _levelScreen.CurrentRoom.Bounds.Bottom;
                     }
 
                     if (m_currentActiveLB == m_cooldownLB)
@@ -507,7 +516,7 @@ namespace RogueLegacy
             var num = 2.14748365E+09f;
             var num2 = 10;
             var flag = true;
-            foreach (var current in m_levelScreen.PhysicsManager.ObjectList)
+            foreach (var current in _levelScreen.PhysicsManager.ObjectList)
                 if (current != this && current.CollidesTop &&
                     (current.CollisionTypeTag == 1 || current.CollisionTypeTag == 5 || current.CollisionTypeTag == 4 ||
                      current.CollisionTypeTag == 10) && Math.Abs(current.Bounds.Top - Bounds.Bottom) < num2)
@@ -566,7 +575,7 @@ namespace RogueLegacy
                 var num2 = 3.40282347E+38f;
                 var terrainBounds = TerrainBounds;
                 terrainBounds.Height += 10;
-                foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
+                foreach (var current in _levelScreen.CurrentRoom.TerrainObjList)
                 {
                     if (current.Visible && current.IsCollidable && current.CollidesTop && current.HasTerrainHitBox &&
                         (current.CollisionTypeTag == 1 || current.CollisionTypeTag == 10 ||
@@ -767,7 +776,7 @@ namespace RogueLegacy
                 {
                     m_invincibleCounter = InvincibilityTime;
                     m_invincibleCounterProjectile = InvincibilityTime;
-                    m_levelScreen.ImpactEffectPool.DisplayQuestionMark(new Vector2(X, Bounds.Top));
+                    _levelScreen.ImpactEffectPool.DisplayQuestionMark(new Vector2(X, Bounds.Top));
                     return;
                 }
 
@@ -778,7 +787,7 @@ namespace RogueLegacy
                     if (CDGMath.RandomFloat(0f, 1f) <= m_target.TotalCritChance && !NonKillable &&
                         physicsObj == m_target)
                     {
-                        m_levelScreen.ImpactEffectPool.DisplayCriticalText(new Vector2(X, Bounds.Top));
+                        _levelScreen.ImpactEffectPool.DisplayCriticalText(new Vector2(X, Bounds.Top));
                         num = (int) (num * m_target.TotalCriticalDamage);
                     }
 
@@ -918,19 +927,19 @@ namespace RogueLegacy
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3",
                     "EnemyHit4", "EnemyHit5", "EnemyHit6");
                 Blink(Color.Red, 0.1f);
-                m_levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(collisionPt);
+                _levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(collisionPt);
                 if (isPlayer && (Game.PlayerStats.Class == 6 || Game.PlayerStats.Class == 14))
                 {
                     CurrentHealth -= damage;
                     m_target.CurrentMana += (int) (damage * 0.3f);
-                    m_levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
-                    m_levelScreen.TextManager.DisplayNumberStringText((int) (damage * 0.3f), "mp", Color.RoyalBlue,
+                    _levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
+                    _levelScreen.TextManager.DisplayNumberStringText((int) (damage * 0.3f), "mp", Color.RoyalBlue,
                         new Vector2(m_target.X, m_target.Bounds.Top - 30));
                 }
                 else
                 {
                     CurrentHealth -= damage;
-                    m_levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
+                    _levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
                 }
 
                 if (isPlayer)
@@ -983,7 +992,7 @@ namespace RogueLegacy
                     }
                 }
 
-                m_levelScreen.SetLastEnemyHit(this);
+                _levelScreen.SetLastEnemyHit(this);
             }
         }
 
@@ -998,40 +1007,40 @@ namespace RogueLegacy
             if (totalVampBonus > 0)
             {
                 m_target.CurrentHealth += totalVampBonus;
-                m_levelScreen.TextManager.DisplayNumberStringText(totalVampBonus, "hp", Color.LightGreen,
+                _levelScreen.TextManager.DisplayNumberStringText(totalVampBonus, "hp", Color.LightGreen,
                     new Vector2(m_target.X, m_target.Bounds.Top - 60));
             }
 
             if (m_target.ManaGain > 0f)
             {
                 m_target.CurrentMana += m_target.ManaGain;
-                m_levelScreen.TextManager.DisplayNumberStringText((int) m_target.ManaGain, "mp", Color.RoyalBlue,
+                _levelScreen.TextManager.DisplayNumberStringText((int) m_target.ManaGain, "mp", Color.RoyalBlue,
                     new Vector2(m_target.X, m_target.Bounds.Top - 90));
             }
 
             if (Game.PlayerStats.SpecialItem == 5)
             {
-                m_levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
-                m_levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
+                _levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
+                _levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
             }
 
-            m_levelScreen.KillEnemy(this);
+            _levelScreen.KillEnemy(this);
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Enemy_Death");
             if (DropsItem)
             {
                 if (Type == 26)
                 {
-                    m_levelScreen.ItemDropManager.DropItem(Position, 2, 0.1f);
+                    _levelScreen.ItemDropManager.DropItem(Position, 2, 0.1f);
                 }
                 else if (CDGMath.RandomInt(1, 100) <= 2)
                 {
                     if (CDGMath.RandomPlusMinus() < 0)
                     {
-                        m_levelScreen.ItemDropManager.DropItem(Position, 2, 0.1f);
+                        _levelScreen.ItemDropManager.DropItem(Position, 2, 0.1f);
                     }
                     else
                     {
-                        m_levelScreen.ItemDropManager.DropItem(Position, 3, 0.1f);
+                        _levelScreen.ItemDropManager.DropItem(Position, 3, 0.1f);
                     }
                 }
 
@@ -1044,9 +1053,9 @@ namespace RogueLegacy
                     var num3 = num / 100;
                     num -= num3 * 100;
                     var num4 = num / 10;
-                    for (var i = 0; i < num2; i++) m_levelScreen.ItemDropManager.DropItem(Position, 11, 500f);
-                    for (var j = 0; j < num3; j++) m_levelScreen.ItemDropManager.DropItem(Position, 10, 100f);
-                    for (var k = 0; k < num4; k++) m_levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
+                    for (var i = 0; i < num2; i++) _levelScreen.ItemDropManager.DropItem(Position, 11, 500f);
+                    for (var j = 0; j < num3; j++) _levelScreen.ItemDropManager.DropItem(Position, 10, 100f);
+                    for (var k = 0; k < num4; k++) _levelScreen.ItemDropManager.DropItem(Position, 1, 10f);
                 }
             }
 
@@ -1055,7 +1064,7 @@ namespace RogueLegacy
                 m_currentActiveLB.StopLogicBlock();
             }
 
-            m_levelScreen.ImpactEffectPool.DisplayDeathEffect(Position);
+            _levelScreen.ImpactEffectPool.DisplayDeathEffect(Position);
             if ((Game.PlayerStats.Class == 7 || Game.PlayerStats.Class == 15) && GivesLichHealth)
             {
                 var num5 = 0;
@@ -1081,7 +1090,7 @@ namespace RogueLegacy
                 {
                     Game.PlayerStats.LichHealth += num5;
                     m_target.CurrentHealth += num5;
-                    m_levelScreen.TextManager.DisplayNumberStringText(num5, "max hp", Color.LightGreen,
+                    _levelScreen.TextManager.DisplayNumberStringText(num5, "max hp", Color.LightGreen,
                         new Vector2(m_target.X, m_target.Bounds.Top - 30));
                 }
             }
@@ -1310,7 +1319,7 @@ namespace RogueLegacy
 
         protected override GameObj CreateCloneInstance()
         {
-            return EnemyBuilder.BuildEnemy(Type, m_target, null, m_levelScreen, Difficulty);
+            return EnemyBuilder.BuildEnemy(Type, m_target, null, _levelScreen, Difficulty);
         }
 
         protected override void FillCloneInstance(object obj)

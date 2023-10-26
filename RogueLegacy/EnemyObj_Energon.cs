@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Energon.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Energon.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -372,14 +372,14 @@ namespace RogueLegacy
                 m_target.AccelerationY = -m_target.EnemyKnockBack.Y;
                 var center = Rectangle.Intersect(thisBox.AbsRect, otherBox.AbsRect).Center;
                 var position = new Vector2(center.X, center.Y);
-                m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, Vector2.One);
-                m_levelScreen.SetLastEnemyHit(this);
+                _levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, Vector2.One);
+                _levelScreen.SetLastEnemyHit(this);
                 m_invincibleCounter = InvincibilityTime;
                 Blink(Color.LightBlue, 0.1f);
                 var projectileObj = otherBox.AbsParent as ProjectileObj;
                 if (projectileObj != null)
                 {
-                    m_levelScreen.ProjectileManager.DestroyProjectile(projectileObj);
+                    _levelScreen.ProjectileManager.DestroyProjectile(projectileObj);
                 }
             }
             else if (otherBox.AbsParent is EnergonProjectileObj)
@@ -396,7 +396,7 @@ namespace RogueLegacy
                         return;
                     }
 
-                    m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(vector, Vector2.One);
+                    _levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(vector, Vector2.One);
                 }
             }
             else

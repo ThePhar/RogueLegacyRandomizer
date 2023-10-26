@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_EarthWizard.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_EarthWizard.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -512,7 +512,7 @@ namespace RogueLegacy
                 m_earthProjectileObj.PlayAnimation("Grown", "End");
             }
 
-            m_levelScreen.PhysicsManager.RemoveObject(m_earthProjectileObj);
+            _levelScreen.PhysicsManager.RemoveObject(m_earthProjectileObj);
         }
 
         public void CancelEarthSpellIn()
@@ -534,7 +534,7 @@ namespace RogueLegacy
             m_earthSummonOutSprite.X = m_target.X;
             var num = 2147483647;
             TerrainObj terrainObj = null;
-            foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
+            foreach (var current in _levelScreen.CurrentRoom.TerrainObjList)
                 if (CollisionMath.Intersects(new Rectangle((int) m_target.X, (int) m_target.Y, 2, 720), current.Bounds))
                 {
                     var num2 = current.Bounds.Top - m_target.TerrainBounds.Bottom;
@@ -606,7 +606,7 @@ namespace RogueLegacy
 
         public void CastEarthSpell(float duration)
         {
-            m_levelScreen.PhysicsManager.AddObject(m_earthProjectileObj);
+            _levelScreen.PhysicsManager.AddObject(m_earthProjectileObj);
             m_earthProjectileObj.Scale = ProjectileScale;
             m_earthProjectileObj.StopAnimation();
             m_earthProjectileObj.Position = m_earthSummonOutSprite.Position;
@@ -660,15 +660,15 @@ namespace RogueLegacy
                     {
                         if (m_effectCycle == 0)
                         {
-                            m_levelScreen.ImpactEffectPool.DisplayEarthParticleEffect(this);
+                            _levelScreen.ImpactEffectPool.DisplayEarthParticleEffect(this);
                         }
                         else if (m_effectCycle == 1)
                         {
-                            m_levelScreen.ImpactEffectPool.DisplayFireParticleEffect(this);
+                            _levelScreen.ImpactEffectPool.DisplayFireParticleEffect(this);
                         }
                         else
                         {
-                            m_levelScreen.ImpactEffectPool.DisplayIceParticleEffect(this);
+                            _levelScreen.ImpactEffectPool.DisplayIceParticleEffect(this);
                         }
 
                         m_effectCycle++;
@@ -679,7 +679,7 @@ namespace RogueLegacy
                     }
                     else
                     {
-                        m_levelScreen.ImpactEffectPool.DisplayEarthParticleEffect(this);
+                        _levelScreen.ImpactEffectPool.DisplayEarthParticleEffect(this);
                     }
 
                     m_earthParticleEffectCounter = 0.15f;
@@ -714,7 +714,7 @@ namespace RogueLegacy
 
             SoundManager.Play3DSound(this, m_target, "FireWizard_Attack_01", "FireWizard_Attack_02",
                 "FireWizard_Attack_03", "FireWizard_Attack_04");
-            var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileObj.Rotation = 0f;
             Tween.RunFunction(0.15f, this, "ChangeFireballState", projectileObj);
         }
@@ -746,7 +746,7 @@ namespace RogueLegacy
             }
 
             SoundManager.Play3DSound(this, m_target, "Fire_Wizard_Form");
-            m_fireballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            m_fireballSummon = _levelScreen.ProjectileManager.FireProjectile(projectileData);
             m_fireballSummon.Opacity = 0f;
             m_fireballSummon.Scale = Vector2.Zero;
             m_fireballSummon.AnimationDelay = 0.1f;
@@ -761,7 +761,7 @@ namespace RogueLegacy
         {
             if (m_fireballSummon != null)
             {
-                m_levelScreen.ProjectileManager.DestroyProjectile(m_fireballSummon);
+                _levelScreen.ProjectileManager.DestroyProjectile(m_fireballSummon);
                 m_fireballSummon = null;
             }
         }
@@ -783,7 +783,7 @@ namespace RogueLegacy
                 Scale = MiniBossIceSize
             };
             SoundManager.Play3DSound(this, m_target, "Ice_Wizard_Form");
-            m_iceballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            m_iceballSummon = _levelScreen.ProjectileManager.FireProjectile(projectileData);
             m_iceballSummon.PlayAnimation("Start", "Grown");
             projectileData.Dispose();
         }
@@ -814,7 +814,7 @@ namespace RogueLegacy
             for (var i = 0; i < numIceballs; i++)
             {
                 projectileData.Angle = new Vector2(num, num);
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num += num2;
             }
@@ -831,7 +831,7 @@ namespace RogueLegacy
         {
             if (m_iceballSummon != null)
             {
-                m_levelScreen.ProjectileManager.DestroyProjectile(m_iceballSummon);
+                _levelScreen.ProjectileManager.DestroyProjectile(m_iceballSummon);
                 m_iceballSummon = null;
             }
         }

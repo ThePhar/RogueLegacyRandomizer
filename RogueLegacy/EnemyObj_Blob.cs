@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnemyObj_Blob.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-26 12:01 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -287,7 +287,7 @@ public class EnemyObj_Blob : EnemyObj
         logicSet5.AddAction(new DelayLogicAction(JumpDelay));
         logicSet5.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
         logicSet5.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
-        logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+        logicSet5.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
         logicSet5.AddAction(new JumpLogicAction());
         logicSet5.AddAction(new LockFaceDirectionLogicAction(true));
         logicSet5.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character"));
@@ -310,14 +310,14 @@ public class EnemyObj_Blob : EnemyObj
         logicSet6.AddAction(new DelayLogicAction(JumpDelay));
         logicSet6.AddAction(new MoveLogicAction(m_target, true, Speed * 6.75f));
         logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Jump"));
-        logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+        logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
         logicSet6.AddAction(new JumpLogicAction());
         logicSet6.AddAction(new LockFaceDirectionLogicAction(true));
         logicSet6.AddAction(new ChangeSpriteLogicAction("EnemyBlobAir_Character"));
         logicSet6.AddAction(new DelayLogicAction(0.2f));
-        logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+        logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
         logicSet6.AddAction(new DelayLogicAction(0.2f));
-        logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, data));
+        logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, data));
         logicSet6.AddAction(new DelayLogicAction(0.2f));
         logicSet6.AddAction(new GroundCheckLogicAction());
         logicSet6.AddAction(new Play3DSoundLogicAction(this, m_target, "Blob_Land"));
@@ -496,7 +496,7 @@ public class EnemyObj_Blob : EnemyObj
             enemyObj_Blob.Orientation = MathHelper.ToRadians(180f);
 
         enemyObj_Blob.Level = Level;
-        m_levelScreen.AddEnemyToCurrentRoom(enemyObj_Blob);
+        _levelScreen.AddEnemyToCurrentRoom(enemyObj_Blob);
         enemyObj_Blob.Scale = new Vector2(ScaleX * BlobSizeChange.X, ScaleY * BlobSizeChange.Y);
         enemyObj_Blob.SetNumberOfHits(numHits);
         enemyObj_Blob.Speed *= BlobSpeedChange;
@@ -543,7 +543,7 @@ public class EnemyObj_Blob : EnemyObj
         if (LevelENV.ShowEnemyRadii) enemyObj_Blob.InitializeDebugRadii();
 
         enemyObj_Blob.SaveToFile = false;
-        enemyObj_Blob.SpawnRoom = m_levelScreen.CurrentRoom;
+        enemyObj_Blob.SpawnRoom = _levelScreen.CurrentRoom;
         enemyObj_Blob.GivesLichHealth = false;
     }
 
@@ -560,7 +560,7 @@ public class EnemyObj_Blob : EnemyObj
 
         enemyObj_EarthWizard.Level = Level;
         enemyObj_EarthWizard.Level -= m_bossEarthWizardLevelReduction;
-        m_levelScreen.AddEnemyToCurrentRoom(enemyObj_EarthWizard);
+        _levelScreen.AddEnemyToCurrentRoom(enemyObj_EarthWizard);
         enemyObj_EarthWizard.SavedStartingPos = enemyObj_EarthWizard.Position;
         var num = CDGMath.RandomInt(-500, -300);
         var num2 = CDGMath.RandomInt(300, 700);
@@ -574,7 +574,7 @@ public class EnemyObj_Blob : EnemyObj
         if (LevelENV.ShowEnemyRadii) enemyObj_EarthWizard.InitializeDebugRadii();
 
         enemyObj_EarthWizard.SaveToFile = false;
-        enemyObj_EarthWizard.SpawnRoom = m_levelScreen.CurrentRoom;
+        enemyObj_EarthWizard.SpawnRoom = _levelScreen.CurrentRoom;
         enemyObj_EarthWizard.GivesLichHealth = false;
     }
 
@@ -606,7 +606,7 @@ public class EnemyObj_Blob : EnemyObj
 
         if (IsNeo)
         {
-            foreach (var current in m_levelScreen.CurrentRoom.EnemyList)
+            foreach (var current in _levelScreen.CurrentRoom.EnemyList)
                 if (current != this && current is EnemyObj_Blob)
                 {
                     var num = Vector2.Distance(Position, current.Position);
@@ -617,7 +617,7 @@ public class EnemyObj_Blob : EnemyObj
                     }
                 }
 
-            foreach (var current2 in m_levelScreen.CurrentRoom.TempEnemyList)
+            foreach (var current2 in _levelScreen.CurrentRoom.TempEnemyList)
                 if (current2 != this && current2 is EnemyObj_Blob)
                 {
                     var num2 = Vector2.Distance(Position, current2.Position);
@@ -693,8 +693,8 @@ public class EnemyObj_Blob : EnemyObj
 
         if (m_target.CurrentHealth > 0)
         {
-            var blobBossRoom = m_levelScreen.CurrentRoom as BlobBossRoom;
-            var blobChallengeRoom = m_levelScreen.CurrentRoom as BlobChallengeRoom;
+            var blobBossRoom = _levelScreen.CurrentRoom as BlobBossRoom;
+            var blobChallengeRoom = _levelScreen.CurrentRoom as BlobChallengeRoom;
             if (((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1) ||
                  (blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1)) && !m_bossVersionKilled)
             {
@@ -703,9 +703,9 @@ public class EnemyObj_Blob : EnemyObj
                 SoundManager.StopMusic();
                 m_bossVersionKilled = true;
                 m_target.LockControls();
-                m_levelScreen.PauseScreen();
-                m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
-                m_levelScreen.RunWhiteSlashEffect();
+                _levelScreen.PauseScreen();
+                _levelScreen.ProjectileManager.DestroyAllProjectiles(false);
+                _levelScreen.RunWhiteSlashEffect();
                 Tween.RunFunction(1f, this, "Part2");
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Eyeball_Freeze");
@@ -732,13 +732,13 @@ public class EnemyObj_Blob : EnemyObj
 
     public void Part2()
     {
-        m_levelScreen.UnpauseScreen();
+        _levelScreen.UnpauseScreen();
         m_target.UnlockControls();
         if (m_currentActiveLB != null) m_currentActiveLB.StopLogicBlock();
 
         m_target.CurrentSpeed = 0f;
         m_target.ForceInvincible = true;
-        foreach (var current in m_levelScreen.CurrentRoom.TempEnemyList)
+        foreach (var current in _levelScreen.CurrentRoom.TempEnemyList)
             if (!current.IsKilled)
                 current.Kill();
 
@@ -756,11 +756,11 @@ public class EnemyObj_Blob : EnemyObj
             {
                 var position = Position;
                 if (list[l] == 0)
-                    Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 1, 10);
+                    Tween.RunFunction(l * num, _levelScreen.ItemDropManager, "DropItemWide", position, 1, 10);
                 else if (list[l] == 1)
-                    Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 10, 100);
+                    Tween.RunFunction(l * num, _levelScreen.ItemDropManager, "DropItemWide", position, 10, 100);
                 else
-                    Tween.RunFunction(l * num, m_levelScreen.ItemDropManager, "DropItemWide", position, 11, 500);
+                    Tween.RunFunction(l * num, _levelScreen.ItemDropManager, "DropItemWide", position, 11, 500);
             }
         }
     }
@@ -769,7 +769,7 @@ public class EnemyObj_Blob : EnemyObj
     {
         if (!MainBlob)
         {
-            m_levelScreen.RemoveEnemyFromRoom(this, SpawnRoom, SavedStartingPos);
+            _levelScreen.RemoveEnemyFromRoom(this, SpawnRoom, SavedStartingPos);
             Dispose();
             return;
         }

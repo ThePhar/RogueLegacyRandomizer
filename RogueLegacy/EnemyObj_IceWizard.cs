@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_IceWizard.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_IceWizard.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -410,7 +410,7 @@ namespace RogueLegacy
                 m_iceParticleEffectCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_iceParticleEffectCounter <= 0f)
                 {
-                    m_levelScreen.ImpactEffectPool.DisplayIceParticleEffect(this);
+                    _levelScreen.ImpactEffectPool.DisplayIceParticleEffect(this);
                     m_iceParticleEffectCounter = 0.15f;
                 }
             }
@@ -435,7 +435,7 @@ namespace RogueLegacy
                 LockPosition = true
             };
             SoundManager.Play3DSound(this, m_target, "Ice_Wizard_Form");
-            m_iceballSummon = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            m_iceballSummon = _levelScreen.ProjectileManager.FireProjectile(projectileData);
             m_iceballSummon.PlayAnimation("Start", "Grown");
             projectileData.Dispose();
         }
@@ -466,7 +466,7 @@ namespace RogueLegacy
             for (var i = 0; i < numIceballs; i++)
             {
                 projectileData.Angle = new Vector2(num, num);
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num += num2;
             }
@@ -500,7 +500,7 @@ namespace RogueLegacy
             {
                 float num2 = CDGMath.RandomInt(0, 360);
                 projectileData.Angle = new Vector2(num2, num2);
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 Tween.RunFunction(0.15f, this, "ChangeIceballState", projectileObj);
                 num2 += num;
             }
@@ -517,7 +517,7 @@ namespace RogueLegacy
         {
             if (m_iceballSummon != null)
             {
-                m_levelScreen.ProjectileManager.DestroyProjectile(m_iceballSummon);
+                _levelScreen.ProjectileManager.DestroyProjectile(m_iceballSummon);
                 m_iceballSummon = null;
             }
         }

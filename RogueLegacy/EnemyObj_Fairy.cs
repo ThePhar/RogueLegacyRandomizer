@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnemyObj_Fairy.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-26 12:01 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -340,13 +340,13 @@ public class EnemyObj_Fairy : EnemyObj
         else
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "FairyAttack1");
 
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(90f, 90f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(180f, 180f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Angle = new Vector2(-90f, -90f);
-        m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileData.Dispose();
     }
 
@@ -367,23 +367,23 @@ public class EnemyObj_Fairy : EnemyObj
             Scale = ProjectileScale
         };
         ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(90f, 90f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(180f, 180f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-90f, -90f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         ls.AddAction(new DelayLogicAction(0.125f));
         ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
         projectileData.Angle = new Vector2(135f, 135f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(45f, 45f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-45f, -45f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-135f, -135f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Dispose();
     }
 
@@ -571,7 +571,7 @@ public class EnemyObj_Fairy : EnemyObj
 
                     m_summonCounter = m_summonTimer;
                     NumHits--;
-                    if (!IsKilled && NumHits <= 0 && m_levelScreen.CurrentRoom.ActiveEnemies <= m_numSummons + 1)
+                    if (!IsKilled && NumHits <= 0 && _levelScreen.CurrentRoom.ActiveEnemies <= m_numSummons + 1)
                     {
                         if (Game.PlayerStats.TimesCastleBeaten <= 0 || IsNeo)
                         {
@@ -589,7 +589,7 @@ public class EnemyObj_Fairy : EnemyObj
                 }
             }
 
-            var currentRoom = m_levelScreen.CurrentRoom;
+            var currentRoom = _levelScreen.CurrentRoom;
             var bounds = Bounds;
             var bounds2 = currentRoom.Bounds;
             var num2 = bounds.Right - bounds2.Right;
@@ -650,14 +650,14 @@ public class EnemyObj_Fairy : EnemyObj
             enemyObj_Fairy.Orientation = MathHelper.ToRadians(180f);
 
         enemyObj_Fairy.Level = Level - 7 - 1;
-        m_levelScreen.AddEnemyToCurrentRoom(enemyObj_Fairy);
+        _levelScreen.AddEnemyToCurrentRoom(enemyObj_Fairy);
         enemyObj_Fairy.PlayAnimation();
         enemyObj_Fairy.MainFairy = false;
         enemyObj_Fairy.SavedStartingPos = enemyObj_Fairy.Position;
         enemyObj_Fairy.SaveToFile = false;
         if (LevelENV.ShowEnemyRadii) enemyObj_Fairy.InitializeDebugRadii();
 
-        enemyObj_Fairy.SpawnRoom = m_levelScreen.CurrentRoom;
+        enemyObj_Fairy.SpawnRoom = _levelScreen.CurrentRoom;
         enemyObj_Fairy.GivesLichHealth = false;
     }
 
@@ -685,9 +685,9 @@ public class EnemyObj_Fairy : EnemyObj
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "PressStart");
             m_bossVersionKilled = true;
             m_target.LockControls();
-            m_levelScreen.PauseScreen();
-            m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
-            m_levelScreen.RunWhiteSlashEffect();
+            _levelScreen.PauseScreen();
+            _levelScreen.ProjectileManager.DestroyAllProjectiles(false);
+            _levelScreen.RunWhiteSlashEffect();
             Tween.RunFunction(1f, this, "Part2");
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flash");
             SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Freeze");
@@ -712,11 +712,11 @@ public class EnemyObj_Fairy : EnemyObj
     public void Part2()
     {
         m_playDeathLoop = true;
-        foreach (var current in m_levelScreen.CurrentRoom.TempEnemyList)
+        foreach (var current in _levelScreen.CurrentRoom.TempEnemyList)
             if (!current.IsKilled)
                 current.Kill();
 
-        m_levelScreen.UnpauseScreen();
+        _levelScreen.UnpauseScreen();
         m_target.UnlockControls();
         if (m_currentActiveLB != null) m_currentActiveLB.StopLogicBlock();
 
@@ -727,7 +727,7 @@ public class EnemyObj_Fairy : EnemyObj
         m_target.ForceInvincible = true;
         if (IsNeo) m_target.InvincibleToSpikes = true;
 
-        Tween.To(m_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
+        Tween.To(_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
         m_shake = true;
         m_shakeTimer = m_shakeDuration;
         for (var i = 0; i < 40; i++)
@@ -740,7 +740,7 @@ public class EnemyObj_Fairy : EnemyObj
                 "Boss_Explo_02",
                 "Boss_Explo_03"
             });
-            Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
+            Tween.RunFunction(i * 0.1f, _levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
         }
 
         Tween.AddEndHandlerToLastTween(this, "Part3");
@@ -756,11 +756,11 @@ public class EnemyObj_Fairy : EnemyObj
             {
                 var position = Position;
                 if (list[m] == 0)
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", position, 1, 10);
                 else if (list[m] == 1)
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 10, 100);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", position, 10, 100);
                 else
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 11, 500);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", position, 11, 500);
             }
         }
     }
@@ -771,7 +771,7 @@ public class EnemyObj_Fairy : EnemyObj
         SoundManager.Play3DSound(this, Game.ScreenManager.Player, "Boss_Flameskull_Death");
         if (m_deathLoop != null && m_deathLoop.IsPlaying) m_deathLoop.Stop(AudioStopOptions.Immediate);
 
-        m_levelScreen.RunWhiteSlash2();
+        _levelScreen.RunWhiteSlash2();
         base.Kill();
     }
 
@@ -779,7 +779,7 @@ public class EnemyObj_Fairy : EnemyObj
     {
         if (!MainFairy)
         {
-            m_levelScreen.RemoveEnemyFromRoom(this, SpawnRoom, SavedStartingPos);
+            _levelScreen.RemoveEnemyFromRoom(this, SpawnRoom, SavedStartingPos);
             Dispose();
             return;
         }

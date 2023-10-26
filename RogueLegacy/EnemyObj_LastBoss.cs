@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnemyObj_LastBoss.cs
-//  Last Modified 2023-10-24 4:38 PM
+//  Last Modified 2023-10-26 12:01 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -559,9 +559,9 @@ namespace RogueLegacy
                 m_axeProjData.AngleOffset = CDGMath.RandomInt(-70, 70);
             }
 
-            m_levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
+            _levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
             SoundManager.Play3DSound(this, m_target, "Cast_Axe");
-            m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 45f, true);
+            _levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 45f, true);
         }
 
         public void ThrowDaggerProjectiles()
@@ -625,9 +625,9 @@ namespace RogueLegacy
                 m_daggerProjData.AngleOffset = CDGMath.RandomInt(-8, 8);
             }
 
-            m_levelScreen.ProjectileManager.FireProjectile(m_daggerProjData);
+            _levelScreen.ProjectileManager.FireProjectile(m_daggerProjData);
             SoundManager.Play3DSound(this, m_target, "Cast_Dagger");
-            m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 0f, true);
+            _levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 0f, true);
         }
 
         public void CastCloseShield()
@@ -646,9 +646,9 @@ namespace RogueLegacy
                 Lifespan = m_Spell_Close_Lifespan,
                 LockPosition = true
             };
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             SoundManager.Play3DSound(this, m_target, "Cast_GiantSword");
-            m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 90f, true);
+            _levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 90f, true);
             projectileData.Dispose();
         }
 
@@ -867,17 +867,17 @@ namespace RogueLegacy
                     {
                         if (roomPosition == "Centre")
                         {
-                            x = m_levelScreen.CurrentRoom.Bounds.Center.X;
+                            x = _levelScreen.CurrentRoom.Bounds.Center.X;
                         }
                     }
                     else
                     {
-                        x = m_levelScreen.CurrentRoom.Bounds.Right - 200;
+                        x = _levelScreen.CurrentRoom.Bounds.Right - 200;
                     }
                 }
                 else
                 {
-                    x = m_levelScreen.CurrentRoom.Bounds.Left + 200;
+                    x = _levelScreen.CurrentRoom.Bounds.Left + 200;
                 }
             }
 
@@ -915,7 +915,7 @@ namespace RogueLegacy
             for (var i = 0; i < MegaFlyingSwordAmount; i++)
             {
                 var vector = new Vector2(X, Y + CDGMath.RandomInt(-1320, 100));
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.Position = vector;
                 Tween.By(projectileObj, 2.5f, Tween.EaseNone, "delay", num.ToString(), "X", num2.ToString());
                 Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
@@ -930,7 +930,7 @@ namespace RogueLegacy
                     "FinalBoss_St2_SwordSummon_c_07",
                     "FinalBoss_St2_SwordSummon_c_08"
                 });
-                m_levelScreen.ImpactEffectPool.SpellCastEffect(vector, 0f, false);
+                _levelScreen.ImpactEffectPool.SpellCastEffect(vector, 0f, false);
                 num += 0.075f;
             }
         }
@@ -957,10 +957,10 @@ namespace RogueLegacy
             var num2 = 0;
             var num3 = 0.5f;
             UpdateCollisionBoxes();
-            var vector = new Vector2(m_levelScreen.CurrentRoom.Bounds.Center.X, Y);
+            var vector = new Vector2(_levelScreen.CurrentRoom.Bounds.Center.X, Y);
             for (var i = 0; i < numSpears; i++)
             {
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj.Scale = new Vector2(2f, 2f);
                 projectileObj.X = vector.X + 50f + num;
                 projectileObj.Y = Y + (Bounds.Bottom - Y);
@@ -989,7 +989,7 @@ namespace RogueLegacy
                     "FinalBoss_St2_Lance_Retract_06"
                 });
                 Tween.RunFunction(num3 + duration + 1f, projectileObj, "KillProjectile");
-                var projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj2 = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj2.Scale = new Vector2(2f, 2f);
                 projectileObj2.X = vector.X - 50f + num2;
                 projectileObj2.Y = Y + (Bounds.Bottom - Y);
@@ -1007,7 +1007,7 @@ namespace RogueLegacy
 
         public void CastSwordsRandom()
         {
-            var vector = new Vector2(m_levelScreen.CurrentRoom.Bounds.Center.X, Y);
+            var vector = new Vector2(_levelScreen.CurrentRoom.Bounds.Center.X, Y);
             UpdateCollisionBoxes();
             var projectileData = new ProjectileData(this)
             {
@@ -1029,7 +1029,7 @@ namespace RogueLegacy
             var num3 = 1f;
             for (var i = 0; i < MegaUpwardSwordProjectileAmount; i++)
             {
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj.Scale = new Vector2(1.5f, 1.5f);
                 projectileObj.X = vector.X + 50f + num;
                 projectileObj.Y = vector.Y + (Bounds.Bottom - Y) + 120f;
@@ -1039,7 +1039,7 @@ namespace RogueLegacy
                     (-megaUpwardSwordProjectileSpeed).ToString());
                 Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
                 num = CDGMath.RandomInt(50, 1000);
-                var projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+                var projectileObj2 = _levelScreen.ProjectileManager.FireProjectile(projectileData);
                 projectileObj2.Scale = new Vector2(2f, 2f);
                 projectileObj2.X = vector.X - 50f + num2;
                 projectileObj2.Y = vector.Y + (Bounds.Bottom - Y) + 120f;
@@ -1086,7 +1086,7 @@ namespace RogueLegacy
             for (var i = 0; i < numOrbs; i++)
             {
                 var num = 360f / numOrbs * i;
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.AltX = num;
                 projectileObj.AltY = mega_Shield_Distance;
                 projectileObj.Spell = 11;
@@ -1095,7 +1095,7 @@ namespace RogueLegacy
                 projectileObj.IgnoreBoundsCheck = true;
                 projectileObj.Scale = new Vector2(m_Mega_Shield_Scale, m_Mega_Shield_Scale);
                 projectileObj.Position = CDGMath.GetCirclePosition(num, mega_Shield_Distance, Position);
-                m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position, projectileObj.Rotation, false);
+                _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position, projectileObj.Rotation, false);
                 m_damageShieldProjectiles.Add(projectileObj);
             }
         }
@@ -1119,7 +1119,7 @@ namespace RogueLegacy
                     ChangeSprite("PlayerDash_Character");
                 }
 
-                m_levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), false);
+                _levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), false);
             }
             else
             {
@@ -1137,7 +1137,7 @@ namespace RogueLegacy
                     ChangeSprite("PlayerFrontDash_Character");
                 }
 
-                m_levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), true);
+                _levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), true);
             }
 
             if (heading != 0)
@@ -1196,7 +1196,7 @@ namespace RogueLegacy
                         m_smokeCounter = 0.05f;
                     }
 
-                    m_levelScreen.ImpactEffectPool.BlackSmokeEffect(this);
+                    _levelScreen.ImpactEffectPool.BlackSmokeEffect(this);
                 }
             }
 
@@ -1242,13 +1242,13 @@ namespace RogueLegacy
                 if (IsTouchingGround && !m_firstFormDying)
                 {
                     m_firstFormDying = true;
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 3, 0.1f);
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 3, 0.1f);
-                    m_levelScreen.ItemDropManager.DropItemWide(Position, 3, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 2, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 3, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 3, 0.1f);
+                    _levelScreen.ItemDropManager.DropItemWide(Position, 3, 0.1f);
                     IsWeighted = false;
                     IsCollidable = false;
                     AnimationDelay = 0.1f;
@@ -1299,20 +1299,20 @@ namespace RogueLegacy
         public void MovePlayerTo()
         {
             m_target.StopAllSpells();
-            m_levelScreen.ProjectileManager.DestroyAllProjectiles(true);
+            _levelScreen.ProjectileManager.DestroyAllProjectiles(true);
             IsSecondForm = true;
             m_isKilled = true;
-            m_levelScreen.RunCinematicBorders(16f);
+            _levelScreen.RunCinematicBorders(16f);
             m_currentActiveLB.StopLogicBlock();
             var num = 250;
             var zero = Vector2.Zero;
-            if (m_target.X < X && X > m_levelScreen.CurrentRoom.X + 500f ||
-                X > m_levelScreen.CurrentRoom.Bounds.Right - 500)
+            if (m_target.X < X && X > _levelScreen.CurrentRoom.X + 500f ||
+                X > _levelScreen.CurrentRoom.Bounds.Right - 500)
             {
                 zero = new Vector2(X - num, Y);
-                if (zero.X > m_levelScreen.CurrentRoom.Bounds.Right - 500)
+                if (zero.X > _levelScreen.CurrentRoom.Bounds.Right - 500)
                 {
-                    zero.X = m_levelScreen.CurrentRoom.Bounds.Right - 500;
+                    zero.X = _levelScreen.CurrentRoom.Bounds.Right - 500;
                 }
             }
             else
@@ -1333,7 +1333,7 @@ namespace RogueLegacy
             m_target.AccelerationY = 0f;
             m_target.AccelerationX = 0f;
             m_target.IsCollidable = false;
-            m_target.Y = m_levelScreen.CurrentRoom.Bounds.Bottom - 180 - (m_target.Bounds.Bottom - m_target.Y);
+            m_target.Y = _levelScreen.CurrentRoom.Bounds.Bottom - 180 - (m_target.Bounds.Bottom - m_target.Y);
             m_target.CurrentSpeed = 0f;
             m_target.LockControls();
             m_target.ChangeSprite("PlayerWalking_Character");
@@ -1365,7 +1365,7 @@ namespace RogueLegacy
             Tween.RunFunction(2f, this, "PlayBlackSmokeSounds");
             for (var i = 0; i < 30; i++)
             {
-                Tween.RunFunction(num, m_levelScreen.ImpactEffectPool, "BlackSmokeEffect", Position,
+                Tween.RunFunction(num, _levelScreen.ImpactEffectPool, "BlackSmokeEffect", Position,
                     new Vector2(1f + num * 1f, 1f + num * 1f));
                 num += 0.05f;
             }
@@ -1386,9 +1386,9 @@ namespace RogueLegacy
 
         public void SecondFormDialogue()
         {
-            var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+            var rCScreenManager = _levelScreen.ScreenManager as RCScreenManager;
             rCScreenManager.DialogueScreen.SetDialogue("FinalBossTalk02");
-            rCScreenManager.DialogueScreen.SetConfirmEndHandler(m_levelScreen.CurrentRoom, "RunFountainCutscene");
+            rCScreenManager.DialogueScreen.SetConfirmEndHandler(_levelScreen.CurrentRoom, "RunFountainCutscene");
             rCScreenManager.DisplayScreen(13, true);
         }
 
@@ -1441,7 +1441,7 @@ namespace RogueLegacy
                 UnpauseEnemy(true);
             }
 
-            m_levelScreen.CameraLockedToPlayer = true;
+            _levelScreen.CameraLockedToPlayer = true;
             m_target.UnlockControls();
             m_target.IsWeighted = true;
             m_target.IsCollidable = true;
@@ -1482,10 +1482,10 @@ namespace RogueLegacy
 
                     m_bossVersionKilled = true;
                     SetPlayerData();
-                    m_levelScreen.PauseScreen();
-                    m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
+                    _levelScreen.PauseScreen();
+                    _levelScreen.ProjectileManager.DestroyAllProjectiles(false);
                     m_target.StopAllSpells();
-                    m_levelScreen.RunWhiteSlashEffect();
+                    _levelScreen.RunWhiteSlashEffect();
                     ChangeSprite("EnemyLastBossDeath_Character");
                     if (m_target.X < X)
                     {
@@ -1511,12 +1511,12 @@ namespace RogueLegacy
                 if (IsNeo && !m_neoDying)
                 {
                     m_neoDying = true;
-                    m_levelScreen.PauseScreen();
+                    _levelScreen.PauseScreen();
                     SoundManager.PauseMusic();
-                    m_levelScreen.RunWhiteSlashEffect();
+                    _levelScreen.RunWhiteSlashEffect();
                     SoundManager.PlaySound("Boss_Flash");
                     SoundManager.PlaySound("Boss_Eyeball_Freeze");
-                    Tween.RunFunction(1f, m_levelScreen, "UnpauseScreen");
+                    Tween.RunFunction(1f, _levelScreen, "UnpauseScreen");
                     Tween.RunFunction(1f, typeof(SoundManager), "ResumeMusic");
                 }
             }
@@ -1625,7 +1625,7 @@ namespace RogueLegacy
         public void Part2()
         {
             SoundManager.PlaySound("FinalBoss_St2_WeatherChange_a");
-            m_levelScreen.UnpauseScreen();
+            _levelScreen.UnpauseScreen();
             if (m_currentActiveLB != null)
             {
                 m_currentActiveLB.StopLogicBlock();
@@ -1634,14 +1634,14 @@ namespace RogueLegacy
             PauseEnemy(true);
             m_target.CurrentSpeed = 0f;
             m_target.ForceInvincible = true;
-            Tween.RunFunction(1f, m_levelScreen, "RevealMorning");
-            Tween.RunFunction(1f, m_levelScreen.CurrentRoom, "ChangeWindowOpacity");
+            Tween.RunFunction(1f, _levelScreen, "RevealMorning");
+            Tween.RunFunction(1f, _levelScreen.CurrentRoom, "ChangeWindowOpacity");
             Tween.RunFunction(5f, this, "Part3");
         }
 
         public void Part3()
         {
-            var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+            var rCScreenManager = _levelScreen.ScreenManager as RCScreenManager;
 
             var finalWords = DialogueManager.GetText("FinalBossTalk03");
             finalWords.Dialogue = finalWords.Dialogue.Take(finalWords.Dialogue.Length - 2)
@@ -1671,7 +1671,7 @@ namespace RogueLegacy
         {
             var list = new List<object>();
             list.Add(this);
-            (m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(26, true, list);
+            (_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(26, true, list);
         }
 
         public override void ChangeSprite(string spriteName)

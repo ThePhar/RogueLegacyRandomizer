@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Chicken.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Chicken.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -192,8 +192,8 @@ namespace RogueLegacy
 
         public override void Update(GameTime gameTime)
         {
-            if (m_levelScreen != null && m_levelScreen.CurrentRoom != null && !IsKilled &&
-                !CollisionMath.Intersects(TerrainBounds, m_levelScreen.CurrentRoom.Bounds))
+            if (_levelScreen != null && _levelScreen.CurrentRoom != null && !IsKilled &&
+                !CollisionMath.Intersects(TerrainBounds, _levelScreen.CurrentRoom.Bounds))
             {
                 Kill();
             }

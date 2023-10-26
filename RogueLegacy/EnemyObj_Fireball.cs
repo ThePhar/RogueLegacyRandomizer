@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnemyObj_Fireball.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-26 12:01 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -303,21 +303,21 @@ public class EnemyObj_Fireball : EnemyObj
 
         ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
         projectileData.Angle = new Vector2(60f, 60f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(30f, 30f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(120f, 120f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(150f, 150f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-60f, -60f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-30f, -30f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-120f, -120f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Angle = new Vector2(-150f, -150f);
-        ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+        ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
         projectileData.Dispose();
     }
 
@@ -342,7 +342,7 @@ public class EnemyObj_Fireball : EnemyObj
 
         if (useBossProjectile) projectileData.SpriteName = "GhostBossProjectile_Sprite";
 
-        var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileObj.Rotation = 0f;
         if (IsNeo) projectileObj.TextureColor = Color.MediumSpringGreen;
 
@@ -589,9 +589,9 @@ public class EnemyObj_Fireball : EnemyObj
             SoundManager.PlaySound("PressStart");
             m_bossVersionKilled = true;
             m_target.LockControls();
-            m_levelScreen.PauseScreen();
-            m_levelScreen.ProjectileManager.DestroyAllProjectiles(false);
-            m_levelScreen.RunWhiteSlashEffect();
+            _levelScreen.PauseScreen();
+            _levelScreen.ProjectileManager.DestroyAllProjectiles(false);
+            _levelScreen.RunWhiteSlashEffect();
             Tween.RunFunction(1f, this, "Part2");
             SoundManager.PlaySound("Boss_Flash");
             SoundManager.PlaySound("Boss_Fireball_Freeze");
@@ -615,7 +615,7 @@ public class EnemyObj_Fireball : EnemyObj
 
     public void Part2()
     {
-        m_levelScreen.UnpauseScreen();
+        _levelScreen.UnpauseScreen();
         m_target.UnlockControls();
         if (m_currentActiveLB != null) m_currentActiveLB.StopLogicBlock();
 
@@ -624,7 +624,7 @@ public class EnemyObj_Fireball : EnemyObj
         PlayAnimation();
         m_target.CurrentSpeed = 0f;
         m_target.ForceInvincible = true;
-        Tween.To(m_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
+        Tween.To(_levelScreen.Camera, 0.5f, Quad.EaseInOut, "X", X.ToString(), "Y", Y.ToString());
         m_shake = true;
         m_shakeTimer = m_shakeDuration;
         for (var i = 0; i < 40; i++)
@@ -637,7 +637,7 @@ public class EnemyObj_Fireball : EnemyObj
                 "Boss_Explo_02",
                 "Boss_Explo_03"
             });
-            Tween.RunFunction(i * 0.1f, m_levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
+            Tween.RunFunction(i * 0.1f, _levelScreen.ImpactEffectPool, "DisplayExplosionEffect", vector);
         }
 
         Tween.AddEndHandlerToLastTween(this, "Part3");
@@ -653,11 +653,11 @@ public class EnemyObj_Fireball : EnemyObj
             {
                 var position = Position;
                 if (list[m] == 0)
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 1, 10);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", position, 1, 10);
                 else if (list[m] == 1)
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 10, 100);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", position, 10, 100);
                 else
-                    Tween.RunFunction(m * num, m_levelScreen.ItemDropManager, "DropItem", position, 11, 500);
+                    Tween.RunFunction(m * num, _levelScreen.ItemDropManager, "DropItem", position, 11, 500);
             }
         }
     }
@@ -665,7 +665,7 @@ public class EnemyObj_Fireball : EnemyObj
     public void Part3()
     {
         SoundManager.PlaySound("Boss_Fireball_Death");
-        m_levelScreen.ImpactEffectPool.DestroyFireballBoss(Position);
+        _levelScreen.ImpactEffectPool.DestroyFireballBoss(Position);
         base.Kill();
     }
 }

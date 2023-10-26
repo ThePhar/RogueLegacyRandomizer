@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_HomingTurret.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_HomingTurret.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -197,22 +197,22 @@ namespace RogueLegacy
             logicSet.AddAction(new DelayLogicAction(0.5f));
             var logicSet2 = new LogicSet(this);
             logicSet2.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet2.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
                 "Turret_Attack03"));
             logicSet2.AddAction(new DelayLogicAction(num));
             var logicSet3 = new LogicSet(this);
             logicSet3.AddAction(new PlayAnimationLogicAction(false), Types.Sequence.Parallel);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
                 "Turret_Attack03"));
             logicSet3.AddAction(new DelayLogicAction(0.1f));
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
                 "Turret_Attack03"));
             logicSet3.AddAction(new DelayLogicAction(0.1f));
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
                 "Turret_Attack03"));
             logicSet3.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
@@ -222,7 +222,7 @@ namespace RogueLegacy
             projectileData.ChaseTarget = true;
             projectileData.Target = m_target;
             projectileData.TurnSpeed = 0.02f;
-            logicSet4.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet4.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, m_target, "Turret_Attack01", "Turret_Attack02",
                 "Turret_Attack03"));
             logicSet4.AddAction(new RunFunctionLogicAction(this, "FireProjectileEffect"));
@@ -251,9 +251,9 @@ namespace RogueLegacy
                 position.X -= 30f;
             }
 
-            m_levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
-            m_levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
-            m_levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
+            _levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
+            _levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
+            _levelScreen.ImpactEffectPool.TurretFireEffect(position, new Vector2(0.5f, 0.5f));
         }
 
         protected override void RunBasicLogic()

@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Starburst.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Starburst.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -170,13 +170,13 @@ namespace RogueLegacy
             logicSet.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
             logicSet.AddAction(new DelayLogicAction(FireballDelay));
             logicSet.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "Eyeball_ProjectileAttack"));
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(90f, 90f);
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(180f, 180f);
-            logicSet.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
             logicSet.AddAction(new DelayLogicAction(1f, 1f));
             logicSet.Tag = 2;
@@ -188,21 +188,21 @@ namespace RogueLegacy
             logicSet2.AddAction(new DelayLogicAction(FireballDelay));
             logicSet2.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player,
                 "Eyeball_ProjectileAttack"));
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-45f, -45f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(135f, 135f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-135f, -135f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(90f, 90f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(180f, 180f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(0f, 0f);
-            logicSet2.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet2.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet2.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
             logicSet2.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet2.AddAction(new DelayLogicAction(1f, 1f));
@@ -217,42 +217,42 @@ namespace RogueLegacy
             logicSet3.AddAction(new DelayLogicAction(FireballDelay));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player,
                 "Eyeball_ProjectileAttack"));
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-45f, -45f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(135f, 135f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-135f, -135f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-90f, -90f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(90f, 90f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(180f, 180f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(0f, 0f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
             logicSet3.AddAction(new DelayLogicAction(1f, 1f));
             logicSet3.AddAction(new RunFunctionLogicAction(this, "FireAnimation"));
             logicSet3.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player,
                 "Eyeball_ProjectileAttack"));
             projectileData.Angle = new Vector2(25f, 25f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-25f, -25f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(115f, 115f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-115f, -115f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-70f, -70f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(70f, 70f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(160f, 160f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-160f, -160f);
-            logicSet3.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet3.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet3.AddAction(new ChangeSpriteLogicAction("EnemyStarburstIdle_Character"));
             logicSet3.AddAction(new ChangePropertyLogicAction(_objectList[1], "Rotation", 45));
             logicSet3.AddAction(new DelayLogicAction(1.25f, 1.25f));

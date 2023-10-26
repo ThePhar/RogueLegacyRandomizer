@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Knight.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Knight.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -189,7 +189,7 @@ namespace RogueLegacy
             logicSet4.AddAction(new DelayLogicAction(AttackThrustDelay));
             logicSet4.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
             logicSet4.AddAction(new MoveDirectionLogicAction(AttackThrustSpeed));
-            logicSet4.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
+            logicSet4.AddAction(new RunFunctionLogicAction(_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
                 this, 20, 0.3f));
             logicSet4.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
             logicSet4.AddAction(new DelayLogicAction(AttackThrustDuration));
@@ -206,7 +206,7 @@ namespace RogueLegacy
             logicSet5.AddAction(new DelayLogicAction(AttackThrustDelayExpert));
             logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
             logicSet5.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedExpert));
-            logicSet5.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
+            logicSet5.AddAction(new RunFunctionLogicAction(_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
                 this, 20, 0.3f));
             logicSet5.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
             logicSet5.AddAction(new DelayLogicAction(AttackThrustDurationExpert));
@@ -223,7 +223,7 @@ namespace RogueLegacy
             logicSet6.AddAction(new DelayLogicAction(AttackThrustDelayMiniBoss));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
             logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss));
-            logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
+            logicSet6.AddAction(new RunFunctionLogicAction(_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
                 this, 20, 0.3f));
             logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
             logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss));
@@ -237,7 +237,7 @@ namespace RogueLegacy
             logicSet6.AddAction(new DelayLogicAction(0.25f));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
             logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss));
-            logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
+            logicSet6.AddAction(new RunFunctionLogicAction(_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
                 this, 20, 0.3f));
             logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
             logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss));
@@ -251,7 +251,7 @@ namespace RogueLegacy
             logicSet6.AddAction(new DelayLogicAction(0.25f));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
             logicSet6.AddAction(new MoveDirectionLogicAction(AttackThrustSpeedMiniBoss));
-            logicSet6.AddAction(new RunFunctionLogicAction(m_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
+            logicSet6.AddAction(new RunFunctionLogicAction(_levelScreen.ImpactEffectPool, "DisplayThrustDustEffect",
                 this, 20, 0.3f));
             logicSet6.AddAction(new PlayAnimationLogicAction("AttackStart", "End"), Types.Sequence.Parallel);
             logicSet6.AddAction(new DelayLogicAction(AttackThrustDurationMiniBoss));
@@ -281,7 +281,7 @@ namespace RogueLegacy
             logicSet7.AddAction(new DelayLogicAction(AttackProjectileDelay));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnight_Projectile"));
-            logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet7.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet7.AddAction(new DelayLogicAction(0.3f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
@@ -391,11 +391,11 @@ namespace RogueLegacy
                 Scale = ProjectileScale
             };
             ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnight_Projectile"));
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(45f, 45f);
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-45f, -45f);
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             projectileData.Dispose();
         }
@@ -415,9 +415,9 @@ namespace RogueLegacy
                 Angle = new Vector2(22f, 22f)
             };
             ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SpearKnightAttack1"));
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Angle = new Vector2(-22f, -22f);
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             projectileData.Dispose();
         }
@@ -437,10 +437,10 @@ namespace RogueLegacy
                 Angle = Vector2.Zero
             };
             ls.AddAction(new DelayLogicAction(0.2f, 0.35f));
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new DelayLogicAction(0.2f, 0.35f));
             projectileData.SourceAnchor = new Vector2(130f, 28f);
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Dispose();
         }
 

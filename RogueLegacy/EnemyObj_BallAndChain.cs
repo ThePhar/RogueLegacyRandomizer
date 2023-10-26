@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_BallAndChain.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_BallAndChain.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Collections.Generic;
@@ -369,12 +369,12 @@ namespace RogueLegacy
 
         public override void Kill(bool giveXP = true)
         {
-            m_levelScreen.PhysicsManager.RemoveObject(BallAndChain);
-            var enemyObj_BouncySpike = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
+            _levelScreen.PhysicsManager.RemoveObject(BallAndChain);
+            var enemyObj_BouncySpike = new EnemyObj_BouncySpike(m_target, null, _levelScreen,
                 Difficulty);
             enemyObj_BouncySpike.SavedStartingPos = Position;
             enemyObj_BouncySpike.Position = Position;
-            m_levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike);
+            _levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike);
             enemyObj_BouncySpike.Position = BallAndChain.Position;
             enemyObj_BouncySpike.Speed = ChainSpeed * 200f / m_BallSpeedDivider;
             enemyObj_BouncySpike.HeadingX =
@@ -383,12 +383,12 @@ namespace RogueLegacy
                 (float) Math.Sin(MathHelper.WrapAngle(MathHelper.ToRadians(m_ballAngle + 90f)));
             if (Difficulty > EnemyDifficulty.Basic)
             {
-                m_levelScreen.PhysicsManager.RemoveObject(BallAndChain2);
-                var enemyObj_BouncySpike2 = new EnemyObj_BouncySpike(m_target, null, m_levelScreen,
+                _levelScreen.PhysicsManager.RemoveObject(BallAndChain2);
+                var enemyObj_BouncySpike2 = new EnemyObj_BouncySpike(m_target, null, _levelScreen,
                     Difficulty);
                 enemyObj_BouncySpike2.SavedStartingPos = Position;
                 enemyObj_BouncySpike2.Position = Position;
-                m_levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike2);
+                _levelScreen.AddEnemyToCurrentRoom(enemyObj_BouncySpike2);
                 enemyObj_BouncySpike2.Position = BallAndChain2.Position;
                 enemyObj_BouncySpike2.Speed = ChainSpeed * 200f * ChainSpeed2Modifier / m_BallSpeedDivider;
                 if (Difficulty == EnemyDifficulty.Advanced)
@@ -410,7 +410,7 @@ namespace RogueLegacy
                         Math.Sin(MathHelper.WrapAngle(MathHelper.ToRadians(-m_ballAngle * ChainSpeed2Modifier + 90f)));
                 }
 
-                enemyObj_BouncySpike2.SpawnRoom = m_levelScreen.CurrentRoom;
+                enemyObj_BouncySpike2.SpawnRoom = _levelScreen.CurrentRoom;
                 enemyObj_BouncySpike2.SaveToFile = false;
                 if (IsPaused)
                 {
@@ -418,7 +418,7 @@ namespace RogueLegacy
                 }
             }
 
-            enemyObj_BouncySpike.SpawnRoom = m_levelScreen.CurrentRoom;
+            enemyObj_BouncySpike.SpawnRoom = _levelScreen.CurrentRoom;
             enemyObj_BouncySpike.SaveToFile = false;
             if (IsPaused)
             {

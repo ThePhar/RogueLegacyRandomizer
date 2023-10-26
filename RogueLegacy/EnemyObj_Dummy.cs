@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Dummy.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Dummy.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -62,8 +62,8 @@ namespace RogueLegacy
                 SoundManager.Play3DSound(this, Game.ScreenManager.Player, "EnemyHit1", "EnemyHit2", "EnemyHit3",
                     "EnemyHit4", "EnemyHit5", "EnemyHit6");
                 Blink(Color.Red, 0.1f);
-                m_levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(collisionPt);
-                m_levelScreen.ImpactEffectPool.WoodChipEffect(new Vector2(X, Bounds.Center.Y));
+                _levelScreen.ImpactEffectPool.DisplayEnemyImpactEffect(collisionPt);
+                _levelScreen.ImpactEffectPool.WoodChipEffect(new Vector2(X, Bounds.Center.Y));
                 if (isPlayer)
                 {
                     var expr_D0 = m_target;
@@ -76,8 +76,8 @@ namespace RogueLegacy
                     }
                 }
 
-                m_levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
-                m_levelScreen.SetLastEnemyHit(this);
+                _levelScreen.TextManager.DisplayNumberText(damage, Color.Red, new Vector2(X, Bounds.Top));
+                _levelScreen.SetLastEnemyHit(this);
                 RandomizeName();
             }
         }

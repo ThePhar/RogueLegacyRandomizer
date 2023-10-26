@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Horse.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Horse.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -251,11 +251,11 @@ namespace RogueLegacy
                 Lifespan = 0.75f
             };
             ls.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "FairyAttack1"));
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new DelayLogicAction(0.075f));
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             ls.AddAction(new DelayLogicAction(0.075f));
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Dispose();
         }
 
@@ -386,8 +386,8 @@ namespace RogueLegacy
                 CastFireShield(m_numFireShieldObjs);
             }
 
-            if ((Bounds.Left < m_levelScreen.CurrentRoom.Bounds.Left ||
-                 Bounds.Right > m_levelScreen.CurrentRoom.Bounds.Right) && m_collisionCheckTimer <= 0f)
+            if ((Bounds.Left < _levelScreen.CurrentRoom.Bounds.Left ||
+                 Bounds.Right > _levelScreen.CurrentRoom.Bounds.Right) && m_collisionCheckTimer <= 0f)
             {
                 TurnHorse();
             }
@@ -406,7 +406,7 @@ namespace RogueLegacy
             }
 
             var flag = true;
-            foreach (var current in m_levelScreen.CurrentRoom.TerrainObjList)
+            foreach (var current in _levelScreen.CurrentRoom.TerrainObjList)
                 if (CollisionMath.Intersects(current.Bounds, b) || CollisionMath.Intersects(current.Bounds, b2))
                 {
                     flag = false;
@@ -449,7 +449,7 @@ namespace RogueLegacy
                 Lifespan = m_fireDropLifespan,
                 LockPosition = true
             };
-            m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+            _levelScreen.ProjectileManager.FireProjectile(projectileData);
             projectileData.Dispose();
         }
 
@@ -477,7 +477,7 @@ namespace RogueLegacy
             for (var i = 0; i < numFires; i++)
             {
                 var altX = 360f / numFires * i;
-                var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+                var projectileObj = _levelScreen.ProjectileManager.FireProjectile(data);
                 projectileObj.AltX = altX;
                 projectileObj.AltY = fireDistance;
                 projectileObj.Spell = 11;

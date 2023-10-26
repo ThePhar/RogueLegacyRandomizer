@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - CharacterObj.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - CharacterObj.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -25,17 +25,17 @@ namespace RogueLegacy
         protected bool m_internalIsWeighted = true;
         protected bool m_internalLockFlip;
         protected float m_internalRotation;
-        protected Vector2 m_internalScale = new Vector2(1f, 1f);
+        protected Vector2 _internalScale = new Vector2(1f, 1f);
         protected bool m_isKilled;
         protected bool m_isTouchingGround;
-        protected ProceduralLevelScreen m_levelScreen;
+        protected ProceduralLevelScreen _levelScreen;
         public float SlopeClimbRotation = 45f;
         protected int StepUp;
 
         public CharacterObj(string spriteName, PhysicsManager physicsManager, ProceduralLevelScreen levelToAttachTo)
             : base(spriteName, physicsManager)
         {
-            m_levelScreen = levelToAttachTo;
+            _levelScreen = levelToAttachTo;
             CanBeKnockedBack = true;
         }
 
@@ -70,7 +70,7 @@ namespace RogueLegacy
 
         public Vector2 InternalScale
         {
-            get { return m_internalScale; }
+            get { return _internalScale; }
         }
 
         public bool IsKilled
@@ -131,7 +131,7 @@ namespace RogueLegacy
             LockFlip = m_internalLockFlip;
             Rotation = m_internalRotation;
             AnimationDelay = m_internalAnimationDelay;
-            Scale = m_internalScale;
+            Scale = _internalScale;
             Flip = InternalFlip;
             m_isKilled = false;
             Visible = true;
@@ -142,7 +142,7 @@ namespace RogueLegacy
         {
             if (!IsDisposed)
             {
-                m_levelScreen = null;
+                _levelScreen = null;
                 base.Dispose();
             }
         }

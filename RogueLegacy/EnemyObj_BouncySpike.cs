@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_BouncySpike.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_BouncySpike.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -235,7 +235,7 @@ namespace RogueLegacy
             {
                 var num = (float) gameTime.ElapsedGameTime.TotalSeconds;
                 var value = Vector2.Zero;
-                var bounds = m_levelScreen.CurrentRoom.Bounds;
+                var bounds = _levelScreen.CurrentRoom.Bounds;
                 if (Y < bounds.Top + 10)
                 {
                     value = CollisionMath.CalculateMTD(Bounds,
@@ -333,7 +333,7 @@ namespace RogueLegacy
         {
             if (SpawnRoom != null)
             {
-                m_levelScreen.RemoveEnemyFromRoom(this, SpawnRoom, SavedStartingPos);
+                _levelScreen.RemoveEnemyFromRoom(this, SpawnRoom, SavedStartingPos);
                 Dispose();
                 return;
             }

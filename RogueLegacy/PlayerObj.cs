@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - PlayerObj.cs
-//  Last Modified 2023-10-24 4:43 PM
+//  Last Modified 2023-10-26 12:02 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -92,7 +92,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
     private          TextObj        m_flightDurationText;
     private          TweenObject    m_flipTween;
     private          int            m_invincibleCounter;
-    private          TeleporterObj  m_lastTouchedTeleporter;
+    private          TeleporterObj  _lastTouchedTeleporter;
     private          Color          m_lichColour1 = new(255, 255, 255, 255);
     private          Color          m_lichColour2 = new(198, 198, 198, 255);
     private          float          m_lightDrainCounter;
@@ -234,7 +234,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public PlayerIndex PlayerIndex { get; }
 
-    public ProceduralLevelScreen AttachedLevel => m_levelScreen;
+    public ProceduralLevelScreen AttachedLevel => _levelScreen;
 
     public float TotalAirAttackDamageMod
     {
@@ -720,7 +720,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 if (m_flipTween != null && m_flipTween.TweenedObject == this && m_flipTween.Active)
                     m_flipTween.StopTween(false);
 
-                var x = m_internalScale.X;
+                var x = _internalScale.X;
                 ScaleX = 0f;
                 m_flipTween = Tween.To(this, 0.15f, Tween.EaseNone, "ScaleX", x.ToString());
             }
@@ -832,7 +832,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         CurrentHealth = MaxHealth;
         CurrentMana = MaxMana;
         Scale = new Vector2(2f, 2f);
-        m_internalScale = Scale;
+        _internalScale = Scale;
         m_wizardSpellList = new List<byte>();
         m_wizardSpellList.Add((byte) Game.PlayerStats.WizardSpellList.X);
         m_wizardSpellList.Add((byte) Game.PlayerStats.WizardSpellList.Y);
@@ -841,7 +841,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void UpdateInternalScale()
     {
-        m_internalScale = Scale;
+        _internalScale = Scale;
     }
 
     private void InitializeInputMap()
@@ -1022,7 +1022,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             expr_13.Spell += 1;
             if (Game.PlayerStats.Spell > 16) Game.PlayerStats.Spell = 1;
 
-            m_levelScreen.UpdatePlayerSpellIcon();
+            _levelScreen.UpdatePlayerSpellIcon();
         }
 
         if (m_debugInputMap.JustPressed(2)) CurrentHealth = MaxHealth;
@@ -1038,7 +1038,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         m_debugInputMap.JustPressed(5);
         if (m_debugInputMap.JustPressed(7))
         {
-            var rCScreenManager = m_levelScreen.ScreenManager as RCScreenManager;
+            var rCScreenManager = _levelScreen.ScreenManager as RCScreenManager;
             if (rCScreenManager != null) Kill();
         }
 
@@ -1052,13 +1052,13 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         if (!LevelENV.CreateRetailVersion && InputManager.JustPressed(Keys.T, null))
         {
             SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
-            m_levelScreen.ImpactEffectPool.DisplayFartEffect(this);
+            _levelScreen.ImpactEffectPool.DisplayFartEffect(this);
         }
 
         if (Game.GlobalInput.JustPressed(9) && Game.PlayerStats.TutorialComplete &&
-            m_levelScreen.CurrentRoom.Name != "Start" && m_levelScreen.CurrentRoom.Name != "Boss" &&
-            m_levelScreen.CurrentRoom.Name != "ChallengeBoss")
-            m_levelScreen.DisplayMap(false);
+            _levelScreen.CurrentRoom.Name != "Start" && _levelScreen.CurrentRoom.Name != "Boss" &&
+            _levelScreen.CurrentRoom.Name != "ChallengeBoss")
+            _levelScreen.DisplayMap(false);
 
         if (State != 8)
         {
@@ -1191,7 +1191,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     CDGMath.RandomInt(0, 100) >= 91)
                 {
                     SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
-                    m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
+                    _levelScreen.ImpactEffectPool.DisplayDustEffect(this);
                 }
 
                 flag = true;
@@ -1202,7 +1202,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             {
                 State = 2;
                 AccelerationY = -DoubleJumpHeight;
-                m_levelScreen.ImpactEffectPool.DisplayDoubleJumpEffect(new Vector2(X, Bounds.Bottom + 10));
+                _levelScreen.ImpactEffectPool.DisplayDoubleJumpEffect(new Vector2(X, Bounds.Bottom + 10));
                 IsJumping = true;
                 m_doubleJumpCount += 1;
                 SoundManager.PlaySound("Player_DoubleJump");
@@ -1210,7 +1210,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     CDGMath.RandomInt(0, 100) >= 91)
                 {
                     SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
-                    m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
+                    _levelScreen.ImpactEffectPool.DisplayDustEffect(this);
                 }
 
                 flag = true;
@@ -1304,7 +1304,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
             if (Game.GlobalInput.JustPressed(13))
             {
-                var currentRoom = m_levelScreen.CurrentRoom;
+                var currentRoom = _levelScreen.CurrentRoom;
                 if (!(currentRoom is CarnivalShoot1BonusRoom) && !(currentRoom is CarnivalShoot2BonusRoom) &&
                     !(currentRoom is ChestBonusRoomObj))
                 {
@@ -1423,12 +1423,12 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 if (m_currentLogicSet.IsActive) m_currentLogicSet.Stop();
 
                 AnimationDelay = m_startingAnimationDelay;
-                m_levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), true);
+                _levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), true);
                 SoundManager.PlaySound("Player_Dash");
                 if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) &&
                     CDGMath.RandomInt(0, 100) >= 91)
                 {
-                    m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
+                    _levelScreen.ImpactEffectPool.DisplayDustEffect(this);
                     SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
                 }
             }
@@ -1446,12 +1446,12 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 AccelerationY = 0f;
                 if (m_currentLogicSet.IsActive) m_currentLogicSet.Stop();
 
-                m_levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), false);
+                _levelScreen.ImpactEffectPool.DisplayDashEffect(new Vector2(X, TerrainBounds.Bottom), false);
                 SoundManager.PlaySound("Player_Dash");
                 if ((Game.PlayerStats.Traits.X == 19f || Game.PlayerStats.Traits.Y == 19f) &&
                     CDGMath.RandomInt(0, 100) >= 91)
                 {
-                    m_levelScreen.ImpactEffectPool.DisplayDustEffect(this);
+                    _levelScreen.ImpactEffectPool.DisplayDustEffect(this);
                     SoundManager.PlaySound("Fart1", "Fart2", "Fart3");
                 }
             }
@@ -1515,7 +1515,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
         if (m_rapidSpellCastDelay > 0f) m_rapidSpellCastDelay -= num;
 
-        if (!(m_levelScreen.CurrentRoom is EndingRoomObj) && ScaleX > 0.1f)
+        if (!(_levelScreen.CurrentRoom is EndingRoomObj) && ScaleX > 0.1f)
         {
             if ((Game.PlayerStats.Traits.Y == 22f || Game.PlayerStats.Traits.X == 22f) && CurrentSpeed == 0f &&
                 m_ambilevousTimer > 0f)
@@ -1524,7 +1524,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 if (m_ambilevousTimer <= 0f)
                 {
                     m_ambilevousTimer = 0.4f;
-                    m_levelScreen.ImpactEffectPool.DisplayQuestionMark(new Vector2(X, Bounds.Top));
+                    _levelScreen.ImpactEffectPool.DisplayQuestionMark(new Vector2(X, Bounds.Top));
                 }
             }
 
@@ -1534,8 +1534,8 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 if (m_wizardSparkleCounter <= 0f)
                 {
                     m_wizardSparkleCounter = 0.2f;
-                    m_levelScreen.ImpactEffectPool.DisplayChestSparkleEffect(Position);
-                    m_levelScreen.ImpactEffectPool.DisplayChestSparkleEffect(Position);
+                    _levelScreen.ImpactEffectPool.DisplayChestSparkleEffect(Position);
+                    _levelScreen.ImpactEffectPool.DisplayChestSparkleEffect(Position);
                 }
             }
 
@@ -1547,7 +1547,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     m_assassinSmokeTimer = 0.15f;
                     if (CurrentSpeed > 0f) m_assassinSmokeTimer = 0.05f;
 
-                    m_levelScreen.ImpactEffectPool.BlackSmokeEffect(this);
+                    _levelScreen.ImpactEffectPool.BlackSmokeEffect(this);
                 }
             }
         }
@@ -2108,7 +2108,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         {
             StopAllSpells();
             LockControls();
-            m_lastTouchedTeleporter = teleporterObj;
+            _lastTouchedTeleporter = teleporterObj;
             Tween.RunFunction(0f, AttachedLevel, "DisplayMap", true);
         }
 
@@ -2137,11 +2137,11 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                             StopAllSpells();
                             CurrentSpeed = 0f;
                             LockControls();
-                            (m_levelScreen.ScreenManager as RCScreenManager).StartWipeTransition();
+                            (_levelScreen.ScreenManager as RCScreenManager).StartWipeTransition();
                             var vector = new Vector2(current.X + current.Width / 2f,
                                 current.Bounds.Bottom - (Bounds.Bottom - Y));
                             Tween.RunFunction(0.2f, this, "EnterBossRoom", vector);
-                            Tween.RunFunction(0.2f, m_levelScreen.ScreenManager, "EndWipeTransition");
+                            Tween.RunFunction(0.2f, _levelScreen.ScreenManager, "EndWipeTransition");
                             break;
                         }
             }
@@ -2243,7 +2243,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                         var position = new Vector2(center.X, center.Y);
                         if (position == Vector2.Zero) position = Position;
 
-                        m_levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, Vector2.One);
+                        _levelScreen.ImpactEffectPool.DisplayBlockImpactEffect(position, Vector2.One);
                         CurrentSpeed = 0f;
                         if (otherBox.AbsParent.Bounds.Left + otherBox.AbsParent.Bounds.Width / 2 > X)
                             AccelerationX = -KnockBack.X;
@@ -2258,7 +2258,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     {
                         CurrentMana -= BlockManaDrain;
                         m_blockInvincibleCounter = BlockInvincibleTime;
-                        m_levelScreen.TextManager.DisplayNumberStringText(-25, "mp", Color.SkyBlue,
+                        _levelScreen.TextManager.DisplayNumberStringText(-25, "mp", Color.SkyBlue,
                             new Vector2(X, Bounds.Top));
                     }
 
@@ -2278,7 +2278,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         var itemDropObj = physicsObj as ItemDropObj;
         if (itemDropObj != null && itemDropObj.IsCollectable)
         {
-            itemDropObj.GiveReward(this, m_levelScreen.TextManager);
+            itemDropObj.GiveReward(this, _levelScreen.TextManager);
             itemDropObj.IsCollidable = false;
             itemDropObj.IsWeighted = false;
             itemDropObj.AnimationDelay = 0.0166666675f;
@@ -2286,14 +2286,14 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             itemDropObj.AccelerationX = 0f;
             Tween.By(itemDropObj, 0.4f, Quad.EaseOut, "Y", "-120");
             Tween.To(itemDropObj, 0.1f, Linear.EaseNone, "delay", "0.6", "Opacity", "0");
-            Tween.AddEndHandlerToLastTween(m_levelScreen.ItemDropManager, "DestroyItemDrop", itemDropObj);
+            Tween.AddEndHandlerToLastTween(_levelScreen.ItemDropManager, "DestroyItemDrop", itemDropObj);
             SoundManager.PlaySound("CoinDrop1", "CoinDrop2", "CoinDrop3", "CoinDrop4", "CoinDrop5");
         }
 
         var chestObj = physicsObj as ChestObj;
         if (chestObj != null && !ControlsLocked && m_isTouchingGround &&
             (Game.GlobalInput.JustPressed(16) || Game.GlobalInput.JustPressed(17)) && !chestObj.IsOpen)
-            chestObj.OpenChest(m_levelScreen.ItemDropManager, this);
+            chestObj.OpenChest(_levelScreen.ItemDropManager, this);
     }
 
     public void PlayAttackSound()
@@ -2354,10 +2354,10 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
     public void TeleportPlayer(Vector2 position, TeleporterObj teleporter = null)
     {
         CurrentSpeed = 0f;
-        Scale = m_internalScale;
-        if (teleporter == null) teleporter = m_lastTouchedTeleporter;
+        Scale = _internalScale;
+        teleporter ??= _lastTouchedTeleporter;
 
-        Console.WriteLine(string.Concat("Player pos: ", Position, " teleporter: ", teleporter.Position));
+        Console.WriteLine($"[Rogue Legacy]: Player pos: {Position} teleporter: {teleporter.Position}");
         Tween.To(this, 0.4f, Linear.EaseNone, "X", teleporter.X.ToString());
         Tween.To(this, 0.05f, Linear.EaseNone, "delay", "1.5", "ScaleX", "0");
         var scale = Scale;
@@ -2365,6 +2365,8 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         Tween.To(this, 0.05f, Linear.EaseNone, "delay", "3.3", "ScaleX", scale.X.ToString());
         ScaleX = scale.X;
         var relativePos = new Vector2(position.X, position.Y - (TerrainBounds.Bottom - Y));
+
+        // Teleporter procedure.
         var logicSet = new LogicSet(this);
         logicSet.AddAction(new RunFunctionLogicAction(this, "LockControls"));
         logicSet.AddAction(new ChangeSpriteLogicAction("PlayerJumping_Character"));
@@ -2373,25 +2375,21 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         logicSet.AddAction(new RunFunctionLogicAction(teleporter, "SetCollision", true));
         logicSet.AddAction(new DelayLogicAction(0.4f));
         logicSet.AddAction(new GroundCheckLogicAction());
-        logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false),
-            Types.Sequence.Parallel);
+        logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false), Types.Sequence.Parallel);
         logicSet.AddAction(new DelayLogicAction(0.1f));
-        logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "DisplayTeleportEffect",
-            new Vector2(teleporter.X, teleporter.Bounds.Top)));
+        logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "DisplayTeleportEffect", new Vector2(teleporter.X, teleporter.Bounds.Top)));
         logicSet.AddAction(new DelayLogicAction(1f));
         logicSet.AddAction(new PlaySoundLogicAction("Teleport_Disappear"));
-        logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleport",
-            new Vector2(teleporter.X, teleporter.Bounds.Top), Scale));
+        logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleport", new Vector2(teleporter.X, teleporter.Bounds.Top), Scale));
         logicSet.AddAction(new DelayLogicAction(0.8f));
-        logicSet.AddAction(new RunFunctionLogicAction(m_levelScreen.ScreenManager, "StartWipeTransition"));
+        logicSet.AddAction(new RunFunctionLogicAction(_levelScreen.ScreenManager, "StartWipeTransition"));
         logicSet.AddAction(new DelayLogicAction(0.2f));
         logicSet.AddAction(new RunFunctionLogicAction(teleporter, "SetCollision", false));
         logicSet.AddAction(new TeleportLogicAction(null, relativePos));
         logicSet.AddAction(new DelayLogicAction(0.05f));
-        logicSet.AddAction(new RunFunctionLogicAction(m_levelScreen.ScreenManager, "EndWipeTransition"));
+        logicSet.AddAction(new RunFunctionLogicAction(_levelScreen.ScreenManager, "EndWipeTransition"));
         logicSet.AddAction(new DelayLogicAction(0.5f));
-        logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleportReverse",
-            new Vector2(position.X - 5f, position.Y + 57f), scale));
+        logicSet.AddAction(new RunFunctionLogicAction(AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new Vector2(position.X - 5f, position.Y + 57f), scale));
         logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
         logicSet.AddAction(new DelayLogicAction(0.2f));
         logicSet.AddAction(new RunFunctionLogicAction(this, "LastBossDoorHack"));
@@ -2407,11 +2405,11 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                             Game.PlayerStats.BlobBossBeaten &&
                             Game.PlayerStats.FireballBossBeaten);
 
-        if (m_levelScreen.CurrentRoom is CastleEntranceRoomObj && hasFountainRequirement && bossesKilled && !Game.PlayerStats.FinalDoorOpened)
+        if (_levelScreen.CurrentRoom is CastleEntranceRoomObj && hasFountainRequirement && bossesKilled && !Game.PlayerStats.FinalDoorOpened)
         {
-            (m_levelScreen.CurrentRoom as CastleEntranceRoomObj).PlayBossDoorAnimation();
+            (_levelScreen.CurrentRoom as CastleEntranceRoomObj).PlayBossDoorAnimation();
             Game.PlayerStats.FinalDoorOpened = true;
-            m_levelScreen.RunCinematicBorders(6f);
+            _levelScreen.RunCinematicBorders(6f);
             return;
         }
 
@@ -2446,7 +2444,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             {
                 flag = false;
                 projectileObj.KillProjectile();
-                m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
+                _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
                     CDGMath.AngleBetweenPts(Position, projectileObj.Position), false);
             }
 
@@ -2468,7 +2466,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         if (flag && (!ForceInvincible || (ForceInvincible && obj is HazardObj)))
         {
             Blink(Color.Red, 0.1f);
-            m_levelScreen.ImpactEffectPool.DisplayPlayerImpactEffect(Position);
+            _levelScreen.ImpactEffectPool.DisplayPlayerImpactEffect(Position);
             AccelerationYEnabled = true;
             UnlockControls();
             var num = (obj as IDealsDamageObj).Damage;
@@ -2540,7 +2538,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     Game.PlayerStats.SpecialItem = 0;
                     (Game.ScreenManager.CurrentScreen as ProceduralLevelScreen).UpdatePlayerHUDSpecialItem();
                     m_invincibleCounter = (int) (InvincibilityTime * 1000f);
-                    (m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true);
+                    (_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true);
                 }
                 else
                 {
@@ -2549,7 +2547,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     {
                         CurrentHealth = (int) (MaxHealth * 0.1f);
                         m_invincibleCounter = (int) (InvincibilityTime * 1000f);
-                        (m_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true);
+                        (_levelScreen.ScreenManager as RCScreenManager).DisplayScreen(21, true);
                     }
                     else
                     {
@@ -2559,13 +2557,13 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 }
             }
 
-            if (!m_levelScreen.IsDisposed)
+            if (!_levelScreen.IsDisposed)
             {
                 if (Game.PlayerStats.Traits.X == 25f || Game.PlayerStats.Traits.Y == 25f)
-                    m_levelScreen.TextManager.DisplayNumberText(num * 100 + CDGMath.RandomInt(1, 99), Color.Red,
+                    _levelScreen.TextManager.DisplayNumberText(num * 100 + CDGMath.RandomInt(1, 99), Color.Red,
                         new Vector2(X, Bounds.Top));
                 else
-                    m_levelScreen.TextManager.DisplayNumberText(num, Color.Red, new Vector2(X, Bounds.Top));
+                    _levelScreen.TextManager.DisplayNumberText(num, Color.Red, new Vector2(X, Bounds.Top));
             }
 
             if (Game.PlayerStats.SpecialItem == 2)
@@ -2582,7 +2580,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     var num9 = (int) (num7 * 10 * (1f + TotalGoldBonus) * feeFactor *
                                       RandomizerData.GoldGainMultiplier);
                     Game.PlayerStats.Gold -= num9;
-                    for (var i = 0; i < num7; i++) m_levelScreen.ItemDropManager.DropItemWide(Position, 1, 10f);
+                    for (var i = 0; i < num7; i++) _levelScreen.ItemDropManager.DropItemWide(Position, 1, 10f);
                     if (num9 > 0)
                         AttachedLevel.TextManager.DisplayNumberStringText(-num9, "gold", Color.Yellow,
                             new Vector2(X, Bounds.Top));
@@ -2788,7 +2786,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         if (CurrentMana < num)
             SoundManager.PlaySound("Error_Spell");
         else if (spell != 6 && spell != 5 && !CastingDamageShield && num > 0)
-            m_levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue,
+            _levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue,
                 new Vector2(X, Bounds.Top));
 
         if (spell != 12 && spell != 11 && (Game.PlayerStats.Traits.X == 22f || Game.PlayerStats.Traits.Y == 22f))
@@ -2825,7 +2823,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                         SoundManager.PlaySound("Enemy_WallTurret_Fire_01", "Enemy_WallTurret_Fire_02",
                             "Enemy_WallTurret_Fire_03", "Enemy_WallTurret_Fire_04");
 
-                    var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                    var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projData);
                     projectileObj.Spell = spell;
                     projectileObj.TextureColor = white;
                     projectileObj.AltY = yValue;
@@ -2847,18 +2845,18 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                         if (Game.PlayerStats.Traits.X == 22f || Game.PlayerStats.Traits.Y == 22f)
                         {
                             projData.SourceAnchor = new Vector2(-50f, -30f);
-                            m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
+                            _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
                                 -projectileObj.Rotation, megaSpell);
                         }
                         else
                         {
                             projData.SourceAnchor = new Vector2(50f, -30f);
-                            m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
+                            _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
                                 projectileObj.Rotation, megaSpell);
                         }
 
                         projData.RotationSpeed = -20f;
-                        projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                        projectileObj = _levelScreen.ProjectileManager.FireProjectile(projData);
                     }
 
                     if (spell == 3)
@@ -2872,17 +2870,17 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     if (spell == 7)
                     {
                         projectileObj.Rotation = 0f;
-                        projectileObj.RunDisplacerEffect(m_levelScreen.CurrentRoom, this);
+                        projectileObj.RunDisplacerEffect(_levelScreen.CurrentRoom, this);
                         projectileObj.KillProjectile();
                     }
 
                     if (spell == 10)
-                        m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position, 90f, megaSpell);
+                        _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position, 90f, megaSpell);
                     else if (Game.PlayerStats.Traits.X == 22f || Game.PlayerStats.Traits.Y == 22f)
-                        m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
+                        _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
                             -projectileObj.Rotation, megaSpell);
                     else
-                        m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
+                        _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj.Position,
                             projectileObj.Rotation, megaSpell);
 
                     CurrentMana -= num;
@@ -2922,7 +2920,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     {
                         if (!current.NonKillable && !current.IsKilled)
                         {
-                            var projectileObj2 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                            var projectileObj2 = _levelScreen.ProjectileManager.FireProjectile(projData);
                             projectileObj2.LifeSpan = 10f;
                             projectileObj2.AltX = 0.25f;
                             projectileObj2.AltY = 0.05f;
@@ -2933,7 +2931,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                             projectileObj2.Target = current;
                             projectileObj2.CollisionTypeTag = 1;
                             projectileObj2.Position = CDGMath.GetCirclePosition(num6, num4, Position);
-                            m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj2.Position,
+                            _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj2.Position,
                                 projectileObj2.Rotation, megaSpell);
                             num6 += num5;
                             num7++;
@@ -2946,7 +2944,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     {
                         if (!current2.NonKillable && !current2.IsKilled)
                         {
-                            var projectileObj3 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                            var projectileObj3 = _levelScreen.ProjectileManager.FireProjectile(projData);
                             projectileObj3.LifeSpan = 99f;
                             projectileObj3.AltX = 0.25f;
                             projectileObj3.AltY = 0.05f;
@@ -2957,7 +2955,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                             projectileObj3.Target = current2;
                             projectileObj3.CollisionTypeTag = 1;
                             projectileObj3.Position = CDGMath.GetCirclePosition(num6, num4, Position);
-                            m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj3.Position,
+                            _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj3.Position,
                                 projectileObj3.Rotation, megaSpell);
                             num6 += num5;
                             num7++;
@@ -2967,7 +2965,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     }
 
                     CurrentMana -= num;
-                    m_levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue,
+                    _levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue,
                         new Vector2(X, Bounds.Top));
                 }
 
@@ -2999,7 +2997,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                         m_translocatorSprite.GetChildAt(11).Visible = false;
                     }
 
-                    m_levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue,
+                    _levelScreen.TextManager.DisplayNumberStringText(-num, "mp", Color.SkyBlue,
                         new Vector2(X, Bounds.Top));
                     AttachedLevel.ImpactEffectPool.StartInverseEmit(m_translocatorSprite.Position);
                     Tween.To(m_translocatorSprite, 0.4f, Linear.EaseNone, "ScaleX", ScaleX.ToString(), "ScaleY",
@@ -3019,7 +3017,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 if (CurrentMana >= num && !activateSecondary)
                 {
                     SoundManager.PlaySound("Cast_Boomerang");
-                    var projectileObj4 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                    var projectileObj4 = _levelScreen.ProjectileManager.FireProjectile(projData);
                     projectileObj4.Spell = spell;
                     projectileObj4.IgnoreBoundsCheck = true;
                     projectileObj4.TextureColor = white;
@@ -3033,7 +3031,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
                     projectileObj4.AltY = 0.5f;
                     CurrentMana -= num;
-                    m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj4.Position, projectileObj4.Rotation,
+                    _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj4.Position, projectileObj4.Rotation,
                         megaSpell);
                 }
 
@@ -3055,7 +3053,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     for (var j = 0; j < (int) yValue; j++)
                     {
                         var altX = 360f / yValue * j;
-                        var projectileObj5 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                        var projectileObj5 = _levelScreen.ProjectileManager.FireProjectile(projData);
                         projectileObj5.LifeSpan = xValue;
                         projectileObj5.AltX = altX;
                         projectileObj5.AltY = num8;
@@ -3063,7 +3061,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                         projectileObj5.AccelerationXEnabled = false;
                         projectileObj5.AccelerationYEnabled = false;
                         projectileObj5.IgnoreBoundsCheck = true;
-                        m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj5.Position,
+                        _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj5.Position,
                             projectileObj5.Rotation, megaSpell);
                     }
 
@@ -3078,7 +3076,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                     SoundManager.PlaySound("Cast_Dagger");
                     for (var k = 0; k < 4; k++)
                     {
-                        var projectileObj6 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                        var projectileObj6 = _levelScreen.ProjectileManager.FireProjectile(projData);
                         projectileObj6.Orientation = MathHelper.ToRadians(projData.Angle.X);
                         projectileObj6.Spell = spell;
                         projectileObj6.ShowIcon = true;
@@ -3100,7 +3098,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                         }
 
                         projData.Angle = new Vector2(projData.Angle.X + 90f, projData.Angle.Y + 90f);
-                        m_levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj6.Position,
+                        _levelScreen.ImpactEffectPool.SpellCastEffect(projectileObj6.Position,
                             projectileObj6.Rotation, megaSpell);
                     }
 
@@ -3122,7 +3120,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 if (b == 100)
                     if (CurrentMana >= num && !activateSecondary)
                     {
-                        var projectileObj7 = m_levelScreen.ProjectileManager.FireProjectile(projData);
+                        var projectileObj7 = _levelScreen.ProjectileManager.FireProjectile(projData);
                         projectileObj7.AltX = 1f;
                         projectileObj7.AltY = 0.5f;
                         projectileObj7.Opacity = 0f;
@@ -3152,13 +3150,13 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void OverrideInternalScale(Vector2 internalScale)
     {
-        m_internalScale = internalScale;
+        _internalScale = internalScale;
     }
 
     public void ResetTranslocution()
     {
         DisableAllWeight = false;
-        Scale = m_internalScale;
+        Scale = _internalScale;
     }
 
     public void ConvertHPtoMP()
@@ -3181,16 +3179,16 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 CurrentMana += num + num2;
                 if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
 
-                m_levelScreen.UpdatePlayerHUD();
-                m_levelScreen.TextManager.DisplayNumberStringText(num + num2, "max mp", Color.RoyalBlue,
+                _levelScreen.UpdatePlayerHUD();
+                _levelScreen.TextManager.DisplayNumberStringText(num + num2, "max mp", Color.RoyalBlue,
                     new Vector2(X, Bounds.Top - 30));
-                m_levelScreen.TextManager.DisplayNumberStringText(-(num + num2), "max hp", Color.Red,
+                _levelScreen.TextManager.DisplayNumberStringText(-(num + num2), "max hp", Color.Red,
                     new Vector2(X, Bounds.Top - 60));
                 return;
             }
 
             SoundManager.PlaySound("Error_Spell");
-            m_levelScreen.TextManager.DisplayStringText("Max MP Converted. Need higher level.", Color.RoyalBlue,
+            _levelScreen.TextManager.DisplayStringText("Max MP Converted. Need higher level.", Color.RoyalBlue,
                 new Vector2(X, Bounds.Top - 30));
         }
     }
@@ -3204,7 +3202,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             Tween.To(this, 0.2f, Tween.EaseNone, "Opacity", "0.05");
             m_assassinSpecialActive = true;
             ForceInvincible = true;
-            m_levelScreen.ImpactEffectPool.AssassinCastEffect(Position);
+            _levelScreen.ImpactEffectPool.AssassinCastEffect(Position);
         }
     }
 
@@ -3226,7 +3224,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         if (num >= m_wizardSpellList.Count) num = 0;
 
         Game.PlayerStats.Spell = m_wizardSpellList[num];
-        m_levelScreen.UpdatePlayerSpellIcon();
+        _levelScreen.UpdatePlayerSpellIcon();
         if (CastingDamageShield)
         {
             CastingDamageShield = false;
@@ -3246,7 +3244,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         {
             CurrentMana -= 5f;
             m_ninjaTeleportDelay = 0.5f;
-            m_levelScreen.ImpactEffectPool.NinjaDisappearEffect(this);
+            _levelScreen.ImpactEffectPool.NinjaDisappearEffect(this);
             var num = 350;
             var num2 = 2147483647;
             var terrainObj = CalculateClosestWall(out num2);
@@ -3286,14 +3284,14 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 else
                     X += num;
 
-                if (X > m_levelScreen.CurrentRoom.Bounds.Right)
-                    X = m_levelScreen.CurrentRoom.Bounds.Right - 5;
-                else if (X < m_levelScreen.CurrentRoom.X) X = m_levelScreen.CurrentRoom.X + 5f;
+                if (X > _levelScreen.CurrentRoom.Bounds.Right)
+                    X = _levelScreen.CurrentRoom.Bounds.Right - 5;
+                else if (X < _levelScreen.CurrentRoom.X) X = _levelScreen.CurrentRoom.X + 5f;
             }
 
             SoundManager.PlaySound("Ninja_Teleport");
-            m_levelScreen.ImpactEffectPool.NinjaAppearEffect(this);
-            m_levelScreen.UpdateCamera();
+            _levelScreen.ImpactEffectPool.NinjaAppearEffect(this);
+            _levelScreen.UpdateCamera();
         }
     }
 
@@ -3302,7 +3300,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         var num = 2147483647;
         TerrainObj result = null;
         var value = Vector2.Zero;
-        var currentRoom = m_levelScreen.CurrentRoom;
+        var currentRoom = _levelScreen.CurrentRoom;
         foreach (var current in currentRoom.TerrainObjList)
             if (current.CollidesBottom || current.CollidesLeft || current.CollidesRight)
             {
@@ -3370,7 +3368,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         if (CurrentMana >= 25f)
         {
             CurrentMana -= 25f;
-            m_levelScreen.ImpactEffectPool.DisplayTanookiEffect(this);
+            _levelScreen.ImpactEffectPool.DisplayTanookiEffect(this);
             TextureColor = Color.White;
             _objectList[0].TextureColor = Color.White;
             State = 8;
@@ -3379,7 +3377,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void DeactivateTanooki()
     {
-        m_levelScreen.ImpactEffectPool.DisplayTanookiEffect(this);
+        _levelScreen.ImpactEffectPool.DisplayTanookiEffect(this);
         State = 0;
     }
 
@@ -3400,7 +3398,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
                 Damage = 0,
                 Scale = Vector2.One
             };
-            var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(data);
+            var projectileObj = _levelScreen.ProjectileManager.FireProjectile(data);
             projectileObj.Opacity = 0f;
             projectileObj.CollisionTypeTag = 2;
             projectileObj.Spell = 20;
@@ -3408,9 +3406,9 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             Tween.To(projectileObj, 0.2f, Tween.EaseNone, "ScaleX", "100", "ScaleY", "50");
             Tween.AddEndHandlerToLastTween(projectileObj, "KillProjectile");
             SoundManager.PlaySound("Cast_FasRoDus");
-            m_levelScreen.ImpactEffectPool.DisplayFusRoDahText(new Vector2(X, Bounds.Top));
-            m_levelScreen.ShoutMagnitude = 0f;
-            Tween.To(m_levelScreen, 1f, Tween.EaseNone, "ShoutMagnitude", "3");
+            _levelScreen.ImpactEffectPool.DisplayFusRoDahText(new Vector2(X, Bounds.Top));
+            _levelScreen.ShoutMagnitude = 0f;
+            Tween.To(_levelScreen, 1f, Tween.EaseNone, "ShoutMagnitude", "3");
         }
     }
 
@@ -3432,8 +3430,8 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         };
         projectileData.Damage = (int) (TotalMagicDamage * 1f);
         SoundManager.PlaySound("Cast_GiantSword");
-        m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 90f, true);
-        var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(projectileData);
+        _levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 90f, true);
+        var projectileObj = _levelScreen.ProjectileManager.FireProjectile(projectileData);
         projectileObj.TextureColor = Color.CadetBlue;
         projectileData.Dispose();
     }
@@ -3452,10 +3450,10 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
     public void CastAxe()
     {
         m_axeProjData.AngleOffset = CDGMath.RandomInt(-70, 70);
-        var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
+        var projectileObj = _levelScreen.ProjectileManager.FireProjectile(m_axeProjData);
         projectileObj.TextureColor = Color.CadetBlue;
         SoundManager.PlaySound("Cast_Axe");
-        m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 45f, true);
+        _levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 45f, true);
     }
 
     private void ThrowDaggerProjectiles()
@@ -3473,10 +3471,10 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
     {
         if (randomize) m_rapidDaggerProjData.AngleOffset = CDGMath.RandomInt(-8, 8);
 
-        var projectileObj = m_levelScreen.ProjectileManager.FireProjectile(m_rapidDaggerProjData);
+        var projectileObj = _levelScreen.ProjectileManager.FireProjectile(m_rapidDaggerProjData);
         projectileObj.TextureColor = Color.CadetBlue;
         SoundManager.PlaySound("Cast_Dagger");
-        m_levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 0f, true);
+        _levelScreen.ImpactEffectPool.LastBossSpellCastEffect(this, 0f, true);
     }
 
     public void StopAllSpells()
@@ -3537,7 +3535,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
             if (m_externalLS != null) m_externalLS.Dispose();
 
             m_externalLS = null;
-            m_lastTouchedTeleporter = null;
+            _lastTouchedTeleporter = null;
             m_flightDurationText.Dispose();
             m_flightDurationText = null;
             Game = null;
@@ -3647,7 +3645,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
 
     public void AttachLevel(ProceduralLevelScreen level)
     {
-        m_levelScreen = level;
+        _levelScreen = level;
     }
 
     public int GetEquipmentDamage()

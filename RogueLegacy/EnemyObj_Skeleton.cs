@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - EnemyObj_Skeleton.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - EnemyObj_Skeleton.cs
+//  Last Modified 2023-10-26 12:01 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using DS2DEngine;
@@ -192,7 +192,7 @@ namespace RogueLegacy
             logicSet5.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
             logicSet5.AddAction(new DelayLogicAction(AttackDelay));
             logicSet5.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
-            logicSet5.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet5.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet5.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet5.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet5.AddAction(new LockFaceDirectionLogicAction(false));
@@ -205,7 +205,7 @@ namespace RogueLegacy
             logicSet6.AddAction(new DelayLogicAction(AttackDelay));
             logicSet6.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
             projectileData.Angle = new Vector2(-85f, -85f);
-            logicSet6.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet6.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet6.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet6.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet6.AddAction(new LockFaceDirectionLogicAction(false));
@@ -221,7 +221,7 @@ namespace RogueLegacy
             logicSet7.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
             logicSet7.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
             projectileData.Angle = new Vector2(-72f, -72f);
-            logicSet7.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet7.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet7.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet7.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet7.AddAction(new LockFaceDirectionLogicAction(false));
@@ -237,7 +237,7 @@ namespace RogueLegacy
             logicSet8.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
             logicSet8.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
             projectileData.Angle = new Vector2(-85f, -85f);
-            logicSet8.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet8.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet8.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet8.AddAction(new DelayLogicAction(0.2f, 0.4f));
             logicSet8.AddAction(new LockFaceDirectionLogicAction(false));
@@ -287,8 +287,8 @@ namespace RogueLegacy
             projectileData.RotationSpeed = 8f;
             projectileData.SourceAnchor = new Vector2(5f, -20f);
             logicSet11.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
-            logicSet11.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-            logicSet11.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet11.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
+            logicSet11.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet11.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet11.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet11.AddAction(new ChangeSpriteLogicAction("EnemySkeletonIdle_Character"));
@@ -300,11 +300,11 @@ namespace RogueLegacy
             logicSet12.AddAction(new PlayAnimationLogicAction("Start", "Windup"));
             logicSet12.AddAction(new DelayLogicAction(AttackDelay));
             logicSet12.AddAction(new Play3DSoundLogicAction(this, Game.ScreenManager.Player, "SkeletonHit1"));
-            logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-            logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-            logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-            logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
-            logicSet12.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            logicSet12.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
+            logicSet12.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
+            logicSet12.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
+            logicSet12.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
+            logicSet12.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             logicSet12.AddAction(new PlayAnimationLogicAction("Attack", "End"));
             logicSet12.AddAction(new LockFaceDirectionLogicAction(false));
             logicSet12.AddAction(new DelayLogicAction(0.15f, 0.35f));
@@ -340,11 +340,11 @@ namespace RogueLegacy
                 CollidesWithTerrain = false,
                 Scale = ProjectileScale
             };
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Speed = new Vector2(ProjectileSpeed - 350f, ProjectileSpeed - 350f);
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Speed = new Vector2(ProjectileSpeed + 350f, ProjectileSpeed + 350f);
-            ls.AddAction(new FireProjectileLogicAction(m_levelScreen.ProjectileManager, projectileData));
+            ls.AddAction(new FireProjectileLogicAction(_levelScreen.ProjectileManager, projectileData));
             projectileData.Dispose();
         }
 
@@ -435,7 +435,7 @@ namespace RogueLegacy
                 case 2:
                 case 3:*/
             //IL_1D:
-            if (m_levelScreen.CurrentRoom.ActiveEnemies > 1)
+            if (_levelScreen.CurrentRoom.ActiveEnemies > 1)
             {
                 var arg_4A_1 = true;
                 var arg_4A_2 = m_generalMiniBossLB;
@@ -455,7 +455,7 @@ namespace RogueLegacy
 
         public override void Update(GameTime gameTime)
         {
-            if (Difficulty == EnemyDifficulty.MiniBoss && m_levelScreen.CurrentRoom.ActiveEnemies == 1)
+            if (Difficulty == EnemyDifficulty.MiniBoss && _levelScreen.CurrentRoom.ActiveEnemies == 1)
             {
                 TintablePart.TextureColor = new Color(185, 0, 15);
             }
