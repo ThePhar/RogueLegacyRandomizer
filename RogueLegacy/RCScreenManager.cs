@@ -1,3 +1,12 @@
+//  RogueLegacyRandomizer - RCScreenManager.cs
+//  Last Modified 2023-10-25 8:36 PM
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,6 +184,11 @@ namespace RogueLegacy
             };
 
             Player.Initialize();
+        }
+
+        public void DisplayScreen(ScreenType screenType, bool pauseOtherScreens, List<object> objList = null)
+        {
+            DisplayScreen((int) screenType, pauseOtherScreens, objList);
         }
 
         public void DisplayScreen(int screenType, bool pauseOtherScreens, List<object> objList = null)

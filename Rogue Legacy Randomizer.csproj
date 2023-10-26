@@ -321,6 +321,7 @@
         <Compile Include="RogueLegacy\Enums\SpellType.cs" />
         <Compile Include="RogueLegacy\Enums\Trait.cs" />
         <Compile Include="RogueLegacy\Util\ConsoleLogger.cs" />
+        <Compile Include="RogueLegacy\Util\StringExtensions.cs" />
         <Compile Include="RogueLegacy\WaypointObj.cs" />
         <Compile Include="RogueLegacy\WordBuilder.cs" />
         <Compile Include="RogueLegacy\XMLCompiler.cs" />

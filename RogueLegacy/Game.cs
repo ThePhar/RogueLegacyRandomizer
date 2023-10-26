@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - Game.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-25 9:15 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -25,6 +25,7 @@ using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
 using RogueLegacy.Screens;
+using RogueLegacy.Util;
 using SpriteSystem;
 using Tweener;
 using Color = Microsoft.Xna.Framework.Color;
@@ -718,46 +719,71 @@ public class Game : Microsoft.Xna.Framework.Game
         SpriteFontArray.SpriteFontList = temp;
     }
 
-    public void SaveOnExit()
+    public void SaveAndReset()
     {
-        if (ScreenManager.CurrentScreen is CDGSplashScreen) return;
+        if (ScreenManager.CurrentScreen is CDGSplashScreen)
+        {
+            return;
+        }
+
+        if (ArchipelagoManager.Ready)
+        {
+            Program.Game.ArchipelagoManager.Disconnect();
+        }
 
         UpdatePlaySessionLength();
         var screen = ScreenManager.GetLevelScreen();
         if (screen != null)
         {
             var currentRoom = screen.CurrentRoom;
-            if (currentRoom is CarnivalShoot1BonusRoom or CarnivalShoot2BonusRoom)
+            switch (currentRoom)
             {
-                if (currentRoom is CarnivalShoot1BonusRoom bonusRoom1) bonusRoom1.UnequipPlayer();
-
-                if (currentRoom is CarnivalShoot2BonusRoom bonusRoom2) bonusRoom2.UnequipPlayer();
-            }
-
-            if (currentRoom is ChallengeBossRoomObj challengeBossRoom)
-            {
-                SaveManager.LoadFiles(ScreenManager.GetLevelScreen(), SaveType.UpgradeData);
-                currentRoom.Player.CurrentHealth = challengeBossRoom.StoredHP;
-                currentRoom.Player.CurrentMana = challengeBossRoom.StoredMP;
+                case CarnivalShoot1BonusRoom carnival:
+                    carnival.UnequipPlayer();
+                    break;
+                case CarnivalShoot2BonusRoom carnival:
+                    carnival.UnequipPlayer();
+                    break;
+                case ChallengeBossRoomObj challenge:
+                    SaveManager.LoadFiles(ScreenManager.GetLevelScreen(), SaveType.UpgradeData);
+                    currentRoom.Player.CurrentHealth = challenge.StoredHP;
+                    currentRoom.Player.CurrentMana = challenge.StoredMP;
+                    break;
             }
         }
 
-        if (ScreenManager.CurrentScreen is GameOverScreen) PlayerStats.Traits = Vector2.Zero;
+        if (ScreenManager.CurrentScreen is GameOverScreen)
+        {
+            PlayerStats.Traits = Vector2.Zero;
+        }
 
         if (SaveManager.FileExists(SaveType.PlayerData))
         {
             SaveManager.SaveFiles(SaveType.PlayerData, SaveType.UpgradeData);
-            if (screen is { CurrentRoom: null }) return;
-
-            if (screen != null && screen.CurrentRoom.Name != "Start" && screen.CurrentRoom.Name != "Ending" &&
-                screen.CurrentRoom.Name != "Tutorial")
-                SaveManager.SaveFiles(SaveType.MapData);
         }
+
+        if (screen is { CurrentRoom: not null } && !screen.CurrentRoom.Name.EqualsAny("Start", "Ending", "Tutorial"))
+        {
+            SaveManager.SaveFiles(SaveType.MapData);
+        }
+
+        SkillSystem.ResetAllTraits();
+        SkillSystem.PreInitialize();
+        SkillSystem.Initialize();
+        PlayerStats.Dispose();
+        PlayerStats = new();
+        ItemHandler.ReceivedItems = new();
+        ScreenManager.Player.Reset();
+        ScreenManager.Player.CurrentHealth = PlayerStats.CurrentHealth;
+        ScreenManager.Player.CurrentMana = PlayerStats.CurrentMana;
     }
 
     public void FormClosing(object sender, FormClosingEventArgs args)
     {
-        if (args.CloseReason == CloseReason.UserClosing) SaveOnExit();
+        if (args.CloseReason == CloseReason.UserClosing)
+        {
+            SaveAndReset();
+        }
     }
 
     public void UpdatePlaySessionLength()

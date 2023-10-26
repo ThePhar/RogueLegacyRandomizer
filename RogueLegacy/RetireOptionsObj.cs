@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - RetireOptionsObj.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-25 8:36 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -23,7 +23,7 @@ namespace RogueLegacy
                 base.IsActive = value;
                 if (IsActive)
                 {
-                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = _parentScreen.ScreenManager as RCScreenManager;
                     DialogueManager.AddText("Retire Character", new[] { "Retire?" }, new[]
                     {
                         "Are you sure you want to immediately end your current character's suffering?" +
@@ -44,7 +44,7 @@ namespace RogueLegacy
         public void RetireCommand()
         {
             IsActive = false;
-            m_parentScreen.ExitTransition();
+            _parentScreen.ExitTransition();
             Game.ScreenManager.GetLevelScreen().UnpauseScreen();
             Game.ScreenManager.HideCurrentScreen();
             Game.Retired = true;

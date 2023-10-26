@@ -1,5 +1,5 @@
 ﻿//  RogueLegacyRandomizer - DeathLinkOptionsObj.cs
-//  Last Modified 2023-10-25 7:48 PM
+//  Last Modified 2023-10-25 8:36 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -22,7 +22,7 @@ public class DeathLinkOptionsObj : OptionsObj
 
     public DeathLinkOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Toggle DeathLink")
     {
-        _modeText = m_nameText.Clone() as TextObj;
+        _modeText = _nameText.Clone() as TextObj;
         _modeText.X = m_optionsTextOffset;
         _modeText.Text = "Uninitialized";
         AddChild(_modeText);
