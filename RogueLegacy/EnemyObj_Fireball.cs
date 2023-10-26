@@ -1,9 +1,9 @@
 //  RogueLegacyRandomizer - EnemyObj_Fireball.cs
-//  Last Modified 2023-10-24 4:38 PM
-//
+//  Last Modified 2023-10-25 7:46 PM
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -597,7 +597,7 @@ public class EnemyObj_Fireball : EnemyObj
             SoundManager.PlaySound("Boss_Fireball_Freeze");
             GameUtil.UnlockAchievement("FEAR_OF_FIRE");
 
-            Program.Game.ArchipelagoManager.CanDeathLink = false;
+            Program.Game.ArchipelagoManager.IsDeathLinkSafe = false;
             var data = new List<object>
             {
                 new Vector2(Game.ScreenManager.Player.X, Game.ScreenManager.Player.Y),

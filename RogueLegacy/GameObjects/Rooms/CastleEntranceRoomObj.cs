@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-//  Last Modified 2023-10-24 4:12 PM
+//  Last Modified 2023-10-25 7:46 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -234,7 +234,7 @@ public class CastleEntranceRoomObj : RoomObj
 
         // Enable death links now that we are in the castle.
         var manager = Program.Game.ArchipelagoManager;
-        manager.CanDeathLink = true;
+        manager.IsDeathLinkSafe = true;
         base.OnEnter();
     }
 

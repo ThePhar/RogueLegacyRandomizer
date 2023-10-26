@@ -1,5 +1,5 @@
 ﻿//  RogueLegacyRandomizer - ArchipelagoManager.cs
-//  Last Modified 2023-10-24 5:43 PM
+//  Last Modified 2023-10-25 7:46 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -35,7 +35,7 @@ public class ArchipelagoManager
     private          DateTime                  _lastDeath;
 
     public DeathLink                                       DeathLinkData      { get; private set; }
-    public bool                                            CanDeathLink       { get; set; }
+    public bool                                            IsDeathLinkSafe    { get; set; }
     public bool                                            Ready              { get; private set; }
     public Queue<Tuple<int, NetworkItem>>                  ItemQueue          { get; private set; } = new();
     public Dictionary<long, NetworkItem>                   LocationDictionary { get; private set; } = new();
@@ -46,6 +46,7 @@ public class ArchipelagoManager
     public bool   CanRemaining => _session.RoomState.RemainingPermissions is Permissions.Goal or Permissions.Enabled;
     public string Seed         => _session.RoomState.Seed;
     public int    Slot         => _session.ConnectionInfo.Slot;
+    public bool   DeathLink    => _session.ConnectionInfo.Tags.Contains("DeathLink");
     public int    HintPoints   => _session.RoomState.HintPoints;
     public int    HintCost     => _session.RoomState.HintCost;
     public Hint[] Hints        => _session.DataStorage.GetHints();
@@ -68,7 +69,7 @@ public class ArchipelagoManager
 
         // (Re-)initialize state.
         DeathLinkData = null;
-        CanDeathLink = false;
+        IsDeathLinkSafe = false;
         Ready = false;
         ItemQueue = new();
         LocationDictionary = new();
@@ -189,7 +190,7 @@ public class ArchipelagoManager
     public void SendDeathLinkIfEnabled(string cause)
     {
         // Do not send any DeathLink messages if it's not enabled.
-        if (!_session.ConnectionInfo.Tags.Contains("DeathLink"))
+        if (!DeathLink)
         {
             return;
         }
@@ -356,7 +357,7 @@ public class ArchipelagoManager
     private void OnDeathLink(DeathLink deathLink)
     {
         // If we receive a DeathLink that is after our last death, let's set it.
-        if (!CanDeathLink && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
+        if (!IsDeathLinkSafe && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
         {
             DeathLinkData = deathLink;
         }

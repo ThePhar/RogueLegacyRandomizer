@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - ChestObj.cs
-//  Last Modified 2023-10-24 4:29 PM
+//  Last Modified 2023-10-25 7:46 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -143,7 +143,7 @@ public class ChestObj : PhysicsObj
         // Handle
         GiveNetworkItem(itemDropManager, player);
         player.AttachedLevel.RefreshMapChestIcons();
-        Program.Game.ArchipelagoManager.CanDeathLink = true;
+        Program.Game.ArchipelagoManager.IsDeathLinkSafe = true;
     }
 
     public void GiveGold(ItemDropManager itemDropManager, int amount = 0)

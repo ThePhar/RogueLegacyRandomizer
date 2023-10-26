@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnemyObj_Blob.cs
-//  Last Modified 2023-10-24 4:32 PM
+//  Last Modified 2023-10-25 7:46 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -698,7 +698,7 @@ public class EnemyObj_Blob : EnemyObj
             if (((blobBossRoom != null && blobBossRoom.NumActiveBlobs == 1) ||
                  (blobChallengeRoom != null && blobChallengeRoom.NumActiveBlobs == 1)) && !m_bossVersionKilled)
             {
-                Program.Game.ArchipelagoManager.CanDeathLink = false;
+                Program.Game.ArchipelagoManager.IsDeathLinkSafe = false;
                 Game.PlayerStats.BlobBossBeaten = true;
                 SoundManager.StopMusic();
                 m_bossVersionKilled = true;
