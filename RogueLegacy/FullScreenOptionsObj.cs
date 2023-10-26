@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - FullScreenOptionsObj.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - FullScreenOptionsObj.cs
+//  Last Modified 2023-10-25 8:36 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -19,7 +19,7 @@ namespace RogueLegacy
 
         public FullScreenOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Fullscreen")
         {
-            m_toggleText = m_nameText.Clone() as TextObj;
+            m_toggleText = _nameText.Clone() as TextObj;
             m_toggleText.X = m_optionsTextOffset;
             m_toggleText.Text = "No";
             AddChild(m_toggleText);
@@ -43,7 +43,7 @@ namespace RogueLegacy
 
         public override void Initialize()
         {
-            if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
+            if ((_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
             {
                 m_toggleText.Text = "Yes";
             }
@@ -75,7 +75,7 @@ namespace RogueLegacy
             if (Game.GlobalInput.JustPressed(0) || Game.GlobalInput.JustPressed(1))
             {
                 SoundManager.PlaySound("Option_Menu_Select");
-                var graphics = (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager;
+                var graphics = (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager;
                 if (m_toggleText.Text == "No" && graphics.IsFullScreen ||
                     m_toggleText.Text == "Yes" && !graphics.IsFullScreen)
                 {
@@ -86,7 +86,7 @@ namespace RogueLegacy
 
             if (Game.GlobalInput.JustPressed(2) || Game.GlobalInput.JustPressed(3))
             {
-                if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
+                if ((_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
                 {
                     m_toggleText.Text = "Yes";
                 }

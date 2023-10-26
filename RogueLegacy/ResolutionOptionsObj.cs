@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - ResolutionOptionsObj.cs
-// Last Modified 2022-10-24
+//  RogueLegacyRandomizer - ResolutionOptionsObj.cs
+//  Last Modified 2023-10-25 8:36 PM
 // 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 // 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System.Collections.Generic;
 using DS2DEngine;
@@ -24,7 +24,7 @@ namespace RogueLegacy
 
         public ResolutionOptionsObj(OptionsScreen parentScreen) : base(parentScreen, "Resolution")
         {
-            m_toggleText = m_nameText.Clone() as TextObj;
+            m_toggleText = _nameText.Clone() as TextObj;
             m_toggleText.X = m_optionsTextOffset;
             m_toggleText.Text = "null";
             AddChild(m_toggleText);
@@ -50,14 +50,14 @@ namespace RogueLegacy
         public override void Initialize()
         {
             m_resetCounter = 0f;
-            m_selectedResolution = new Vector2(m_parentScreen.ScreenManager.Game.GraphicsDevice.Viewport.Width,
-                m_parentScreen.ScreenManager.Game.GraphicsDevice.Viewport.Height);
+            m_selectedResolution = new Vector2(_parentScreen.ScreenManager.Game.GraphicsDevice.Viewport.Width,
+                _parentScreen.ScreenManager.Game.GraphicsDevice.Viewport.Height);
             if (m_displayModeList != null)
             {
                 m_displayModeList.Clear();
             }
 
-            m_displayModeList = (m_parentScreen.ScreenManager.Game as Game).GetSupportedResolutions();
+            m_displayModeList = (_parentScreen.ScreenManager.Game as Game).GetSupportedResolutions();
             m_toggleText.Text = m_selectedResolution.X + "x" + m_selectedResolution.Y;
             m_selectedResIndex = 0;
             for (var i = 0; i < m_displayModeList.Count; i++)
@@ -104,15 +104,15 @@ namespace RogueLegacy
                 var vector = m_displayModeList[m_selectedResIndex];
                 if (m_selectedResolution != vector)
                 {
-                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth =
+                    (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth =
                         (int) vector.X;
-                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
+                    (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
                         (int) vector.Y;
-                    (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
-                    (m_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
-                    if ((m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
+                    (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
+                    (_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
+                    if ((_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.IsFullScreen)
                     {
-                        var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                        var rCScreenManager = _parentScreen.ScreenManager as RCScreenManager;
                         rCScreenManager.DialogueScreen.SetDialogue("Resolution Changed");
                         rCScreenManager.DialogueScreen.SetDialogueChoice("ConfirmTest1");
                         rCScreenManager.DialogueScreen.SetConfirmEndHandler(this, "SaveResolution", vector);
@@ -143,7 +143,7 @@ namespace RogueLegacy
                 m_resetCounter -= (float) gameTime.ElapsedGameTime.TotalSeconds;
                 if (m_resetCounter <= 0f)
                 {
-                    var rCScreenManager = m_parentScreen.ScreenManager as RCScreenManager;
+                    var rCScreenManager = _parentScreen.ScreenManager as RCScreenManager;
                     rCScreenManager.HideCurrentScreen();
                     CancelResolution();
                 }
@@ -164,12 +164,12 @@ namespace RogueLegacy
         public void CancelResolution()
         {
             m_resetCounter = 0f;
-            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth =
+            (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferWidth =
                 (int) m_selectedResolution.X;
-            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
+            (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.PreferredBackBufferHeight =
                 (int) m_selectedResolution.Y;
-            (m_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
-            (m_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
+            (_parentScreen.ScreenManager.Game as Game).GraphicsDeviceManager.ApplyChanges();
+            (_parentScreen.ScreenManager as RCScreenManager).ForceResolutionChangeCheck();
             m_toggleText.Text = m_selectedResolution.X + "x" + m_selectedResolution.Y;
         }
 

@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - OptionsObj.cs
-// Last Modified 2022-10-24
-// 
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  RogueLegacyRandomizer - OptionsObj.cs
+//  Last Modified 2023-10-25 8:36 PM
+//
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using DS2DEngine;
 using Microsoft.Xna.Framework;
@@ -17,18 +17,18 @@ namespace RogueLegacy
     {
         protected bool m_isActive;
         protected bool m_isSelected;
-        protected TextObj m_nameText;
+        protected TextObj _nameText;
         protected int m_optionsTextOffset = 250;
-        protected OptionsScreen m_parentScreen;
+        protected OptionsScreen _parentScreen;
 
         public OptionsObj(OptionsScreen parentScreen, string name)
         {
-            m_parentScreen = parentScreen;
-            m_nameText = new TextObj(Game.JunicodeFont);
-            m_nameText.FontSize = 12f;
-            m_nameText.Text = name;
-            m_nameText.DropShadow = new Vector2(2f, 2f);
-            AddChild(m_nameText);
+            _parentScreen = parentScreen;
+            _nameText = new TextObj(Game.JunicodeFont);
+            _nameText.FontSize = 12f;
+            _nameText.Text = name;
+            _nameText.DropShadow = new Vector2(2f, 2f);
+            AddChild(_nameText);
             ForceDraw = true;
         }
 
@@ -49,7 +49,7 @@ namespace RogueLegacy
                 m_isActive = value;
                 if (!value)
                 {
-                    (m_parentScreen.ScreenManager.Game as Game).SaveConfig();
+                    (_parentScreen.ScreenManager.Game as Game).SaveConfig();
                 }
             }
         }
@@ -62,11 +62,11 @@ namespace RogueLegacy
                 m_isSelected = value;
                 if (value)
                 {
-                    m_nameText.TextureColor = Color.Yellow;
+                    _nameText.TextureColor = Color.Yellow;
                     return;
                 }
 
-                m_nameText.TextureColor = Color.White;
+                _nameText.TextureColor = Color.White;
             }
         }
 
@@ -86,8 +86,8 @@ namespace RogueLegacy
         {
             if (!IsDisposed)
             {
-                m_parentScreen = null;
-                m_nameText = null;
+                _parentScreen = null;
+                _nameText = null;
                 base.Dispose();
             }
         }
