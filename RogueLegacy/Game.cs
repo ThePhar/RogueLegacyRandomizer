@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - Game.cs
-//  Last Modified 2023-10-25 5:05 PM
+//  Last Modified 2023-10-25 7:46 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -586,7 +586,7 @@ public class Game : Microsoft.Xna.Framework.Game
         {
             if (ScreenManager.Player is { ControlsLocked: false } &&
                 ScreenManager.CurrentScreen is ProceduralLevelScreen screen && !PlayerStats.IsDead &&
-                ArchipelagoManager.CanDeathLink)
+                ArchipelagoManager.IsDeathLinkSafe)
             {
                 if (PlayerStats.SpecialItem == 3)
                 {

@@ -2917,7 +2917,7 @@
     <GameObject Type="PhysicsObjContainer" Name="Container_Obj 827" X="4920" Y="-8100" Width="56" Height="130" ScaleX="2" ScaleY="2" Rotation="0" Flip="True" Tag="" SpriteName="CastleAssetKnightStatue_Character" Weighted="False" Collidable="False" Breakable="True" BGLayer="False" LevelType="1" />
     <GameObject Type="PhysicsObjContainer" Name="Container_Obj 827" X="4740" Y="-8100" Width="56" Height="130" ScaleX="2" ScaleY="2" Rotation="0" Flip="True" Tag="" SpriteName="CastleAssetKnightStatue_Character" Weighted="False" Collidable="False" Breakable="True" BGLayer="False" LevelType="1" />
   </RoomObject>
-<RoomObject Name="CastleEntrance" X="6000" Y="-6960" Width="3960" Height="720" ScaleX="1" ScaleY="1" Tag="2" SelectionMode="0" DisplayBG="False" CastlePool="True" GardenPool="True" TowerPool="True" DungeonPool="True">
+  <RoomObject Name="CastleEntrance" X="6000" Y="-6960" Width="3960" Height="720" ScaleX="1" ScaleY="1" Tag="2" SelectionMode="0" DisplayBG="False" CastlePool="True" GardenPool="True" TowerPool="True" DungeonPool="True">
     <GameObject Type="ObjContainer" Name="LastDoor" X="7320" Y="-6480" Width="280" Height="375" ScaleX="2.5" ScaleY="2.5" Rotation="0" Flip="False" Tag="" SpriteName="LastDoor_Character" Weighted="False" Collidable="False" Breakable="False" BGLayer="False" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull 802" X="6000" Y="-6540" Width="240" Height="300" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull 804" X="6000" Y="-6960" Width="3960" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
@@ -2986,7 +2986,7 @@
     <GameObject Type="CollHullObj" Name="Coll_Hull 802" X="9420" Y="-6420" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="SpriteObj" Name="Sprite_Obj 698" X="8640" Y="-6660" Width="122" Height="194" ScaleX="2" ScaleY="2" Rotation="0" Flip="False" Tag="" SpriteName="CastleAssetWindow2_Sprite" BGLayer="True" LevelType="1" />
     <GameObject Type="SpriteObj" Name="Sprite_Obj 697" X="8880" Y="-6660" Width="122" Height="194" ScaleX="2" ScaleY="2" Rotation="0" Flip="True" Tag="" SpriteName="CastleAssetWindow2_Sprite" BGLayer="True" LevelType="1" />
-</RoomObject>
+  </RoomObject>
   <RoomObject Name="Secret" X="5880" Y="-3900" Width="1320" Height="2160" ScaleX="1" ScaleY="1" Tag="" SelectionMode="0" DisplayBG="False" CastlePool="True" GardenPool="True" TowerPool="True" DungeonPool="True">
     <GameObject Type="CollHullObj" Name="Coll_Hull20" X="5880" Y="-3900" Width="120" Height="1440" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull11" X="5880" Y="-2460" Width="120" Height="240" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
@@ -6085,8 +6085,6 @@
     <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-8040" Y="-5640" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-8040" Y="-5640" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="CollHullObj" Name="Coll_Hull17" X="-6720" Y="-5640" Width="360" Height="60" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="False" CollidesLeft="False" CollidesRight="False" LevelType="0" />
-
-    <!-- Testing -->
     <GameObject Type="BorderObj" Name="Col_125" X="-7380" Y="-5140" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-8040" Y="-5140" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />
     <GameObject Type="BorderObj" Name="Col_125" X="-6720" Y="-5140" Width="360" Height="30" ScaleX="1" ScaleY="1" Rotation="0" Flip="False" Tag="" CollidesTop="True" CollidesBottom="True" CollidesLeft="True" CollidesRight="True" LevelType="0" />

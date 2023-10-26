@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - LineageScreen.cs
-//  Last Modified 2023-10-24 4:19 PM
+//  Last Modified 2023-10-25 7:46 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -358,7 +358,7 @@ namespace RogueLegacy.Screens
             }
 
             // Disable death links now that we are in lineage screen.
-            Program.Game.ArchipelagoManager.CanDeathLink = false;
+            Program.Game.ArchipelagoManager.IsDeathLinkSafe = false;
 
             base.OnEnter();
         }
