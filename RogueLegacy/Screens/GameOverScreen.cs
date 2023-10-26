@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - GameOverScreen.cs
-//  Last Modified 2023-10-24 4:17 PM
+//  Last Modified 2023-10-26 12:22 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -185,8 +185,17 @@ namespace RogueLegacy.Screens
                 Game.PlayerStats.SpecialItem = 0;
             }
 
-            (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.MapData);
-            (ScreenManager.Game as Game).SaveManager.SaveAllFileTypes(true);
+            if (Game.PlayerStats.LockCastle)
+            {
+                (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage);
+                (ScreenManager.Game as Game).SaveManager.SaveBackupFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
+            }
+            else
+            {
+                (ScreenManager.Game as Game).SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.MapData);
+                (ScreenManager.Game as Game).SaveManager.SaveAllFileTypes(true);
+            }
+
             Game.PlayerStats.Traits = traits;
 
             SoundManager.StopMusic(0.5f);

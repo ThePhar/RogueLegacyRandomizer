@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - SkillScreen.cs
-//  Last Modified 2023-10-24 4:27 PM
+//  Last Modified 2023-10-26 12:09 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Randomizer.Definitions;
 using RogueLegacy.Enums;
+using RogueLegacy.GameObjects.Rooms;
 using RogueLegacy.Systems;
 using Tweener;
 using Tweener.Ease;
