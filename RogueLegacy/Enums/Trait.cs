@@ -1,11 +1,11 @@
-// RogueLegacyRandomizer - Trait.cs
-// Last Modified 2023-07-30 10:59 AM by
-//
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
-// Original Source - © 2011-2018, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  RogueLegacyRandomizer - Trait.cs
+//  Last Modified 2023-10-26 4:05 PM
+// 
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+// 
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System;
 using System.Linq;
@@ -16,41 +16,41 @@ namespace RogueLegacy.Enums;
 public enum Trait
 {
     None           = 0,
-    ColorBlind     = 1,
-    Gay            = 2,
-    NearSighted    = 3,
-    FarSighted     = 4,
+    ColorBlind     = 1, // Good
+    Gay            = 2, // Good
+    NearSighted    = 3, // Good
+    FarSighted     = 4, // Good
     Dyslexia       = 5,
-    Gigantism      = 6,
-    Dwarfism       = 7,
+    Gigantism      = 6, // Good
+    Dwarfism       = 7, // Good
     Baldness       = 8,
     Endomorph      = 9,
     Ectomorph      = 10,
     Alzheimers     = 11,
     Dextrocardia   = 12,
     Coprolalia     = 13,
-    Hyperactive    = 14,
+    Hyperactive    = 14, // Good
     OCD            = 15,
-    Hypergonadism  = 16,
-    Hypogonadism   = 17,
+    Hypergonadism  = 16, // Good
+    Hypogonadism   = 17, // Good
     StereoBlind    = 18,
     IBS            = 19,
-    Vertigo        = 20,
+    Vertigo        = 20, // Good
     TunnelVision   = 21,
     Ambilevous     = 22,
     PAD            = 23,
     Alektorophobia = 24,
     Hypochondriac  = 25,
-    Dementia       = 26,
+    Dementia       = 26, // Good
     Flexible       = 27,
-    EideticMemory  = 28,
-    Nostalgic      = 29,
-    CIP            = 30,
+    EideticMemory  = 28, // Good
+    Nostalgic      = 29, // Good
+    CIP            = 30, // Good
     Savant         = 31,
-    TheOne         = 32,
+    TheOne         = 32, // Not Good
     Clumsy         = 33,
     EHS            = 34,
-    Glaucoma       = 35
+    Glaucoma       = 35,
 
     // Hilarious that this is a trait in the game.
     // Adopted = 100
@@ -310,5 +310,10 @@ public static class TraitHelper
         // TODO: Move this away from using floats. It's terrible.
         // ReSharper disable line CompareOfFloatsByEqualityOperator
         return Game.PlayerStats.Traits.X == (float) trait || Game.PlayerStats.Traits.Y == (float) trait;
+    }
+
+    public static bool HasAnyTrait(params Trait[] traits)
+    {
+        return traits.Any(HasTrait);
     }
 }

@@ -1,9 +1,9 @@
 ﻿//  RogueLegacyRandomizer - ItemHandler.cs
-//  Last Modified 2023-10-25 9:15 PM
-// 
+//  Last Modified 2023-10-26 4:05 PM
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -11,11 +11,9 @@ using System;
 using System.Collections.Generic;
 using Archipelago.MultiClient.Net.Models;
 using DS2DEngine;
-using Microsoft.Xna.Framework;
 using Randomizer.Definitions;
 using RogueLegacy;
 using RogueLegacy.Enums;
-using Game = RogueLegacy.Game;
 
 namespace Randomizer;
 
@@ -410,13 +408,15 @@ public class ItemHandler
                 break;
 
             case ItemCode.TRAP_GENETIC_LOTTERY:
+                // Class and HP + MP
+                var percentHP = Game.ScreenManager.Player.CurrentHealth / (float) Game.ScreenManager.Player.MaxHealth;
+                var percentMP = Game.ScreenManager.Player.CurrentMana / (float) Game.ScreenManager.Player.MaxMana;
                 Game.PlayerStats.Class = (byte) ClassExtensions.RandomClass();
+                Game.ScreenManager.Player.CurrentHealth = (int) Math.Ceiling(Game.ScreenManager.Player.MaxHealth * percentHP);
+                Game.ScreenManager.Player.CurrentMana = (int) Math.Ceiling(Game.ScreenManager.Player.MaxMana * percentMP);
 
                 var spells = ((ClassType) Game.PlayerStats.Class).SpellList();
                 Game.PlayerStats.Spell = (byte) spells[CDGMath.RandomInt(0, spells.Length - 1)];
-
-                var traits = TraitHelper.ReturnRandomTraits();
-                Game.PlayerStats.Traits = new Vector2((float) traits[0], (float) traits[1]);
 
                 var currentlyFemale = Game.PlayerStats.IsFemale;
                 Game.PlayerStats.IsFemale = CDGMath.RandomInt(0, 1) == 0;
@@ -426,6 +426,47 @@ public class ItemHandler
                         ? Game.PlayerStats.PlayerName.Replace("Sir ", "Lady ")
                         : Game.PlayerStats.PlayerName.Replace("Lady ", "Sir ");
                 }
+
+                // Validate some of the traits.
+                do
+                {
+                    var traits = TraitHelper.ReturnRandomTraits();
+                    Game.PlayerStats.Traits = new((float) traits[0], (float) traits[1]);
+                } while (TraitHelper.HasAnyTrait(Trait.TheOne));
+
+                // Swap health.
+                if (TraitHelper.HasTrait(Trait.Dextrocardia))
+                {
+                    Game.ScreenManager.Player.CurrentHealth = (int) Math.Ceiling(Game.ScreenManager.Player.MaxHealth * percentHP);
+                    Game.ScreenManager.Player.CurrentMana = (int) Math.Ceiling(Game.ScreenManager.Player.MaxMana * percentMP);
+                }
+
+                // Sizing
+                if (TraitHelper.HasTrait(Trait.Gigantism))
+                {
+                    Game.ScreenManager.Player.Scale = new(3f, 3f);
+                }
+                else if (TraitHelper.HasTrait(Trait.Dwarfism))
+                {
+                    Game.ScreenManager.Player.Scale = new(1.35f, 1.35f);
+                }
+                else
+                {
+                    Game.ScreenManager.Player.Scale = new(2f, 2f);
+                }
+
+                // Ecto / Endo
+                if (TraitHelper.HasTrait(Trait.Ectomorph))
+                {
+                    Player.ScaleX *= 0.825f;
+                    Player.ScaleY *= 1.15f;
+                }
+                else if (TraitHelper.HasTrait(Trait.Endomorph))
+                {
+                    Player.ScaleX *= 1.25f;
+                    Player.ScaleY *= 1.175f;
+                }
+
                 break;
 
             #endregion
