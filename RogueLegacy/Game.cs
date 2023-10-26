@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - Game.cs
-//  Last Modified 2023-10-25 9:15 PM
+//  Last Modified 2023-10-26 11:30 AM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -24,6 +24,7 @@ using Microsoft.Xna.Framework.Input;
 using Randomizer;
 using RogueLegacy.Enums;
 using RogueLegacy.GameObjects;
+using RogueLegacy.GameObjects.Rooms;
 using RogueLegacy.Screens;
 using RogueLegacy.Util;
 using SpriteSystem;

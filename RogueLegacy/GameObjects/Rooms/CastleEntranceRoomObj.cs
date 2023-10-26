@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-26 11:37 AM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -36,24 +36,27 @@ public class CastleEntranceRoomObj : RoomObj
 
     public CastleEntranceRoomObj()
     {
-        _castleGate = new PhysicsObj("CastleEntranceGate_Sprite");
-        _castleGate.IsWeighted = false;
-        _castleGate.IsCollidable = true;
-        _castleGate.CollisionTypeTag = 1;
-        _castleGate.Layer = -1f;
-        _castleGate.OutlineWidth = 2;
-        GameObjList.Add(_castleGate);
-        _teleporter = new TeleporterObj();
+        _teleporter = new();
+        _castleGate = new("CastleEntranceGate_Sprite")
+        {
+            IsWeighted = false,
+            IsCollidable = true,
+            CollisionTypeTag = 1,
+            Layer = -1f,
+            OutlineWidth = 2,
+        };
+
         GameObjList.Add(_teleporter);
+        GameObjList.Add(_castleGate);
     }
 
     public bool RoomCompleted { get; set; }
 
     public override void Initialize()
     {
-        _speechBubble = new SpriteObj("ExclamationSquare_Sprite");
+        _speechBubble = new("ExclamationSquare_Sprite");
         _speechBubble.Flip = SpriteEffects.FlipHorizontally;
-        _speechBubble.Scale = new Vector2(1.2f, 1.2f);
+        _speechBubble.Scale = new(1.2f, 1.2f);
         GameObjList.Add(_speechBubble);
         _mapText = new KeyIconTextObj(Game.JunicodeFont);
         _mapText.Text = "view map any time";
@@ -68,39 +71,47 @@ public class CastleEntranceRoomObj : RoomObj
         placeholder.Name = "placeholder";
         GameObjList.Add(_mapText);
         GameObjList.Add(placeholder);
-        _mapIcon = new KeyIconObj();
-        _mapIcon.Scale = new Vector2(0.5f, 0.5f);
+        _mapIcon = new();
+        _mapIcon.Scale = new(0.5f, 0.5f);
         GameObjList.Add(_mapIcon);
         foreach (var current in GameObjList)
         {
-            if (current.Name == "diary") _diary = current as SpriteObj;
+            if (current.Name == "diary")
+            {
+                _diary = current as SpriteObj;
+            }
 
             if (current.Name == "map")
             {
                 (current as SpriteObj).OutlineWidth = 2;
-                _mapText.Position = new Vector2(current.X, current.Bounds.Top - 50);
-                _mapIcon.Position = new Vector2(_mapText.X, _mapText.Y - 20f);
+                _mapText.Position = new(current.X, current.Bounds.Top - 50);
+                _mapIcon.Position = new(_mapText.X, _mapText.Y - 20f);
             }
 
             if (current.Name == "placeholder")
             {
-                placeholder.Position = new Vector2(_mapText.X + 1020f, _mapText.Y + 120);
+                placeholder.Position = new(_mapText.X + 1020f, _mapText.Y + 120);
             }
         }
 
         _diary.OutlineWidth = 2;
-        _speechBubble.Position = new Vector2(_diary.X, _diary.Y - _speechBubble.Height - 20f);
+        _speechBubble.Position = new(_diary.X, _diary.Y - _speechBubble.Height - 20f);
         DoorObj doorObj = null;
         foreach (var current2 in GameObjList)
+        {
             if (current2.Name == "LastDoor")
             {
                 _bossDoorSprite = current2 as ObjContainer;
                 break;
             }
+        }
 
         foreach (var current3 in DoorList)
         {
-            if (current3.DoorPosition == "Left") doorObj = current3;
+            if (current3.DoorPosition == "Left")
+            {
+                doorObj = current3;
+            }
 
             if (current3.IsBossDoor)
             {
@@ -112,9 +123,8 @@ public class CastleEntranceRoomObj : RoomObj
         for (var i = 1; i < _bossDoorSprite.NumChildren; i++) _bossDoorSprite.GetChildAt(i).Opacity = 0f;
 
         _bossDoorSprite.AnimationDelay = 0.1f;
-        _castleGate.Position = new Vector2(doorObj.Bounds.Right - _castleGate.Width,
-            doorObj.Y - _castleGate.Height);
-        _teleporter.Position = new Vector2(X + Width / 2f - 1260f, Y + 720f - 120f);
+        _castleGate.Position = new(doorObj.Bounds.Right - _castleGate.Width, doorObj.Y - _castleGate.Height);
+        _teleporter.Position = new(X + Width / 2f - 1260f, Y + 720f - 120f);
         base.Initialize();
     }
 
@@ -155,10 +165,7 @@ public class CastleEntranceRoomObj : RoomObj
                 break;
         }
 
-        if (flag)
-            _bossDoorSprite.GetChildAt(index).TextureColor = Color.Yellow;
-        else
-            _bossDoorSprite.GetChildAt(index).TextureColor = Color.White;
+        _bossDoorSprite.GetChildAt(index).TextureColor = flag ? Color.Yellow : Color.White;
 
         if (tween)
         {
@@ -176,20 +183,17 @@ public class CastleEntranceRoomObj : RoomObj
         if (Game.PlayerStats.ReadLastDiary && LinkedRoom.LinkedRoom != null) LinkedRoom = LinkedRoom.LinkedRoom;
 
         Game.PlayerStats.LoadStartingRoom = false;
-        if (Game.PlayerStats.DiaryEntry < 1)
-            _speechBubble.Visible = true;
-        else
-            _speechBubble.Visible = false;
+        _speechBubble.Visible = Game.PlayerStats.DiaryEntry < 1;
 
         if (InputManager.GamePadIsConnected(PlayerIndex.One))
         {
             _mapIcon.SetButton(Game.GlobalInput.ButtonList[9]);
-            _mapIcon.Scale = new Vector2(1f, 1f);
+            _mapIcon.Scale = new(1f, 1f);
         }
         else
         {
             _mapIcon.SetKey(Game.GlobalInput.KeyList[9]);
-            _mapIcon.Scale = new Vector2(0.5f, 0.5f);
+            _mapIcon.Scale = new(0.5f, 0.5f);
         }
 
         if (!_allFilesSaved)
@@ -248,18 +252,9 @@ public class CastleEntranceRoomObj : RoomObj
         Player.CurrentSpeed = 0f;
         Player.LockControls();
         Player.AttachedLevel.CameraLockedToPlayer = false;
-        var x = Player.AttachedLevel.Camera.X;
-        object arg_C7_0 = Player.AttachedLevel.Camera;
-        var arg_C7_1 = 1f;
-        Easing arg_C7_2 = Quad.EaseInOut;
-        var array = new string[2];
-        array[0] = "X";
-        var arg_C5_0 = array;
-        var arg_C5_1 = 1;
-        var x2 = Bounds.Center.X;
-        arg_C5_0[arg_C5_1] = x2.ToString();
-        Tween.To(arg_C7_0, arg_C7_1, arg_C7_2, array);
-        Tween.RunFunction(2.2f, this, "PlayBossDoorAnimation2", x);
+
+        Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "X", "3960");
+        Tween.RunFunction(2.2f, this, "PlayBossDoorAnimation2", Player.AttachedLevel.Camera.X);
     }
 
     public void PlayBossDoorAnimation2(float storedX)
@@ -267,7 +262,8 @@ public class CastleEntranceRoomObj : RoomObj
         _bossDoorSprite.ChangeSprite("LastDoorOpen_Character");
         _bossDoorSprite.PlayAnimation(false);
         SoundManager.PlaySound("LastDoor_Open");
-        Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "2", "X", (storedX - 660).ToString());
+
+        Tween.To(Player.AttachedLevel.Camera, 1f, Quad.EaseInOut, "delay", "2", "X", storedX.ToString());
         Tween.RunFunction(3.1f, this, "BossDoorAnimationComplete");
     }
 
@@ -286,9 +282,15 @@ public class CastleEntranceRoomObj : RoomObj
 
     public override void Update(GameTime gameTime)
     {
-        if (_bossDoorOpening && !Player.ControlsLocked) Player.LockControls();
+        if (_bossDoorOpening && !Player.ControlsLocked)
+        {
+            Player.LockControls();
+        }
 
-        if (!SoundManager.IsMusicPlaying) SoundManager.PlayMusic("CastleSong", true);
+        if (!SoundManager.IsMusicPlaying)
+        {
+            SoundManager.PlayMusic("CastleSong", true);
+        }
 
         if (Player.X < _castleGate.Bounds.Right)
         {
@@ -361,7 +363,7 @@ public class CastleEntranceRoomObj : RoomObj
         base.Update(gameTime);
     }
 
-    public void CloseGate(bool animate)
+    private void CloseGate(bool animate)
     {
         if (animate)
         {
@@ -402,27 +404,24 @@ public class CastleEntranceRoomObj : RoomObj
 
     public override void Dispose()
     {
-        if (!IsDisposed)
+        if (IsDisposed)
         {
-            _castleGate = null;
-            _teleporter = null;
-            _bossDoor = null;
-            _bossDoorSprite = null;
-            _diary = null;
-            _speechBubble = null;
-            _mapText = null;
-            _mapIcon = null;
-            base.Dispose();
+            return;
         }
+
+        _castleGate = null;
+        _teleporter = null;
+        _bossDoor = null;
+        _bossDoorSprite = null;
+        _diary = null;
+        _speechBubble = null;
+        _mapText = null;
+        _mapIcon = null;
+        base.Dispose();
     }
 
     protected override GameObj CreateCloneInstance()
     {
         return new CastleEntranceRoomObj();
-    }
-
-    protected override void FillCloneInstance(object obj)
-    {
-        base.FillCloneInstance(obj);
     }
 }

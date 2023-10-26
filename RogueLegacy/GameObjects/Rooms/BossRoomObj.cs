@@ -1,11 +1,11 @@
-// Rogue Legacy Randomizer - BossRoomObj.cs
-// Last Modified 2022-12-01
+//  RogueLegacyRandomizer - BossRoomObj.cs
+//  Last Modified 2023-10-26 11:30 AM
 //
-// This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
-// original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
+//  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
+//  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
 //
-// Original Source © 2011-2015, Cellar Door Games Inc.
-// Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
+//  Original Source - © 2011-2018, Cellar Door Games Inc.
+//  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
 using System.Globalization;
 using DS2DEngine;
@@ -15,7 +15,7 @@ using RogueLegacy.Enums;
 using Tweener;
 using Tweener.Ease;
 
-namespace RogueLegacy;
+namespace RogueLegacy.GameObjects.Rooms;
 
 public abstract class BossRoomObj : RoomObj
 {
@@ -32,16 +32,16 @@ public abstract class BossRoomObj : RoomObj
 
     public override void Initialize()
     {
-        _bossTitle1 = new TextObj(Game.JunicodeFont) { Text = "The Forsaken", OutlineWidth = 2, FontSize = 18f };
-        _bossTitle2 = new TextObj(Game.JunicodeLargeFont) { Text = "Alexander", OutlineWidth = 2, FontSize = 40f };
-        _bossDivider = new SpriteObj("Blank_Sprite") { OutlineWidth = 2 };
+        _bossTitle1 = new(Game.JunicodeFont) { Text = "The Forsaken", OutlineWidth = 2, FontSize = 18f };
+        _bossTitle2 = new(Game.JunicodeLargeFont) { Text = "Alexander", OutlineWidth = 2, FontSize = 40f };
+        _bossDivider = new("Blank_Sprite") { OutlineWidth = 2 };
         foreach (var current in DoorList)
         {
             _roomFloor = current.Bounds.Bottom;
         }
 
-        _bossChest = new ChestObj(null);
-        _bossChest.Position = new Vector2(Bounds.Center.X - _bossChest.Width / 2f, Bounds.Center.Y);
+        _bossChest = new(null);
+        _bossChest.Position = new(Bounds.Center.X - _bossChest.Width / 2f, Bounds.Center.Y);
         GameObjList.Add(_bossChest);
         base.Initialize();
     }
@@ -72,7 +72,7 @@ public abstract class BossRoomObj : RoomObj
         _bossTitle2.Text = bossTitle2;
         var camera = Player.AttachedLevel.Camera;
         _bossTitle1.Position = Player.AttachedLevel.CurrentRoom is LastBossRoom
-            ? new Vector2(camera.X - 550f, camera.Y + 100f)
+            ? new(camera.X - 550f, camera.Y + 100f)
             : new Vector2(camera.X - 550f, camera.Y + 50f);
 
         _bossTitle2.X = _bossTitle1.X - 0f;
@@ -172,44 +172,42 @@ public abstract class BossRoomObj : RoomObj
         var scale = Player.Scale;
         Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "1.2", "ScaleX", "0");
         Player.ScaleX = 0f;
-        Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "7", "ScaleX",
-            scale.X.ToString(CultureInfo.InvariantCulture));
+        Tween.To(Player, 0.05f, Linear.EaseNone, "delay", "7", "ScaleX", scale.X.ToString(CultureInfo.InvariantCulture));
         Player.ScaleX = scale.X;
+
         var logicSet = new LogicSet(Player);
+
+        // Teleport player and wipe screen.
         logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", true));
         logicSet.AddAction(new RunFunctionLogicAction(Player, "LockControls"));
         logicSet.AddAction(new ChangeSpriteLogicAction("PlayerLevelUp_Character", true, false));
         logicSet.AddAction(new DelayLogicAction(0.5f));
         logicSet.AddAction(new PlaySoundLogicAction("Teleport_Disappear"));
-        logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport",
-            new Vector2(Player.X, Player.Bounds.Bottom), Player.Scale));
+        logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleport", new Vector2(Player.X, Player.Bounds.Bottom), Player.Scale));
         logicSet.AddAction(new DelayLogicAction(0.3f));
         logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
         logicSet.AddAction(new DelayLogicAction(0.2f));
+
         if (LinkedRoom != null)
         {
-            Player.Position = new Vector2(Player.AttachedLevel.RoomList[1].Bounds.Center.X,
-                Player.AttachedLevel.RoomList[1].Bounds.Center.Y);
+            // Put player in entrance room.
+            Player.Position = new(3960, Player.AttachedLevel.RoomList[1].Bounds.Center.Y);
             Player.UpdateCollisionBoxes();
             logicSet.AddAction(new TeleportLogicAction(null, Player.Position));
             logicSet.AddAction(new DelayLogicAction(0.05f));
             logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
-            logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.RoomList[1], "RevealSymbol",
-                Zone, true));
+            logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.RoomList[1], "RevealSymbol", Zone, true));
             logicSet.AddAction(new DelayLogicAction(3.5f));
-            logicSet.AddAction(
-                new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
+            logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "StartWipeTransition"));
             logicSet.AddAction(new DelayLogicAction(0.2f));
-            Player.Position = new Vector2(LinkedRoom.Bounds.Center.X,
-                LinkedRoom.Bounds.Bottom - 60 - (Player.Bounds.Bottom - Player.Y));
+            Player.Position = new(LinkedRoom.Bounds.Center.X, LinkedRoom.Bounds.Bottom - 60 - (Player.Bounds.Bottom - Player.Y));
             Player.UpdateCollisionBoxes();
             logicSet.AddAction(new ChangePropertyLogicAction(Player.AttachedLevel, "DisableSongUpdating", false));
             logicSet.AddAction(new TeleportLogicAction(null, Player.Position));
             logicSet.AddAction(new DelayLogicAction(0.05f));
             logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ScreenManager, "EndWipeTransition"));
             logicSet.AddAction(new DelayLogicAction(1f));
-            logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool,
-                "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), scale));
+            logicSet.AddAction(new RunFunctionLogicAction(Player.AttachedLevel.ImpactEffectPool, "MegaTeleportReverse", new Vector2(Player.X, LinkedRoom.Bounds.Bottom - 60), scale));
             logicSet.AddAction(new PlaySoundLogicAction("Teleport_Reappear"));
         }
 
