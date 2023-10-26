@@ -1,9 +1,9 @@
 //  RogueLegacyRandomizer - CarnivalShoot1BonusRoom.cs
-//  Last Modified 2023-10-24 4:10 PM
-//
+//  Last Modified 2023-10-26 3:26 PM
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -54,7 +54,22 @@ public class CarnivalShoot1BonusRoom : BonusRoomObj
         _balloonList = new List<ObjContainer>();
     }
 
-    private int ActiveTargets => _targetList.Select(t => !t.Broken).Count();
+    private int ActiveTargets
+    {
+        get
+        {
+            var num = 0;
+            foreach (var current in _targetList)
+            {
+                if (!current.Broken)
+                {
+                    num++;
+                }
+            }
+
+            return num;
+        }
+    }
 
     public override void LoadContent(GraphicsDevice graphics)
     {
