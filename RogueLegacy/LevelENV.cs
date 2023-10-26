@@ -1,9 +1,9 @@
 //  RogueLegacyRandomizer - LevelENV.cs
-//  Last Modified 2023-10-25 6:35 PM
-//
+//  Last Modified 2023-10-26 4:24 PM
+// 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-//
+// 
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -58,7 +58,7 @@ namespace RogueLegacy
         public static Version TargetVersion   => Version.Parse("1.0.0");
         public static int     PreRelease      => 6;
         public static string  FullVersion     => $"v{TargetVersion}" + (PreRelease > 0 ? $" Alpha {PreRelease}" : "");
-        public static string  VersionSubtitle => "Development Build 2023-XX-XX";
+        public static string  VersionSubtitle => "Development Build 2023-10-26";
 
         static LevelENV()
         {

@@ -3,7 +3,7 @@
 
 #define MyAppId "{6741975E-782A-438F-8C05-502EDB37E7DB}"
 #define MyAppName "Rogue Legacy Randomizer"
-#define MyAppVersion "1.0.0 Alpha 5"
+#define MyAppVersion "1.0.0 Alpha 6"
 #define MyAppPublisher "Zach Parks & Cellar Door Games"
 #define MyAppURL "https://github.com/ThePhar/RogueLegacyRandomizer"
 #define MyAppExeName "Rogue Legacy Randomizer.exe"
@@ -82,7 +82,18 @@ procedure InitializeWizard();
 begin
   CopyDirPage := CreateInputDirPage(wpSelectDir, 'Select your vanilla Rogue Legacy source directory.', '',  '', False, '');
   CopyDirPage.Add('Source directory:');
-  CopyDirPage.Values[0] := 'C:\Program Files (x86)\Steam\steamapps\common\Rogue Legacy';
+  CopyDirPage.Values[0] := '';
+end;
+
+function NextButtonClick(CurPageId: Integer): Boolean;
+begin
+  Result := True
+  Log(CopyDirPage.Values[0]);
+  if (CurPageId = CopyDirPage.Id) and not FileExists(CopyDirPage.Values[0] + '/RogueLegacy.exe') then begin
+    MsgBox('RogueLegacy.exe does not appear to be preset in that folder. Please select the correct folder.', mbError, MB_OK);
+    Result := False;
+    exit;
+  end;
 end;
 
 function CopyDir(Params: string): string;
