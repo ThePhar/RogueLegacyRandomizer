@@ -1,5 +1,5 @@
 ﻿//  RogueLegacyRandomizer - ArchipelagoManager.cs
-//  Last Modified 2023-10-26 2:02 PM
+//  Last Modified 2023-10-26 2:48 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -87,7 +87,7 @@ public class ArchipelagoManager
         catch (Exception ex)
         {
             Disconnect();
-            return new (ex.ToString());
+            return new($"Unable to establish an initial connection to the Archipelago server @ {_connectionInfo.Url}");
         }
 
         var result = await _session.LoginAsync(
@@ -118,7 +118,6 @@ public class ArchipelagoManager
 
         // Build dictionary of locations with item information for fast lookup.
         await BuildLocationDictionary();
-
 
         // Return null to signify no error.
         Ready = true;
