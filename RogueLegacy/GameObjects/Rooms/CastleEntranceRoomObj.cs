@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-//  Last Modified 2023-10-26 11:37 AM
+//  Last Modified 2023-10-26 11:52 AM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -124,7 +124,7 @@ public class CastleEntranceRoomObj : RoomObj
 
         _bossDoorSprite.AnimationDelay = 0.1f;
         _castleGate.Position = new(doorObj.Bounds.Right - _castleGate.Width, doorObj.Y - _castleGate.Height);
-        _teleporter.Position = new(X + Width / 2f - 1260f, Y + 720f - 120f);
+        _teleporter.Position = new(3300, Y + 720f - 120f);
         base.Initialize();
     }
 
