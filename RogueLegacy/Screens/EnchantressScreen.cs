@@ -1,5 +1,5 @@
 //  RogueLegacyRandomizer - EnchantressScreen.cs
-//  Last Modified 2023-10-24 4:17 PM
+//  Last Modified 2023-10-25 11:04 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -50,7 +50,7 @@ namespace RogueLegacy.Screens
         public EnchantressScreen()
         {
             _currentCategoryIndex = STARTING_CATEGORY_INDEX;
-            _masterIconArray = new List<SpriteObj[]>();
+            _masterIconArray = new();
             for (var i = 0; i < 5; i++)
             {
                 _masterIconArray.Add(new SpriteObj[11]);
@@ -64,14 +64,14 @@ namespace RogueLegacy.Screens
 
         public override void LoadContent()
         {
-            _enchantressUI = new ObjContainer("BlacksmithUI_Character");
-            _enchantressUI.Position = new Vector2(660f, 360f);
-            _playerMoney = new TextObj(Game.GoldFont);
+            _enchantressUI = new("BlacksmithUI_Character");
+            _enchantressUI.Position = new(660f, 360f);
+            _playerMoney = new(Game.GoldFont);
             _playerMoney.Align = Types.TextAlign.Left;
             _playerMoney.Text = "1000";
             _playerMoney.FontSize = 30f;
             _playerMoney.OverrideParentScale = true;
-            _playerMoney.Position = new Vector2(210f, -225f);
+            _playerMoney.Position = new(210f, -225f);
             _playerMoney.AnchorY = 10f;
             _enchantressUI.AddChild(_playerMoney);
             _enchantressUI.GetChildAt(_enchantressUI.NumChildren - 3).ChangeSprite("EnchantressUI_Title_Sprite");
@@ -80,15 +80,15 @@ namespace RogueLegacy.Screens
                 _enchantressUI.GetChildAt(i).Scale = Vector2.Zero;
             }
 
-            _selectionIcon = new SpriteObj("BlacksmithUI_SelectionIcon_Sprite");
+            _selectionIcon = new("BlacksmithUI_SelectionIcon_Sprite");
             _selectionIcon.PlayAnimation();
             _selectionIcon.Scale = Vector2.Zero;
             _selectionIcon.AnimationDelay = 0.1f;
             _selectionIcon.ForceDraw = true;
-            _equipmentDescriptionText = new TextObj(Game.JunicodeFont);
+            _equipmentDescriptionText = new(Game.JunicodeFont);
             _equipmentDescriptionText.Align = Types.TextAlign.Centre;
             _equipmentDescriptionText.FontSize = 12f;
-            _equipmentDescriptionText.Position = new Vector2(230f, -20f);
+            _equipmentDescriptionText.Position = new(230f, -20f);
             _equipmentDescriptionText.Text = "Select a category";
             _equipmentDescriptionText.WordWrap(190);
             _equipmentDescriptionText.Scale = Vector2.Zero;
@@ -102,7 +102,7 @@ namespace RogueLegacy.Screens
                 var num2 = 80f;
                 for (var j = 0; j < current.Length; j++)
                 {
-                    current[j] = new SpriteObj("BlacksmithUI_QuestionMarkIcon_Sprite");
+                    current[j] = new("BlacksmithUI_QuestionMarkIcon_Sprite");
                     current[j].Position = absPosition;
                     current[j].Scale = Vector2.Zero;
                     current[j].ForceDraw = true;
@@ -116,28 +116,28 @@ namespace RogueLegacy.Screens
             }
 
             InitializeTextObjs();
-            _equippedIcon = new SpriteObj("BlacksmithUI_EquippedIcon_Sprite");
-            _confirmText = new KeyIconTextObj(Game.JunicodeFont);
+            _equippedIcon = new("BlacksmithUI_EquippedIcon_Sprite");
+            _confirmText = new(Game.JunicodeFont);
             _confirmText.Text = "to close map";
             _confirmText.FontSize = 12f;
-            _confirmText.Position = new Vector2(50f, 550f);
+            _confirmText.Position = new(50f, 550f);
             _confirmText.ForceDraw = true;
-            _cancelText = new KeyIconTextObj(Game.JunicodeFont);
+            _cancelText = new(Game.JunicodeFont);
             _cancelText.Text = "to re-center on player";
             _cancelText.FontSize = 12f;
-            _cancelText.Position = new Vector2(_confirmText.X, _confirmText.Y + 40f);
+            _cancelText.Position = new(_confirmText.X, _confirmText.Y + 40f);
             _cancelText.ForceDraw = true;
-            _navigationText = new KeyIconTextObj(Game.JunicodeFont);
+            _navigationText = new(Game.JunicodeFont);
             _navigationText.Text = "to move map";
             _navigationText.FontSize = 12f;
-            _navigationText.Position = new Vector2(_confirmText.X, _confirmText.Y + 80f);
+            _navigationText.Position = new(_confirmText.X, _confirmText.Y + 80f);
             _navigationText.ForceDraw = true;
-            _newIconList = new List<SpriteObj>();
+            _newIconList = new();
             for (var k = 0; k < 55; k++)
             {
                 var spriteObj = new SpriteObj("BlacksmithUI_NewIcon_Sprite");
                 spriteObj.Visible = false;
-                spriteObj.Scale = new Vector2(1.1f, 1.1f);
+                spriteObj.Scale = new(1.1f, 1.1f);
                 _newIconList.Add(spriteObj);
             }
 
@@ -146,36 +146,36 @@ namespace RogueLegacy.Screens
 
         private void InitializeTextObjs()
         {
-            _descriptionText = new TextObj(Game.JunicodeFont);
+            _descriptionText = new(Game.JunicodeFont);
             _descriptionText.FontSize = 9f;
-            _instructionsTitleText = new TextObj();
+            _instructionsTitleText = new();
             _instructionsTitleText.Font = Game.JunicodeFont;
             _instructionsTitleText.FontSize = 10f;
-            _instructionsTitleText.TextureColor = new Color(237, 202, 138);
+            _instructionsTitleText.TextureColor = new(237, 202, 138);
             _instructionsTitleText.Text = "Instructions:";
-            _instructionsText = new KeyIconTextObj();
+            _instructionsText = new();
             _instructionsText.Font = Game.JunicodeFont;
             _instructionsText.FontSize = 10f;
-            _unlockCostContainer = new ObjContainer();
+            _unlockCostContainer = new();
             var textObj = new TextObj();
             textObj.Font = Game.JunicodeFont;
             textObj.FontSize = 10f;
             textObj.TextureColor = Color.Yellow;
-            textObj.Position = new Vector2(50f, 9f);
+            textObj.Position = new(50f, 9f);
             _unlockCostContainer.AddChild(new SpriteObj("BlacksmithUI_CoinBG_Sprite"));
             _unlockCostContainer.AddChild(textObj);
-            _descriptionText.Position = new Vector2(_enchantressUI.X + 140f,
+            _descriptionText.Position = new(_enchantressUI.X + 140f,
                 _enchantressUI.Y - _enchantressUI.Height / 2 + 20f + 40f);
-            _instructionsTitleText.Position = new Vector2(_enchantressUI.X + 140f,
+            _instructionsTitleText.Position = new(_enchantressUI.X + 140f,
                 _descriptionText.Bounds.Bottom + 20);
-            _instructionsText.Position = new Vector2(_instructionsTitleText.X, _instructionsTitleText.Bounds.Bottom);
-            _unlockCostContainer.Position = new Vector2(_enchantressUI.X + 114f, 485f);
-            _equipmentTitleText = new TextObj(Game.JunicodeFont);
+            _instructionsText.Position = new(_instructionsTitleText.X, _instructionsTitleText.Bounds.Bottom);
+            _unlockCostContainer.Position = new(_enchantressUI.X + 114f, 485f);
+            _equipmentTitleText = new(Game.JunicodeFont);
             _equipmentTitleText.ForceDraw = true;
             _equipmentTitleText.FontSize = 10f;
-            _equipmentTitleText.DropShadow = new Vector2(2f, 2f);
-            _equipmentTitleText.TextureColor = new Color(237, 202, 138);
-            _equipmentTitleText.Position = new Vector2(_enchantressUI.X + 140f, _descriptionText.Y - 50f);
+            _equipmentTitleText.DropShadow = new(2f, 2f);
+            _equipmentTitleText.TextureColor = new(237, 202, 138);
+            _equipmentTitleText.Position = new(_enchantressUI.X + 140f, _descriptionText.Y - 50f);
             _descriptionText.Visible = false;
             _instructionsTitleText.Visible = false;
             _instructionsText.Visible = false;
@@ -197,6 +197,45 @@ namespace RogueLegacy.Screens
             }
 
             _activeIconArray = _masterIconArray[equipmentType];
+            if (RandomizerData.ShuffleEnchantress)
+            {
+                switch ((EquipmentCategory) _currentCategoryIndex)
+                {
+                    case EquipmentCategory.Sword + 6:
+                        if (SkillSystem.GetSkill(SkillType.EnchantressSword).CurrentLevel == 0)
+                        {
+                            return;
+                        }
+                        break;
+                    case EquipmentCategory.Helm + 6:
+                        if (SkillSystem.GetSkill(SkillType.EnchantressHelm).CurrentLevel == 0)
+                        {
+                            return;
+                        }
+                        break;
+                    case EquipmentCategory.Chest + 6:
+                        if (SkillSystem.GetSkill(SkillType.EnchantressChest).CurrentLevel == 0)
+                        {
+                            return;
+                        }
+                        break;
+                    case EquipmentCategory.Limbs + 6:
+                        if (SkillSystem.GetSkill(SkillType.EnchantressLimbs).CurrentLevel == 0)
+                        {
+                            return;
+                        }
+                        break;
+                    case EquipmentCategory.Cape + 6:
+                        if (SkillSystem.GetSkill(SkillType.EnchantressCape).CurrentLevel == 0)
+                        {
+                            return;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
             num = 0.25f;
             for (var j = 0; j < 11; j++)
             {
@@ -291,56 +330,54 @@ namespace RogueLegacy.Screens
 
         private void UpdateIconStates()
         {
-            for (var i = 0; i < Game.PlayerStats.GetRuneArray.Count; i++)
-            for (var j = 0; j < Game.PlayerStats.GetRuneArray[i].Length; j++)
+            // Change to question marks.
+            for (var i = 0; i < 5; i++)
             {
-                var b = Game.PlayerStats.GetRuneArray[i][j];
-
-                // Outline disabled slots.
-                _masterIconArray[i][j].OutlineWidth = 0;
                 if (RandomizerData.ShuffleEnchantress)
                 {
                     switch ((EquipmentCategory) i)
                     {
                         case EquipmentCategory.Sword:
-                            if (SkillSystem.GetSkill(SkillType.EnchantressSword).CurrentLevel == 0)
-                            {
-                                _masterIconArray[i][j].OutlineColour = Color.Red;
-                                _masterIconArray[i][j].OutlineWidth = 2;
-                            }
+                            _enchantressUI.GetChildAt(i + 6)
+                                .ChangeSprite(SkillSystem.GetSkill(SkillType.EnchantressSword).CurrentLevel == 0
+                                    ? "BlacksmithUI_QuestionMarkIcon_Sprite"
+                                    : "BlacksmithUI_SwordCategoryIcon_Sprite");
                             break;
                         case EquipmentCategory.Helm:
-                            if (SkillSystem.GetSkill(SkillType.EnchantressHelm).CurrentLevel == 0)
-                            {
-                                _masterIconArray[i][j].OutlineColour = Color.Red;
-                                _masterIconArray[i][j].OutlineWidth = 2;
-                            }
+                            _enchantressUI.GetChildAt(i + 6)
+                                .ChangeSprite(SkillSystem.GetSkill(SkillType.EnchantressHelm).CurrentLevel == 0
+                                    ? "BlacksmithUI_QuestionMarkIcon_Sprite"
+                                    : "BlacksmithUI_HelmCategoryIcon_Sprite");
                             break;
                         case EquipmentCategory.Chest:
-                            if (SkillSystem.GetSkill(SkillType.EnchantressChest).CurrentLevel == 0)
-                            {
-                                _masterIconArray[i][j].OutlineColour = Color.Red;
-                                _masterIconArray[i][j].OutlineWidth = 2;
-                            }
+                            _enchantressUI.GetChildAt(i + 6)
+                                .ChangeSprite(SkillSystem.GetSkill(SkillType.EnchantressChest).CurrentLevel == 0
+                                    ? "BlacksmithUI_QuestionMarkIcon_Sprite"
+                                    : "BlacksmithUI_ChestCategoryIcon_Sprite");
                             break;
                         case EquipmentCategory.Limbs:
-                            if (SkillSystem.GetSkill(SkillType.EnchantressLimbs).CurrentLevel == 0)
-                            {
-                                _masterIconArray[i][j].OutlineColour = Color.Red;
-                                _masterIconArray[i][j].OutlineWidth = 2;
-                            }
+                            _enchantressUI.GetChildAt(i + 6)
+                                .ChangeSprite(SkillSystem.GetSkill(SkillType.EnchantressLimbs).CurrentLevel == 0
+                                    ? "BlacksmithUI_QuestionMarkIcon_Sprite"
+                                    : "BlacksmithUI_LimbsCategoryIcon_Sprite");
                             break;
                         case EquipmentCategory.Cape:
-                            if (SkillSystem.GetSkill(SkillType.EnchantressCape).CurrentLevel == 0)
-                            {
-                                _masterIconArray[i][j].OutlineColour = Color.Red;
-                                _masterIconArray[i][j].OutlineWidth = 2;
-                            }
+                            _enchantressUI.GetChildAt(i + 6)
+                                .ChangeSprite(SkillSystem.GetSkill(SkillType.EnchantressCape).CurrentLevel == 0
+                                    ? "BlacksmithUI_QuestionMarkIcon_Sprite"
+                                    : "BlacksmithUI_CapeCategoryIcon_Sprite");
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException($"Unknown equipment type: ${i}");
                     }
                 }
+            }
+
+            for (var i = 0; i < Game.PlayerStats.GetRuneArray.Count; i++)
+            for (var j = 0; j < Game.PlayerStats.GetRuneArray[i].Length; j++)
+            {
+                var b = Game.PlayerStats.GetRuneArray[i][j];
+
                 if (b == 0)
                 {
                     _masterIconArray[i][j].ChangeSprite("BlacksmithUI_QuestionMarkIcon_Sprite");
@@ -479,6 +516,8 @@ namespace RogueLegacy.Screens
                 {
                     _currentCategoryIndex = 10;
                 }
+
+                UpdateIconSelectionText();
             }
             else if (Game.GlobalInput.JustPressed(18) || Game.GlobalInput.JustPressed(19))
             {
@@ -487,6 +526,8 @@ namespace RogueLegacy.Screens
                 {
                     _currentCategoryIndex = 6;
                 }
+
+                UpdateIconSelectionText();
             }
 
             if (currentCategoryIndex != _currentCategoryIndex)
@@ -497,7 +538,7 @@ namespace RogueLegacy.Screens
                 {
                     if (i == 1)
                     {
-                        _enchantressUI.GetChildAt(i).Scale = new Vector2(1f, 1f);
+                        _enchantressUI.GetChildAt(i).Scale = new(1f, 1f);
                     }
                     else
                     {
@@ -507,7 +548,7 @@ namespace RogueLegacy.Screens
 
                 if (_currentCategoryIndex != 6)
                 {
-                    _enchantressUI.GetChildAt(_currentCategoryIndex - 5).Scale = new Vector2(1f, 1f);
+                    _enchantressUI.GetChildAt(_currentCategoryIndex - 5).Scale = new(1f, 1f);
                 }
                 else
                 {
@@ -680,7 +721,7 @@ namespace RogueLegacy.Screens
 
                 if (num3 != _currentEquipmentIndex && num2 == 3)
                 {
-                    _equippedIcon.Scale = new Vector2(1f, 1f);
+                    _equippedIcon.Scale = new(1f, 1f);
                     _equippedIcon.Position = _activeIconArray[_currentEquipmentIndex].AbsPosition;
                     _equippedIcon.Position += new Vector2(18f, 18f);
                     Game.PlayerStats.GetEquippedRuneArray[num] = (sbyte) _currentEquipmentIndex;
@@ -702,7 +743,7 @@ namespace RogueLegacy.Screens
 
         private void UpdateIconSelectionText()
         {
-            _equipmentDescriptionText.Position = new Vector2(-1000f, -1000f);
+            _equipmentDescriptionText.Position = new(-1000f, -1000f);
             _descriptionText.Visible = false;
             _instructionsTitleText.Visible = false;
             _instructionsText.Visible = false;
@@ -710,13 +751,38 @@ namespace RogueLegacy.Screens
             _equipmentTitleText.Visible = false;
             if (_inCategoryMenu)
             {
-                _equipmentDescriptionText.Text = "Select a category";
+                if (!RandomizerData.ShuffleEnchantress)
+                {
+                    return;
+                }
+
+                _equipmentDescriptionText.Position = new(230f, -20f);
+                _equipmentDescriptionText.Text = (EquipmentCategory) _currentCategoryIndex switch
+                {
+                    EquipmentCategory.Sword + 6 => SkillSystem.GetSkill(SkillType.EnchantressSword).CurrentLevel == 0
+                        ? "Sword slot needed"
+                        : "",
+                    EquipmentCategory.Helm + 6 => SkillSystem.GetSkill(SkillType.EnchantressHelm).CurrentLevel == 0
+                        ? "Helm slot needed"
+                        : "",
+                    EquipmentCategory.Chest + 6 => SkillSystem.GetSkill(SkillType.EnchantressChest).CurrentLevel == 0
+                        ? "Chest slot needed"
+                        : "",
+                    EquipmentCategory.Limbs + 6 => SkillSystem.GetSkill(SkillType.EnchantressLimbs).CurrentLevel == 0
+                        ? "Limbs slot needed"
+                        : "",
+                    EquipmentCategory.Cape + 6 => SkillSystem.GetSkill(SkillType.EnchantressCape).CurrentLevel == 0
+                        ? "Cape slot needed"
+                        : "",
+                    _ => throw new ArgumentOutOfRangeException(),
+                };
+
                 return;
             }
 
             if (Game.PlayerStats.GetRuneArray[_currentCategoryIndex - 6][_currentEquipmentIndex] == 0)
             {
-                _equipmentDescriptionText.Position = new Vector2(230f, -20f);
+                _equipmentDescriptionText.Position = new(230f, -20f);
                 _equipmentDescriptionText.Text = "Rune needed";
                 return;
             }
@@ -758,11 +824,11 @@ namespace RogueLegacy.Screens
             _descriptionText.Text = ((EquipmentAbility) _currentEquipmentIndex).Description();
             _descriptionText.WordWrap(195);
             _descriptionText.Y = _equipmentTitleText.Y + 60f;
-            _instructionsTitleText.Position = new Vector2(_enchantressUI.X + 140f,
+            _instructionsTitleText.Position = new(_enchantressUI.X + 140f,
                 _descriptionText.Bounds.Bottom + 20);
             _instructionsText.Text = ((EquipmentAbility) _currentEquipmentIndex).Instructions();
             _instructionsText.WordWrap(200);
-            _instructionsText.Position = new Vector2(_instructionsTitleText.X, _instructionsTitleText.Bounds.Bottom);
+            _instructionsText.Position = new(_instructionsTitleText.X, _instructionsTitleText.Bounds.Bottom);
         }
 
         private void UpdateNewIcons()
@@ -792,7 +858,7 @@ namespace RogueLegacy.Screens
             var b2 = Game.PlayerStats.GetEquippedRuneArray[CurrentCategoryIndex];
             if (b2 > -1)
             {
-                _equippedIcon.Position = new Vector2(_activeIconArray[b2].AbsPosition.X + 18f,
+                _equippedIcon.Position = new(_activeIconArray[b2].AbsPosition.X + 18f,
                     _activeIconArray[b2].AbsPosition.Y + 18f);
                 _equippedIcon.Visible = true;
                 return;
