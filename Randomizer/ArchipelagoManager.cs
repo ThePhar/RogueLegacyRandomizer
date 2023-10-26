@@ -1,5 +1,5 @@
 ﻿//  RogueLegacyRandomizer - ArchipelagoManager.cs
-//  Last Modified 2023-10-25 7:46 PM
+//  Last Modified 2023-10-26 2:02 PM
 // 
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
@@ -385,19 +385,20 @@ public class ArchipelagoManager
                 .Aggregate(new StringBuilder(), (sb, data) => sb.Append(data.Text))
                 .ToString();
 
-            Console.WriteLine($"[Archipelago] @ [{DateTime.UtcNow}]: Message Received: {message}");
+            RandUtil.Console("Archipelago", $"Message Received: {message}");
             return;
         }
 
-        Console.WriteLine($"[Archipelago] @ [{DateTime.UtcNow}]: Packet Received: {packet.GetType().Name}");
-        Util.PrintProperties(packet);
+        RandUtil.Console("Archipelago", $"Packet Received: {packet.GetType().Name}");
+        RandUtil.PrintProperties(packet);
     }
 
     private static void OnError(Exception exception, string message)
     {
-        Console.WriteLine(
-            $"[Archipelago] @ [{DateTime.UtcNow}]: Encountered an unhandled exception in ArchipelagoManager: " +
-            $"{message}\n\nStack Trace:\n{exception.StackTrace}"
+        RandUtil.Console(
+            "Archipelago",
+            $"Encountered an unhandled exception in ArchipelagoManager: " +
+                    $"{message}\n\nStack Trace:\n{exception.StackTrace}"
         );
     }
 }

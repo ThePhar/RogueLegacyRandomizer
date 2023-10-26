@@ -1,9 +1,9 @@
 //  RogueLegacyRandomizer - CastleEntranceRoomObj.cs
-//  Last Modified 2023-10-26 11:52 AM
-// 
+//  Last Modified 2023-10-26 1:59 PM
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -302,13 +302,14 @@ public class CastleEntranceRoomObj : RoomObj
         var bounds = _diary.Bounds;
         bounds.X -= 50;
         bounds.Width += 100;
-        _speechBubble.Y = _diary.Y - _speechBubble.Height - 20f - 30f +
-                          (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
+        _speechBubble.Y = _diary.Y - _speechBubble.Height - 20f - 30f + (float) Math.Sin(Game.TotalGameTimeSeconds * 20f) * 2f;
 
         if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround)
         {
             if (_speechBubble.SpriteName == "ExclamationSquare_Sprite")
+            {
                 _speechBubble.ChangeSprite("UpArrowSquare_Sprite");
+            }
         }
         else if (_speechBubble.SpriteName == "UpArrowSquare_Sprite")
         {
@@ -317,20 +318,27 @@ public class CastleEntranceRoomObj : RoomObj
 
         var freeDiary = RandomizerData.FreeDiaryOnGeneration;
 
-        if ((!RoomCompleted && freeDiary) || (Game.PlayerStats.DiaryEntry < 1 && !freeDiary) ||
-            CollisionMath.Intersects(Player.Bounds, bounds))
+        if ((!Game.PlayerStats.ReadStartingDiary && freeDiary) || (Game.PlayerStats.DiaryEntry < 1 && !freeDiary) || CollisionMath.Intersects(Player.Bounds, bounds))
+        {
             _speechBubble.Visible = true;
-        else if (RoomCompleted && freeDiary &&
-                 !CollisionMath.Intersects(Player.Bounds, bounds))
+        }
+        else if (Game.PlayerStats.ReadStartingDiary && freeDiary && !CollisionMath.Intersects(Player.Bounds, bounds))
+        {
             _speechBubble.Visible = false;
+        }
         else if (Game.PlayerStats.DiaryEntry >= 1 && !freeDiary)
+        {
             _speechBubble.Visible = false;
+        }
 
-        if (Game.PlayerStats.DiaryEntry >= 25) _speechBubble.Visible = false;
+        if (Game.PlayerStats.DiaryEntry >= 24 || Game.PlayerStats.ReadStartingDiary)
+        {
+            _speechBubble.Visible = false;
+        }
 
         if (CollisionMath.Intersects(Player.Bounds, bounds) && Player.IsTouchingGround && InputTypeHelper.PressedUp)
         {
-            if ((!RoomCompleted && Game.PlayerStats.DiaryEntry < 25 && freeDiary) || Game.PlayerStats.DiaryEntry < 1)
+            if ((!Game.PlayerStats.ReadStartingDiary && Game.PlayerStats.DiaryEntry < 25 && freeDiary) || Game.PlayerStats.DiaryEntry < 1)
             {
                 // We're going to set diaries based on lower ones completed.
                 Game.PlayerStats.DiaryEntry = 0;
@@ -347,16 +355,11 @@ public class CastleEntranceRoomObj : RoomObj
                     }
 
                     Game.PlayerStats.DiaryEntry = (byte) (diary + 1);
+                    Game.PlayerStats.ReadStartingDiary = true;
                     Program.Game.CollectItemFromLocation(location);
-                    RoomCompleted = true;
+                    Program.Game.SaveManager.SaveFiles(SaveType.PlayerData);
                     break;
                 }
-            }
-            else
-            {
-                RoomCompleted = true;
-                var rCScreenManager2 = Player.AttachedLevel.ScreenManager as RCScreenManager;
-                rCScreenManager2.DisplayScreen(20, true);
             }
         }
 

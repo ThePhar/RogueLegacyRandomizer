@@ -89,7 +89,7 @@
         <Compile Include="RandomChaos\LightSourceMask.cs" />
         <Compile Include="RandomChaos\PostProcessingManager.cs" />
         <Compile Include="RandomChaos\ScreenQuad.cs" />
-        <Compile Include="Randomizer\Util.cs" />
+        <Compile Include="Randomizer\RandUtil.cs" />
         <Compile Include="RogueLegacy\BackToMenuOptionsObj.cs" />
         <Compile Include="RogueLegacy\BlacksmithObj.cs" />
         <Compile Include="RogueLegacy\BorderObj.cs" />

@@ -1,9 +1,9 @@
 //  RogueLegacyRandomizer - Game.cs
-//  Last Modified 2023-10-26 11:30 AM
-// 
+//  Last Modified 2023-10-26 2:31 PM
+//
 //  This project is based on the modified disassembly of Rogue Legacy's engine, with permission to do so by its
 //  original creators. Therefore, the former creators' copyright notice applies to the original disassembly.
-// 
+//
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
@@ -159,7 +159,7 @@ public class Game : Microsoft.Xna.Framework.Game
         DialogueManager.LoadLanguageBinFile(@"Content\Languages\Diary_En.bin");
         DialogueManager.SetLanguage("English");
 
-        ProfileName = "DEFAULT-0";
+        ProfileName = "DEFAULT";
         SaveManager.Initialize();
         PhysicsManager.Initialize(ScreenManager.Camera);
         PhysicsManager.TerminalVelocity = 2000;
@@ -260,19 +260,60 @@ public class Game : Microsoft.Xna.Framework.Game
         GlobalInput.KeyList[3] = GlobalInput.KeyList[10];
     }
 
-    public void ChangeProfile(string seed, int slot)
+    public bool ChangeProfile(string seed, int slot)
     {
         // Load Default Save Profile
         ProfileName = "DEFAULT";
         SaveManager.CreateSaveDirectory();
         SaveManager.LoadAllFileTypes(null);
 
-        // Change Profile Name
-        ProfileName = $"AP_{seed}-{slot}";
+        // Change Profile Name if not default.
+        if (seed != "DEFAULT")
+        {
+            ProfileName = $"AP_{seed}-{slot}";
+        }
 
         // Load AP Save Files
         SaveManager.CreateSaveDirectory();
-        SaveManager.LoadAllFileTypes(null);
+        try
+        {
+            SaveManager.LoadAllFileTypes(null);
+            return true;
+        }
+        catch (FileLoadException exception)
+        {
+            DialogueManager.AddText(
+                "Invalid Save Version",
+                new[] { "Invalid Save Loaded" },
+                new[]
+                {
+                    "You are attempting to load an incompatible or corrupted save file for this version of Rogue " +
+                    $"Legacy Randomizer.\nSupported Save Version: {SaveGameManager.SAVE_VERSION}. " +
+                    $"Detected(?) Save Version: {exception.Message}",
+                }
+            );
+
+            ScreenManager.DialogueScreen.SetDialogue("Invalid Save Version");
+            ScreenManager.DisplayScreen(ScreenType.Dialogue, false);
+            return false;
+        }
+        catch
+        {
+            DialogueManager.AddText(
+                "Invalid Save Version",
+                new[] { "Invalid Save Loaded" },
+                new[]
+                {
+                    "You are attempting to load an incompatible or corrupted save file for this version of Rogue " +
+                    $"Legacy Randomizer.\nSupported Save Version: {SaveGameManager.SAVE_VERSION}. " +
+                    "Detected(?) Save Version: Unknown",
+                }
+            );
+
+            ScreenManager.DialogueScreen.SetDialogue("Invalid Save Version");
+            ScreenManager.DisplayScreen(ScreenType.Dialogue, false);
+            return false;
+        }
     }
 
     protected override void LoadContent()
@@ -512,7 +553,13 @@ public class Game : Microsoft.Xna.Framework.Game
         if (ArchipelagoManager.Ready && ScreenManager.CurrentScreen is RandomizerScreen)
         {
             // Initialize Save Data
-            ChangeProfile(ArchipelagoManager.Seed, ArchipelagoManager.Slot);
+            var loaded = ChangeProfile(ArchipelagoManager.Seed, ArchipelagoManager.Slot);
+            if (!loaded)
+            {
+                ArchipelagoManager.Disconnect();
+                base.Update(gameTime);
+                return;
+            }
 
             // Load Area Struct Data
             Area1List = RandomizerData.AreaStructs;
@@ -670,10 +717,10 @@ public class Game : Microsoft.Xna.Framework.Game
         if (NameArray.Count < 1)
         {
             NameArray.Add("Lee");
-            NameArray.Add("Charles");
-            NameArray.Add("Lancelot");
-            NameArray.Add("Zachary");
+            NameArray.Add("Zachery");
             NameArray.Add("Travis");
+            NameArray.Add("Daniel");
+            NameArray.Add("Devon");
         }
 
         textObj.Dispose();
@@ -710,10 +757,10 @@ public class Game : Microsoft.Xna.Framework.Game
         if (FemaleNameArray.Count < 1)
         {
             FemaleNameArray.Add("Jenny");
-            FemaleNameArray.Add("Shanoa");
-            FemaleNameArray.Add("Chun Li");
             FemaleNameArray.Add("Sasha");
-            FemaleNameArray.Add("Mika-mi");
+            FemaleNameArray.Add("Lauren");
+            FemaleNameArray.Add("Dorian");
+            FemaleNameArray.Add("Chelsea");
         }
 
         textObj.Dispose();
@@ -808,7 +855,7 @@ public class Game : Microsoft.Xna.Framework.Game
 
     public void SaveConfig()
     {
-        Console.WriteLine("Saving Config file");
+        RandUtil.Console("Rogue Legacy", "Saving Config file");
         var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         var dirPath = Path.Combine(folderPath, LevelENV.GameName);
         if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
@@ -874,7 +921,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     public void LoadConfig()
     {
-        Console.WriteLine("Loading Config file");
+        RandUtil.Console("Rogue Legacy", $"Starting Rogue Legacy Randomizer {LevelENV.FullVersion}");
+        RandUtil.Console("Rogue Legacy", "Loading Config file");
         InitializeDefaultConfig();
         try
         {
@@ -1033,7 +1081,7 @@ public class Game : Microsoft.Xna.Framework.Game
         }
         catch
         {
-            Console.WriteLine("Config File Not Found. Creating Default Config File.");
+            RandUtil.Console("Rogue Legacy", "Config File Not Found. Creating Default Config File.");
             InitializeDefaultConfig();
             SaveConfig();
         }
