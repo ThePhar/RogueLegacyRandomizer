@@ -7,6 +7,7 @@
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
+// ReSharper disable once CheckNamespace
 namespace System.Runtime.CompilerServices;
 
 public class IsExternalInit
