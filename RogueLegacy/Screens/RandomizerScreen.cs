@@ -101,8 +101,8 @@ namespace RogueLegacy.Screens
             _soloRandomizerOptions.Add(new TextBoxOption(this, "Currently Not Working", ""));
 
             // MultiWorld Randomizer Options
-            _hostname = new TextBoxOption(this, "Hostname", !LevelENV.RunConsole ? "archipelago.gg:38281" : "ws://localhost:38281");
-            _slot = new TextBoxOption(this, "Slot Name", !LevelENV.RunConsole ? "Sir Lee" : "Phar");
+            _hostname = new TextBoxOption(this, "Hostname", !LevelENV.RunConsole ? Game.GameConfig.APServer : "ws://localhost:38281");
+            _slot = new TextBoxOption(this, "Slot Name", !LevelENV.RunConsole ? Game.GameConfig.APSlot : "Phar");
             _password = new TextBoxOption(this, "Password", "");
 
             _multiRandomizerOptions.Add(_hostname);
@@ -175,6 +175,11 @@ namespace RogueLegacy.Screens
         public void Connect()
         {
             LockControls = true;
+
+            Game.GameConfig.APServer = _hostname.GetValue;
+            Game.GameConfig.APSlot = _slot.GetValue;
+
+            Program.Game.SaveConfig();
 
             // Parse port and connect.
             var manager = new ArchipelagoManager(new()

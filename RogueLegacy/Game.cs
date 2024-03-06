@@ -193,6 +193,8 @@ public class Game : Microsoft.Xna.Framework.Game
         InputManager.Deadzone = 10f;
         GameConfig.EnableSteamCloud = false;
         GameConfig.ReduceQuality = false;
+        GameConfig.APServer = "archipelago.gg:38281";
+        GameConfig.APSlot = "Sir Lee";
 
         InitializeGlobalInput();
     }
@@ -916,6 +918,10 @@ public class Game : Microsoft.Xna.Framework.Game
         streamWriter.WriteLine("ButtonDASHLEFT=" + GlobalInput.ButtonList[14]);
         streamWriter.WriteLine("ButtonDASHRIGHT=" + GlobalInput.ButtonList[15]);
         streamWriter.WriteLine("ButtonSPELL1=" + GlobalInput.ButtonList[24]);
+        streamWriter.WriteLine();
+        streamWriter.WriteLine("[Archipelago Config]");
+        streamWriter.WriteLine("APServer=" + GameConfig.APServer);
+        streamWriter.WriteLine("APSlot=" + GameConfig.APSlot);
         streamWriter.Close();
     }
 
@@ -1070,6 +1076,14 @@ public class Game : Microsoft.Xna.Framework.Game
                         case "ButtonSPELL1":
                             GlobalInput.ButtonList[24] = (Buttons) Enum.Parse(typeof(Buttons), setting);
                             break;
+
+                        case "APServer":
+                            GameConfig.APServer = setting;
+                            break;
+
+                        case "APSlot":
+                            GameConfig.APSlot = setting;
+                            break;
                     }
                 }
             }
@@ -1118,6 +1132,8 @@ public class Game : Microsoft.Xna.Framework.Game
         public int   ScreenHeight;
         public int   ScreenWidth;
         public float SFXVolume;
+        public string APServer;
+        public string APSlot;
     }
 
     public void CollectItemFromLocation(long location)
