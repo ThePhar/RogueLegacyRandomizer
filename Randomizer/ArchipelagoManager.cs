@@ -37,8 +37,8 @@ public class ArchipelagoManager
     public DeathLink                                       DeathLinkData      { get; private set; }
     public bool                                            IsDeathLinkSafe    { get; set; }
     public bool                                            Ready              { get; private set; }
-    public Queue<Tuple<int, NetworkItem>>                  ItemQueue          { get; private set; } = new();
-    public Dictionary<long, NetworkItem>                   LocationDictionary { get; private set; } = new();
+    public Queue<Tuple<int, ItemInfo>>                     ItemQueue          { get; private set; } = new();
+    public Dictionary<long, ItemInfo>                      LocationDictionary { get; private set; } = new();
     public List<Tuple<JsonMessageType, JsonMessagePart[]>> ChatLog            { get; }              = new();
 
     public bool   CanCollect   => _session.RoomState.CollectPermissions is Permissions.Goal or Permissions.Enabled;
@@ -270,11 +270,11 @@ public class ArchipelagoManager
     /// <param name="item">The network item to get name from.</param>
     /// <returns>A string representation of the item (or a trap).</returns>
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public string GetItemOrTrapName(NetworkItem item)
+    public string GetItemOrTrapName(ItemInfo item)
     {
         if (!item.Flags.HasFlag(ItemFlags.Trap))
         {
-            return GetItemName(item.Item);
+            return GetItemName(item.ItemId);
         }
 
         // I'm hilarious, obviously.
@@ -366,9 +366,9 @@ public class ArchipelagoManager
     {
         var locations = await _session.Locations.ScoutLocationsAsync(false, _session.Locations.AllLocations.ToArray());
 
-        foreach (var item in locations.Locations)
+        foreach (var item in locations.Values)
         {
-            LocationDictionary[item.Location] = item;
+            LocationDictionary[item.LocationId] = item;
         }
     }
 

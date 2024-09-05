@@ -1152,7 +1152,7 @@ public class Game : Microsoft.Xna.Framework.Game
             new Vector2(stats.Item1, stats.Item4),
             new Vector2(stats.Item2, stats.Item3),
             ArchipelagoManager.GetPlayerName(item.Player),
-            item.Item
+            item.ItemId,
         };
 
         ScreenManager.DisplayScreen((int) ScreenType.GetItem, true, data);

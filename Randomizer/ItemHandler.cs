@@ -31,10 +31,16 @@ public class ItemHandler
             return;
         }
 
-        var (index, item) = Manager.ItemQueue.Dequeue();
+        var (index, itemInfo) = Manager.ItemQueue.Dequeue();
         if (!HasReceivedItem(index))
         {
-            GainItem(item);
+            GainItem(itemInfo);
+            var item = new NetworkItem
+            {
+                Item = itemInfo.ItemId,
+                Location = itemInfo.LocationId,
+                Player = itemInfo.Player,
+            };
             ReceivedItems.Add(index, item);
             Program.Game.SaveManager.SaveFiles(SaveType.PlayerData, SaveType.Lineage, SaveType.UpgradeData);
         }
@@ -45,10 +51,10 @@ public class ItemHandler
         return ReceivedItems.ContainsKey(index);
     }
 
-    private static void GainItem(NetworkItem item)
+    private static void GainItem(ItemInfo item)
     {
         var stats = new float[] { -1, -1, -1 };
-        switch (item.Item)
+        switch (item.ItemId)
         {
             #region Vendors
 
@@ -479,8 +485,8 @@ public class ItemHandler
         // Add item to received items HUD.
         var tupleStats = new Tuple<float, float, float, float>(stats[0], stats[1], stats[2], 0);
         Game.ScreenManager.GetLevelScreen().AddReceivedItem(
-            item.Item.GetItemType(),
-            item.Item,
+            item.ItemId.GetItemType(),
+            item.ItemId,
             Manager.GetPlayerName(item.Player),
             tupleStats
         );

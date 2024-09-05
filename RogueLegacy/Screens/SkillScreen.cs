@@ -240,12 +240,12 @@ public class SkillScreen : Screen
                 var item = Program.Game.ArchipelagoManager.LocationDictionary[ManorContainer.ArchipelagoLocationTable[(ManorPiece) SkillSystem.GetManorPiece(s)]];
 
                 // Toggle correct plate.
-                s.IconName = GetSkillPlateIcon(item.Item);
-                s.Name = Program.Game.ArchipelagoManager.GetLocationName(item.Location).Replace("Manor - ", "");
+                s.IconName = GetSkillPlateIcon(item.ItemId);
+                s.Name = Program.Game.ArchipelagoManager.GetLocationName(item.LocationId).Replace("Manor - ", "");
                 var itemName = Program.Game.ArchipelagoManager.GetItemOrTrapName(item);
 
                 // Check if we grabbed this location, and change our skillArray current level.
-                if (Program.Game.ArchipelagoManager.IsLocationChecked(item.Location))
+                if (Program.Game.ArchipelagoManager.IsLocationChecked(item.LocationId))
                 {
                     s.CurrentLevel = 1;
                 }
