@@ -1,4 +1,10 @@
-﻿# Rogue Legacy Randomizer
+## NOTICE
+
+As of October 11th, 2024, Cellar Door Games has made the source code for RL1 available so this project is being moved to the [https://github.com/ThePhar/RogueLegacyRandomizerRedux](Rogue Legacy Randomizer Redux) repository. 
+
+Any new issues will not be accepted on this repo, as the project will be rewritten on the new repository linked above.
+ 
+ # Rogue Legacy Randomizer
 
 ![](https://img.shields.io/github/v/tag/thephar/roguelegacyrandomizer?label=latest&style=flat-square)
 ![](https://img.shields.io/github/commits-since/thephar/roguelegacyrandomizer/latest/main?color=8df702&style=flat-square)
