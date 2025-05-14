@@ -58,7 +58,7 @@ namespace RogueLegacy
         public static Version TargetVersion   => Version.Parse("1.1.0");
         public static int     PreRelease      => 0;
         public static string  FullVersion     => $"v{TargetVersion}" + (PreRelease > 0 ? $" Alpha Hotfix {PreRelease}" : "");
-        public static string  VersionSubtitle => "Development Build 2025-14-05";
+        public static string  VersionSubtitle => "v3_final_final_remix.bsp";
 
         static LevelENV()
         {
