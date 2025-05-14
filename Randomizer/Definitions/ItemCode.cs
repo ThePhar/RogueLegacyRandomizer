@@ -7,6 +7,8 @@
 // Original Source - © 2011-2018, Cellar Door Games Inc.
 // Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
+using Archipelago.MultiClient.Net.Models;
+
 namespace Randomizer.Definitions;
 
 public static class ItemCode
@@ -103,9 +105,9 @@ public static class ItemCode
     public const long FOUNTAIN_PIECE         = 90_180;
     public const long SPENDING               = 90_190;
 
-    public static ItemType GetItemType(this long itemCode)
+    public static ItemType GetItemType(this ItemInfo item)
     {
-        return itemCode switch
+        return item.ItemId switch
         {
             BLACKSMITH             => ItemType.Skill,
             ENCHANTRESS            => ItemType.Skill,

@@ -7,6 +7,7 @@
 //  Original Source - © 2011-2018, Cellar Door Games Inc.
 //  Rogue Legacy™ is a trademark or registered trademark of Cellar Door Games Inc. All Rights Reserved.
 
+using DS2DEngine;
 using RogueLegacy.Screens;
 
 namespace RogueLegacy
@@ -20,14 +21,21 @@ namespace RogueLegacy
             get { return base.IsActive; }
             set
             {
+                var rCScreenManager = Game.ScreenManager as RCScreenManager;
+                var levelScreen = rCScreenManager.GetLevelScreen();
+                if (levelScreen.CurrentRoom is StartingRoomObj)
+                {
+                    SoundManager.PlaySound("Error_Spell");
+                    return;
+                }
+                
                 base.IsActive = value;
                 if (IsActive)
                 {
-                    var rCScreenManager = _parentScreen.ScreenManager as RCScreenManager;
                     DialogueManager.AddText("Retire Character", new[] { "Retire?" }, new[]
                     {
                         "Are you sure you want to immediately end your current character's suffering?" +
-                        (Program.Game.ArchipelagoManager.IsDeathLinkSafe
+                        (Program.Game.ArchipelagoManager.DeathLink
                             ? " Be warned, this counts as a death and will punish all those with DeathLink enabled."
                             : ""),
                     });

@@ -485,7 +485,7 @@ public class ItemHandler
         // Add item to received items HUD.
         var tupleStats = new Tuple<float, float, float, float>(stats[0], stats[1], stats[2], 0);
         Game.ScreenManager.GetLevelScreen().AddReceivedItem(
-            item.ItemId.GetItemType(),
+            item.GetItemType(),
             item.ItemId,
             Manager.GetPlayerName(item.Player),
             tupleStats

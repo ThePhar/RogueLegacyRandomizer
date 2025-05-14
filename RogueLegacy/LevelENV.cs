@@ -55,10 +55,10 @@ namespace RogueLegacy
         public const int   LevelDungeonBottomDoor               = 100;
 
         public static string  GameName        => "Rogue Legacy Randomizer";
-        public static Version TargetVersion   => Version.Parse("1.0.1");
-        public static int     PreRelease      => 1;
+        public static Version TargetVersion   => Version.Parse("1.1.0");
+        public static int     PreRelease      => 0;
         public static string  FullVersion     => $"v{TargetVersion}" + (PreRelease > 0 ? $" Alpha Hotfix {PreRelease}" : "");
-        public static string  VersionSubtitle => "Development Build 2024-09-05";
+        public static string  VersionSubtitle => "v3_final_final_remix.bsp";
 
         static LevelENV()
         {

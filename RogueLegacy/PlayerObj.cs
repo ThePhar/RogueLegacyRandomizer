@@ -2613,6 +2613,7 @@ public class PlayerObj : CharacterObj, IDealsDamageObj
         Game.PlayerStats.IsDead = true;
         m_isKilled = true;
         AttachedLevel.RunGameOver();
+        
         base.Kill(giveXP);
     }
 

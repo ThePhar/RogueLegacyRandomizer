@@ -19,21 +19,21 @@ public static class RandUtil
         System.Console.WriteLine($"[{group}] {DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffff")}: {message}");
     }
 
-    /// <summary>
-    /// Deep print all properties of a supplied object with given indentation level.
-    /// </summary>
-    /// <param name="obj">Object to print all properties from.</param>
-    public static void PrintProperties(object obj)
-    {
-        if (obj == null)
-        {
-            return;
-        }
-
-        var json = JObject.FromObject(obj);
-        foreach (var property in json.Properties())
-        {
-            Console("Archipelago", $"{property.Name}: {property.Value}");
-        }
-    }
+    // /// <summary>
+    // /// Deep print all properties of a supplied object with given indentation level.
+    // /// </summary>
+    // /// <param name="obj">Object to print all properties from.</param>
+    // public static void PrintProperties(object obj)
+    // {
+    //     if (obj == null)
+    //     {
+    //         return;
+    //     }
+    //
+    //     var json = JObject.FromObject(obj);
+    //     foreach (var property in json.Properties())
+    //     {
+    //         Console("Archipelago", $"{property.Name}: {property.Value}");
+    //     }
+    // }
 }
