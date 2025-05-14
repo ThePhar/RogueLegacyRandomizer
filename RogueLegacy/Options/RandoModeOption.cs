@@ -14,6 +14,7 @@ namespace RogueLegacy.Options
             _toggleText = _nameText.Clone() as TextObj;
             _toggleText.X = OPTIONS_TEXT_OFFSET;
             _toggleText.Text = "No";
+            _toggleText.TextureColor = Color.Gray;
             AddChild(_toggleText);
         }
 
@@ -22,6 +23,7 @@ namespace RogueLegacy.Options
             get => base.IsActive;
             set
             {
+                return;
                 base.IsActive = value;
                 if (value)
                 {

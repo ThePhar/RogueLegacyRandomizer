@@ -116,10 +116,12 @@ namespace RogueLegacy
 
                     MessageBox.Show(
                         "Rogue Legacy Randomizer has run into a situation it cannot recover from and needs to " +
-                        "close. If you are not Phar, please reach out to Phar#4444 in Discord and include the " +
-                        "crash logs so they can fix this issue.\n\nIf you are Phar, stop breaking everything.\n\n" +
+                        "close. If you are not Phar, please submit a #bug-report in the Archipelago Discord and include the " +
+                        "crash logs so it can fix this issue.\n\nIf you are Phar, stop breaking everything.\n\n" +
 
-                        "These log files are located at:\n" + folderPath + ".zip",
+                        "These log files are located at:\n" + folderPath + ".zip\n\n" +
+                        
+                        "Discord URL: discord.gg/archipelago",
 
                         "RLR: Unhandled Exception Occurred", MessageBoxButtons.OK, MessageBoxIcon.Hand);
 

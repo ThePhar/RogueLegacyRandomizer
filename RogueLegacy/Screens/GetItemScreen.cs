@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using Archipelago.MultiClient.Net.Models;
 using DS2DEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -17,6 +18,7 @@ using Randomizer.Definitions;
 using RogueLegacy.Enums;
 using Tweener;
 using Tweener.Ease;
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace RogueLegacy.Screens
 {
@@ -40,7 +42,7 @@ namespace RogueLegacy.Screens
         private          SpriteObj      _levelUpBGImage;
         private          SpriteObj[]    _levelUpParticles;
         private          bool           _lockControls;
-        private          long           _network_item;
+        private          ItemInfo       _network_item;
         private          string         _network_player;
         private          string         _songName;
         private          float          _storedMusicVolume;
@@ -136,7 +138,7 @@ namespace RogueLegacy.Screens
                 case (int) ItemCategory.GiveNetworkItem:
                     _tripStatData = (Vector2) objList[3];
                     _network_player = (string) objList[4];
-                    _network_item = (long) objList[5];
+                    _network_item = (ItemInfo) objList[5];
                     break;
             }
 
@@ -271,7 +273,7 @@ namespace RogueLegacy.Screens
                     _itemSpinning = false;
                     _itemSprite.ChangeSprite("Icon_AP_Sprite");
                     _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
-                    _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
+                    _itemFoundText.Text = _network_item.ItemDisplayName;
                     _itemFoundPlayerText.Visible = true;
                     _itemFoundPlayerText.Text = $"You found {_network_player}'s";
                     _itemFoundText.TextureColor = Color.Yellow;
@@ -291,7 +293,7 @@ namespace RogueLegacy.Screens
 
                         case ItemCode.ItemType.Skill:
                             _itemSpinning = false;
-                            _itemSprite.ChangeSprite(GetSkillPlateIcon(_network_item, out _));
+                            _itemSprite.ChangeSprite(GetSkillPlateIcon(_network_item.ItemId, out _));
                             break;
 
                         case ItemCode.ItemType.Stats:
@@ -330,14 +332,14 @@ namespace RogueLegacy.Screens
                             _itemSpinning = true;
                             _itemSprite.ChangeSprite("RuneIcon_Sprite");
                             _itemFoundSprite.ChangeSprite("RuneFoundText_Sprite");
-                            _itemFoundText.Text = Program.Game.ArchipelagoManager.GetItemName(_network_item);
+                            _itemFoundText.Text = _network_item.ItemDisplayName;
                             _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
                             _itemSprite.AnimationDelay = 0.05f;
                             break;
 
                         case ItemCode.ItemType.Skill:
                             _itemFoundText.Y += 40f;
-                            _itemSprite.ChangeSprite(GetSkillPlateIcon(_network_item, out var itemName));
+                            _itemSprite.ChangeSprite(GetSkillPlateIcon(_network_item.ItemId, out var itemName));
                             _itemFoundSprite.ChangeSprite("ItemFoundText_Sprite");
                             _itemFoundText.Text = itemName;
                             _itemFoundPlayerText.Text = self ? "You found" : $"You received from {_network_player}";
@@ -388,9 +390,9 @@ namespace RogueLegacy.Screens
             base.OnEnter();
         }
 
-        private string GetBlueprintName(long item)
+        private string GetBlueprintName(ItemInfo item)
         {
-            var text = Program.Game.ArchipelagoManager.GetItemName(item);
+            var text = item.ItemDisplayName;
             if (text != "Progressive Blueprints")
             {
                 return text;

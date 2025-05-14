@@ -9,7 +9,7 @@
         <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
         <TargetFrameworkProfile></TargetFrameworkProfile>
         <WarningLevel>4</WarningLevel>
-        <LangVersion>11</LangVersion>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
         <PlatformTarget>x86</PlatformTarget>
@@ -40,8 +40,8 @@
         <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Archipelago.MultiClient.Net, Version=6.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>packages\Archipelago.MultiClient.Net.6.3.1\lib\net45\Archipelago.MultiClient.Net.dll</HintPath>
+        <Reference Include="Archipelago.MultiClient.Net, Version=6.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\Archipelago.MultiClient.Net.6.6.0\lib\net45\Archipelago.MultiClient.Net.dll</HintPath>
         </Reference>
         <Reference Include="DS2DEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>lib\DS2DEngine.dll</HintPath>
@@ -57,7 +57,7 @@
         </Reference>
         <Reference Include="mscorlib" />
         <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>packages\Archipelago.MultiClient.Net.6.3.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <HintPath>packages\Archipelago.MultiClient.Net.6.6.0\lib\net45\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="SpriteSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>lib\SpriteSystem.dll</HintPath>

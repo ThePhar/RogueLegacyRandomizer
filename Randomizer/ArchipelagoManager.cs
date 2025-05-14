@@ -27,7 +27,7 @@ namespace Randomizer;
 
 public class ArchipelagoManager
 {
-    private static readonly Version _supportedArchipelagoVersion = new(0, 4, 3);
+    private static readonly Version _supportedArchipelagoVersion = new(0, 6, 2);
 
     private readonly ArchipelagoConnectionInfo _connectionInfo;
     private          ArchipelagoSession        _session;
@@ -96,7 +96,8 @@ public class ArchipelagoManager
             ItemsHandlingFlags.AllItems,
             _supportedArchipelagoVersion,
             uuid: Guid.NewGuid().ToString(),
-            password: _connectionInfo.Password
+            password: _connectionInfo.Password,
+            tags:["NoText"]
         );
 
         if (!result.Successful)
@@ -110,10 +111,10 @@ public class ArchipelagoManager
 
         // Initialize DeathLink service.
         _deathLinkService = _session.CreateDeathLinkService();
-        _deathLinkService.OnDeathLinkReceived += OnDeathLink;
         if (RandomizerData.DeathLinkMode is DeathLinkMode.Enabled or DeathLinkMode.ForcedEnabled)
         {
             _deathLinkService.EnableDeathLink();
+            _deathLinkService.OnDeathLinkReceived += OnDeathLink;
         }
 
         // Build dictionary of locations with item information for fast lookup.
@@ -243,17 +244,6 @@ public class ArchipelagoManager
     }
 
     /// <summary>
-    /// Returns the location name of a given location id.
-    /// </summary>
-    /// <param name="location">The location id.</param>
-    /// <returns>The string representation of the location.</returns>
-    public string GetLocationName(long location)
-    {
-        var name = _session.Locations.GetLocationNameFromId(location);
-        return string.IsNullOrEmpty(name) ? $"Unknown Location {location}" : name;
-    }
-
-    /// <summary>
     /// Returns the item name of a given item id.
     /// </summary>
     /// <param name="item">The item id.</param>
@@ -274,7 +264,7 @@ public class ArchipelagoManager
     {
         if (!item.Flags.HasFlag(ItemFlags.Trap))
         {
-            return GetItemName(item.ItemId);
+            return item.ItemDisplayName;
         }
 
         // I'm hilarious, obviously.
@@ -356,7 +346,7 @@ public class ArchipelagoManager
     private void OnDeathLink(DeathLink deathLink)
     {
         // If we receive a DeathLink that is after our last death, let's set it.
-        if (!IsDeathLinkSafe && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
+        if (IsDeathLinkSafe && DateTime.Compare(deathLink.Timestamp, _lastDeath) > 0)
         {
             DeathLinkData = deathLink;
         }
@@ -389,7 +379,7 @@ public class ArchipelagoManager
         }
 
         RandUtil.Console("Archipelago", $"Packet Received: {packet.GetType().Name}");
-        RandUtil.PrintProperties(packet);
+        // RandUtil.PrintProperties(packet);
     }
 
     private static void OnError(Exception exception, string message)
